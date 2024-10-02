@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Chat from './LogComponents/Chat';
 import Extension from './LogComponents/Extension';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { MdEdit } from 'react-icons/md';
 
 export default function Logs() {
   // PAGINATION
@@ -236,7 +237,7 @@ export default function Logs() {
       username: 'Vikas Koli',
       extensionNumber: 123456,
       givenTime: '12:03 Am',
-    }
+    },
   ];
 
   const paginate = (page) => setCurrentPage(page);
@@ -423,8 +424,12 @@ export default function Logs() {
                       {/*   ACTIONS */}
                       <td className="px-6 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
                         <div className="flex gap-2 items-center text-blue-600">
-                          <FaPen className="text-white text-xl bg-blue-600 py-1 px-1 rounded-md text-center cursor-pointer" />
-                          <RiDeleteBin6Fill className="text-red-500 text-xl cursor-pointer" />
+                          <MdEdit
+                            size={25}
+                            color="white"
+                            className="bg-blue-500 rounded"
+                          />
+                          <RiDeleteBin6Fill size={25} color="red" />
                         </div>
                       </td>
                     </tr>
