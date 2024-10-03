@@ -11,11 +11,19 @@ export default function Home() {
         <div className="flex flex-col justify-between bg-blue-100 py-4 px-4 rounded-md shadow-md h-[210px] w-1/4">
           <div className="flex flex-col gap-2">
             <h1 className="font-light uppercase text-sm">Lead this month</h1>
-            <span className="font-bold text-2xl">10</span>
-            <button className="flex text-[12px] font-thin p-1 items-center bg-green-100 w-max rounded-md justify-between gap-1">
-              <FaArrowAltCircleUp />
-              <span>100%</span>
-            </button>
+            {/* ------- MIDDLE SECTION ----------- */}
+            <div className="flex items-center gap-2">
+              <button className='py-3 px-3 h-20 w-20 rounded-[90%] bg-blue-500 text-white flex items-center justify-center'>Com</button>
+              <div className="flex flex-col items-center justify-center">
+                <span className="font-bold text-2xl">10</span>
+                <button className="flex text-[12px] font-thin p-1 items-center bg-green-100 w-max rounded-md justify-between gap-1">
+                  <FaArrowAltCircleUp />
+                  <span>100%</span>
+                </button>
+              </div>
+            </div>
+            {/* ---------- PROGRESS BAR --------- */}
+            
           </div>
           <h3 className="font-light">Last Month Relative: 0</h3>
         </div>
@@ -82,7 +90,9 @@ export default function Home() {
       <div className="flex gap-3 mx-2">
         {/* ------- BOTTOM CARD ------- */}
         <div className="flex-2 flex flex-col bg-white shadow-sm py-6 px-3 relative">
-          <h1 className="text-left font-thin">LAST MONTHS PERFORMANCE MONIT..</h1>
+          <h1 className="text-left font-thin">
+            LAST MONTHS PERFORMANCE MONIT..
+          </h1>
           <div className="flex items-center justify-end">
             <p className="mt-8">December 2023</p>
           </div>
@@ -141,8 +151,8 @@ export default function Home() {
         </div>
         {/* ------- BOTTOM CARD ------- */}
         <div className="flex-2 py-6 px-3 w-[300px] flex flex-col bg-gray-100 shadow-md gap-1">
-          <h1 className='font-thin'>PROLIFIC SALES REPS</h1>
-          <div className='flex items-center justify-between border-b pb-2'>
+          <h1 className="font-thin">PROLIFIC SALES REPS</h1>
+          <div className="flex items-center justify-between border-b pb-2">
             <p>1. Shubham Mishra</p>
             <span>$ 35,000.00</span>
           </div>
