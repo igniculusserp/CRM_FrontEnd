@@ -1,99 +1,153 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { FaAngleDown } from "react-icons/fa";
+
+import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+
+import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 export default function UploadLead() {
+  const name = getHostnamePart();
+
   const [isEditMode, setIsEditMode] = useState(false);
   const [editLead, setEditLead] = useState({
-    file: '',
-    nameColNum: '',
-    emailColNum: '',
-    investAmountColNum: '',
-    stateColNum: '',
-    mobColNum: '',
-    occupationColNum: '',
-    cityColNum: '',
-    descriptionColNum: '',
-    assigned_To: '',
-    pool: '',
-    status: '',
+    assignedTo: "",
+    pool: "",
+    status: "",
+    namecolumnno: "",
+    mobilecolno: "",
+    emailcolno: "",
+    citycoluno: "",
+    statecolno: "",
+    occupationcolno: "",
+    descolumnno: "",
+    file: null,
   });
 
   //   HANDLING INPUTS
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setEditLead({
-      ...editLead,
+    setEditLead((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
-  };
-
-  //   HANDLING FORM SUBMIT
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
-  //   DROPDOWNS STATE AND THEIR OTHER FUNCTIONALITY
-  const [assignedToDropdown, setAssignedToDropdown] = useState(false);
-  const [defaultAssignedToText, setDefaultAssignedToText] =
-    useState('Assigned To');
-  const [poolDropdown, setPoolDropdown] = useState(false);
-  const [defaultPoolText, setDefaultPoolText] = useState('pool');
-  const [statusDropdown, setStatusDropdown] = useState(false);
-  const [defaultStatusText, setDefaultStatusText] = useState('status');
-
-  // ASSIGNED TO DATA
-  const assignedToData = [
-    { key: 1, name: 'Assigned To' },
-    { key: 2, name: 'Assigned To' },
-    { key: 3, name: 'Assigned To' },
-    { key: 4, name: 'Assigned To' },
-  ];
-
-  //   TOGGLE ASSIGNED TO DROPDOWN
-  const toggleAssignedToDropdown = () => {
-    setAssignedToDropdown(!assignedToDropdown);
-  };
-
-  // HANDLE DROPDOWN FOR TYPE
-  const handleDropdownAssignedTo = (assigned_To) => {
-    setDefaultAssignedToText(assigned_To);
-    setAssignedToDropdown(!assignedToDropdown);
-    setEditLead((prevTask) => ({
-      ...prevTask,
-      assigned_To: assigned_To,
     }));
   };
 
-  // LEAD VENDER DUMMY DATA
-  const poolData = [
-    { key: 1, name: 'pool' },
-    { key: 1, name: 'pool' },
-    { key: 1, name: 'pool' },
-    { key: 1, name: 'pool' },
-  ];
-
-  //   TOGGLE ASSIGNED TO DROPDOWN
-  const togglePoolDropdown = () => {
-    setPoolDropdown(!poolDropdown);
+  // Handle file change
+  const handleFileChange = (e) => {
+    setEditLead((prevData) => ({
+      ...prevData,
+      file: e.target.files[0],
+    }));
   };
 
-  // HANDLE DROPDOWN FOR TYPE
-  const handleDropdownPool = (pool) => {
-    setDefaultPoolText(pool);
-    setPoolDropdown(!poolDropdown);
+  //   DROPDOWNS STATE AND THEIR OTHER FUNCTIONALITY
+  const [statusDropdown, setStatusDropdown] = useState(false);
+  const [defaultStatusText, setDefaultStatusText] = useState("status");
+
+  //----------------------------------------------------------------------------------------
+  //assigned_ToDropDown
+  const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
+
+  async function handleAssigned_To() {
+    const bearer_token = localStorage.getItem("token");
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Setting/Alluser`,
+        config
+      );
+      setassigned_ToDropDown(response.data);
+      console.log("status:", response.data);
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+      // Optionally, set an error state to display a user-friendly message
+    }
+  }
+
+  useEffect(() => {
+    handleAssigned_To();
+  }, []);
+
+  const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
+    useState("Select Assigned");
+  const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
+    useState(false);
+
+  const toggleDropdownassigned_ToDropDown = () => {
+    setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
+  };
+
+  const handleDropdownassigned_ToDropDown = (
+    assigned_To_Username,
+    assigned_To_Role
+  ) => {
+    setdefaultTextassigned_ToDropDown(
+      assigned_To_Username + " " + assigned_To_Role
+    );
+    setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     setEditLead((prevTask) => ({
       ...prevTask,
-      pool: pool,
+      assignedTo: assigned_To_Username,
+    }));
+  };
+
+  //----------------------------------------------------------------------------------------
+  //PooL_ToDropDown
+  const [poolToDropDown, setPoolToDropDown] = useState([]);
+  const [defaultTextPool, setDefaultTextPool] = useState("Select Pool");
+  const [isPoolDropdownOpen, setIsPoolDropdownOpen] = useState(false);
+  const [error, setError] = useState(null); // New error state
+
+  const handlePool = async () => {
+    const bearerToken = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`,
+      },
+    };
+
+    try {
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
+        config
+      );
+      setPoolToDropDown(response.data.data);
+      console.log("status:", response.data.data);
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+      setError("Failed to fetch pools."); // Set error message
+    }
+  };
+
+  useEffect(() => {
+    handlePool();
+  }, []);
+
+  const toggleDropdown = () => {
+    setIsPoolDropdownOpen((prev) => !prev);
+    // console.log("@@@===",isPoolDropdownOpen);
+  };
+
+  const handleDropdownSelection = (poolName) => {
+    setIsPoolDropdownOpen(false);
+    setDefaultTextPool(poolName);
+    console.log("@@@===", isPoolDropdownOpen);
+    setEditLead((prev) => ({
+      ...prev,
+      pool: poolName,
     }));
   };
 
   // FLUSH DUMMY DATA
   const statusData = [
-    { key: 1, name: 'Status' },
-    { key: 2, name: 'Status' },
-    { key: 3, name: 'Status' },
-    { key: 4, name: 'Status' },
+    { key: 1, name: "Ready" },
+    { key: 2, name: "Not Ready" },
   ];
 
   // TOGGLE FLUSH
@@ -109,6 +163,59 @@ export default function UploadLead() {
       ...prevTask,
       status: status,
     }));
+  };
+
+  //---------->handleSubmit<----------
+  //two different models one for PUT and one for POST
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const bearer_token = localStorage.getItem("token");
+
+    try {
+      // Axios config with headers and query parameters
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+          "Content-Type": "multipart/form-data", // Correct content type for file uploads
+        },
+        params: {
+          // Attach the query parameters
+          assignedTo: editLead.assignedTo,
+          pool: editLead.pool,
+          status: editLead.status,
+          namecolumnno: editLead.namecolumnno,
+          mobilecolno: editLead.mobilecolno,
+          emailcolno: editLead.emailcolno,
+          citycoluno: editLead.citycoluno,
+          statecolno: editLead.statecolno,
+          occupationcolno: editLead.occupationcolno,
+          descolumnno: editLead.descolumnno,
+        },
+      };
+
+      // FormData for the file upload
+      const formData_POST = new FormData();
+      formData_POST.append("file", editLead.file);
+
+      // Send POST request with file and config (query params + headers)
+      await axios.post(
+        `${protocal_url}${name}.${tenant_base_url}/Lead/lead/uploadmain`,
+        formData_POST,
+        config
+      );
+
+      alert("Lead uploaded successfully!");
+      // Save selected button to localStorage
+    localStorage.setItem("selectedButton", "Leads");
+      window.location.reload(); 
+    } catch (error) {
+      if (error.response) {
+        console.error("Error data:", error.response.data);
+      } else {
+        console.error("Error:", error.message);
+      }
+      alert("An error occurred. Please try again.");
+    }
   };
 
   return (
@@ -135,10 +242,10 @@ export default function UploadLead() {
               type="file"
               name="file"
               id="file"
-              value={editLead.file}
               placeholder="Upload"
+              accept=".xls,.xlsx"
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-              onChange={handleChange}
+              onChange={handleFileChange} // File selection is handled here
             />
           </div>
           <div className="flex gap-3 bg-white py-2 px-3 rounded-b-xl">
@@ -146,34 +253,39 @@ export default function UploadLead() {
             <div className="flex-1 flex flex-col">
               {/* ASSIGNED TO DROPDOWN */}
               <label
-                htmlFor="assigned_To"
+                htmlFor="leadesStatus"
                 className="text-sm font-medium text-gray-700"
               >
-                Assigned To
+                Assigned to
               </label>
               <div
                 className="relative"
-                onClick={toggleAssignedToDropdown}
-                onMouseLeave={() => setAssignedToDropdown(false)}
+                onClick={toggleDropdownassigned_ToDropDown}
+                onMouseLeave={() => setisDropdownassigned_ToDropDown(false)}
               >
                 <button
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                   id="LeadStatusDropDown"
                   type="button"
                 >
-                  {isEditMode ? editLead.assigned_To : defaultAssignedToText}
+                  {editLead.assignedTo === ""
+                    ? defaultTextassigned_ToDropDown
+                    : editLead.assignedTo}
+
                   <FaAngleDown className="ml-2 text-gray-400" />
                 </button>
-                {assignedToDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                {isDropdownassigned_ToDropDown && (
+                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                     <ul className="py-2 text-sm text-gray-700">
-                      {assignedToData.map(({ key, name }) => (
+                      {assigned_ToDropDown.map(({ key, userName, role }) => (
                         <li
-                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                           key={key}
-                          onClick={() => handleDropdownAssignedTo(name)}
+                          onClick={() =>
+                            handleDropdownassigned_ToDropDown(userName, role)
+                          }
+                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                         >
-                          {name}
+                          {userName}-({role})
                         </li>
                       ))}
                     </ul>
@@ -182,37 +294,41 @@ export default function UploadLead() {
               </div>
               {/* POOL DROPDOWN */}
               <label
-                htmlFor="pool"
+                htmlFor="Pool"
                 className="text-sm font-medium text-gray-700"
               >
                 Pool
               </label>
               <div
                 className="relative"
-                onClick={togglePoolDropdown}
-                onMouseLeave={() => setPoolDropdown(false)}
+                onMouseLeave={() => setIsPoolDropdownOpen(false)}
               >
                 <button
+                  onClick={toggleDropdown}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                   id="LeadStatusDropDown"
                   type="button"
                 >
-                  {isEditMode ? editLead.pool : defaultPoolText}
+                  {editLead.pool === "" ? defaultTextPool : editLead.pool}
                   <FaAngleDown className="ml-2 text-gray-400" />
                 </button>
-                {poolDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {poolData.map(({ key, name }) => (
-                        <li
-                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={key}
-                          onClick={() => handleDropdownPool(name)}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
+                {isPoolDropdownOpen && (
+                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                    {error ? (
+                      <div className="py-2 text-red-600">{error}</div>
+                    ) : (
+                      <ul className="py-2 text-sm text-gray-700">
+                        {poolToDropDown.map(({ id, poolName }) => (
+                          <li
+                            key={id}
+                            onClick={() => handleDropdownSelection(poolName)}
+                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          >
+                            {poolName}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 )}
               </div>
@@ -275,9 +391,9 @@ export default function UploadLead() {
                 </label>
                 <input
                   type="number"
-                  name="nameColNum"
+                  name="namecolumnno" // Use state property name directly
                   id="nameColNum"
-                  value={editLead.nameColNum}
+                  value={editLead.namecolumnno}
                   placeholder="Enter name column"
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                   onChange={handleChange}
@@ -291,9 +407,9 @@ export default function UploadLead() {
                 </label>
                 <input
                   type="number"
-                  name="mobColNum"
+                  name="mobilecolno" // Use state property name directly
                   id="mobColNum"
-                  value={editLead.mobColNum}
+                  value={editLead.mobilecolno}
                   placeholder="Enter mobile column"
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                   onChange={handleChange}
@@ -307,9 +423,9 @@ export default function UploadLead() {
                 </label>
                 <input
                   type="number"
-                  name="emailColNum"
+                  name="emailcolno" // Use state property name directly
                   id="emailColNum"
-                  value={editLead.emailColNum}
+                  value={editLead.emailcolno}
                   placeholder="Enter email column"
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                   onChange={handleChange}
@@ -323,9 +439,9 @@ export default function UploadLead() {
                 </label>
                 <input
                   type="number"
-                  name="cityColNum"
+                  name="citycoluno" // Use state property name directly
                   id="cityColNum"
-                  value={editLead.cityColNum}
+                  value={editLead.citycoluno}
                   placeholder="Enter city column"
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                   onChange={handleChange}
@@ -342,9 +458,9 @@ export default function UploadLead() {
                 </label>
                 <input
                   type="number"
-                  name="stateColNum"
+                  name="statecolno" // Use state property name directly
                   id="stateColNum"
-                  value={editLead.stateColNum}
+                  value={editLead.statecolno}
                   placeholder="Enter state column"
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                   onChange={handleChange}
@@ -358,9 +474,9 @@ export default function UploadLead() {
                 </label>
                 <input
                   type="number"
-                  name="occupationColNum"
+                  name="occupationcolno" // Use state property name directly
                   id="occupationColNum"
-                  value={editLead.occupationColNum}
+                  value={editLead.occupationcolno}
                   placeholder="Enter occupation column"
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                   onChange={handleChange}
@@ -374,9 +490,9 @@ export default function UploadLead() {
                 </label>
                 <input
                   type="number"
-                  name="descriptionColNum"
+                  name="descolumnno" // Use state property name directly
                   id="descriptionColNum"
-                  value={editLead.descriptionColNum}
+                  value={editLead.descolumnno}
                   placeholder="Enter description column"
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                   onChange={handleChange}
@@ -390,7 +506,7 @@ export default function UploadLead() {
                   type="submit"
                   className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
                 >
-                  {isEditMode ? 'Update' : 'Save'}
+                  {isEditMode ? "Update" : "Save"}
                 </button>
               </div>
             </div>
