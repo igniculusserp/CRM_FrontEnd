@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaBars, FaPen, FaTrash } from 'react-icons/fa';
+import { FaBars } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Chat from './LogComponents/Chat';
 import Extension from './LogComponents/Extension';
