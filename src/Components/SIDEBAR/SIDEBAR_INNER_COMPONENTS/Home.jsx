@@ -1,6 +1,10 @@
 import { FaArrowAltCircleUp } from 'react-icons/fa';
 import MyGaugeChart from './MyGaugeChart';
 import ProgressBarChart from './ProgressBarChat';
+import Price from '../../../assets/images/sales-badge-svgrepo-com 1.png';
+import Group from '../../../assets/images/Group.png';
+import Dollar from '../../../assets/images/price-label-svgrepo-com 1.png';
+import Profile from "../../../assets/images/users-svgrepo-com 1.png"
 
 export default function Home() {
   return (
@@ -8,12 +12,14 @@ export default function Home() {
       {/* ------- TOP CARDS ------- */}
       <div className="flex items-center px-2 gap-3">
         {/* ------- CARD ------- */}
-        <div className="flex flex-col justify-between bg-blue-100 py-4 px-4 rounded-md shadow-md h-[210px] w-1/4">
+        <div className="flex flex-col justify-between bg-white py-4 px-4 rounded-md shadow-lg h-[210px] w-1/4">
           <div className="flex flex-col gap-2">
             <h1 className="font-light uppercase text-sm">Lead this month</h1>
             {/* ------- MIDDLE SECTION ----------- */}
-            <div className="flex items-center gap-2">
-              <button className='py-3 px-3 h-20 w-20 rounded-[90%] bg-blue-500 text-white flex items-center justify-center'>Com</button>
+            <div className="flex items-center gap-2 mt-2">
+              <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-blue-500 text-white flex items-center justify-center">
+                <img src={Group} alt="Home Icon" />
+              </button>
               <div className="flex flex-col items-center justify-center">
                 <span className="font-bold text-2xl">10</span>
                 <button className="flex text-[12px] font-thin p-1 items-center bg-green-100 w-max rounded-md justify-between gap-1">
@@ -22,40 +28,79 @@ export default function Home() {
                 </button>
               </div>
             </div>
-            {/* ---------- PROGRESS BAR --------- */}
-            
+          </div>
+          {/* ---------- PROGRESS BAR --------- */}
+          <div className="h-2 w-full bg-transparent border border-gray-600 rounded-lg mt-2">
+            <div className="h-full w-12 bg-blue-600"></div>
           </div>
           <h3 className="font-light">Last Month Relative: 0</h3>
         </div>
         {/* ------- CARD ------- */}
-        <div className="flex flex-col justify-between bg-gray-200 py-4 px-4 rounded-md shadow-md h-[210px] w-1/4">
+        <div className="flex flex-col justify-between py-4 px-4 bg-white rounded-md shadow-lg h-[210px] w-1/4">
           <div className="flex flex-col gap-2">
             <h1 className="font-light uppercase text-sm">REVENUE THIS MONTH</h1>
-            <span className="font-bold text-2xl">$ 35,00.00</span>
-            <button className="flex text-[12px] font-thin p-1 items-center bg-green-100 w-max rounded-md justify-between gap-1">
-              <FaArrowAltCircleUp />
-              <span>100%</span>
-            </button>
+            <div className="flex gap-4 items-center mt-2">
+              <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-orange-300 text-white flex items-center justify-center">
+                <img src={Dollar} alt="Profile Icon" />
+              </button>
+              <div className="flex flex-col gap-1">
+                <span className="font-bold text-2xl">$ 35,00.00</span>
+                <button className="flex text-[12px] font-thin p-1 items-center bg-green-100 w-max rounded-md justify-between gap-1">
+                  <FaArrowAltCircleUp />
+                  <span>100%</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          {/* ---------- PROGRESS BAR --------- */}
+          <div className="h-2 w-full bg-transparent border border-gray-600 rounded-lg mt-2">
+            <div className="h-full w-12 bg-blue-600"></div>
           </div>
           <h3 className="font-light">Last Month Relative: 0</h3>
         </div>
         {/* ------- CARD ------- */}
-        <div className="flex flex-col justify-between bg-blue-100 py-4 px-4 rounded-md shadow-md h-[210px] w-1/4">
+        <div className="flex flex-col justify-between bg-white py-4 px-4 rounded-md shadow-lg h-[210px] w-1/4">
           <div className="flex flex-col gap-2">
             <h1 className="font-light uppercase text-sm">SALES IN PIPELINE</h1>
-            <span className="font-bold text-2xl">10</span>
+            <div className="flex gap-4 items-center mt-2">
+              <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-red-700 text-white flex items-center justify-center">
+                <img src={Price} alt="Profile Icon" />
+              </button>
+              <div className="flex flex-col gap-1">
+                <span className="font-bold text-2xl">10</span>
+                <button className="flex text-[12px] font-thin p-1 items-center bg-green-100 w-max rounded-md justify-between gap-1">
+                  <FaArrowAltCircleUp />
+                  <span>100%</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          {/* ---------- PROGRESS BAR --------- */}
+          <div className="h-2 w-full bg-transparent border border-gray-600 rounded-lg mt-2">
+            <div className="h-full w-12 bg-blue-600"></div>
           </div>
           <h3 className="font-light">Last Month Relative: 0</h3>
         </div>
         {/* ------- CARD ------- */}
-        <div className="flex flex-col justify-between bg-gray-200 py-4 px-4 rounded-md shadow-md h-[210px] w-1/4">
+        <div className="flex flex-col justify-between bg-white py-4 px-4 rounded-md shadow-lg h-[210px] w-1/4">
           <div className="flex flex-col gap-2">
             <h1 className="font-light uppercase text-sm">CLIENT THIS MONTH</h1>
-            <span className="font-bold text-2xl">10</span>
-            <button className="flex text-[12px] font-thin p-1 items-center bg-green-100 w-max rounded-md justify-between gap-1">
-              <FaArrowAltCircleUp />
-              <span>100%</span>
-            </button>
+            <div className="flex gap-4 items-center mt-2">
+              <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-cyan-500 text-white flex items-center justify-center">
+                <img src={Profile} alt="Profile Icon" />
+              </button>
+              <div className="flex flex-col gap-1">
+                <span className="font-bold text-2xl">10</span>
+                <button className="flex text-[12px] font-thin p-1 items-center bg-green-100 w-max rounded-md justify-between gap-1">
+                  <FaArrowAltCircleUp />
+                  <span>100%</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          {/* ---------- PROGRESS BAR --------- */}
+          <div className="h-2 w-full bg-transparent border border-gray-600 rounded-lg mt-2">
+            <div className="h-full w-12 bg-blue-600"></div>
           </div>
           <h3 className="font-light">Last Month Relative: 0</h3>
         </div>
