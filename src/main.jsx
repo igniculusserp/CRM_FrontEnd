@@ -22,7 +22,6 @@ import SidebarBase            from './Components/SIDEBAR/SidebarBase.jsx'
 import WelcomePage            from './Components/REGISTRATION/WelcomePage.jsx';
 
 //SiderBar Inner-Components
-import Home                   from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Home.jsx'
 
 import Client                 from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Client/Client.jsx';
 import SalesOrder             from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SalesOrder/SalesOrder.jsx'
@@ -36,6 +35,7 @@ import GroupChat              from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENT
 
 
 //Shivam ---> CreateTrial-->|-->|-->CreateVoice
+import Home from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Home/Home.jsx";
 
 import CreateOrder            from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/CreateOrder.jsx';
 import CreateMailBox          from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/CreateMailBox.jsx';
