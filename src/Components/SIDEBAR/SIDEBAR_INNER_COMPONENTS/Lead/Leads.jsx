@@ -1,12 +1,12 @@
-//react 
+//react
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 //external Packages
 import axios from "axios";
-import * as XLSX from 'xlsx';
+import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
-import autoTable from 'jspdf-autotable'
+import autoTable from "jspdf-autotable";
 
 //React Icons
 import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
@@ -19,7 +19,7 @@ import { ImFilter } from "react-icons/im";
 import { MdCall } from "react-icons/md";
 
 //Folder Imported
-import dp from "./../../../../assets/images/dp.png"
+import dp from "./../../../../assets/images/dp.png";
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
 
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
@@ -27,7 +27,7 @@ import LeadOperations from "./LeadComponents/LeadOperations";
 import LeadAction from "./LeadComponents/LeadAction";
 import UploadLead from "./LeadComponents/UploadLead";
 
-const name = getHostnamePart()
+const name = getHostnamePart();
 
 export default function Lead() {
   const navigate = useNavigate(); // Add this line
@@ -56,11 +56,11 @@ export default function Lead() {
         config
       );
 
-      const data = response.data.data
+      const data = response.data.data;
       setGetleads(data);
       setFilteredLeads(data); // Initialize filtered leads
 
-      setfilteredLeads_assigned_To(data)
+      setfilteredLeads_assigned_To(data);
     } catch (error) {
       console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
@@ -82,66 +82,64 @@ export default function Lead() {
         config
       );
 
-      const data = response.data?.data
+      const data = response.data?.data;
       setUsers(data);
     } catch (error) {
       console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
     }
-  }
+  };
 
   useEffect(() => {
     handleLead();
-    getAllUsers()
+    getAllUsers();
   }, []);
 
-
-
-  const [leadStatus, setLeadStatus] = useState('All Lead');   // Track the selected lead status
-  const [assignedTo, setAssignedTo] = useState('Assigned to');   // Track the selected assigned user
+  const [leadStatus, setLeadStatus] = useState("All Lead"); // Track the selected lead status
+  const [assignedTo, setAssignedTo] = useState("Assigned to"); // Track the selected assigned user
 
   // Function to handle both filters
   function handle_LeadStatus(statusValue) {
     let filteredLeads = getleads;
 
     // Filter by leadStatus if it's not 'ALL' or null
-    if (statusValue !== null && statusValue !== 'All Leads') {
-      filteredLeads = filteredLeads.filter(lead => lead.leadesStatus === statusValue);
-      console.log(filteredLeads)
+    if (statusValue !== null && statusValue !== "All Leads") {
+      filteredLeads = filteredLeads.filter(
+        (lead) => lead.leadesStatus === statusValue
+      );
+      console.log(filteredLeads);
     }
-    setFilteredLeads(filteredLeads);  // Set the filtered results
+    setFilteredLeads(filteredLeads); // Set the filtered results
   }
 
   function handle_AssignedTo(assignedToValue) {
     let filteredLeads = getleads;
-    if (assignedToValue !== null && assignedToValue !== 'Assigned to') {
-      filteredLeads = filteredLeads.filter(lead => lead.assigned_To === assignedToValue);
+    if (assignedToValue !== null && assignedToValue !== "Assigned to") {
+      filteredLeads = filteredLeads.filter(
+        (lead) => lead.assigned_To === assignedToValue
+      );
     }
-    setFilteredLeads(filteredLeads);  // Set the filtered result
+    setFilteredLeads(filteredLeads); // Set the filtered result
   }
 
   // Handle selecting a lead status
   function handleLeadStatusSelection(status) {
-    setLeadStatus(status);  // Update leadStatus state
-    handle_LeadStatus(status);  // Apply both filters
+    setLeadStatus(status); // Update leadStatus state
+    handle_LeadStatus(status); // Apply both filters
   }
 
   // Handle selecting an assigned user
   function handleAssignedToSelection(user) {
-    setAssignedTo(user);  // Update assignedTo state
-    handle_AssignedTo(user);  // Apply both filters
+    setAssignedTo(user); // Update assignedTo state
+    handle_AssignedTo(user); // Apply both filters
   }
-
-
-
-
 
   //-----------------------------------------------> ALL-> LEADS <-functionality <-----------------------------------------------
 
   const [allLeaddropDown, setAllLeaddropDown] = useState(false);
   const toggleMenuAllLead = () => {
     setAllLeaddropDown(!allLeaddropDown);
-  }
+  };
 
   //-----------------------------------------------> ALL LEADS DATA <-----------------------------------------------
   //----------------STATUS DROPDOWN----------------
@@ -155,7 +153,8 @@ export default function Lead() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
         config
       );
       setallLeadData(response.data.data);
@@ -174,7 +173,7 @@ export default function Lead() {
   const [allAssigned_To_DROPDOWN, setallAssigned_To_DROPDOWN] = useState(false);
   const toggleMenuAssigned_To = () => {
     setallAssigned_To_DROPDOWN(!allAssigned_To_DROPDOWN);
-  }
+  };
 
   //-----------------------------------------------> ALL ASSIGNED_TO DATA <-----------------------------------------------
   //----------------ASSIGNED_TO DROPDOWN----------------
@@ -226,8 +225,6 @@ export default function Lead() {
     setsearchBardropDown(!searchBardropDown);
   };
 
-
-
   //------------------------------------------------------------------------------------------------
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
@@ -238,13 +235,13 @@ export default function Lead() {
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
 
   const handleStripeButton = (value) => {
-    console.log(value)
+    console.log(value);
     setSelectedViewValue(value);
-  }
+  };
 
   const togglestripeBar = () => {
     setstripeBardropDown(!stripeBardropDown);
-  }
+  };
 
   // DROP_LOGO DROPDOWN------------>>>
   const dropLogoMenu = [{ key: 1, value: "Import Leads" }];
@@ -252,9 +249,11 @@ export default function Lead() {
 
   const togglesdropLogo = () => {
     setdropLogodropDown(!dropLogodropDown);
-  }
+  };
 
-  const [selectedViewValue, setSelectedViewValue] = useState(stripeBar[0].value);
+  const [selectedViewValue, setSelectedViewValue] = useState(
+    stripeBar[0].value
+  );
 
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
@@ -279,10 +278,11 @@ export default function Lead() {
   };
 
   const handleActionButton = async (value, leadId) => {
-
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
     if (value === "Mass Delete") {
-      const userConfirmed = confirm('Are you sure you want to Delete the selected Leads?');
+      const userConfirmed = confirm(
+        "Are you sure you want to Delete the selected Leads?"
+      );
       if (userConfirmed) {
         massDelete();
       }
@@ -290,7 +290,9 @@ export default function Lead() {
 
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
     if (value === "Sheet View") {
-      const userConfirmed = confirm('Are you sure you want to export the selected Leads?');
+      const userConfirmed = confirm(
+        "Are you sure you want to export the selected Leads?"
+      );
       if (userConfirmed) {
         exportToExcel();
       }
@@ -298,7 +300,9 @@ export default function Lead() {
 
     // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
     if (value === "Print View") {
-      const userConfirmed = confirm('Are you sure you want to export the selected Leads?');
+      const userConfirmed = confirm(
+        "Are you sure you want to export the selected Leads?"
+      );
       if (userConfirmed) {
         exportToPDF();
       }
@@ -306,13 +310,14 @@ export default function Lead() {
 
     // ---------------------->Convert Lead to Contact FUNCTIONALITY*<----------------------
     if (value === "Convert Lead to Contact") {
-      const userConfirmed = confirm('Are you sure you want to convert this lead to a contact?');
+      const userConfirmed = confirm(
+        "Are you sure you want to convert this lead to a contact?"
+      );
       if (userConfirmed) {
         convertType();
       }
-
-    };
-  }
+    }
+  };
   // ---------------------->MASS DELETE FUNCTIONALITY---###API###<----------------------
   const massDelete = async () => {
     const bearer_token = localStorage.getItem("token");
@@ -347,7 +352,6 @@ export default function Lead() {
     navigate(`/sidebar/editlead/${item.id}`);
   };
 
-
   //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
   //-------> XLSX used here
   const exportToExcel = () => {
@@ -380,9 +384,16 @@ export default function Lead() {
       alert("No leads selected to export");
       return;
     }
-    const doc = new jsPDF()
+    const doc = new jsPDF();
     // const role = matchedUser?.role;
-    const tableColumn = ['ID', 'Name', 'Email', "Phone No.", "Lead Source", "Assigned To"];
+    const tableColumn = [
+      "ID",
+      "Name",
+      "Email",
+      "Phone No.",
+      "Lead Source",
+      "Assigned To",
+    ];
     // Map the leads data to rows
     const tableRows = leadsToExport?.map((lead) => [
       lead.id,
@@ -400,10 +411,8 @@ export default function Lead() {
       body: tableRows,
       startY: 22, // Position the table after the title
     });
-    doc.save('Leads.pdf')
+    doc.save("Leads.pdf");
   };
-
-
 
   //---------------------->---------------------->MANAGE_BY/ASSIGNED_TO<----------------------<ARVIND----------------------
   const roleColors = [
@@ -411,8 +420,8 @@ export default function Lead() {
     "#2563eb", // blue
     "#65a30d", // LimeGreen
     "#7c3aed", // MediumPurple
-    "#0369a1",  //Sky
-    "#e11d48",  //Rose
+    "#0369a1", //Sky
+    "#e11d48", //Rose
   ];
 
   //---------------------->---------------------->CONVERT_LEADS_TO_CONTACTS<----------------------<----------------------
@@ -430,34 +439,35 @@ export default function Lead() {
 
       const response = await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/Lead/leadtocontact/${selectedIds}`,
-        { id: selectedIds },  // Pass data as second parameter
+        { id: selectedIds }, // Pass data as second parameter
         config
       );
 
-      alert('Converted lead to contact');
+      alert("Converted lead to contact");
       setGetleads((prevLeads) =>
         prevLeads.filter((lead) => !selectedIds.includes(lead.id))
       );
       setSelectedIds([]);
 
       if (response.status === 200) {
-        alert('Lead has been successfully converted to a contact.');
+        alert("Lead has been successfully converted to a contact.");
       } else {
-        alert(`Failed to convert lead: ${response.data.message || 'Unknown error'}`);
+        alert(
+          `Failed to convert lead: ${response.data.message || "Unknown error"}`
+        );
       }
     } catch (error) {
-      console.error('Error converting lead:', error);
-      alert('An error occurred while converting the lead. Please try again later.');
+      console.error("Error converting lead:", error);
+      alert(
+        "An error occurred while converting the lead. Please try again later."
+      );
     }
   };
-
 
   // Function to get the color for a role based on its index
   const getRoleColorByIndex = (index) => {
     return roleColors[index % roleColors?.length]; // Use modulo for wrapping
   };
-
-
 
   //---------------------->---------------------->PAGINATION<----------------------<----------------------
   const [currentPage, setCurrentPage] = useState(1);
@@ -469,17 +479,17 @@ export default function Lead() {
   const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-
   //---------------------->---------------------->̧CHECKBOX<----------------------<----------------------
   //---------------------->---------------------->̧CHECKBOX -> SINGLE<----------------------<----------------------
   const [selectedIds, setSelectedIds] = useState([]);
   const handleOnCheckBox = (e, item) => {
     e.stopPropagation();
-    setSelectedIds((prevSelected) => prevSelected.includes(item.id) ? prevSelected.filter((id) => id !== item.id) : [...prevSelected, item.id]);
+    setSelectedIds((prevSelected) =>
+      prevSelected.includes(item.id)
+        ? prevSelected.filter((id) => id !== item.id)
+        : [...prevSelected, item.id]
+    );
   };
-
-
-
 
   //---------------------->---------------------->̧CHECKBOX -> MULTIPLE<----------------------<----------------------
   const [isSelectAllChecked, setIsSelectAllChecked] = useState(false);
@@ -511,30 +521,38 @@ export default function Lead() {
     setIsSelectAllChecked(isAllSelected);
   }, [selectedIds, currentLeads]);
 
-
   // DYNAMIC RENDERING BUTTONS - TABLE
   // DYNAMIC LEAD BUTTONS
   const dynamicButtons = {
-    Leads: { href: '/sidebar/lead' },
-    'Upload Leads': { href: '/sidebar/lead' },
-    'Lead Operations': { href: '/sidebar/lead' },
-    'Lead Action': { href: '/sidebar/lead' },
+    Leads: { href: "/sidebar/lead" },
+    "Upload Leads": { href: "/sidebar/lead" },
+    "Lead Operations": { href: "/sidebar/lead" },
+    "Lead Action": { href: "/sidebar/lead" },
   };
 
-  const [selectedButton, setSelectedButton] = useState('Leads');
-  const [buttonText, setButtonText] = useState({
-    text: 'Leads',
-    href: '/sidebar/lead',
-  });
+  // State to keep track of the selected button and button text
+  const [selectedButton, setSelectedButton] = useState(null);
+  const [buttonText, setButtonText] = useState("Leads");
 
-  // Function to handle option click using bracket notation
+  // Handle option click
   const handleOptionClick = (key) => {
-    console.log('Clicked key:', key);
-    setButtonText(dynamicButtons[key]);
+    console.log("Clicked key:", key);
+    setButtonText(key); // Set the text of the clicked button
     setSelectedButton(key);
+
+    // Save selected button to localStorage
+    localStorage.setItem("selectedButton", key);
   };
 
+  // Use useEffect to retrieve the selected button from localStorage when the component mounts
+  useEffect(() => {
+    const savedButton = localStorage.getItem("selectedButton");
 
+    if (savedButton) {
+      setSelectedButton(savedButton);
+      setButtonText(savedButton); // Set the saved button's text
+    }
+  }, []);
 
   return (
     //parent
@@ -544,8 +562,13 @@ export default function Lead() {
         {/* PART-I */}
         {/* container- Alleads, search */}
         <div className="flex gap-3 items-center justify-center ">
-          {/* PART-I */}{/* All Lead  DropDown*/}
-          <div className="relative" onClick={toggleMenuAllLead} onMouseLeave={() => setAllLeaddropDown(false)}>
+          {/* PART-I */}
+          {/* All Lead  DropDown*/}
+          <div
+            className="relative"
+            onClick={toggleMenuAllLead}
+            onMouseLeave={() => setAllLeaddropDown(false)}
+          >
             <button
               className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 max-w-44 truncate"
               id="dropdownDefaultButton"
@@ -561,7 +584,7 @@ export default function Lead() {
                     <li
                       key={item.id}
                       className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                      onClick={() => handleLeadStatusSelection(item.status)}  // Correct selection logic
+                      onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
                     >
                       {item.status}
                     </li>
@@ -570,8 +593,13 @@ export default function Lead() {
               </div>
             )}
           </div>
-          {/* PART-I-ii */}{/* All ASSIGNED_TO  DropDown*/}
-          <div className="relative" onClick={toggleMenuAssigned_To} onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}>
+          {/* PART-I-ii */}
+          {/* All ASSIGNED_TO  DropDown*/}
+          <div
+            className="relative"
+            onClick={toggleMenuAssigned_To}
+            onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
+          >
             <button
               className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 max-w-44"
               id="dropdownDefaultButton"
@@ -587,7 +615,7 @@ export default function Lead() {
                     <li
                       key={item.id}
                       className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                      onClick={() => handleAssignedToSelection(item.userName)}  // Correct selection logic
+                      onClick={() => handleAssignedToSelection(item.userName)} // Correct selection logic
                     >
                       {item.userName}
                     </li>
@@ -596,8 +624,13 @@ export default function Lead() {
               </div>
             )}
           </div>
-          {/* PART-I */}{/* Search Box */}
-          <div className="relative" onClick={togglesearchBar} onMouseLeave={() => setsearchBardropDown(false)}>
+          {/* PART-I */}
+          {/* Search Box */}
+          <div
+            className="relative"
+            onClick={togglesearchBar}
+            onMouseLeave={() => setsearchBardropDown(false)}
+          >
             <button
               className="py-2 px-4 border rounded-full gap-2 flex justify-between items-center"
               id="dropdownDefaultButton"
@@ -626,8 +659,13 @@ export default function Lead() {
 
         {/* PART-II */}
         <div className="flex gap-3 items-center justify-center">
-          {/* PART-II */}{/* Stripe-BarDropDown */}
-          <div className="relative" onClick={togglestripeBar} onMouseLeave={() => setstripeBardropDown(false)}>
+          {/* PART-II */}
+          {/* Stripe-BarDropDown */}
+          <div
+            className="relative"
+            onClick={togglestripeBar}
+            onMouseLeave={() => setstripeBardropDown(false)}
+          >
             <button
               className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center"
               id="dropdownDefaultButton"
@@ -652,7 +690,8 @@ export default function Lead() {
               </div>
             )}
           </div>
-          {/* PART-II */}{/*  Create Lead */}
+          {/* PART-II */}
+          {/*  Create Lead */}
           <div className="flex gap-1">
             <Link to="/sidebar/createlead">
               <button
@@ -663,8 +702,13 @@ export default function Lead() {
                 Create Lead
               </button>
             </Link>
-            {/* PART-II */}{/*  Create Lead Part-II -> down button */}
-            <div className="relative" onClick={togglesdropLogo} onMouseLeave={() => setdropLogodropDown(false)}>
+            {/* PART-II */}
+            {/*  Create Lead Part-II -> down button */}
+            <div
+              className="relative"
+              onClick={togglesdropLogo}
+              onMouseLeave={() => setdropLogodropDown(false)}
+            >
               <button
                 className="py-3 px-2 min border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
                 id="dropdownDefaultButton"
@@ -689,8 +733,13 @@ export default function Lead() {
             </div>
           </div>
 
-          {/* PART-II */}{/*-------Action DropDown */}
-          <div className="relative" onClick={toggleActionsMenuLogo} onMouseLeave={() => setdropActionsMenudropDown(false)}>
+          {/* PART-II */}
+          {/*-------Action DropDown */}
+          <div
+            className="relative"
+            onClick={toggleActionsMenuLogo}
+            onMouseLeave={() => setdropActionsMenudropDown(false)}
+          >
             <button
               className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
               id="dropdownDefaultButton"
@@ -701,7 +750,7 @@ export default function Lead() {
             </button>
             {dropActionsMenudropDown && (
               <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
-                <ul className="text-sm text-gray-700 " >
+                <ul className="text-sm text-gray-700 ">
                   {dropActionsMenu.map(({ key, value }) => (
                     <li
                       key={key}
@@ -717,32 +766,34 @@ export default function Lead() {
           </div>
         </div>
       </div>
-      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}
+      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{" "}
+      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{" "}
+      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}
       <div className="mt-3 flex justify-between items-center gap-3">
         <div className="flex gap-3 items-center justify-center">
-          <h1 className="text-3xl font-medium ">
-            Leads
-          </h1>
+          <h1 className="text-3xl font-medium ">Leads</h1>
           <h1 className="bg-blue-600 text-white px-2 py-2 min-w-10 text-center rounded-md text-md shadow-md">
             {getleads?.length}
           </h1>
 
-
           {/* BUTTONS */}
-          <div className="flex gap-3">
+          <div className="flex gap-4">
             {Object.keys(dynamicButtons).map((key) => (
               <button
                 key={key}
                 onClick={() => handleOptionClick(key)}
-                className={`px-6 py-2 rounded-md font-light text-md ${selectedButton === key ? 'bg-cyan-500 text-white shadow-sm shadow-cyan-700' : 'bg-gray-100 text-gray-700'}`}
+                className={`px-6 py-1.5 rounded font-light text-md
+          ${
+            selectedButton === key
+              ? "bg-cyan-600 text-white"
+              : "bg-gray-100 text-gray-700"
+          }
+        `}
               >
                 {key}
               </button>
             ))}
           </div>
-
-
-
         </div>
 
         <div>
@@ -760,7 +811,7 @@ export default function Lead() {
       {/*-------Table-------*/}
       <div className="overflow-x-auto mt-3 ">
         <div className="min-w-full overflow-hidden rounded-md shadow-lg">
-          {selectedViewValue === "Table View" && selectedButton === 'Leads' && (
+          {selectedViewValue === "Table View" && selectedButton === "Leads" && (
             <table className="min-w-full bg-white">
               <thead>
                 <tr className="border-gray-300 border-b-2">
@@ -775,7 +826,8 @@ export default function Lead() {
                   <th className="px-1 py-3 text-left border-r font-medium max-w-56  ">
                     <div className="flex justify-between">
                       <span>Lead Name</span>
-                      <span className="flex items-center"><FaAngleDown />
+                      <span className="flex items-center">
+                        <FaAngleDown />
                       </span>
                       <span className="flex items-center">
                         <FaBars />
@@ -819,7 +871,12 @@ export default function Lead() {
               </thead>
               <tbody>
                 {currentLeads?.map((item) => {
-                  const matchedUser = users?.length > 0 ? users?.find((user) => user?.userName === item?.assigned_To) : []
+                  const matchedUser =
+                    users?.length > 0
+                      ? users?.find(
+                          (user) => user?.userName === item?.assigned_To
+                        )
+                      : [];
                   const role = matchedUser?.role;
                   const roleColor = getRoleColorByIndex(role?.length); // Get color for the role
                   return (
@@ -836,9 +893,16 @@ export default function Lead() {
                         />
                       </td>
                       {/* CONTACT NAME */}
-                      <td className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600" onClick={() => handleClick(item)}>
+                      <td
+                        className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600"
+                        onClick={() => handleClick(item)}
+                      >
                         <div className="flex items-center">
-                          <img className="h-6 w-6 mx-1 rounded-full" src={dp} alt="DP" />
+                          <img
+                            className="h-6 w-6 mx-1 rounded-full"
+                            src={dp}
+                            alt="DP"
+                          />
                           <span className="">{item.name}</span>
                         </div>
                         <div className="flex justify-start text-center w-[80%]">
@@ -860,14 +924,20 @@ export default function Lead() {
                       </td>
                       {/*Follow UP*/}
                       <td className="px-1 py-4 border-b border-gray-300 text-sm">
-                        {(item.call_bck_DateTime?.replace('T', ' ',).split(':00')[0])}
+                        {
+                          item.call_bck_DateTime
+                            ?.replace("T", " ")
+                            .split(":00")[0]
+                        }
                       </td>
                       {/* Segments */}
                       <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
                         <div className="grid grid-cols-2 gap-1 items-center">
                           {item.segments &&
                             item?.segments?.map((segment, index) => (
-                              <span key={index} className="	">{segment}</span>
+                              <span key={index} className="	">
+                                {segment}
+                              </span>
                             ))}
                         </div>
                       </td>
@@ -880,7 +950,7 @@ export default function Lead() {
                               backgroundColor: roleColor ? roleColor : "#000",
                               borderRadius: "8px",
                               padding: 8,
-                              textAlign: "center"
+                              textAlign: "center",
                             }}
                           >
                             {item.assigned_To} - ({matchedUser?.role})
@@ -892,8 +962,12 @@ export default function Lead() {
                       <td>
                         <button
                           className="bg-black p-1 text-white text-xm rounded mx-auto"
-                          onClick={() => navigate(`/sidebar/lead/create/so/${item.id}`)}
-                        >SO</button>
+                          onClick={() =>
+                            navigate(`/sidebar/lead/create/so/${item.id}`)
+                          }
+                        >
+                          SO
+                        </button>
                       </td>
                     </tr>
                   );
@@ -902,15 +976,22 @@ export default function Lead() {
             </table>
           )}
 
-          {/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
           {selectedViewValue === "Grid View" && (
             <>
               <div className="min-w-full">
                 <div className="grid grid-cols-3 gap-3">
                   {/*---------Card starts Here */}
                   {getleads.map((item) => (
-                    <div className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2" key={item.id}>
-                      <div className="flex items-center gap-3" >
+                    <div
+                      className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2"
+                      key={item.id}
+                    >
+                      <div className="flex items-center gap-3">
                         <img src={item.img} height={60} width={60} />
                         <div className="flex flex-col grow">
                           <div className="flex justify-between font-medium">
@@ -977,39 +1058,45 @@ export default function Lead() {
         {/* LEAD OPERATIONS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {/* MONITORING TABLE */}
-          {selectedViewValue === 'Table View' &&
-            selectedButton === 'Lead Operations' && (
-           <LeadOperations  currentLeads={currentLeads}/>
-           
-          )}
+          {selectedViewValue === "Table View" &&
+            selectedButton === "Lead Operations" && (
+              <LeadOperations currentLeads={currentLeads} />
+            )}
         </div>
 
         {/* LEAD ACTION TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {/* LEAD ACTION TABLE */}
-          {selectedViewValue === 'Table View' &&
-            selectedButton === 'Lead Action' && (
-              <LeadAction currentLeads={currentLeads}/>             
+          {selectedViewValue === "Table View" &&
+            selectedButton === "Lead Action" && (
+              <LeadAction currentLeads={currentLeads} />
             )}
-            {/* RENDERING UPLOAD LEADS PAGE */}
-          {selectedButton === 'Upload Leads' && <UploadLead />}
+          {/* RENDERING UPLOAD LEADS PAGE */}
+          {selectedButton === "Upload Leads" && <UploadLead />}
         </div>
 
         {selectedViewValue === "Table View" && (
           <>
-            <div className={`flex justify-end m-4 ${selectedButton === 'Upload Leads' ? 'hidden' : 'flex'}`}>
+            <div
+              className={`flex justify-end m-4 ${
+                selectedButton === "Upload Leads" ? "hidden" : "flex"
+              }`}
+            >
               <nav>
                 <ul className="inline-flex items-center">
                   {Array.from(
-                    { length: Math?.ceil(filteredLeads?.length / itemsPerPage) },
+                    {
+                      length: Math?.ceil(filteredLeads?.length / itemsPerPage),
+                    },
                     (_, i) => (
                       <li key={i + 1}>
                         <button
                           onClick={() => paginate(i + 1)}
-                          className={`px-4 py-2 mx-1 ${currentPage === i + 1
-                            ? "bg-blue-500 text-white"
-                            : "bg-white text-gray-700 border"
-                            }`}
+                          className={`px-4 py-2 mx-1 ${
+                            currentPage === i + 1
+                              ? "bg-blue-500 text-white"
+                              : "bg-white text-gray-700 border"
+                          }`}
                         >
                           {i + 1}
                         </button>
