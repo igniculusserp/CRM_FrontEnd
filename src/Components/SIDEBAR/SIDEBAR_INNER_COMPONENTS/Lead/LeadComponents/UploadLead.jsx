@@ -41,9 +41,6 @@ export default function UploadLead() {
     }));
   };
 
-  //   DROPDOWNS STATE AND THEIR OTHER FUNCTIONALITY
-  const [statusDropdown, setStatusDropdown] = useState(false);
-  const [defaultStatusText, setDefaultStatusText] = useState("status");
 
   //----------------------------------------------------------------------------------------
   //assigned_ToDropDown
@@ -385,8 +382,8 @@ export default function UploadLead() {
                 </button>
                 {isStatusDropdownOpen && (
                   <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                    {error ? (
-                      <div className="py-2 text-red-600">{error}</div>
+                    {errorStatus ? (
+                      <div className="py-2 text-red-600">{errorStatus}</div>
                     ) : (
                       <ul className="py-2 text-sm text-gray-700">
                         {statusToDropDown.map(({ id, status }) => (
