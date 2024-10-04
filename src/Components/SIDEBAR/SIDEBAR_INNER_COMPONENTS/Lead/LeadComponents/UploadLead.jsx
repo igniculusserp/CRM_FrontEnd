@@ -144,26 +144,54 @@ export default function UploadLead() {
     }));
   };
 
-  // FLUSH DUMMY DATA
-  const statusData = [
-    { key: 1, name: "Ready" },
-    { key: 2, name: "Not Ready" },
-  ];
+   //----------------------------------------------------------------------------------------
+  //Status_ToDropDown
+  const [statusToDropDown, setStatusToDropDown] = useState([]);
+  const [defaultTextStatus, setDefaultTextStatus] = useState("Select Status");
+  const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
+  const [errorStatus, setStatusError] = useState(null); // New error state
 
-  // TOGGLE FLUSH
-  const toggleStatusDropdown = () => {
-    setStatusDropdown(!statusDropdown);
+  const handleStatus = async () => {
+    const bearerToken = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`,
+      },
+    };
+
+    try {
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
+        config
+      );
+      setStatusToDropDown(response.data.data);
+      console.log("status:", response.data.data);
+    } catch (error) {
+      console.error("Error fetching leads:", errorStatus);
+      console.error("Error fetching leads:", error);
+      setStatusError("Failed to fetch pools."); // Set error message
+    }
   };
 
-  // HANDLE DROPDOWN FOR FLUSH
-  const handleDropdownStatus = (status) => {
-    setDefaultStatusText(status);
-    setStatusDropdown(!statusDropdown);
-    setEditLead((prevTask) => ({
-      ...prevTask,
-      status: status,
+  useEffect(() => {
+    handleStatus();
+  }, []);
+
+  const toggleStatusDropdown = () => {
+    setIsStatusDropdownOpen((prev) => !prev);
+  };
+
+  const handleDropdownStatusSelection = (status) => {
+    setIsStatusDropdownOpen(false);
+    setDefaultTextStatus(status);
+    console.log("@@@===", isStatusDropdownOpen);
+    setEditLead((prev) => ({
+      ...prev,
+      Status: status,
     }));
   };
+
+ 
 
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
@@ -306,7 +334,7 @@ export default function UploadLead() {
                 <button
                   onClick={toggleDropdown}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="LeadStatusDropDown"
+                  id="LeadPoolDropDown"
                   type="button"
                 >
                   {editLead.pool === "" ? defaultTextPool : editLead.pool}
@@ -337,37 +365,41 @@ export default function UploadLead() {
             <div className="flex-1 flex flex-col">
               {/* STATUS DROPDOWN */}
               <label
-                htmlFor="status"
+                htmlFor="Pool"
                 className="text-sm font-medium text-gray-700"
               >
                 Status
               </label>
               <div
                 className="relative"
-                onClick={toggleStatusDropdown}
-                onMouseLeave={() => setStatusDropdown(false)}
+                onMouseLeave={() => setIsStatusDropdownOpen(false)}
               >
                 <button
+                  onClick={toggleStatusDropdown}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                   id="LeadStatusDropDown"
                   type="button"
                 >
-                  {isEditMode ? editLead.status : defaultStatusText}
+                  {editLead.status === "" ? defaultTextStatus : editLead.status}
                   <FaAngleDown className="ml-2 text-gray-400" />
                 </button>
-                {statusDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {statusData.map(({ key, name }) => (
-                        <li
-                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={key}
-                          onClick={() => handleDropdownStatus(name)}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
+                {isStatusDropdownOpen && (
+                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                    {error ? (
+                      <div className="py-2 text-red-600">{error}</div>
+                    ) : (
+                      <ul className="py-2 text-sm text-gray-700">
+                        {statusToDropDown.map(({ id, status }) => (
+                          <li
+                            key={id}
+                            onClick={() => handleDropdownStatusSelection(status)}
+                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          >
+                            {status}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 )}
               </div>
