@@ -369,13 +369,16 @@ export default function FollowUp() {
     handle_AssignedTo(user); // Apply both filters
   }
 
-  // ----------------------------- Date Filter -----------------------------
 
-  const today = new Date().toISOString().split("T")[0]; // Format today's date as 'YYYY-MM-DD'
 
+// ----------------------------- Date Filter -----------------------------
+
+const today = new Date().toISOString().split("T")[0]; 
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(today);
 
+
+// Function to filter based on date range
 function handle_DateRange(startDate, endDate) {
   let filteredFollows = currentFollows;
 
@@ -396,7 +399,12 @@ function handle_DateRange(startDate, endDate) {
   setFilteredLeads(filteredFollows); // Update the filtered result
 }
 
-
+// UseEffect to trigger handle_DateRange on date change
+useEffect(() => {
+  if(startDate<=endDate){
+    handle_DateRange(startDate, endDate);
+  }
+}, [startDate, endDate]); 
 
 
 
@@ -562,7 +570,7 @@ function handle_DateRange(startDate, endDate) {
                     </ul>
                   </div>
                 )}
-                Actions g
+                Actions
                 <FaAngleDown className="text-gray-700 text-center" />
               </button>
             </div>
@@ -589,7 +597,6 @@ function handle_DateRange(startDate, endDate) {
             {/* Date Range Filter Button */}
             <button
               className="border-r border-gray-500 px-3"
-              onClick={() => handle_DateRange(startDate, endDate)}
             >
               Filter By
             </button>

@@ -411,7 +411,41 @@ export default function SalesOrder() {
   }, [selectedIds, currentLeads]);
 
 
+  // ----------------------------- Date Filter -----------------------------
 
+  const today = new Date().toISOString().split("T")[0]; 
+  const [startDate, setStartDate] = useState(today);
+  const [endDate, setEndDate] = useState(today);
+  
+  
+  // Function to filter based on date range
+  function handle_DateRange(startDate, endDate) {
+  let filteredFollows = currentLeads;
+  console.log("@@@@@======",currentLeads);
+  
+  // Convert startDate to the beginning of the day and endDate to the end of the day
+  const start = new Date(startDate);
+  start.setHours(0, 0, 0, 0); // Set time to 00:00:00
+  
+  const end = new Date(endDate);
+  end.setHours(23, 59, 59, 999); // Set time to 23:59:59
+  
+  if (startDate && endDate) {
+    filteredFollows = filteredFollows.filter((follow) => {
+      const callbackDate = new Date(follow.subscription_end_date);
+      return callbackDate >= start && callbackDate <= end;
+    });
+  }
+  setFilteredLeads(filteredFollows); // Update the filtered result
+  }
+  
+  // UseEffect to trigger handle_DateRange on date change
+  useEffect(() => {
+  if(startDate<=endDate){
+    handle_DateRange(startDate, endDate);
+  }
+  }, [startDate, endDate]); 
+  
 
 
 
@@ -612,14 +646,39 @@ export default function SalesOrder() {
         </div>
 
         <div>
-          <div className="flex bg-white  border-2 border-gray-300 py-2 rounded-lg justify-center items-center">
+          {/* ------------------- Filter by date ----------------- */}
+
+          <div className="flex bg-white border-2 border-gray-300 py-2 rounded-lg justify-center items-center">
+            {/* Filter Icon Button */}
             <button className="border-r border-gray-500 px-3">
               <ImFilter />
             </button>
-            <button className="border-r border-gray-500 px-3">Filter By</button>
-            <button className="px-3">
-              <input type="date" />
+
+            {/* Date Range Filter Button */}
+            <button
+              className="border-r border-gray-500 px-3"
+            >
+              Filter By
             </button>
+
+            {/* Date Range Inputs */}
+            <div className="px-3 flex items-center gap-2">
+              <label>From:</label>
+              <input
+                type="date"
+                value={startDate}
+                className="border rounded px-2 py-1"
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+
+              <label>To:</label>
+              <input
+                type="date"
+                value={endDate}
+                className="border rounded px-2 py-1"
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+            </div>
           </div>
         </div>
       </div>

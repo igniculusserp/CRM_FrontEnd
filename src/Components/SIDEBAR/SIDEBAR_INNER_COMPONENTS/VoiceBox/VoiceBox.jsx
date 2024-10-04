@@ -251,32 +251,42 @@ export default function VoiceBox() {
   const currentSms = voiceMainData.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  // ----------------------------- Date Filter -----------------------------
 
-  const today = new Date().toISOString().split("T")[0]; // Format today's date as 'YYYY-MM-DD'
+  
+// ----------------------------- Date Filter -----------------------------
 
-  const [startDate, setStartDate] = useState(today);
-  const [endDate, setEndDate] = useState(today);
+const today = new Date().toISOString().split("T")[0]; 
+const [startDate, setStartDate] = useState(today);
+const [endDate, setEndDate] = useState(today);
 
-  function handle_DateRange(startDate, endDate) {
-    let filteredFollows = currentSms;
 
-    // Convert startDate to the beginning of the day and endDate to the end of the day
-    const start = new Date(startDate);
-    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
+// Function to filter based on date range
+function handle_DateRange(startDate, endDate) {
+let filteredFollows = currentSms;
 
-    const end = new Date(endDate);
-    end.setHours(23, 59, 59, 999); // Set time to 23:59:59
+// Convert startDate to the beginning of the day and endDate to the end of the day
+const start = new Date(startDate);
+start.setHours(0, 0, 0, 0); // Set time to 00:00:00
 
-    if (startDate && endDate) {
-      filteredFollows = filteredFollows.filter((follow) => {
-        const callbackDate = new Date(follow.callDateTime);
-        return callbackDate >= start && callbackDate <= end;
-      });
-    }
+const end = new Date(endDate);
+end.setHours(23, 59, 59, 999); // Set time to 23:59:59
 
-    setVoiceMainData(filteredFollows); // Update the filtered result
-  }
+if (startDate && endDate) {
+  filteredFollows = filteredFollows.filter((follow) => {
+    const callbackDate = new Date(follow.callDateTime);
+    return callbackDate >= start && callbackDate <= end;
+  });
+}
+
+setVoiceMainData(filteredFollows); // Update the filtered result
+}
+
+// UseEffect to trigger handle_DateRange on date change
+useEffect(() => {
+if(startDate<=endDate){
+  handle_DateRange(startDate, endDate);
+}
+}, [startDate, endDate]); 
 
   return (
     <div className="min-h-screen flex flex-col m-3">

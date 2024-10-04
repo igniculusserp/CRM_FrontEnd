@@ -20,6 +20,7 @@ import EmailSetting from './SIDEBAR_SETTING_COMPONENTS/EmailSetting/EmailSetting
 import BranchTarget from './SIDEBAR_SETTING_COMPONENTS/BranchTarget/BranchTarget';
 import NotificationPopup from './SIDEBAR_SETTING_COMPONENTS/NotificationPopup/NotificationPopup';
 import CallingExtension from './SIDEBAR_SETTING_COMPONENTS/CallingExtension/CallingExtension';
+import AccessDevice from "./SIDEBAR_SETTING_COMPONENTS/AccessDevice/AccessDevice";
 
 // Import other components here...
 
@@ -51,6 +52,7 @@ export default function Setting() {
     { key: 17, value: "Branch Target" },
     { key: 18, value: "Notification Popup" },
     { key: 19, value: "Calling Extension" },
+    { key: 21, value: "Access Device" },
   ];
 
   // Create a mapping of keys to components
@@ -75,6 +77,7 @@ export default function Setting() {
     17: BranchTarget,
     18: NotificationPopup,
     19: CallingExtension,
+    21:AccessDevice,
   };
 
   // Save the active tab in localStorage whenever it changes
