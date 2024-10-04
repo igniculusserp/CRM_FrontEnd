@@ -78,6 +78,7 @@ import CreateLogs from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Lo
 import CreateChats from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateChats.jsx';
 import CreateExtension from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateExtension.jsx';
 import Reports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/Reports.jsx';
+import MISReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx';
  
 
 
@@ -148,6 +149,8 @@ const router = createBrowserRouter([
 
       { path: '/sidebar/reports',            element : <Reports /> },
       { path: '/sidebar/analytics',          element : <Analytics /> },
+
+      { path: '/sidebar/misreports',         element: <MISReports /> },
 
 
       { path: '/sidebar/groupChat',          element : <GroupChat/> },  
