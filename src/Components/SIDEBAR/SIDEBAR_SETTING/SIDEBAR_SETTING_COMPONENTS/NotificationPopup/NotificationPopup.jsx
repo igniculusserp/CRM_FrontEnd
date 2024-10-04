@@ -106,7 +106,7 @@ export default function BranchTarget() {
                 onClick={handleActiveState}
                 className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
               >
-                Add NotificationPopup
+                Add Notification Popup
               </button>
             </div>
             <div className="overflow-x-auto mt-3">
@@ -185,7 +185,7 @@ export default function BranchTarget() {
           <>
             <div className="flex min-w-screen justify-between items-center">
               <h1 className="text-3xl font-medium">
-                {isEditMode ? "Edit Branch Target" : "Add Branch Target"}
+                {isEditMode ? "Edit Push Notification Details" : "Add Push Notification Details"}
               </h1>
               <button
                 onClick={handleActiveState}
@@ -194,12 +194,12 @@ export default function BranchTarget() {
                 Cancel
               </button>
             </div>
-
+{/* Form Starts From Here -------------------------------------------> */}
             <form onSubmit={handleSubmit} className="flex">
               <div className="w-full">
                 <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
                   <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-                    Branch Target
+                    Notification Details
                   </h2>
                   <div className="py-2 px-4 min-h-screen relative">
                     <div className="flex space-x-4">
@@ -208,7 +208,7 @@ export default function BranchTarget() {
                           htmlFor="jaisonDocument"
                           className="text-sm font-medium text-gray-700"
                         >
-                          Jaison Document
+
                         </label>
                         <input
                           type="text"
