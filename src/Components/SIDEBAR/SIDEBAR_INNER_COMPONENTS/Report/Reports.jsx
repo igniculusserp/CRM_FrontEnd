@@ -276,11 +276,6 @@ export default function Reports() {
     { id: 4, name: 'Sales Reports' },
   ];
 
-  // State to manage the button text
-  const [buttonText, setButtonText] = useState({
-    name: 'Employee Report',
-  });
-
   const [selectedId, setSelectedId] = useState(1);
 
   // Function to handle option click using bracket notation
