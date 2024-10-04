@@ -10,6 +10,11 @@ import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 export default function BranchTarget() {
   const { id } = useParams();
   const [active, setActive] = useState(true);
+
+  //forImgUpload
+
+
+
   const [users, setUsers] = useState([
     {
       id: "1",
@@ -202,21 +207,61 @@ export default function BranchTarget() {
                     Notification Details
                   </h2>
                   <div className="py-2 px-4 min-h-screen relative">
+                    
+
+
                     <div className="flex space-x-4">
                       <div className="flex flex-col w-1/2">
                         <label
-                          htmlFor="jaisonDocument"
+                          htmlFor="Token"
                           className="text-sm font-medium text-gray-700"
                         >
-
+                        Token
                         </label>
                         <input
                           type="text"
-                          name="jaisonDocument"
-                          value={formData.jaisonDocument}
+                          name="Token"
+                          value={formData.Token}
                           onChange={handleChange}
                           className="mt-1 p-2 border border-gray-300 rounded-md"
-                          placeholder="Enter Jaison Document"
+                          placeholder="Please paste token here"
+                        />
+                      </div>
+
+                      <div className="flex flex-col w-1/2">
+                        <label
+                          htmlFor="Title"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          Title
+                        </label>
+                         <input
+                          type="text"
+                          name="Title"
+                          value={formData.Title}
+                          onChange={handleChange}
+                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          placeholder="Please paste token here"
+                        />
+                      </div>
+                    </div>
+
+
+                    <div className="flex space-x-4">
+                      <div className="flex flex-col w-1/2">
+                        <label
+                          htmlFor="Body"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                        Body
+                        </label>
+                        <input
+                          type="text"
+                          name="Body"
+                          value={formData.Body}
+                          onChange={handleChange}
+                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          placeholder="Please paste token here"
                         />
                       </div>
 
@@ -243,6 +288,28 @@ export default function BranchTarget() {
                           {formData.popup ? "Enabled" : "Disabled"}
                         </span>
                       </div>
+                    </div>
+
+
+                     <div className="flex space-x-4">
+                      <div className="flex flex-col w-1/2">
+                        <label
+                          htmlFor="img"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                        Image
+                        </label>
+                        <input
+                          type="file"
+                          name="Body"
+                          value={formData.img}
+                          onChange={handleChange}
+                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          placeholder="Please paste token here"
+                        />
+                      </div>
+
+                      
                     </div>
 
                     <button
