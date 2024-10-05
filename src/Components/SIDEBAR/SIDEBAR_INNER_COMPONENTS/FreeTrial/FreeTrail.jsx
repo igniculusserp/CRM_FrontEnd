@@ -376,6 +376,10 @@ const today = new Date().toISOString().split("T")[0]; // Format today's date as 
 const [startDate, setStartDate] = useState(today);
 const [endDate, setEndDate] = useState(today);
 
+// ----------------------------- Date Filter -----------------------------
+
+
+// Function to filter based on date range
 function handle_DateRange(startDate, endDate) {
   let filteredFollows = currentTrials;
 
@@ -395,6 +399,13 @@ function handle_DateRange(startDate, endDate) {
 
   setFilteredTrails(filteredFollows); // Update the filtered result
 }
+
+// UseEffect to trigger handle_DateRange on date change
+useEffect(() => {
+  if(startDate<=endDate){
+    handle_DateRange(startDate, endDate);
+  }
+}, [startDate, endDate]); 
 
 
 
