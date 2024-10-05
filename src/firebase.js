@@ -20,35 +20,48 @@ export const requestPermission = () => {
     if (permission === 'granted') {
       console.log('Notification permission granted.');
 
-      navigator.serviceWorker.register('/firebase-messaging-sw.js')
-        .then((registration) => {
-          console.log('Service Worker registered:', registration);
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/firebase-messaging-sw.js')
+          .then((registration) => {
+            console.log('Service Worker registered:', registration);
 
-          return getToken(messaging, {
-            vapidKey: "BOhAmHCIF385Ys47ISMWZty-Yqhy_ZOskHTrXkjaO1xIOIr0AV9iRSr8DOx7liiHlJrCiPI1FPzPxaqvE7J42_A",
-            serviceWorkerRegistration: registration,
+            return getToken(messaging, {
+              vapidKey: "BOhAmHCIF385Ys47ISMWZty-Yqhy_ZOskHTrXkjaO1xIOIr0AV9iRSr8DOx7liiHlJrCiPI1FPzPxaqvE7J42_A",
+              serviceWorkerRegistration: registration,
+            });
+          })
+          .then((currentToken) => {
+            if (currentToken) {
+              console.log("Client Token: ", currentToken);
+              // Send the token to your server here
+            } else {
+              console.log("Failed to generate the app registration token");
+            }
+          })
+          .catch((err) => {
+            console.error("An error occurred while retrieving token:", err);
           });
-        })
-        .then((currentToken) => {
-          if (currentToken) {
-            console.log("Client Token: ", currentToken);
-          } else {
-            console.log("Failed to generate the app registration token");
-          }
-        })
-        .catch((err) => {
-          console.log("An error occurred when requesting to receive the token:", err);
-        });
+      } else {
+        console.error("Service Worker is not supported in this browser.");
+      }
     } else {
       console.log("User Permission Denied");
     }
+  }).catch((error) => {
+    console.error("Error requesting notification permission:", error);
   });
 };
 
 // Listen for messages
-export const onMessageListener = () =>
-  new Promise((resolve) => {
-    onMessage(messaging, (payload) => {
-      resolve(payload);
-    });
+export const onMessageListener = () => 
+  new Promise((resolve, reject) => {
+    try {
+      onMessage(messaging, (payload) => {
+        console.log("Message received. ", payload); // Log the received message
+        resolve(payload);
+      });
+    } catch (error) {
+      console.error("Error in onMessageListener:", error);
+      reject(error);
+    }
   });
