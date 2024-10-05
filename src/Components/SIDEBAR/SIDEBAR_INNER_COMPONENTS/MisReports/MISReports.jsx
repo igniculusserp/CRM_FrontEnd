@@ -3,6 +3,10 @@ import GeneralReport from './MisComponents/GeneralReport';
 import FtReport from './MisComponents/FtReport';
 import PaidClientReport from './MisComponents/PaidClientReport';
 import UserReport from './MisComponents/UserReport';
+import CallingReport from './MisComponents/CallingReport';
+import DNDReport from './MisComponents/DNDReport';
+import TrackSheet from './MisComponents/TrackSheet';
+import ResearchReport from './MisComponents/ResearchReport';
 
 export default function MISReports() {
   const dynamicButtons = [
@@ -48,6 +52,14 @@ export default function MISReports() {
         {activeButtonId === 3 && <PaidClientReport />}
         {/* USER REPORT COMPONENT */}
         {activeButtonId === 4 && <UserReport />}
+        {/* CALLING REPORT COMPONENT */}
+        {activeButtonId === 5 && <CallingReport />}
+        {/* DND REPORT COMPONENT */}
+        {activeButtonId === 6 && <DNDReport />}
+        {/* TRACK SHEET COMPONENT */}
+        {activeButtonId === 7 && <TrackSheet />}
+        {/* RESEARCH REPORT COMPONENT */}
+        {activeButtonId === 8 && <ResearchReport />}
       </div>
     </>
   );
