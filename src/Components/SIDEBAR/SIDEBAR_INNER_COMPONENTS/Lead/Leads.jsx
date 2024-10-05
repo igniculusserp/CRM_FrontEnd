@@ -813,12 +813,12 @@ if(startDate<=endDate){
           </h1>
 
           {/* BUTTONS */}
-          <div className="flex gap-4">
+          <div className="flex gap-2">
             {Object.keys(dynamicButtons).map((key) => (
               <button
                 key={key}
                 onClick={() => handleOptionClick(key)}
-                className={`px-6 py-1.5 rounded font-light text-md
+                className={`px-2 py-1.5 rounded font-light text-md
           ${
             selectedButton === key
               ? "bg-cyan-600 text-white"
