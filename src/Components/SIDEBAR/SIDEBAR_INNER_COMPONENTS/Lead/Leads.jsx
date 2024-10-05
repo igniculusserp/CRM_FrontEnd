@@ -1,31 +1,31 @@
 //react
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 //external Packages
-import axios from "axios";
-import * as XLSX from "xlsx";
-import { jsPDF } from "jspdf";
-import autoTable from "jspdf-autotable";
+import axios from 'axios';
+import * as XLSX from 'xlsx';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 //React Icons
-import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
-import { IoIosMail } from "react-icons/io";
-import { BiEdit } from "react-icons/bi";
-import { IoSearchOutline } from "react-icons/io5";
-import { FaBars } from "react-icons/fa";
-import { VscSettings } from "react-icons/vsc";
-import { ImFilter } from "react-icons/im";
-import { MdCall } from "react-icons/md";
+import { FaAngleDown, FaPhoneAlt } from 'react-icons/fa';
+import { IoIosMail } from 'react-icons/io';
+import { BiEdit } from 'react-icons/bi';
+import { IoSearchOutline } from 'react-icons/io5';
+import { FaBars } from 'react-icons/fa';
+import { VscSettings } from 'react-icons/vsc';
+import { ImFilter } from 'react-icons/im';
+import { MdCall } from 'react-icons/md';
 
 //Folder Imported
-import dp from "./../../../../assets/images/dp.png";
-import { tenant_base_url, protocal_url } from "../../../../Config/config";
+import dp from './../../../../assets/images/dp.png';
+import { tenant_base_url, protocal_url } from '../../../../Config/config';
 
-import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
-import LeadOperations from "./LeadComponents/LeadOperations";
-import LeadAction from "./LeadComponents/LeadAction";
-import UploadLead from "./LeadComponents/UploadLead";
+import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
+import LeadOperations from './LeadComponents/LeadOperations';
+import LeadAction from './LeadComponents/LeadAction';
+import UploadLead from './LeadComponents/UploadLead';
 
 const name = getHostnamePart();
 
@@ -44,7 +44,7 @@ export default function Lead() {
   //------------------------------------------------------------------------------------------------
   //----------------GET----------------
   async function handleLead() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -62,7 +62,7 @@ export default function Lead() {
 
       setfilteredLeads_assigned_To(data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -70,7 +70,7 @@ export default function Lead() {
   //------------------------------------------------------------------------------------------------
   //----------------Managing Color of Assigned To----------------
   const getAllUsers = async () => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -85,7 +85,7 @@ export default function Lead() {
       const data = response.data?.data;
       setUsers(data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
     }
   };
@@ -95,15 +95,15 @@ export default function Lead() {
     getAllUsers();
   }, []);
 
-  const [leadStatus, setLeadStatus] = useState("All Lead"); // Track the selected lead status
-  const [assignedTo, setAssignedTo] = useState("Assigned to"); // Track the selected assigned user
+  const [leadStatus, setLeadStatus] = useState('All Lead'); // Track the selected lead status
+  const [assignedTo, setAssignedTo] = useState('Assigned to'); // Track the selected assigned user
 
   // Function to handle both filters
   function handle_LeadStatus(statusValue) {
     let filteredLeads = getleads;
 
     // Filter by leadStatus if it's not 'ALL' or null
-    if (statusValue !== null && statusValue !== "All Leads") {
+    if (statusValue !== null && statusValue !== 'All Leads') {
       filteredLeads = filteredLeads.filter(
         (lead) => lead.leadesStatus === statusValue
       );
@@ -114,7 +114,7 @@ export default function Lead() {
 
   function handle_AssignedTo(assignedToValue) {
     let filteredLeads = getleads;
-    if (assignedToValue !== null && assignedToValue !== "Assigned to") {
+    if (assignedToValue !== null && assignedToValue !== 'Assigned to') {
       filteredLeads = filteredLeads.filter(
         (lead) => lead.assigned_To === assignedToValue
       );
@@ -145,7 +145,7 @@ export default function Lead() {
   //----------------STATUS DROPDOWN----------------
   const [allLeadData, setallLeadData] = useState([]);
   async function handleLeadStatus() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
@@ -159,7 +159,7 @@ export default function Lead() {
       );
       setallLeadData(response.data.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -179,7 +179,7 @@ export default function Lead() {
   //----------------ASSIGNED_TO DROPDOWN----------------
   const [allAssigned_To_Data, setallAssigned_To_Data] = useState([]);
   async function handleallAssigned_To() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
@@ -193,7 +193,7 @@ export default function Lead() {
       );
       setallAssigned_To_Data(response.data.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -207,16 +207,16 @@ export default function Lead() {
 
   // All SearchBar Menu
   const searchBar = [
-    { key: 0, value: "Search" },
-    { key: 1, value: "Touched Records" },
-    { key: 2, value: "Untouched Records" },
-    { key: 3, value: "Record Action" },
-    { key: 4, value: "Related Records Action" },
-    { key: 5, value: "Locked" },
-    { key: 6, value: "Latest Email Status" },
-    { key: 7, value: "Activities" },
-    { key: 8, value: "Notes" },
-    { key: 9, value: "Campaigns" },
+    { key: 0, value: 'Search' },
+    { key: 1, value: 'Touched Records' },
+    { key: 2, value: 'Untouched Records' },
+    { key: 3, value: 'Record Action' },
+    { key: 4, value: 'Related Records Action' },
+    { key: 5, value: 'Locked' },
+    { key: 6, value: 'Latest Email Status' },
+    { key: 7, value: 'Activities' },
+    { key: 8, value: 'Notes' },
+    { key: 9, value: 'Campaigns' },
   ];
 
   const [searchBardropDown, setsearchBardropDown] = useState(false);
@@ -228,8 +228,8 @@ export default function Lead() {
   //------------------------------------------------------------------------------------------------
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
-    { key: 1, value: "Table View" },
-    { key: 2, value: "Grid View" },
+    { key: 1, value: 'Table View' },
+    { key: 2, value: 'Grid View' },
   ];
 
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
@@ -244,7 +244,7 @@ export default function Lead() {
   };
 
   // DROP_LOGO DROPDOWN------------>>>
-  const dropLogoMenu = [{ key: 1, value: "Import Leads" }];
+  const dropLogoMenu = [{ key: 1, value: 'Import Leads' }];
   const [dropLogodropDown, setdropLogodropDown] = useState(false);
 
   const togglesdropLogo = () => {
@@ -259,16 +259,16 @@ export default function Lead() {
   //----------------ACTION BAR DROPDOWN----------------
   const [dropActionsMenu, setdropActionsMenu] = useState([
     // { key: 0, value: "Actions" },
-    { key: 1, value: "Mass Delete" },
-    { key: 2, value: "Mass Update" },
-    { key: 3, value: "Mass Email" },
-    { key: 4, value: "Approve Leads" },
-    { key: 5, value: "Add to Campaign" },
+    { key: 1, value: 'Mass Delete' },
+    { key: 2, value: 'Mass Update' },
+    { key: 3, value: 'Mass Email' },
+    { key: 4, value: 'Approve Leads' },
+    { key: 5, value: 'Add to Campaign' },
     // { key: 6, value: "Export Leads" },
-    { key: 7, value: "Export To Excel" },
-    { key: 8, value: "Export To PDF" },
+    { key: 7, value: 'Export To Excel' },
+    { key: 8, value: 'Export To PDF' },
     // { key: 9, value: "Create SO" },
-    { key: 10, value: "Convert Lead to Contact" },
+    { key: 10, value: 'Convert Lead to Contact' },
   ]);
 
   const [dropActionsMenudropDown, setdropActionsMenudropDown] = useState(false);
@@ -279,9 +279,9 @@ export default function Lead() {
 
   const handleActionButton = async (value, leadId) => {
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
-    if (value === "Mass Delete") {
+    if (value === 'Mass Delete') {
       const userConfirmed = confirm(
-        "Are you sure you want to Delete the selected Leads?"
+        'Are you sure you want to Delete the selected Leads?'
       );
       if (userConfirmed) {
         massDelete();
@@ -289,9 +289,9 @@ export default function Lead() {
     }
 
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
-    if (value === "Sheet View") {
+    if (value === 'Sheet View') {
       const userConfirmed = confirm(
-        "Are you sure you want to export the selected Leads?"
+        'Are you sure you want to export the selected Leads?'
       );
       if (userConfirmed) {
         exportToExcel();
@@ -299,9 +299,9 @@ export default function Lead() {
     }
 
     // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
-    if (value === "Print View") {
+    if (value === 'Print View') {
       const userConfirmed = confirm(
-        "Are you sure you want to export the selected Leads?"
+        'Are you sure you want to export the selected Leads?'
       );
       if (userConfirmed) {
         exportToPDF();
@@ -309,9 +309,9 @@ export default function Lead() {
     }
 
     // ---------------------->Convert Lead to Contact FUNCTIONALITY*<----------------------
-    if (value === "Convert Lead to Contact") {
+    if (value === 'Convert Lead to Contact') {
       const userConfirmed = confirm(
-        "Are you sure you want to convert this lead to a contact?"
+        'Are you sure you want to convert this lead to a contact?'
       );
       if (userConfirmed) {
         convertType();
@@ -320,13 +320,13 @@ export default function Lead() {
   };
   // ---------------------->MASS DELETE FUNCTIONALITY---###API###<----------------------
   const massDelete = async () => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         data: { leadIds: selectedIds },
       };
@@ -335,7 +335,7 @@ export default function Lead() {
         `${protocal_url}${name}.${tenant_base_url}/Lead/lead/massdelete`,
         config
       );
-      alert("Mass Deleted run");
+      alert('Mass Deleted run');
       console.log(response);
 
       setGetleads((prevLeads) =>
@@ -343,7 +343,7 @@ export default function Lead() {
       );
       setSelectedIds([]);
     } catch (error) {
-      console.error("Error deleting leads:", error);
+      console.error('Error deleting leads:', error);
     }
   };
 
@@ -360,7 +360,7 @@ export default function Lead() {
       selectedIds.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
-      alert("No leads selected to export");
+      alert('No leads selected to export');
       return;
     }
 
@@ -369,10 +369,10 @@ export default function Lead() {
 
     // Create a new workbook and append the worksheet
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Selected Leads");
+    XLSX.utils.book_append_sheet(wb, ws, 'Selected Leads');
 
     // Export the workbook to an Excel file
-    XLSX.writeFile(wb, "SelectedLeadsData.xlsx");
+    XLSX.writeFile(wb, 'SelectedLeadsData.xlsx');
   };
 
   //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
@@ -381,18 +381,18 @@ export default function Lead() {
       selectedIds.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
-      alert("No leads selected to export");
+      alert('No leads selected to export');
       return;
     }
     const doc = new jsPDF();
     // const role = matchedUser?.role;
     const tableColumn = [
-      "ID",
-      "Name",
-      "Email",
-      "Phone No.",
-      "Lead Source",
-      "Assigned To",
+      'ID',
+      'Name',
+      'Email',
+      'Phone No.',
+      'Lead Source',
+      'Assigned To',
     ];
     // Map the leads data to rows
     const tableRows = leadsToExport?.map((lead) => [
@@ -404,36 +404,36 @@ export default function Lead() {
       lead.assigned_To,
     ]);
     // Add a title to the PDF
-    doc.text("Selected Leads Data", 14, 16);
+    doc.text('Selected Leads Data', 14, 16);
     // Add the table to the PDF
     autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
       startY: 22, // Position the table after the title
     });
-    doc.save("Leads.pdf");
+    doc.save('Leads.pdf');
   };
 
   //---------------------->---------------------->MANAGE_BY/ASSIGNED_TO<----------------------<ARVIND----------------------
   const roleColors = [
     // "#f97316", // Red
-    "#2563eb", // blue
-    "#65a30d", // LimeGreen
-    "#7c3aed", // MediumPurple
-    "#0369a1", //Sky
-    "#e11d48", //Rose
+    '#2563eb', // blue
+    '#65a30d', // LimeGreen
+    '#7c3aed', // MediumPurple
+    '#0369a1', //Sky
+    '#e11d48', //Rose
   ];
 
   //---------------------->---------------------->CONVERT_LEADS_TO_CONTACTS<----------------------<----------------------
 
   const convertType = async () => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       };
 
@@ -443,23 +443,23 @@ export default function Lead() {
         config
       );
 
-      alert("Converted lead to contact");
+      alert('Converted lead to contact');
       setGetleads((prevLeads) =>
         prevLeads.filter((lead) => !selectedIds.includes(lead.id))
       );
       setSelectedIds([]);
 
       if (response.status === 200) {
-        alert("Lead has been successfully converted to a contact.");
+        alert('Lead has been successfully converted to a contact.');
       } else {
         alert(
-          `Failed to convert lead: ${response.data.message || "Unknown error"}`
+          `Failed to convert lead: ${response.data.message || 'Unknown error'}`
         );
       }
     } catch (error) {
-      console.error("Error converting lead:", error);
+      console.error('Error converting lead:', error);
       alert(
-        "An error occurred while converting the lead. Please try again later."
+        'An error occurred while converting the lead. Please try again later.'
       );
     }
   };
@@ -523,72 +523,70 @@ export default function Lead() {
 
   // DYNAMIC RENDERING BUTTONS - TABLE
   // DYNAMIC LEAD BUTTONS
-  const dynamicButtons = {
-    Leads: { href: "/sidebar/lead" },
-    "Upload Leads": { href: "/sidebar/lead" },
-    "Lead Operations": { href: "/sidebar/lead" },
-    "Lead Action": { href: "/sidebar/lead" },
-  };
+  const dynamicButtons = [
+    { id: 1, name: 'Leads' },
+    { id: 2, name: 'Upload Leads' },
+    { id: 3, name: 'Lead Operations' },
+    { id: 4, name: 'Lead Action' },
+  ];
 
   // State to keep track of the selected button and button text
-  const [selectedButton, setSelectedButton] = useState(null);
-  const [buttonText, setButtonText] = useState("Leads");
+  const [activeButtonId, setActiveButtonId] = useState({
+    id: 1,
+    name: 'Leads',
+  });
+  // const [buttonText, setButtonText] = useState("Leads");
 
   // Handle option click
-  const handleOptionClick = (key) => {
-    console.log("Clicked key:", key);
-    setButtonText(key); // Set the text of the clicked button
-    setSelectedButton(key);
+  const handleDynamicButtonsClick = (id) => {
+    setActiveButtonId(id);
 
     // Save selected button to localStorage
-    localStorage.setItem("selectedButton", key);
+    localStorage.setItem('selectedButton', id);
   };
 
   // Use useEffect to retrieve the selected button from localStorage when the component mounts
   useEffect(() => {
-    const savedButton = localStorage.getItem("selectedButton");
+    const savedButton = localStorage.getItem('selectedButton');
 
     if (savedButton) {
-      setSelectedButton(savedButton);
-      setButtonText(savedButton); // Set the saved button's text
+      setActiveButtonId(savedButton);
+      // setButtonText(savedButton); // Set the saved button's text
     }
   }, []);
 
+  // ----------------------------- Date Filter -----------------------------
 
-  
-// ----------------------------- Date Filter -----------------------------
+  const today = new Date().toISOString().split('T')[0];
+  const [startDate, setStartDate] = useState(today);
+  const [endDate, setEndDate] = useState(today);
 
-const today = new Date().toISOString().split("T")[0]; 
-const [startDate, setStartDate] = useState(today);
-const [endDate, setEndDate] = useState(today);
+  // Function to filter based on date range
+  function handle_DateRange(startDate, endDate) {
+    let filteredFollows = currentLeads;
 
+    // Convert startDate to the beginning of the day and endDate to the end of the day
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
 
-// Function to filter based on date range
-function handle_DateRange(startDate, endDate) {
-let filteredFollows = currentLeads;
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999); // Set time to 23:59:59
 
-// Convert startDate to the beginning of the day and endDate to the end of the day
-const start = new Date(startDate);
-start.setHours(0, 0, 0, 0); // Set time to 00:00:00
+    if (startDate && endDate) {
+      filteredFollows = filteredFollows.filter((follow) => {
+        const callbackDate = new Date(follow.call_bck_DateTime);
+        return callbackDate >= start && callbackDate <= end;
+      });
+    }
+    setFilteredLeads(filteredFollows); // Update the filtered result
+  }
 
-const end = new Date(endDate);
-end.setHours(23, 59, 59, 999); // Set time to 23:59:59
-
-if (startDate && endDate) {
-  filteredFollows = filteredFollows.filter((follow) => {
-    const callbackDate = new Date(follow.call_bck_DateTime);
-    return callbackDate >= start && callbackDate <= end;
-  });
-}
-setFilteredLeads(filteredFollows); // Update the filtered result
-}
-
-// UseEffect to trigger handle_DateRange on date change
-useEffect(() => {
-if(startDate<=endDate){
-  handle_DateRange(startDate, endDate);
-}
-}, [startDate, endDate]); 
+  // UseEffect to trigger handle_DateRange on date change
+  useEffect(() => {
+    if (startDate <= endDate) {
+      handle_DateRange(startDate, endDate);
+    }
+  }, [startDate, endDate]);
 
   return (
     //parent
@@ -802,8 +800,8 @@ if(startDate<=endDate){
           </div>
         </div>
       </div>
-      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{" "}
-      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{" "}
+      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{' '}
+      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{' '}
       {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}
       <div className="mt-3 flex justify-between items-center gap-3">
         <div className="flex gap-3 items-center justify-center">
@@ -814,19 +812,19 @@ if(startDate<=endDate){
 
           {/* BUTTONS */}
           <div className="flex gap-2">
-            {Object.keys(dynamicButtons).map((key) => (
+            {dynamicButtons.map(({ id, name }) => (
               <button
-                key={key}
-                onClick={() => handleOptionClick(key)}
+                key={id}
+                onClick={() => handleDynamicButtonsClick(id)}
                 className={`px-2 py-1.5 rounded font-light text-md
           ${
-            selectedButton === key
-              ? "bg-cyan-600 text-white"
-              : "bg-gray-100 text-gray-700"
+            activeButtonId === id
+              ? 'bg-cyan-600 text-white'
+              : 'bg-gray-100 text-gray-700'
           }
         `}
               >
-                {key}
+                {name}
               </button>
             ))}
           </div>
@@ -842,11 +840,7 @@ if(startDate<=endDate){
             </button>
 
             {/* Date Range Filter Button */}
-            <button
-              className="border-r border-gray-500 px-3"
-            >
-              Filter By
-            </button>
+            <button className="border-r border-gray-500 px-3">Filter By</button>
 
             {/* Date Range Inputs */}
             <div className="px-3 flex items-center gap-2">
@@ -870,7 +864,7 @@ if(startDate<=endDate){
       {/*-------Table-------*/}
       <div className="overflow-x-auto mt-3 ">
         <div className="min-w-full overflow-hidden rounded-md shadow-lg">
-          {selectedViewValue === "Table View" && selectedButton === "Leads" && (
+          {selectedViewValue === 'Table View' && activeButtonId === 1 && (
             <table className="min-w-full bg-white">
               <thead>
                 <tr className="border-gray-300 border-b-2">
@@ -985,8 +979,8 @@ if(startDate<=endDate){
                       <td className="px-1 py-4 border-b border-gray-300 text-sm">
                         {
                           item.call_bck_DateTime
-                            ?.replace("T", " ")
-                            .split(":00")[0]
+                            ?.replace('T', ' ')
+                            .split(':00')[0]
                         }
                       </td>
                       {/* Segments */}
@@ -1006,10 +1000,10 @@ if(startDate<=endDate){
                           <div
                             className="text-xs font-semibold text-white px-2 py-2 rounded-full w-[100%]"
                             style={{
-                              backgroundColor: roleColor ? roleColor : "#000",
-                              borderRadius: "8px",
+                              backgroundColor: roleColor ? roleColor : '#000',
+                              borderRadius: '8px',
                               padding: 8,
-                              textAlign: "center",
+                              textAlign: 'center',
                             }}
                           >
                             {item.assigned_To} - ({matchedUser?.role})
@@ -1040,7 +1034,7 @@ if(startDate<=endDate){
           {/* ------------GRID------------ */}
           {/* ------------GRID------------ */}
           {/* ------------GRID------------ */}
-          {selectedViewValue === "Grid View" && (
+          {selectedViewValue === 'Grid View' && (
             <>
               <div className="min-w-full">
                 <div className="grid grid-cols-3 gap-3">
@@ -1117,28 +1111,26 @@ if(startDate<=endDate){
         {/* LEAD OPERATIONS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {/* MONITORING TABLE */}
-          {selectedViewValue === "Table View" &&
-            selectedButton === "Lead Operations" && (
-              <LeadOperations currentLeads={currentLeads} />
-            )}
+          {selectedViewValue === 'Table View' && activeButtonId === 2 && (
+            <UploadLead />
+          )}
         </div>
 
         {/* LEAD ACTION TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {/* LEAD ACTION TABLE */}
-          {selectedViewValue === "Table View" &&
-            selectedButton === "Lead Action" && (
-              <LeadAction currentLeads={currentLeads} />
-            )}
+          {selectedViewValue === 'Table View' && activeButtonId === 3 && (
+            <LeadOperations currentLeads={currentLeads} />
+          )}
           {/* RENDERING UPLOAD LEADS PAGE */}
-          {selectedButton === "Upload Leads" && <UploadLead />}
+          {activeButtonId === 4 && <LeadAction currentLeads={currentLeads} />}
         </div>
 
-        {selectedViewValue === "Table View" && (
+        {selectedViewValue === 'Table View' && (
           <>
             <div
               className={`flex justify-end m-4 ${
-                selectedButton === "Upload Leads" ? "hidden" : "flex"
+                activeButtonId === 2 ? 'hidden' : 'flex'
               }`}
             >
               <nav>
@@ -1153,8 +1145,8 @@ if(startDate<=endDate){
                           onClick={() => paginate(i + 1)}
                           className={`px-4 py-2 mx-1 ${
                             currentPage === i + 1
-                              ? "bg-blue-500 text-white"
-                              : "bg-white text-gray-700 border"
+                              ? 'bg-blue-500 text-white'
+                              : 'bg-white text-gray-700 border'
                           }`}
                         >
                           {i + 1}

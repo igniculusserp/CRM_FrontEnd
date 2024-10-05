@@ -16,7 +16,7 @@ export default function MISReports() {
     { id: 8, name: 'Research Report' },
   ];
 
-  const [activeButtonId, setActiveButtonId] = useState(1);
+  const [activeButtonId, setActiveButtonId] = useState(2);
 
   const handleDynamicButtonsClick = (id) => {
     setActiveButtonId(id);
