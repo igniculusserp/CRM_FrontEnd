@@ -26,3 +26,20 @@ export const showErrorToast = (message) => {
         theme: "colored",
     });
 };
+
+
+const defaultOptions = {
+  position: "top-right",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: false,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "colored",
+};
+
+
+export const showInfoToast = (message) => {
+  toast.info(message, defaultOptions);
+};
