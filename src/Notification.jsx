@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { requestPermission, onMessageListener } from "./firebase";
-import { ToastContainer } from "react-toastify";
-import { showInfoToast } from "./utils/toastNotifications";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for toast notifications
 
 export default function Notification() {
   const [notification, setNotification] = useState({
@@ -10,31 +10,28 @@ export default function Notification() {
   });
 
   useEffect(() => {
+    // Request notification permission when the component mounts
     requestPermission();
 
     const listenForMessages = () => {
-      const unsubscribe = onMessageListener()
+      onMessageListener()
         .then(payload => {
-          console.log('Received payload:', payload); // Debugging line
-    
-          if (payload && payload.notification) {
-            const { title, body } = payload.notification;
-    
-            setNotification({ title, body });
-            showInfoToast(`${title}: ${body}`);
-          } else {
-            console.warn("Payload is missing notification data:", payload);
-          }
+          setNotification({
+            title: payload?.notification?.title,
+            body: payload?.notification?.body
+          });
+
+          // Show toast notification
+          toast.info(`${payload?.notification?.title}: ${payload?.notification?.body}`);
         })
         .catch(err => console.log("Notification error: ", err));
-        
-      return unsubscribe; 
     };
 
+    listenForMessages();
+
+    // Clean up function (if required for future unsubscriptions)
     return () => {
-      if (unsubscribe) {
-        unsubscribe();
-      }
+      // Unsubscribe logic here, if needed
     };
   }, []);
 

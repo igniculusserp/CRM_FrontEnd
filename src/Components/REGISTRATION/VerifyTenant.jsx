@@ -57,10 +57,10 @@ export default function VerifyTenant() {
           showSuccessToast("Login Successful!");
           setTimeout(() => {
             //localhost
-              // const newUrl = `http://${host}.localhost:5173/tenantlogin`;
+              const newUrl = `http://${host}.localhost:5173/tenantlogin`;
             
             //forServer
-            const newUrl = `http://${host}.${urlchange_base}/tenantlogin `
+            //  const newUrl = `http://${host}.${urlchange_base}/tenantlogin `
             window.location.href = newUrl;
           }, 100);
         }
