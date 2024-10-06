@@ -1,6 +1,7 @@
 //react
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 //external Packages
 import axios from 'axios';
@@ -31,6 +32,8 @@ const name = getHostnamePart();
 
 export default function Lead() {
   const navigate = useNavigate(); // Add this line
+
+  const location = useLocation();
 
   //This is to store the upcoming data from API
   const [getleads, setGetleads] = useState([]);
@@ -544,6 +547,13 @@ export default function Lead() {
     // Save selected button to localStorage
     localStorage.setItem('selectedButton', id);
   };
+
+  useEffect(() => {
+    return () => {
+      // This will run when the component unmounts
+      localStorage.setItem("selectedButton", "Leads");
+    };
+  }, [location]);
 
   // Use useEffect to retrieve the selected button from localStorage when the component mounts
   useEffect(() => {

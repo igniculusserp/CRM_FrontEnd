@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import ButtonGroup from './ButtonGroup';
 import UserSetting from './SIDEBAR_SETTING_COMPONENTS/User_Setting/UserSetting';
 import UserOperation from './SIDEBAR_SETTING_COMPONENTS/User_Operation/UserOperation';
@@ -22,14 +23,12 @@ import NotificationPopup from './SIDEBAR_SETTING_COMPONENTS/NotificationPopup/No
 import CallingExtension from './SIDEBAR_SETTING_COMPONENTS/CallingExtension/CallingExtension';
 import AccessDevice from "./SIDEBAR_SETTING_COMPONENTS/AccessDevice/AccessDevice";
 
-// Import other components here...
-
 export default function Setting() {
-  // Set default tab to key 1 (User Setting) if no value exists in localStorage
-  const [active, setActive] = useState(() => {
-    const savedTab = localStorage.getItem("activeTab");
-    return savedTab ? parseInt(savedTab, 10) : 1; // Default to 1 if no saved tab
-  });
+  const location = useLocation();
+
+  const [activeTab, setActiveTab] = useState(
+    () => parseInt(localStorage.getItem('activeTab')) || 1
+  );
 
   const buttons = [
     { key: 1, value: "User Setting" },
@@ -55,7 +54,6 @@ export default function Setting() {
     { key: 21, value: "Access Device" },
   ];
 
-  // Create a mapping of keys to components
   const componentMap = {
     1: UserSetting,
     2: UserOperation,
@@ -77,17 +75,23 @@ export default function Setting() {
     17: BranchTarget,
     18: NotificationPopup,
     19: CallingExtension,
-    21:AccessDevice,
+    21: AccessDevice,
   };
 
-  // Save the active tab in localStorage whenever it changes
   const handleButtonClick = (key) => {
-    setActive(key);
+    setActiveTab(key);
     localStorage.setItem("activeTab", key);
   };
 
-  // Dynamically determine which component to render
-  const ActiveComponent = componentMap[active];
+  useEffect(() => {
+    return () => {
+      // This will run when the component unmounts
+      localStorage.removeItem("activeTab");
+    };
+  }, [location]);
+
+  const ActiveComponent = componentMap[activeTab];
+
   return (
     <>
       <div className="flex flex-col m-3">
@@ -105,7 +109,7 @@ export default function Setting() {
 
       <ButtonGroup
         buttons={buttons}
-        active={active}
+        active={activeTab}
         onButtonClick={handleButtonClick}
       />
 
