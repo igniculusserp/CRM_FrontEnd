@@ -432,7 +432,7 @@ export default function SalesOrder() {
   
   if (startDate && endDate) {
     filteredFollows = filteredFollows.filter((follow) => {
-      const callbackDate = new Date(follow.subscription_end_date);
+      const callbackDate = new Date(follow.subscription_start_date);
       return callbackDate >= start && callbackDate <= end;
     });
   }
