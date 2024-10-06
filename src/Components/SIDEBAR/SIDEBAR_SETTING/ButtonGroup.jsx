@@ -3,7 +3,7 @@ export default function ButtonGroup({ buttons, active, onButtonClick }) {
   return (
     <div
       className="px-3 mt-3 bg-white border rounded py-3 mx-3"
-      style={{ overflowX: 'auto', whiteSpace: 'nowrap', maxWidth: '1175px' }}
+      style={{ overflowX: 'auto', whiteSpace: 'nowrap' }}
     >
       {buttons.map(({ key, value }) => (
         <button
