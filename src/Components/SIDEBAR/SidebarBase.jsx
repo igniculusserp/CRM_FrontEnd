@@ -7,7 +7,7 @@ export default function SidebarBase() {
     return (
         <div className="flex min-h-screen main_Body_Container">
             {/* SidebarBar is fixed in place */}
-            <div className="h-screen sticky top-0 overflow-y-auto side_Bar_Container">
+            <div className="h-screen sticky top-0 overflow-y-auto side_Bar_Container scrollbar-hidden">
                 <SidebarBar />
             </div>
             {/* Main content and header */}
