@@ -115,14 +115,15 @@ export default function UserSettingForm({ handleActiveState, editUser, isEditMod
             contactNo: formData.contactNo,
             country: formData.country,
             businessType: formData.businessType || "",
+            userName: formData.username,
             password: formData.password,
             confirmPassword: formData.confirmPassword,
             role: formData.Role,
-            isActive: true,
+            groupId: selectedRole,
             reportedTo: formData.reportedTo,
+            isActive: true,
             createdDate: formData.createdDate || "",
             deletedDate: formData.deletedDate || "",
-            groupId: selectedRole
           },
           config
         );
