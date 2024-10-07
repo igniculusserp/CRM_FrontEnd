@@ -1,5 +1,6 @@
 // REACT - IN BUILD
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { FaAngleDown, FaBars } from 'react-icons/fa';
 // REACT - ICONS
 import { IoSearchOutline } from 'react-icons/io5';
@@ -9,6 +10,7 @@ import ClientReports from './RepoComponents/ClientReports';
 import SalesReports from './RepoComponents/SalesReports';
 
 export default function Reports() {
+  const location = useLocation();
   // REPORTS DUMMY DATA
   const reportsMainData = [
     {
@@ -256,7 +258,6 @@ export default function Reports() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
   const currentReports = getReports.slice(indexOfFirstItem, indexOfLastItem);
-  const [activeButton, setActiveButton] = useState(1);
 
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
@@ -276,15 +277,23 @@ export default function Reports() {
     { id: 4, name: 'Sales Reports' },
   ];
 
-  const [selectedId, setSelectedId] = useState(1);
+  const [selectedId, setSelectedId] = useState(
+    () => parseInt(localStorage.getItem('selectedId')) || 1
+  );
 
   // Function to handle option click using bracket notation
   const handleOptionClick = (id) => {
-    console.log('Clicked id:', id);
-    // setButtonText(dynamicButtons.key);
-    setActiveButton(id);
     setSelectedId(id);
+    localStorage.setItem('selectedId', id); // Store the selected id
   };
+
+  useEffect(() => {
+    return () => {
+      // This will run when the component unmounts
+      localStorage.removeItem("selectedId");
+    };
+  }, [location]);
+
 
   //   SEARCH DROPDOWN
   const [searchDropdown, setSearchDropdown] = useState(false);
@@ -333,6 +342,7 @@ export default function Reports() {
 
   return (
     <div className="min-h-screen flex flex-col m-3">
+      
       <div className="py-2 px-3 bg-white gap-3 flex items-center justify-start rounded-md">
         <div className="flex gap-3">
           {dynamicButtons.map(({ id, name }) => (
@@ -341,7 +351,7 @@ export default function Reports() {
               onClick={() => handleOptionClick(id)}
               className={`px-5 py-1.5 rounded font-light text-md
                     ${
-                      activeButton === id
+                      selectedId === id
                         ? 'bg-cyan-600 text-white'
                         : 'bg-gray-100 text-gray-700'
                     }

@@ -62,8 +62,6 @@ export default function Lead() {
       const data = response.data.data;
       setGetleads(data);
       setFilteredLeads(data); // Initialize filtered leads
-
-      setfilteredLeads_assigned_To(data);
     } catch (error) {
       console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
@@ -534,36 +532,25 @@ export default function Lead() {
   ];
 
   // State to keep track of the selected button and button text
-  const [activeButtonId, setActiveButtonId] = useState({
-    id: 1,
-    name: 'Leads',
-  });
-  // const [buttonText, setButtonText] = useState("Leads");
+ 
 
-  // Handle option click
+  const [activeButtonId, setActiveButtonId] = useState(
+    () => parseInt(localStorage.getItem('activeButtonId')) || 1
+  );
+
   const handleDynamicButtonsClick = (id) => {
     setActiveButtonId(id);
-
-    // Save selected button to localStorage
-    localStorage.setItem('selectedButton', id);
+    localStorage.setItem('activeButtonId', id);
   };
+
 
   useEffect(() => {
     return () => {
       // This will run when the component unmounts
-      localStorage.setItem("selectedButton", "Leads");
+      localStorage.removeItem("activeButtonId");
     };
   }, [location]);
 
-  // Use useEffect to retrieve the selected button from localStorage when the component mounts
-  useEffect(() => {
-    const savedButton = localStorage.getItem('selectedButton');
-
-    if (savedButton) {
-      setActiveButtonId(savedButton);
-      // setButtonText(savedButton); // Set the saved button's text
-    }
-  }, []);
 
   // ----------------------------- Date Filter -----------------------------
 
