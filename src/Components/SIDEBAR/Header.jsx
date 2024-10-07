@@ -1,61 +1,43 @@
 import { useState, useEffect } from "react";
 import { RiAddBoxFill } from "react-icons/ri";
 import { IoMdNotifications } from "react-icons/io";
-import { FaCalendar } from "react-icons/fa";
+import { TbCalendarMonth } from "react-icons/tb";
 import { IoMdSettings } from "react-icons/io";
 import { FaAngleDown } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { main_base_url } from "./../../Config/config";
 import axios from "axios";
 import { BiLogOut } from "react-icons/bi";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  showSuccessToast,
-  showErrorToast,
-} from "./../../utils/toastNotifications";
+
+import {showSuccessToast, showErrorToast} from "./../../utils/toastNotifications";
 
 export default function Header() {
     const navigate = useNavigate();
+    const location = useLocation(); 
     const [welcomedata, setWelcomeData] = useState([]);
     const [tenantId, setData] = useState('');
+    const [activeKey, setActiveKey] = useState(null); 
 
-    const signout = () => {
-        localStorage.clear();
-        sessionStorage.clear();
-        showSuccessToast('Logout Successful');
-        navigate(`/tenantlogin`);
-    };
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const registrationdata = localStorage.getItem('registrationdata');
+        const userDetail = localStorage.getItem('userDetail');
 
-   // In homeScreen component
-   useEffect(() => {
-    const token = localStorage.getItem('token');
-    console.log(token);  //28-Aug
-    const registrationdata = localStorage.getItem('registrationdata');
-    const userDetail = localStorage.getItem('userDetail');
-
-    if (token && (userDetail || registrationdata)) {
-        // Set the tenantId if registrationdata exists
-        const registrationDataParsed = JSON.parse(registrationdata || '{}');
-        setData(registrationDataParsed.tenantId || '');
-        
-        // Optionally set state with retrieved data
-        setWelcomeData(JSON.parse(userDetail));
-
-        if (window.location.pathname === '/sidebar') {
-            navigate('/sidebar');
+        if(token && (userDetail || registrationdata)) {
+            const registrationDataParsed = JSON.parse(registrationdata || '{}');
+            setData(registrationDataParsed.tenantId || '');
+            setWelcomeData(JSON.parse(userDetail));
+            if (window.location.pathname === '/sidebar') {
+                navigate('/sidebar');
+            } else if (window.location.pathname !== '/sidebar') {
+                navigate(window.location.pathname);
+            }
+        } else {
+            navigate('/tenantlogin'); // Redirect to login if no data found
         }
-        else if(window.location.pathname !== '/sidebar'){
-              navigate(window.location.pathname);
-              console.log(window.location.pathname)
-        }
-    } else {
-        navigate('/tenantlogin'); // Redirect to login if no data found
-    }
-}, [navigate]);
-
-
-
+    }, [navigate]);
 
     useEffect(() => {
         if (tenantId) {
@@ -65,29 +47,86 @@ export default function Header() {
 
     const handlewelcomedata = async () => {
         try {
-            console.log(`Fetching data for tenantId: ${tenantId}`);
             const response = await axios.get(`${main_base_url}/Tenants/gettenant/${tenantId}`);
-            console.log('Response:', response.data);
         } catch (error) {
             console.error('Error fetching welcome data:', error);
         }
     };
 
+    const signout = () => {
+        localStorage.clear();
+        sessionStorage.clear();
+        showSuccessToast('Logout Successful');
+        navigate(`/tenantlogin`);
+    };
+
+    const menu = [
+        {
+            key: 1,
+            logo: <RiAddBoxFill />,
+        },
+        {
+            key: 2,
+            logo: <IoMdNotifications />,
+        },
+        {
+            key: 3,
+            logo: <TbCalendarMonth />,
+        },
+        {
+            key: 4,
+            logo: <IoMdSettings />,
+            link: "/sidebar/setting"
+        },
+        {
+            key: 5,
+            logo: <BiLogOut />,
+            functionality: signout
+        },
+    ];
+
+    useEffect(() => {
+        const activeMenuItem = menu.find(item => location.pathname.includes(item.link));
+        if (activeMenuItem) {
+            setActiveKey(activeMenuItem.key);
+        } else {
+            setActiveKey(null);
+        }
+    }, [location.pathname, menu]); // Update activeKey whenever location changes
+
+    const handleMenuClick = (key, functionality) => {
+        setActiveKey(key);  
+        if (functionality) {
+            functionality(); // If functionality exists, execute it (for signout)
+        }
+    };
+
     return (
         <>
-        <ToastContainer/>
-        <div className="flex justify-between items-center py-3 mx-3">
-            <button className="flex items-center justify-center gap-2 border rounded-full py-1 px-2">
-                Igniculuss <FaAngleDown />
-            </button>
-            <div className="flex text-gray-500 gap-3 text-2xl">
-                <RiAddBoxFill />
-                <IoMdNotifications />
-                <FaCalendar />
-                <Link to = "/sidebar/setting"> <IoMdSettings /></Link>
-                <BiLogOut onClick={signout} className="cursor-pointer"/>
+            <ToastContainer />
+            <div className="flex justify-between items-center py-3 mx-3">
+                <button className="flex items-center justify-center gap-2 border rounded-full py-1 px-2">
+                    Igniculuss <FaAngleDown />
+                </button>
+                <div className="flex gap-1 justify-center items-center">
+                    {menu.map(({ key, logo, link, functionality }) => (
+                        <div 
+                            key={key} 
+                            className={`cursor-pointer p-1 ${activeKey === key ? 'rounded-full p-1 bg-gray-700 text-cyan-500 shadow-md ' : 'text-gray-700 '}`}
+                        >
+                            <div onClick={() => handleMenuClick(key, functionality)}>
+                                {link ? (
+                                    <Link to={link}>
+                                        <span className="text-2xl">{logo}</span>
+                                    </Link>
+                                ) : (
+                                    <span className="text-2xl">{logo}</span> // No link, just execute functionality
+                                )}
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
-        </div>
         </>
     );
 }

@@ -180,9 +180,9 @@ export default function UserSettingTable({ users, handleActiveState, handleClick
                       <td className="px-1 py-4 text-sm min-w-20 max-w-20 break-words">
                         {user.createdDate.split('T')[0]}
                       </td>
-                      <td>
-                        <button onClick={() => handleLoginUser(user)} className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded">
-                          <p className="text-center">Login</p>
+                      <td className="text-center">
+                        <button onClick={() => handleLoginUser(user)} className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded ">
+                          <p className="text-center">Login As</p>
                         </button>
                       </td>
                       <td className="px-1 py-4 flex gap-3 justify-center min-w-20 max-w-20 break-words mx-auto">
