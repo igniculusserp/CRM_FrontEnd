@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Header from "./../SIDEBAR/Header";
 import SidebarBar from "./../SIDEBAR/Sidebar";
-import "../../ExternalCSS.css"
+import "./../../ExternalCSS/ExternalCSS_Settings.css"
 
 export default function SidebarBase() {
     return (
