@@ -29,7 +29,6 @@ import Logs                   from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENT
 
 
 import MailBox                from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MailBox.jsx';
-import SmsBox                 from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SmsBox.jsx';
 import Analytics              from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Analytics.jsx'
 import GroupChat              from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/GroupChat.jsx';
 
@@ -39,7 +38,11 @@ import Home from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Home/Home.jsx";
 
 import CreateOrder            from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/CreateOrder.jsx';
 import CreateMailBox          from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/CreateMailBox.jsx';
-import CreateSms              from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/CreateSms.jsx';
+
+// SMS BOX => INNER COMPONENT
+import SmsBox                 from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SMSBox/SmsBox.jsx';
+import CreateSendSms          from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SMSBox/CreateSendSms.jsx';
+import CreateSendEmail        from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SMSBox/SMSComponents/CreateSendEmail.jsx';
 
 
 // Inner Contact --> FollowUp
@@ -52,33 +55,33 @@ import CreateTrial            from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENT
 
 
 //only for Testing
-import Test from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Test.jsx';
+import Test                   from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Test.jsx';
 
 //Inner Lead -> Component
-import Lead       from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Lead/Leads.jsx'
-import Createlead from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Lead/CreateLead.jsx';
+import Lead                   from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Lead/Leads.jsx'
+import Createlead             from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Lead/CreateLead.jsx';
  
 
 // Inner Contact --> Component
 import Contact                from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Contact/Contacts.jsx'
-import CreateContact from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Contact/CreateContact.jsx';
+import CreateContact          from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Contact/CreateContact.jsx';
 
 //Sidebar-Header button Inner Components -> Setting
-import Setting from './Components/SIDEBAR/SIDEBAR_SETTING/Setting.jsx'
-import CreateSOLead from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Lead/CreateSOLead.jsx';
+import Setting                from './Components/SIDEBAR/SIDEBAR_SETTING/Setting.jsx'
+import CreateSOLead           from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Lead/CreateSOLead.jsx';
 
-import CreateSOContact from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Contact/CreateSOContact.jsx';
+import CreateSOContact        from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Contact/CreateSOContact.jsx';
 
 // VOICEBOX - INNER VOICEBOX COMPONENTS
-import VoiceBox from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/VoiceBox.jsx';
-import CreateVoice from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/CreateVoice.jsx';
-import CreateVoiceReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/CreateVoiceReports.jsx';
-import CreateVoiceDetails from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/CreateVoiceDetails.jsx';
-import CreateLogs from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateLogs.jsx';
-import CreateChats from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateChats.jsx';
-import CreateExtension from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateExtension.jsx';
-import Reports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/Reports.jsx';
-import MISReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx';
+import VoiceBox               from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/VoiceBox.jsx';
+import CreateVoice            from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/CreateVoice.jsx';
+import CreateVoiceReports     from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/CreateVoiceReports.jsx';
+import CreateVoiceDetails     from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/CreateVoiceDetails.jsx';
+import CreateLogs             from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateLogs.jsx';
+import CreateChats            from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateChats.jsx';
+import CreateExtension        from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateExtension.jsx';
+import Reports                from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/Reports.jsx';
+import MISReports             from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx';
  
 
 
@@ -144,8 +147,11 @@ const router = createBrowserRouter([
       { path: '/sidebar/createorder',        element : <CreateOrder/> },
       { path: '/sidebar/mailBox',            element : <MailBox/> },
       { path: '/sidebar/createmail',         element : <CreateMailBox/> },
+
+      // SMS BOX => INNER COMPONENT
       { path: '/sidebar/smsBox',             element : <SmsBox/> },
-      { path: '/sidebar/createsms',          element : <CreateSms/> },
+      { path: '/sidebar/sendsms',             element : <CreateSendSms/> },
+      { path: '/sidebar/sendemail',             element : <CreateSendEmail/> },
 
       { path: '/sidebar/reports',            element : <Reports /> },
       { path: '/sidebar/analytics',          element : <Analytics /> },

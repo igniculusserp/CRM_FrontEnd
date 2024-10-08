@@ -3,6 +3,8 @@ import { FaAngleDown, FaBars } from 'react-icons/fa';
 import { ImFilter } from 'react-icons/im';
 import { IoSearchOutline } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
+import SendSMS from './SMSComponents/SendSMS.JSX';
+import SendEmail from './SMSComponents/SendEmail';
 
 export default function SmsBox() {
   const navigate = useNavigate();
@@ -54,165 +56,165 @@ export default function SmsBox() {
   // MAIN SMSBOX DATA
   const smsBoxData = [
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
     {
-      clientName: 'Shubham Mishra',
-      mobile: 5567894329,
-      sms: 'Hey, how are you!',
-      type: 'Calling Person',
-      smsType: '13/12/2023 16:15',
+      segment: 'Global Reach',
+      message: 'How are you! dude',
+      sentBy: 'Rahul Jain',
+      sentTime: '12/02/2023 3:00 AM',
+      subject: 'Fresh Pool',
     },
   ];
 
@@ -297,6 +299,27 @@ export default function SmsBox() {
     { key: 4, value: '12/03/2023' },
   ];
 
+  // DYNAMIC BUTTONS
+  const dynamicButtons = {
+    'Send SMS': { text: 'Send SMS', href: '/sidebar/sendsms' },
+    'Send Email': { text: 'Send Email', href: '/sidebar/sendemail' },
+  };
+
+  // State to manage the button text
+  const [buttonText, setButtonText] = useState({
+    text: 'Send SMS',
+    href: '/sidebar/sendsms',
+  });
+
+  const [selectedButton, setSelectedButton] = useState('Send SMS');
+
+  // Function to handle option click using bracket notation
+  const handleOptionClick = (key) => {
+    console.log('Clicked key:', key);
+    setButtonText(dynamicButtons[key]);
+    setSelectedButton(key);
+  };
+
   return (
     <div className="min-h-screen flex flex-col m-3">
       <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md">
@@ -335,7 +358,7 @@ export default function SmsBox() {
           <div
             className="relative"
             onClick={toggleSearchDropdown}
-            onMouseLeave={() => setSearchDropdown(!searchDropdown)}
+            onMouseLeave={() => setSearchDropdown(false)}
           >
             <button
               className="py-2 px-4 border rounded-full  flex justify-between items-center"
@@ -360,14 +383,31 @@ export default function SmsBox() {
               Search
             </button>
           </div>
+          {/* DYNAMIC BUTTONS */}
+          <div className="flex gap-4">
+            {Object.keys(dynamicButtons).map((key) => (
+              <button
+                key={key}
+                onClick={() => handleOptionClick(key)}
+                className={`px-5 py-1.5 rounded font-light text-md
+                ${
+                  selectedButton === key
+                    ? 'bg-cyan-600 text-white'
+                    : 'bg-gray-100 text-gray-700'
+                }
+              `}
+              >
+                {key}
+              </button>
+            ))}
+          </div>
         </div>
         <div className="flex gap-3">
-          {/* CREATE SMSBOX */}
-          <Link
-            to="/sidebar/createsms"
-            className="py-2 px-4 border rounded-md bg-blue-600 text-white"
-          >
-            Create Mail Box
+          {/* DYNAMIC BUTTONS LINKS */}
+          <Link to={buttonText.href}>
+            <button className="px-3 py-2 bg-blue-500 text-center text-md text-white font-[300] rounded-md w-[150px]">
+              {buttonText.text}
+            </button>
           </Link>
           {/* STRIPEBAR DROPDOWN */}
           <div
@@ -477,98 +517,23 @@ export default function SmsBox() {
 
       {/* ------------TABLE------------ */}
       <div className="overflow-x-auto mt-3">
+        {/* SEND SMS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === 'Table View' && (
-            <table className="min-w-full bg-white">
-              {/* ----------------- TABLE HEAD START ----------------- */}
-              <thead>
-                <tr className="border-gray-300 border-b-2">
-                  {/* CHECKBOX */}
-                  <th className="px-1 py-3 w-max">
-                    <input type="checkbox" />
-                  </th>
-                  {/* CLIENT NAME */}
-                  <th className="px-3 py-3 text-left border-r font-medium">
-                    <span>Client Name</span>
-                  </th>
-                  {/* MOBILE */}
-                  <th className="px-3 py-3 text-left border-r font-medium">
-                    <div className="flex items-center justify-between">
-                      <span>Mobile</span>
-                      <FaBars />
-                    </div>
-                  </th>
-                  {/* SMS */}
-                  <th className="px-3 py-3 text-left border-r font-medium">
-                    <div className="flex items-center justify-between">
-                      <span>SMS</span>
-                      <FaBars />
-                    </div>
-                  </th>
-                  {/* TYPE */}
-                  <th className="px-3 py-3 text-left border-r font-medium">
-                    <div className="flex items-center justify-between">
-                      <span>Type</span>
-                      <FaBars />
-                    </div>
-                  </th>
-                  {/* SMS TIME */}
-                  <th className="px-3 py-3 text-left font-medium">
-                    <span>SMS Time</span>
-                  </th>
-                </tr>
-              </thead>
-              {/* ----------------- TABLE HEAD END ----------------- */}
-              {/* ----------------- TABLE BODY START ----------------- */}
-              <tbody>
-                {currentSms.map((sms, index) => (
-                  <tr
-                    key={index}
-                    onClick={() => handleClick(sms)}
-                    className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
-                  >
-                    {/*   CHECKBOX */}
-                    <td className="px-3 py-3 text-center w-max">
-                      <input
-                        type="checkbox"
-                        onClick={(e) => handleCheckboxClick(e, sms.id)}
-                      />
-                    </td>
-                    {/* CLIENT NAME AND IMAGE */}
-                    <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                      <div className="flex items-center">
-                        <img
-                          className="h-8 w-8 rounded-full"
-                          src={sms.img}
-                          alt="DP"
-                        />
-                        <span className="ml-2 w-[80px] break-words">
-                          {sms.clientName}
-                        </span>
-                      </div>
-                    </td>
-                    {/* MOBILE */}
-                    <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                      {sms.mobile}
-                    </td>
-                    {/* SMS */}
-                    <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                      {sms.sms}
-                    </td>
-                    {/* TYPE */}
-                    <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                      {sms.type}
-                    </td>
-                    {/* SMS TIME */}
-                    <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                      <p className="w-20 break-words">{sms.smsType}</p>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-              {/* ----------------- TABLE BODY END ----------------- */}
-            </table>
-          )}
+          {selectedViewValue === 'Table View' &&
+            selectedButton === 'Send SMS' && (
+              <SendSMS currentSms={currentSms} />
+            )}
+        </div>
+        {/* SEND EMAIL TABLE */}
+        <div className="min-w-full overflow-hidden rounded-md">
+          {selectedViewValue === 'Table View' &&
+            selectedButton === 'Send Email' && (
+              <SendEmail
+                currentSms={currentSms}
+                handleCheckboxClick={handleCheckboxClick}
+                handleClick={handleClick}
+              />
+            )}
         </div>
       </div>
 
