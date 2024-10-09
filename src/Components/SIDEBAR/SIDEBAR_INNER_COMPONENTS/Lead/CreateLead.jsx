@@ -420,7 +420,7 @@ export default function Createlead() {
   return (
     <>
       <div className="min-h-screen flex flex-col mt-3">
-        <div className="flex justify-between mx-3 px-3 bg-white border rounded py-3">
+        <div className="flex justify-between mx-3  bg-white border rounded p-3">
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-xl">{isEditMode? <h1>Edit Lead</h1>: <>Create Lead</> }</h1>
             <h1 className="bg-blue-500 text-xs text-white px-4 py-1 font-medium rounded-lg">
@@ -439,7 +439,7 @@ export default function Createlead() {
 
         {/* -------------FORM Starts FROM HERE------------- */}
         {/* Lead Image */}
-        <form onSubmit={handleSubmit} className="flex">
+        <form onSubmit={handleSubmit} className="flex mb-6">
           {/*-FORM- */}
           {/*Parent Div */}
           <div className="w-full">
@@ -451,7 +451,7 @@ export default function Createlead() {
               <img src={profilepic} className=" max-h-24 max-w-24 p-3" />
             </div>
 
-            <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
+            <div className="mx-3 bg-white rounded-xl shadow-md ">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                 Lead Information
               </h2>
@@ -460,8 +460,8 @@ export default function Createlead() {
               {/*CHILD Div------ Image Input */}
               {/* -------------1------------- */}
               {/* -------------Name------------- */}
-              <div className="py-2 px-4">
-                <div className="flex space-x-4  ">
+              <div className="grid gap-2 p-2">
+                <div className="flex space-x-4 ">
                   <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="name"
@@ -713,14 +713,15 @@ export default function Createlead() {
             </div>
             </div>
             {/* -------------Address INFORMATION STARTS FROM HERE------------- */}
-            <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
+            <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow ">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                 Address Information
               </h2>
 
+                  {/* -------------Address Information STARTS FROM HERE------------- */}
               {/* -------------6------------- */}
               {/* -------------Street------------- */}
-              <div className="py-2 px-4">
+              <div className="grid gap-2 p-2">
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
@@ -1060,33 +1061,31 @@ export default function Createlead() {
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                 Description Information
               </h2>
-              <div className="px-2 py-4 ">
-                <div className="flex flex-col ">
+              <div className="p-2 ">
+                <div className="flex flex-col">
                   <label
                     htmlFor="description"
-                    className="text-sm font-medium text-gray-700"
+                    className="text-sm  font-medium text-gray-700"
                   >
                     Description
                   </label>
                   <ReactQuill
                     name="description"
                     value={description}
-                    className=" text-balance hyphens-auto max-w-5xl  max-h-60 h-60"
+                    className="text-balance hyphens-auto  max-h-full h-60 mt-1"
                     theme="snow"
                     onChange={setdescription}
                     placeholder="Add Description"
                   />
                 </div>
               </div>
-              <div className="flex justify-end gap-5 mr-10">
-                <div className="flex justify-end mr-20">
+              <div className="flex justify-end px-2">
                   <button
                     type="submit"
-                    className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                    className="px-32 py-4 mt-40 mb-2 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
                   >
                     {isEditMode ? "Update" : "Save"}
                   </button>
-                </div>
               </div>
             </div>
           </div>

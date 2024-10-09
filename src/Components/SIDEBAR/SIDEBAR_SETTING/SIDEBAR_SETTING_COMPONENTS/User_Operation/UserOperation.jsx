@@ -542,7 +542,7 @@ export default function UserOperation() {
                       {/* -------------Button------------- */}
                       <button
                         type="submit"
-                        className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute  top-[450px]"
+                        className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md "
                       >
                         {isEditMode ? "Update User" : "Save User"}
                       </button>

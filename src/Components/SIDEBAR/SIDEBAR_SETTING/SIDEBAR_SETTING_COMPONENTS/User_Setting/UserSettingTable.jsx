@@ -148,36 +148,36 @@ export default function UserSettingTable({ users, handleActiveState, handleClick
                   {users?.map((user) => (
                     <tr
                       key={user.userId}
-                      className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                      className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b "
                     >
-                      <td className="px-1 py-2 text-center">
+                      <td className="px-2 py-2 text-center">
                         <input
                           type="checkbox"
                           onClick={(e) => handleCheckboxClick(e, user.userId)}
                         />
                       </td>
-                      <td className="px-1 py-4 text-sm min-w-20 max-w-20 break-words">
+                      <td className="px-1  text-sm min-w-20 max-w-20 break-words">
                         {user.firstName}
                       </td>
-                      <td className="px-1 py-4 text-sm min-w-20 max-w-20 break-words">
+                      <td className="px-1 text-sm min-w-20 max-w-20 break-words">
                         {user.lastName}
                       </td>
-                      <td className="px-1 py-4 text-sm min-w-20 max-w-28 break-words">
+                      <td className="px-1  text-sm min-w-20 max-w-28 break-words">
                         {user.email}
                       </td>
-                      <td className="px-1 py-4 text-sm min-w-20 max-w-16 break-words">
+                      <td className="px-1  text-sm min-w-20 max-w-16 break-words">
                         {user.contactNo}
                       </td>
-                      <td className="px-1 py-4 text-sm min-w-20 max-w-20 break-words">
+                      <td className="px-1  text-sm min-w-20 max-w-20 break-words">
                         {user.country}
                       </td>
-                      <td className="px-1 py-4 text-sm min-w-20 max-w-20 break-words">
+                      <td className="px-1  text-sm min-w-20 max-w-20 break-words text-center">
                         {user.reportedTo}
                       </td>
-                      <td className="px-1 py-4 text-sm min-w-16 max-w-20 break-words">
+                      <td className="px-1  text-sm min-w-16 max-w-20 break-words">
                         {user.role}
                       </td>
-                      <td className="px-1 py-4 text-sm min-w-20 max-w-20 break-words">
+                      <td className="px-1  text-sm min-w-20 max-w-20 break-words text-center">
                         {user.createdDate.split('T')[0]}
                       </td>
                       <td className="text-center">
@@ -185,7 +185,7 @@ export default function UserSettingTable({ users, handleActiveState, handleClick
                           <p className="text-center">Login As</p>
                         </button>
                       </td>
-                      <td className="px-1 py-4 flex gap-3 justify-center min-w-20 max-w-20 break-words mx-auto">
+                      <td className="px-1 py-4 flex gap-1 justify-center min-w-20 max-w-20 break-words mx-auto">
                         <MdEdit
                           size={25}
                           color="white"
