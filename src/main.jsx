@@ -81,6 +81,8 @@ import CreateLogs from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Lo
 import CreateChats from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateChats.jsx';
 import CreateExtension from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateExtension.jsx';
 import Reports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/Reports.jsx';
+// Edit Client SO
+import EditClientSO from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/RepoComponents/EditClientSO.jsx';
 import MISReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx';
  
 
