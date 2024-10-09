@@ -79,6 +79,7 @@ import CreateChats from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_L
 import CreateExtension from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateExtension.jsx';
 // Reports - INNER Reports COMPONENTS
 import Reports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/Reports.jsx';
+// Edit Client SO
 import EditClientSO from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/RepoComponents/EditClientSO.jsx';
 import MISReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx';
  

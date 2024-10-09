@@ -247,6 +247,21 @@ const handleClearFilter = () => {
 // };
 
 
+
+
+  // ---------------------BUTTON THAT ARE VISIBLE IN SALES REPORTS ------------------------------------
+  const buttons = [
+    { id: 1, name: 'Source Wise' },
+    { id: 2, name: 'Employee Wise' },
+  ];
+ 
+  const [buttonId, setButtonId] = useState(1);
+ 
+  const handleButtonClick = (id) => {
+    setButtonId(id);
+  };
+ 
+
   return (
     <div className="min-h-screen flex flex-col m-3">
       <div className="py-2 px-3 bg-white gap-3 flex items-center justify-start rounded-md">
@@ -321,6 +336,24 @@ const handleClearFilter = () => {
             {getReports.length}
           </h1>
         </div>
+
+        {selectedId === 4 && (
+          <div className="flex items-center gap-1">
+            {buttons.map(({ id, name }) => (
+              <button
+                onClick={() => handleButtonClick(id)}
+                key={id}
+                className={`px-1 text-sm py-1.5 ${
+                  buttonId === id
+                    ? 'bg-cyan-600 text-white'
+                    : 'bg-gray-100 text-gray-700'
+                } rounded-md shadow-md`}
+              >
+                {name}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* -------------- FILTER SECTION ------------------ */}
         <div className="flex bg-white border-2 gap-2 border-gray-300 py-1 rounded-lg justify-center items-center">
