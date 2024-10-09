@@ -25,36 +25,31 @@ export default function EditClientSO() {
   //IMP used as ${name} in an API
   const name = getHostnamePart();
 
-  //imp to identify mode
-  const [isEditMode, setIsEditMode] = useState(false);
-
-  //auto search id-> if found isEditMode(true)
+ 
   useEffect(() => {
-    if (id) {
-      setIsEditMode(false);
-      handleLeadbyId(); // Fetch lead data for editing
-    } else {
-      setIsEditMode(true);
-    }
+ 
+    handleLeadById(); // Fetch lead data for editing
+   
   }, [id]);
 
   //GET by ID---------------------------//GET---------------------------//GET---------------------------by ID-----------by ID
-  async function handleLeadbyId() {
+  async function handleLeadById() {
     const bearer_token = localStorage.getItem("token");
+  
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
+  
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesorder/${id}`,
         config
       );
       const data = response.data.data;
-
+  
       seteditLead({
-
         leadId: data.leadId || "",
         clientName: data.clientName || "",
         fatherName: data.fatherName || "",
@@ -83,24 +78,23 @@ export default function EditClientSO() {
         discount: data.discount || "",
         advisaryExp: data.advisaryExp || "",
         segments: data.segments || [],
-        subscription_start_date: data.trialStartDate.split("T")[0] || null,
-        subscription_end_date: data.trialEndDate.split("T")[0] || null,
+        subscription_start_date: data.trialStartDate?.split("T")[0] || null,
+        subscription_end_date: data.trialEndDate?.split("T")[0] || null,
         period_of_Subscription: data.period_of_Subscription || "",
         term: data.term || "",
         service: data.service || "",
         chequeOrDD_no: data.chequeOrDD_no || "",
         remarks: data.remarks || "",
         status: data.status || "",
-        dob: data.dob.split("T")[0] || null,
+        dob: data.dob?.split("T")[0] || null,
         business: data.business || "",
-        paymentDate: data.paymentDate.split("T")[0] || null,
+        paymentDate: data.paymentDate?.split("T")[0] || null,
       });
-      //Description Information
-      setdescription(data.description);
     } catch (error) {
       console.error("Error fetching leads:", error);
     }
   }
+  
 
   //----------------------------------------------------------------------------------------
   //SEGMENETS API Is being used here
@@ -276,34 +270,7 @@ export default function EditClientSO() {
     }));
   };
 
-  //----------------------------------------------------------------------------------------
-  //Business Type
-  const BusinessTypeDropDown = [
-    { key: 1, name: "IT" },
-    { key: 2, name: "eCommerce" },
-    { key: 3, name: "Marketing" },
-    { key: 4, name: "Hospitality" },
-  ];
-
-  const [defaultTextbusinessTypeDropDown, setDefaultTextbusinessTypeDropDown] =
-    useState("Select Business Type");
-
-  const [isDropdownVisiblebusinessType, setisDropdownVisiblebusinessType] =
-    useState(false);
-
-  const toggleDropdownbusinessType = () => {
-    setisDropdownVisiblebusinessType(!isDropdownVisiblebusinessType);
-  };
-
-  const handleDropdownisDropdownVisiblebusinessType = (businessType) => {
-    setDefaultTextbusinessTypeDropDown(businessType);
-    setisDropdownVisiblebusinessType(!isDropdownVisiblebusinessType);
-    seteditLead((prevTask) => ({
-      ...prevTask,
-      businessType: businessType,
-    }));
-  };
-
+ 
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
   const handleSubmit = async (event) => {
@@ -317,50 +284,49 @@ export default function EditClientSO() {
           "Content-Type": "application/json",
         },
       };
-      const formData_PUT = {};
-      const formData_POST = {
-        //Personal Details
+      // const formData_PUT = {};
+      const formData_PUT = {
+        
         leadId: editLead.leadId,
         clientName: editLead.clientName,
-        language: editLead.language,
         fatherName: editLead.fatherName,
         motherName: editLead.motherName,
-        mobileNo: editLead.mobileNo,
-        phoneNo: editLead.phoneNo,
         uidaI_Id_No: editLead.uidaI_Id_No,
         panCard_No: editLead.panCard_No,
-        email: editLead.email,
-        assigned_To: editLead.assigned_To,
-        state: editLead.state,
-        city: editLead.city,
-        street: editLead.street,
-        postalCode: editLead.pinCode,
-        advisaryExp: editLead.advisaryExp,
-        //Payment Details
+        language: editLead.language,
         bank_name: editLead.bank_name,
         branch_name: editLead.branch_name,
         paymenT_MODE: editLead.paymenT_MODE,
+        saleS_ODR_NO: editLead.saleS_ODR_NO,
+        mobileNo: editLead.mobileNo,
+        phoneNo: editLead.phoneNo,
+        email: editLead.email,
+        assigned_To: editLead.assigned_To,
+        street: editLead.street,
+        postalCode: editLead.postalCode,
+        country: editLead.country,
+        city: editLead.city,
+        state: editLead.state,
+        description: editLead.description,
         reference_Number: editLead.reference_Number,
         totalAmount: editLead.totalAmount,
         due_Amount: editLead.due_Amount,
         amount_paid: editLead.amount_paid,
         discount: editLead.discount,
-
-        chequeOrDD_no: editLead.chequeOrDD_no,
+        advisaryExp: editLead.advisaryExp,
         segments: editLead.segments,
-        saleS_ODR_NO: editLead.saleS_ODR_NO,
-
-        //Service Details
-        period_of_subscription: editLead.period_of_subscription || null,
+        subscription_start_date: editLead.trialStartDate,
+        subscription_end_date: editLead.trialEndDate,
+        period_of_Subscription: editLead.period_of_Subscription,
         term: editLead.term,
-        subscription_start_date: editLead.subscription_start_date || null,
-        subscription_end_date: editLead.subscription_end_date || null,
-        service: editLead.service || null,
-        status: false,
-        description: description,
+        service: editLead.service,
+        chequeOrDD_no: editLead.chequeOrDD_no,
+        remarks: editLead.remarks,
+        status: editLead.status,
+        dob: editLead.dob,
+        business: editLead.business,
+        paymentDate: editLead.paymentDate("T")[0] || null,
       };
-
-      if (isEditMode) {
         await axios.put(
           `${protocal_url}${name}.${tenant_base_url}/Lead/lead/update`,
           formData_PUT,
@@ -368,16 +334,8 @@ export default function EditClientSO() {
         );
         alert("Lead updated successfully!");
         navigate(`/sidebar/lead`);
-      } else {
-        await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/add`,
-          formData_POST,
-          config
-        );
-        console.log(formData_POST);
-        alert("Sales Order created successfully!");
-        navigate(`/sidebar/lead`);
-      }
+      
+    
 
       // Redirect after a short delay
     } catch (error) {
@@ -392,7 +350,6 @@ export default function EditClientSO() {
         <div className="flex justify-between mx-3 px-3 bg-white border rounded py-3">
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-xl">
-              {/*  {isEditMode? <h1>Edit Lead</h1>: <>Create Lead</> } */}
               Edit Sales Order
             </h1>
           </div>
@@ -546,7 +503,7 @@ export default function EditClientSO() {
                       Enter UIDAI Id
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       name="uidaI_Id_No"
                       value={editLead.uidaI_Id_No}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
@@ -613,9 +570,8 @@ export default function EditClientSO() {
                         id="LeadStatusDropDown"
                         type="button"
                       >
-                        {isEditMode
-                          ? defaultTextassigned_ToDropDown
-                          : editLead.assigned_To}
+                       
+                         {editLead.assigned_To}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownassigned_ToDropDown && (
@@ -645,22 +601,22 @@ export default function EditClientSO() {
                 </div>
 
                 {/* -------------0--1--------------- */}
-                {/* -------------DOB------------- */}
+                {/* -------------dob------------- */}
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
-                      htmlFor="DOB"
+                      htmlFor="dob"
                       className="text-sm font-medium text-gray-700"
                     >
                       DOB
                     </label>
                     <input
                       type="date"
-                      name="state"
-                      value={editLead.DOB}
+                      name="dob"
+                      value={editLead.dob}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
-                      placeholder="Enter your DOB"
+                      placeholder="Enter your dob"
                     />
                   </div>
                   {/* -------------0--2--------------- */}
@@ -765,49 +721,21 @@ export default function EditClientSO() {
                 <div className="flex space-x-4">
                   {/* -------------Business Type------------- */}
                   <div className="flex flex-col w-1/2 relative">
-                    <label
-                      htmlFor="businessType"
+
+                  <label
+                      htmlFor="business"
                       className="text-sm font-medium text-gray-700"
                     >
                       Business Type
                     </label>
-                    <div
-                      className="relative"
-                      onClick={toggleDropdownbusinessType}
-                      onMouseLeave={() =>
-                        setisDropdownVisiblebusinessType(false)
-                      }
-                    >
-                      <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                        id="businessTypeDropDown"
-                        type="button"
-                      >
-                        {isEditMode
-                          ? editLead.businessType
-                          : defaultTextbusinessTypeDropDown}
-                        <FaAngleDown className="ml-2 text-gray-400" />
-                      </button>
-                      {isDropdownVisiblebusinessType && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                          <ul className="py-2 text-sm text-gray-700">
-                            {BusinessTypeDropDown.map(({ key, name }) => (
-                              <li
-                                key={key}
-                                onClick={() =>
-                                  handleDropdownisDropdownVisiblebusinessType(
-                                    name
-                                  )
-                                }
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                              >
-                                {name}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
+                    <input
+                      type="text"
+                      name="business"
+                      value={editLead.business}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Enter your pincode"
+                    />
                   </div>
                   {/* -------------VIII--2--------------- */}
                   {/* -------------Advisory Experience------------- */}
@@ -1139,7 +1067,7 @@ export default function EditClientSO() {
                         id="termDropDown"
                         type="button"
                       >
-                        {isEditMode ? editLead.term : defaultText_Term_DropDown}
+                    {editLead.term}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisible_Term_ && (
@@ -1219,9 +1147,7 @@ export default function EditClientSO() {
                         id="serviceDropDown"
                         type="button"
                       >
-                        {isEditMode
-                          ? editLead.service
-                          : defaultText_Service_DropDown}
+                        {editLead.service}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisible_Service_ && (
@@ -1293,7 +1219,7 @@ export default function EditClientSO() {
                     type="submit"
                     className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
                   >
-                    {isEditMode ? "Update" : "Save"}
+                 Save
                   </button>
                 </div>
               </div>
