@@ -122,8 +122,8 @@ export default function UserSettingForm({ handleActiveState, editUser, isEditMod
             groupId: selectedRole,
             reportedTo: formData.reportedTo,
             isActive: true,
-            createdDate: formData.createdDate || "",
-            deletedDate: formData.deletedDate || "",
+            createdDate: formData.createdDate || null,
+            deletedDate: formData.deletedDate || null,
           },
           config
         );

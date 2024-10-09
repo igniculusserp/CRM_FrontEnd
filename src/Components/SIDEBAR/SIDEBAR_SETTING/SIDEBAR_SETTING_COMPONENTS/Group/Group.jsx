@@ -298,7 +298,7 @@ export default function Group() {
                     Lead Information
                   </h2>
                   {/* -------------1------------- */}
-                  <div className="py-2 px-4 min-h-screen relative">
+                  <div className="py-2 px-4 min-h-screen ">
                     {/* -------------groupID------------- */}
                     <div className="flex space-x-4">
                       <div className="flex flex-col w-1/2">
@@ -376,12 +376,17 @@ export default function Group() {
 
 
                     {/* -------------Button------------- */}
-                    <button
-                      type="submit"
-                      className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute  top-[300px]"
-                    >
-                      {isEditMode ? "Update User" : "Save User"}
-                    </button>
+
+
+                    <div className="grid justify-end mt-56  ">
+                      <button
+                        type="submit"
+                        className="px-32 py-4 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+                      >
+                        {isEditMode ? "Update" : "Save"}
+                      </button>
+                    </div>
+
                   </div>
                 </div>
               </div>
