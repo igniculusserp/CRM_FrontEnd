@@ -6,24 +6,19 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 
-export default function LeadStatus() {
+export default function Leadstatus() {
+
   const [data, setData] = useState([]);
   const [active, setActive] = useState(true);
-  const [addStatus, setAddStatus] = useState(
-    {
-      id:     "", 
-      status: "" 
-    });
+  const [isEditMode, setIsEditMode] = useState(false); // Default to add mode
+  const [addStatus, setaddStatus] = useState({ id: "", status: "" });
   const { id } = useParams(); 
-  const [isEditMode, setIsEditMode] = useState(false); 
-
 
   const fullURL = window.location.href;
   const url = new URL(fullURL);
   const name = url.hostname.split(".")[0]; 
 
-
-//getall <<------------------GET API------------------>> 
+  // Fetch all Lead Status
   async function handleLead() {
     const bearer_token = localStorage.getItem("token");
     try {
@@ -38,15 +33,15 @@ export default function LeadStatus() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error("Error fetching status:", error);
     }
   }
 
   useEffect(() => {
-    handleLead(); // Fetch the leads list on initial load
+    handleLead(); 
   }, []); 
 
-  //delete <<------------------DELETE API------------------>> 
+  // Delete Status
   const handleClick = async (id) => {
     const bearer_token = localStorage.getItem("token");
     try {
@@ -60,17 +55,14 @@ export default function LeadStatus() {
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert("Lead Data deleted successfully");
+      alert("Status deleted successfully");
     } catch (error) {
       console.log(error);
-      alert("Failed to delete Lead Status. Please try again.");
+      alert("Failed to delete Status. Please try again.");
     }
   };
 
-
-
-  //get-BY-ID <<------------------GET API BY ID------------------>> 
-
+  // Fetch status by ID
   const fetchLeadById = async (id) => {
     const bearer_token = localStorage.getItem("token");
     try {
@@ -84,41 +76,35 @@ export default function LeadStatus() {
         config
       );
       const data = response.data.data;
-      setAddStatus({
+      setaddStatus({
         id: data.id,
         status: data.status,
       });
+      setIsEditMode(true); // Switch to edit mode
     } catch (error) {
-      console.error("There was an error fetching the lead status!", error);
-      alert("Failed to fetch Lead Status. Please try again.");
+      console.error("There was an error fetching!", error);
+      alert("Failed to fetch. Please try again.");
     }
   };
 
-  useEffect(() => {
-    if (id) {
-      setIsEditMode(true);
-      fetchLeadById(id); // Fetch lead data for editing if the ID is present in the params
-    }
-  }, [id]);
-  
-  //Imp to manage toggle Active state
+  // Manage the toggle between adding and editing
   const handleActiveState = () => {
     setActive(!active);
-    setIsEditMode(false); 
-    setAddStatus({ id: "", status: "" }); 
+    if (active) {
+      setIsEditMode(false); // When switching to add mode, reset isEditMode
+      setaddStatus({ id: "", status: "" }); // Clear form for adding
+    }
   };
 
-  //form
+  // Handle form field changes
   const handleChange = (e) => {
-    setAddStatus({
+    setaddStatus({
       ...addStatus,
       status: e.target.value,
     });
   };
 
-
-  //------------------------->> POST PUT API <<-------------------------
-  //Submition 
+  // Handle form submission (either add or edit)
   const handleSubmit = async (e) => {
     e.preventDefault();
     const bearer_token = localStorage.getItem("token");
@@ -130,35 +116,29 @@ export default function LeadStatus() {
 
     try {
       if (isEditMode) {
+        // Update status
         await axios.put(
           `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/edit/${addStatus.id}`,
           { status: addStatus.status },
           config
         );
-        alert("Lead Status updated successfully");
+        alert("Lead status updated successfully");
       } else {
+        // Add new status
         await axios.post(
           `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/add`,
-          { 
-            status: addStatus.status 
-          },
+          { status: addStatus.status },
           config
         );
         alert("Lead Status added successfully");
       }
 
-      //works commonly for both 
-      handleLead(); //-->-->-->-->-->-->   // Refresh the list of leads and reset the form state
-
-
-      setActive(true); //-->-->-->-->-->-->    Switch back to the list view
-
-      setAddStatus({ id: "", status: "" }); //-->-->-->-->-->-->    Reset the form data
-      setIsEditMode(false); //-->-->-->-->-->-->    Reset edit mode
+      handleLead(); // Refresh the list
+      handleActiveState(); // Toggle back to list view
 
     } catch (error) {
-      console.error("Error saving lead status", error);
-      alert("Failed to save Lead Status. Please try again.");
+      console.error("Error saving status", error);
+      alert("Failed to save status. Please try again.");
     }
   };
 
@@ -172,7 +152,7 @@ export default function LeadStatus() {
               onClick={handleActiveState}
               className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
             >
-              Add Lead
+              Add Status
             </button>
           </div>
           <div className="overflow-x-auto mt-3">
@@ -185,7 +165,7 @@ export default function LeadStatus() {
                     </th>
                     <th className="px-2 py-3 text-left border-r font-medium">
                       <div className="flex justify-between items-center text-sm">
-                        <span>Lead Name</span>
+                        <span>Lead Status </span>
                         <FaBars />
                       </div>
                     </th>
@@ -214,7 +194,7 @@ export default function LeadStatus() {
                           color="white"
                           className="bg-blue-500 rounded"
                           onClick={() => {
-                            fetchLeadById(user.id);
+                            fetchLeadById(user.id); 
                             setActive(false); // Switch to form view when editing
                           }}
                         />
@@ -235,7 +215,7 @@ export default function LeadStatus() {
         <>
           <div className="flex min-w-screen justify-between items-center">
             <h1 className="text-3xl font-medium">
-              {isEditMode ? "Edit Lead Status" : "Add Lead Status"}
+              {isEditMode ? "Edit Status" : "Add Status"}
             </h1>
             <button
               onClick={handleActiveState}
@@ -249,9 +229,8 @@ export default function LeadStatus() {
             <div className="w-full">
               <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
                 <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-                  Lead Information
+                  Status Information
                 </h2>
-                {/* -------------status------------- */}
                 <div className="py-2 px-4 min-h-screen relative">
                   <div className="flex space-x-4">
                     <div className="flex flex-col w-1/2">
@@ -259,7 +238,7 @@ export default function LeadStatus() {
                         htmlFor="status"
                         className="text-sm font-medium text-gray-700"
                       >
-                        Add Lead
+                        {isEditMode ? "Edit Status" : "Add Status"}
                       </label>
                       <input
                         type="text"
@@ -271,12 +250,11 @@ export default function LeadStatus() {
                     </div>
                   </div>
 
-                  {/* -------------Button------------- */}
                   <button
                     type="submit"
                     className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute  top-[200px]"
                   >
-                    {isEditMode ? "Update Lead" : "Save Lead"}
+                    {isEditMode ? "Update" : "Save"}
                   </button>
                 </div>
               </div>
