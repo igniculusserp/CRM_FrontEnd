@@ -77,7 +77,9 @@ import CreateVoiceDetails from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Vo
 import CreateLogs from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateLogs.jsx';
 import CreateChats from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateChats.jsx';
 import CreateExtension from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateExtension.jsx';
+// Reports - INNER Reports COMPONENTS
 import Reports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/Reports.jsx';
+import EditClientSO from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/RepoComponents/EditClientSO.jsx';
 import MISReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx';
  
 
@@ -148,6 +150,7 @@ const router = createBrowserRouter([
       { path: '/sidebar/createsms',          element : <CreateSms/> },
 
       { path: '/sidebar/reports',            element : <Reports /> },
+      { path: '/sidebar/Client_SO/:id',            element : <EditClientSO /> },
       { path: '/sidebar/analytics',          element : <Analytics /> },
 
       { path: '/sidebar/misreports',         element: <MISReports /> },
