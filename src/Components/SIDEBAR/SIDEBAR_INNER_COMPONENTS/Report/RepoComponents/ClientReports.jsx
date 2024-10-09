@@ -1,6 +1,7 @@
 import { FaBars } from 'react-icons/fa';
-
+import { useNavigate } from "react-router-dom";
 export default function ClientReports({ currentReports }) {
+  const navigate = useNavigate(); // Add this line
   return (
     <table className="min-w-full bg-white">
       {/* ----------------- TABLE HEAD START ----------------- */}
@@ -55,7 +56,7 @@ export default function ClientReports({ currentReports }) {
           {/* TOTAL AMOUNT TOKEN */}
           <th className="px-2 py-3 text-left border-r font-medium">
             <div className="flex items-center justify-between">
-              <span className="text-nowrap pr-2">Total Amount Token</span>
+              <span className="text-nowrap pr-2">Total Amount Taken</span>
               <FaBars />
             </div>
           </th>
@@ -78,24 +79,28 @@ export default function ClientReports({ currentReports }) {
               <input type="checkbox" />
             </td>
             {/* CLIENT ID */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.leadId}
+            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-blue-600"
+             onClick={() =>
+              navigate(`/sidebar/Client_SO/${report.id}`)
+            }
+            >
+              {report.id}
             </td>
             {/* CLIENT NAME */}
             <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.leadName}
+              {report.clientName}
             </td>
             {/* MOBILE */}
             <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.mobile}
+              {report.mobileNo}
             </td>
             {/* VIEW SO */}
             <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.viewSo}
+              {report.saleS_ODR_NO}
             </td>
             {/* ASSIGNED TO */}
             <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.assignedTo}
+              {report.assigned_To}
             </td>
             {/* MANAGER */}
             <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
@@ -103,11 +108,11 @@ export default function ClientReports({ currentReports }) {
             </td>
             {/* TOTAL AMOUNT TOKEN */}
             <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.totalAmtToken}
+              {report.amount_paid}
             </td>
             {/* LAST REMARKS */}
             <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.lastRemarks}
+              {report.remarks}
             </td>
           </tr>
         ))}

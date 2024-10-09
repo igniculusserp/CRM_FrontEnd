@@ -1,13 +1,21 @@
 // REACT - IN BUILD
-import { useState, useEffect } from 'react';
+import { useState,useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FaAngleDown, FaBars } from 'react-icons/fa';
 // REACT - ICONS
-import { IoSearchOutline } from 'react-icons/io5';
-import EmployeeReport from './RepoComponents/EmployeeReport';
-import LeadsReport from './RepoComponents/LeadsReport';
-import ClientReports from './RepoComponents/ClientReports';
-import SalesReports from './RepoComponents/SalesReports';
+import { IoSearchOutline } from "react-icons/io5";
+import EmployeeReport from "./RepoComponents/EmployeeReport";
+import LeadsReport from "./RepoComponents/LeadsReport";
+import ClientReports from "./RepoComponents/ClientReports";
+import SalesReports from "./RepoComponents/SalesReports";
+//Folder Imported
+import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import { tenant_base_url, protocal_url } from "./../../../../Config/config";
+//external Packages
+import axios from "axios";
+// import { parseISO, subMonths, isAfter } from 'date-fns';
+
+const name = getHostnamePart();
 
 export default function Reports() {
   const location = useLocation();
@@ -33,7 +41,6 @@ export default function Reports() {
       totalAmtToken: 11800,
       netTotal: 12345678,
       grandTotal: 1234567,
-      employeeName: 'Shubham Mishra',
     },
     {
       id: 2,
@@ -55,7 +62,6 @@ export default function Reports() {
       totalAmtToken: 11800,
       netTotal: 12345678,
       grandTotal: 1234567,
-      employeeName: 'Shubham Mishra',
     },
     {
       id: 3,
@@ -77,7 +83,6 @@ export default function Reports() {
       totalAmtToken: 11800,
       netTotal: 12345678,
       grandTotal: 1234567,
-      employeeName: 'Shubham Mishra',
     },
     {
       id: 4,
@@ -99,7 +104,6 @@ export default function Reports() {
       totalAmtToken: 11800,
       netTotal: 12345678,
       grandTotal: 1234567,
-      employeeName: 'Shubham Mishra',
     },
     {
       id: 5,
@@ -121,7 +125,6 @@ export default function Reports() {
       totalAmtToken: 11800,
       netTotal: 12345678,
       grandTotal: 1234567,
-      employeeName: 'Shubham Mishra',
     },
     {
       id: 6,
@@ -143,7 +146,6 @@ export default function Reports() {
       totalAmtToken: 11800,
       netTotal: 12345678,
       grandTotal: 1234567,
-      employeeName: 'Shubham Mishra',
     },
     {
       id: 7,
@@ -165,7 +167,6 @@ export default function Reports() {
       totalAmtToken: 11800,
       netTotal: 12345678,
       grandTotal: 1234567,
-      employeeName: 'Shubham Mishra',
     },
     {
       id: 8,
@@ -187,7 +188,6 @@ export default function Reports() {
       totalAmtToken: 11800,
       netTotal: 12345678,
       grandTotal: 1234567,
-      employeeName: 'Shubham Mishra',
     },
     {
       id: 9,
@@ -209,7 +209,6 @@ export default function Reports() {
       totalAmtToken: 11800,
       netTotal: 12345678,
       grandTotal: 1234567,
-      employeeName: 'Shubham Mishra',
     },
     {
       id: 10,
@@ -231,7 +230,6 @@ export default function Reports() {
       totalAmtToken: 11800,
       netTotal: 12345678,
       grandTotal: 1234567,
-      employeeName: 'Shubham Mishra',
     },
     {
       id: 11,
@@ -253,15 +251,12 @@ export default function Reports() {
       totalAmtToken: 11800,
       netTotal: 12345678,
       grandTotal: 1234567,
-      employeeName: 'Shubham Mishra',
     },
   ];
 
   // PAGINATION
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // item to be seen in a single page
-
-  const [getReports, setGetReports] = useState(reportsMainData);
 
   const paginate = (page) => setCurrentPage(page);
 
@@ -272,8 +267,8 @@ export default function Reports() {
 
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
-    { key: 1, value: 'Table View' },
-    { key: 2, value: 'Grid View' },
+    { key: 1, value: "Table View" },
+    { key: 2, value: "Grid View" },
   ];
 
   const [selectedViewValue, setSelectedViewValue] = useState(
@@ -282,20 +277,26 @@ export default function Reports() {
 
   //   DYNAMIC BUTTONS
   const dynamicButtons = [
-    { id: 1, name: 'Employee Report' },
-    { id: 2, name: 'Leads Report' },
-    { id: 3, name: 'Client Reports' },
-    { id: 4, name: 'Sales Reports' },
+    { id: 1, name: "Employee Report" },
+    { id: 2, name: "Leads Report" },
+    { id: 3, name: "Client Reports" },
+    { id: 4, name: "Sales Reports" },
   ];
 
   const [selectedId, setSelectedId] = useState(
-    () => parseInt(localStorage.getItem('selectedId')) || 1
+    () => parseInt(localStorage.getItem("selectedId")) || 1
   );
 
   // Function to handle option click using bracket notation
   const handleOptionClick = (id) => {
     setSelectedId(id);
-    localStorage.setItem('selectedId', id); // Store the selected id
+    console.log("@@@@==== Selected ID (immediate):", id);
+
+    // Immediately use the `id` instead of `selectedId` which will be stale
+    handleGetReport(id);
+
+    // Store the selected id in localStorage
+    localStorage.setItem("selectedId", id);
   };
 
   useEffect(() => {
@@ -310,9 +311,9 @@ export default function Reports() {
 
   // SEARCH DUMMY DATA
   const searchData = [
-    { key: 1, name: 'Search' },
-    { key: 2, name: 'Search' },
-    { key: 3, name: 'Search' },
+    { key: 1, name: "Search" },
+    { key: 2, name: "Search" },
+    { key: 3, name: "Search" },
   ];
 
   // TOGGLE SEARCH DROPDOWN
@@ -320,22 +321,7 @@ export default function Reports() {
     setSearchDropdown(!searchDropdown);
   };
 
-  // FILTER DATE DROPDOWN
-  const [dateDropdown, setDateDropdown] = useState(false);
-
-  // date dummy data
-  const dateData = [
-    { key: 1, name: '01/09/2023' },
-    { key: 2, name: '01/09/2023' },
-    { key: 3, name: '01/09/2023' },
-  ];
-
-  // toggle date dropdown
-  const toggleDropdownDate = () => {
-    setDateDropdown(!dateDropdown);
-  };
-
-  // last 6 months filter dropdown
+  // ------------------------------------------------------ Date Filter According to Month -----------------------------------------
   const [filterSixMonthsDropdown, setFilterSixMonthsDropdown] = useState(false);
 
   // filter 6 months dummy data
@@ -350,18 +336,6 @@ export default function Reports() {
     setFilterSixMonthsDropdown(!filterSixMonthsDropdown);
   };
 
-  // BUTTON THAT ARE VISIBLE IN SALES REPORTS
-  const buttons = [
-    { id: 1, name: 'Source Wise' },
-    { id: 2, name: 'Employee Wise' },
-  ];
-
-  const [buttonId, setButtonId] = useState(1);
-
-  const handleButtonClick = (id) => {
-    setButtonId(id);
-  };
-
   return (
     <div className="min-h-screen flex flex-col m-3">
       <div className="py-2 px-3 bg-white gap-3 flex items-center justify-start rounded-md">
@@ -373,8 +347,8 @@ export default function Reports() {
               className={`px-5 py-1.5 rounded font-light text-md
                     ${
                       selectedId === id
-                        ? 'bg-cyan-600 text-white'
-                        : 'bg-gray-100 text-gray-700'
+                        ? "bg-cyan-600 text-white"
+                        : "bg-gray-100 text-gray-700"
                     }
                   `}
             >
@@ -417,10 +391,10 @@ export default function Reports() {
 
       {/* FILTER BY SECTION */}
       <div className="mt-3 mb-3 flex justify-between items-center gap-3">
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <h1 className="text-3xl font-medium ">Employee Reports</h1>
           <h1 className="bg-blue-600 text-white p-2 self-center rounded text-sm font-medium antialiased inline-block">
-            {reportsMainData.length}
+            {'72'}
           </h1>
         </div>
 
@@ -445,7 +419,7 @@ export default function Reports() {
         {/* -------------- FILTER SECTION ------------------ */}
         <div className="flex bg-white border-2 gap-2 border-gray-300 py-1 rounded-lg justify-center items-center shadow-md">
           {/* Filter Icon Button */}
-          <button className="border-gray-500 px-1">filter</button>
+          <button className="border-gray-500 px-2">filter</button>
           {/* DATE DROPDOWN */}
           <div
             className="relative"
@@ -453,7 +427,7 @@ export default function Reports() {
             onMouseLeave={() => setDateDropdown(false)}
           >
             <button
-              className="py-1 px-2 text-sm border rounded-md gap-2 border-blue-600 text-blue-600  flex justify-between items-center"
+              className="py-2 px-6 border rounded-md gap-2 border-blue-600 text-blue-600  flex justify-between items-center"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -461,7 +435,7 @@ export default function Reports() {
               <FaAngleDown className="ml-2 text-blue-600" />
             </button>
             {dateDropdown && (
-              <div className="absolute bg-white border border-gray-300 rounded-md top-8 z-10">
+              <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
                 <ul className="py-2 text-sm text-gray-700">
                   {dateData.map(({ key, name }) => (
                     <li
@@ -482,7 +456,7 @@ export default function Reports() {
             onMouseLeave={() => setFilterSixMonthsDropdown(false)}
           >
             <button
-              className="py-1 px-2 text-sm border rounded-md gap-2 border-blue-600 text-blue-600  flex justify-between items-center"
+              className="py-2 px-6 border rounded-md gap-2 border-blue-600 text-blue-600  flex justify-between items-center"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -490,7 +464,7 @@ export default function Reports() {
               <FaAngleDown className="ml-2 text-blue-600" />
             </button>
             {filterSixMonthsDropdown && (
-              <div className="absolute bg-white border border-gray-300 rounded-md top-8 z-10">
+              <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
                 <ul className="py-2 text-sm text-gray-700">
                   {filterData.map(({ key, name }) => (
                     <li
@@ -505,19 +479,19 @@ export default function Reports() {
             )}
           </div>
           {/* DATE BUTTON */}
-          <button className="border-blue-600 px-2 text-sm border py-1 rounded-md text-blue-600 cursor-pointer">
+          <button className="border-blue-600 px-6 border py-2 rounded-md text-blue-600 cursor-pointer">
             01/11/2023
           </button>
           {/* DATE BUTTON */}
-          <button className="border-blue-600 text-sm px-2 border py-1 rounded-md text-blue-600 cursor-pointer">
+          <button className="border-blue-600 px-6 border py-2 rounded-md text-blue-600 cursor-pointer">
             31/05/2024
           </button>
           {/* APPLY BUTTON */}
-          <button className="py-1 px-2 bg-blue-500 text-sm text-white border-none cursor-pointer rounded-md text-sm">
+          <button className="py-2 px-4 bg-blue-500 text-white border-none cursor-pointer rounded-md text-sm">
             Apply
           </button>
           {/* CLEAR FILTER */}
-          <button className="text-blue-600 text-sm px-1">Clear Filter</button>
+          <button className="text-blue-600 px-2">Clear Filter</button>
         </div>
       </div>
 
@@ -525,32 +499,32 @@ export default function Reports() {
       <div className="overflow-x-auto">
         {/* EMPLOYEE REPORT TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === 'Table View' && selectedId === 1 && (
+          {selectedViewValue === "Table View" && selectedId === 1 && (
             <EmployeeReport currentReports={currentReports} />
           )}
         </div>
         {/* LEAD REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === 'Table View' && selectedId === 2 && (
+          {selectedViewValue === "Table View" && selectedId === 2 && (
             <LeadsReport currentReports={currentReports} />
           )}
         </div>
         {/* CLIENT REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === 'Table View' && selectedId === 3 && (
+          {selectedViewValue === "Table View" && selectedId === 3 && (
             <ClientReports currentReports={currentReports} />
           )}
         </div>
         {/* SALES REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {selectedViewValue === 'Table View' && selectedId === 4 && (
-            <SalesReports currentReports={currentReports} btn={buttonId} />
+            <SalesReports currentReports={currentReports} />
           )}
         </div>
       </div>
 
       {/* PAGINATION */}
-      {selectedViewValue === 'Table View' && (
+      {selectedViewValue === "Table View" && (
         <>
           <div className="flex justify-end m-4">
             <nav>
@@ -563,8 +537,8 @@ export default function Reports() {
                         onClick={() => paginate(i + 1)}
                         className={`px-4 py-2 mx-1 ${
                           currentPage === i + 1
-                            ? 'bg-blue-500 text-white'
-                            : 'bg-white text-gray-700 border'
+                            ? "bg-blue-500 text-white"
+                            : "bg-white text-gray-700 border"
                         }`}
                       >
                         {i + 1}

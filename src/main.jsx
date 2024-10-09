@@ -73,15 +73,15 @@ import CreateSOLead           from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENT
 import CreateSOContact        from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Contact/CreateSOContact.jsx';
 
 // VOICEBOX - INNER VOICEBOX COMPONENTS
-import VoiceBox               from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/VoiceBox.jsx';
-import CreateVoice            from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/CreateVoice.jsx';
-import CreateVoiceReports     from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/CreateVoiceReports.jsx';
-import CreateVoiceDetails     from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/CreateVoiceDetails.jsx';
-import CreateLogs             from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateLogs.jsx';
-import CreateChats            from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateChats.jsx';
-import CreateExtension        from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateExtension.jsx';
-import Reports                from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/Reports.jsx';
-import MISReports             from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx';
+import VoiceBox from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/VoiceBox.jsx';
+import CreateVoice from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/CreateVoice.jsx';
+import CreateVoiceReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/CreateVoiceReports.jsx';
+import CreateVoiceDetails from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/CreateVoiceDetails.jsx';
+import CreateLogs from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateLogs.jsx';
+import CreateChats from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateChats.jsx';
+import CreateExtension from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateExtension.jsx';
+import Reports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/Reports.jsx';
+import MISReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx';
  
 
 
@@ -154,6 +154,7 @@ const router = createBrowserRouter([
       { path: '/sidebar/sendemail',             element : <CreateSendEmail/> },
 
       { path: '/sidebar/reports',            element : <Reports /> },
+      { path: '/sidebar/Client_SO/:id',            element : <EditClientSO /> },
       { path: '/sidebar/analytics',          element : <Analytics /> },
 
       { path: '/sidebar/misreports',         element: <MISReports /> },
