@@ -1,5 +1,5 @@
 import { Link,  useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 
@@ -7,28 +7,72 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {showSuccessToast, showErrorToast} from "../../utils/toastNotifications";
 
+import { getHostnamePart } from "../SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+
 import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
 import CRMLoginPage from "./../../assets/images/CRMLoginPage.png";
 
 import { GiDiamonds } from "react-icons/gi";
 
-import { main_base_url } from "../../Config/config";
+import { main_base_url, protocal_url, tenant_base_url, urlchange_base } from "../../Config/config";
 
 //Loginjsx is now VerifyTenant.jsx 
 
 export default function VerifyTenant() {
   const [userName, setuserName] = useState("");
-  const [password, setPassword] = useState("");
+  // const navigate = useNavigate();
+  const name = getHostnamePart(); 
+  console.log("Hostname part:", name); 
+  useEffect(() => {
+    
 
-  const deviceType = "";
-  const deviceAddress = "";
+    const apiUrl = `${protocal_url}${name}.${tenant_base_url}/Tenants/check`;
+    console.log("Constructed API URL:", apiUrl); 
+
+    const verifyTenant = async () => {
+      try {
+        const response = await axios.post(apiUrl, {
+          tenantName: name, 
+          tenanturl: apiUrl 
+        }, 
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+
+        console.log("API Response:", response); 
+        const { isSuccess } = response.data;
+
+        if (isSuccess) {
+          {
+          showSuccessToast("Login Successful!");
+          setTimeout(() => {
+            //localhost
+              // const newUrl = `http://${host}.localhost:5173/tenantlogin`;
+            
+            //forServer
+             const newUrl = `http://${host}.${urlchange_base}/tenantlogin `
+            window.location.href = newUrl;
+          }, 100);
+        }
+        } else {
+          console.log("Tenant verification failed.");
+          showErrorToast("Tenant verification failed");
+        }
+      } catch (error) {
+        console.error("Error checking tenant:", error); // Log the error
+
+      }
+    };
+
+    verifyTenant();
+  }, []);
 
   function handleusername(e) {
     setuserName(e.target.value);
   }
- 
-
-  
+   
   async function handleSubmit(e) {
     e.preventDefault();
     const emailRegex =
@@ -52,10 +96,10 @@ export default function VerifyTenant() {
           showSuccessToast("Login Successful!");
           setTimeout(() => {
             //localhost
-              const newUrl = `http://${host}.localhost:5173/tenantlogin`;
+              // const newUrl = `http://${host}.localhost:5173/tenantlogin`;
             
             //forServer
-            //  const newUrl = `http://${host}.${urlchange_base}/tenantlogin `
+             const newUrl = `http://${host}.${urlchange_base}/tenantlogin `
             window.location.href = newUrl;
           }, 100);
         }
