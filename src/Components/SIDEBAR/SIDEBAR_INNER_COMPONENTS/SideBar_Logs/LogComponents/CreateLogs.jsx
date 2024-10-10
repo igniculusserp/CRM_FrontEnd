@@ -162,10 +162,10 @@ export default function CreateLogs() {
             {/* DROPDOWN */}
             <div className="flex flex-col">
               <div className="flex flex-col w-1/2">
-                {/* CLIENT NAME DROPDOWN */}
+                {/* TEXT MESSAGE DROPDOWN */}
                 <label
                   htmlFor="clientName"
-                  className="text-sm font-medium text-gray-700 mt-2"
+                  className="text-sm font-medium text-gray-700"
                 >
                   Text Message
                 </label>

@@ -5,6 +5,7 @@ import Chat from './LogComponents/Chat';
 import Extension from './LogComponents/Extension';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 import { MdEdit } from 'react-icons/md';
+import LoginTable from './LogComponents/LoginTable';
 
 export default function Logs() {
   // PAGINATION
@@ -27,6 +28,9 @@ export default function Logs() {
       username: 'Vikas Koli',
       extensionNumber: 123456,
       givenTime: '12:03 Am',
+      ipAddress: '45.117.73.26',
+      macAddress: '98-43-FA-28-3C-34',
+      loginTime: '1 hr ago.'
     },
     {
       id: 2,
@@ -42,6 +46,9 @@ export default function Logs() {
       username: 'Vikas Koli',
       extensionNumber: 123456,
       givenTime: '12:03 Am',
+      ipAddress: '45.117.73.26',
+      macAddress: '98-43-FA-28-3C-34',
+      loginTime: '1 hr ago.'
     },
     {
       id: 3,
@@ -57,6 +64,9 @@ export default function Logs() {
       username: 'Vikas Koli',
       extensionNumber: 123456,
       givenTime: '12:03 Am',
+      ipAddress: '45.117.73.26',
+      macAddress: '98-43-FA-28-3C-34',
+      loginTime: '1 hr ago.'
     },
     {
       id: 4,
@@ -72,6 +82,9 @@ export default function Logs() {
       username: 'Vikas Koli',
       extensionNumber: 123456,
       givenTime: '12:03 Am',
+      ipAddress: '45.117.73.26',
+      macAddress: '98-43-FA-28-3C-34',
+      loginTime: '1 hr ago.'
     },
     {
       id: 5,
@@ -87,9 +100,12 @@ export default function Logs() {
       username: 'Vikas Koli',
       extensionNumber: 123456,
       givenTime: '12:03 Am',
+      ipAddress: '45.117.73.26',
+      macAddress: '98-43-FA-28-3C-34',
+      loginTime: '1 hr ago.'
     },
     {
-      id: 20,
+      id: 6,
       mobNo: 9326766137,
       clientName: 'Shubham Mishra',
       createdBy: 'Admin',
@@ -102,6 +118,9 @@ export default function Logs() {
       username: 'Vikas Koli',
       extensionNumber: 123456,
       givenTime: '12:03 Am',
+      ipAddress: '45.117.73.26',
+      macAddress: '98-43-FA-28-3C-34',
+      loginTime: '1 hr ago.'
     },
     {
       id: 7,
@@ -117,6 +136,9 @@ export default function Logs() {
       username: 'Vikas Koli',
       extensionNumber: 123456,
       givenTime: '12:03 Am',
+      ipAddress: '45.117.73.26',
+      macAddress: '98-43-FA-28-3C-34',
+      loginTime: '1 hr ago.'
     },
     {
       id: 8,
@@ -132,6 +154,9 @@ export default function Logs() {
       username: 'Vikas Koli',
       extensionNumber: 123456,
       givenTime: '12:03 Am',
+      ipAddress: '45.117.73.26',
+      macAddress: '98-43-FA-28-3C-34',
+      loginTime: '1 hr ago.'
     },
     {
       id: 9,
@@ -147,6 +172,9 @@ export default function Logs() {
       username: 'Vikas Koli',
       extensionNumber: 123456,
       givenTime: '12:03 Am',
+      ipAddress: '45.117.73.26',
+      macAddress: '98-43-FA-28-3C-34',
+      loginTime: '1 hr ago.'
     },
     {
       id: 10,
@@ -162,6 +190,9 @@ export default function Logs() {
       username: 'Vikas Koli',
       extensionNumber: 123456,
       givenTime: '12:03 Am',
+      ipAddress: '45.117.73.26',
+      macAddress: '98-43-FA-28-3C-34',
+      loginTime: '1 hr ago.'
     },
     {
       id: 11,
@@ -177,6 +208,9 @@ export default function Logs() {
       username: 'Vikas Koli',
       extensionNumber: 123456,
       givenTime: '12:03 Am',
+      ipAddress: '45.117.73.26',
+      macAddress: '98-43-FA-28-3C-34',
+      loginTime: '1 hr ago.'
     },
     {
       id: 12,
@@ -192,6 +226,9 @@ export default function Logs() {
       username: 'Vikas Koli',
       extensionNumber: 123456,
       givenTime: '12:03 Am',
+      ipAddress: '45.117.73.26',
+      macAddress: '98-43-FA-28-3C-34',
+      loginTime: '1 hr ago.'
     },
     {
       id: 13,
@@ -207,6 +244,9 @@ export default function Logs() {
       username: 'Vikas Koli',
       extensionNumber: 123456,
       givenTime: '12:03 Am',
+      ipAddress: '45.117.73.26',
+      macAddress: '98-43-FA-28-3C-34',
+      loginTime: '1 hr ago.'
     },
     {
       id: 14,
@@ -222,6 +262,9 @@ export default function Logs() {
       username: 'Vikas Koli',
       extensionNumber: 123456,
       givenTime: '12:03 Am',
+      ipAddress: '45.117.73.26',
+      macAddress: '98-43-FA-28-3C-34',
+      loginTime: '1 hr ago.'
     },
     {
       id: 15,
@@ -237,6 +280,9 @@ export default function Logs() {
       username: 'Vikas Koli',
       extensionNumber: 123456,
       givenTime: '12:03 Am',
+      ipAddress: '45.117.73.26',
+      macAddress: '98-43-FA-28-3C-34',
+      loginTime: '1 hr ago.'
     },
   ];
 
@@ -266,7 +312,7 @@ export default function Logs() {
       text: 'Add Chat Logs',
       href: '/sidebar/createchats',
     },
-    Login: {},
+    Login: { text: 'Add Login Logs', href: '/sidebar/createlogin' },
     Extension: { text: 'Add Extension Logs', href: '/sidebar/createextension' },
   };
 
@@ -445,6 +491,14 @@ export default function Logs() {
           {selectedViewValue === 'Table View' && selectedButton === 'Chat' && (
             <Chat currentLogs={currentLogs} />
           )}
+        </div>
+        {/* LOGIN TABLE */}
+        <div className="min-w-full overflow-hidden rounded-md">
+          {/*-------Table-------*/}
+          {selectedViewValue === 'Table View' &&
+            selectedButton === 'Login' && (
+              <LoginTable currentLogs={currentLogs} />
+            )}
         </div>
         {/* EXTENSION TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">

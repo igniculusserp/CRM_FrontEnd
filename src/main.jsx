@@ -79,6 +79,7 @@ import Reports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/Report
 import EditClientSO from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/RepoComponents/EditClientSO.jsx';
 import MISReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx';
 import CreateClient from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Client/CreateClient.jsx';
+import CreateLogin from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateLogin.jsx';
 
 const router = createBrowserRouter([
   { path: '/', element: <App /> },
@@ -132,6 +133,7 @@ const router = createBrowserRouter([
       { path: '/sidebar/createlogs', element: <CreateLogs /> },
       { path: '/sidebar/createchats', element: <CreateChats /> },
       { path: '/sidebar/createextension', element: <CreateExtension /> },
+      { path: '/sidebar/createlogin', element: <CreateLogin /> },
 
       // CLIENT => INNER COMPONENT
       { path: '/sidebar/client', element: <Client /> },

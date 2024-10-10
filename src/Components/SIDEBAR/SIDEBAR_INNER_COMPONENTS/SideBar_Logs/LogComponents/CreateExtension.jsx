@@ -101,7 +101,7 @@ export default function CreateExtension() {
           {/* -------------Client Logs Information STARTS FROM HERE------------- */}
           {/* -------------6------------- */}
           {/* -------------Street------------- */}
-          <div className="grid gap-2 p-2">
+          <div className="grid gap-2 px-2 pb-3">
             {/* DROPDOWNS */}
             <div className="flex space-x-4">
               {/* USERNAME DROPDOWN */}
