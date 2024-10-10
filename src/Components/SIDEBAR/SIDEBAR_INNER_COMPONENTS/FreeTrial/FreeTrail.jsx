@@ -293,7 +293,7 @@ export default function FreeTrail() {
     if (selectedEmails.length > 0) {
       setIsModalOpen(true); // Open the modal
     } else {
-      alert("Please select at least one row for mass emailing.");
+      alert("Selected Entity dose not have E-Mail Address.");
     }
   };
 
