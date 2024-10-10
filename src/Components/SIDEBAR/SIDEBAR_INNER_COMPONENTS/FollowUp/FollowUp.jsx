@@ -13,6 +13,7 @@ import { FaAngleDown, FaBars } from "react-icons/fa";
 //Folder Imported
 import { tenant_base_url, protocal_url } from "./../../../../Config/config"
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import MassEmail from '../MassEmail/MassEmail';
 
 export default function FollowUp() {
   const navigate = useNavigate();
@@ -22,6 +23,9 @@ export default function FollowUp() {
   // All States
   const [selectAll, setSelectAll] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
+// Mass Email
+const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEmails, setSelectedEmails] = useState([]);
   const [followupList, setFollowupList] = useState([]);
   const [followupDropdown, setFollowupDropdown] = useState(false);
   const [searchDropdown, setSearchDropdown] = useState(false);
@@ -122,7 +126,6 @@ export default function FollowUp() {
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
   const actions = [
-    { key: 0, value: "Actions" },
     { key: 1, value: "Mass Delete" },
     { key: 2, value: "Mass Update" },
     { key: 3, value: "Mass Email" },
@@ -144,7 +147,15 @@ export default function FollowUp() {
         handleMassTrailDelete(selectedRows);
       }
     }
-
+// ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
+if (value === "Mass Email") {
+  const userConfirmed = confirm(
+    "Are you sure you want to Send E-Mail to the selected Data?"
+  );
+  if (userConfirmed) {
+    openMassEmailModal(selectedRows);
+  }
+}
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
     if (value === "Sheet View") {
       const userConfirmed = confirm(
@@ -193,6 +204,22 @@ export default function FollowUp() {
       console.error("Error deleting follow-ups:", error);
     }
   };
+
+  // ---------------------->MASS Email FUNCTIONALITY---<----------------------
+
+
+  const openMassEmailModal = () => {
+    if (selectedEmails.length > 0) {
+      setIsModalOpen(true); // Open the modal
+    } else {
+      alert('Please select at least one row for mass emailing.');
+    }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // Close the modal
+  };
+
 
   //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
   //-------> XLSX used here
@@ -264,30 +291,50 @@ export default function FollowUp() {
   // Function to toggle all checkboxes
   const selectAllCheckbox = () => {
     if (selectAll) {
-      // If already selected, deselect everything
+      // Deselect all rows
       setSelectedRows([]);
+      setSelectedEmails([]); // Clear selected emails
       setSelectAll(false);
     } else {
       // Select all rows in the current page
       const allIds = currentFollows.map((order) => order.id);
+      const allEmails = currentFollows.map((order) => order.email); // Extract emails
       setSelectedRows(allIds);
+      setSelectedEmails(allEmails); // Store all emails
       setSelectAll(true);
     }
   };
 
-  // Function to toggle individual checkboxes
-  const handleCheckboxChange = (id, e) => {
-    e.stopPropagation();
-    console.log("Checkbox clicked: ", id);
-    setSelectedRows((prevSelectedRows) =>
-      prevSelectedRows.includes(id)
-        ? prevSelectedRows.filter((rowId) => rowId !== id)
-        : [...prevSelectedRows, id]
-    );
+  
+ // Function to toggle individual checkboxes
+const handleCheckboxChange = (id, email, e) => {
+  e.stopPropagation();
 
-    setSelectAll(false);
-    console.log("Updated selectedRows: ", selectedRows);
-  };
+  // Update selected rows
+  setSelectedRows((prevSelectedRows) => {
+    const newSelectedRows = prevSelectedRows.includes(id)
+      ? prevSelectedRows.filter((rowId) => rowId !== id)
+      : [...prevSelectedRows, id];
+
+    // Log the updated selectedRows
+    console.log("Updated Selected Rows:", newSelectedRows);
+    return newSelectedRows;
+  });
+
+  // Update selected emails
+  setSelectedEmails((prevSelectedEmails) => {
+    const newSelectedEmails = prevSelectedEmails.includes(email)
+      ? prevSelectedEmails.filter((e) => e !== email)
+      : [...prevSelectedEmails, email];
+
+    // Log the updated selectedEmails
+    console.log("@@@===", newSelectedEmails);
+    return newSelectedEmails;
+  });
+
+  setSelectAll(false); // Uncheck "Select All" if individual checkbox is toggled
+};
+
 
   // Navigate to Edit Screen
   const handleClick = (id) => {
@@ -412,6 +459,13 @@ useEffect(() => {
     <>
       {/* -------- PARENT -------- */}
       <div className="min-h-screen flex flex-col m-3 ">
+          {/* Render the modal only when `isModalOpen` is true */}
+      {isModalOpen && (
+        <MassEmail
+          emails={selectedEmails}
+          onClose={closeModal} // Pass function to close modal
+        />
+      )}
         {/* containerbar*/}
         <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg">
           {/* PART-I */}
@@ -702,7 +756,7 @@ useEffect(() => {
                               type="checkbox"
                               checked={selectedRows.includes(order.id)}
                               onChange={(e) =>
-                                handleCheckboxChange(order.id, e)
+                                handleCheckboxChange(order.id, order.email, e)
                               }
                             />
                           </div>

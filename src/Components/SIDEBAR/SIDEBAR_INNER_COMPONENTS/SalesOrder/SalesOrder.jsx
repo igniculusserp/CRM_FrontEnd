@@ -275,11 +275,6 @@ export default function SalesOrder() {
   };
 
 
-  //Enable us to switch to createlead/editlead page with /:id
-  let handleClick = (item) => {
-    navigate(`/sidebar/editso/${item.id}`);
-  };
-
 
   //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
   //-------> XLSX used here
@@ -770,7 +765,9 @@ export default function SalesOrder() {
                         />
                       </td>
                       {/* CONTACT NAME */}
-                      <td className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600" onClick={() => handleClick(item)}>
+                      <td className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600"  onClick={() =>
+              navigate(`/sidebar/Client_SO/${item.id}`)
+            }>
                         <div className="flex items-center">
                           <img className="h-6 w-6 mx-1 rounded-full" src={dp} alt="DP" />
                           <span className="">{item.clientName}</span>
