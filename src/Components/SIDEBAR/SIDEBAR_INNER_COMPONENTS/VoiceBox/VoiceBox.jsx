@@ -161,7 +161,6 @@ export default function VoiceBox() {
 
   // ACTION DROPDOWN DATA
   const dropActionsMenu = [
-    { key: 0, value: "Actions" },
     { key: 1, value: "Mass Delete" },
     { key: 2, value: "Mass Update" },
     { key: 3, value: "Mass Email" },

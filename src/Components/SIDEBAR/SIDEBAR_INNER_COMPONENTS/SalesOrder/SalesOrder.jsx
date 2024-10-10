@@ -21,13 +21,18 @@ import { MdCall } from "react-icons/md";
 //Folder Imported
 import dp from "./../../../../assets/images/dp.png"
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
-
+import MassEmail from '../MassEmail/MassEmail';
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 const name = getHostnamePart()
 
 export default function SalesOrder() {
   const navigate = useNavigate();
+
+  
+// Mass Email
+const [isModalOpen, setIsModalOpen] = useState(false);
+const [selectedEmails, setSelectedEmails] = useState([]);
 
   //This is to store the upcoming data from API
   const [getleads, setGetleads] = useState([]);
@@ -220,6 +225,17 @@ export default function SalesOrder() {
       }
     }
 
+   // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
+   if (value === "Mass Email") {
+    const userConfirmed = confirm(
+      "Are you sure you want to Send E-Mail to the selected Data?"
+    );
+    if (userConfirmed) {
+      openMassEmailModal(selectedEmails);
+    }
+  }
+  
+
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
     if (value === "Sheet View") {
       const userConfirmed = confirm('Are you sure you want to export the selected Leads?');
@@ -273,6 +289,24 @@ export default function SalesOrder() {
       console.error("Error deleting leads:", error);
     }
   };
+
+
+ // ---------------------->MASS Email FUNCTIONALITY---<----------------------
+
+
+ const openMassEmailModal = () => {
+  if (selectedEmails.length > 0) {
+    setIsModalOpen(true); // Open the modal
+  } else {
+    alert('Please select at least one row for mass emailing.');
+  }
+};
+
+const closeModal = () => {
+  setIsModalOpen(false); // Close the modal
+};
+
+
 
 
 
@@ -365,13 +399,32 @@ export default function SalesOrder() {
 
 
   //---------------------->---------------------->̧CHECKBOX<----------------------<----------------------
-  //---------------------->---------------------->̧CHECKBOX -> SINGLE<----------------------<----------------------
-  const [selectedIds, setSelectedIds] = useState([]);
-  const handleOnCheckBox = (e, item) => {
-    e.stopPropagation();
-    setSelectedIds((prevSelected) => prevSelected.includes(item.id) ? prevSelected.filter((id) => id !== item.id) : [...prevSelected, item.id]);
-  };
 
+ //---------------------->---------------------->̧CHECKBOX -> SINGLE<----------------------<----------------------
+ const [selectedIds, setSelectedIds] = useState([]);
+ const handleOnCheckBox = (e, item) => {
+   e.stopPropagation();
+ 
+   // Toggle selected IDs
+   setSelectedIds((prevSelected) =>
+     prevSelected.includes(item.id)
+       ? prevSelected.filter((id) => id !== item.id)
+       : [...prevSelected, item.id]
+   );
+ 
+   // Update selected emails
+   setSelectedEmails((prevSelectedEmails) => {
+     const newSelectedEmails = prevSelectedEmails.includes(item.email)
+       ? prevSelectedEmails.filter((email) => email !== item.email)
+       : [...prevSelectedEmails, item.email];
+ 
+     // Log the updated selectedEmails
+     console.log("Updated Selected Emails:", newSelectedEmails);
+     return newSelectedEmails;
+   });
+ };
+ 
+   
 
 
 
@@ -384,17 +437,21 @@ export default function SalesOrder() {
     if (isChecked) {
       // Add all leads in the current page to selectedIds
       const currentPageIds = currentLeads?.map((lead) => lead.id);
+      const allEmails = currentLeads.map((order) => order.email);
+      setSelectedEmails(allEmails); // Store all emails
       setSelectedIds((prevSelected) => [
         ...new Set([...prevSelected, ...currentPageIds]),
       ]);
-    } else {
+   } else {
       // Remove all current page leads from selectedIds
       const currentPageIds = currentLeads?.map((lead) => lead.id);
+      setSelectedEmails([]); 
       setSelectedIds((prevSelected) =>
         prevSelected.filter((id) => !currentPageIds.includes(id))
       );
     }
   };
+
 
   // Update "Select All" checkbox state when individual checkboxes are clicked
   useEffect(() => {
@@ -485,6 +542,14 @@ export default function SalesOrder() {
   return (
     //parent
     <div className="min-h-screen flex flex-col m-3 ">
+        {/* Render the modal only when `isModalOpen` is true */}
+        {isModalOpen && (
+        <MassEmail
+          emails={selectedEmails}
+          onClose={closeModal} // Pass function to close modal
+        />
+      )}
+
       {/* containerbar*/}
       <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg">
         {/* PART-I */}
