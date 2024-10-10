@@ -23,9 +23,9 @@ export default function VerifyTenant() {
   // const navigate = useNavigate();
   const name = getHostnamePart(); 
   console.log("Hostname part:", name); 
+  
+  
   useEffect(() => {
-    
-
     const apiUrl = `${protocal_url}${name}.${tenant_base_url}/Tenants/check`;
     console.log("Constructed API URL:", apiUrl); 
 
@@ -49,10 +49,10 @@ export default function VerifyTenant() {
           showSuccessToast("Login Successful!");
           setTimeout(() => {
             //localhost
-              // const newUrl = `http://${host}.localhost:5173/tenantlogin`;
+              const newUrl = `http://${name}.localhost:5173/tenantlogin`;
             
             //forServer
-             const newUrl = `http://${host}.${urlchange_base}/tenantlogin `
+            //  const newUrl = `http://${name}.${urlchange_base}/tenantlogin `
             window.location.href = newUrl;
           }, 100);
         }
@@ -96,10 +96,10 @@ export default function VerifyTenant() {
           showSuccessToast("Login Successful!");
           setTimeout(() => {
             //localhost
-              // const newUrl = `http://${host}.localhost:5173/tenantlogin`;
+              const newUrl = `http://${host}.localhost:5173/tenantlogin`;
             
             //forServer
-             const newUrl = `http://${host}.${urlchange_base}/tenantlogin `
+            //  const newUrl = `http://${host}.${urlchange_base}/tenantlogin `
             window.location.href = newUrl;
           }, 100);
         }
