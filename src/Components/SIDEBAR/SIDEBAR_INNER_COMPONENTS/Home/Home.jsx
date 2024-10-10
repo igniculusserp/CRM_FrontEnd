@@ -1,7 +1,10 @@
-import { FaArrowAltCircleDown, FaArrowAltCircleUp } from 'react-icons/fa';
-import Price from '../../../../assets/images/sales-badge-svgrepo-com 1.png';
-import Group from '../../../../assets/images/Group.png';
-import Dollar from '../../../../assets/images/price-label-svgrepo-com 1.png';
+import {
+  FaArrowAltCircleDown,
+  FaArrowAltCircleUp,
+  FaUsers,
+} from 'react-icons/fa';
+import { CiBadgeDollar } from 'react-icons/ci';
+import { FcSalesPerformance } from 'react-icons/fc';
 import Profile from '../../../../assets/images/users-svgrepo-com 1.png';
 import SalesPipelineChart from './homeComponents/SalesPipelineChart';
 import LeadSourceChart from './homeComponents/LeadSourceChart';
@@ -9,9 +12,10 @@ import SalesReportChart from './homeComponents/SalesReportChart';
 import CustomerSegmentationChart from './homeComponents/CustomerSegmentationChart';
 import { useEffect, useState } from 'react';
 
-import { tenant_base_url, protocal_url } from "../../../../Config/config";
+import { tenant_base_url, protocal_url } from '../../../../Config/config';
 import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 import axios from 'axios';
+import { FaUsersRectangle } from 'react-icons/fa6';
 
 export default function Home() {
   //DND
@@ -21,14 +25,13 @@ export default function Home() {
 
   //----------calling data in effect-----------
   useEffect(() => {
-    handleGetApis()
-  }, [])
-
+    handleGetApis();
+  }, []);
 
   //------------------------------------------------------------------------------------------------
   //----------------GET----------------
   async function handleGetApis() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -51,9 +54,8 @@ export default function Home() {
       );
       const leadData = leadRes.data.data;
       setLeadsData(leadData); // Set leads data after the second API call is complete
-
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error('Error fetching data:', error);
     }
   }
 
@@ -62,52 +64,66 @@ export default function Home() {
     currentMonthSales = 0,
     previousMonthSales = 0,
     currentMonthClientCount = 0,
-    previousMonthClientCount = 0
+    previousMonthClientCount = 0,
   } = salesData || {};
 
   //----------------Calculate percentage increase for clients-----------------
-  const clientPercentageChange = previousMonthClientCount === 0
-    ? (currentMonthClientCount > 0 ? 100 : 0)
-    : ((currentMonthClientCount - previousMonthClientCount) / previousMonthClientCount) * 100;
+  const clientPercentageChange =
+    previousMonthClientCount === 0
+      ? currentMonthClientCount > 0
+        ? 100
+        : 0
+      : ((currentMonthClientCount - previousMonthClientCount) /
+          previousMonthClientCount) *
+        100;
   //---------------------last month diffrence-------------------------
-  const clientDiffrence = currentMonthClientCount - previousMonthClientCount
+  const clientDiffrence = currentMonthClientCount - previousMonthClientCount;
   //-------------------------- Calculate percentage increase for revenue-----------------------------
-  const revenuePercentageChange = previousMonthSales === 0
-    ? (currentMonthSales > 0 ? 100 : 0)
-    : ((currentMonthSales - previousMonthSales) / previousMonthSales) * 100;
-  const revenueDiffrence = currentMonthSales - previousMonthSales
+  const revenuePercentageChange =
+    previousMonthSales === 0
+      ? currentMonthSales > 0
+        ? 100
+        : 0
+      : ((currentMonthSales - previousMonthSales) / previousMonthSales) * 100;
+  const revenueDiffrence = currentMonthSales - previousMonthSales;
   //-------------------------- Determine increase or decrease status for revenue and sales--------------------------
   const revenueStatus = revenuePercentageChange > 0 ? 'up' : 'down';
   const clientStatus = clientPercentageChange > 0 ? 'up' : 'down';
-
 
   //----------------------for leads and intrested leads-----------------------------
   const {
     currentMonthLeads = 0,
     previousMonthLeads = 0,
     currentMonthInterestedLeads = 0,
-    previousMonthInterestedLeads = 0
+    previousMonthInterestedLeads = 0,
   } = leadsData || {};
 
   //----------------Calculate percentage increase for leads-----------------
-  const leadsPercentage = previousMonthLeads === 0
-    ? (currentMonthLeads > 0 ? 100 : 0)
-    : ((currentMonthLeads - previousMonthLeads) / previousMonthLeads) * 100;
+  const leadsPercentage =
+    previousMonthLeads === 0
+      ? currentMonthLeads > 0
+        ? 100
+        : 0
+      : ((currentMonthLeads - previousMonthLeads) / previousMonthLeads) * 100;
   //---------------------last month diffrence-------------------------
-  const leadsDiffrence = currentMonthLeads - previousMonthLeads
+  const leadsDiffrence = currentMonthLeads - previousMonthLeads;
   //-------------------------- Calculate percentage increase for intrested leads-----------------------------
-  const intrestedPercentageChange = previousMonthInterestedLeads === 0
-    ? (currentMonthInterestedLeads > 0 ? 100 : 0)
-    : ((currentMonthInterestedLeads - previousMonthInterestedLeads) / previousMonthInterestedLeads) * 100;
-  const intrestedLeadsDiffrence = currentMonthInterestedLeads - previousMonthInterestedLeads
+  const intrestedPercentageChange =
+    previousMonthInterestedLeads === 0
+      ? currentMonthInterestedLeads > 0
+        ? 100
+        : 0
+      : ((currentMonthInterestedLeads - previousMonthInterestedLeads) /
+          previousMonthInterestedLeads) *
+        100;
+  const intrestedLeadsDiffrence =
+    currentMonthInterestedLeads - previousMonthInterestedLeads;
   //-------------------------- Determine increase or decrease status for leads and intrested leads--------------------------
   const leadStatus = leadsPercentage > 0 ? 'up' : 'down';
   const intrestedLeadStatus = intrestedPercentageChange > 0 ? 'up' : 'down';
 
-
-
   return (
-    <main className="min-h-screen flex flex-col mt-3 gap-1">
+    <main className="min-h-screen flex flex-col my-3 gap-1 mx-1">
       {/* ------- TOP CARDS ------- */}
       <div className="flex items-center px-2 gap-3">
         {/* ------- CARD ------- */}
@@ -115,14 +131,24 @@ export default function Home() {
           <div className="flex flex-col gap-2">
             <h1 className="font-light uppercase text-sm">Lead this month</h1>
             {/* ------- MIDDLE SECTION ----------- */}
-            <div className="flex items-center gap-2 mt-2">
+            <div className="flex items-center gap-4 mt-2">
               <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-blue-500 text-white flex items-center justify-center">
-                <img src={Group} alt="Home Icon" />
+                {/* <img src={Group} alt="Home Icon" /> */}
+
+                <FaUsersRectangle className="text-3xl" />
               </button>
               <div className="flex flex-col items-center justify-center">
                 <span className="font-bold text-2xl">{currentMonthLeads}</span>
-                <button className={`flex text-[12px] font-thin p-1 items-center ${leadStatus == "up" ? 'bg-green-100' : 'bg-red-100'} w-max rounded-md justify-between gap-1`}>
-                  {leadStatus == "up" ? <FaArrowAltCircleUp /> : <FaArrowAltCircleDown />}
+                <button
+                  className={`flex text-[12px] font-thin p-1 items-center ${
+                    leadStatus == 'up' ? 'bg-green-100' : 'bg-red-100'
+                  } w-max rounded-md justify-between gap-1`}
+                >
+                  {leadStatus == 'up' ? (
+                    <FaArrowAltCircleUp />
+                  ) : (
+                    <FaArrowAltCircleDown />
+                  )}
                   <span>{Math.round(leadsPercentage)}%</span>
                 </button>
               </div>
@@ -130,7 +156,12 @@ export default function Home() {
           </div>
           {/* ---------- PROGRESS BAR --------- */}
           <div className="h-2 w-full bg-transparent border border-gray-600 rounded-lg mt-2">
-            <div className={`h-full ${leadStatus == "up" ? 'bg-blue-600' : 'bg-red-600'}`} style={{ maxWidth: `${Math.abs(Math.round(leadsPercentage))}%` }}></div>
+            <div
+              className={`h-full ${
+                leadStatus == 'up' ? 'bg-blue-600' : 'bg-red-600'
+              }`}
+              style={{ maxWidth: `${Math.abs(Math.round(leadsPercentage))}%` }}
+            ></div>
           </div>
           <h3 className="font-light">Last Month Relative: {leadsDiffrence}</h3>
         </div>
@@ -140,12 +171,24 @@ export default function Home() {
             <h1 className="font-light uppercase text-sm">REVENUE THIS MONTH</h1>
             <div className="flex gap-4 items-center mt-2">
               <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-orange-300 text-white flex items-center justify-center">
-                <img src={Dollar} alt="Profile Icon" />
+                {/* <img src={Dollar} alt="Profile Icon" /> */}
+
+                <CiBadgeDollar className="text-4xl" />
               </button>
               <div className="flex flex-col gap-1">
-                <span className="font-bold text-2xl">$ {currentMonthSales}</span>
-                <button className={`flex text-[12px] font-thin p-1 items-center ${revenueStatus == "up" ? 'bg-green-100' : 'bg-red-100'} w-max rounded-md justify-between gap-1`}>
-                  {revenueStatus == "up" ? <FaArrowAltCircleUp /> : <FaArrowAltCircleDown />}
+                <span className="font-bold text-2xl">
+                  $ {currentMonthSales}
+                </span>
+                <button
+                  className={`flex text-[12px] font-thin p-1 items-center ${
+                    revenueStatus == 'up' ? 'bg-green-100' : 'bg-red-100'
+                  } w-max rounded-md justify-between gap-1`}
+                >
+                  {revenueStatus == 'up' ? (
+                    <FaArrowAltCircleUp />
+                  ) : (
+                    <FaArrowAltCircleDown />
+                  )}
                   <span>{Math.round(revenuePercentageChange)}%</span>
                 </button>
               </div>
@@ -153,9 +196,18 @@ export default function Home() {
           </div>
           {/* ---------- PROGRESS BAR --------- */}
           <div className="h-2 w-full bg-transparent border border-gray-600 rounded-lg mt-2">
-            <div className={`h-full ${revenueStatus == "up" ? 'bg-blue-600' : 'bg-red-600'}`} style={{ maxWidth: `${Math.abs(Math.round(revenuePercentageChange))}%` }}></div>
+            <div
+              className={`h-full ${
+                revenueStatus == 'up' ? 'bg-blue-600' : 'bg-red-600'
+              }`}
+              style={{
+                maxWidth: `${Math.abs(Math.round(revenuePercentageChange))}%`,
+              }}
+            ></div>
           </div>
-          <h3 className="font-light">Last Month Relative: $ {revenueDiffrence}</h3>
+          <h3 className="font-light">
+            Last Month Relative: $ {revenueDiffrence}
+          </h3>
         </div>
         {/* ------- CARD ------- */}
         <div className="flex flex-col justify-between bg-white py-4 px-4 rounded-md shadow-lg h-[210px] w-1/4">
@@ -163,12 +215,24 @@ export default function Home() {
             <h1 className="font-light uppercase text-sm">SALES IN PIPELINE</h1>
             <div className="flex gap-4 items-center mt-2">
               <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-red-700 text-white flex items-center justify-center">
-                <img src={Price} alt="Profile Icon" />
+                {/* <img src={Price} alt="Profile Icon" /> */}
+
+                <FcSalesPerformance className="text-white text-3xl" />
               </button>
               <div className="flex flex-col gap-1">
-                <span className="font-bold text-2xl">{currentMonthInterestedLeads}</span>
-                <button className={`flex text-[12px] font-thin p-1 items-center ${intrestedLeadStatus == "up" ? 'bg-green-100' : 'bg-red-100'} w-max rounded-md justify-between gap-1`}>
-                  {intrestedLeadStatus == "up" ? <FaArrowAltCircleUp /> : <FaArrowAltCircleDown />}
+                <span className="font-bold text-2xl">
+                  {currentMonthInterestedLeads}
+                </span>
+                <button
+                  className={`flex text-[12px] font-thin p-1 items-center ${
+                    intrestedLeadStatus == 'up' ? 'bg-green-100' : 'bg-red-100'
+                  } w-max rounded-md justify-between gap-1`}
+                >
+                  {intrestedLeadStatus == 'up' ? (
+                    <FaArrowAltCircleUp />
+                  ) : (
+                    <FaArrowAltCircleDown />
+                  )}
                   <span>{Math.round(intrestedPercentageChange)}%</span>
                 </button>
               </div>
@@ -176,9 +240,18 @@ export default function Home() {
           </div>
           {/* ---------- PROGRESS BAR --------- */}
           <div className="h-2 w-full bg-transparent border border-gray-600 rounded-lg mt-2">
-            <div className={`h-full ${intrestedLeadStatus == "up" ? 'bg-blue-600' : 'bg-red-600'}`} style={{ maxWidth: `${Math.abs(Math.round(intrestedPercentageChange))}%` }}></div>
+            <div
+              className={`h-full ${
+                intrestedLeadStatus == 'up' ? 'bg-blue-600' : 'bg-red-600'
+              }`}
+              style={{
+                maxWidth: `${Math.abs(Math.round(intrestedPercentageChange))}%`,
+              }}
+            ></div>
           </div>
-          <h3 className="font-light">Last Month Relative: {intrestedLeadsDiffrence}</h3>
+          <h3 className="font-light">
+            Last Month Relative: {intrestedLeadsDiffrence}
+          </h3>
         </div>
         {/* ------- CARD ------- */}
         <div className="flex flex-col justify-between bg-white py-4 px-4 rounded-md shadow-lg h-[210px] w-1/4">
@@ -186,12 +259,24 @@ export default function Home() {
             <h1 className="font-light uppercase text-sm">CLIENT THIS MONTH</h1>
             <div className="flex gap-4 items-center mt-2">
               <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-cyan-500 text-white flex items-center justify-center">
-                <img src={Profile} alt="Profile Icon" />
+                {/* <img src={Profile} alt="Profile Icon" /> */}
+
+                <FaUsers className="text-white text-3xl" />
               </button>
               <div className="flex flex-col gap-1">
-                <span className="font-bold text-2xl">{currentMonthClientCount}</span>
-                <button className={`flex text-[12px] font-thin p-1 items-center ${clientStatus == "up" ? 'bg-green-100' : 'bg-red-100'} w-max rounded-md justify-between gap-1`}>
-                  {clientStatus == "up" ? <FaArrowAltCircleUp /> : <FaArrowAltCircleDown />}
+                <span className="font-bold text-2xl">
+                  {currentMonthClientCount}
+                </span>
+                <button
+                  className={`flex text-[12px] font-thin p-1 items-center ${
+                    clientStatus == 'up' ? 'bg-green-100' : 'bg-red-100'
+                  } w-max rounded-md justify-between gap-1`}
+                >
+                  {clientStatus == 'up' ? (
+                    <FaArrowAltCircleUp />
+                  ) : (
+                    <FaArrowAltCircleDown />
+                  )}
                   <span>{Math.round(clientPercentageChange)}%</span>
                 </button>
               </div>
@@ -199,7 +284,14 @@ export default function Home() {
           </div>
           {/* ---------- PROGRESS BAR --------- */}
           <div className="h-2 w-full bg-transparent border border-gray-600 rounded-lg mt-2">
-            <div className={`h-full ${clientStatus == "up" ? 'bg-blue-600' : 'bg-red-600'}`} style={{ maxWidth: `${Math.abs(Math.round(clientPercentageChange))}%` }}></div>
+            <div
+              className={`h-full ${
+                clientStatus == 'up' ? 'bg-blue-600' : 'bg-red-600'
+              }`}
+              style={{
+                maxWidth: `${Math.abs(Math.round(clientPercentageChange))}%`,
+              }}
+            ></div>
           </div>
           <h3 className="font-light">Last Month Relative: {clientDiffrence}</h3>
         </div>
