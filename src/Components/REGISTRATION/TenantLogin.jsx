@@ -1,20 +1,70 @@
+//react
 import { Link,  useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+
+//react-icons
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+import { GiDiamonds } from "react-icons/gi";
+
+//react-toast
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {showSuccessToast,showErrorToast} from "./../../utils/toastNotifications";
+
+//imgUsed
 
 import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
 import CRMLoginPage from "./../../assets/images/CRMLoginPage.png";
 import Microsoft from "./../../assets/images/microsoft-logo.png";
 
-import { IoIosEye, IoIosEyeOff } from "react-icons/io";
-import { GiDiamonds } from "react-icons/gi";
-
-import {  protocal_url, tenant_base_url } from "./../../Config/config";
+import { getHostnamePart } from "../SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import {protocal_url, tenant_base_url } from "./../../Config/config";
 
 export default function TenantLogin() {
+  
+  const name = getHostnamePart(); 
+  console.log("Hostname part:", name); 
+
+
+  useEffect(() => {
+    const apiUrl = `${protocal_url}${name}.${tenant_base_url}/Tenants/check`;
+    console.log("Constructed API URL:", apiUrl); 
+
+    const verifyTenant = async () => {
+      try {
+        const response = await axios.post(apiUrl, {
+          tenantName: name, 
+          tenanturl: apiUrl 
+        }, 
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+
+        // console.log("API Response:", response); 
+        const { isSuccess } = response.data;
+      } catch (error) {
+        console.error("Error checking tenant:", error); // Log the error
+        setTimeout(() => {
+          //localhost
+            const newUrl = `http://${name}.localhost:5173`;
+          
+          //forServer
+          //  const newUrl = `http://${name}.${urlchange_base}/VerifyTenant `
+          window.location.href = newUrl;
+        }, 100);
+
+      }
+    };
+
+    verifyTenant();
+  }, []);
+
+
+
+
 
     const [userName, setuserName] = useState("")
     const [password, setPassword] = useState("")
