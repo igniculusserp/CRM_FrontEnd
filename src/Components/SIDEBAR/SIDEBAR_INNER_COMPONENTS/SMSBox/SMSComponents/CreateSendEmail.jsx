@@ -161,7 +161,7 @@ export default function CreateSendEmail() {
                   name="attachment"
                   id="attachment"
                   value={editSms.attachment}
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  className="p-2 border border-gray-300 rounded-md"
                   onChange={handleChange}
                   placeholder="Entere verox peron"
                 />
@@ -174,7 +174,7 @@ export default function CreateSendEmail() {
                 {/* SUBJECT FIELD */}
                 <label
                   htmlFor="textMsg"
-                  className="text-sm font-medium text-gray-700 mt-2"
+                  className="text-sm font-medium text-gray-700"
                 >
                 Message
                 </label>
@@ -214,7 +214,7 @@ export default function CreateSendEmail() {
           <div className="flex justify-end px-2">
             <button
               type="submit"
-              className="px-32 py-4 mt-40 mb-2 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+              className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
             >
               {isEditMode ? 'Update' : 'Save'}
             </button>
