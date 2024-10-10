@@ -19,7 +19,7 @@ import CRMLoginPage from "./../../assets/images/CRMLoginPage.png";
 import Microsoft from "./../../assets/images/microsoft-logo.png";
 
 import { getHostnamePart } from "../SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
-import {protocal_url, tenant_base_url } from "./../../Config/config";
+import {protocal_url, tenant_base_url, urlchange_base } from "./../../Config/config";
 
 export default function TenantLogin() {
   
