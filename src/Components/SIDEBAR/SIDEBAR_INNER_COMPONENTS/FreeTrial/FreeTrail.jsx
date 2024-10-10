@@ -1,8 +1,8 @@
 //react inbuilt
-import { useState, useEffect} from 'react';
-import {  useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-//external 
+//external
 import axios from "axios";
 // import { useParams } from "react-router-dom";
 import * as XLSX from "xlsx";
@@ -10,18 +10,24 @@ import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
 //reactIcons
-import { FaAngleDown, FaBars } from 'react-icons/fa';
-import { ImFilter } from 'react-icons/im';
-import { IoSearchOutline } from 'react-icons/io5';
-import { MdCall } from 'react-icons/md';
+import { FaAngleDown, FaBars } from "react-icons/fa";
+import { ImFilter } from "react-icons/im";
+import { IoSearchOutline } from "react-icons/io5";
+import { MdCall } from "react-icons/md";
 
 //Folder Imported
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
-import { tenant_base_url, protocal_url } from "./../../../../Config/config"
+import { tenant_base_url, protocal_url } from "./../../../../Config/config";
+import MassEmail from "../MassEmail/MassEmail";
 
 //------------------------------------------------------------------------------->CODE STARTS FROM HERE<-------------------------------------------------------------------------------
 export default function FreeTrail() {
   const navigate = useNavigate();
+
+  // Mass Email
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEmails, setSelectedEmails] = useState([]);
+
   const [selectAll, setSelectAll] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const bearer_token = localStorage.getItem("token");
@@ -86,7 +92,6 @@ export default function FreeTrail() {
 
   //   Action Dropdown Menu
   const dropActionsMenu = [
-    { key: 0, value: "Actions" },
     { key: 1, value: "Mass Delete" },
     { key: 2, value: "Mass Update" },
     { key: 3, value: "Mass Email" },
@@ -144,25 +149,47 @@ export default function FreeTrail() {
   // Function to toggle all checkboxes
   const selectAllCheckbox = () => {
     if (selectAll) {
-      // If already selected, deselect everything
+      // Deselect all rows
       setSelectedRows([]);
+      setSelectedEmails([]); // Clear selected emails
       setSelectAll(false);
     } else {
       // Select all rows in the current page
-      const allIds = currentTrials.map((order) => order.id);
+      const allIds = currentFollows.map((order) => order.id);
+      const allEmails = currentFollows.map((order) => order.email); // Extract emails
       setSelectedRows(allIds);
+      setSelectedEmails(allEmails); // Store all emails
       setSelectAll(true);
     }
   };
+
   // Function to toggle individual checkboxes
-  const handleCheckboxChange = (id, e) => {
+  const handleCheckboxChange = (id, email, e) => {
     e.stopPropagation();
-    setSelectedRows((prevSelectedRows) =>
-      prevSelectedRows.includes(id)
+
+    // Update selected rows
+    setSelectedRows((prevSelectedRows) => {
+      const newSelectedRows = prevSelectedRows.includes(id)
         ? prevSelectedRows.filter((rowId) => rowId !== id)
-        : [...prevSelectedRows, id]
-    );
-    setSelectAll(false); // Deselect "Select All" when individual items are clicked
+        : [...prevSelectedRows, id];
+
+      // Log the updated selectedRows
+      console.log("Updated Selected Rows:", newSelectedRows);
+      return newSelectedRows;
+    });
+
+    // Update selected emails
+    setSelectedEmails((prevSelectedEmails) => {
+      const newSelectedEmails = prevSelectedEmails.includes(email)
+        ? prevSelectedEmails.filter((e) => e !== email)
+        : [...prevSelectedEmails, email];
+
+      // Log the updated selectedEmails
+      console.log("@@@===", newSelectedEmails);
+      return newSelectedEmails;
+    });
+
+    setSelectAll(false); // Uncheck "Select All" if individual checkbox is toggled
   };
 
   // On click of Action Button
@@ -174,6 +201,16 @@ export default function FreeTrail() {
       );
       if (userConfirmed) {
         handleMassDelete(selectedRows);
+      }
+    }
+
+    // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
+    if (value === "Mass Email") {
+      const userConfirmed = confirm(
+        "Are you sure you want to Send E-Mail to the selected Data?"
+      );
+      if (userConfirmed) {
+        openMassEmailModal(selectedEmails);
       }
     }
 
@@ -248,6 +285,20 @@ export default function FreeTrail() {
 
     // Export the workbook to an Excel file
     XLSX.writeFile(wb, "SelectedFreeeTrailData.xlsx");
+  };
+
+  // ---------------------->MASS Email FUNCTIONALITY---<----------------------
+
+  const openMassEmailModal = () => {
+    if (selectedEmails.length > 0) {
+      setIsModalOpen(true); // Open the modal
+    } else {
+      alert("Please select at least one row for mass emailing.");
+    }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // Close the modal
   };
 
   //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
@@ -371,46 +422,51 @@ export default function FreeTrail() {
 
   // ----------------------------- Date Filter -----------------------------
 
-const today = new Date().toISOString().split("T")[0]; // Format today's date as 'YYYY-MM-DD'
+  const today = new Date().toISOString().split("T")[0]; // Format today's date as 'YYYY-MM-DD'
 
-const [startDate, setStartDate] = useState(today);
-const [endDate, setEndDate] = useState(today);
+  const [startDate, setStartDate] = useState(today);
+  const [endDate, setEndDate] = useState(today);
 
-// ----------------------------- Date Filter -----------------------------
+  // ----------------------------- Date Filter -----------------------------
 
+  // Function to filter based on date range
+  function handle_DateRange(startDate, endDate) {
+    let filteredFollows = currentTrials;
 
-// Function to filter based on date range
-function handle_DateRange(startDate, endDate) {
-  let filteredFollows = currentTrials;
+    // Convert startDate to the beginning of the day and endDate to the end of the day
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
 
-  // Convert startDate to the beginning of the day and endDate to the end of the day
-  const start = new Date(startDate);
-  start.setHours(0, 0, 0, 0); // Set time to 00:00:00
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999); // Set time to 23:59:59
 
-  const end = new Date(endDate);
-  end.setHours(23, 59, 59, 999); // Set time to 23:59:59
+    if (startDate && endDate) {
+      filteredFollows = filteredFollows.filter((follow) => {
+        const callbackDate = new Date(follow.trialStartDate);
+        return callbackDate >= start && callbackDate <= end;
+      });
+    }
 
-  if (startDate && endDate) {
-    filteredFollows = filteredFollows.filter((follow) => {
-      const callbackDate = new Date(follow.trialStartDate);
-      return callbackDate >= start && callbackDate <= end;
-    });
+    setFilteredTrails(filteredFollows); // Update the filtered result
   }
 
-  setFilteredTrails(filteredFollows); // Update the filtered result
-}
-
-// UseEffect to trigger handle_DateRange on date change
-useEffect(() => {
-  if(startDate<=endDate){
-    handle_DateRange(startDate, endDate);
-  }
-}, [startDate, endDate]); 
-
-
+  // UseEffect to trigger handle_DateRange on date change
+  useEffect(() => {
+    if (startDate <= endDate) {
+      handle_DateRange(startDate, endDate);
+    }
+  }, [startDate, endDate]);
 
   return (
     <div className="min-h-screen flex flex-col m-3">
+      {/* Render the modal only when `isModalOpen` is true */}
+      {isModalOpen && (
+        <MassEmail
+          emails={selectedEmails}
+          onClose={closeModal} // Pass function to close modal
+        />
+      )}
+
       <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md">
         <div className="flex gap-3">
           {/* AllContact  DropDown*/}
@@ -581,9 +637,7 @@ useEffect(() => {
       {/* FILTER BY */}
       <div className="flex py-2 justify-between items-center gap-3">
         <div className="flex gap-3">
-          <h1 className="text-3xl font-medium ">
-           Free Trail
-          </h1>
+          <h1 className="text-3xl font-medium ">Free Trail</h1>
           <h1 className="bg-blue-600 text-white p-2 min-w-10 text-center rounded text-sm">
             {freeTrial?.length}
           </h1>
@@ -722,7 +776,9 @@ useEffect(() => {
                         <input
                           type="checkbox"
                           checked={selectedRows.includes(order.id)}
-                          onChange={(e) => handleCheckboxChange(order.id, e)}
+                          onChange={(e) =>
+                            handleCheckboxChange(order.id, order.email, e)
+                          }
                         />
                       </div>
                     </td>
@@ -748,15 +804,11 @@ useEffect(() => {
                     </td>
                     {/* Email */}
                     <td className="px-1 py-4 border-b border-gray-300 text-sm leading-5 ">
-                      <div className="break-all">
-                        {order.email}
-                      </div>
+                      <div className="break-all">{order.email}</div>
                     </td>
                     {/* Assigned To */}
                     <td className="px-1 py-4 border-b border-gray-300 text-sm">
-                      <div className="text-center">
-                        {order.assigned_To}
-                      </div>
+                      <div className="text-center">{order.assigned_To}</div>
                     </td>
                     {/* SEGMENT */}
                     <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
@@ -775,13 +827,21 @@ useEffect(() => {
                     {/* Trial Start Date */}
                     <td className="px-1 py-4 border-b border-gray-300 text-sm leading-5 ">
                       <div className="flex items-center break-words">
-                        {(order.trialStartDate.replace("T", " "))?.split(':').slice(0, 2).join(':')}
+                        {order.trialStartDate
+                          .replace("T", " ")
+                          ?.split(":")
+                          .slice(0, 2)
+                          .join(":")}
                       </div>
                     </td>
                     {/* Trial End Date */}
                     <td className="pr-3 pl-1 py-4 border-b border-gray-300 text-sm leading-5 ">
                       <div className="flex items-center break-words">
-                        {(order.trialEndDate.replace("T", " "))?.split(':').slice(0, 2).join(':')}
+                        {order.trialEndDate
+                          .replace("T", " ")
+                          ?.split(":")
+                          .slice(0, 2)
+                          .join(":")}
                       </div>
                     </td>
                   </tr>
