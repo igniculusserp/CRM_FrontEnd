@@ -2,15 +2,10 @@ import { Link,  useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-import {urlchange_base} from './../../Config/config'
-
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  showSuccessToast,
-  showErrorToast,
-} from "../../utils/toastNotifications";
+import {showSuccessToast, showErrorToast} from "../../utils/toastNotifications";
 
 import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
 import CRMLoginPage from "./../../assets/images/CRMLoginPage.png";
@@ -57,10 +52,10 @@ export default function VerifyTenant() {
           showSuccessToast("Login Successful!");
           setTimeout(() => {
             //localhost
-              const newUrl = `http://${host}.localhost:5173/tenantlogin`;
+              // const newUrl = `http://${host}.localhost:5173/tenantlogin`;
             
             //forServer
-            //  const newUrl = `http://${host}.${urlchange_base}/tenantlogin `
+             const newUrl = `http://${host}.${urlchange_base}/tenantlogin `
             window.location.href = newUrl;
           }, 100);
         }

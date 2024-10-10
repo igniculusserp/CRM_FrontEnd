@@ -11,6 +11,7 @@ export default function UserOperation() {
   const fullURL = window.location.href;
   const url = new URL(fullURL);
   const name = url.hostname.split(".")[0];
+  
   const { id } = useParams();
   const bearer_token = localStorage.getItem("token");
   const [active, setActive] = useState(true);

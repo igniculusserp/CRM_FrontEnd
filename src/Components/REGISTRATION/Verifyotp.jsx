@@ -138,10 +138,10 @@ const VerifyOtp = () => {
         const tenantId = response.data.tenant.tenantId
         
         //localhost
-         const newUrl = `http://${host.split('.')[0]}.${localBase}/welcome/${tenantId}`;
+        //  const newUrl = `http://${host.split('.')[0]}.${localBase}/welcome/${tenantId}`;
         
          //forServer
-          // const newUrl = `http://${host.split('.')[0]}.${urlchange_base}/welcome/${tenantId}`;
+          const newUrl = `http://${host.split('.')[0]}.${urlchange_base}/welcome/${tenantId}`;
 
         window.location.href = newUrl;
         // console.log(newUrl)

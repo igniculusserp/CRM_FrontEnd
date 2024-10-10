@@ -7,7 +7,8 @@ import { FaAngleDown } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { main_base_url } from "./../../Config/config";
 import axios from "axios";
-import { BiLogOut } from "react-icons/bi";
+import { MdLogout } from "react-icons/md";
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -80,7 +81,7 @@ export default function Header() {
         },
         {
             key: 5,
-            logo: <BiLogOut />,
+            logo: <MdLogout />,
             functionality: signout
         },
     ];
