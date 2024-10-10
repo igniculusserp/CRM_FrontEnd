@@ -20,36 +20,78 @@ export default function EditClientSO() {
 
   //form description is kept-out
   const [description, setdescription] = useState("Add Text Here");
-  const [editLead, seteditLead] = useState({});
 
   //IMP used as ${name} in an API
   const name = getHostnamePart();
 
- 
+  const [editLead, seteditLead] = useState({
+    id: "",
+    leadId: "",
+    clientName: "",
+    fatherName: "",
+    motherName: "",
+    uidaI_Id_No: "",
+    panCard_No: "",
+    language: "",
+    bank_name: "",
+    branch_name: "",
+    paymenT_MODE: "",
+    saleS_ODR_NO: "",
+    mobileNo: "",
+    phoneNo: "",
+    email: "",
+    assigned_To: "",
+    street: "",
+    postalCode: "",
+    country: "",
+    city: "",
+    state: "",
+    description: "",
+    reference_Number: "",
+    totalAmount: "",
+    due_Amount: "",
+    amount_paid: "",
+    discount: "",
+    advisaryExp: "",
+    segments: [],
+    subscription_start_date: "",
+    subscription_end_date: "",
+    period_of_Subscription: "",
+    term: "",
+    service: "",
+    chequeOrDD_no: "",
+    remarks: "",
+    status: true,
+    dob: "",
+    business: "",
+    paymentDate: "",
+  });
+
   useEffect(() => {
- 
     handleLeadById(); // Fetch lead data for editing
-   
   }, [id]);
 
   //GET by ID---------------------------//GET---------------------------//GET---------------------------by ID-----------by ID
   async function handleLeadById() {
     const bearer_token = localStorage.getItem("token");
-  
+
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-  
+
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesorder/${id}`,
         config
       );
       const data = response.data.data;
-  
+      console.log("Fetched segments:", response.data.data);
+
+
       seteditLead({
+        id: data.id,
         leadId: data.leadId || "",
         clientName: data.clientName || "",
         fatherName: data.fatherName || "",
@@ -78,9 +120,11 @@ export default function EditClientSO() {
         discount: data.discount || "",
         advisaryExp: data.advisaryExp || "",
         segments: data.segments || [],
-        subscription_start_date: data.trialStartDate?.split("T")[0] || null,
-        subscription_end_date: data.trialEndDate?.split("T")[0] || null,
-        period_of_Subscription: data.period_of_Subscription || "",
+        subscription_start_date:
+          data.subscription_start_date?.split("T")[0] || null,
+        subscription_end_date:
+          data.subscription_end_date?.split("T")[0] || null,
+        period_of_Subscription: data.period_of_Subscription,
         term: data.term || "",
         service: data.service || "",
         chequeOrDD_no: data.chequeOrDD_no || "",
@@ -91,10 +135,9 @@ export default function EditClientSO() {
         paymentDate: data.paymentDate?.split("T")[0] || null,
       });
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error("Error fetching lead by ID:", error);
     }
   }
-  
 
   //----------------------------------------------------------------------------------------
   //SEGMENETS API Is being used here
@@ -136,18 +179,21 @@ export default function EditClientSO() {
   };
 
   const handleCheckboxChange = (segment) => {
-    const isChecked = editLead.segments.includes(segment.segment);
+    const segmentName = segment.segment; // Ensure you're getting the correct string
 
+    const isChecked = editLead.segments.includes(segmentName);
     let updatedSegments;
+
     if (isChecked) {
       // Remove segment if already selected
       updatedSegments = editLead.segments.filter(
-        (selectedSegment) => selectedSegment !== segment.segment
+        (selectedSegment) => selectedSegment !== segmentName
       );
     } else {
       // Add segment if not already selected
-      updatedSegments = [...editLead.segments, segment.segment];
+      updatedSegments = [...editLead.segments, segmentName];
     }
+
     seteditLead((prev) => ({
       ...prev,
       segments: updatedSegments,
@@ -236,10 +282,10 @@ export default function EditClientSO() {
 
   const handleDropdownisDropdown_Service_ = (service) => {
     setDefaultText_Service_DropDown(service);
-    setisDropdownVisible_Service_(!isDropdownVisible_Status_);
-    seteditLead((prevTask) => ({
-      ...prevTask,
-      service: service,
+    setisDropdownVisible_Service_(!isDropdownVisible_Service_); // Corrected to toggle the right state
+    seteditLead((prevLead) => ({
+      ...prevLead,
+      service: service, // Updating the correct field in editLead
     }));
   };
 
@@ -263,14 +309,41 @@ export default function EditClientSO() {
 
   const handleDropdownisDropdown_Term_ = (term) => {
     setDefaultText_Term_DropDown(term);
-    setisDropdownVisible_Term_(!isDropdownVisible_Status_);
-    seteditLead((prevTask) => ({
-      ...prevTask,
-      term: term,
+    setisDropdownVisible_Term_(!isDropdownVisible_Term_); // Corrected the state toggle
+    seteditLead((prevLead) => ({
+      ...prevLead,
+      term: term, // Updating the 'term' property in editLead
     }));
   };
 
- 
+  //----------------------------------------------------------------------------------------
+  //Business Type
+  const BusinessTypeDropDown = [
+    { key: 1, name: "IT" },
+    { key: 2, name: "eCommerce" },
+    { key: 3, name: "Marketing" },
+    { key: 4, name: "Hospitality" },
+  ];
+
+  const [defaultTextbusinessTypeDropDown, setDefaultTextbusinessTypeDropDown] =
+    useState("Select Business Type");
+
+  const [isDropdownVisiblebusinessType, setisDropdownVisiblebusinessType] =
+    useState(false);
+
+  const toggleDropdownbusinessType = () => {
+    setisDropdownVisiblebusinessType(!isDropdownVisiblebusinessType);
+  };
+
+  const handleDropdownisDropdownVisiblebusinessType = (business) => {
+    setDefaultTextbusinessTypeDropDown(business);
+    setisDropdownVisiblebusinessType(!isDropdownVisiblebusinessType);
+    seteditLead((prevTask) => ({
+      ...prevTask,
+      business: business,
+    }));
+  };
+
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
   const handleSubmit = async (event) => {
@@ -284,62 +357,60 @@ export default function EditClientSO() {
           "Content-Type": "application/json",
         },
       };
-      // const formData_PUT = {};
-      const formData_PUT = {
-        
-        leadId: editLead.leadId,
-        clientName: editLead.clientName,
-        fatherName: editLead.fatherName,
-        motherName: editLead.motherName,
-        uidaI_Id_No: editLead.uidaI_Id_No,
-        panCard_No: editLead.panCard_No,
-        language: editLead.language,
-        bank_name: editLead.bank_name,
-        branch_name: editLead.branch_name,
-        paymenT_MODE: editLead.paymenT_MODE,
-        saleS_ODR_NO: editLead.saleS_ODR_NO,
-        mobileNo: editLead.mobileNo,
-        phoneNo: editLead.phoneNo,
-        email: editLead.email,
-        assigned_To: editLead.assigned_To,
-        street: editLead.street,
-        postalCode: editLead.postalCode,
-        country: editLead.country,
-        city: editLead.city,
-        state: editLead.state,
-        description: editLead.description,
-        reference_Number: editLead.reference_Number,
-        totalAmount: editLead.totalAmount,
-        due_Amount: editLead.due_Amount,
-        amount_paid: editLead.amount_paid,
-        discount: editLead.discount,
-        advisaryExp: editLead.advisaryExp,
-        segments: editLead.segments,
-        subscription_start_date: editLead.trialStartDate,
-        subscription_end_date: editLead.trialEndDate,
-        period_of_Subscription: editLead.period_of_Subscription,
-        term: editLead.term,
-        service: editLead.service,
-        chequeOrDD_no: editLead.chequeOrDD_no,
-        remarks: editLead.remarks,
-        status: editLead.status,
-        dob: editLead.dob,
-        business: editLead.business,
-        paymentDate: editLead.paymentDate("T")[0] || null,
-      };
-        await axios.put(
-          `${protocal_url}${name}.${tenant_base_url}/Lead/lead/update`,
-          formData_PUT,
-          config
-        );
-        alert("Lead updated successfully!");
-        navigate(`/sidebar/lead`);
-      
-    
 
-      // Redirect after a short delay
+      const formData_PUT = {
+        id: editLead.id,
+        leadId: editLead.leadId || "",
+        clientName: editLead.clientName || "",
+        fatherName: editLead.fatherName || "",
+        motherName: editLead.motherName || "",
+        uidaI_Id_No: editLead.uidaI_Id_No || "",
+        panCard_No: editLead.panCard_No || "",
+        language: editLead.language || "",
+        bank_name: editLead.bank_name || "",
+        branch_name: editLead.branch_name || "",
+        paymenT_MODE: editLead.paymenT_MODE || "",
+        saleS_ODR_NO: editLead.saleS_ODR_NO || "",
+        mobileNo: editLead.mobileNo || "",
+        phoneNo: editLead.phoneNo || "",
+        email: editLead.email || "",
+        assigned_To: editLead.assigned_To || "",
+        street: editLead.street || "",
+        postalCode: editLead.postalCode || "",
+        country: editLead.country || "",
+        city: editLead.city || "",
+        state: editLead.state || "",
+        description: editLead.description || "",
+        reference_Number: editLead.reference_Number || "",
+        totalAmount: editLead.totalAmount || "",
+        due_Amount: editLead.due_Amount || "",
+        amount_paid: editLead.amount_paid || "",
+        discount: editLead.discount || "",
+        advisaryExp: editLead.advisaryExp || "",
+        segments: editLead.segments || [],
+        subscription_start_date: editLead.subscription_start_date || null,
+        subscription_end_date: editLead.subscription_end_date || null,
+        period_of_Subscription: editLead.period_of_Subscription || "",
+        term: editLead.term || "",
+        service: editLead.service || "",
+        chequeOrDD_no: editLead.chequeOrDD_no || "",
+        remarks: editLead.remarks || "",
+        status: editLead.status || "",
+        dob: editLead.dob || null,
+        business: editLead.business || "",
+        paymentDate: editLead.paymentDate?.split("T")[0] || null,
+      };
+
+      await axios.post(
+        `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesorder/edit`,
+        formData_PUT,
+        config
+      );
+
+      alert("Lead updated successfully!");
+      setTimeout(() => navigate(`/sidebar/reports`), 500); // Optional delay for navigation
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error updating lead:", error);
       alert("An error occurred. Please try again.");
     }
   };
@@ -349,9 +420,7 @@ export default function EditClientSO() {
       <div className="min-h-screen flex flex-col mt-3">
         <div className="flex justify-between mx-3 px-3 bg-white border rounded py-3">
           <div className="flex items-center justify-center gap-3">
-            <h1 className="text-xl">
-              Edit Sales Order
-            </h1>
+            <h1 className="text-xl">Edit Sales Order</h1>
           </div>
           <div>
             <Link
@@ -560,18 +629,17 @@ export default function EditClientSO() {
                     </label>
                     <div
                       className="relative"
-                      onClick={toggleDropdownassigned_ToDropDown}
                       onMouseLeave={() =>
                         setisDropdownassigned_ToDropDown(false)
                       }
                     >
                       <button
+                        onClick={toggleDropdownassigned_ToDropDown}
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="LeadStatusDropDown"
                         type="button"
                       >
-                       
-                         {editLead.assigned_To}
+                        {editLead.assigned_To}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownassigned_ToDropDown && (
@@ -601,11 +669,11 @@ export default function EditClientSO() {
                 </div>
 
                 {/* -------------0--1--------------- */}
-                {/* -------------dob------------- */}
+                {/* -------------DOB------------- */}
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
-                      htmlFor="dob"
+                      htmlFor="DdobOB"
                       className="text-sm font-medium text-gray-700"
                     >
                       DOB
@@ -616,7 +684,7 @@ export default function EditClientSO() {
                       value={editLead.dob}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
-                      placeholder="Enter your dob"
+                      placeholder="Enter your DOB"
                     />
                   </div>
                   {/* -------------0--2--------------- */}
@@ -630,7 +698,7 @@ export default function EditClientSO() {
                     </label>
                     <input
                       type="text"
-                      name="city"
+                      name="country"
                       value={editLead.country}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
@@ -708,7 +776,7 @@ export default function EditClientSO() {
                     </label>
                     <input
                       type="text"
-                      name="pinCode"
+                      name="postalCode"
                       value={editLead.postalCode}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
@@ -721,21 +789,51 @@ export default function EditClientSO() {
                 <div className="flex space-x-4">
                   {/* -------------Business Type------------- */}
                   <div className="flex flex-col w-1/2 relative">
-
-                  <label
-                      htmlFor="business"
+                    <label
+                      htmlFor="businessType"
                       className="text-sm font-medium text-gray-700"
                     >
                       Business Type
                     </label>
-                    <input
-                      type="text"
-                      name="business"
-                      value={editLead.business}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                      placeholder="Enter your pincode"
-                    />
+                    <div
+                      className="relative"
+                      onClick={toggleDropdownbusinessType}
+                    >
+                      <button
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        id="businessTypeDropDown"
+                        type="button"
+                      >
+                        {editLead.business === ""
+                          ? defaultTextbusinessTypeDropDown
+                          : editLead.business}
+                        <FaAngleDown className="ml-2 text-gray-400" />
+                      </button>
+                      {isDropdownVisiblebusinessType && (
+                        <div
+                          className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10"
+                          onMouseLeave={() =>
+                            setisDropdownVisiblebusinessType(false)
+                          }
+                        >
+                          <ul className="py-2 text-sm text-gray-700">
+                            {BusinessTypeDropDown.map(({ key, name }) => (
+                              <li
+                                key={key}
+                                onClick={() =>
+                                  handleDropdownisDropdownVisiblebusinessType(
+                                    name
+                                  )
+                                }
+                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              >
+                                {name}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
                   </div>
                   {/* -------------VIII--2--------------- */}
                   {/* -------------Advisory Experience------------- */}
@@ -849,7 +947,7 @@ export default function EditClientSO() {
                       Total Amount
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       name="totalAmount"
                       value={editLead.totalAmount}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
@@ -957,49 +1055,43 @@ export default function EditClientSO() {
                 <div className="flex space-x-4">
                   {/* -------------Product-------------> Means Segments */}
                   <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="segment"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Product
-                    </label>
-                    <div
-                      className="relative"
-                      onClick={toggleDropdownSegment}
-                      onMouseLeave={() => setisDropdownVisibleSegment(false)}
-                    >
-                      <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                        id="LeadStatusDropDown"
-                        type="button"
-                      >
-                        {defaultTextSegmentDropDown}
-                        <FaAngleDown className="ml-2 text-gray-400" />
-                      </button>
-                      {isDropdownVisibleSegment && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                          <ul className="py-2 text-sm text-gray-700">
-                            {segments.map((segment) => (
-                              <li
-                                key={segment.id}
-                                className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                              >
-                                <input
-                                  type="checkbox"
-                                  checked={editLead.segments.includes(
-                                    segment.segment
-                                  )}
-                                  onChange={() => handleCheckboxChange(segment)}
-                                  className="mr-2"
-                                />
-                                {segment.segment}{" "}
-                                {/* Assuming 'segment' is the property you want to display */}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
+                  <label htmlFor="segment" className="text-sm font-medium text-gray-700">
+        Segments
+      </label>
+      <div
+        className="relative"
+        onClick={toggleDropdownSegment}
+        onMouseLeave={() => setisDropdownVisibleSegment(false)}
+      >
+        <button
+          className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+          id="LeadStatusDropDown"
+          type="button"
+        >
+          {defaultTextSegmentDropDown}
+          <FaAngleDown className="ml-2 text-gray-400" />
+        </button>
+        {isDropdownVisibleSegment && (
+          <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+            <ul className="py-2 text-sm text-gray-700">
+              {segments.map((segment) => (
+                <li
+                  key={segment.id}
+                  className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                >
+                  <input
+                    type="checkbox"
+                    checked={editLead.segments.includes(segment.segment)}
+                    onChange={() => handleCheckboxChange(segment)}
+                    className="mr-2"
+                  />
+                  {segment.segment}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
                   </div>
                   {/* -------------XIV--2------------- */}
                   {/* -------------Sales Order No------------- */}
@@ -1011,7 +1103,7 @@ export default function EditClientSO() {
                       Sales Order No
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       name="saleS_ODR_NO"
                       value={editLead.saleS_ODR_NO}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
@@ -1042,7 +1134,7 @@ export default function EditClientSO() {
                     <input
                       type="text"
                       name="period_of_Subscription"
-                      value={editLead.period_of_subscription}
+                      value={editLead.period_of_Subscription}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Period of Subscription"
@@ -1067,7 +1159,9 @@ export default function EditClientSO() {
                         id="termDropDown"
                         type="button"
                       >
-                    {editLead.term}
+                        {editLead.term === ""
+                          ? defaultText_Term_DropDown
+                          : editLead.term}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisible_Term_ && (
@@ -1147,7 +1241,9 @@ export default function EditClientSO() {
                         id="serviceDropDown"
                         type="button"
                       >
-                        {editLead.service}
+                        {editLead.service === ""
+                          ? defaultText_Service_DropDown
+                          : editLead.service}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisible_Service_ && (
@@ -1178,12 +1274,31 @@ export default function EditClientSO() {
                     >
                       Status
                     </label>
-                    <input
-                      readOnly
-                      type="test"
+                    <select
                       name="status"
-                      value="Pending"
                       className="mt-1 p-2 border border-gray-300 rounded-md"
+                    >
+                      <option value="true">True</option>
+                      <option value="false">False</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="flex space-x-4">
+                  {/* -------------Service------------- */} {/* sms , wp,  */}
+                  {/* -------------Remark------------- */}
+                  <div className="flex flex-col w-full">
+                    <label
+                      htmlFor="remarks"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Remarks
+                    </label>
+                    <input
+                      type="text"
+                      name="remarks"
+                      value={editLead.remarks}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
                     />
                   </div>
                 </div>
@@ -1198,13 +1313,13 @@ export default function EditClientSO() {
               <div className="px-2 py-4 ">
                 <div className="flex flex-col ">
                   <label
-                    htmlFor="remarks"
+                    htmlFor="description"
                     className="text-sm font-medium text-gray-700"
                   >
                     Description
                   </label>
                   <ReactQuill
-                    name="remarks"
+                    name="description"
                     value={description}
                     className=" text-balance hyphens-auto max-w-5xl  max-h-60 h-60"
                     theme="snow"
@@ -1219,7 +1334,7 @@ export default function EditClientSO() {
                     type="submit"
                     className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
                   >
-                 Save
+                    Save
                   </button>
                 </div>
               </div>
