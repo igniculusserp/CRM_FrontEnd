@@ -1,26 +1,26 @@
+//react
 import { Link,  useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+//react-icons
+import { GiDiamonds } from "react-icons/gi";
 
+//react-toast
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {showSuccessToast, showErrorToast} from "../../utils/toastNotifications";
 
-import { getHostnamePart } from "../SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
-
+//imgUsed
 import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
 import CRMLoginPage from "./../../assets/images/CRMLoginPage.png";
 
-import { GiDiamonds } from "react-icons/gi";
-
+import { getHostnamePart } from "../SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import { main_base_url, protocal_url, tenant_base_url, urlchange_base } from "../../Config/config";
-
-//Loginjsx is now VerifyTenant.jsx 
 
 export default function VerifyTenant() {
   const [userName, setuserName] = useState("");
-  // const navigate = useNavigate();
+
   const name = getHostnamePart(); 
   console.log("Hostname part:", name); 
   
@@ -62,7 +62,6 @@ export default function VerifyTenant() {
         }
       } catch (error) {
         console.error("Error checking tenant:", error); // Log the error
-
       }
     };
 
