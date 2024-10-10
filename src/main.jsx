@@ -84,6 +84,7 @@ import Reports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/Report
 // Edit Client SO
 import EditClientSO from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/RepoComponents/EditClientSO.jsx';
 import MISReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx';
+import CreateClient from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Client/CreateClient.jsx';
  
 
 
@@ -143,8 +144,11 @@ const router = createBrowserRouter([
           { path: '/sidebar/createextension',    element : <CreateExtension/> },
 
 
-      
+      // CLIENT => INNER COMPONENT
       { path: '/sidebar/client',             element : <Client/> },
+      { path: '/sidebar/createclient',       element : <CreateClient/> },
+      { path: '/sidebar/editclient/:id',   element : <CreateClient/> },
+      
       { path: '/sidebar/salesorder',         element : <SalesOrder/> },
       { path: '/sidebar/createorder',        element : <CreateOrder/> },
       { path: '/sidebar/mailBox',            element : <MailBox/> },
