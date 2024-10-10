@@ -1,41 +1,39 @@
-import { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { FaAngleDown } from "react-icons/fa";
-import ReactQuill from "react-quill";
-import axios from "axios";
+import { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { FaAngleDown } from 'react-icons/fa';
+import ReactQuill from 'react-quill';
+import axios from 'axios';
 
+import { tenant_base_url, protocal_url } from './../../../../Config/config';
 
-import { tenant_base_url, protocal_url } from "./../../../../Config/config"
-
-import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
-
+import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 
 const CreateFollowUp = () => {
   const { id } = useParams();
-  const bearer_token = localStorage.getItem("token");
+  const bearer_token = localStorage.getItem('token');
   const name = getHostnamePart();
   const navigate = useNavigate();
 
+  const [isEditMode, setIsEditMode] = useState(false);
   const [followupsData, setFollowupsData] = useState({
-    id: "",
-    leadId: "",
-    name: "",
-    language: "",
-    mobileNo: "",
-    phoneNo: "",
-    email: "",
-    assigned_To: "",
+    id: '',
+    leadId: '',
+    name: '',
+    language: '',
+    mobileNo: '',
+    phoneNo: '',
+    email: '',
+    assigned_To: '',
     segments: [],
-    call_bck_DateTime: "",
-    lastModifiedBy: "",
+    call_bck_DateTime: '',
+    lastModifiedBy: '',
   });
 
-  const [description, setDescription] = useState(""); // For Quill editor
+  const [description, setDescription] = useState(''); // For Quill editor
 
   // Fetch Data by ID
   useEffect(() => {
     fetchDataById();
-     
   }, [id, bearer_token, name]);
 
   // Function to fetch data by ID
@@ -56,23 +54,23 @@ const CreateFollowUp = () => {
         const followup = response.data.data;
         setFollowupsData({
           id: followup.id,
-          leadId: followup.leadId || "",
-          name: followup.name || "",
-          language: followup.language || "",
-          mobileNo: followup.mobileNo || "",
-          phoneNo: followup.phoneNo || "",
-          email: followup.email || "",
-          assigned_To: followup.assigned_To || "",
+          leadId: followup.leadId || '',
+          name: followup.name || '',
+          language: followup.language || '',
+          mobileNo: followup.mobileNo || '',
+          phoneNo: followup.phoneNo || '',
+          email: followup.email || '',
+          assigned_To: followup.assigned_To || '',
           segments: followup.segments || [],
-          call_bck_DateTime: followup.call_bck_DateTime || "",
-          lastModifiedBy: followup.lastModifiedBy || "",
+          call_bck_DateTime: followup.call_bck_DateTime || '',
+          lastModifiedBy: followup.lastModifiedBy || '',
         });
 
         // Set description in Quill editor
-        setDescription(followup.description || "");
+        setDescription(followup.description || '');
       }
     } catch (error) {
-      console.error("Error fetching data: ", error);
+      console.error('Error fetching data: ', error);
     }
   };
 
@@ -93,10 +91,10 @@ const CreateFollowUp = () => {
   // Handle PUT request for submitting data
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     if (!bearer_token) {
-      alert("No token found, please log in again.");
+      alert('No token found, please log in again.');
       return;
     }
 
@@ -104,7 +102,7 @@ const CreateFollowUp = () => {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       };
 
@@ -125,10 +123,10 @@ const CreateFollowUp = () => {
 
       // Log the URL and payload for debugging
       console.log(
-        "PUT URL:",
+        'PUT URL:',
         `${protocal_url}${name}.${tenant_base_url}/FollowUp/update`
       );
-      console.log("formData_PUT:", formData_PUT);
+      console.log('formData_PUT:', formData_PUT);
 
       // Make the PUT request
       await axios.put(
@@ -137,26 +135,26 @@ const CreateFollowUp = () => {
         config
       );
 
-      alert("Follow updated successfully!");
+      alert('Follow updated successfully!');
       navigate(`/sidebar/followup`);
     } catch (error) {
       // Log the detailed error response
-      console.error("Error response:", error.response);
+      console.error('Error response:', error.response);
 
       if (error.response && error.response.data && error.response.data.errors) {
         const validationErrors = error.response.data.errors;
-        console.error("Validation errors:", validationErrors);
+        console.error('Validation errors:', validationErrors);
 
         // Create a readable error message from the validation errors
-        let errorMessage = "Validation errors:\n";
+        let errorMessage = 'Validation errors:\n';
         for (const field in validationErrors) {
           if (validationErrors.hasOwnProperty(field)) {
-            errorMessage += `${field}: ${validationErrors[field].join(", ")}\n`;
+            errorMessage += `${field}: ${validationErrors[field].join(', ')}\n`;
           }
         }
         alert(errorMessage);
       } else {
-        alert("An error occurred. Please try again.");
+        alert('An error occurred. Please try again.');
       }
     }
   };
@@ -167,7 +165,7 @@ const CreateFollowUp = () => {
 
   // Segment GET API Is being used here
   async function handleSegment() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
@@ -182,7 +180,7 @@ const CreateFollowUp = () => {
       setSegments(response.data.data);
       // console.log("segment:", response.data.data);
     } catch (error) {
-      console.error("Error fetching segments:", error);
+      console.error('Error fetching segments:', error);
     }
   }
 
@@ -191,7 +189,7 @@ const CreateFollowUp = () => {
   }, []);
 
   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
-    useState("Select Segment");
+    useState('Select Segment');
   const [isDropdownVisibleSegment, setisDropdownVisibleSegment] =
     useState(false);
 
@@ -219,7 +217,7 @@ const CreateFollowUp = () => {
       segments: updatedSegments,
     }));
 
-    console.log("Selected segments:", updatedSegments);
+    console.log('Selected segments:', updatedSegments);
   };
 
   // Segment GET API Is being used here
@@ -229,7 +227,7 @@ const CreateFollowUp = () => {
   const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
 
   async function handleAssigned_To() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
@@ -242,20 +240,19 @@ const CreateFollowUp = () => {
         config
       );
       setassigned_ToDropDown(response.data);
-      console.log("status:", response.data);
+      console.log('status:', response.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
 
   useEffect(() => {
     handleAssigned_To();
-    
   }, []);
 
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
-    useState("Select Assigned");
+    useState('Select Assigned');
   const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
     useState(false);
 
@@ -268,7 +265,7 @@ const CreateFollowUp = () => {
     assigned_To_Role
   ) => {
     setdefaultTextassigned_ToDropDown(
-      assigned_To_Username + " " + assigned_To_Role
+      assigned_To_Username + ' ' + assigned_To_Role
     );
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     setFollowupsData((prevTask) => ({
@@ -277,11 +274,10 @@ const CreateFollowUp = () => {
     }));
   };
 
-
   return (
     <>
       {/* TOP PART */}
-      <div className="px-3 py-4 bg-white rounded-md flex items-center justify-between m-3">
+      <div className="px-3 py-2 bg-white rounded-md flex items-center justify-between m-3">
         <h1 className="text-xl font-bold">Create Follow Up</h1>
         <Link to="/sidebar/followup">
           <button className="px-6 py-2 text-center text-sm border border-blue-600 text-blue-600 rounded-md">
@@ -292,261 +288,256 @@ const CreateFollowUp = () => {
 
       {/* FOLLOW-UP FORM */}
       <form onSubmit={handleSubmit}>
-        <div className="m-3">
-          <h1 className="py-3 px-6 rounded-t-lg bg-cyan-500 text-white text-md font-bold">
+        <div className="m-3 shadow-lg">
+          <h1 className="py-2 px-3 rounded-t-lg bg-cyan-500 text-white text-md font-medium">
             Follow Up Details
           </h1>
-          <div className="bg-white px-6 py-6">
-            <div className="flex gap-4">
-              {/* LEFT COLUMN */}
-              <div className="flex-1 flex flex-col">
-                {/* ..................Lead ID................. */}
-                <label
-                  htmlFor="leadId"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Lead ID
-                </label>
-                <input
-                  type="text"
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
-                  name="leadId"
-                  value={followupsData.leadId}
-                  onChange={handleChange}
-                />
-                {/* ..................Language................. */}
-                <label
-                  htmlFor="language"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Language
-                </label>
-                <input
-                  type="text"
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
-                  name="language"
-                  value={followupsData.language}
-                  onChange={handleChange}
-                />
-                {/* ..................Mobile Number................. */}
-                <label
-                  htmlFor="mobileNo"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Mobile Number
-                </label>
-                <input
-                  type="text"
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
-                  name="mobileNo"
-                  value={followupsData.mobileNo}
-                  onChange={handleChange}
-                />
-
-                {/* -------------Assigned to------------- */}
-                <div className="flex flex-col w-1/1 relative">
-                  <label
-                    htmlFor="leadesStatus"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Assigned to
-                  </label>
-                  <div
-                    className="relative"
-                    onClick={toggleDropdownassigned_ToDropDown}
-                    onMouseLeave={() => setisDropdownassigned_ToDropDown(false)}
-                  >
-                    <button
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                      id="LeadStatusDropDown"
-                      type="button"
+          <div className="bg-white px-1 rounded-b-xl">
+              <div className="grid gap-2 p-2">
+                {/* FIRST ROW */}
+                <div className="flex space-x-4">
+                  {/* LEAD ID FIELD */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="leadId"
+                      className="text-sm font-medium text-gray-700"
                     >
-                      {followupsData.assigned_To === ""
-                        ? defaultTextassigned_ToDropDown
-                        : followupsData.assigned_To}
-
-                      <FaAngleDown className="ml-2 text-gray-400" />
-                    </button>
-                    {isDropdownassigned_ToDropDown && (
-                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                        <ul className="py-2 text-sm text-gray-700">
-                          {assigned_ToDropDown.map(
-                            ({ key, userName, role }) => (
-                              <li
-                                key={key}
-                                onClick={() =>
-                                  handleDropdownassigned_ToDropDown(
-                                    userName,
-                                    role
-                                  )
-                                }
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                              >
-                                {userName}-({role})
-                              </li>
-                            )
-                          )}
-                        </ul>
-                      </div>
-                    )}
+                      Lead Id
+                    </label>
+                    <input
+                      type="number"
+                      name="leadId"
+                      id="leadId"
+                      value={followupsData.leadId}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Entere verox peron"
+                    />
+                  </div>
+                  {/* CLIENT NAME FIELD */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="name"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Client Name
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      id="name"
+                      value={followupsData.name}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Entere verox peron"
+                    />
                   </div>
                 </div>
-                {/* ------------Call Back Date------------- */}
-                <label
-                  htmlFor="call_bck_DateTime"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Call Back Date
-                </label>
-                <input
-                  type="datetime-local"
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
-                  name="call_bck_DateTime"
-                  value={followupsData.call_bck_DateTime}
-                  onChange={handleChange}
-                />
-              </div>
-
-              {/* RIGHT COLUMN */}
-              <div className="flex-1 flex flex-col">
-                {/* ................Client Name................... */}
-                <label
-                  htmlFor="name"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Client Name
-                </label>
-                <input
-                  type="text"
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
-                  name="name"
-                  value={followupsData.name}
-                  onChange={handleChange}
-                />
-                {/* ..................Phone Number................. */}
-                <label
-                  htmlFor="phoneNo"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Phone Number
-                </label>
-                <input
-                  type="text"
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
-                  name="phoneNo"
-                  value={followupsData.phoneNo}
-                  onChange={handleChange}
-                />
-                {/* ..........................Email..................... */}
-                <label
-                  htmlFor="email"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
-                  name="email"
-                  value={followupsData.email}
-                  onChange={handleChange}
-                />
-                {/* -------------Segments------------- */}
-                <div className="flex flex-col w-1/1 relative">
-                  <label
-                    htmlFor="segment"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Segment
-                  </label>
-                  <div
-                    className="relative"
-                    onClick={toggleDropdownSegment}
-                    onMouseLeave={() => setisDropdownVisibleSegment(false)}
-                  >
-                    <button
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                      id="LeadStatusDropDown"
-                      type="button"
+                {/* SECOND ROW */}
+                <div className="flex space-x-4">
+                  {/* LANGUAGE FIELD */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="language"
+                      className="text-sm font-medium text-gray-700"
                     >
-                      {defaultTextSegmentDropDown}
-
-                      <FaAngleDown className="ml-2 text-gray-400" />
-                    </button>
-                    {isDropdownVisibleSegment && (
-                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                        <ul className="py-2 text-sm text-gray-700">
-                          {segments.map((segment) => (
-                            <li
-                              key={segment.id}
-                              className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                            >
-                              <input
-                                type="checkbox"
-                                checked={followupsData.segments.includes(
-                                  segment.segment
-                                )} // Ensure correct checked state
-                                onChange={() => handleCheckboxChange(segment)} // Handle checkbox change
-                                className="mr-2"
-                              />
-                              {segment.segment}{" "}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+                      Language
+                    </label>
+                    <input
+                      type="text"
+                      name="language"
+                      id="language"
+                      value={followupsData.language}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Entere verox peron"
+                    />
+                  </div>
+                  {/* phoneNo FIELD */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="phoneNo"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      phone Number
+                    </label>
+                    <input
+                      type="number"
+                      name="phoneNo"
+                      id="phoneNo"
+                      value={followupsData.phoneNo}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Entere verox peron"
+                    />
                   </div>
                 </div>
-                {/* .................Modified By...................... */}
-                <label
-                  htmlFor="lastModifiedBy"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Last Modified By
-                </label>
-                <input
-                  type="text"
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
-                  name="lastModifiedBy"
-                  value={followupsData.lastModifiedBy}
-                  onChange={handleChange}
-                />
+                {/* THIRD ROW */}
+                <div className="flex space-x-4">
+                  {/* MOBILE NUMBER FIELD */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="mobileNo"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      mobile Number
+                    </label>
+                    <input
+                      type="number"
+                      name="mobileNo"
+                      id="mobileNo"
+                      value={followupsData.mobileNo}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Entere verox peron"
+                    />
+                  </div>
+                  {/* EMAIL FIELD */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="mobileNo"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      name="mobileNo"
+                      id="mobileNo"
+                      value={followupsData.email}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Entere verox peron"
+                    />
+                  </div>
+                </div>
+                {/* FOURTH ROW */}
+                <div className="flex space-x-4">
+                  {/* ASSIGNED TO DROPDOWN */}
+                  <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col w-1/1 relative">
+                      <label
+                        htmlFor="leadesStatus"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Assigned to
+                      </label>
+                      <div
+                        className="relative"
+                        onClick={toggleDropdownassigned_ToDropDown}
+                        onMouseLeave={() =>
+                          setisDropdownassigned_ToDropDown(false)
+                        }
+                      >
+                        <button
+                          className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                          id="LeadStatusDropDown"
+                          type="button"
+                        >
+                          {followupsData.assigned_To === ''
+                            ? defaultTextassigned_ToDropDown
+                            : followupsData.assigned_To}
+
+                          <FaAngleDown className="ml-2 text-gray-400" />
+                        </button>
+                        {isDropdownassigned_ToDropDown && (
+                          <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                            <ul className="py-2 text-sm text-gray-700">
+                              {assigned_ToDropDown.map(
+                                ({ key, userName, role }) => (
+                                  <li
+                                    key={key}
+                                    onClick={() =>
+                                      handleDropdownassigned_ToDropDown(
+                                        userName,
+                                        role
+                                      )
+                                    }
+                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                  >
+                                    {userName}-({role})
+                                  </li>
+                                )
+                              )}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  {/* CALL BACK DATE FIELD */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="call_bck_DateTime"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Call Back Date
+                    </label>
+                    <input
+                      type="date"
+                      name="call_bck_DateTime"
+                      id="call_bck_DateTime"
+                      value={followupsData.call_bck_DateTime}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Entere verox peron"
+                    />
+                  </div>
+                </div>
+                {/* FIFTH ROW */}
+                <div className="flex space-x-4">
+                  {/* LAST MODIFIED BY FIELD */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="lastModifiedBy"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Last Modified By
+                    </label>
+                    <input
+                      type="date"
+                      name="lastModifiedBy"
+                      id="lastModifiedBy"
+                      value={followupsData.lastModifiedBy}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Entere verox peron"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
           </div>
         </div>
-        <div className="m-3">
-          <h1 className="py-3 px-6 rounded-t-lg bg-cyan-500 text-white text-md font-bold">
+        {/* DESCRIPTION */}
+        <div className="bg-white rounded-xl shadow-lg mx-3 mb-6">
+          <h2 className="py-2 font-medium px-3 rounded-t-xl text-white bg-cyan-500">
             Description Information
-          </h1>
-          <div className="bg-white px-6 py-6">
-            <div className="flex">
-              {/* Description Information COLUMN */}
-              <div className="flex-1 flex flex-col">
-                <label
-                  htmlFor="description"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Description
-                </label>
-                <ReactQuill
-                  value={description}
-                  className="text-balance hyphens-auto max-w-5xl max-h-60 h-60"
-                  theme="snow"
-                  onChange={setDescriptionValue}
-                  placeholder="Add Description"
-                />
-              </div>
-            </div>
-            {/* BUTTONS */}
-            <div className="flex items-center justify-end gap-4 py-10 px-2 mr-20">
-              <button
-                type="submit"
-                className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+          </h2>
+          <div className="p-2 ">
+            <div className="flex flex-col">
+              <label
+                htmlFor="description"
+                className="text-sm  font-medium text-gray-700"
               >
-                Save
-              </button>
+                Description
+              </label>
+              <ReactQuill
+                name="description"
+                value={description}
+                className="text-balance hyphens-auto  max-h-full h-60 mt-1"
+                theme="snow"
+                onChange={setDescription}
+                placeholder="Add Description"
+              />
             </div>
+          </div>
+          <div className="flex justify-end px-2">
+            <button
+              type="submit"
+              className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+            >
+              {isEditMode ? 'Update' : 'Save'}
+            </button>
           </div>
         </div>
       </form>

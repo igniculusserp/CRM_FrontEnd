@@ -1,54 +1,54 @@
 //react
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 //reactIcon->
-import { FaAngleDown } from "react-icons/fa";
+import { FaAngleDown } from 'react-icons/fa';
 //reactPackages
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 //external Packages
-import axios from "axios";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import axios from 'axios';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 //file
-import {tenant_base_url, protocal_url} from "../../../../Config/config";
+import { tenant_base_url, protocal_url } from '../../../../Config/config';
 //Images
-import profilepic from "./../../../../assets/images/profilePicEditLead.png";
+import profilepic from './../../../../assets/images/profilePicEditLead.png';
 //------------------------------------------------------------------------------->CODE STARTS FROM HERE<-------------------------------------------------------------------------------
 export default function CreateClient() {
   //to make id unique
   const { id } = useParams();
   const navigate = useNavigate();
-  
+
   //form description is kept-out
-  const [description, setdescription] = useState("Add Text Here");
+  const [description, setdescription] = useState('Add Text Here');
   const [editLead, seteditLead] = useState({
-    id: "",
-    name: "",
-    language: "",
-    company: "",
-    email: "",
-    title: "",
-    leadSource: "",
-    leadesStatus: "",
-    mobNo: "",
-    phNo: "",
-    assigned_To: "",
-    street: "",
-    pinCode: "",
-    country: "",
-    city: "",
-    state: "",
-    riskCapcity: "",
-    tradingTime: "",
-    tradingType: "",
-    investmet: "",
-    advisoryExp: "",
-    trialStartDate: "",
-    trialEndDate: "",
-    tradingYears: "",
-    callBackDateTime: "",
-    contactId: "",
-    lastModifiedBy: "",
+    id: '',
+    name: '',
+    language: '',
+    company: '',
+    email: '',
+    title: '',
+    leadSource: '',
+    leadesStatus: '',
+    mobNo: '',
+    phNo: '',
+    assigned_To: '',
+    street: '',
+    pinCode: '',
+    country: '',
+    city: '',
+    state: '',
+    riskCapcity: '',
+    tradingTime: '',
+    tradingType: '',
+    investmet: '',
+    advisoryExp: '',
+    trialStartDate: '',
+    trialEndDate: '',
+    tradingYears: '',
+    callBackDateTime: '',
+    contactId: '',
+    lastModifiedBy: '',
     segments: [],
   });
 
@@ -56,7 +56,7 @@ export default function CreateClient() {
   //to make code for particluar company
   const fullURL = window.location.href;
   const url = new URL(fullURL);
-  const name = url.hostname.split(".")[0];
+  const name = url.hostname.split('.')[0];
 
   //imp to identify mode
   const [isEditMode, setIsEditMode] = useState(false);
@@ -73,7 +73,7 @@ export default function CreateClient() {
 
   //GET by ID
   async function handleLead() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -87,51 +87,51 @@ export default function CreateClient() {
       const data = response.data.data;
       setdescription(data.description);
       seteditLead({
-        id: data.id || "",
-        name: data.name || "",
-        language: data.language || "",
-        company: data.company || "",
-        title: data.tital || "",
-        leadSource: data.leadsSource || "",
-        leadesStatus: data.leadesStatus || "",
-        mobNo: data.mobileNo || "",
-        phNo: data.phoneNo || "",
-        email: data.email || "",
-        assigned_To: data.assigned_To || "",
-        callBackDateTime: data.call_bck_DateTime || "",
-        street: data.street || "",
-        pinCode: data.postalCode || "",
-        country: data.country || "",
-        city: data.city || "",
-        state: data.state || "",
-        riskCapcity: data.risk_Capacity || "",
-        tradingTime: data.tradingTime || "",
-        tradingType: data.tradingType || "",
-        investmet: data.investment || "",
-        advisoryExp: data.advisaryExp || "",
+        id: data.id || '',
+        name: data.name || '',
+        language: data.language || '',
+        company: data.company || '',
+        title: data.tital || '',
+        leadSource: data.leadsSource || '',
+        leadesStatus: data.leadesStatus || '',
+        mobNo: data.mobileNo || '',
+        phNo: data.phoneNo || '',
+        email: data.email || '',
+        assigned_To: data.assigned_To || '',
+        callBackDateTime: data.call_bck_DateTime || '',
+        street: data.street || '',
+        pinCode: data.postalCode || '',
+        country: data.country || '',
+        city: data.city || '',
+        state: data.state || '',
+        riskCapcity: data.risk_Capacity || '',
+        tradingTime: data.tradingTime || '',
+        tradingType: data.tradingType || '',
+        investmet: data.investment || '',
+        advisoryExp: data.advisaryExp || '',
         segments: data.segments || [],
-        trialStartDate: data.trialStartDate || "",
-        trialEndDate: data.trialEndDate || "",
-        tradingYears: data.trading_yrs || "",
-        contactId: data.contactId || "",
-        lastModifiedBy: data.lastModifiedBy || "",
+        trialStartDate: data.trialStartDate || '',
+        trialEndDate: data.trialEndDate || '',
+        tradingYears: data.trading_yrs || '',
+        contactId: data.contactId || '',
+        lastModifiedBy: data.lastModifiedBy || '',
       });
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
     }
   }
 
   //----------------------------------------------------------------------------------------
   //LeadSourceDropDown
   const LeadSourceDropDown = [
-    { key: 1, name: "Cold Call" },
-    { key: 2, name: "Advertisement" },
-    { key: 3, name: "Web Download" },
-    { key: 4, name: "Seminar Partner" },
+    { key: 1, name: 'Cold Call' },
+    { key: 2, name: 'Advertisement' },
+    { key: 3, name: 'Web Download' },
+    { key: 4, name: 'Seminar Partner' },
   ];
 
   const [defaultTextLeadSourceDropDown, setDefaultTextLeadSourceDropDown] =
-    useState("Select Lead");
+    useState('Select Lead');
 
   const [isDropdownVisibleLeadSource, setisDropdownVisibleLeadSource] =
     useState(false);
@@ -151,10 +151,10 @@ export default function CreateClient() {
 
   //----------------------------------------------------------------------------------------
   //LeadStatusDropDown GET API Is being used here
-  const [leadStatus, setleadStatus] = useState("");
+  const [leadStatus, setleadStatus] = useState('');
 
   async function handleLeadStatus() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
@@ -167,9 +167,9 @@ export default function CreateClient() {
         config
       );
       setleadStatus(response.data.data);
-      console.log("status:", response.data.data);
+      console.log('status:', response.data.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -177,7 +177,6 @@ export default function CreateClient() {
   useEffect(() => {
     handleLeadStatus();
   }, []);
-
 
   const [defaultTextLeadStatusDropDown, setdefaultTextLeadStatusDropDown] =
     useState('Select Status');
@@ -201,7 +200,7 @@ export default function CreateClient() {
 
   // Segment GET API Is being used here
   async function handleSegment() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
@@ -216,7 +215,7 @@ export default function CreateClient() {
       setSegments(response.data.data);
       // console.log("segment:", response.data.data);
     } catch (error) {
-      console.error("Error fetching segments:", error);
+      console.error('Error fetching segments:', error);
     }
   }
 
@@ -224,10 +223,10 @@ export default function CreateClient() {
     handleSegment();
   }, []);
 
-  const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] = useState(
-    "Select Segment"
-  );
-  const [isDropdownVisibleSegment, setisDropdownVisibleSegment] = useState(false);
+  const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
+    useState('Select Segment');
+  const [isDropdownVisibleSegment, setisDropdownVisibleSegment] =
+    useState(false);
 
   const toggleDropdownSegment = () => {
     setisDropdownVisibleSegment(true);
@@ -251,25 +250,21 @@ export default function CreateClient() {
       segments: updatedSegments,
     }));
 
-    console.log("Selected segments:", updatedSegments);
+    console.log('Selected segments:', updatedSegments);
   };
   // Segment GET API Is being used here
- 
-
-  
-
 
   //----------------------------------------------------------------------------------------
   //assigned_ToDropDown
   const assigned_ToDropDown = [
-    { key: 1, name: "Staff" },
-    { key: 2, name: "Manager" },
-    { key: 3, name: "Company" },
-    { key: 4, name: "Employee" },
+    { key: 1, name: 'Staff' },
+    { key: 2, name: 'Manager' },
+    { key: 3, name: 'Company' },
+    { key: 4, name: 'Employee' },
   ];
 
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
-    useState("Select Assigned");
+    useState('Select Assigned');
   const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
     useState(false);
 
@@ -294,18 +289,17 @@ export default function CreateClient() {
     }));
   };
 
-
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       };
       const formData_PUT = {
@@ -363,7 +357,7 @@ export default function CreateClient() {
         tradingType: editLead.tradingType,
         investment: editLead.investmet,
         advisaryExp: editLead.advisoryExp,
-        segments  : editLead.segments,
+        segments: editLead.segments,
         trialStartDate: editLead.trialStartDate,
         trialEndDate: editLead.trialEndDate,
         trading_yrs: editLead.tradingYears,
@@ -380,8 +374,8 @@ export default function CreateClient() {
           formData_PUT,
           config
         );
-        alert("Contact updated successfully!");
-        navigate(`/sidebar/contact`)
+        alert('Contact updated successfully!');
+        navigate(`/sidebar/contact`);
       } else {
         // POST request to create
         await axios.post(
@@ -389,14 +383,14 @@ export default function CreateClient() {
           formData_POST,
           config
         );
-        alert("Contact created successfully!");
-        navigate(`/sidebar/contact`)
+        alert('Contact created successfully!');
+        navigate(`/sidebar/contact`);
       }
 
       // Redirect after a short delay
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error occurred. Please try again.");
+      console.error('Error:', error);
+      alert('An error occurred. Please try again.');
     }
   };
 
@@ -405,7 +399,9 @@ export default function CreateClient() {
       <div className="min-h-screen flex flex-col mt-3">
         <div className="flex justify-between mx-3 px-3 bg-white border rounded py-3">
           <div className="flex items-center justify-center gap-3">
-            <h1 className="text-xl">{isEditMode? <h1>Edit Contact</h1>: <>Create Contact</>}</h1>
+            <h1 className="text-xl">
+              {isEditMode ? <h1>Edit Client</h1> : <>Create Client</>}
+            </h1>
             <h1 className="bg-blue-500 text-xs text-white px-4 py-1 font-medium rounded-lg">
               Edit Page Layout
             </h1>
@@ -429,21 +425,21 @@ export default function CreateClient() {
             {/*CHILD Div------ Image Input */}
             <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-                Contact Image
+                Client Image
               </h2>
               <img src={profilepic} className=" max-h-24 max-w-24 p-3" />
             </div>
 
             <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-                Contact Details
+                Client Details
               </h2>
 
               {/* -------------CONTACT INFORMATION STARTS FROM HERE------------- */}
               {/*CHILD Div------ Image Input */}
               {/* -------------1------------- */}
               {/* -------------Name------------- */}
-              <div className="py-2 px-4">
+              <div className="grid gap-2 p-2">
                 <div className="flex space-x-4  ">
                   <div className="flex flex-col w-1/2">
                     <label
@@ -528,15 +524,17 @@ export default function CreateClient() {
                     <div
                       className="relative"
                       onClick={toggleDropdownLeadSource}
-                      onMouseLeave={()=>(setisDropdownVisibleLeadSource(false))}
+                      onMouseLeave={() => setisDropdownVisibleLeadSource(false)}
                     >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="LeadSourceDropDown"
                         type="button"
                       >
-                      {isEditMode ? editLead.leadSource : defaultTextLeadSourceDropDown}
-                      <FaAngleDown className="ml-2 text-gray-400" />
+                        {isEditMode
+                          ? editLead.leadSource
+                          : defaultTextLeadSourceDropDown}
+                        <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLeadSource && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
@@ -567,14 +565,16 @@ export default function CreateClient() {
                     <div
                       className="relative"
                       onClick={toggleDropdownLeadStatus}
-                      onMouseLeave={()=>(setisDropdownVisibleLeadStatus(false ))}
+                      onMouseLeave={() => setisDropdownVisibleLeadStatus(false)}
                     >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="LeadStatusDropDown"
                         type="button"
                       >
-                        {isEditMode ? editLead.leadesStatus : defaultTextLeadStatusDropDown}
+                        {isEditMode
+                          ? editLead.leadesStatus
+                          : defaultTextLeadStatusDropDown}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLeadStatus && (
@@ -663,18 +663,22 @@ export default function CreateClient() {
                     <div
                       className="relative"
                       onClick={toggleDropdownassigned_ToDropDown}
-                      onMouseLeave={()=>setisDropdownassigned_ToDropDown(false)}
+                      onMouseLeave={() =>
+                        setisDropdownassigned_ToDropDown(false)
+                      }
                     >
                       <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        className="mt-1 px-4 py-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="assigned_ToDropDown"
                         type="button"
                       >
-                      {isEditMode ? editLead.assigned_To : defaultTextassigned_ToDropDown}
+                        {isEditMode
+                          ? editLead.assigned_To
+                          : defaultTextassigned_ToDropDown}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownassigned_ToDropDown && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-7 z-10">
                           <ul className="py-2 text-sm text-gray-700">
                             {assigned_ToDropDown.map(({ key, name }) => (
                               <li
@@ -703,7 +707,7 @@ export default function CreateClient() {
 
               {/* -------------6------------- */}
               {/* -------------Street------------- */}
-              <div className="py-2 px-4">
+              <div className="grid gap-2 p-2">
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
@@ -796,7 +800,7 @@ export default function CreateClient() {
                     />
                   </div>
                   {/* -------------Description------------- */}
-                </div>{" "}
+                </div>{' '}
                 {/* -------------9------------- */}
                 {/* -------------Risk Capcity------------- */}
                 <div className="flex space-x-4">
@@ -888,46 +892,52 @@ export default function CreateClient() {
                       placeholder="Enter your Advisory"
                     />
                   </div>
-         {/* -------------Segments------------- */}
-        <div className="flex flex-col w-1/2 relative">
-          <label htmlFor="segment" className="text-sm font-medium text-gray-700">
-            Segment
-          </label>
-          <div
-            className="relative"
-            onClick={toggleDropdownSegment}
-            onMouseLeave={() => setisDropdownVisibleSegment(false)}
-          >
-            <button
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-              id="LeadStatusDropDown"
-              type="button"
-            >
-              {defaultTextSegmentDropDown}
-              <FaAngleDown className="ml-2 text-gray-400" />
-            </button>
-            {isDropdownVisibleSegment && (
-              <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                <ul className="py-2 text-sm text-gray-700">
-                  {segments.map((segment) => (
-                    <li
-                      key={segment.id}
-                      className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                  {/* -------------Segments------------- */}
+                  <div className="flex flex-col w-1/2 relative">
+                    <label
+                      htmlFor="segment"
+                      className="text-sm font-medium text-gray-700"
                     >
-                      <input
-                        type="checkbox"
-                        checked={editLead.segments.includes(segment.segment)}
-                        onChange={() => handleCheckboxChange(segment)}
-                        className="mr-2"
-                      />
-                      {segment.segment} {/* Assuming 'segment' is the property you want to display */}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        </div>
+                      Segment
+                    </label>
+                    <div
+                      className="relative"
+                      onClick={toggleDropdownSegment}
+                      onMouseLeave={() => setisDropdownVisibleSegment(false)}
+                    >
+                      <button
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        id="LeadStatusDropDown"
+                        type="button"
+                      >
+                        {defaultTextSegmentDropDown}
+                        <FaAngleDown className="ml-2 text-gray-400" />
+                      </button>
+                      {isDropdownVisibleSegment && (
+                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                          <ul className="py-2 text-sm text-gray-700">
+                            {segments.map((segment) => (
+                              <li
+                                key={segment.id}
+                                className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={editLead.segments.includes(
+                                    segment.segment
+                                  )}
+                                  onChange={() => handleCheckboxChange(segment)}
+                                  className="mr-2"
+                                />
+                                {segment.segment}{' '}
+                                {/* Assuming 'segment' is the property you want to display */}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
                 {/* -------------11------------- */}
                 {/* -------------Trail Start Date------------- */}
@@ -1039,37 +1049,36 @@ export default function CreateClient() {
                 </div>
               </div>
             </div>
-            <div className="mx-3 bg-white rounded-xl shadow-md ">
+            {/* DESCRIPTION */}
+            <div className="bg-white rounded-xl shadow-md mx-3 mb-6">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                 Description Information
               </h2>
-              <div className="px-2 py-4 ">
-                <div className="flex flex-col ">
+              <div className="p-2 ">
+                <div className="flex flex-col">
                   <label
                     htmlFor="description"
-                    className="text-sm font-medium text-gray-700"
+                    className="text-sm  font-medium text-gray-700"
                   >
                     Description
                   </label>
                   <ReactQuill
                     name="description"
                     value={description}
-                    className=" text-balance hyphens-auto max-w-5xl  max-h-60 h-60"
+                    className="text-balance hyphens-auto  max-h-full h-60 mt-1"
                     theme="snow"
                     onChange={setdescription}
                     placeholder="Add Description"
                   />
                 </div>
               </div>
-              <div className="flex justify-end gap-5 mr-10">
-                <div className="flex justify-end mr-20">
-                  <button
-                    type="submit"
-                    className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
-                  >
-                    {isEditMode ? "Update" : "Save"}
-                  </button>
-                </div>
+              <div className="flex justify-end px-2">
+                <button
+                  type="submit"
+                  className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+                >
+                  {isEditMode ? 'Update' : 'Save'}
+                </button>
               </div>
             </div>
           </div>

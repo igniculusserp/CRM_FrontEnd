@@ -32,8 +32,10 @@ export default function CreateExtension() {
   const [defaultUsernameDropdownText, setDefaultUsernameDropdownText] =
     useState('Username');
   const [extensionNumberDropdown, setExtensionNumberDropdown] = useState(false);
-  const [defaultExtensionNuberDropdownText, setDefaultExtensionNuberDropdownText] =
-    useState('Username');
+  const [
+    defaultExtensionNuberDropdownText,
+    setDefaultExtensionNuberDropdownText,
+  ] = useState('Username');
 
   // USERNAME DUMMY DATA
   const usernameData = [
@@ -56,53 +58,57 @@ export default function CreateExtension() {
     }));
   };
 
-    // USERNAME DUMMY DATA
-    const extensionNumberData = [
-        { key: 1, name: 45 },
-        { key: 2, name: 45 },
-        { key: 3, name: 45 },
-      ];
-    
-      // TOGGLE USERNAME DROPDOWN
-      const toggleDropdownExtensionNumber = () => {
-        setExtensionNumberDropdown(!extensionNumberDropdown);
-      };
-    
-      const handleDropdownExtensionNumber = (name) => {
-        setDefaultExtensionNuberDropdownText(name);
-        setExtensionNumberDropdown(!extensionNumberDropdown);
-        editExtension((prev) => ({
-          ...prev,
-          name: name,
-        }));
-      };
+  // USERNAME DUMMY DATA
+  const extensionNumberData = [
+    { key: 1, name: 45 },
+    { key: 2, name: 45 },
+    { key: 3, name: 45 },
+  ];
+
+  // TOGGLE USERNAME DROPDOWN
+  const toggleDropdownExtensionNumber = () => {
+    setExtensionNumberDropdown(!extensionNumberDropdown);
+  };
+
+  const handleDropdownExtensionNumber = (name) => {
+    setDefaultExtensionNuberDropdownText(name);
+    setExtensionNumberDropdown(!extensionNumberDropdown);
+    editExtension((prev) => ({
+      ...prev,
+      name: name,
+    }));
+  };
 
   return (
-    <>
-      {/* TOP SECTION */}
-      <div className="px-3 py-4 bg-white rounded-md flex items-center justify-between m-3">
-        <h1 className="text-xl font-bold">Add Extension Logs</h1>
-        <Link to="/sidebar/logs">
-          <button className="px-6 py-2 text-center text-sm border border-blue-600 text-blue-600 rounded-md">
-            Cancel
-          </button>
+    <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
+      <div className="flex py-2 px-3 items-center justify-between bg-white rounded-md shadow-md">
+        <h1 className="text-xl">Add Extension Logs</h1>
+        <Link
+          to="/sidebar/logs"
+          className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
+        >
+          Cancel
         </Link>
       </div>
+      {/* -------------FORM Starts FROM HERE------------- */}
+      <form onSubmit={handleSubmit} className="flex flex-col mb-6">
+        {/* -------------Client Logs Information STARTS FROM HERE------------- */}
+        <div className="my-3 bg-white rounded-xl shadow-md flex-grow ">
+          <h2 className="font-medium py-2 px-3 rounded-t-xl text-white bg-cyan-500">
+            Extension Logs Information
+          </h2>
 
-      {/* FORM SECTION */}
-      <div className="px-3">
-        <h1 className="py-2 px-3 font-medium rounded-t-xl bg-cyan-500 text-white text-md shadow-md">
-          Extension Logs Information
-        </h1>
-        <form onSubmit={handleSubmit}>
-          <div className="flex gap-3 bg-white px-4 py-2 pb-4 rounded-b-xl shadow-md">
-            <div className="flex-1 flex gap-4">
-              {/* --------------------------- LEFT SIDE --------------------------- */}
-              <div className="flex-1 flex flex-col">
-                {/* --------------------------- FORM USERNAME DROPDOWN --------------------------- */}
+          {/* -------------Client Logs Information STARTS FROM HERE------------- */}
+          {/* -------------6------------- */}
+          {/* -------------Street------------- */}
+          <div className="grid gap-2 px-2 pb-3">
+            {/* DROPDOWNS */}
+            <div className="flex space-x-4">
+              {/* USERNAME DROPDOWN */}
+              <div className="flex flex-col w-1/2">
                 <label
                   htmlFor="username"
-                  className="text-sm font-medium text-gray-700"
+                  className="text-sm font-medium text-gray-700 mt-2"
                 >
                   User Name
                 </label>
@@ -122,13 +128,13 @@ export default function CreateExtension() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {usernameDropdown && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
                       <ul className="py-2 text-sm text-gray-700">
                         {usernameData.map(({ key, name }) => (
                           <li
+                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer z-10"
                             key={key}
                             onClick={() => handleDropdownUsername(name)}
-                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                           >
                             {name}
                           </li>
@@ -137,7 +143,51 @@ export default function CreateExtension() {
                     </div>
                   )}
                 </div>
-                {/* --------------------------- MESSAGE FIELD --------------------------- */}
+              </div>
+              {/* EXTENSION NUMBER DROPDOWN */}
+              <div className="flex flex-col w-1/2">
+                <label
+                  htmlFor="extensionNumber"
+                  className="text-sm font-medium text-gray-700 mt-2"
+                >
+                  Extension Number
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownExtensionNumber}
+                  onMouseLeave={() => setExtensionNumberDropdown(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="extensionNumber"
+                    type="button"
+                  >
+                    {isEditMode
+                      ? editExtension.extensionNumber
+                      : defaultExtensionNuberDropdownText}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {extensionNumberDropdown && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                        {extensionNumberData.map(({ key, name }) => (
+                          <li
+                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer z-10"
+                            key={key}
+                            onClick={() => handleDropdownExtensionNumber(name)}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="flex space-x-4">
+              <div className="flex flex-col w-1/2">
+                {/* GIVEN TIME FIELD */}
                 <label
                   htmlFor="givenTime"
                   className="text-sm font-medium text-gray-700"
@@ -146,93 +196,50 @@ export default function CreateExtension() {
                 </label>
                 <input
                   type="text"
-                  id="givenTime"
                   name="givenTime"
+                  id="givenTime"
                   value={editExtension.givenTime}
                   className="mt-1 p-2 border border-gray-300 rounded-md"
-                  placeholder="Given Time"
                   onChange={handleChange}
+                  placeholder="Entere verox peron"
                 />
-                {/* --------------------------- FROM CHAT DATE DROPDOWN --------------------------- */}
               </div>
             </div>
-            {/* --------------------------- RIGHT SIDE --------------------------- */}
-            <div className="flex-1 flex flex-col">
-              {/* --------------------------- TO USERNAME DROPDOWN --------------------------- */}
+          </div>
+        </div>
+        {/* DESCRIPTION */}
+        <div className="bg-white rounded-xl shadow-md">
+          <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+            Description Information
+          </h2>
+          <div className="p-2 ">
+            <div className="flex flex-col">
               <label
-                htmlFor="extensionNumber"
-                className="text-sm font-medium text-gray-700"
+                htmlFor="description"
+                className="text-sm  font-medium text-gray-700"
               >
-                Extension Number
+                Description
               </label>
-              <div
-                className="relative"
-                onClick={toggleDropdownExtensionNumber}
-                onMouseLeave={() => setExtensionNumberDropdown(false)}
-              >
-                <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="extensionNumber"
-                  type="button"
-                >
-                  {isEditMode ? editExtension.extensionNumber : defaultExtensionNuberDropdownText}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {extensionNumberDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {extensionNumberData.map(({ key, name }) => (
-                        <li
-                          key={key}
-                          onClick={() => handleDropdownExtensionNumber(name)}
-                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
+              <ReactQuill
+                name="description"
+                value={description}
+                className="text-balance hyphens-auto  max-h-full h-60 mt-1"
+                theme="snow"
+                onChange={setDescription}
+                placeholder="Add Description"
+              />
             </div>
           </div>
-          {/* DESCRIPTION */}
-          <div className="bg-white rounded-xl shadow-md mt-3 mb-2">
-            <h2 className="font-medium py-2 px-4 shadow-md rounded-t-xl text-white bg-cyan-500">
-              Description Information
-            </h2>
-            <div className="px-2 py-4">
-              <div className="flex flex-col gap-1">
-                <label
-                  htmlFor="description"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Description
-                </label>
-                <ReactQuill
-                  name="description"
-                  value={description}
-                  className=" text-balance hyphens-auto max-w-5xl  max-h-60 h-60"
-                  theme="snow"
-                  onChange={setDescription}
-                  placeholder="Add Description"
-                />
-              </div>
-            </div>
-            <div className="flex justify-end gap-5 mr-10">
-              <div className="flex justify-end mr-20">
-                <button
-                  type="submit"
-                  className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
-                >
-                  {isEditMode ? 'Update' : 'Save'}
-                </button>
-              </div>
-            </div>
+          <div className="flex justify-end px-2">
+            <button
+              type="submit"
+              className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+            >
+              {isEditMode ? 'Update' : 'Save'}
+            </button>
           </div>
-          {/* BUTTONS END */}
-        </form>
-      </div>
-    </>
+        </div>
+      </form>
+    </div>
   );
 }

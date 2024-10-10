@@ -4,7 +4,7 @@ import ReactQuill from 'react-quill';
 import { Link } from 'react-router-dom';
 
 export default function CreateLogs() {
-  const [description, setDescription] = useState("HELLO, ");
+  const [description, setDescription] = useState('HELLO, ');
   const [isEditMode, setIsEditMode] = useState(false);
   const [editLogs, setEditLogs] = useState({
     number: '',
@@ -56,28 +56,32 @@ export default function CreateLogs() {
   };
 
   return (
-    <>
-      {/* TOP SECTION */}
-      <div className="px-3 py-4 bg-white rounded-md flex items-center justify-between m-3">
-        <h1 className="text-xl font-bold">Client Logs Information</h1>
-        <Link to="/sidebar/logs">
-          <button className="px-6 py-2 text-center text-sm border border-blue-600 text-blue-600 rounded-md">
-            Cancel
-          </button>
+    <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
+      <div className="flex py-2 px-3 items-center justify-between bg-white rounded-md shadow-md">
+        <h1 className="text-xl">Add Client Logs</h1>
+        <Link
+          to="/sidebar/logs"
+          className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
+        >
+          Cancel
         </Link>
       </div>
+      {/* -------------FORM Starts FROM HERE------------- */}
+      <form onSubmit={handleSubmit} className="flex flex-col mb-6">
+        {/* -------------Client Logs Information STARTS FROM HERE------------- */}
+        <div className="my-3 bg-white rounded-xl shadow-md flex-grow ">
+          <h2 className="font-medium py-2 px-3 rounded-t-xl text-white bg-cyan-500">
+            Client Logs Information
+          </h2>
 
-      {/* FORM SECTION */}
-      <div className="px-3">
-        <h1 className="py-2 px-3 font-medium rounded-t-xl bg-cyan-500 text-white text-md shadow-md">
-        Client Logs Information
-        </h1>
-        <form onSubmit={handleSubmit}>
-          <div className="flex gap-3 bg-white px-4 py-2 pb-4 rounded-b-xl shadow-md">
-            <div className="flex-1 flex gap-4">
-              {/* LEFT SIDE */}
-              <div className="flex-1 flex flex-col">
-                {/* CLIENT NAME */}
+          {/* -------------Client Logs Information STARTS FROM HERE------------- */}
+          {/* -------------6------------- */}
+          {/* -------------Street------------- */}
+          <div className="grid gap-2 p-2">
+            <div className="flex space-x-4">
+              {/* CALL STATUS DROPDOWN */}
+              <div className="flex flex-col w-1/2">
+                {/* NUMBER */}
                 <label
                   htmlFor="number"
                   className="text-sm font-medium text-gray-700"
@@ -85,14 +89,18 @@ export default function CreateLogs() {
                   Number
                 </label>
                 <input
-                  type="text"
-                  id="number"
+                  type="number"
                   name="number"
+                  id="number"
                   value={editLogs.number}
                   className="mt-1 p-2 border border-gray-300 rounded-md"
-                  placeholder="SMS"
                   onChange={handleChange}
+                  placeholder="Entere verox peron"
                 />
+              </div>
+              {/* TEXT MESSAGE DROPDOWN */}
+              <div className="flex flex-col w-1/2">
+                {/* CREATED BY FIELD */}
                 <label
                   htmlFor="createdBy"
                   className="text-sm font-medium text-gray-700"
@@ -101,13 +109,20 @@ export default function CreateLogs() {
                 </label>
                 <input
                   type="text"
-                  id="createdBy"
                   name="createdBy"
+                  id="createdBy"
                   value={editLogs.createdBy}
                   className="mt-1 p-2 border border-gray-300 rounded-md"
-                  placeholder="SMS"
                   onChange={handleChange}
+                  placeholder="Entere verox peron"
                 />
+              </div>
+            </div>
+            {/* INPUT FIELDS */}
+            <div className="flex space-x-4">
+              {/* CREATED TIME FIELD */}
+              <div className="flex flex-col w-1/2">
+                {/* CREATED TIME FIELD */}
                 <label
                   htmlFor="createdTime"
                   className="text-sm font-medium text-gray-700"
@@ -116,109 +131,110 @@ export default function CreateLogs() {
                 </label>
                 <input
                   type="text"
-                  id="createdTime"
                   name="createdTime"
+                  id="createdTime"
                   value={editLogs.createdTime}
                   className="mt-1 p-2 border border-gray-300 rounded-md"
-                  placeholder="SMS"
                   onChange={handleChange}
+                  placeholder="Entere verox peron"
                 />
               </div>
-            </div>
-            {/* LEFT SIDE */}
-            <div className="flex-1 flex flex-col">
               {/* OPERATION FIELD */}
-              <label
-                htmlFor="operation"
-                className="text-sm font-medium text-gray-700"
-              >
-                Operation
-              </label>
-              <input
-                type="text"
-                id="operation"
-                name="operation"
-                value={editLogs.operation}
-                className="mt-1 p-2 border border-gray-300 rounded-md"
-                placeholder="SMS"
-                onChange={handleChange}
-              />
-              {/* CLIENT NAME DROPDOWN */}
-              <label
-                htmlFor="smsTime"
-                className="text-sm font-medium text-gray-700"
-              >
-                Client Name
-              </label>
-              <div
-                className="relative"
-                onClick={toggleDropdownClientName}
-                onMouseLeave={() => setClientNameDropdown(false)}
-              >
-                <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="LeadStatusDropDown"
-                  type="button"
-                >
-                  {isEditMode ? editLogs.clientName : defaultClientNameText}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {clientNameDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {clientNameData.map(({ key, name }) => (
-                        <li
-                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={key}
-                          onClick={() => handleDropdownClientName(name)}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </div>
-            {/* RIGHT SIDE */}
-          </div>
-          {/* DESCRIPTION */}
-          <div className="bg-white rounded-xl shadow-md mt-3 mb-2">
-            <h2 className="font-medium py-2 px-4 shadow-md rounded-t-xl text-white bg-cyan-500">
-              Description Information
-            </h2>
-            <div className="px-2 py-4">
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col w-1/2">
+                {/* OPERATION FIELD */}
                 <label
-                  htmlFor="description"
+                  htmlFor="operation"
                   className="text-sm font-medium text-gray-700"
                 >
-                  Description
+                  Operation
                 </label>
-                <ReactQuill
-                  name="description"
-                  value={description}
-                  className=" text-balance hyphens-auto max-w-5xl  max-h-60 h-60"
-                  theme="snow"
-                  onChange={setDescription}
-                  placeholder="Add Description"
+                <input
+                  type="text"
+                  name="operation"
+                  id="operation"
+                  value={editLogs.operation}
+                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  onChange={handleChange}
+                  placeholder="Entere verox peron"
                 />
               </div>
             </div>
-            <div className="flex justify-end gap-5 mr-10">
-              <div className="flex justify-end mr-20">
-                <button
-                  type="submit"
-                  className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+            {/* DROPDOWN */}
+            <div className="flex flex-col">
+              <div className="flex flex-col w-1/2">
+                {/* TEXT MESSAGE DROPDOWN */}
+                <label
+                  htmlFor="clientName"
+                  className="text-sm font-medium text-gray-700"
                 >
-                  {isEditMode ? 'Update' : 'Save'}
-                </button>
+                  Text Message
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownClientName}
+                  onMouseLeave={() => setClientNameDropdown(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="clientName"
+                    type="button"
+                  >
+                    {isEditMode ? editLogs.clientName : defaultClientNameText}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {clientNameDropdown && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                        {clientNameData.map(({ key, name }) => (
+                          <li
+                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer z-10"
+                            key={key}
+                            onClick={() => handleDropdownClientName(name)}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-          {/* BUTTONS END */}
-        </form>
-      </div>
-    </>
+        </div>
+        {/* DESCRIPTION */}
+        <div className="bg-white rounded-xl shadow-md">
+          <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+            Description Information
+          </h2>
+          <div className="p-2 ">
+            <div className="flex flex-col">
+              <label
+                htmlFor="description"
+                className="text-sm  font-medium text-gray-700"
+              >
+                Description
+              </label>
+              <ReactQuill
+                name="description"
+                value={description}
+                className="text-balance hyphens-auto  max-h-full h-60 mt-1"
+                theme="snow"
+                onChange={setDescription}
+                placeholder="Add Description"
+              />
+            </div>
+          </div>
+          <div className="flex justify-end px-2">
+            <button
+              type="submit"
+              className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+            >
+              {isEditMode ? 'Update' : 'Save'}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }

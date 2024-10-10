@@ -341,7 +341,7 @@ export default function Client() {
 
   //Enable us to switch to createlead/editlead page with /:id
   let handleClick = (item) => {
-    navigate(`/sidebar/editcontact/${item.id}`);
+    navigate(`/sidebar/editclient/${item.id}`);
   };
 
 
