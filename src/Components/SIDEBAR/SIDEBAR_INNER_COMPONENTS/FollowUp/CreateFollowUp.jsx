@@ -288,12 +288,11 @@ const CreateFollowUp = () => {
 
       {/* FOLLOW-UP FORM */}
       <form onSubmit={handleSubmit}>
-        <div className="m-3">
+        <div className="m-3 shadow-lg">
           <h1 className="py-2 px-3 rounded-t-lg bg-cyan-500 text-white text-md font-medium">
             Follow Up Details
           </h1>
-          <div className="bg-white px-3 py-3">
-            <div className="">
+          <div className="bg-white px-1 rounded-b-xl">
               <div className="grid gap-2 p-2">
                 {/* FIRST ROW */}
                 <div className="flex space-x-4">
@@ -345,7 +344,7 @@ const CreateFollowUp = () => {
                       Language
                     </label>
                     <input
-                      type="language"
+                      type="text"
                       name="language"
                       id="language"
                       value={followupsData.language}
@@ -507,11 +506,10 @@ const CreateFollowUp = () => {
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
         {/* DESCRIPTION */}
-        <div className="bg-white rounded-xl shadow-md mx-3 mb-6">
+        <div className="bg-white rounded-xl shadow-lg mx-3 mb-6">
           <h2 className="py-2 font-medium px-3 rounded-t-xl text-white bg-cyan-500">
             Description Information
           </h2>
