@@ -82,92 +82,94 @@ export default function PaidClientReport() {
           onSubmit={handleSubmit}
           className="flex gap-3 bg-white px-4 py-2 pb-4 rounded-b-xl shadow-md flex-col"
         >
-          <div className="flex-1 flex gap-4">
-            {/* LEFT SIDE */}
-            <div className="flex-1 flex flex-col">
-              {/* SUBSCRIPTION START DATE DROPDOWN */}
-              <label
-                htmlFor="subsStartDate"
-                className="text-sm font-medium text-gray-700"
-              >
-                Subscription Start Date
-              </label>
-              <div
-                className="relative"
-                onClick={toggleDropdownSubsStart}
-                onMouseLeave={() => setSubsStartDropdown(false)}
-              >
-                <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="subsStartDate"
-                  type="button"
+          <div className="grid gap-2 pb-3">
+            <div className="flex space-x-4">
+              {/* SUBSCRIPTION START DATE */}
+              <div className="flex flex-col w-1/2">
+                <label
+                  htmlFor="subsStartDate"
+                  className="text-sm font-medium text-gray-700"
                 >
-                  {isEditMode ? editReport.subsStartDate : defaultSubsStartText}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {subsStartDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {subsStart.map(({ key, name }) => (
-                        <li
-                          className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={key}
-                          onClick={() => handleDropdownSubsStart(name)}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                  Subscription Start Date
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownSubsStart}
+                  onMouseLeave={() => setSubsStartDropdown(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="subsStartDate"
+                    type="button"
+                  >
+                    {isEditMode
+                      ? editReport.subsStartDate
+                      : defaultSubsStartText}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {subsStartDropdown && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                        {subsStart.map(({ key, name }) => (
+                          <li
+                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            key={key}
+                            onClick={() => handleDropdownSubsStart(name)}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-            {/* RIGHT SIDE */}
-            <div className="flex-1 flex flex-col">
-              {/* SUBSCRIPTION END DATE DROPDOWN */}
-              <label
-                htmlFor="subsEndDate"
-                className="text-sm font-medium text-gray-700"
-              >
-                Subscription End Date
-              </label>
-              <div
-                className="relative"
-                onClick={toggleDropdownSubsEnd}
-                onMouseLeave={() => setSubsEndDropdown(false)}
-              >
-                <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="subsEndDate"
-                  type="button"
+              <div className="flex flex-col w-1/2">
+                {/* SUBSCRIPTION END DATE */}
+                <label
+                  htmlFor="subsEndDate"
+                  className="text-sm font-medium text-gray-700"
                 >
-                  {isEditMode ? editReport.subsEndDate : defaultSubsEndText}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {subsEndDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {subsEnd.map(({ key, name }) => (
-                        <li
-                          className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={key}
-                          onClick={() => handleDropdownSubsEnd(name)}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                  Subscription End Date
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownSubsEnd}
+                  onMouseLeave={() => setSubsEndDropdown(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="subsEndDate"
+                    type="button"
+                  >
+                    {isEditMode ? editReport.subsEndDate : defaultSubsEndText}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {subsEndDropdown && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                        {subsEnd.map(({ key, name }) => (
+                          <li
+                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            key={key}
+                            onClick={() => handleDropdownSubsEnd(name)}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
           {/* BUTTON */}
-          <div className="flex justify-end gap-5 mr-10">
-            <div className="flex justify-end mr-20">
+          <div className="flex justify-end gap-5">
+            <div className="flex justify-end">
               <button
                 type="submit"
-                className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
               >
                 {isEditMode ? 'Update' : 'Save'}
               </button>

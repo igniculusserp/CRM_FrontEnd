@@ -129,165 +129,172 @@ export default function TrackSheet() {
           onSubmit={handleSubmit}
           className="flex gap-3 bg-white px-4 py-2 pb-4 rounded-b-xl shadow-md flex-col"
         >
-          <div className="flex-1 flex gap-4">
-            {/* LEFT SIDE */}
-            {/* START DATE DROPDOWN */}
-            <div className="flex-1 flex flex-col">
-              {/* START DATE DROPDOWN */}
-              <label
-                htmlFor="fromDate"
-                className="text-sm font-medium text-gray-700"
-              >
-                From Date
-              </label>
-              <div
-                className="relative"
-                onClick={toggleDropdownFromDate}
-                onMouseLeave={() => setFromDateDropdown(false)}
-              >
-                <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="fromDate"
-                  type="button"
+          <div className="grid gap-2 pb-3">
+            {/* FIRST ROW */}
+            <div className="flex space-x-4">
+              {/* FROM DATE */}
+              <div className="flex flex-col w-1/2">
+                <label
+                  htmlFor="fromDate"
+                  className="text-sm font-medium text-gray-700"
                 >
-                  {isEditMode ? editReport.fromDate : defaultFromDateText}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {fromDateDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {fromDate.map(({ key, name }) => (
-                        <li
-                          className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={key}
-                          onClick={() => handleDropdownFromDate(name)}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                  From Date
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownFromDate}
+                  onMouseLeave={() => setFromDateDropdown(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="fromDate"
+                    type="button"
+                  >
+                    {isEditMode ? editReport.fromDate : defaultFromDateText}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {fromDateDropdown && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                        {fromDate.map(({ key, name }) => (
+                          <li
+                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            key={key}
+                            onClick={() => handleDropdownFromDate(name)}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
-              {/* END DATE DROPDOWN */}
-              <label
-                htmlFor="toDate"
-                className="text-sm font-medium text-gray-700"
-              >
-                To Date
-              </label>
-              <div
-                className="relative"
-                onClick={toggleDropdownToDate}
-                onMouseLeave={() => setToDateDropdown(false)}
-              >
-                <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="toDate"
-                  type="button"
+              <div className="flex flex-col w-1/2">
+                {/* TO DATE */}
+                <label
+                  htmlFor="toDate"
+                  className="text-sm font-medium text-gray-700"
                 >
-                  {isEditMode ? editReport.toDate : defaultToDateText}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {toDateDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {toDate.map(({ key, name }) => (
-                        <li
-                          className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={key}
-                          onClick={() => handleDropdownToDate(name)}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                  To Date
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownToDate}
+                  onMouseLeave={() => setToDateDropdown(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="toDate"
+                    type="button"
+                  >
+                    {isEditMode ? editReport.toDate : defaultToDateText}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {toDateDropdown && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                        {toDate.map(({ key, name }) => (
+                          <li
+                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            key={key}
+                            onClick={() => handleDropdownToDate(name)}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-            {/* RIGHT SIDE */}
-            <div className="flex-1 flex flex-col">
-              {/* CALL STATUS DROPDOWN */}
-              <label
-                htmlFor="callStatus"
-                className="text-sm font-medium text-gray-700"
-              >
-                Call Status
-              </label>
-              <div
-                className="relative"
-                onClick={toggleDropdownCallStatus}
-                onMouseLeave={() => setCallStatusDropdown(false)}
-              >
-                <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="callStatus"
-                  type="button"
+            {/* SECOND ROW */}
+            <div className="flex space-x-4">
+              {/* CALL STATUS */}
+              <div className="flex flex-col w-1/2">
+                <label
+                  htmlFor="callStatus"
+                  className="text-sm font-medium text-gray-700"
                 >
-                  {isEditMode ? editReport.callStatus : defaultCallStatusText}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {callStatusDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {callStatus.map(({ key, name }) => (
-                        <li
-                          className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={key}
-                          onClick={() => handleDropdownCallStatus(name)}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                  Call Status
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownCallStatus}
+                  onMouseLeave={() => setCallStatusDropdown(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="callStatus"
+                    type="button"
+                  >
+                    {isEditMode ? editReport.callStatus : defaultCallStatusText}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {callStatusDropdown && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                        {callStatus.map(({ key, name }) => (
+                          <li
+                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            key={key}
+                            onClick={() => handleDropdownCallStatus(name)}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
-              {/* PRODUCT DROPDOWN */}
-              <label
-                htmlFor="product"
-                className="text-sm font-medium text-gray-700"
-              >
-                Product
-              </label>
-              <div
-                className="relative"
-                onClick={toggleDropdownProduct}
-                onMouseLeave={() => setProductDropdown(false)}
-              >
-                <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="product"
-                  type="button"
+              <div className="flex flex-col w-1/2">
+                {/* PRODUCT */}
+                <label
+                  htmlFor="product"
+                  className="text-sm font-medium text-gray-700"
                 >
-                  {isEditMode ? editReport.product : defaultProductText}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {productDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {product.map(({ key, name }) => (
-                        <li
-                          className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={key}
-                          onClick={() => handleDropdownProduct(name)}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                  Product
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownProduct}
+                  onMouseLeave={() => setProductDropdown(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="product"
+                    type="button"
+                  >
+                    {isEditMode ? editReport.product : defaultProductText}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {productDropdown && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                        {product.map(({ key, name }) => (
+                          <li
+                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            key={key}
+                            onClick={() => handleDropdownProduct(name)}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
           {/* BUTTON */}
-          <div className="flex justify-end gap-5 mr-10">
-            <div className="flex justify-end mr-20">
+          <div className="flex justify-end gap-5">
+            <div className="flex justify-end">
               <button
                 type="submit"
-                className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
               >
                 {isEditMode ? 'Update' : 'Save'}
               </button>
@@ -298,3 +305,6 @@ export default function TrackSheet() {
     </>
   );
 }
+
+// from date, to date
+// call status product

@@ -214,7 +214,7 @@ export default function Home() {
           <div className="flex flex-col gap-2">
             <h1 className="font-light uppercase text-sm">SALES IN PIPELINE</h1>
             <div className="flex gap-4 items-center mt-2">
-              <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-red-700 text-white flex items-center justify-center">
+              <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-red-500 text-white flex items-center justify-center">
                 {/* <img src={Price} alt="Profile Icon" /> */}
 
                 <FcSalesPerformance className="text-white text-3xl" />

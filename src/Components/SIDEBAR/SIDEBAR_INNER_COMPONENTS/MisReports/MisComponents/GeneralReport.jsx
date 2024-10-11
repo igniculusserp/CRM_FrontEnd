@@ -169,266 +169,303 @@ export default function GeneralReport() {
         </h1>
         <form
           onSubmit={handleSubmit}
-          className="flex gap-3 bg-white px-4 py-2 pb-4 rounded-b-xl shadow-md flex-col"
+          className="flex gap-3 bg-white px-2 py-2 pb-4 rounded-b-xl shadow-md flex-col"
         >
-          <div className="flex-1 flex gap-4">
-            {/* LEFT SIDE */}
-            <div className="flex-1 flex flex-col">
+          <div className="grid gap-2 px-2 pb-3">
+            {/* FIRST ROW */}
+            <div className="flex space-x-4">
               {/* CREATED START DATE DROPDOWN */}
-              <label
-                htmlFor="createdStartDate"
-                className="text-sm font-medium text-gray-700"
-              >
-                Created Start Date
-              </label>
-              <div
-                className="relative"
-                onClick={toggleDropdownCreatedStartDate}
-                onMouseLeave={() => setCreatedStartDateDropdown(false)}
-              >
-                <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="createdStartDate"
-                  type="button"
+              <div className="flex flex-col w-1/2">
+                <label
+                  htmlFor="createdStartDate"
+                  className="text-sm font-medium text-gray-700"
                 >
-                  {isEditMode
-                    ? editReport.createdStartDate
-                    : defaultCreatedStartDateText}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {createdStartDateDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {createdStartData.map(({ key, name }) => (
-                        <li
-                          className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={key}
-                          onClick={() => handleDropdownCreatedStart(name)}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                  Created Start Date
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownCreatedStartDate}
+                  onMouseLeave={() => setCreatedStartDateDropdown(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="createdStartDate"
+                    type="button"
+                  >
+                    {isEditMode
+                      ? editReport.createdStartDate
+                      : defaultCreatedStartDateText}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {createdStartDateDropdown && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                        {createdStartData.map(({ key, name }) => (
+                          <li
+                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            key={key}
+                            onClick={() => handleDropdownCreatedStart(name)}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
-              {/* CREATED END DATE DROPDOWN */}
-              <label
-                htmlFor="createdEndDate"
-                className="text-sm font-medium text-gray-700"
-              >
-                Created End Date
-              </label>
-              <div
-                className="relative"
-                onClick={toggleDropdownCreatedEnd}
-                onMouseLeave={() => setCreatedEndDropdown(false)}
-              >
-                <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="createdEndDate"
-                  type="button"
+              <div className="flex flex-col w-1/2">
+                {/* MODIFIED START DATE FIELD */}
+                <label
+                  htmlFor="modifiedStartDate"
+                  className="text-sm font-medium text-gray-700"
                 >
-                  {isEditMode
-                    ? editReport.createdEndDate
-                    : defaultCreatedEndText}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {createdEndDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {createdEndData.map(({ key, name }) => (
-                        <li
-                          className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={key}
-                          onClick={() => handleDropdownCreatedEnd(name)}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-              {/* LEAD STATUS DROPDOWN */}
-              <label
-                htmlFor="leadStatus"
-                className="text-sm font-medium text-gray-700"
-              >
-                Lead Status
-              </label>
-              <div
-                className="relative"
-                onClick={toggleDropdownLeadStatus}
-                onMouseLeave={() => setLeadStatusDropdown(false)}
-              >
-                <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="leadStatus"
-                  type="button"
-                >
-                  {isEditMode ? editReport.leadStatus : defaultLeadStatusText}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {leadStatusDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {leadStatusData.map(({ key, name }) => (
-                        <li
-                          className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={key}
-                          onClick={() => handleDropdownLeadStatus(name)}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-              {/* LEAD OWNER DROPDOWN */}
-              <label
-                htmlFor="leadOwner"
-                className="text-sm font-medium text-gray-700"
-              >
-                Lead Owner
-              </label>
-              <div
-                className="relative"
-                onClick={toggleDropdownLeadOwner}
-                onMouseLeave={() => setLeadOwnerDropdown(false)}
-              >
-                <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="leadOwner"
-                  type="button"
-                >
-                  {isEditMode ? editReport.leadOwner : defaultLeadOwnerText}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {leadOwnerDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {leadOwnerData.map(({ key, name }) => (
-                        <li
-                          className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={key}
-                          onClick={() => handleDropdownLeadOwner(name)}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-              {/* LEAD SOURCE DROPDOWN */}
-              <label
-                htmlFor="leadSource"
-                className="text-sm font-medium text-gray-700"
-              >
-                Lead Source
-              </label>
-              <div
-                className="relative"
-                onClick={toggleDropdownLeadSource}
-                onMouseLeave={() => setLeadSourceDropdown(false)}
-              >
-                <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="leadSource"
-                  type="button"
-                >
-                  {isEditMode ? editReport.leadSource : defaultLeadSourceText}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {leadSourceDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {leadSourceData.map(({ key, name }) => (
-                        <li
-                          className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={key}
-                          onClick={() => handleDropdownLeadSource(name)}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                  Modified Start Date
+                </label>
+                <input
+                  type="text"
+                  name="modifiedStartDate"
+                  id="modifiedStartDate"
+                  value={editReport.modifiedStartDate}
+                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  onChange={handleChange}
+                  placeholder="Entere verox peron"
+                />
               </div>
             </div>
-            {/* RIGHT SIDE */}
-            <div className="flex-1 flex flex-col">
-              {/* MODIFIED START DATE FIELD */}
-              <label
-                htmlFor="modifiedStartDate"
-                className="text-sm font-medium text-gray-700"
-              >
-                Modified Start Date
-              </label>
-              <input
-                type="text"
-                id="modifiedStartDate"
-                name="modifiedStartDate"
-                value={editReport.modifiedStartDate}
-                className="mt-1 p-2 border border-gray-300 rounded-md"
-                onChange={handleChange}
-              />
-              {/* MODIFIED END DATE FIELD */}
-              <label
-                htmlFor="modifiedEndDate"
-                className="text-sm font-medium text-gray-700"
-              >
-                Modified End Date
-              </label>
-              <input
-                type="text"
-                id="modifiedEndDate"
-                name="modifiedEndDate"
-                value={editReport.modifiedEndDate}
-                className="mt-1 p-2 border border-gray-300 rounded-md"
-                onChange={handleChange}
-              />
-              {/* CALLBACK START DATE FIELD */}
-              <label
-                htmlFor="callbackStartDate"
-                className="text-sm font-medium text-gray-700"
-              >
-                Callback Start Date
-              </label>
-              <input
-                type="text"
-                id="callbackStartDate"
-                name="callbackStartDate"
-                value={editReport.callbackStartDate}
-                className="mt-1 p-2 border border-gray-300 rounded-md"
-                onChange={handleChange}
-              />
-              {/* CALLBACK END DATE FIELD */}
-              <label
-                htmlFor="callbackEndDate"
-                className="text-sm font-medium text-gray-700"
-              >
-                Callback End Date
-              </label>
-              <input
-                type="text"
-                id="callbackEndDate"
-                name="callbackEndDate"
-                value={editReport.callbackEndDate}
-                className="mt-1 p-2 border border-gray-300 rounded-md"
-                onChange={handleChange}
-              />
+            {/* SECOND ROW */}
+            <div className="flex space-x-4">
+              {/* CREATED END DATE DROPDOWN */}
+              <div className="flex flex-col w-1/2">
+                <label
+                  htmlFor="createdEndDate"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Created End Date
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownCreatedEnd}
+                  onMouseLeave={() => setCreatedEndDropdown(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="createdEndDate"
+                    type="button"
+                  >
+                    {isEditMode
+                      ? editReport.createdEndDate
+                      : defaultCreatedEndText}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {createdEndDropdown && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                        {createdEndData.map(({ key, name }) => (
+                          <li
+                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            key={key}
+                            onClick={() => handleDropdownCreatedEnd(name)}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="flex flex-col w-1/2">
+                {/* MODIFIED END DATE FIELD */}
+                <label
+                  htmlFor="modifiedEndDate"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Modified End Date
+                </label>
+                <input
+                  type="text"
+                  name="modifiedEndDate"
+                  id="modifiedEndDate"
+                  value={editReport.modifiedEndDate}
+                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  onChange={handleChange}
+                  placeholder="Entere verox peron"
+                />
+              </div>
+            </div>
+            {/* THIRD ROW */}
+            <div className="flex space-x-4">
+              {/* LEAD STATUS DROPDOWN */}
+              <div className="flex flex-col w-1/2">
+                <label
+                  htmlFor="leadStatus"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Lead Status
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownLeadStatus}
+                  onMouseLeave={() => setLeadStatusDropdown(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="leadStatus"
+                    type="button"
+                  >
+                    {isEditMode
+                      ? editReport.leadStatus
+                      : defaultLeadStatusText}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {leadStatusDropdown && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                        {leadStatusData.map(({ key, name }) => (
+                          <li
+                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            key={key}
+                            onClick={() => handleDropdownLeadStatus(name)}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="flex flex-col w-1/2">
+                {/* CALL BACK START DATE FIELD */}
+                <label
+                  htmlFor="callbackStartDate"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Callback Start Date
+                </label>
+                <input
+                  type="text"
+                  name="callbackStartDate"
+                  id="callbackStartDate"
+                  value={editReport.callbackStartDate}
+                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  onChange={handleChange}
+                  placeholder="Entere verox peron"
+                />
+              </div>
+            </div>
+            {/* FOURTH ROW */}
+            <div className="flex space-x-4">
+              {/* LEAD OWNER DROPDOWN */}
+              <div className="flex flex-col w-1/2">
+                <label
+                  htmlFor="leadStatus"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Lead Owner
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownLeadOwner}
+                  onMouseLeave={() => setLeadOwnerDropdown(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="leadStatus"
+                    type="button"
+                  >
+                    {isEditMode
+                      ? editReport.leadOwner
+                      : defaultLeadOwnerText}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {leadOwnerDropdown && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                        {leadOwnerData.map(({ key, name }) => (
+                          <li
+                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            key={key}
+                            onClick={() => handleDropdownLeadOwner(name)}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="flex flex-col w-1/2">
+                {/* CALL BACK END DATE FIELD */}
+                <label
+                  htmlFor="callbackEndDate"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Callback End Date
+                </label>
+                <input
+                  type="text"
+                  name="callbackEndDate"
+                  id="callbackEndDate"
+                  value={editReport.callbackEndDate}
+                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  onChange={handleChange}
+                  placeholder="Entere verox peron"
+                />
+              </div>
+            </div>
+            {/* FIFTH ROW */}
+            <div className="flex space-x-4">
+              {/* LEAD SOURCE DROPDOWN */}
+              <div className="flex flex-col w-1/2">
+                <label
+                  htmlFor="leadSource"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Lead Source
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownLeadSource}
+                  onMouseLeave={() => setLeadSourceDropdown(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="leadSource"
+                    type="button"
+                  >
+                    {isEditMode
+                      ? editReport.leadSource
+                      : defaultLeadSourceText}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {leadSourceDropdown && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                        {leadSourceData.map(({ key, name }) => (
+                          <li
+                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            key={key}
+                            onClick={() => handleDropdownLeadSource(name)}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
           {/* BUTTON */}
-          <div className="flex justify-end gap-5 mr-10">
-            <div className="flex justify-end mr-20">
+          <div className="flex justify-end gap-5">
+            <div className="flex justify-end">
               <button
                 type="submit"
-                className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
               >
                 {isEditMode ? 'Update' : 'Save'}
               </button>
