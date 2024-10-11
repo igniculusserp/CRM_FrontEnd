@@ -20,18 +20,18 @@ export const OTPProvider = ({ children }) => {
     //counting
     const [countdown, setCountdown] = useState(120);
 
-    //emailInput
-    const [email, setEmail] = useState("");
+    // //emailInput
+    // const [email, setEmail] = useState("");
 
-  // Fetch email from localStorage
-  useEffect(() => {
-    const storedEmail = localStorage.getItem("myData_forget");
-    if (storedEmail) {
-      setEmail(storedEmail);
-    } else {
-      console.error("Email is not available in localStorage.");
-    }
-  }, []);
+//   // Fetch email from localStorage
+//   useEffect(() => {
+//     const storedEmail = localStorage.getItem("myData_forget");
+//     if (storedEmail) {
+//       setEmail(storedEmail);
+//     } else {
+//       console.error("Email is not available in localStorage.");
+//     }
+//   }, []);
 
   // Countdown logic for OTP resend
   useEffect(() => {
@@ -89,7 +89,6 @@ const handleResend = async () => {
         setOtp,
         resendDisabled,
         countdown,
-        email,
         handleResend,
         handleChange,
       }}

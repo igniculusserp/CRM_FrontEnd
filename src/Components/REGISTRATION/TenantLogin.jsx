@@ -32,9 +32,7 @@ export default function TenantLogin() {
 
   const navigate = useNavigate()
 
-  const name = getHostnamePart(); 
-  console.log("Hostname part:", name); 
-
+  const name = getHostnamePart();
 
   useEffect(() => {
     const apiUrl = `${protocal_url}${name}.${tenant_base_url}/Tenants/check`;
@@ -67,12 +65,8 @@ export default function TenantLogin() {
 
       }
     };
-
     verifyTenant();
   }, []);
-
-
-
 
 
     const data = JSON.parse(localStorage.getItem('dat'));
@@ -154,7 +148,7 @@ export default function TenantLogin() {
             const logindetail = response.data.data
             localStorage.setItem("token", response.data.data.token);
             localStorage.setItem("userDetail", JSON.stringify(logindetail))
-            showSuccessToast('Login Successful')
+            localStorage.setItem("myData_forget", userName);
             navigate('/tenantloginOTP')
         }
         catch (error) {

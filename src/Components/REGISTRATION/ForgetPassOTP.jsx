@@ -7,9 +7,21 @@ import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
 import { main_base_url } from "./../../Config/config";
 import { GiDiamonds } from "react-icons/gi";
 import { showSuccessToast, showErrorToast } from "./../../utils/toastNotifications";
+import { useState, useEffect } from "react";
 
 export default function ForgetPassOTP() {
-  const { otp, resendDisabled, countdown, email, handleResend, handleChange } = useOTP();
+  const { otp, resendDisabled, countdown, handleResend, handleChange } = useOTP();
+  const [email, setemail] = useState("")
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("myData_forget");
+    if (storedEmail) {
+      setemail(storedEmail);
+    } else {
+      console.error("Email is not available in localStorage.");
+    }
+  }, []);
+
   const navigate = useNavigate();
 
   // Handle OTP verification
