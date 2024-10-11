@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { FaAngleDown } from "react-icons/fa";
+import { useState } from 'react';
+import { FaAngleDown } from 'react-icons/fa';
 
 export default function DNDReport() {
   const [editReport, setEditReport] = useState({
@@ -14,13 +14,13 @@ export default function DNDReport() {
   };
 
   // DROPDOWNS
-  const [fromDateDropdown, setFromDateDropdown] = useState(false);
-  const [defaultFromDateText, setDefaultFromDateText] = useState('Start Date');
-  const [toDateDropdown, setToDateDropdown] = useState(false);
-  const [defaultToDateText, setDefaultToDateText] = useState('End Date');
+  const [startDateDropdown, setStartDateDropdown] = useState(false);
+  const [defaultStartDateText, setDefaultStartDateText] = useState('Start Date');
+  const [endDateDropdown, setEndDateDropdown] = useState(false);
+  const [defaultEndDateText, setDefaultEndDateText] = useState('End Date');
 
   // FROM DATE DUMMY
-  const fromDate = [
+  const startDate = [
     { id: 1, name: '12/09/2023' },
     { id: 2, name: '12/09/2023' },
     { id: 3, name: '12/09/2023' },
@@ -28,13 +28,13 @@ export default function DNDReport() {
   ];
 
   // TOGGLE FROM DATE
-  const toggleDropdownFromDate = () => {
-    setFromDateDropdown(!fromDateDropdown);
+  const toggleDropdownStartDate = () => {
+    setStartDateDropdown(!startDateDropdown);
   };
 
-  const handleDropdownFromDate = (name) => {
-    setDefaultFromDateText(name);
-    setFromDateDropdown(!fromDateDropdown);
+  const handleDropdownStartDate = (name) => {
+    setDefaultStartDateText(name);
+    setStartDateDropdown(!startDateDropdown);
     editReport((prev) => ({
       ...prev,
       name: name,
@@ -42,7 +42,7 @@ export default function DNDReport() {
   };
 
   // TO DATE DUMMY
-  const toDate = [
+  const endDate = [
     { id: 1, name: '12/09/2023' },
     { id: 2, name: '12/09/2023' },
     { id: 3, name: '12/09/2023' },
@@ -50,13 +50,13 @@ export default function DNDReport() {
   ];
 
   // TOGGLE TO DATE
-  const toggleDropdownToDate = () => {
-    setToDateDropdown(!toDateDropdown);
+  const toggleDropdownEndDate = () => {
+    setEndDateDropdown(!endDateDropdown);
   };
 
-  const handleDropdownToDate = (name) => {
-    setDefaultToDateText(name);
-    setToDateDropdown(!toDateDropdown);
+  const handleDropdownEndDate = (name) => {
+    setDefaultEndDateText(name);
+    setEndDateDropdown(!endDateDropdown);
     editReport((prev) => ({
       ...prev,
       name: name,
@@ -78,92 +78,92 @@ export default function DNDReport() {
           onSubmit={handleSubmit}
           className="flex gap-3 bg-white px-4 py-2 pb-4 rounded-b-xl shadow-md flex-col"
         >
-          <div className="flex-1 flex gap-4">
-            {/* LEFT SIDE */}
-            <div className="flex-1 flex flex-col">
-              {/* SUBSCRIPTION START DATE DROPDOWN */}
-              <label
-                htmlFor="startDate"
-                className="text-sm font-medium text-gray-700"
-              >
-                Start Date
-              </label>
-              <div
-                className="relative"
-                onClick={toggleDropdownFromDate}
-                onMouseLeave={() => setFromDateDropdown(false)}
-              >
-                <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="fromDate"
-                  type="button"
+          <div className="grid gap-2 pb-3">
+            <div className="flex space-x-4">
+              {/* START DATE */}
+              <div className="flex flex-col w-1/2">
+                <label
+                  htmlFor="startDate"
+                  className="text-sm font-medium text-gray-700"
                 >
-                  {isEditMode ? editReport.startDate : defaultFromDateText}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {fromDateDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {fromDate.map(({ key, name }) => (
-                        <li
-                          className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={key}
-                          onClick={() => handleDropdownFromDate(name)}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                  Start Date
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownStartDate}
+                  onMouseLeave={() => setStartDateDropdown(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="startDate"
+                    type="button"
+                  >
+                    {isEditMode ? editReport.startDate : defaultStartDateText}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {startDateDropdown && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                        {startDate.map(({ key, name }) => (
+                          <li
+                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            key={key}
+                            onClick={() => handleDropdownStartDate(name)}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-            {/* RIGHT SIDE */}
-            <div className="flex-1 flex flex-col">
-              {/* SUBSCRIPTION END DATE DROPDOWN */}
-              <label
-                htmlFor="endDate"
-                className="text-sm font-medium text-gray-700"
-              >
-                End Date
-              </label>
-              <div
-                className="relative"
-                onClick={toggleDropdownToDate}
-                onMouseLeave={() => setToDateDropdown(false)}
-              >
-                <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="endDate"
-                  type="button"
+              <div className="flex flex-col w-1/2">
+                {/* END DATE */}
+                <label
+                  htmlFor="endDate"
+                  className="text-sm font-medium text-gray-700"
                 >
-                  {isEditMode ? editReport.endDate : defaultToDateText}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {toDateDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {toDate.map(({ key, name }) => (
-                        <li
-                          className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={key}
-                          onClick={() => handleDropdownToDate(name)}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                  End Date
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownEndDate}
+                  onMouseLeave={() => setEndDateDropdown(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="endDate"
+                    type="button"
+                  >
+                    {isEditMode ? editReport.endDate : defaultEndDateText}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {endDateDropdown && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                        {endDate.map(({ key, name }) => (
+                          <li
+                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            key={key}
+                            onClick={() => handleDropdownEndDate(name)}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
           {/* BUTTON */}
-          <div className="flex justify-end gap-5 mr-10">
-            <div className="flex justify-end mr-20">
+          <div className="flex justify-end gap-5">
+            <div className="flex justify-end">
               <button
                 type="submit"
-                className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
               >
                 {isEditMode ? 'Update' : 'Save'}
               </button>
