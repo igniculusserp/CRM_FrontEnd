@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FaAngleDown } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export default function FtReport() {
   const [editReport, setEditReport] = useState({
@@ -69,14 +70,20 @@ export default function FtReport() {
 
   return (
     <>
-      <div className="flex py-3 px-3 items-center justify-between">
-        <h1 className="text-3xl font-medium">View Client Logs</h1>
+      <div className="flex py-2 px-3 m-3 items-center justify-between bg-white rounded-md shadow-md">
+        <h1 className="text-xl">Add Ft Report</h1>
+        <Link
+          to="/sidebar/misreports"
+          className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
+        >
+          Cancel
+        </Link>
       </div>
 
       {/* FORM SECTION */}
       <div className="px-3">
         <h1 className="py-2 px-3 font-medium rounded-t-xl bg-cyan-500 text-white text-md shadow-md">
-          Client Logs Information
+          General Report Detail
         </h1>
         <form
           onSubmit={handleSubmit}

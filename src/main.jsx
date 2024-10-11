@@ -77,9 +77,18 @@ import CreateExtension from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideB
 import Reports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/Reports.jsx';
 // Edit Client SO
 import EditClientSO from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/RepoComponents/EditClientSO.jsx';
-import MISReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx';
 import CreateClient from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Client/CreateClient.jsx';
 import CreateLogin from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateLogin.jsx';
+// MIS REPORT => INNER COMPONENT
+import MISReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx';
+import GeneralReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/GeneralReport.jsx';
+import FtReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/FtReport.jsx';
+import PaidClientReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/PaidClientReport.jsx';
+import UserReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/UserReport.jsx';
+import CallingReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/CallingReport.jsx';
+import DNDReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/DNDReport.jsx';
+import TrackSheet from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/TrackSheet.jsx';
+import ResearchReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/ResearchReport.jsx';
 
 const router = createBrowserRouter([
   { path: '/', element: <App /> },
@@ -154,7 +163,16 @@ const router = createBrowserRouter([
       { path: '/sidebar/Client_SO/:id', element: <EditClientSO /> },
       { path: '/sidebar/analytics', element: <Analytics /> },
 
-      { path: '/sidebar/misreports', element: <MISReports /> },
+      // MIS REPORT => INNER COMPONENT
+      { path: '/sidebar/misreports',    element: <MISReports /> },
+      { path: '/sidebar/creategeneral', element: <GeneralReport /> },
+      { path: '/sidebar/createft', element: <FtReport /> },
+      { path: '/sidebar/createpaid', element: <PaidClientReport /> },
+      { path: '/sidebar/createuser', element: <UserReport /> },
+      { path: '/sidebar/createcalling', element: <CallingReport /> },
+      { path: '/sidebar/creatednd', element: <DNDReport /> },
+      { path: '/sidebar/createtrack', element: <TrackSheet /> },
+      { path: '/sidebar/createresearch', element: <ResearchReport /> },
 
       { path: '/sidebar/groupChat', element: <GroupChat /> },
       { path: '/sidebar/setting', element: <Setting /> },
