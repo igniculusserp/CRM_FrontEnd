@@ -1,20 +1,31 @@
 import { useState, useEffect } from "react";
 //external Packages
 import axios from "axios";
+
+import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 //React Icons
 import { FaAngleDown, FaBars } from "react-icons/fa";
 import { ImFilter } from "react-icons/im";
 import { IoSearchOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
+
 //Folder Imported
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import MassEmail from '../MassEmail/MassEmail';
 
 export default function VoiceBox() {
   const navigate = useNavigate();
 
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
+
+// Mass Email
+const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEmails, setSelectedEmails] = useState([]);
+
 
   const [voiceMainData, setVoiceMainData] = useState([]);
   const [getVoice, setGetVoice] = useState([]);
@@ -79,46 +90,6 @@ export default function VoiceBox() {
     stripeBar[0].value
   );
 
-  //   FOR SAVING VALUES
-  // function handleSmsBoxStatusButton(value) {
-  //   console.log(value);
-  //   if (value === null || value === "ALL") {
-  //     setFilteredVoice(getVoice);
-  //   } else {
-  //     // Filter leads based on the value
-  //     const filtered = getVoice.filter(
-  //       (getleads) => getleads.leadesStatus === value
-  //     );
-  //     console.log(filtered);
-  //   }
-  // }
-
-  // Function to toggle individual checkboxes
-  const handleCheckboxChange = (id, e) => {
-    e.stopPropagation();
-    console.log("Checkbox clicked: ", id);
-    setSelectedRows((prevSelectedRows) =>
-      prevSelectedRows.includes(id)
-        ? prevSelectedRows.filter((rowId) => rowId !== id)
-        : [...prevSelectedRows, id]
-    );
-    setSelectAll(false);
-    console.log("Updated selectedRows: ", selectedRows);
-  };
-
-  // Function to toggle all checkboxes
-  const selectAllCheckbox = () => {
-    if (selectAll) {
-      // If already selected, deselect everything
-      setSelectedRows([]);
-      setSelectAll(false);
-    } else {
-      // Select all rows in the current page
-      const allIds = currentSms.map((order) => order.id);
-      setSelectedRows(allIds);
-      setSelectAll(true);
-    }
-  };
 
   // TOGGLE VOICEBOX DROPDOWN
   const toggleVoiceBoxDropdown = () => {
@@ -171,29 +142,50 @@ export default function VoiceBox() {
     { key: 8, value: "Print View" },
   ];
 
-  // Object containing the options
-  const dynamicButtons = {
-    Monitoring: { text: "Create View Box", href: "/sidebar/createvoice" },
-    Reports: { text: "Create Reports", href: "/sidebar/createreports" },
-    "SMS via GMS Gateway": {
-      text: "Send Details",
-      href: "/sidebar/createvoicedetails",
-    },
-  };
 
   // On click of Action Button
-  const handleActionClick = (key) => {
-    if (
-      key === 1 &&
-      selectedRows.length > 0 &&
-      selectedButton === "Monitoring"
-    ) {
-      handleMonitorMassDelete(selectedRows); // Pass selected rows when deleting
+  const handleActionButton = async (value) => {
+    // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
+    if (value === "Mass Delete") {
+      const userConfirmed = confirm(
+        "Are you sure you want to Delete the selected Data?"
+      );
+      if (userConfirmed) {
+        handleMassTrailDelete(selectedRows);
+      }
     }
-    // Add other conditions for different actions if needed
+  // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
+  if (value === "Mass Email") {
+    const userConfirmed = confirm(
+      "Are you sure you want to Send E-Mail to the selected Data?"
+    );
+    if (userConfirmed) {
+      openMassEmailModal(selectedEmails);
+    }
+  }
+    // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
+    if (value === "Sheet View") {
+      const userConfirmed = confirm(
+        "Are you sure you want to export the selected data?"
+      );
+      if (userConfirmed) {
+        exportToTrailExcel(selectedRows);
+      }
+    }
+
+    // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
+    if (value === "Print View") {
+      const userConfirmed = confirm(
+        "Are you sure you want to export the selected Leads?"
+      );
+      if (userConfirmed) {
+        exportToTrailPDF(selectedRows);
+      }
+    }
   };
-  // On click of Mass Delete Button
-  const handleMonitorMassDelete = async (ids) => {
+  // ---------------------->MASS DELETE FUNCTIONALITY---###API###<----------------------
+ // On click of Mass Delete Button
+  const handleMassTrailDelete = async (ids) => {
     try {
       const config = {
         headers: {
@@ -218,6 +210,138 @@ export default function VoiceBox() {
     } catch (error) {
       console.error("Error deleting follow-ups:", error);
     }
+  };
+
+  // ---------------------->MASS Email FUNCTIONALITY---<----------------------
+
+
+  const openMassEmailModal = () => {
+    if (selectedEmails.length > 0) {
+      setIsModalOpen(true); // Open the modal
+    } else {
+      alert('Selected Entity dose not have E-Mail Address.');
+    }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // Close the modal
+  };
+
+
+  //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
+  //-------> XLSX used here
+  const exportToTrailExcel = () => {
+    // Filter currentLeads based on selectedIds
+    const leadsToExport = currentSms.filter((lead) =>
+      selectedRows.includes(lead.id)
+    );
+    if (leadsToExport?.length === 0) {
+      alert("No leads selected to export");
+      return;
+    }
+
+    // Create a worksheet from the filtered leads data
+    const ws = XLSX.utils.json_to_sheet(leadsToExport);
+
+    // Create a new workbook and append the worksheet
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Selected FollowUp");
+
+    // Export the workbook to an Excel file
+    XLSX.writeFile(wb, "SelectedFollowupData.xlsx");
+  };
+
+  //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
+  const exportToTrailPDF = () => {
+    const leadsToExport = currentSms.filter((lead) =>
+      selectedRows.includes(lead.id)
+    );
+    if (leadsToExport?.length === 0) {
+      alert("No leads selected to export");
+      return;
+    }
+    const doc = new jsPDF();
+    // const role = matchedUser?.role;
+    const tableColumn = ["ID", "Name", "Email", "Phone No.", "Assigned To"];
+    // Map the leads data to rows
+    const tableRows = leadsToExport?.map((lead) => [
+      lead.id,
+      lead.name,
+      lead.email,
+      lead.phoneNo,
+      lead.assigned_To,
+    ]);
+    // Add a title to the PDF
+    doc.text("Selected Leads Data", 14, 16);
+    // Add the table to the PDF
+    autoTable(doc, {
+      head: [tableColumn],
+      body: tableRows,
+      startY: 22, // Position the table after the title
+    });
+    doc.save("Followup.pdf");
+  };
+
+  
+  // Function to toggle all checkboxes
+  const selectAllCheckbox = () => {
+    if (selectAll) {
+      // Deselect all rows
+      setSelectedRows([]);
+      setSelectedEmails([]); // Clear selected emails
+      setSelectAll(false);
+    } else {
+      // Select all rows in the current page
+      const allIds = currentSms.map((order) => order.id);
+      const allEmails = currentSms.map((order) => order.email); // Extract emails
+      setSelectedRows(allIds);
+      setSelectedEmails(allEmails); // Store all emails
+      setSelectAll(true);
+    }
+  };
+
+  
+ // Function to toggle individual checkboxes
+const handleCheckboxChange = (id, email, e) => {
+  e.stopPropagation();
+
+  // Update selected rows
+  setSelectedRows((prevSelectedRows) => {
+    const newSelectedRows = prevSelectedRows.includes(id)
+      ? prevSelectedRows.filter((rowId) => rowId !== id)
+      : [...prevSelectedRows, id];
+
+    // Log the updated selectedRows
+    console.log("Updated Selected Rows:", newSelectedRows);
+    return newSelectedRows;
+  });
+
+  // Update selected emails
+  setSelectedEmails((prevSelectedEmails) => {
+    const newSelectedEmails = prevSelectedEmails.includes(email)
+      ? prevSelectedEmails.filter((e) => e !== email)
+      : [...prevSelectedEmails, email];
+
+    // Log the updated selectedEmails
+    console.log("@@@===", newSelectedEmails);
+    return newSelectedEmails;
+  });
+
+  setSelectAll(false); // Uncheck "Select All" if individual checkbox is toggled
+};
+
+
+ 
+ 
+
+  // Object containing the options
+  const dynamicButtons = {
+    Monitoring: { text: "Create View Box", href: "/sidebar/createvoice" },
+    Reports: { text: "Create Reports", href: "/sidebar/createreports" },
+    "SMS via GMS Gateway": {
+      text: "Send Details",
+      href: "/sidebar/createvoicedetails",
+    },
   };
 
   const handleCheckboxClick = (e, id) => {
@@ -289,6 +413,14 @@ if(startDate<=endDate){
 
   return (
     <div className="min-h-screen flex flex-col m-3">
+      
+  {/* Render the modal only when `isModalOpen` is true */}
+  {isModalOpen && (
+        <MassEmail
+          emails={selectedEmails}
+          onClose={closeModal} // Pass function to close modal
+        />
+      )}
       <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md">
         <div className="flex gap-3">
           {/* TOP */}
@@ -429,7 +561,7 @@ if(startDate<=endDate){
                       <li
                         className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                         key={key}
-                        onClick={() => handleActionClick(key)}
+                        onClick={() => handleActionButton(value)}
                       >
                         {value}
                       </li>
@@ -581,7 +713,7 @@ if(startDate<=endDate){
                         <input
                           type="checkbox"
                           checked={selectedRows.includes(voice.id)}
-                          onChange={(e) => handleCheckboxChange(voice.id, e)}
+                          onChange={(e) => handleCheckboxChange(voice.id,voice.email, e)}
                         />
                       </td>
 
