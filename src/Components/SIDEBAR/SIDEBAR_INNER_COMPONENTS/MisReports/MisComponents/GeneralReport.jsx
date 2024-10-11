@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FaAngleDown } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export default function GeneralReport() {
   const [editReport, setEditReport] = useState({
@@ -158,14 +159,20 @@ export default function GeneralReport() {
   };
   return (
     <>
-      <div className="flex py-3 px-3 items-center justify-between">
-        <h1 className="text-3xl font-medium">View Client Logs</h1>
+      <div className="flex py-2 px-3 m-3 items-center justify-between bg-white rounded-md shadow-md">
+        <h1 className="text-xl">Add General Report</h1>
+        <Link
+          to="/sidebar/misreports"
+          className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
+        >
+          Cancel
+        </Link>
       </div>
 
       {/* FORM SECTION */}
       <div className="px-3">
         <h1 className="py-2 px-3 font-medium rounded-t-xl bg-cyan-500 text-white text-md shadow-md">
-          Client Logs Information
+          General Report Detail
         </h1>
         <form
           onSubmit={handleSubmit}
@@ -314,9 +321,7 @@ export default function GeneralReport() {
                     id="leadStatus"
                     type="button"
                   >
-                    {isEditMode
-                      ? editReport.leadStatus
-                      : defaultLeadStatusText}
+                    {isEditMode ? editReport.leadStatus : defaultLeadStatusText}
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {leadStatusDropdown && (
@@ -375,9 +380,7 @@ export default function GeneralReport() {
                     id="leadStatus"
                     type="button"
                   >
-                    {isEditMode
-                      ? editReport.leadOwner
-                      : defaultLeadOwnerText}
+                    {isEditMode ? editReport.leadOwner : defaultLeadOwnerText}
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {leadOwnerDropdown && (
@@ -436,9 +439,7 @@ export default function GeneralReport() {
                     id="leadSource"
                     type="button"
                   >
-                    {isEditMode
-                      ? editReport.leadSource
-                      : defaultLeadSourceText}
+                    {isEditMode ? editReport.leadSource : defaultLeadSourceText}
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {leadSourceDropdown && (
