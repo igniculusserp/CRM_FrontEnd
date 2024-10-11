@@ -83,6 +83,16 @@ import CreateLogin from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_L
 
 import { OTPProvider } from './store/OTPContext.jsx';
 
+import MISReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx';
+import GeneralReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/GeneralReport.jsx';
+import FtReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/FtReport.jsx';
+import PaidClientReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/PaidClientReport.jsx';
+import UserReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/UserReport.jsx';
+import CallingReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/CallingReport.jsx';
+import DNDReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/DNDReport.jsx';
+import TrackSheet from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/TrackSheet.jsx';
+import ResearchReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/ResearchReport.jsx';
+
 
 const router = createBrowserRouter([
   { path: '/', element: <App /> },
