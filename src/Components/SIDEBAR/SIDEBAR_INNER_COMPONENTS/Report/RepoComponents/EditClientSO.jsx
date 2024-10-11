@@ -88,7 +88,9 @@ export default function EditClientSO() {
       );
       const data = response.data.data;
       console.log("Fetched segments:", response.data.data);
-
+      const segmentsArray = typeof data.segments === 'string' 
+      ? data.segments.split(',') 
+      : (Array.isArray(data.segments) ? data.segments : []);
 
       seteditLead({
         id: data.id,
@@ -119,7 +121,7 @@ export default function EditClientSO() {
         amount_paid: data.amount_paid || "",
         discount: data.discount || "",
         advisaryExp: data.advisaryExp || "",
-        segments: data.segments || [],
+        segments: segmentsArray,
         subscription_start_date:
           data.subscription_start_date?.split("T")[0] || null,
         subscription_end_date:
