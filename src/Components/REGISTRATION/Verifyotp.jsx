@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import {  useParams, Link } from "react-router-dom";
-import { main_base_url, urlchange_base,localBase } from "./../../Config/config";
+import { main_base_url,localBase } from "./../../Config/config";
 
+
+//images
 import VerifyOTP from "./../../assets/images/verifyOTP.png";
 import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
 import { GiDiamonds } from "react-icons/gi";

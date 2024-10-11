@@ -8,7 +8,7 @@ import { main_base_url } from "./../../Config/config";
 import { GiDiamonds } from "react-icons/gi";
 import { showSuccessToast, showErrorToast } from "./../../utils/toastNotifications";
 
-export default function ForgetPassOTP() {
+export default function TenantLoginOTP() {
   const { otp, resendDisabled, countdown, email, handleResend, handleChange } = useOTP();
   const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ export default function ForgetPassOTP() {
       const response = await axios.post(`${main_base_url}/Users/verify/otp`, formValues);
       if (response.data.status === 200) {
         showSuccessToast("OTP Verified");
-        navigate("/forgetresetpass");
+        navigate("/sidebar");
       } else {
         showErrorToast("OTP verification failed");
       }
@@ -45,8 +45,8 @@ export default function ForgetPassOTP() {
             <div className="flex text-3xl font-semibold">
               <GiDiamonds className="mt-1 text-cyan-500" />
               <h1 className="">
-                Don't worry <br />
-                we'll help you.
+                Two Factor  <br />
+                Authentication
               </h1>
             </div>
             <div>
@@ -66,15 +66,14 @@ export default function ForgetPassOTP() {
 
           <div className="flex flex-col justify-center mx-10 md:mx-4 px-3 mt-8 bg-white py-3 rounded-2xl">
             <div className="flex text-2xl font-semibold gap-3 items-center">
-              <GiDiamonds className="text-3xl hidden md:block mb-6" />
+              <GiDiamonds className="text-3xl hidden md:block " />
               <h1>
-                Forgot your <br />
-                Password
+                Verify OTP 
               </h1>
             </div>
 
             <div className="flex sm:mx-10">
-              <p className=" text-gray-500">Don't worry about your account</p>
+              <p className=" text-gray-500">2-FA Enabled for your account, please verify </p>
             </div>
 
             <div className="mt-8 md:mt-16">
@@ -92,7 +91,7 @@ export default function ForgetPassOTP() {
                 />
                 <div className="flex flex-col justify-center items-center gap-2 mt-6">
                   <div className="text-sm">
-                    <p>Code was sent to your Mail Address</p>
+                    <p>Code was sent to your mail address</p>
                     <p className="text-center text-cyan-500">{email}</p>
                   </div>
                   <div className="mt-6">
@@ -114,7 +113,7 @@ export default function ForgetPassOTP() {
                     {resendDisabled ? `Resend` : "Resend"}
                   </div>
                   <div className="text-right text-sm">
-                    <Link to="/" className="underline text-cyan-500">
+                    <Link to="/tenantlogin" className="underline text-cyan-500">
                       Back to login
                     </Link>
                   </div>

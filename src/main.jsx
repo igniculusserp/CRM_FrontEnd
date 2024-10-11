@@ -9,6 +9,7 @@ import Registration from './Components/REGISTRATION/Registration.jsx';
 import Verifyotp from './Components/REGISTRATION/Verifyotp.jsx';
 import VerifyTenant from './Components/REGISTRATION/VerifyTenant.jsx';
 import TenantLogin from './Components/REGISTRATION/TenantLogin.jsx';
+import TenantLoginOTP from './Components/REGISTRATION/TenantLoginOTP.jsx';
 
 //Forget Password
 import ForgetPass from './Components/REGISTRATION/ForgetPass.jsx';
@@ -80,11 +81,13 @@ import EditClientSO from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/R
 import MISReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx';
 import CreateClient from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Client/CreateClient.jsx';
 import CreateLogin from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateLogin.jsx';
+import { OTPProvider } from './store/OTPContext.jsx';
 
 const router = createBrowserRouter([
   { path: '/', element: <App /> },
   { path: '/VerifyTenant', element: <VerifyTenant /> },
   { path: '/tenantlogin', element: <TenantLogin /> },
+  { path: '/tenantloginOTP', element: <TenantLoginOTP /> },
   { path: '/registration', element: <Registration /> },
   { path: '/verifyotp/:userId', element: <Verifyotp /> },
   { path: '/welcome/:tenantId', element: <WelcomePage /> },
@@ -164,5 +167,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <OTPProvider>
+    <RouterProvider router={router} />
+  </OTPProvider>
 );
