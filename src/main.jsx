@@ -9,6 +9,7 @@ import Registration from './Components/REGISTRATION/Registration.jsx';
 import Verifyotp from './Components/REGISTRATION/Verifyotp.jsx';
 import VerifyTenant from './Components/REGISTRATION/VerifyTenant.jsx';
 import TenantLogin from './Components/REGISTRATION/TenantLogin.jsx';
+import TenantLoginOTP from './Components/REGISTRATION/TenantLoginOTP.jsx';
 
 //Forget Password
 import ForgetPass from './Components/REGISTRATION/ForgetPass.jsx';
@@ -79,21 +80,15 @@ import Reports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/Report
 import EditClientSO from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/RepoComponents/EditClientSO.jsx';
 import CreateClient from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Client/CreateClient.jsx';
 import CreateLogin from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateLogin.jsx';
-// MIS REPORT => INNER COMPONENT
-import MISReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx';
-import GeneralReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/GeneralReport.jsx';
-import FtReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/FtReport.jsx';
-import PaidClientReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/PaidClientReport.jsx';
-import UserReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/UserReport.jsx';
-import CallingReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/CallingReport.jsx';
-import DNDReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/DNDReport.jsx';
-import TrackSheet from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/TrackSheet.jsx';
-import ResearchReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/ResearchReport.jsx';
+
+import { OTPProvider } from './store/OTPContext.jsx';
+
 
 const router = createBrowserRouter([
   { path: '/', element: <App /> },
   { path: '/VerifyTenant', element: <VerifyTenant /> },
   { path: '/tenantlogin', element: <TenantLogin /> },
+  { path: '/tenantloginOTP', element: <TenantLoginOTP /> },
   { path: '/registration', element: <Registration /> },
   { path: '/verifyotp/:userId', element: <Verifyotp /> },
   { path: '/welcome/:tenantId', element: <WelcomePage /> },
@@ -182,5 +177,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <OTPProvider>
+    <RouterProvider router={router} />
+  </OTPProvider>
 );

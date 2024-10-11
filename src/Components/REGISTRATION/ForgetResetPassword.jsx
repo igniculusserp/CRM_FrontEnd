@@ -26,11 +26,8 @@ export default function ForgetResetPassword() {
 
   const navigate = useNavigate();
 
-    // Get the full URL
     const fullURL = window.location.href;
-    // Create a new URL object
     const url = new URL(fullURL);
-    // Extract the hostname and split by '.'
     const subdomain = url.hostname.split('.')[0];
 
 

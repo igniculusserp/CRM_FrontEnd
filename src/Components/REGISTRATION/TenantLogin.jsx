@@ -13,19 +13,26 @@ import "react-toastify/dist/ReactToastify.css";
 import {showSuccessToast,showErrorToast} from "./../../utils/toastNotifications";
 
 //imgUsed
-
 import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
 import CRMLoginPage from "./../../assets/images/CRMLoginPage.png";
 import Microsoft from "./../../assets/images/microsoft-logo.png";
 
 import { getHostnamePart } from "../SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
-import {protocal_url, tenant_base_url, urlchange_base } from "./../../Config/config";
+import {protocal_url, tenant_base_url } from "./../../Config/config";
 
 export default function TenantLogin() {
-  
-  const name = getHostnamePart(); 
-  console.log("Hostname part:", name); 
 
+  const [userName, setuserName] = useState("")
+  const [password, setPassword] = useState("")
+  const deviceType = "";
+  const deviceAddress ="";
+
+  const [emailError, setEmailError] = useState(false)
+  const [passwordError, setPasswordError] = useState(false)
+
+  const navigate = useNavigate()
+
+  const name = getHostnamePart();
 
   useEffect(() => {
     const apiUrl = `${protocal_url}${name}.${tenant_base_url}/Tenants/check`;
@@ -58,23 +65,8 @@ export default function TenantLogin() {
 
       }
     };
-
     verifyTenant();
   }, []);
-
-
-
-
-
-    const [userName, setuserName] = useState("")
-    const [password, setPassword] = useState("")
-    const deviceType = "";
-    const deviceAddress ="";
-
-    const [emailError, setEmailError] = useState(false)
-    const [passwordError, setPasswordError] = useState(false)
-
-    const navigate = useNavigate()
 
 
     const data = JSON.parse(localStorage.getItem('dat'));
@@ -156,8 +148,8 @@ export default function TenantLogin() {
             const logindetail = response.data.data
             localStorage.setItem("token", response.data.data.token);
             localStorage.setItem("userDetail", JSON.stringify(logindetail))
-            showSuccessToast('Login Successful')
-            navigate('/sidebar')
+            localStorage.setItem("myData_forget", userName);
+            navigate('/tenantloginOTP')
         }
         catch (error) {
             if (error.response.data) {

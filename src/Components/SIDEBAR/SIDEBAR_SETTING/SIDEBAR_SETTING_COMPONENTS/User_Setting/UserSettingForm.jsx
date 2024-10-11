@@ -27,7 +27,7 @@ export default function UserSettingForm({ handleActiveState, editUser, isEditMod
     password: editUser?.password || "",
     confirmPassword: editUser?.confirmPassword || "",
     reportedTo: editUser?.reportedTo || "",
-    Role: editUser?.Role || "",
+    role: editUser?.role || "",
     createdDate: editUser?.createdDate || "",
     deletedDate: editUser?.deletedDate || "",
   });
@@ -45,7 +45,7 @@ export default function UserSettingForm({ handleActiveState, editUser, isEditMod
         password: editUser.password || "",
         confirmPassword: editUser.confirmPassword || "",
         reportedTo: editUser.reportedTo,
-        Role: editUser.role,
+        role: editUser.role,
         createdDate: editUser.createdDate || "",
         deletedDate: editUser.deletedDate || "",
       });
@@ -62,7 +62,7 @@ export default function UserSettingForm({ handleActiveState, editUser, isEditMod
         password: "",
         confirmPassword: "",
         reportedTo: "",
-        Role: "",
+        role: "",
         createdDate: "",
         deletedDate: "",
       });
@@ -118,7 +118,7 @@ export default function UserSettingForm({ handleActiveState, editUser, isEditMod
             userName: formData.username,
             password: formData.password,
             confirmPassword: formData.confirmPassword,
-            role: formData.Role,
+            role: formData.role,
             groupId: selectedRole,
             reportedTo: formData.reportedTo,
             isActive: true,
@@ -142,7 +142,7 @@ export default function UserSettingForm({ handleActiveState, editUser, isEditMod
             businessType: formData.businessType || "",
             password: formData.password,
             confirmPassword: formData.confirmPassword,
-            role: formData.Role || "",
+            role: formData.role || "",
             reportedTo: formData.reportedTo,
             isActive: true,
             createdDate: new Date().toISOString(),
@@ -410,9 +410,9 @@ export default function UserSettingForm({ handleActiveState, editUser, isEditMod
                     Group Name
                   </label>
                   <select
-                    name={"Role"}
+                    name="role"
                     className="mt-1 p-2 border border-gray-300 rounded-md"
-                    value={formData?.Role || ""}
+                    value={formData?.role || ""}
                     onChange={handleChange}
                   >
                     <option value={formData?.Role || ""} disabled>{formData?.Role || 'Select'}</option>
