@@ -279,6 +279,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
         config
       );
       alert("Mass Deleted run");
+      handleLead();
       console.log(response);
 
       setGetleads((prevLeads) =>
