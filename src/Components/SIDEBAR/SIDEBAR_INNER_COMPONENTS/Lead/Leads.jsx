@@ -353,6 +353,7 @@ if (value === "Mass Email") {
         config
       );
       alert('Mass Deleted run');
+      handleLead();
       console.log(response);
 
       setGetleads((prevLeads) =>
