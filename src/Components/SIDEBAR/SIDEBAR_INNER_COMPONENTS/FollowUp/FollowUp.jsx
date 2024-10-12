@@ -1,30 +1,30 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 //external Packages
-import axios from "axios";
-import * as XLSX from "xlsx";
-import { jsPDF } from "jspdf";
-import autoTable from "jspdf-autotable";
+import axios from 'axios';
+import * as XLSX from 'xlsx';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
 //React Icons
-import { ImFilter } from "react-icons/im";
-import { IoSearchOutline } from "react-icons/io5";
-import { MdCall } from "react-icons/md";
-import { FaAngleDown, FaBars } from "react-icons/fa";
+import { ImFilter } from 'react-icons/im';
+import { IoSearchOutline } from 'react-icons/io5';
+import { MdCall } from 'react-icons/md';
+import { FaAngleDown, FaBars } from 'react-icons/fa';
 //Folder Imported
-import { tenant_base_url, protocal_url } from "./../../../../Config/config"
-import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import { tenant_base_url, protocal_url } from './../../../../Config/config';
+import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 import MassEmail from '../MassEmail/MassEmail';
 
 export default function FollowUp() {
   const navigate = useNavigate();
 
-  const bearer_token = localStorage.getItem("token");
+  const bearer_token = localStorage.getItem('token');
   const name = getHostnamePart();
   // All States
   const [selectAll, setSelectAll] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
-// Mass Email
-const [isModalOpen, setIsModalOpen] = useState(false);
+  // Mass Email
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEmails, setSelectedEmails] = useState([]);
   const [followupList, setFollowupList] = useState([]);
   const [followupDropdown, setFollowupDropdown] = useState(false);
@@ -52,7 +52,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
         setFilteredLeads(followup?.data);
       }
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     }
   };
 
@@ -62,8 +62,8 @@ const [isModalOpen, setIsModalOpen] = useState(false);
 
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
-    { key: 1, value: "Table View" },
-    { key: 2, value: "Grid View" },
+    { key: 1, value: 'Table View' },
+    { key: 2, value: 'Grid View' },
   ];
 
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
@@ -100,66 +100,65 @@ const [isModalOpen, setIsModalOpen] = useState(false);
 
   //   FOLLOW UP DROPDOWN DATA
   const followup = [
-    { key: 1, value: "Man Insited" },
-    { key: 2, value: "Man Insited" },
-    { key: 3, value: "Man Insited" },
-    { key: 4, value: "Man Insited" },
-    { key: 4, value: "Man Insited" },
-    { key: 4, value: "Man Insited" },
+    { key: 1, value: 'Man Insited' },
+    { key: 2, value: 'Man Insited' },
+    { key: 3, value: 'Man Insited' },
+    { key: 4, value: 'Man Insited' },
+    { key: 4, value: 'Man Insited' },
+    { key: 4, value: 'Man Insited' },
   ];
 
   //   SEARCH BAR DATA
   const searchBar = [
-    { key: 0, value: "Search" },
-    { key: 1, value: "Touched Records" },
-    { key: 2, value: "Untouched Records" },
-    { key: 3, value: "Reecord Action" },
-    { key: 4, value: "Related Records Action" },
-    { key: 5, value: "Locked" },
-    { key: 6, value: "Latest Email Status" },
-    { key: 7, value: "Activities" },
-    { key: 8, value: "Notes" },
-    { key: 9, value: "Campaigns" },
+    { key: 0, value: 'Search' },
+    { key: 1, value: 'Touched Records' },
+    { key: 2, value: 'Untouched Records' },
+    { key: 3, value: 'Reecord Action' },
+    { key: 4, value: 'Related Records Action' },
+    { key: 5, value: 'Locked' },
+    { key: 6, value: 'Latest Email Status' },
+    { key: 7, value: 'Activities' },
+    { key: 8, value: 'Notes' },
+    { key: 9, value: 'Campaigns' },
   ];
 
- 
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
   const actions = [
-    { key: 1, value: "Mass Delete" },
-    { key: 2, value: "Mass Update" },
-    { key: 3, value: "Mass Email" },
-    { key: 4, value: "Approve Leads" },
-    { key: 5, value: "Add to Campaign" },
-    { key: 6, value: "Export Leads" },
-    { key: 7, value: "Sheet View" },
-    { key: 8, value: "Print View" },
+    { key: 1, value: 'Mass Delete' },
+    { key: 2, value: 'Mass Update' },
+    { key: 3, value: 'Mass Email' },
+    { key: 4, value: 'Approve Leads' },
+    { key: 5, value: 'Add to Campaign' },
+    { key: 6, value: 'Export Leads' },
+    { key: 7, value: 'Sheet View' },
+    { key: 8, value: 'Print View' },
   ];
 
   // On click of Action Button
   const handleActionButton = async (value) => {
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
-    if (value === "Mass Delete") {
+    if (value === 'Mass Delete') {
       const userConfirmed = confirm(
-        "Are you sure you want to Delete the selected Data?"
+        'Are you sure you want to Delete the selected Data?'
       );
       if (userConfirmed) {
         handleMassTrailDelete(selectedRows);
       }
     }
-// ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
-if (value === "Mass Email") {
-  const userConfirmed = confirm(
-    "Are you sure you want to Send E-Mail to the selected Data?"
-  );
-  if (userConfirmed) {
-    openMassEmailModal(selectedRows);
-  }
-}
-    // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
-    if (value === "Sheet View") {
+    // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
+    if (value === 'Mass Email') {
       const userConfirmed = confirm(
-        "Are you sure you want to export the selected data?"
+        'Are you sure you want to Send E-Mail to the selected Data?'
+      );
+      if (userConfirmed) {
+        openMassEmailModal(selectedRows);
+      }
+    }
+    // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
+    if (value === 'Sheet View') {
+      const userConfirmed = confirm(
+        'Are you sure you want to export the selected data?'
       );
       if (userConfirmed) {
         exportToTrailExcel(selectedRows);
@@ -167,9 +166,9 @@ if (value === "Mass Email") {
     }
 
     // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
-    if (value === "Print View") {
+    if (value === 'Print View') {
       const userConfirmed = confirm(
-        "Are you sure you want to export the selected Leads?"
+        'Are you sure you want to export the selected Leads?'
       );
       if (userConfirmed) {
         exportToTrailPDF(selectedRows);
@@ -201,12 +200,11 @@ if (value === "Mass Email") {
       getFollowupLists(); // Refresh the list after deletion
       alert(`${responses.length} items successfully deleted.`);
     } catch (error) {
-      console.error("Error deleting follow-ups:", error);
+      console.error('Error deleting follow-ups:', error);
     }
   };
 
   // ---------------------->MASS Email FUNCTIONALITY---<----------------------
-
 
   const openMassEmailModal = () => {
     if (selectedEmails.length > 0) {
@@ -220,7 +218,6 @@ if (value === "Mass Email") {
     setIsModalOpen(false); // Close the modal
   };
 
-
   //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
   //-------> XLSX used here
   const exportToTrailExcel = () => {
@@ -229,7 +226,7 @@ if (value === "Mass Email") {
       selectedRows.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
-      alert("No leads selected to export");
+      alert('No leads selected to export');
       return;
     }
 
@@ -238,10 +235,10 @@ if (value === "Mass Email") {
 
     // Create a new workbook and append the worksheet
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Selected FollowUp");
+    XLSX.utils.book_append_sheet(wb, ws, 'Selected FollowUp');
 
     // Export the workbook to an Excel file
-    XLSX.writeFile(wb, "SelectedFollowupData.xlsx");
+    XLSX.writeFile(wb, 'SelectedFollowupData.xlsx');
   };
 
   //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
@@ -250,12 +247,12 @@ if (value === "Mass Email") {
       selectedRows.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
-      alert("No leads selected to export");
+      alert('No leads selected to export');
       return;
     }
     const doc = new jsPDF();
     // const role = matchedUser?.role;
-    const tableColumn = ["ID", "Name", "Email", "Phone No.", "Assigned To"];
+    const tableColumn = ['ID', 'Name', 'Email', 'Phone No.', 'Assigned To'];
     // Map the leads data to rows
     const tableRows = leadsToExport?.map((lead) => [
       lead.id,
@@ -265,14 +262,14 @@ if (value === "Mass Email") {
       lead.assigned_To,
     ]);
     // Add a title to the PDF
-    doc.text("Selected Leads Data", 14, 16);
+    doc.text('Selected Leads Data', 14, 16);
     // Add the table to the PDF
     autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
       startY: 22, // Position the table after the title
     });
-    doc.save("Followup.pdf");
+    doc.save('Followup.pdf');
   };
 
   //---------------------->---------------------->PAGINATION<----------------------<----------------------
@@ -305,36 +302,34 @@ if (value === "Mass Email") {
     }
   };
 
-  
- // Function to toggle individual checkboxes
-const handleCheckboxChange = (id, email, e) => {
-  e.stopPropagation();
+  // Function to toggle individual checkboxes
+  const handleCheckboxChange = (id, email, e) => {
+    e.stopPropagation();
 
-  // Update selected rows
-  setSelectedRows((prevSelectedRows) => {
-    const newSelectedRows = prevSelectedRows.includes(id)
-      ? prevSelectedRows.filter((rowId) => rowId !== id)
-      : [...prevSelectedRows, id];
+    // Update selected rows
+    setSelectedRows((prevSelectedRows) => {
+      const newSelectedRows = prevSelectedRows.includes(id)
+        ? prevSelectedRows.filter((rowId) => rowId !== id)
+        : [...prevSelectedRows, id];
 
-    // Log the updated selectedRows
-    console.log("Updated Selected Rows:", newSelectedRows);
-    return newSelectedRows;
-  });
+      // Log the updated selectedRows
+      console.log('Updated Selected Rows:', newSelectedRows);
+      return newSelectedRows;
+    });
 
-  // Update selected emails
-  setSelectedEmails((prevSelectedEmails) => {
-    const newSelectedEmails = prevSelectedEmails.includes(email)
-      ? prevSelectedEmails.filter((e) => e !== email)
-      : [...prevSelectedEmails, email];
+    // Update selected emails
+    setSelectedEmails((prevSelectedEmails) => {
+      const newSelectedEmails = prevSelectedEmails.includes(email)
+        ? prevSelectedEmails.filter((e) => e !== email)
+        : [...prevSelectedEmails, email];
 
-    // Log the updated selectedEmails
-    console.log("@@@===", newSelectedEmails);
-    return newSelectedEmails;
-  });
+      // Log the updated selectedEmails
+      console.log('@@@===', newSelectedEmails);
+      return newSelectedEmails;
+    });
 
-  setSelectAll(false); // Uncheck "Select All" if individual checkbox is toggled
-};
-
+    setSelectAll(false); // Uncheck "Select All" if individual checkbox is toggled
+  };
 
   // Navigate to Edit Screen
   const handleClick = (id) => {
@@ -343,7 +338,7 @@ const handleCheckboxChange = (id, email, e) => {
 
   //-----------------------------------------------> ALL-> ASSIGNED_TO <-functionality <-----------------------------------------------
 
-  const [assignedTo, setAssignedTo] = useState("Assigned to"); // Track the selected assigned user
+  const [assignedTo, setAssignedTo] = useState('Assigned to'); // Track the selected assigned user
 
   //-----------------------------------------------> ALL-> ASSIGNED_TO DropDown <-functionality <-----------------------------------------------
 
@@ -356,7 +351,7 @@ const handleCheckboxChange = (id, email, e) => {
   //----------------ASSIGNED_TO DROPDOWN----------------
   const [allAssigned_To_Data, setallAssigned_To_Data] = useState([]);
   async function handleallAssigned_To() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
@@ -370,7 +365,7 @@ const handleCheckboxChange = (id, email, e) => {
       );
       setallAssigned_To_Data(response.data.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -396,7 +391,7 @@ const handleCheckboxChange = (id, email, e) => {
 
   function handle_AssignedTo(assignedToValue) {
     let filteredLeads = followupList;
-    if (assignedToValue !== null && assignedToValue !== "Assigned to") {
+    if (assignedToValue !== null && assignedToValue !== 'Assigned to') {
       filteredLeads = filteredLeads.filter(
         (lead) => lead.assigned_To === assignedToValue
       );
@@ -416,56 +411,51 @@ const handleCheckboxChange = (id, email, e) => {
     handle_AssignedTo(user); // Apply both filters
   }
 
+  // ----------------------------- Date Filter -----------------------------
 
-
-// ----------------------------- Date Filter -----------------------------
-
-const today = new Date().toISOString().split("T")[0]; 
+  const today = new Date().toISOString().split('T')[0];
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(today);
 
+  // Function to filter based on date range
+  function handle_DateRange(startDate, endDate) {
+    let filteredFollows = currentFollows;
 
-// Function to filter based on date range
-function handle_DateRange(startDate, endDate) {
-  let filteredFollows = currentFollows;
+    // Convert startDate to the beginning of the day and endDate to the end of the day
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
 
-  // Convert startDate to the beginning of the day and endDate to the end of the day
-  const start = new Date(startDate);
-  start.setHours(0, 0, 0, 0); // Set time to 00:00:00
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999); // Set time to 23:59:59
 
-  const end = new Date(endDate);
-  end.setHours(23, 59, 59, 999); // Set time to 23:59:59
+    if (startDate && endDate) {
+      filteredFollows = filteredFollows.filter((follow) => {
+        const callbackDate = new Date(follow.call_bck_DateTime);
+        return callbackDate >= start && callbackDate <= end;
+      });
+    }
 
-  if (startDate && endDate) {
-    filteredFollows = filteredFollows.filter((follow) => {
-      const callbackDate = new Date(follow.call_bck_DateTime);
-      return callbackDate >= start && callbackDate <= end;
-    });
+    setFilteredLeads(filteredFollows); // Update the filtered result
   }
 
-  setFilteredLeads(filteredFollows); // Update the filtered result
-}
-
-// UseEffect to trigger handle_DateRange on date change
-useEffect(() => {
-  if(startDate<=endDate){
-    handle_DateRange(startDate, endDate);
-  }
-}, [startDate, endDate]); 
-
-
+  // UseEffect to trigger handle_DateRange on date change
+  useEffect(() => {
+    if (startDate <= endDate) {
+      handle_DateRange(startDate, endDate);
+    }
+  }, [startDate, endDate]);
 
   return (
     <>
       {/* -------- PARENT -------- */}
       <div className="min-h-screen flex flex-col m-3 ">
-          {/* Render the modal only when `isModalOpen` is true */}
-      {isModalOpen && (
-        <MassEmail
-          emails={selectedEmails}
-          onClose={closeModal} // Pass function to close modal
-        />
-      )}
+        {/* Render the modal only when `isModalOpen` is true */}
+        {isModalOpen && (
+          <MassEmail
+            emails={selectedEmails}
+            onClose={closeModal} // Pass function to close modal
+          />
+        )}
         {/* containerbar*/}
         <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg">
           {/* PART-I */}
@@ -604,29 +594,33 @@ useEffect(() => {
             </div>
             {/* ACTIONS DROPDWON */}
             <div
-              className="relative flex items-center"
+              className="relative"
               onClick={toggleActionDropdown}
               onMouseLeave={() => setActionDropdown(false)}
             >
-              <button className="px-4 rounded-md py-2 border border-blue-600  flex items-center justify-between gap-2">
-                {actionDropdown && (
-                  <div className="absolute bg-white border border-gray-300 top-10 right-0 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {actions.map(({ key, value }) => (
-                        <li
-                          className="px-2 py-2 w-56 border border-b hover:bg-cyan-500 hover:text-white cursor-pointer"
-                          key={key}
-                          onClick={() => handleActionButton(value)}
-                        >
-                          {value}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+              <button
+                className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center"
+                id="dropdownDefaultButton"
+                type="button"
+              >
                 Actions
                 <FaAngleDown className="text-gray-700 text-center" />
               </button>
+              {actionDropdown && (
+                <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10 right-0">
+                  <ul className="text-sm text-gray-700">
+                    {actions.map(({ key, value }) => (
+                      <li
+                        key={key}
+                        className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                        onClick={() => handleActionButton(value)}
+                      >
+                        {value}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
             {/* END ACTIONS DROPDWON */}
           </div>
@@ -636,8 +630,8 @@ useEffect(() => {
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-3xl font-medium ">Follow Up</h1>
             <h1 className="bg-blue-600 text-white p-2   min-w-10 text-center rounded text-sm">
-              {" "}
-              {followupList.length}{" "}
+              {' '}
+              {followupList.length}{' '}
             </h1>
           </div>
           {/* ------------------- Filter by date ----------------- */}
@@ -649,11 +643,7 @@ useEffect(() => {
             </button>
 
             {/* Date Range Filter Button */}
-            <button
-              className="border-r border-gray-500 px-3"
-            >
-              Filter By
-            </button>
+            <button className="border-r border-gray-500 px-3">Filter By</button>
 
             {/* Date Range Inputs */}
             <div className="px-3 flex items-center gap-2">
@@ -680,7 +670,7 @@ useEffect(() => {
         <div className="overflow-x-auto">
           <div className="min-w-full rounded-md overflow-hidden">
             {/*--------------TABLE HEAD START------------- */}
-            {selectedViewValue === "Table View" && (
+            {selectedViewValue === 'Table View' && (
               <table className="min-w-full bg-white">
                 <thead>
                   <tr className="border-gray-300 border-b-2">
@@ -802,7 +792,7 @@ useEffect(() => {
                         {/* FOLLOW UP */}
                         <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 ">
                           <div className="flex items-center text-nowrap">
-                            {order.call_bck_DateTime.replace("T", " ")}
+                            {order.call_bck_DateTime.replace('T', ' ')}
                           </div>
                         </td>
                       </tr>
@@ -815,7 +805,7 @@ useEffect(() => {
           </div>
 
           {/* PAGINATION */}
-          {selectedViewValue === "Table View" && (
+          {selectedViewValue === 'Table View' && (
             <>
               <div className="flex justify-end m-4">
                 <nav>
@@ -830,8 +820,8 @@ useEffect(() => {
                             onClick={() => paginate(i + 1)}
                             className={`px-4 py-2 mx-1 ${
                               currentPage === i + 1
-                                ? "bg-blue-500 text-white"
-                                : "bg-white text-gray-700 border"
+                                ? 'bg-blue-500 text-white'
+                                : 'bg-white text-gray-700 border'
                             }`}
                           >
                             {i + 1}

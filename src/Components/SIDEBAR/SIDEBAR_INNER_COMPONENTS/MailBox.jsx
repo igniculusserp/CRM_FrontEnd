@@ -465,12 +465,11 @@ export default function MailBox() {
       </div>
 
       {/* FILTER BY */}
-      <div className="flex px-3 py-2 items-center justify-between gap-3">
+      <div className="flex py-2 items-center justify-between gap-3">
         <div className="flex items-center justify-center gap-3">
-          <h1 className="text-2xl font-bold">Mail Box</h1>
-          <button className="bg-blue-600 text-white p-2   min-w-10 text-center rounded text-sm">
-            {' '}
-            {mailBoxMainData.length}{' '}
+          <h1 className="text-3xl font-bold">Mail Box</h1>
+          <button className="bg-blue-600 text-white px-2 py-2 min-w-10 text-center rounded-md text-md shadow-md">
+            {mailBoxMainData.length}
           </button>
         </div>
         {/* FILTER BY */}

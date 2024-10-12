@@ -389,10 +389,10 @@ export default function SmsBox() {
               <button
                 key={key}
                 onClick={() => handleOptionClick(key)}
-                className={`px-5 py-1.5 rounded font-light text-md
+                className={`px-4 py-1.5 rounded font-light text-md
                 ${
                   selectedButton === key
-                    ? 'bg-cyan-600 text-white'
+                    ? 'bg-cyan-500 text-white'
                     : 'bg-gray-100 text-gray-700'
                 }
               `}
@@ -405,7 +405,7 @@ export default function SmsBox() {
         <div className="flex gap-3">
           {/* DYNAMIC BUTTONS LINKS */}
           <Link to={buttonText.href}>
-            <button className="px-3 py-2 bg-blue-500 text-center text-md text-white font-[300] rounded-md w-[150px]">
+            <button className="px-3 py-2 bg-blue-600 text-center text-md text-white rounded-md w-[150px]">
               {buttonText.text}
             </button>
           </Link>
@@ -474,7 +474,7 @@ export default function SmsBox() {
       <div className="mt-4 flex justify-between items-center gap-3">
         <div className="flex gap-3">
           <h1 className="text-3xl font-medium ">SMS Box</h1>
-          <h1 className="bg-blue-600 text-white p-2 self-center rounded text-sm font-medium antialiased inline-block">
+          <h1 className="bg-blue-600 text-white px-2 py-2 min-w-10 text-center rounded-md text-md shadow-md">
             {smsBoxData.length}
           </h1>
         </div>
