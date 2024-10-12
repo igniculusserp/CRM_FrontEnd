@@ -1268,7 +1268,7 @@ export default function CreateSO() {
                 <div className="flex justify-end mr-20">
                   <button
                     type="submit"
-                    className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                    className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
                   >
                     {isEditMode ? "Update" : "Save"}
                   </button>
