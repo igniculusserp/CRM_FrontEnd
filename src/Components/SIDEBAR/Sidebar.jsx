@@ -113,28 +113,20 @@ export default function SidebaBar() {
       icon: <VscGraph />,
     },
     {
-      key: 11,
+      key: 15,
       data: 'MIS Reports',
       link: '/sidebar/misreports',
       icon: <IoDocumentTextOutline />,
     },
   ];
-  const [active, setactive] = useState(sideBar[0].key);
-  const [tenantId, setData] = useState('');
-  useEffect(() => {
-    const savedData = localStorage.getItem('myData');
-    if (savedData) {
-      setData(savedData);
-    }
-  }, ['myData']);
 
-  const id = tenantId;
+
+  const [active, setactive] = useState(sideBar[0].key);
+  
   const handlewelcomedata = async () => {
     try {
-      console.log(`Fetching data for userId: ${id}`);
-      const response = await axios.get(
-        `${main_base_url}/Tenants/gettenant/${name}`
-      );
+      const response = await axios.get(`${main_base_url}/Tenants/gettenant/${name}`);
+      
       console.log('Response:', response.data);
       setWelcomeData(response.data);
     } catch (error) {

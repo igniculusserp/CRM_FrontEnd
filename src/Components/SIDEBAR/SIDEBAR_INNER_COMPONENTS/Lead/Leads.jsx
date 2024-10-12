@@ -65,7 +65,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
         config
       );
 
-      const data = response.data.data;
+      const data = await response.data.data;
       setGetleads(data);
       setFilteredLeads(data); // Initialize filtered leads
     } catch (error) {
@@ -371,8 +371,6 @@ if (value === "Mass Email") {
   };
 
    // ---------------------->MASS Email FUNCTIONALITY---<----------------------
-
-
    const openMassEmailModal = () => {
     if (selectedEmails.length > 0) {
       setIsModalOpen(true); // Open the modal
@@ -384,8 +382,6 @@ if (value === "Mass Email") {
   const closeModal = () => {
     setIsModalOpen(false); // Close the modal
   };
-
-
 
 
   //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
@@ -539,11 +535,7 @@ if (value === "Mass Email") {
       return newSelectedEmails;
     });
   };
-  
-    
-
-
-
+      
   //---------------------->---------------------->̧CHECKBOX -> MULTIPLE<----------------------<----------------------
   const [isSelectAllChecked, setIsSelectAllChecked] = useState(false);
   const handleSelectAllCheckbox = (e) => {
