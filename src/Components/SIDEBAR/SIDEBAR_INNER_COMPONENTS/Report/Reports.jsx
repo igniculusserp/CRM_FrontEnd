@@ -273,7 +273,7 @@ const handleClearFilter = () => {
               className={`px-5 py-1.5 rounded font-light text-md
                     ${
                       selectedId === id
-                        ? "bg-cyan-600 text-white"
+                        ? "bg-cyan-500 text-white"
                         : "bg-gray-100 text-gray-700"
                     }
                   `}
@@ -332,7 +332,7 @@ const handleClearFilter = () => {
               }
             })()}
           </h1>
-          <h1 className="bg-blue-600 text-white p-2 self-center rounded text-sm font-medium antialiased inline-block">
+          <h1 className="bg-blue-600 text-white px-2 py-2 min-w-10 text-center rounded-md text-md shadow-md">
             {getReports.length}
           </h1>
         </div>
@@ -343,9 +343,9 @@ const handleClearFilter = () => {
               <button
                 onClick={() => handleButtonClick(id)}
                 key={id}
-                className={`px-1 text-sm py-1.5 ${
+                className={`py-1.5 px-1 text-sm ${
                   buttonId === id
-                    ? 'bg-cyan-600 text-white'
+                    ? 'bg-cyan-500 text-white'
                     : 'bg-gray-100 text-gray-700'
                 } rounded-md shadow-md`}
               >
@@ -358,7 +358,7 @@ const handleClearFilter = () => {
         {/* -------------- FILTER SECTION ------------------ */}
         <div className="flex bg-white border-2 gap-2 border-gray-300 py-1 rounded-lg justify-center items-center">
           {/* Filter Icon Button */}
-          <span className="border-gray-500 px-2">filter</span>
+          <span className="border-gray-500 px-1">filter</span>
           {/* ---------------------- MONTHS wISE DROPDOWN FILTER -------------------------*/}
           <div
         className="relative"
@@ -366,7 +366,7 @@ const handleClearFilter = () => {
         onMouseLeave={() => setFilterSixMonthsDropdown(false)}
       >
         <button
-          className="py-2 px-6 border rounded-md gap-2 border-blue-600 text-blue-600 flex justify-between items-center"
+          className="py-1 px-1 border rounded-md gap-2 border-blue-600 text-blue-600 flex justify-between items-center w-[150px]"
           id="dropdownDefaultButton"
           type="button"
         >
@@ -392,12 +392,12 @@ const handleClearFilter = () => {
 
           {/*-------------------------------  DATE Range Filter ------------------------------------ */}
            {/* Date Range Inputs */}
-           <div className="px-3 flex items-center gap-2">
+           <div className="px-1 flex items-center gap-2">
               <label>From:</label>
               <input
                 type="date"
                 value={startDate}
-                className="border rounded px-2 py-1"
+                className="border rounded px-1 py-1"
                 onChange={(e) => setStartDate(e.target.value)}
               />
 
@@ -405,12 +405,12 @@ const handleClearFilter = () => {
               <input
                 type="date"
                 value={endDate}
-                className="border rounded px-2 py-1"
+                className="border rounded px-1 py-1"
                 onChange={(e) => setEndDate(e.target.value)}
               />
             </div>
           {/* CLEAR FILTER */}
-          <button className="text-blue-600 px-2" onClick={handleClearFilter}>Clear Filter</button>
+          <button className="text-blue-600 flex items-center px-1 text-sm" onClick={handleClearFilter}>Clear Filter</button>
         </div>
       </div>
 
