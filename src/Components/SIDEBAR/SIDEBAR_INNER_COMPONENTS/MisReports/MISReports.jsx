@@ -184,7 +184,7 @@ export default function MISReports() {
                 className={`px-4 py-1.5 rounded font-light text-md
                 ${
                   selectedButton === key
-                    ? 'bg-cyan-600 text-white'
+                    ? 'bg-cyan-500 text-white'
                     : 'bg-gray-100 text-gray-700'
                 }
               `}
@@ -218,7 +218,7 @@ export default function MISReports() {
             })()}
           </h1>
           <Link to={buttonText.href}>
-            <button className="px-3 py-2 bg-blue-500 text-center text-md text-white font-[300] rounded-md">
+            <button className="px-3 py-2 bg-blue-600 text-center text-md text-white rounded-md">
               {buttonText.text || 'Add General Report'}
             </button>
           </Link>
