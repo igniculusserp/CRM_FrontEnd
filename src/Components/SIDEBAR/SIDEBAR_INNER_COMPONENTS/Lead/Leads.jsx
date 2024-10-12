@@ -879,7 +879,7 @@ if (value === "Mass Email") {
                 onClick={() => handleDynamicButtonsClick(id)}
                 className={`px-2 py-1.5 rounded font-light text-md
           ${
-            activeButtonId === id? 'bg-cyan-600 text-white': 'bg-gray-100 text-gray-700'}`}>
+            activeButtonId === id? 'bg-cyan-500 text-white': 'bg-gray-100 text-gray-700'}`}>
                 {name}
               </button>
             ))}
