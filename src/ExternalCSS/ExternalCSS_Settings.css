@@ -1,15 +1,9 @@
 .side_Bar_Container{
-    width: 20vw;
-    /* max-width: 18vw;
-    min-width: 18vw; */
+    width: 20%;
 }
-.main_Body_Container{
-    width: 100vw;
-}
+
 .Main_Data_Container{
-    width: 80vw;
-    /* max-width: 80vw;
-    min-width: 80vw; */
+    width: 80%;
 }
 
 /* Global CSS file or component-specific styles */
