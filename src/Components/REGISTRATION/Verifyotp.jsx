@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import {  useParams, Link } from "react-router-dom";
-import { main_base_url,localBase } from "./../../Config/config";
+import { main_base_url,localBase,urlchange_base } from "./../../Config/config";
 
 
 //images
