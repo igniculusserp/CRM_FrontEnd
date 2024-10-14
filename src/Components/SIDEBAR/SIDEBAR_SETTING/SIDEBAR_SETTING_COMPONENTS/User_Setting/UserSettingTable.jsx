@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { FaBars } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
@@ -181,9 +183,9 @@ export default function UserSettingTable({ users, handleActiveState, handleClick
                         {user.createdDate.split('T')[0]}
                       </td>
                       <td className="text-center">
-                        <button onClick={() => handleLoginUser(user)} className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded ">
-                          <p className="text-center">Login As</p>
-                        </button>
+                        <Link onClick={() => handleLoginUser(user)}  className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded ">
+                          Login As
+                        </Link>
                       </td>
                       <td className="px-1 py-4 flex gap-1 justify-center min-w-20 max-w-20 break-words mx-auto">
                         <MdEdit
