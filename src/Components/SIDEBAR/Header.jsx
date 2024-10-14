@@ -24,6 +24,7 @@ export default function Header() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         const registrationdata = localStorage.getItem('registrationdata');
+        
         const userDetail = localStorage.getItem('userDetail');
 
         if(token && (userDetail || registrationdata)) {
