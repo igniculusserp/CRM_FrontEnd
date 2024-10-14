@@ -10,9 +10,12 @@ import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
 //reactIcons
-import { FaAngleDown, FaBars } from "react-icons/fa";
-import { ImFilter } from "react-icons/im";
+import { FaAngleDown, FaBars,FaPhoneAlt } from "react-icons/fa";
+
+import { IoIosMail } from "react-icons/io";
+import { BiEdit } from "react-icons/bi";
 import { IoSearchOutline } from "react-icons/io5";
+import { ImFilter } from "react-icons/im";
 import { MdCall } from "react-icons/md";
 
 //Folder Imported
@@ -155,8 +158,8 @@ export default function FreeTrail() {
       setSelectAll(false);
     } else {
       // Select all rows in the current page
-      const allIds = currentFollows.map((order) => order.id);
-      const allEmails = currentFollows.map((order) => order.email); // Extract emails
+      const allIds = currentTrials.map((order) => order.id);
+      const allEmails = currentTrials.map((order) => order.email); // Extract emails
       setSelectedRows(allIds);
       setSelectedEmails(allEmails); // Store all emails
       setSelectAll(true);
@@ -853,8 +856,75 @@ export default function FreeTrail() {
         </div>
       </div>
 
-      {selectedViewValue === "Table View" && (
+      {selectedViewValue === "Grid View" && (
         <>
+        <div className="min-w-full">
+                <div className="grid grid-cols-3 gap-3">
+                  {/*---------Card starts Here */}
+                  {currentTrials.map((item) => (
+                    <div className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2" key={item.id}>
+                      <div className="flex items-center gap-3" >
+                        <img src={item.img} height={60} width={60} />
+                        <div className="flex flex-col grow">
+                          <div className="flex justify-between font-medium">
+                            <span className="text-indigo-500">{item.name}</span>
+                            <BiEdit
+                              size={25}
+                              className="bg-white rounded-full shadow-md text-blue-500 p-1"
+                            />
+                          </div>
+                          <div className="flex items-center gap-2 text-sm font-medium">
+                            {item.leadesStatus}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                        <div className="w-2/4 text-gray-500 text-sm">
+                          Client Name
+                        </div>
+                        <div className="2-2/4 font-medium text-sm">
+                          {item.name}
+                        </div>
+                      </div>
+
+
+                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                        <div className="w-2/4">
+                          <IoIosMail className="text-2xl" />
+                        </div>
+                        <div className="2-2/4 font-medium  text-sm">
+                          {item.email}
+                        </div>
+                      </div>
+
+                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                        <div className="w-2/4">
+                          <FaPhoneAlt className="text-xl" />
+                        </div>
+                        <div className="2-2/4 font-medium text-sm">
+                          {item.phoneNo}
+                        </div>
+                      </div>
+                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                        <div className="w-2/4 text-gray-500 text-sm">Trail Start Date</div>
+                        <div className="2-2/4 font-medium text-sm">
+                          {item.trialStartDate}
+                        </div>
+                      </div>
+                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                        <div className="w-2/4 text-gray-500 text-sm">
+                          Trail End Date  
+                        </div>
+                        <div className="2-2/4 font-medium  text-sm">
+                          {item.trialEndDate}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+        </>
+      )}
           <div className="flex justify-end m-4">
             <nav>
               <ul className="inline-flex items-center">
@@ -878,8 +948,6 @@ export default function FreeTrail() {
               </ul>
             </nav>
           </div>
-        </>
-      )}
     </div>
   );
 }
