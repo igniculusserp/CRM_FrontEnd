@@ -223,7 +223,7 @@ export default function CreateSO() {
 
   const handleDropdownisDropdown_Service_ = (service) => {
     setDefaultText_Service_DropDown(service);
-    setisDropdownVisible_Service_(!isDropdownVisible_Status_);
+    setisDropdownVisible_Service_(!isDropdownVisible_Service_);
     seteditLead((prevTask) => ({
       ...prevTask,
       service: service,
@@ -250,7 +250,7 @@ export default function CreateSO() {
 
   const handleDropdownisDropdown_Term_ = (term) => {
     setDefaultText_Term_DropDown(term);
-    setisDropdownVisible_Term_(!isDropdownVisible_Status_);
+    setisDropdownVisible_Term_(!setisDropdownVisible_Term_);
     seteditLead((prevTask) => ({
       ...prevTask,
       term: term,
@@ -281,7 +281,7 @@ export default function CreateSO() {
     setisDropdownVisiblebusinessType(!isDropdownVisiblebusinessType);
     seteditLead((prevTask) => ({
       ...prevTask,
-      businessType: businessType,
+      business: businessType,
     }));
   };
 
@@ -316,8 +316,10 @@ export default function CreateSO() {
         city: editLead.city,
         street: editLead.street,
         postalCode: editLead.postalCode,
+        dob : editLead.dob,
+        country : editLead.country,
+        business: editLead.business|| "",
         advisaryExp: editLead.advisaryExp,
-        //Payment Details
         bank_name: editLead.bank_name,
         branch_name: editLead.branch_name,
         paymenT_MODE: editLead.paymenT_MODE,
@@ -326,16 +328,15 @@ export default function CreateSO() {
         due_Amount: editLead.due_Amount,
         amount_paid: editLead.amount_paid,
         discount: editLead.discount,
-
+        paymentDate: editLead.paymentDate,
         chequeOrDD_no: editLead.chequeOrDD_no,
         segments: editLead.segments,
         saleS_ODR_NO: editLead.saleS_ODR_NO,
-
-        //Service Details
-        period_of_subscription: editLead.period_of_subscription || null,
+        period_of_Subscription: editLead.period_of_Subscription || null,
         term: editLead.term,
         subscription_start_date: editLead.subscription_start_date || null,
         subscription_end_date: editLead.subscription_end_date || null,
+        remarks: editLead.remarks,
         service: editLead.service || null,
         status: false,
         description: description,
@@ -633,7 +634,7 @@ export default function CreateSO() {
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
-                      htmlFor="DOB"
+                      htmlFor="dob"
                       className="text-sm font-medium text-gray-700"
                     >
                       DOB
@@ -641,10 +642,9 @@ export default function CreateSO() {
                     <input
                       type="date"
                       name="state"
-                      value={editLead.DOB}
+                      value={editLead.dob}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
-                      placeholder="Enter your DOB"
                     />
                   </div>
                   {/* -------------0--2--------------- */}
@@ -1086,11 +1086,11 @@ export default function CreateSO() {
               <div className="py-2 px-4">
                 {/* -------------SALES ORDER INFORMATION FORM STARTS FROM HERE------------- */}
                 {/* -------------XV--1------------- */}
-                {/* -------------period_of_subscription------------- */}
+                {/* -------------period_of_Subscription------------- */}
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
-                      htmlFor="period_of_subscription"
+                      htmlFor="period_of_Subscription"
                       className="text-sm font-medium text-gray-700"
                     >
                       Period of Subscription
@@ -1098,7 +1098,7 @@ export default function CreateSO() {
                     <input
                       type="text"
                       name="period_of_Subscription"
-                      value={editLead.period_of_subscription}
+                      value={editLead.period_of_Subscription}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Period of Subscription"
@@ -1245,6 +1245,25 @@ export default function CreateSO() {
                     />
                   </div>
                 </div>
+                <div className="flex space-x-4">
+                {/* -------------Service------------- */} {/* sms , wp,  */}
+                {/* -------------Remark------------- */}
+                <div className="flex flex-col w-full">
+                  <label
+                    htmlFor="remarks"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Remarks
+                  </label>
+                  <input
+                    type="text"
+                    name="remarks"
+                    value={editLead.remarks}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
               </div>
             </div>
 
