@@ -315,7 +315,7 @@ export default function CreateSO() {
         state: editLead.state,
         city: editLead.city,
         street: editLead.street,
-        postalCode: editLead.pinCode,
+        postalCode: editLead.postalCode,
         advisaryExp: editLead.advisaryExp,
         //Payment Details
         bank_name: editLead.bank_name,
