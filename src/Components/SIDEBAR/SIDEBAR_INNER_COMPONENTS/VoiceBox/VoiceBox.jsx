@@ -6,7 +6,9 @@ import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 //React Icons
-import { FaAngleDown, FaBars } from "react-icons/fa";
+import { FaAngleDown, FaBars,FaPhoneAlt } from "react-icons/fa";
+import { IoIosMail } from "react-icons/io";
+import { BiEdit } from "react-icons/bi";
 import { ImFilter } from "react-icons/im";
 import { IoSearchOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
@@ -1062,8 +1064,86 @@ if(startDate<=endDate){
       </div>
 
       {/* PAGINATION */}
-      {selectedViewValue === "Table View" && (
+      {selectedViewValue === "Grid View" && (
         <>
+        <div className="min-w-full">
+                <div className="grid grid-cols-3 gap-3">
+                  {/*---------Card starts Here */}
+                  {currentSms.map((item) => (
+                    <div
+                      className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2"
+                      key={item.id}
+                    >
+                      <div className="flex items-center gap-3">
+                        <img src={item.img} height={60} width={60} />
+                        <div className="flex flex-col grow">
+                          <div className="flex justify-between font-medium">
+                            <span className="text-indigo-500">{item.name}</span>
+                            <BiEdit
+                              size={25}
+                              className="bg-white rounded-full shadow-md text-blue-500 p-1"
+                              // onClick={() => handleClick(item.id)}
+                            />
+                          </div>
+                          <div className="flex items-center gap-2 text-sm font-medium">
+                            {item.leadesStatus}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                        <div className="w-2/4 text-gray-500 text-sm">
+                          Client Name
+                        </div>
+                        <div className="2-2/4 font-medium text-sm">
+                          {item.clientName}
+                        </div>
+                      </div>
+
+                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                        <div className="w-2/4">
+                          <IoIosMail className="text-2xl" />
+                        </div>
+                        <div className="2-2/4 font-medium  text-sm">
+                          {item.email}
+                        </div>
+                      </div>
+
+                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                        <div className="w-2/4">
+                          <FaPhoneAlt className="text-xl" />
+                        </div>
+                        <div className="2-2/4 font-medium text-sm">
+                          {item.phoneNo}
+                        </div>
+                      </div>
+                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                        <div className="w-2/4 text-gray-500 text-sm">
+                          Follow Up Date
+                        </div>
+                        <div className="2-2/4 font-medium text-sm">
+                          {item.call_bck_DateTime.replace("T", " ")}
+                        </div>
+                      </div>
+                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                        <div className="w-2/4 text-gray-500 text-sm">
+                          Segment
+                        </div>
+                        <div className="2-2/4 font-medium text-sm">
+                          {item.segments && (
+                            <span className="">
+                              {item.segments
+                                .filter((segment) => segment.length > 1)
+                                .join(", ")}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+        </>
+      )}
           <div className="flex justify-end m-4">
             <nav>
               <ul className="inline-flex items-center">
@@ -1087,8 +1167,6 @@ if(startDate<=endDate){
               </ul>
             </nav>
           </div>
-        </>
-      )}
     </div>
   );
 }

@@ -11,7 +11,6 @@ import autoTable from "jspdf-autotable";
 
 //reactIcons
 import { FaAngleDown, FaBars,FaPhoneAlt } from "react-icons/fa";
-
 import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
 import { IoSearchOutline } from "react-icons/io5";
@@ -69,6 +68,7 @@ export default function FreeTrail() {
   useEffect(() => {
     getFreeTrail();
   }, [bearer_token, protocal_url, name, tenant_base_url]);
+
   const handleClick = (id) => {
     navigate(`/sidebar/createtrial/${id}`);
   };
@@ -816,15 +816,13 @@ export default function FreeTrail() {
                     {/* SEGMENT */}
                     <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
                       <div className="grid grid-cols-2 gap-1 items-center">
-                        {order.segments &&
-                          order.segments.map(
-                            (segment, index) =>
-                              segment.length > 1 && (
-                                <span key={index} className="">
-                                  {segment}
-                                </span>
-                              )
-                          )}
+                       {order.segments && (
+                              <span className="">
+                                {order.segments
+                                  .filter((segment) => segment.length > 1)
+                                  .join(", ")}
+                              </span>
+                            )}
                       </div>
                     </td>
                     {/* Trial Start Date */}
@@ -871,6 +869,7 @@ export default function FreeTrail() {
                             <BiEdit
                               size={25}
                               className="bg-white rounded-full shadow-md text-blue-500 p-1"
+                              onClick={() => handleClick(item.id)}
                             />
                           </div>
                           <div className="flex items-center gap-2 text-sm font-medium">
