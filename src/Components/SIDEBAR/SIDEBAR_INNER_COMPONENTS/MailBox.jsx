@@ -465,7 +465,7 @@ export default function MailBox() {
       </div>
 
       {/* FILTER BY */}
-      <div className="flex py-2 items-center justify-between gap-3">
+      <div className="my-1 flex py-2 items-center justify-between gap-3">
         <div className="flex items-center justify-center gap-3">
           <h1 className="text-3xl font-bold">Mail Box</h1>
           <button className="bg-blue-600 text-white px-2 py-2 min-w-10 text-center rounded-md text-md shadow-md">
@@ -473,7 +473,7 @@ export default function MailBox() {
           </button>
         </div>
         {/* FILTER BY */}
-        <div className="flex bg-white rounded-lg py-2 items-center border-2 border-gray-300 gap-3 justify-center">
+        <div className="flex bg-white rounded-lg py-3 items-center border-2 border-gray-300 gap-3 justify-center">
           <button className="border-r border-gray-500 px-3">
             <ImFilter />
           </button>
