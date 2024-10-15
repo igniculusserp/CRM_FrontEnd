@@ -47,7 +47,6 @@ export default function EditClientSO() {
     country: '',
     city: '',
     state: '',
-    description: '',
     reference_Number: '',
     totalAmount: '',
     due_Amount: '',
@@ -118,7 +117,7 @@ export default function EditClientSO() {
         country: data.country || '',
         city: data.city || '',
         state: data.state || '',
-        description: data.description || '',
+        
         reference_Number: data.reference_Number || '',
         totalAmount: data.totalAmount || '',
         due_Amount: data.due_Amount || '',
@@ -140,6 +139,7 @@ export default function EditClientSO() {
         business: data.business || '',
         paymentDate: data.paymentDate?.split('T')[0] || null,
       });
+      setdescription(data.description || '');
     } catch (error) {
       console.error('Error fetching lead by ID:', error);
     }
@@ -386,7 +386,7 @@ export default function EditClientSO() {
         country: editLead.country || '',
         city: editLead.city || '',
         state: editLead.state || '',
-        description: editLead.description || '',
+        description: description || '',
         reference_Number: editLead.reference_Number || '',
         totalAmount: editLead.totalAmount || '',
         due_Amount: editLead.due_Amount || '',
@@ -421,6 +421,10 @@ export default function EditClientSO() {
     }
   };
 
+    const goBack = () => {
+    navigate(-1); // Goes back to the previous page
+  };
+
   return (
     <>
       <div className="min-h-screen flex flex-col mt-3">
@@ -429,12 +433,13 @@ export default function EditClientSO() {
             <h1 className="text-xl">Edit Sales Order</h1>
           </div>
           <div>
-            <Link
-              to="/sidebar/reports"
+            <div
+              // to="/sidebar/reports"
+              onClick={goBack}
               className="px-6 py-1 rounded  border border-blue-500 text-blue-500 "
             >
               Cancel
-            </Link>
+            </div>
           </div>
         </div>
 
