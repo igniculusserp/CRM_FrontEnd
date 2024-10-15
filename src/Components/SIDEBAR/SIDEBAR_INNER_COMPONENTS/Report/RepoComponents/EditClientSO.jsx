@@ -62,7 +62,7 @@ export default function EditClientSO() {
     service: '',
     chequeOrDD_no: '',
     remarks: '',
-    status: true,
+    status: false,
     dob: '',
     business: '',
     paymentDate: '',
@@ -135,7 +135,7 @@ export default function EditClientSO() {
         service: data.service || '',
         chequeOrDD_no: data.chequeOrDD_no || '',
         remarks: data.remarks || '',
-        status: data.status || '',
+        // status: data.status || '',
         dob: data.dob?.split('T')[0] || null,
         business: data.business || '',
         paymentDate: data.paymentDate?.split('T')[0] || null,
@@ -401,7 +401,7 @@ export default function EditClientSO() {
         service: editLead.service || '',
         chequeOrDD_no: editLead.chequeOrDD_no || '',
         remarks: editLead.remarks || '',
-        status: editLead.status || '',
+        status: false,
         dob: editLead.dob || null,
         business: editLead.business || '',
         paymentDate: editLead.paymentDate?.split('T')[0] || null,
@@ -1278,21 +1278,7 @@ export default function EditClientSO() {
                   </div>
                   {/* -------------XVII--2------------- */}
                   {/* -------------Status------------- */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="status"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Status
-                    </label>
-                    <select
-                      name="status"
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                    >
-                      <option value="true">True</option>
-                      <option value="false">False</option>
-                    </select>
-                  </div>
+                  
                 </div>
                 <div className="flex space-x-4">
                   {/* -------------Service------------- */} {/* sms , wp,  */}
