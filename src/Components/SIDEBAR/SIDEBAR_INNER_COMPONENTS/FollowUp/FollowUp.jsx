@@ -626,12 +626,11 @@ export default function FollowUp() {
           </div>
         </div>
         {/* MIDDLE SECTION */}
-        <div className="flex py-2 items-center justify-between gap-3">
+        <div className="my-1 flex py-2 items-center justify-between gap-3">
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-3xl font-medium ">Follow Up</h1>
             <h1 className="bg-blue-600 text-white p-2   min-w-10 text-center rounded text-sm">
-              {' '}
-              {followupList.length}{' '}
+              {followupList.length}
             </h1>
           </div>
           {/* ------------------- Filter by date ----------------- */}

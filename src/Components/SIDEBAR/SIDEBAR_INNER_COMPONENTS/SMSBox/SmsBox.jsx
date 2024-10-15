@@ -471,7 +471,7 @@ export default function SmsBox() {
       </div>
 
       {/* FILTER BY SECTION */}
-      <div className="mt-4 flex justify-between items-center gap-3">
+      <div className="mt-3 flex justify-between items-center gap-3">
         <div className="flex gap-3">
           <h1 className="text-3xl font-medium ">SMS Box</h1>
           <h1 className="bg-blue-600 text-white px-2 py-2 min-w-10 text-center rounded-md text-md shadow-md">
@@ -480,7 +480,7 @@ export default function SmsBox() {
         </div>
 
         <div>
-          <div className="flex bg-white  border-2 border-gray-300 py-2 rounded-lg justify-center items-center">
+          <div className="flex bg-white  border-2 border-gray-300 py-3 rounded-lg justify-center items-center">
             <button className="border-r border-gray-500 px-3">
               <ImFilter />
             </button>

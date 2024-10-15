@@ -638,7 +638,7 @@ export default function FreeTrail() {
         </div>
       </div>
       {/* FILTER BY */}
-      <div className="flex py-2 justify-between items-center gap-3">
+      <div className="my-1 flex py-2 justify-between items-center gap-3">
         <div className="flex gap-3">
           <h1 className="text-3xl font-medium ">Free Trail</h1>
           <h1 className="bg-blue-600 text-white p-2 min-w-10 text-center rounded text-sm">

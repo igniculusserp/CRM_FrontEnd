@@ -360,7 +360,7 @@ const handleClearFilter = () => {
         )}
 
         {/* -------------- FILTER SECTION ------------------ */}
-        <div className="flex bg-white border-2 gap-2 border-gray-300 py-1 rounded-lg justify-center items-center">
+        <div className="flex bg-white border-2 gap-2 border-gray-300 py-2 rounded-lg justify-center items-center">
           {/* Filter Icon Button */}
           <span className="border-gray-500 px-1">filter</span>
           {/* ---------------------- MONTHS wISE DROPDOWN FILTER -------------------------*/}
