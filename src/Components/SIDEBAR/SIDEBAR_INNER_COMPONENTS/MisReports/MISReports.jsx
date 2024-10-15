@@ -176,12 +176,12 @@ export default function MISReports() {
     <>
       <div className="min-h-screen flex flex-col m-3">
         <div className="flex items-center gap-2 px-3 bg-white border rounded py-2">
-          <div className="flex gap-2">
+          <div className="flex gap-4">
             {Object.keys(dynamicButtons).map((key) => (
               <button
                 key={key}
                 onClick={() => handleOptionClick(key)}
-                className={`px-4 py-1.5 rounded font-light text-md
+                className={`px-3 py-2 rounded font-light text-md
                 ${
                   selectedButton === key
                     ? 'bg-cyan-500 text-white'
