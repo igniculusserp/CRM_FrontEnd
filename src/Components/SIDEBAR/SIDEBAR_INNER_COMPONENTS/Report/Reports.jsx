@@ -13,6 +13,7 @@ import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/Global
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
 //external Packages
 import axios from "axios";
+import DisposeLeads from "./RepoComponents/DisposeLeads";
 // import { parseISO, subMonths, isAfter } from 'date-fns';
 
 const name = getHostnamePart();
@@ -93,6 +94,7 @@ export default function Reports() {
     { id: 2, name: "Leads Report" },
     { id: 3, name: "Client Reports" },
     { id: 4, name: "Sales Reports" },
+    { id: 5, name: "Dispose Leads" },
   ];
 
   const [selectedId, setSelectedId] = useState(
@@ -329,6 +331,8 @@ const handleClearFilter = () => {
                   return "Clients Report";
                 case 4:
                   return "Sales Report";
+                case 5:
+                  return "Dispose Leads";
               }
             })()}
           </h1>
@@ -438,6 +442,12 @@ const handleClearFilter = () => {
         <div className="min-w-full overflow-hidden rounded-md">
           {selectedViewValue === "Table View" && selectedId === 4 && (
             <SalesReports currentReports={currentReports} />
+          )}
+        </div>
+        {/* SALES REPORTS TABLE */}
+        <div className="min-w-full overflow-hidden rounded-md">
+          {selectedViewValue === "Table View" && selectedId === 5 && (
+            <DisposeLeads currentReports={currentReports} />
           )}
         </div>
       </div>
