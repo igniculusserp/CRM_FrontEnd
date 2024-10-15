@@ -421,6 +421,10 @@ export default function EditClientSO() {
     }
   };
 
+    const goBack = () => {
+    navigate(-1); // Goes back to the previous page
+  };
+
   return (
     <>
       <div className="min-h-screen flex flex-col mt-3">
@@ -429,12 +433,13 @@ export default function EditClientSO() {
             <h1 className="text-xl">Edit Sales Order</h1>
           </div>
           <div>
-            <Link
-              to="/sidebar/reports"
+            <div
+              // to="/sidebar/reports"
+              onClick={goBack}
               className="px-6 py-1 rounded  border border-blue-500 text-blue-500 "
             >
               Cancel
-            </Link>
+            </div>
           </div>
         </div>
 
