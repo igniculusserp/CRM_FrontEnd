@@ -278,7 +278,7 @@ const CreateFollowUp = () => {
     <>
       {/* TOP PART */}
       <div className="px-3 py-2 bg-white rounded-md flex items-center justify-between m-3">
-        <h1 className="text-xl font-bold">Create Follow Up</h1>
+        <h1 className="text-xl font-bold">Edit Follow Up</h1>
         <Link to="/sidebar/followup">
           <button className="px-6 py-2 text-center text-sm border border-blue-600 text-blue-600 rounded-md">
             Cancel
@@ -477,7 +477,7 @@ const CreateFollowUp = () => {
                       type="date"
                       name="call_bck_DateTime"
                       id="call_bck_DateTime"
-                      value={followupsData.call_bck_DateTime}
+                      value={followupsData.call_bck_DateTime.split('T')[0]}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Entere verox peron"
@@ -495,7 +495,7 @@ const CreateFollowUp = () => {
                       Last Modified By
                     </label>
                     <input
-                      type="date"
+                      type="Text"
                       name="lastModifiedBy"
                       id="lastModifiedBy"
                       value={followupsData.lastModifiedBy}
