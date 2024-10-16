@@ -290,8 +290,8 @@ export default function MailBox() {
     { key: 2, value: 'Man Insited' },
     { key: 3, value: 'Man Insited' },
     { key: 4, value: 'Man Insited' },
-    { key: 4, value: 'Man Insited' },
-    { key: 4, value: 'Man Insited' },
+    { key: 5, value: 'Man Insited' },
+    { key: 6, value: 'Man Insited' },
   ];
 
   //   SEARCH BAR DATA
@@ -314,8 +314,8 @@ export default function MailBox() {
     { key: 2, value: '10/09/2023' },
     { key: 3, value: '10/09/2023' },
     { key: 4, value: '12/03/2023' },
-    { key: 4, value: '10/09/2023' },
-    { key: 4, value: '12/03/2023' },
+    { key: 5, value: '10/09/2023' },
+    { key: 6, value: '12/03/2023' },
   ];
 
   //   ACTION DROPDOWN
@@ -325,10 +325,9 @@ export default function MailBox() {
     { key: 2, value: 'Mass Update' },
     { key: 3, value: 'Mass Email' },
     { key: 4, value: 'Approve Leads' },
-    { key: 5, value: 'Add to Campaign' },
-    { key: 6, value: 'Export Leads' },
-    { key: 7, value: 'Sheet View' },
-    { key: 8, value: 'Print View' },
+    { key: 5, value: 'Export Leads' },
+    { key: 6, value: 'Sheet View' },
+    { key: 7, value: 'Print View' },
   ];
 
   return (
