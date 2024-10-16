@@ -1,33 +1,32 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 //external Packages
-import axios from "axios";
+import axios from 'axios';
 
-import * as XLSX from "xlsx";
-import { jsPDF } from "jspdf";
-import autoTable from "jspdf-autotable";
+import * as XLSX from 'xlsx';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
 //React Icons
-import { FaAngleDown, FaBars,FaPhoneAlt } from "react-icons/fa";
-import { IoIosMail } from "react-icons/io";
-import { BiEdit } from "react-icons/bi";
-import { ImFilter } from "react-icons/im";
-import { IoSearchOutline } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { FaAngleDown, FaBars, FaPhoneAlt } from 'react-icons/fa';
+import { IoIosMail } from 'react-icons/io';
+import { BiEdit } from 'react-icons/bi';
+import { ImFilter } from 'react-icons/im';
+import { IoSearchOutline } from 'react-icons/io5';
+import { Link, useNavigate } from 'react-router-dom';
 
 //Folder Imported
-import { tenant_base_url, protocal_url } from "./../../../../Config/config";
-import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import { tenant_base_url, protocal_url } from './../../../../Config/config';
+import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 import MassEmail from '../MassEmail/MassEmail';
 
 export default function VoiceBox() {
   const navigate = useNavigate();
 
-  const bearer_token = localStorage.getItem("token");
+  const bearer_token = localStorage.getItem('token');
   const name = getHostnamePart();
 
-// Mass Email
-const [isModalOpen, setIsModalOpen] = useState(false);
+  // Mass Email
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEmails, setSelectedEmails] = useState([]);
-
 
   const [voiceMainData, setVoiceMainData] = useState([]);
   const [getVoice, setGetVoice] = useState([]);
@@ -63,7 +62,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
         setGetVoice(followup?.data);
       }
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     }
   };
 
@@ -73,8 +72,8 @@ const [isModalOpen, setIsModalOpen] = useState(false);
 
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
-    { key: 1, value: "Table View" },
-    { key: 2, value: "Grid View" },
+    { key: 1, value: 'Table View' },
+    { key: 2, value: 'Grid View' },
   ];
 
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
@@ -91,7 +90,6 @@ const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedViewValue, setSelectedViewValue] = useState(
     stripeBar[0].value
   );
-
 
   // TOGGLE VOICEBOX DROPDOWN
   const toggleVoiceBoxDropdown = () => {
@@ -110,65 +108,64 @@ const [isModalOpen, setIsModalOpen] = useState(false);
 
   //   SEARCH BAR DATA
   const searchBar = [
-    { key: 0, value: "Search" },
-    { key: 1, value: "Touched Records" },
-    { key: 2, value: "Untouched Records" },
-    { key: 3, value: "Reecord Action" },
-    { key: 4, value: "Related Records Action" },
-    { key: 5, value: "Locked" },
-    { key: 6, value: "Latest Email Status" },
-    { key: 7, value: "Activities" },
-    { key: 8, value: "Notes" },
-    { key: 9, value: "Campaigns" },
+    { key: 0, value: 'Search' },
+    { key: 1, value: 'Touched Records' },
+    { key: 2, value: 'Untouched Records' },
+    { key: 3, value: 'Reecord Action' },
+    { key: 4, value: 'Related Records Action' },
+    { key: 5, value: 'Locked' },
+    { key: 6, value: 'Latest Email Status' },
+    { key: 7, value: 'Activities' },
+    { key: 8, value: 'Notes' },
+    { key: 9, value: 'Campaigns' },
   ];
 
   //   ALLVOICE DROPDOWN DATA
   const allVoiceDropdown = [
-    { key: 1, value: "Man Insited" },
-    { key: 2, value: "Man Insited" },
-    { key: 3, value: "Man Insited" },
-    { key: 4, value: "Man Insited" },
-    { key: 4, value: "Man Insited" },
-    { key: 4, value: "Man Insited" },
+    { key: 1, value: 'Man Insited' },
+    { key: 2, value: 'Man Insited' },
+    { key: 3, value: 'Man Insited' },
+    { key: 4, value: 'Man Insited' },
+    { key: 4, value: 'Man Insited' },
+    { key: 4, value: 'Man Insited' },
   ];
 
   // ACTION DROPDOWN DATA
   const dropActionsMenu = [
-    { key: 1, value: "Mass Delete" },
-    { key: 2, value: "Mass Update" },
-    { key: 3, value: "Mass Email" },
-    { key: 4, value: "Approve Leads" },
-    { key: 5, value: "Add to Campaign" },
-    { key: 6, value: "Export Leads" },
-    { key: 7, value: "Sheet View" },
-    { key: 8, value: "Print View" },
+    { key: 1, value: 'Mass Delete' },
+    { key: 2, value: 'Mass Update' },
+    { key: 3, value: 'Mass Email' },
+    { key: 4, value: 'Approve Leads' },
+    // { key: 5, value: "Add to Campaign" },
+    { key: 6, value: 'Export Leads' },
+    { key: 7, value: 'Sheet View' },
+    { key: 8, value: 'Print View' },
   ];
-
 
   // On click of Action Button
   const handleActionButton = async (value) => {
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
-    if (value === "Mass Delete") {
+    if (value === 'Mass Delete') {
       const userConfirmed = confirm(
-        "Are you sure you want to Delete the selected Data?"
+        'Are you sure you want to Delete the selected Data?'
       );
       if (userConfirmed) {
         handleMassTrailDelete(selectedRows);
       }
     }
-  // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
-  if (value === "Mass Email") {
-    const userConfirmed = confirm(
-      "Are you sure you want to Send E-Mail to the selected Data?"
-    );
-    if (userConfirmed) {
-      openMassEmailModal(selectedEmails);
-    }
-  }
-    // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
-    if (value === "Sheet View") {
+    // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
+    if (value === 'Mass Email') {
       const userConfirmed = confirm(
-        "Are you sure you want to export the selected data?"
+        'Are you sure you want to Send E-Mail to the selected Data?'
+      );
+      if (userConfirmed) {
+        openMassEmailModal(selectedEmails);
+      }
+    }
+    // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
+    if (value === 'Sheet View') {
+      const userConfirmed = confirm(
+        'Are you sure you want to export the selected data?'
       );
       if (userConfirmed) {
         exportToTrailExcel(selectedRows);
@@ -176,9 +173,9 @@ const [isModalOpen, setIsModalOpen] = useState(false);
     }
 
     // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
-    if (value === "Print View") {
+    if (value === 'Print View') {
       const userConfirmed = confirm(
-        "Are you sure you want to export the selected Leads?"
+        'Are you sure you want to export the selected Leads?'
       );
       if (userConfirmed) {
         exportToTrailPDF(selectedRows);
@@ -186,7 +183,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
     }
   };
   // ---------------------->MASS DELETE FUNCTIONALITY---###API###<----------------------
- // On click of Mass Delete Button
+  // On click of Mass Delete Button
   const handleMassTrailDelete = async (ids) => {
     try {
       const config = {
@@ -210,12 +207,11 @@ const [isModalOpen, setIsModalOpen] = useState(false);
       getVoiceBoxMonitorLists(); // Refresh the list after deletion
       alert(`${responses.length} items successfully deleted.`);
     } catch (error) {
-      console.error("Error deleting follow-ups:", error);
+      console.error('Error deleting follow-ups:', error);
     }
   };
 
   // ---------------------->MASS Email FUNCTIONALITY---<----------------------
-
 
   const openMassEmailModal = () => {
     if (selectedEmails.length > 0) {
@@ -229,7 +225,6 @@ const [isModalOpen, setIsModalOpen] = useState(false);
     setIsModalOpen(false); // Close the modal
   };
 
-
   //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
   //-------> XLSX used here
   const exportToTrailExcel = () => {
@@ -238,7 +233,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
       selectedRows.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
-      alert("No leads selected to export");
+      alert('No leads selected to export');
       return;
     }
 
@@ -247,10 +242,10 @@ const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Create a new workbook and append the worksheet
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Selected FollowUp");
+    XLSX.utils.book_append_sheet(wb, ws, 'Selected FollowUp');
 
     // Export the workbook to an Excel file
-    XLSX.writeFile(wb, "SelectedFollowupData.xlsx");
+    XLSX.writeFile(wb, 'SelectedFollowupData.xlsx');
   };
 
   //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
@@ -259,12 +254,12 @@ const [isModalOpen, setIsModalOpen] = useState(false);
       selectedRows.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
-      alert("No leads selected to export");
+      alert('No leads selected to export');
       return;
     }
     const doc = new jsPDF();
     // const role = matchedUser?.role;
-    const tableColumn = ["ID", "Name", "Email", "Phone No.", "Assigned To"];
+    const tableColumn = ['ID', 'Name', 'Email', 'Phone No.', 'Assigned To'];
     // Map the leads data to rows
     const tableRows = leadsToExport?.map((lead) => [
       lead.id,
@@ -274,17 +269,16 @@ const [isModalOpen, setIsModalOpen] = useState(false);
       lead.assigned_To,
     ]);
     // Add a title to the PDF
-    doc.text("Selected Leads Data", 14, 16);
+    doc.text('Selected Leads Data', 14, 16);
     // Add the table to the PDF
     autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
       startY: 22, // Position the table after the title
     });
-    doc.save("Followup.pdf");
+    doc.save('Followup.pdf');
   };
 
-  
   // Function to toggle all checkboxes
   const selectAllCheckbox = () => {
     if (selectAll) {
@@ -302,66 +296,61 @@ const [isModalOpen, setIsModalOpen] = useState(false);
     }
   };
 
-  
- // Function to toggle individual checkboxes
-const handleCheckboxChange = (id, email, e) => {
-  e.stopPropagation();
+  // Function to toggle individual checkboxes
+  const handleCheckboxChange = (id, email, e) => {
+    e.stopPropagation();
 
-  // Update selected rows
-  setSelectedRows((prevSelectedRows) => {
-    const newSelectedRows = prevSelectedRows.includes(id)
-      ? prevSelectedRows.filter((rowId) => rowId !== id)
-      : [...prevSelectedRows, id];
+    // Update selected rows
+    setSelectedRows((prevSelectedRows) => {
+      const newSelectedRows = prevSelectedRows.includes(id)
+        ? prevSelectedRows.filter((rowId) => rowId !== id)
+        : [...prevSelectedRows, id];
 
-    // Log the updated selectedRows
-    console.log("Updated Selected Rows:", newSelectedRows);
-    return newSelectedRows;
-  });
+      // Log the updated selectedRows
+      console.log('Updated Selected Rows:', newSelectedRows);
+      return newSelectedRows;
+    });
 
-  // Update selected emails
-  setSelectedEmails((prevSelectedEmails) => {
-    const newSelectedEmails = prevSelectedEmails.includes(email)
-      ? prevSelectedEmails.filter((e) => e !== email)
-      : [...prevSelectedEmails, email];
+    // Update selected emails
+    setSelectedEmails((prevSelectedEmails) => {
+      const newSelectedEmails = prevSelectedEmails.includes(email)
+        ? prevSelectedEmails.filter((e) => e !== email)
+        : [...prevSelectedEmails, email];
 
-    // Log the updated selectedEmails
-    console.log("@@@===", newSelectedEmails);
-    return newSelectedEmails;
-  });
+      // Log the updated selectedEmails
+      console.log('@@@===', newSelectedEmails);
+      return newSelectedEmails;
+    });
 
-  setSelectAll(false); // Uncheck "Select All" if individual checkbox is toggled
-};
-
-
- 
- 
+    setSelectAll(false); // Uncheck "Select All" if individual checkbox is toggled
+  };
 
   // Object containing the options
   const dynamicButtons = {
-    Monitoring: { text: "Create View Box", href: "/sidebar/createvoice" },
-    Reports: { text: "Create Reports", href: "/sidebar/createreports" },
-    "SMS via GMS Gateway": {
-      text: "Send Details",
-      href: "/sidebar/createvoicedetails",
+    Monitoring: { text: 'Create View Box', href: '/sidebar/createvoice' },
+    Reports: { text: 'Create Reports', href: '/sidebar/createreports' },
+    'SMS via GMS Gateway': {
+      text: 'Send Details',
+      href: '/sidebar/createvoicedetails',
     },
   };
 
   const handleCheckboxClick = (e, id) => {
     e.stopPropagation(); // Prevent row click
-    console.log("ID:", id); // Replace with your logic to handle checkbox click
+    console.log('ID:', id); // Replace with your logic to handle checkbox click
   };
 
-  const [selectedButton, setSelectedButton] = useState("Monitoring");
+  const [selectedButton, setSelectedButton] = useState('Monitoring');
 
   // State to manage the button text
   const [buttonText, setButtonText] = useState({
-    text: "Create View Box",
-    href: "/sidebar/createvoice",
+    text: 'Create View Box',
+    href: '/sidebar/createvoice',
   });
 
   // Function to handle option click using bracket notation
   const handleOptionClick = (key) => {
-    console.log("Clicked key:", key);
+    console.log('Clicked key:', key);
     setButtonText(dynamicButtons[key]);
     setSelectedButton(key);
   };
@@ -376,48 +365,44 @@ const handleCheckboxChange = (id, email, e) => {
   const currentSms = voiceMainData.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  // ----------------------------- Date Filter -----------------------------
 
-  
-// ----------------------------- Date Filter -----------------------------
+  const today = new Date().toISOString().split('T')[0];
+  const [startDate, setStartDate] = useState(today);
+  const [endDate, setEndDate] = useState(today);
 
-const today = new Date().toISOString().split("T")[0]; 
-const [startDate, setStartDate] = useState(today);
-const [endDate, setEndDate] = useState(today);
+  // Function to filter based on date range
+  function handle_DateRange(startDate, endDate) {
+    let filteredFollows = currentSms;
 
+    // Convert startDate to the beginning of the day and endDate to the end of the day
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
 
-// Function to filter based on date range
-function handle_DateRange(startDate, endDate) {
-let filteredFollows = currentSms;
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999); // Set time to 23:59:59
 
-// Convert startDate to the beginning of the day and endDate to the end of the day
-const start = new Date(startDate);
-start.setHours(0, 0, 0, 0); // Set time to 00:00:00
+    if (startDate && endDate) {
+      filteredFollows = filteredFollows.filter((follow) => {
+        const callbackDate = new Date(follow.callDateTime);
+        return callbackDate >= start && callbackDate <= end;
+      });
+    }
 
-const end = new Date(endDate);
-end.setHours(23, 59, 59, 999); // Set time to 23:59:59
+    setVoiceMainData(filteredFollows); // Update the filtered result
+  }
 
-if (startDate && endDate) {
-  filteredFollows = filteredFollows.filter((follow) => {
-    const callbackDate = new Date(follow.callDateTime);
-    return callbackDate >= start && callbackDate <= end;
-  });
-}
-
-setVoiceMainData(filteredFollows); // Update the filtered result
-}
-
-// UseEffect to trigger handle_DateRange on date change
-useEffect(() => {
-if(startDate<=endDate){
-  handle_DateRange(startDate, endDate);
-}
-}, [startDate, endDate]); 
+  // UseEffect to trigger handle_DateRange on date change
+  useEffect(() => {
+    if (startDate <= endDate) {
+      handle_DateRange(startDate, endDate);
+    }
+  }, [startDate, endDate]);
 
   return (
     <div className="min-h-screen flex flex-col m-3">
-      
-  {/* Render the modal only when `isModalOpen` is true */}
-  {isModalOpen && (
+      {/* Render the modal only when `isModalOpen` is true */}
+      {isModalOpen && (
         <MassEmail
           emails={selectedEmails}
           onClose={closeModal} // Pass function to close modal
@@ -498,8 +483,8 @@ if(startDate<=endDate){
               className={`px-5 py-1.5 rounded font-light text-md
                 ${
                   selectedButton === key
-                    ? "bg-cyan-500 text-white"
-                    : "bg-gray-100 text-gray-700"
+                    ? 'bg-cyan-500 text-white'
+                    : 'bg-gray-100 text-gray-700'
                 }
               `}
             >
@@ -511,7 +496,7 @@ if(startDate<=endDate){
         <div className="flex gap-2">
           <Link to={buttonText.href}>
             <button className="bg-blue-600 text-white px-2 py-2 text-center rounded-md text-md shadow-md w-[150px]">
-              {buttonText.text || "Create Voice Box"}
+              {buttonText.text || 'Create Voice Box'}
             </button>
           </Link>
 
@@ -552,28 +537,27 @@ if(startDate<=endDate){
             onMouseLeave={() => setActionDropdown(false)}
           >
             <button
-              className="py-2 px-4 border border-blue-600 text-blue-600 rounded-md  flex justify-between items-center"
+              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
               id="dropdownDefaultButton"
               type="button"
             >
-              {actionDropdown && (
-                <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10 right-0">
-                  <ul className="py-2 text-sm text-gray-700">
-                    {dropActionsMenu.map(({ key, value }) => (
-                      <li
-                        className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                        key={key}
-                        onClick={() => handleActionButton(value)}
-                      >
-                        {value}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              Action
-              <FaAngleDown />
+              Actions
+              <FaAngleDown className="text-gray-900" />
             </button>
+            {actionDropdown && (
+              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
+                <ul className="text-sm text-gray-700 ">
+                  {dropActionsMenu.map(({ key, value }) => (
+                    <li
+                      key={key}
+                      className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                    >
+                      {value}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -628,8 +612,8 @@ if(startDate<=endDate){
       <div className="overflow-x-auto">
         {/* MONITORING TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === "Table View" &&
-            selectedButton === "Monitoring" && (
+          {selectedViewValue === 'Table View' &&
+            selectedButton === 'Monitoring' && (
               <table className="min-w-full bg-white">
                 {/* ----------------- TABLE HEAD START ----------------- */}
                 <thead>
@@ -715,7 +699,9 @@ if(startDate<=endDate){
                         <input
                           type="checkbox"
                           checked={selectedRows.includes(voice.id)}
-                          onChange={(e) => handleCheckboxChange(voice.id,voice.email, e)}
+                          onChange={(e) =>
+                            handleCheckboxChange(voice.id, voice.email, e)
+                          }
                         />
                       </td>
 
@@ -749,7 +735,7 @@ if(startDate<=endDate){
                       </td>
                       {/* CALL DATE */}
                       <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                        {voice.callDateTime.split("T")[0]}
+                        {voice.callDateTime.split('T')[0]}
                       </td>
                       {/* SOURCE */}
                       <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
@@ -763,7 +749,7 @@ if(startDate<=endDate){
                       <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
                         <p
                           className={
-                            voice.type === "Incoming"
+                            voice.type === 'Incoming'
                               ? `text-green-600`
                               : `text-red-400`
                           }
@@ -785,8 +771,8 @@ if(startDate<=endDate){
 
         {/* REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === "Table View" &&
-            selectedButton === "Reports" && (
+          {selectedViewValue === 'Table View' &&
+            selectedButton === 'Reports' && (
               <table className="min-w-full bg-white">
                 {/* ----- TABLE HEAD ----- */}
                 <thead>
@@ -952,8 +938,8 @@ if(startDate<=endDate){
 
         {/* GATEWAY TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === "Table View" &&
-            selectedButton === "SMS via GMS Gateway" && (
+          {selectedViewValue === 'Table View' &&
+            selectedButton === 'SMS via GMS Gateway' && (
               <table className="min-w-full bg-white">
                 {/* -------- TABLE HEAD -------- */}
                 <thead>
@@ -1064,109 +1050,107 @@ if(startDate<=endDate){
       </div>
 
       {/* PAGINATION */}
-      {selectedViewValue === "Grid View" && (
+      {selectedViewValue === 'Grid View' && (
         <>
-        <div className="min-w-full">
-                <div className="grid grid-cols-3 gap-3">
-                  {/*---------Card starts Here */}
-                  {currentSms.map((item) => (
-                    <div
-                      className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2"
-                      key={item.id}
-                    >
-                      <div className="flex items-center gap-3">
-                        <img src={item.img} height={60} width={60} />
-                        <div className="flex flex-col grow">
-                          <div className="flex justify-between font-medium">
-                            <span className="text-indigo-500">{item.name}</span>
-                            <BiEdit
-                              size={25}
-                              className="bg-white rounded-full shadow-md text-blue-500 p-1"
-                              // onClick={() => handleClick(item.id)}
-                            />
-                          </div>
-                          <div className="flex items-center gap-2 text-sm font-medium">
-                            {item.leadesStatus}
-                          </div>
-                        </div>
+          <div className="min-w-full">
+            <div className="grid grid-cols-3 gap-3">
+              {/*---------Card starts Here */}
+              {currentSms.map((item) => (
+                <div
+                  className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2"
+                  key={item.id}
+                >
+                  <div className="flex items-center gap-3">
+                    <img src={item.img} height={60} width={60} />
+                    <div className="flex flex-col grow">
+                      <div className="flex justify-between font-medium">
+                        <span className="text-indigo-500">{item.name}</span>
+                        <BiEdit
+                          size={25}
+                          className="bg-white rounded-full shadow-md text-blue-500 p-1"
+                          // onClick={() => handleClick(item.id)}
+                        />
                       </div>
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4 text-gray-500 text-sm">
-                          Client Name
-                        </div>
-                        <div className="2-2/4 font-medium text-sm">
-                          {item.clientName}
-                        </div>
-                      </div>
-
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4">
-                          <IoIosMail className="text-2xl" />
-                        </div>
-                        <div className="2-2/4 font-medium  text-sm">
-                          {item.email}
-                        </div>
-                      </div>
-
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4">
-                          <FaPhoneAlt className="text-xl" />
-                        </div>
-                        <div className="2-2/4 font-medium text-sm">
-                          {item.phoneNo}
-                        </div>
-                      </div>
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4 text-gray-500 text-sm">
-                          Follow Up Date
-                        </div>
-                        <div className="2-2/4 font-medium text-sm">
-                          {item.call_bck_DateTime.replace("T", " ")}
-                        </div>
-                      </div>
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4 text-gray-500 text-sm">
-                          Segment
-                        </div>
-                        <div className="2-2/4 font-medium text-sm">
-                          {item.segments && (
-                            <span className="">
-                              {item.segments
-                                .filter((segment) => segment.length > 1)
-                                .join(", ")}
-                            </span>
-                          )}
-                        </div>
+                      <div className="flex items-center gap-2 text-sm font-medium">
+                        {item.leadesStatus}
                       </div>
                     </div>
-                  ))}
+                  </div>
+                  <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                    <div className="w-2/4 text-gray-500 text-sm">
+                      Client Name
+                    </div>
+                    <div className="2-2/4 font-medium text-sm">
+                      {item.clientName}
+                    </div>
+                  </div>
+
+                  <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                    <div className="w-2/4">
+                      <IoIosMail className="text-2xl" />
+                    </div>
+                    <div className="2-2/4 font-medium  text-sm">
+                      {item.email}
+                    </div>
+                  </div>
+
+                  <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                    <div className="w-2/4">
+                      <FaPhoneAlt className="text-xl" />
+                    </div>
+                    <div className="2-2/4 font-medium text-sm">
+                      {item.phoneNo}
+                    </div>
+                  </div>
+                  <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                    <div className="w-2/4 text-gray-500 text-sm">
+                      Follow Up Date
+                    </div>
+                    <div className="2-2/4 font-medium text-sm">
+                      {item.call_bck_DateTime.replace('T', ' ')}
+                    </div>
+                  </div>
+                  <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                    <div className="w-2/4 text-gray-500 text-sm">Segment</div>
+                    <div className="2-2/4 font-medium text-sm">
+                      {item.segments && (
+                        <span className="">
+                          {item.segments
+                            .filter((segment) => segment.length > 1)
+                            .join(', ')}
+                        </span>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
+            </div>
+          </div>
         </>
       )}
-          <div className="flex justify-end m-4">
-            <nav>
-              <ul className="inline-flex items-center">
-                {Array.from(
-                  { length: Math.ceil(getVoice.length / itemsPerPage) },
-                  (_, i) => (
-                    <li key={i + 1}>
-                      <button
-                        onClick={() => paginate(i + 1)}
-                        className={`px-4 py-2 mx-1 ${
-                          currentPage === i + 1
-                            ? "bg-blue-500 text-white"
-                            : "bg-white text-gray-700 border"
-                        }`}
-                      >
-                        {i + 1}
-                      </button>
-                    </li>
-                  )
-                )}
-              </ul>
-            </nav>
-          </div>
+      <div className="flex justify-end m-4">
+        <nav>
+          <ul className="inline-flex items-center">
+            {Array.from(
+              { length: Math.ceil(getVoice.length / itemsPerPage) },
+              (_, i) => (
+                <li key={i + 1}>
+                  <button
+                    onClick={() => paginate(i + 1)}
+                    className={`px-4 py-2 mx-1 ${
+                      currentPage === i + 1
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-white text-gray-700 border'
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                </li>
+              )
+            )}
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 }
