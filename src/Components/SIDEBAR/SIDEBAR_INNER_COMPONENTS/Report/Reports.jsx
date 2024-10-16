@@ -441,7 +441,7 @@ const handleClearFilter = () => {
         {/* SALES REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {selectedViewValue === "Table View" && selectedId === 4 && (
-            <SalesReports currentReports={currentReports} />
+            <SalesReports currentReports={currentReports} btn={buttonId} />
           )}
         </div>
         {/* DISPOSE REPORTS TABLE */}
