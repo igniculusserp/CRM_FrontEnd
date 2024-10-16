@@ -44,10 +44,10 @@ export default function LeadsReport({ currentReports }) {
               <FaBars />
             </div>
           </th>
-          {/* ASSIGNED TO */}
+          {/* MANAGE BY */}
           <th className="px-2 py-3 text-left border-r font-medium">
             <div className="flex items-center justify-between">
-              <span className="text-nowrap pr-2">Assigned To</span>
+              <span className="text-nowrap pr-2">Managed By</span>
               <FaBars />
             </div>
           </th>

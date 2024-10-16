@@ -350,7 +350,7 @@ export default function FreeTrail() {
 
   //-----------------------------------------------> ALL-> ASSIGNED_TO <-functionality <-----------------------------------------------
 
-  const [assignedTo, setAssignedTo] = useState("Assigned to"); // Track the selected assigned user
+  const [assignedTo, setAssignedTo] = useState("Managed By"); // Track the selected assigned user
 
   //-----------------------------------------------> ALL-> ASSIGNED_TO DropDown <-functionality <-----------------------------------------------
 
@@ -727,10 +727,10 @@ export default function FreeTrail() {
                       </span>
                     </div>
                   </th>
-                  {/* Assigned To */}
+                  {/* MANAGE BY */}
                   <th className="px-1 py-3  text-left  border-r font-medium ">
                     <div className="flex items-center justify-between gap-3">
-                      <span className="text-nowrap">Assigned To</span>
+                      <span className="text-nowrap">Managed By</span>
                       <span>
                         <FaBars />
                       </span>
@@ -811,7 +811,7 @@ export default function FreeTrail() {
                     </td>
                     {/* Assigned To */}
                     <td className="px-1 py-4 border-b border-gray-300 text-sm">
-                      <div className="text-center">{order.assigned_To}</div>
+                      <div>{order.assigned_To}</div>
                     </td>
                     {/* SEGMENT */}
                     <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
