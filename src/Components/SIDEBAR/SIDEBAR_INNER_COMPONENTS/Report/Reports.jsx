@@ -266,7 +266,7 @@ const handleClearFilter = () => {
 
   return (
     <div className="min-h-screen flex flex-col m-3">
-      <div className="py-2 px-3 bg-white gap-3 flex items-center justify-start rounded-md">
+      <div className="py-2 px-3 bg-white gap-3 flex items-center justify-between rounded-md">
         <div className="flex gap-3">
           {dynamicButtons.map(({ id, name }) => (
             <button
@@ -291,7 +291,7 @@ const handleClearFilter = () => {
           onMouseLeave={() => setSearchDropdown(false)}
         >
           <button
-            className="py-2 px-6 border rounded-full gap-2  flex justify-between items-center"
+            className="py-2 px-6 border rounded-full gap-2 flex justify-between items-center"
             id="dropdownDefaultButton"
             type="button"
           >
