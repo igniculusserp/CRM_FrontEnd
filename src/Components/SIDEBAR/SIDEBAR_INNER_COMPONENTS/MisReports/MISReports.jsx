@@ -154,8 +154,8 @@ export default function MISReports() {
     'User Report': { text: 'Add User Report', href: '/sidebar/createuser' },
     'Calling Report': { text: 'Add Calling Report', href: '/sidebar/createcalling' },
     'DND Report': { text: 'Add DND Report', href: '/sidebar/creatednd' },
-    'Track Sheet': { text: 'Add Track Sheet', href: '/sidebar/createtrack' },
-    'Research Report': { text: 'Add Research Report', href: '/sidebar/createresearch' },
+    // 'Track Sheet': { text: 'Add Track Sheet', href: '/sidebar/createtrack' },
+    // 'Research Report': { text: 'Add Research Report', href: '/sidebar/createresearch' },
   };
 
   const [selectedButton, setSelectedButton] = useState('General Report');
@@ -269,19 +269,19 @@ export default function MISReports() {
               )}
           </div>
           {/* TRACK SHEET REPORT TABLE */}
-          <div className="min-w-full overflow-hidden rounded-md">
+          {/* <div className="min-w-full overflow-hidden rounded-md">
             {selectedViewValue === 'Table View' &&
               selectedButton === 'Track Sheet' && (
                 <TrackSheetTable currentReports={currentReports} />
               )}
-          </div>
+          </div> */}
           {/* RESEARCH REPORT TABLE */}
-          <div className="min-w-full overflow-hidden rounded-md">
+          {/* <div className="min-w-full overflow-hidden rounded-md">
             {selectedViewValue === 'Table View' &&
               selectedButton === 'Research Report' && (
                 <ResearchReportTable currentReports={currentReports} />
               )}
-          </div>
+          </div> */}
         </div>
 
         {/* PAGINATION */}
