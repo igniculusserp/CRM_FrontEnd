@@ -432,33 +432,29 @@ export default function MailBox() {
             </button>
           </div>
           {/* ACTION DROPDOWN */}
-          <div
-            className="relative"
-            onClick={toggleActionDropdown}
-            onMouseLeave={() => setActionDropdown(false)}
-          >
+          <div className="relative" onClick={toggleActionDropdown} onMouseLeave={() => setActionDropdown(false)}>
             <button
-              className="px-4 py-2 border border-blue-600 rounded-md text-blue-600 flex items-center justify-between gap-2"
+              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
+              id="dropdownDefaultButton"
               type="button"
-              id="defaultDropdown"
             >
-              {actionDropdown && (
-                <div className="absolute bg-white border top-10 z-10 right-0">
-                  <ul className="py-2 text-sm text-gray-700">
-                    {dropActionsMenu.map(({ key, value }) => (
-                      <li
-                        className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                        key={key}
-                      >
-                        {value}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              Action
-              <FaAngleDown />
+              Actions
+              <FaAngleDown className="text-gray-900" />
             </button>
+            {actionDropdown && (
+              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
+                <ul className="text-sm text-gray-700 " >
+                  {dropActionsMenu.map(({ key, value }) => (
+                    <li
+                      key={key}
+                      className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                    >
+                      {value}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>

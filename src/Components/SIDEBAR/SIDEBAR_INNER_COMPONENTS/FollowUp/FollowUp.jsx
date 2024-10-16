@@ -131,10 +131,9 @@ export default function FollowUp() {
     { key: 2, value: "Mass Update" },
     { key: 3, value: "Mass Email" },
     { key: 4, value: "Approve Leads" },
-    { key: 5, value: "Add to Campaign" },
-    { key: 6, value: "Export Leads" },
-    { key: 7, value: "Sheet View" },
-    { key: 8, value: "Print View" },
+    { key: 5, value: "Export Leads" },
+    { key: 6, value: "Sheet View" },
+    { key: 7, value: "Print View" },
   ];
 
   // On click of Action Button
@@ -595,31 +594,31 @@ export default function FollowUp() {
               )}
             </div>
             {/* ACTIONS DROPDWON */}
-            <div
-              className="relative flex items-center"
-              onClick={toggleActionDropdown}
-              onMouseLeave={() => setActionDropdown(false)}
+            <div className="relative" onClick={toggleActionDropdown} onMouseLeave={() => setActionDropdown(false)}>
+            <button
+              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
+              id="dropdownDefaultButton"
+              type="button"
             >
-              <button className="px-4 rounded-md py-2 border border-blue-600  flex items-center justify-between gap-2">
-                {actionDropdown && (
-                  <div className="absolute bg-white border border-gray-300 top-10 right-0 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {actions.map(({ key, value }) => (
-                        <li
-                          className="px-2 py-2 w-56 border border-b hover:bg-cyan-500 hover:text-white cursor-pointer"
-                          key={key}
-                          onClick={() => handleActionButton(value)}
-                        >
-                          {value}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                Actions
-                <FaAngleDown className="text-gray-700 text-center" />
-              </button>
-            </div>
+              Actions
+              <FaAngleDown className="text-gray-900" />
+            </button>
+            {actionDropdown && (
+              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
+                <ul className="text-sm text-gray-700 " >
+                  {actions.map(({ key, value }) => (
+                    <li
+                      key={key}
+                      className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                      onClick={() => handleActionButton(value)}
+                    >
+                      {value}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
             {/* END ACTIONS DROPDWON */}
           </div>
         </div>
@@ -627,7 +626,7 @@ export default function FollowUp() {
         <div className="my-1 flex py-2 items-center justify-between gap-3">
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-3xl font-medium ">Follow Up</h1>
-            <h1 className="bg-blue-600 text-white p-2   min-w-10 text-center rounded text-sm">
+            <h1 className="bg-blue-600 text-white p-2   min-w-10 text-center rounded-md text-sm shadow-md">
               {followupList.length}{" "}
             </h1>
           </div>

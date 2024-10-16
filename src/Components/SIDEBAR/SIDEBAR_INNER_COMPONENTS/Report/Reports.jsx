@@ -1,19 +1,19 @@
 // REACT - IN BUILD
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { FaAngleDown } from "react-icons/fa";
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { FaAngleDown } from 'react-icons/fa';
 // REACT - ICONS
-import { IoSearchOutline } from "react-icons/io5";
-import EmployeeReport from "./RepoComponents/EmployeeReport";
-import LeadsReport from "./RepoComponents/LeadsReport";
-import ClientReports from "./RepoComponents/ClientReports";
-import SalesReports from "./RepoComponents/SalesReports";
+import { IoSearchOutline } from 'react-icons/io5';
+import EmployeeReport from './RepoComponents/EmployeeReport';
+import LeadsReport from './RepoComponents/LeadsReport';
+import ClientReports from './RepoComponents/ClientReports';
+import SalesReports from './RepoComponents/SalesReports';
 //Folder Imported
-import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
-import { tenant_base_url, protocal_url } from "./../../../../Config/config";
+import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
+import { tenant_base_url, protocal_url } from './../../../../Config/config';
 //external Packages
-import axios from "axios";
-import DisposeLeads from "./RepoComponents/DisposeLeads";
+import axios from 'axios';
+import DisposeLeads from './RepoComponents/DisposeLeads';
 // import { parseISO, subMonths, isAfter } from 'date-fns';
 
 const name = getHostnamePart();
@@ -26,39 +26,39 @@ export default function Reports() {
   //------------------------------------------------------------------------------------------------
   //----------------GET ----------------
   async function handleGetReport(reportId = selectedId) {
-    const bearer_token = localStorage.getItem("token");
-  
+    const bearer_token = localStorage.getItem('token');
+
     const urls = {
-      1: "/Report/performance/report/byusertoken",
-      2: "/Lead/leads/byusertoken",
-      3: "/SalesOrder/salesOrder/clientbyusertoken",
-      4: "/Report/performance/report/byusertoken",
+      1: '/Report/performance/report/byusertoken',
+      2: '/Lead/leads/byusertoken',
+      3: '/SalesOrder/salesOrder/clientbyusertoken',
+      4: '/Report/performance/report/byusertoken',
     };
-  
+
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-  
+
       const endpoint = urls[reportId];
-  
+
       if (!endpoint) {
-        throw new Error("Invalid report selection.");
+        throw new Error('Invalid report selection.');
       }
-  
+
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}${endpoint}`,
         config
       );
-  
+
       const data = response.data.data;
-      console.log("@@@@==== Data:", data);
+      console.log('@@@@==== Data:', data);
       setGetReports(data);
       setOriginalReports(data); // Store original unfiltered data
     } catch (error) {
-      console.error("Error fetching reports:", error);
+      console.error('Error fetching reports:', error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -80,8 +80,8 @@ export default function Reports() {
 
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
-    { key: 1, value: "Table View" },
-    { key: 2, value: "Grid View" },
+    { key: 1, value: 'Table View' },
+    { key: 2, value: 'Grid View' },
   ];
 
   const [selectedViewValue, setSelectedViewValue] = useState(
@@ -90,33 +90,33 @@ export default function Reports() {
 
   //   DYNAMIC BUTTONS
   const dynamicButtons = [
-    { id: 1, name: "Employee Report" },
-    { id: 2, name: "Leads Report" },
-    { id: 3, name: "Client Reports" },
-    { id: 4, name: "Sales Reports" },
-    { id: 5, name: "Dispose Leads" },
+    { id: 1, name: 'Employee Report' },
+    { id: 2, name: 'Leads Report' },
+    { id: 3, name: 'Client Reports' },
+    { id: 4, name: 'Sales Reports' },
+    { id: 5, name: 'Dispose Leads' },
   ];
 
   const [selectedId, setSelectedId] = useState(
-    () => parseInt(localStorage.getItem("selectedId")) || 1
+    () => parseInt(localStorage.getItem('selectedId')) || 1
   );
 
   // Function to handle option click using bracket notation
   const handleOptionClick = (id) => {
     setSelectedId(id);
-    console.log("@@@@==== Selected ID (immediate):", id);
+    console.log('@@@@==== Selected ID (immediate):', id);
 
     // Immediately use the `id` instead of `selectedId` which will be stale
     handleGetReport(id);
 
     // Store the selected id in localStorage
-    localStorage.setItem("selectedId", id);
+    localStorage.setItem('selectedId', id);
   };
 
   useEffect(() => {
     return () => {
       // This will run when the component unmounts
-      localStorage.removeItem("selectedId");
+      localStorage.removeItem('selectedId');
     };
   }, [location]);
 
@@ -125,9 +125,9 @@ export default function Reports() {
 
   // SEARCH DUMMY DATA
   const searchData = [
-    { key: 1, name: "Search" },
-    { key: 2, name: "Search" },
-    { key: 3, name: "Search" },
+    { key: 1, name: 'Search' },
+    { key: 2, name: 'Search' },
+    { key: 3, name: 'Search' },
   ];
 
   // TOGGLE SEARCH DROPDOWN
@@ -137,132 +137,148 @@ export default function Reports() {
 
   // ------------------------------------------------------ Date Filter According to Month -----------------------------------------
   const [filterSixMonthsDropdown, setFilterSixMonthsDropdown] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState("Last 6 Month");
-    // Filter options
-    const filterData = [
-      { key: 1, name: "Last 1 Month", months: 1 },
-      { key: 2, name: "Last 3 Month", months: 3 },
-      { key: 3, name: "Last 6 Month", months: 6 },
-      { key: 4, name: "Last 9 Month", months: 9 },
-      { key: 5, name: "Last 12 Month", months: 12 },
-      { key: 6, name: "Last 18 Month", months: 18 },
-      { key: 7, name: "Last 24 Month", months: 24 },
-    ];
-  
-    // Toggle dropdown
-    const toggleDropdownFilter = () => {
-      setFilterSixMonthsDropdown(!filterSixMonthsDropdown);
-    };
-  
-    // Handle filter selection
-    const handleFilterSelect = (filter) => {
-      setSelectedFilter(filter.name);
-      setFilterSixMonthsDropdown(false);
-      applyDateFilter(filter.months);
-    };
-  
-    // Apply the selected filter to the data
-    const applyDateFilter = (months) => {
-      const now = new Date();
-      const pastDate = new Date(now.setMonth(now.getMonth() - months));
-    
-      // Define which field to fiassadfsaddgfgfglter by based on selectedId
-      const filterFieldMap = {
-        1: 'paymentDate',
-        2: 'createdDate',
-        3: 'paymentDate',
-        4: 'paymentDate',
-      };
-    
-      const filterField = filterFieldMap[selectedId];
-    
-      if (filterField) {
-        const filtered = getReports.filter((item) => {
-          const itemDate = new Date(item[filterField]); // Assuming 'item.date' is a valid date string
-          return itemDate >= pastDate;
-        });
-        setGetReports(filtered);
-      }
-    };
-    
+  const [selectedFilter, setSelectedFilter] = useState('Last 6 Month');
+  // Filter options
+  const filterData = [
+    { key: 1, name: 'Last 1 Month', months: 1 },
+    { key: 2, name: 'Last 3 Month', months: 3 },
+    { key: 3, name: 'Last 6 Month', months: 6 },
+    { key: 4, name: 'Last 9 Month', months: 9 },
+    { key: 5, name: 'Last 12 Month', months: 12 },
+    { key: 6, name: 'Last 18 Month', months: 18 },
+    { key: 7, name: 'Last 24 Month', months: 24 },
+  ];
 
-
-    
-// ----------------------------- Date Filter -----------------------------
-
-const today = new Date().toISOString().split("T")[0]; 
-const [startDate, setStartDate] = useState(today);
-const [endDate, setEndDate] = useState(today);
-
-// Function to filter based on date range
-function handleDateRange(startDate, endDate) {
-  let filteredFollows = currentReports;
-
-  // Convert startDate to the beginning of the day and endDate to the end of the day
-  const start = new Date(startDate);
-  start.setHours(0, 0, 0, 0); // Set time to 00:00:00
-
-  const end = new Date(endDate);
-  end.setHours(23, 59, 59, 999); // Set time to 23:59:59
-
-  // Define which field to filter by based on selectedId
-  const filterFieldMap = {
-    1: 'paymentDate',
-    2: 'createdDate',
-    3: 'paymentDate',
-    4: 'paymentDate',
+  // Toggle dropdown
+  const toggleDropdownFilter = () => {
+    setFilterSixMonthsDropdown(!filterSixMonthsDropdown);
   };
 
-  const filterField = filterFieldMap[selectedId];
+  // Handle filter selection
+  const handleFilterSelect = (filter) => {
+    setSelectedFilter(filter.name);
+    setFilterSixMonthsDropdown(false);
+    applyDateFilter(filter.months);
+  };
 
-  if (startDate && endDate && filterField) {
-    filteredFollows = filteredFollows.filter((follow) => {
-      const callbackDate = new Date(follow[filterField]);
-      return callbackDate >= start && callbackDate <= end;
-    });
+  // Apply the selected filter to the data
+  const applyDateFilter = (months) => {
+    const now = new Date();
+    const pastDate = new Date(now.setMonth(now.getMonth() - months));
+
+    // Define which field to fiassadfsaddgfgfglter by based on selectedId
+    const filterFieldMap = {
+      1: 'paymentDate',
+      2: 'createdDate',
+      3: 'paymentDate',
+      4: 'paymentDate',
+    };
+
+    const filterField = filterFieldMap[selectedId];
+
+    if (filterField) {
+      const filtered = getReports.filter((item) => {
+        const itemDate = new Date(item[filterField]); // Assuming 'item.date' is a valid date string
+        return itemDate >= pastDate;
+      });
+      setGetReports(filtered);
+    }
+  };
+
+  // ----------------------------- Date Filter -----------------------------
+
+  const today = new Date().toISOString().split('T')[0];
+  const [startDate, setStartDate] = useState(today);
+  const [endDate, setEndDate] = useState(today);
+
+  // Function to filter based on date range
+  function handleDateRange(startDate, endDate) {
+    let filteredFollows = currentReports;
+
+    // Convert startDate to the beginning of the day and endDate to the end of the day
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
+
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999); // Set time to 23:59:59
+
+    // Define which field to filter by based on selectedId
+    const filterFieldMap = {
+      1: 'paymentDate',
+      2: 'createdDate',
+      3: 'paymentDate',
+      4: 'paymentDate',
+    };
+
+    const filterField = filterFieldMap[selectedId];
+
+    if (startDate && endDate && filterField) {
+      filteredFollows = filteredFollows.filter((follow) => {
+        const callbackDate = new Date(follow[filterField]);
+        return callbackDate >= start && callbackDate <= end;
+      });
+    }
+
+    setGetReports(filteredFollows); // Update the filtered result
   }
 
-  setGetReports(filteredFollows); // Update the filtered result
-}
+  // UseEffect to trigger handle_DateRange on date change
+  useEffect(() => {
+    if (startDate <= endDate) {
+      handleDateRange(startDate, endDate);
+    }
+  }, [startDate, endDate]);
 
-// UseEffect to trigger handle_DateRange on date change
-useEffect(() => {
-  if (startDate <= endDate) {
-    handleDateRange(startDate, endDate);
-  }
-}, [startDate, endDate]);
+  // --------------------------------- Clear Button --------------------------------
 
+  const handleClearFilter = () => {
+    console.log('Before Clear: ', getReports);
+    setGetReports(originalReports); // Reset to original data
+    console.log('After Clear: ', originalReports); // Should be the same as originalReports
+    // reset();
+  };
 
-// --------------------------------- Clear Button --------------------------------
-
-
-const handleClearFilter = () => {
-  console.log("Before Clear: ", getReports);
-  setGetReports(originalReports); // Reset to original data
-  console.log("After Clear: ", originalReports); // Should be the same as originalReports
-  // reset();
-};
-
-// const reset = () => {
-//   setStartDate(today);
-//   setEndDate(today);
-// };
-
-
-
+  // const reset = () => {
+  //   setStartDate(today);
+  //   setEndDate(today);
+  // };
 
   // ---------------------BUTTON THAT ARE VISIBLE IN SALES REPORTS ------------------------------------
   const buttons = [
     { id: 1, name: 'Source Wise' },
     { id: 2, name: 'Employee Wise' },
   ];
- 
+
+  // DROPDOWN
+  const [sourceWiseDropdown, setSourceWiseDropdown] = useState(false);
+  const [employeeWiseDropdown, setEmployeeWiseDropdown] = useState(false);
+
+  const sourceWiseData = [
+    { id: 1, name: 'source wise' },
+    { id: 2, name: 'source wise' },
+    { id: 3, name: 'source wise' },
+  ];
+
+  const empWiseData = [
+    { id: 1, name: 'employee wise' },
+    { id: 2, name: 'employee wise' },
+    { id: 3, name: 'employee wise' },
+  ];
+
+  // TOGGLE DROPDOWNS
+  const toggleDropdownSourceWise = () => {
+    setSourceWiseDropdown(!sourceWiseDropdown);
+  };
+
+  const toggleDropdownEmployeeWise = () => {
+    setEmployeeWiseDropdown(!employeeWiseDropdown);
+  };
+
   const [buttonId, setButtonId] = useState(1);
- 
+
   const handleButtonClick = (id) => {
     setButtonId(id);
   };
- 
 
   return (
     <div className="min-h-screen flex flex-col m-3">
@@ -275,8 +291,8 @@ const handleClearFilter = () => {
               className={`px-5 py-1.5 rounded font-light text-md
                     ${
                       selectedId === id
-                        ? "bg-cyan-500 text-white"
-                        : "bg-gray-100 text-gray-700"
+                        ? 'bg-cyan-500 text-white'
+                        : 'bg-gray-100 text-gray-700'
                     }
                   `}
             >
@@ -324,15 +340,15 @@ const handleClearFilter = () => {
             {(() => {
               switch (selectedId) {
                 case 1:
-                  return "Employees Report";
+                  return 'Employees Report';
                 case 2:
-                  return "Leads Report";
+                  return 'Leads Report';
                 case 3:
-                  return "Clients Report";
+                  return 'Clients Report';
                 case 4:
-                  return "Sales Report";
+                  return 'Sales Report';
                 case 5:
-                  return "Dispose Leads";
+                  return 'Dispose Leads';
               }
             })()}
           </h1>
@@ -341,23 +357,57 @@ const handleClearFilter = () => {
           </h1>
         </div>
 
-        {selectedId === 4 && (
+        {/* {selectedId === 4 && (
           <div className="flex items-center gap-1">
             {buttons.map(({ id, name }) => (
-              <button
-                onClick={() => handleButtonClick(id)}
+              <div
+                className="relative"
                 key={id}
-                className={`py-1.5 px-1 text-sm ${
-                  buttonId === id
-                    ? 'bg-cyan-500 text-white'
-                    : 'bg-gray-100 text-gray-700'
-                } rounded-md shadow-md`}
+                onClick={
+                  id === 1
+                    ? toggleDropdownSourceWise
+                    : toggleDropdownEmployeeWise
+                }
+                onMouseLeave={
+                  id === 1
+                    ? setSourceWiseDropdown(false)
+                    : setEmployeeWiseDropdown(false)
+                }
               >
-                {name}
-              </button>
+                <button
+                  onClick={() => handleButtonClick(id)}
+                  key={id}
+                  className={`py-2 text-[10px] px-2 ${
+                    buttonId === id
+                      ? 'bg-cyan-500 text-white'
+                      : 'bg-gray-100 text-gray-700'
+                  } rounded-md shadow-md`}
+                >
+                  <span>{name}</span>
+                  <FaAngleDown className="ml-2 text-blue-600" />
+                </button>
+                {id === 1
+                  ? sourceWiseDropdown
+                  : employeeWiseDropdown && (
+                      <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+                        <ul className="py-2 text-sm text-gray-700">
+                          {id === 1
+                            ? sourceWiseData
+                            : empWiseData.map((data) => (
+                                <li
+                                  className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                  key={data.id}
+                                >
+                                  {data.name}
+                                </li>
+                              ))}
+                        </ul>
+                      </div>
+                    )}
+              </div>
             ))}
           </div>
-        )}
+        )} */}
 
         {/* -------------- FILTER SECTION ------------------ */}
         <div className="flex bg-white border-2 gap-2 border-gray-300 py-2 rounded-lg justify-center items-center">
@@ -365,56 +415,61 @@ const handleClearFilter = () => {
           <span className="border-gray-500 px-1">filter</span>
           {/* ---------------------- MONTHS wISE DROPDOWN FILTER -------------------------*/}
           <div
-        className="relative"
-        onClick={toggleDropdownFilter}
-        onMouseLeave={() => setFilterSixMonthsDropdown(false)}
-      >
-        <button
-          className="py-1 px-1 border rounded-md gap-2 border-blue-600 text-blue-600 flex justify-between items-center w-[150px]"
-          id="dropdownDefaultButton"
-          type="button"
-        >
-          {selectedFilter}
-          <FaAngleDown className="ml-2 text-blue-600" />
-        </button>
-        {filterSixMonthsDropdown && (
-          <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
-            <ul className="py-2 text-sm text-gray-700">
-              {filterData.map((filter) => (
-                <li
-                  className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                  key={filter.key}
-                  onClick={() => handleFilterSelect(filter)}
-                >
-                  {filter.name}
-                </li>
-              ))}
-            </ul>
+            className="relative"
+            onClick={toggleDropdownFilter}
+            onMouseLeave={() => setFilterSixMonthsDropdown(false)}
+          >
+            <button
+              className="py-1 px-1 border rounded-md gap-2 border-blue-600 text-blue-600 flex justify-between items-center w-[150px]"
+              id="dropdownDefaultButton"
+              type="button"
+            >
+              {selectedFilter}
+              <FaAngleDown className="ml-2 text-blue-600" />
+            </button>
+            {filterSixMonthsDropdown && (
+              <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+                <ul className="py-2 text-sm text-gray-700">
+                  {filterData.map((filter) => (
+                    <li
+                      className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                      key={filter.key}
+                      onClick={() => handleFilterSelect(filter)}
+                    >
+                      {filter.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
           {/*-------------------------------  DATE Range Filter ------------------------------------ */}
-           {/* Date Range Inputs */}
-           <div className="px-1 flex items-center gap-2">
-              <label>From:</label>
-              <input
-                type="date"
-                value={startDate}
-                className="border rounded px-1 py-1"
-                onChange={(e) => setStartDate(e.target.value)}
-              />
+          {/* Date Range Inputs */}
+          <div className="px-1 flex items-center gap-2">
+            <label>From:</label>
+            <input
+              type="date"
+              value={startDate}
+              className="border rounded px-1 py-1"
+              onChange={(e) => setStartDate(e.target.value)}
+            />
 
-              <label>To:</label>
-              <input
-                type="date"
-                value={endDate}
-                className="border rounded px-1 py-1"
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </div>
+            <label>To:</label>
+            <input
+              type="date"
+              value={endDate}
+              className="border rounded px-1 py-1"
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </div>
           {/* CLEAR FILTER */}
-          <button className="text-blue-600 flex items-center px-1 text-sm" onClick={handleClearFilter}>Clear Filter</button>
+          <button
+            className="text-blue-600 flex items-center px-1 text-sm"
+            onClick={handleClearFilter}
+          >
+            Clear Filter
+          </button>
         </div>
       </div>
 
@@ -422,38 +477,38 @@ const handleClearFilter = () => {
       <div className="overflow-x-auto">
         {/* EMPLOYEE REPORT TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === "Table View" && selectedId === 1 && (
+          {selectedViewValue === 'Table View' && selectedId === 1 && (
             <EmployeeReport currentReports={currentReports} />
           )}
         </div>
         {/* LEAD REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === "Table View" && selectedId === 2 && (
+          {selectedViewValue === 'Table View' && selectedId === 2 && (
             <LeadsReport currentReports={currentReports} />
           )}
         </div>
         {/* CLIENT REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === "Table View" && selectedId === 3 && (
+          {selectedViewValue === 'Table View' && selectedId === 3 && (
             <ClientReports currentReports={currentReports} />
           )}
         </div>
         {/* SALES REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === "Table View" && selectedId === 4 && (
+          {selectedViewValue === 'Table View' && selectedId === 4 && (
             <SalesReports currentReports={currentReports} />
           )}
         </div>
         {/* SALES REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === "Table View" && selectedId === 5 && (
+          {selectedViewValue === 'Table View' && selectedId === 5 && (
             <DisposeLeads currentReports={currentReports} />
           )}
         </div>
       </div>
 
       {/* PAGINATION */}
-      {selectedViewValue === "Table View" && (
+      {selectedViewValue === 'Table View' && (
         <>
           <div className="flex justify-end m-4">
             <nav>
@@ -466,8 +521,8 @@ const handleClearFilter = () => {
                         onClick={() => paginate(i + 1)}
                         className={`px-4 py-2 mx-1 ${
                           currentPage === i + 1
-                            ? "bg-blue-500 text-white"
-                            : "bg-white text-gray-700 border"
+                            ? 'bg-blue-500 text-white'
+                            : 'bg-white text-gray-700 border'
                         }`}
                       >
                         {i + 1}
