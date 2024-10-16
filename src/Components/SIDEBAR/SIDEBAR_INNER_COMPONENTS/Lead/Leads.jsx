@@ -1033,14 +1033,15 @@ if (value === "Mass Email") {
                       </td>
                       {/* Segments */}
                       <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
-                        <div className="grid grid-cols-2 gap-1 items-center">
-                          {item.segments &&
-                            item?.segments?.map((segment, index) => (
-                              <span key={index} className="	">
-                                {segment}
+                      <div className="grid grid-cols-2 gap-1 items-center">
+                       {item.segments && (
+                              <span className="">
+                                {item.segments
+                                  .filter((segment) => segment.length > 1)
+                                  .join(", ")}
                               </span>
-                            ))}
-                        </div>
+                            )}
+                      </div>
                       </td>
                       {/* Assigned To and User Role */}
                       <td className="px-2 py-4 border-b border-gray-300 text-sm text-center">
