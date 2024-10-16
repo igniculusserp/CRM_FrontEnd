@@ -701,7 +701,7 @@ const closeModal = () => {
           <h1 className="text-3xl font-medium ">
             Sales Order
           </h1>
-          <h1 className="bg-blue-600 text-white p-2 min-w-10 text-center rounded text-sm">
+          <h1 className="bg-blue-600 text-white p-2 min-w-10 text-center rounded text-sm shadow-md">
             {getleads?.length}
           </h1>
         </div>
