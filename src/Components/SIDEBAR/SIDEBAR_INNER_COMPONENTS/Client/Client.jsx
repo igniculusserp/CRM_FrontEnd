@@ -100,7 +100,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
 
 
   const [leadStatus, setLeadStatus] = useState('All Lead');   // Track the selected lead status
-  const [assignedTo, setAssignedTo] = useState('Assigned to');   // Track the selected assigned user
+  const [assignedTo, setAssignedTo] = useState('Managed By');   // Track the selected assigned user
 
   // Function to handle both filters
   function handle_LeadStatus(statusValue) {
@@ -908,7 +908,7 @@ if(startDate<=endDate){
                   <th className="px-1 py-3 text-left border-r font-medium">
                     <div className="flex justify-between items-center">
                       <span>
-                        Assigned To
+                        Managed By
                       </span>
                       <FaBars />
                     </div>

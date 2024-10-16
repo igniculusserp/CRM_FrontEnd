@@ -339,7 +339,7 @@ export default function FollowUp() {
 
   //-----------------------------------------------> ALL-> ASSIGNED_TO <-functionality <-----------------------------------------------
 
-  const [assignedTo, setAssignedTo] = useState("Assigned to"); // Track the selected assigned user
+  const [assignedTo, setAssignedTo] = useState("Managed By"); // Track the selected assigned user
 
   //-----------------------------------------------> ALL-> ASSIGNED_TO DropDown <-functionality <-----------------------------------------------
 

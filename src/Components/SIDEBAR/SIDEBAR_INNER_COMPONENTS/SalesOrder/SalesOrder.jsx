@@ -803,7 +803,7 @@ const closeModal = () => {
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium w-44">
                     <div className="flex justify-between items-center">
-                      <span>Manage By</span>
+                      <span>Managed By</span>
                       <FaBars />
                     </div>
                   </th>

@@ -100,7 +100,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
 
 
   const [leadStatus, setLeadStatus] = useState('All Lead');   // Track the selected lead status
-  const [assignedTo, setAssignedTo] = useState('Assigned to');   // Track the selected assigned user
+  const [assignedTo, setAssignedTo] = useState('Managed By');   // Track the selected assigned user
 
   // Function to handle both filters
   function handle_LeadStatus(statusValue) {
@@ -648,7 +648,7 @@ if(startDate<=endDate){
               </div>
             )}
           </div>
-          {/* PART-I-ii */}{/* All ASSIGNED_TO  DropDown*/}
+          {/* PART-I-ii */}{/* All MANAGED_BY  DropDown*/}
           <div className="relative" onClick={toggleMenuAssigned_To} onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}>
             <button
               className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 max-w-44"
@@ -905,7 +905,7 @@ if(startDate<=endDate){
                   <th className="px-1 py-3 text-left border-r font-medium">
                     <div className="flex justify-between items-center">
                       <span>
-                        Assigned To
+                        Managed By
                       </span>
                       <FaBars />
                     </div>
