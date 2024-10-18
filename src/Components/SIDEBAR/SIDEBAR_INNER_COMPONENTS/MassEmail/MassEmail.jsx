@@ -60,7 +60,7 @@ const MassEmailModal = ({ emails, onClose }) => {
 
         let errorMessage = "Validation errors:\n";
         for (const field in validationErrors) {
-          if (validationErrors.hasOwnProperty(field)) {
+          if (Object.prototype.hasOwnProperty.call(validationErrors, field)) {
             errorMessage += `${field}: ${validationErrors[field].join(", ")}\n`;
           }
         }

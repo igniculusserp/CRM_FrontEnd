@@ -16,6 +16,7 @@ import { MdCall } from "react-icons/md";
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import MassEmail from "../MassEmail/MassEmail";
+import FollowupNotificationModal from "./FollowupNotificationModal";
 
 export default function FollowUp() {
   const navigate = useNavigate();
@@ -28,6 +29,8 @@ export default function FollowUp() {
   // Mass Email
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEmails, setSelectedEmails] = useState([]);
+  const [isNotification, setIsNotification] = useState(false);
+  const [notificationData, setNotificationData] = useState("");
   const [followupList, setFollowupList] = useState([]);
   const [followupDropdown, setFollowupDropdown] = useState(false);
   const [searchDropdown, setSearchDropdown] = useState(false);
@@ -221,6 +224,7 @@ export default function FollowUp() {
   const closeModal = () => {
     setIsModalOpen(false); // Close the modal
   };
+
 
   //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
   //-------> XLSX used here
@@ -451,33 +455,44 @@ export default function FollowUp() {
 
 
   // ---------------------------- Notifications ----------------------------
+  const openNotification = (id) => {
+    if (id) {
+      setNotificationData(id);
+      setIsNotification(true); 
+    } else {
+      alert("Process Failed");
+      console.log("@@@@@=====", id);
+    }
+  };
 
-// ---------------------------- Notifications ----------------------------
-const showNotification = (message) => {
-if (Notification.permission === "granted") {
-  new Notification(message);
-}
-};
+  const closeNotification = () => {
+    setIsNotification(false); 
+    setNotificationData("");
+  };
 
-const checkDateTimeMatch = (targetDateTime) => {
-const interval = setInterval(() => {
-  const now = new Date();
-  const selectedTime = new Date(targetDateTime);
-  if (Math.abs(now - selectedTime) < 60000) { 
-    showNotification("It's time for your scheduled task!");
-    clearInterval(interval);
-  }
-}, 30000);  
-return () => clearInterval(interval);
-};
+  useEffect(() => {
+    const checkTime = () => {
+      const currentTime = new Date();
+      const formattedCurrentTime = currentTime.toISOString().slice(0, 16).replace(" ", "T");
 
-useEffect(() => {
-followupList.forEach((followup) => {
-  if (followup.call_bck_DateTime) {
-    checkDateTimeMatch(followup.call_bck_DateTime);
-  }
-});
-}, [followupList]);
+      followupList.forEach((item) => {
+        const formattedCallbackTime = item.call_bck_DateTime.slice(0, 16).replace(" ", "T");
+
+        if (formattedCurrentTime === formattedCallbackTime) {
+          openNotification(item.id);
+        }
+      });
+    };
+
+    // Check every minute
+    const interval = setInterval(checkTime, 5000);
+    
+    // Check immediately on component mount
+    checkTime();
+    
+    // Clean up interval on component unmount
+    return () => clearInterval(interval);
+  }, [followupList]);
 
 
 
@@ -489,8 +504,15 @@ followupList.forEach((followup) => {
         {/* Render the modal only when `isModalOpen` is true */}
         {isModalOpen && (
           <MassEmail
-            emails={selectedEmails}
-            onClose={closeModal} // Pass function to close modal
+          emails={selectedEmails}
+          onClose={closeModal} // Pass function to close modal
+          />
+        )}
+        {/* Render the Notification modal */}
+        { isNotification && (
+          <FollowupNotificationModal
+          id={notificationData}
+          onClose={closeNotification} // Pass function to close modal
           />
         )}
         {/* containerbar*/}
@@ -821,7 +843,9 @@ followupList.forEach((followup) => {
                         </td>
                         {/* FOLLOW UP */}
                         <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 ">
-                          <div className="flex items-center text-nowrap">
+                          <div className="flex items-center text-nowrap"
+                          // onClick={() => }
+                          >
                             {order.call_bck_DateTime.replace("T", " ")}
                           </div>
                         </td>
@@ -834,7 +858,7 @@ followupList.forEach((followup) => {
             )}
           </div>
 
-          {/* PAGINATION */}
+          {/* Grid View */}
           {selectedViewValue === "Grid View" && (
             <>
               <div className="min-w-full">
