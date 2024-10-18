@@ -74,10 +74,7 @@ const CreateFollowUp = () => {
     }
   };
 
-  // Function to set description value
-  const setDescriptionValue = (value) => {
-    setDescription(value);
-  };
+
 
   // Handle Input Change
   const handleChange = (e) => {
@@ -474,14 +471,13 @@ const CreateFollowUp = () => {
                     Call Back Date
                   </label>
                   <input
-                    type="date"
-                    name="call_bck_DateTime"
-                    id="call_bck_DateTime"
-                    value={followupsData.call_bck_DateTime.split("T")[0]}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                    onChange={handleChange}
-                    placeholder="Select Date"
-                    min={new Date().toISOString().split("T")[0]}
+                     type="datetime-local"
+                     name="call_bck_DateTime"
+                     id="call_bck_DateTime"
+                     value={followupsData.call_bck_DateTime}
+                     className="mt-1 p-2 border border-gray-300 rounded-md"
+                     onChange={handleChange}
+                     min={new Date().toISOString().slice(0, 16)} 
                   />
                 </div>
               </div>
