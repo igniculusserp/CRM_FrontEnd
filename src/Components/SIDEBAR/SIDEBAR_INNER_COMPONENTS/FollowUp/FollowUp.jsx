@@ -93,6 +93,7 @@ export default function FollowUp() {
   const toggleFollowupDropdown = () => {
     setFollowupDropdown(!followupDropdown);
   };
+  
 
   //   TOGGLE SEARCH DROPDOWN
   const toggleSearchDropdown = () => {

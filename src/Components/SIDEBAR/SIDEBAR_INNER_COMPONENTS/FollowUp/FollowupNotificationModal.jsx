@@ -100,7 +100,7 @@ const FollowupNotificationModal = ({ id, onClose }) => {
             </div>
 
             <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-              <div className="w-2/4 text-gray-500 text-sm">Follow Up Date</div>
+              <div className="w-2/4 text-gray-500 text-sm">Follow Up</div>
               <div className="w-2/4 font-medium text-sm">
                 {followupsData.call_bck_DateTime.replace("T", " ")}
               </div>
