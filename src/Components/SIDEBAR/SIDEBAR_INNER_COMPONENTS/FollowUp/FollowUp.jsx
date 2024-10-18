@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 //external Packages
-import { NotificationContainer, NotificationManager } from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
 import axios from "axios";
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
@@ -51,8 +49,8 @@ export default function FollowUp() {
         config
       );
       if (response.status === 200) {
-        const followup = response.data; // Get the user data
-        setFollowupList(followup?.data); // Set the user data for editing
+        const followup = response.data; 
+        setFollowupList(followup?.data); 
         setFilteredLeads(followup?.data);
       }
     } catch (error) {
@@ -62,8 +60,11 @@ export default function FollowUp() {
 
   useEffect(() => {
     getFollowupLists();
+    // Request notification permission on mount
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission();
+    }
   }, []);
-
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
     { key: 1, value: "Table View" },
@@ -450,39 +451,41 @@ export default function FollowUp() {
 
 
   // ---------------------------- Notifications ----------------------------
-  // ---------------------------- Notifications ----------------------------
-  const showNotification = (message) => {
-    NotificationManager.info(message, 'Follow-Up Reminder', 5000);
-  };
 
-  const checkDateTimeMatch = (targetDateTime) => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      const selectedTime = new Date(targetDateTime);
-      if (Math.abs(now - selectedTime) < 60000) { // Checks if the time matches within a 1-minute range
-        showNotification("It's time for your scheduled task!");
-        clearInterval(interval);
-      }
-    }, 30000); // Check every 30 seconds
+// ---------------------------- Notifications ----------------------------
+const showNotification = (message) => {
+if (Notification.permission === "granted") {
+  new Notification(message);
+}
+};
 
-    return () => clearInterval(interval);
-  };
+const checkDateTimeMatch = (targetDateTime) => {
+const interval = setInterval(() => {
+  const now = new Date();
+  const selectedTime = new Date(targetDateTime);
+  if (Math.abs(now - selectedTime) < 60000) { 
+    showNotification("It's time for your scheduled task!");
+    clearInterval(interval);
+  }
+}, 30000);  
+return () => clearInterval(interval);
+};
 
-  useEffect(() => {
-    // Loop through each follow-up and check the scheduled date and time
-    followupList.forEach((followup) => {
-      if (followup.call_bck_DateTime) {
-        checkDateTimeMatch(followup.call_bck_DateTime);
-      }
-    });
-  }, [followupList]);
+useEffect(() => {
+followupList.forEach((followup) => {
+  if (followup.call_bck_DateTime) {
+    checkDateTimeMatch(followup.call_bck_DateTime);
+  }
+});
+}, [followupList]);
+
 
 
   return (
     <>
       {/* -------- PARENT -------- */}
       <div className="min-h-screen flex flex-col m-3 ">
-      <NotificationContainer />
+      
         {/* Render the modal only when `isModalOpen` is true */}
         {isModalOpen && (
           <MassEmail
