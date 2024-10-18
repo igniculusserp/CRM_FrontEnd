@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 //external Packages
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 import axios from "axios";
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
@@ -446,10 +448,41 @@ export default function FollowUp() {
     }
   }, [startDate, endDate]);
 
+
+  // ---------------------------- Notifications ----------------------------
+  // ---------------------------- Notifications ----------------------------
+  const showNotification = (message) => {
+    NotificationManager.info(message, 'Follow-Up Reminder', 5000);
+  };
+
+  const checkDateTimeMatch = (targetDateTime) => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const selectedTime = new Date(targetDateTime);
+      if (Math.abs(now - selectedTime) < 60000) { // Checks if the time matches within a 1-minute range
+        showNotification("It's time for your scheduled task!");
+        clearInterval(interval);
+      }
+    }, 30000); // Check every 30 seconds
+
+    return () => clearInterval(interval);
+  };
+
+  useEffect(() => {
+    // Loop through each follow-up and check the scheduled date and time
+    followupList.forEach((followup) => {
+      if (followup.call_bck_DateTime) {
+        checkDateTimeMatch(followup.call_bck_DateTime);
+      }
+    });
+  }, [followupList]);
+
+
   return (
     <>
       {/* -------- PARENT -------- */}
       <div className="min-h-screen flex flex-col m-3 ">
+      <NotificationContainer />
         {/* Render the modal only when `isModalOpen` is true */}
         {isModalOpen && (
           <MassEmail
