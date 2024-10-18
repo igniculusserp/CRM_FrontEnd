@@ -330,16 +330,16 @@ export default function Logs() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col mx-3 mt-3">
+    <div className="min-h-screen flex flex-col m-3">
       {/* BUTTONS */}
       {/* MIDDLE */}
-      <div className="py-2 px-4 bg-white flex items-center justify-between rounded-md">
-        <div className="flex gap-4">
+      <div className="py-2.5 px-3 bg-white flex items-center justify-between rounded-md">
+        <div className="flex gap-3">
           {Object.keys(dynamicButtons).map((key) => (
             <button
               key={key}
               onClick={() => handleClick(key)}
-              className={`px-8 py-1.5 rounded font-light text-md
+              className={`px-5 py-1.5 rounded font-light text-md
                 ${
                   selectedButton === key
                     ? 'bg-cyan-500 text-white'

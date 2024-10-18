@@ -641,7 +641,7 @@ export default function FreeTrail() {
       <div className="my-1 flex py-2 justify-between items-center gap-3">
         <div className="flex gap-3">
           <h1 className="text-3xl font-medium ">Free Trail</h1>
-          <h1 className="bg-blue-600 text-white p-2 min-w-10 text-center rounded text-sm">
+          <h1 className="bg-blue-600 text-white p-2 min-w-10 text-center rounded text-sm shadow-md">
             {freeTrial?.length}
           </h1>
         </div>
@@ -727,7 +727,7 @@ export default function FreeTrail() {
                       </span>
                     </div>
                   </th>
-                  {/* MANAGE BY */}
+                  {/* MANAGED BY */}
                   <th className="px-1 py-3  text-left  border-r font-medium ">
                     <div className="flex items-center justify-between gap-3">
                       <span className="text-nowrap">Managed By</span>
