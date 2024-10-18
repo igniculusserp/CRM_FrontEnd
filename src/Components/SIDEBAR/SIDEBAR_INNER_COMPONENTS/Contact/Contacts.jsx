@@ -29,10 +29,10 @@ const name = getHostnamePart()
 export default function Contact() {
   const navigate = useNavigate(); // Add this line
 
-  
-// Mass Email
-const [isModalOpen, setIsModalOpen] = useState(false);
-const [selectedEmails, setSelectedEmails] = useState([]);
+
+  // Mass Email
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEmails, setSelectedEmails] = useState([]);
 
   //This is to store the upcoming data from API
   const [getleads, setGetleads] = useState([]);
@@ -290,16 +290,16 @@ const [selectedEmails, setSelectedEmails] = useState([]);
       }
     }
 
-   // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
-   if (value === "Mass Email") {
-    const userConfirmed = confirm(
-      "Are you sure you want to Send E-Mail to the selected Data?"
-    );
-    if (userConfirmed) {
-      openMassEmailModal(selectedEmails);
+    // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
+    if (value === "Mass Email") {
+      const userConfirmed = confirm(
+        "Are you sure you want to Send E-Mail to the selected Data?"
+      );
+      if (userConfirmed) {
+        openMassEmailModal(selectedEmails);
+      }
     }
-  }
-  
+
 
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
     if (value === "Sheet View") {
@@ -362,10 +362,10 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   };
 
 
-   // ---------------------->MASS Email FUNCTIONALITY---<----------------------
+  // ---------------------->MASS Email FUNCTIONALITY---<----------------------
 
 
-   const openMassEmailModal = () => {
+  const openMassEmailModal = () => {
     if (selectedEmails.length > 0) {
       setIsModalOpen(true); // Open the modal
     } else {
@@ -504,31 +504,31 @@ const [selectedEmails, setSelectedEmails] = useState([]);
 
   //---------------------->---------------------->̧CHECKBOX<----------------------<----------------------
 
- //---------------------->---------------------->̧CHECKBOX -> SINGLE<----------------------<----------------------
- const [selectedIds, setSelectedIds] = useState([]);
- const handleOnCheckBox = (e, item) => {
-   e.stopPropagation();
- 
-   // Toggle selected IDs
-   setSelectedIds((prevSelected) =>
-     prevSelected.includes(item.id)
-       ? prevSelected.filter((id) => id !== item.id)
-       : [...prevSelected, item.id]
-   );
- 
-   // Update selected emails
-   setSelectedEmails((prevSelectedEmails) => {
-     const newSelectedEmails = prevSelectedEmails.includes(item.email)
-       ? prevSelectedEmails.filter((email) => email !== item.email)
-       : [...prevSelectedEmails, item.email];
- 
-     // Log the updated selectedEmails
-     console.log("Updated Selected Emails:", newSelectedEmails);
-     return newSelectedEmails;
-   });
- };
- 
-   
+  //---------------------->---------------------->̧CHECKBOX -> SINGLE<----------------------<----------------------
+  const [selectedIds, setSelectedIds] = useState([]);
+  const handleOnCheckBox = (e, item) => {
+    e.stopPropagation();
+
+    // Toggle selected IDs
+    setSelectedIds((prevSelected) =>
+      prevSelected.includes(item.id)
+        ? prevSelected.filter((id) => id !== item.id)
+        : [...prevSelected, item.id]
+    );
+
+    // Update selected emails
+    setSelectedEmails((prevSelectedEmails) => {
+      const newSelectedEmails = prevSelectedEmails.includes(item.email)
+        ? prevSelectedEmails.filter((email) => email !== item.email)
+        : [...prevSelectedEmails, item.email];
+
+      // Log the updated selectedEmails
+      console.log("Updated Selected Emails:", newSelectedEmails);
+      return newSelectedEmails;
+    });
+  };
+
+
 
 
 
@@ -547,10 +547,10 @@ const [selectedEmails, setSelectedEmails] = useState([]);
       setSelectedIds((prevSelected) => [
         ...new Set([...prevSelected, ...currentPageIds]),
       ]);
-   } else {
+    } else {
       // Remove all current page leads from selectedIds
       const currentPageIds = currentLeads?.map((lead) => lead.id);
-      setSelectedEmails([]); 
+      setSelectedEmails([]);
       setSelectedIds((prevSelected) =>
         prevSelected.filter((id) => !currentPageIds.includes(id))
       );
@@ -572,45 +572,45 @@ const [selectedEmails, setSelectedEmails] = useState([]);
 
   // ----------------------------- Date Filter -----------------------------
 
-const today = new Date().toISOString().split("T")[0]; 
-const [startDate, setStartDate] = useState(today);
-const [endDate, setEndDate] = useState(today);
+  const today = new Date().toISOString().split("T")[0];
+  const [startDate, setStartDate] = useState(today);
+  const [endDate, setEndDate] = useState(today);
 
 
-// Function to filter based on date range
-function handle_DateRange(startDate, endDate) {
-let filteredFollows = currentLeads;
+  // Function to filter based on date range
+  function handle_DateRange(startDate, endDate) {
+    let filteredFollows = currentLeads;
 
-// Convert startDate to the beginning of the day and endDate to the end of the day
-const start = new Date(startDate);
-start.setHours(0, 0, 0, 0); // Set time to 00:00:00
+    // Convert startDate to the beginning of the day and endDate to the end of the day
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
 
-const end = new Date(endDate);
-end.setHours(23, 59, 59, 999); // Set time to 23:59:59
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999); // Set time to 23:59:59
 
-if (startDate && endDate) {
-  filteredFollows = filteredFollows.filter((follow) => {
-    const callbackDate = new Date(follow.trialStartDate);
-    return callbackDate >= start && callbackDate <= end;
-  });
-}
-setFilteredLeads(filteredFollows); // Update the filtered result
-}
+    if (startDate && endDate) {
+      filteredFollows = filteredFollows.filter((follow) => {
+        const callbackDate = new Date(follow.trialStartDate);
+        return callbackDate >= start && callbackDate <= end;
+      });
+    }
+    setFilteredLeads(filteredFollows); // Update the filtered result
+  }
 
-// UseEffect to trigger handle_DateRange on date change
-useEffect(() => {
-if(startDate<=endDate){
-  handle_DateRange(startDate, endDate);
-}
-}, [startDate, endDate]); 
+  // UseEffect to trigger handle_DateRange on date change
+  useEffect(() => {
+    if (startDate <= endDate) {
+      handle_DateRange(startDate, endDate);
+    }
+  }, [startDate, endDate]);
 
 
 
   return (
     //parent
     <div className="min-h-screen flex flex-col m-3 ">
-        {/* Render the modal only when `isModalOpen` is true */}
-        {isModalOpen && (
+      {/* Render the modal only when `isModalOpen` is true */}
+      {isModalOpen && (
         <MassEmail
           emails={selectedEmails}
           onClose={closeModal} // Pass function to close modal
@@ -859,7 +859,7 @@ if(startDate<=endDate){
                       onChange={handleSelectAllCheckbox}
                     />
                   </th>
-                
+
                   <th className="px-1 py-3 text-left border-r font-medium">
                     <div className="flex justify-between items-center">
                       <span>
@@ -876,8 +876,8 @@ if(startDate<=endDate){
                       <FaBars />
                     </div>
                   </th>
-            
-               
+
+
                   <th className="px-1 py-3 text-left border-r font-medium min-w-16 max-w-20">
                     <div className="flex justify-between items-center">
                       <span>
@@ -892,8 +892,7 @@ if(startDate<=endDate){
                         Free Trail
                       </span>
                       <FaBars />
-                      </div>
-                      <span className= "text-xs  absolute top-100 left-8 text-gray-500 top-8 ">yyyy-mm-dd</span>
+                    </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium max-w-16">
                     <div className="flex justify-between items-center">
@@ -935,7 +934,7 @@ if(startDate<=endDate){
                         />
                       </td>
 
-                    
+
                       {/* CONTACT NAME */}
                       <td className="px-1 py-4 border-b border-gray-300 text-sm" onClick={() => handleClick(item)}>
                         <div className="flex items-center">
@@ -954,15 +953,15 @@ if(startDate<=endDate){
 
                       {/* Segments */}
                       <td className="px-1 py-4 border-b border-gray-300 text-sm  ">
-                      <div>
-                       {item.segments && (
-                              <span className="">
-                                {item.segments
-                                  .filter((segment) => segment.length > 1)
-                                  .join(", ")}
-                              </span>
-                            )}
-                      </div>
+                        <div>
+                          {item.segments && (
+                            <span className="">
+                              {item.segments
+                                .filter((segment) => segment.length > 1)
+                                .join(", ")}
+                            </span>
+                          )}
+                        </div>
                       </td>
 
                       <td className="px-1 py-4 border-b border-gray-300 text-sm text-center">
@@ -970,10 +969,10 @@ if(startDate<=endDate){
                       </td>
 
                       <td className="px-1 py-4 border-b border-gray-300 text-sm text-center">
-                      {(item.call_bck_DateTime?.replace("T", " "))?.split(':').slice(0, 2).join(':')}
+                        {(item.call_bck_DateTime?.replace("T", " "))?.split(':').slice(0, 2).join(':')}
                       </td>
 
-                       {/* Assigned To and User Role */}
+                      {/* Assigned To and User Role */}
                       <td className="px-2 py-4 border-b border-gray-300 text-sm  w-[20%] ">
                         {matchedUser && (
                           <div
@@ -995,11 +994,12 @@ if(startDate<=endDate){
 
                       {/*------------------<- Create-SO->------------*/}
                       {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
-                       <td className = "text-center">
+                      <td className="text-center">
                         <button
                           className="bg-blue-600 p-1 text-white text-xm rounded mx-auto"
-                          onClick={() => navigate(`/sidebar/contact/create/so/${item.id}`)}
-                        >SO</button>
+                          onClick={() => navigate(`/sidebar/contact/create/so/${item.id}`)}>
+                          SO
+                        </button>
                       </td>
                     </tr>
                   );
