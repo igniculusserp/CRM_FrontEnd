@@ -230,7 +230,7 @@ export default function Dlp() {
           </div>
         </div>
         <div className="overflow-hidden shadow-md">
-          <div className="py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+          <div className="py-2 px-3 bg-cyan-500 rounded-t-xl mt-3">
             <h1 className="text-white">Access Policy</h1>
           </div>
           {/* CREATE DLP FORM */}

@@ -23,6 +23,7 @@ import NotificationPopup from './SIDEBAR_SETTING_COMPONENTS/NotificationPopup/No
 import CallingExtension from './SIDEBAR_SETTING_COMPONENTS/CallingExtension/CallingExtension';
 import AccessDevice from "./SIDEBAR_SETTING_COMPONENTS/AccessDevice/AccessDevice";
 import Dlp from './SIDEBAR_SETTING_COMPONENTS/DLP/Dlp';
+import Alert from './SIDEBAR_SETTING_COMPONENTS/Alert/Alert';
 
 export default function Setting() {
   const location = useLocation();
@@ -82,6 +83,7 @@ export default function Setting() {
     19: CallingExtension,
     21: AccessDevice,
     22: Dlp,
+    23: Alert,
   };
 
   const handleButtonClick = (key) => {
