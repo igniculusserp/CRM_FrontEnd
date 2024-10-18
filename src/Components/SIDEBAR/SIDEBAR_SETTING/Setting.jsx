@@ -22,6 +22,7 @@ import BranchTarget from './SIDEBAR_SETTING_COMPONENTS/BranchTarget/BranchTarget
 import NotificationPopup from './SIDEBAR_SETTING_COMPONENTS/NotificationPopup/NotificationPopup';
 import CallingExtension from './SIDEBAR_SETTING_COMPONENTS/CallingExtension/CallingExtension';
 import AccessDevice from "./SIDEBAR_SETTING_COMPONENTS/AccessDevice/AccessDevice";
+import Dlp from './SIDEBAR_SETTING_COMPONENTS/DLP/Dlp';
 
 export default function Setting() {
   const location = useLocation();
@@ -52,6 +53,10 @@ export default function Setting() {
     { key: 18, value: "Notification Popup" },
     { key: 19, value: "Calling Extension" },
     { key: 21, value: "Access Device" },
+    { key: 22, value: "DLP" },
+    { key: 23, value: "Alerts" },
+    { key: 24, value: "Access Control" },
+    { key: 25, value: "Password Policy" },
   ];
 
   const componentMap = {
@@ -76,6 +81,7 @@ export default function Setting() {
     18: NotificationPopup,
     19: CallingExtension,
     21: AccessDevice,
+    22: Dlp,
   };
 
   const handleButtonClick = (key) => {
