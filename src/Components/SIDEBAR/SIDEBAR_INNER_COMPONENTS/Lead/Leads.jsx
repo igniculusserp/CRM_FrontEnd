@@ -1033,7 +1033,7 @@ if (value === "Mass Email") {
                       </td>
                       {/* Segments */}
                       <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
-                      <div className="grid grid-cols-2 gap-1 items-center">
+                      <div>
                        {item.segments && (
                               <span className="">
                                 {item.segments
