@@ -852,7 +852,7 @@ if(startDate<=endDate){
               <thead>
                 <tr className="border-gray-300 border-b-2">
                   {/* CHECKBOX */}
-                  <th className="px-1 py-3">
+                  <th className=" py-3">
                     <input
                       type="checkbox"
                       checked={isSelectAllChecked}
@@ -860,7 +860,7 @@ if(startDate<=endDate){
                     />
                   </th>
                 
-                  <th className="px-2 py-3 text-left border-r font-medium">
+                  <th className="px-1 py-3 text-left border-r font-medium">
                     <div className="flex justify-between items-center">
                       <span>
                         Client Name
@@ -868,7 +868,7 @@ if(startDate<=endDate){
                       <FaBars />
                     </div>
                   </th>
-                  <th className="px-1 py-3 text-left border-r font-medium">
+                  <th className="px-1 py-3 text-left border-r font-medium min-w-16 max-w-20">
                     <div className="flex justify-between items-center">
                       <span>
                         Mobile
@@ -878,7 +878,7 @@ if(startDate<=endDate){
                   </th>
             
                
-                  <th className="px-1 py-3 text-left border-r font-medium w-48">
+                  <th className="px-1 py-3 text-left border-r font-medium min-w-16 max-w-20">
                     <div className="flex justify-between items-center">
                       <span>
                         Segment
@@ -886,15 +886,16 @@ if(startDate<=endDate){
                       <FaBars />
                     </div>
                   </th>
-                  <th className="px-1 py-3 text-left border-r font-medium w-48">
+                  <th className="px-1 py-3 text-left border-r font-medium  min-w-20 max-w-24 relative">
                     <div className="flex justify-between items-center">
                       <span>
                         Free Trail
                       </span>
                       <FaBars />
-                    </div>
+                      </div>
+                      <span className= "text-xs  absolute top-100 left-8 text-gray-500 top-8 ">yyyy-mm-dd</span>
                   </th>
-                  <th className="px-1 py-3 text-left border-r font-medium w-48">
+                  <th className="px-1 py-3 text-left border-r font-medium max-w-16">
                     <div className="flex justify-between items-center">
                       <span>
                         Follow Up
@@ -926,7 +927,7 @@ if(startDate<=endDate){
                       className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
                     >
                       {/* CHECKBOX */}
-                      <td className="px-2 py-3 text-center">
+                      <td className="px-1 py-3 text-center">
                         <input
                           type="checkbox"
                           checked={selectedIds.includes(item.id)}
@@ -936,14 +937,15 @@ if(startDate<=endDate){
 
                     
                       {/* CONTACT NAME */}
-                      <td className="px-4 py-4 border-b border-gray-300 text-sm w-[15%]" onClick={() => handleClick(item)}>
+                      <td className="px-1 py-4 border-b border-gray-300 text-sm" onClick={() => handleClick(item)}>
                         <div className="flex items-center">
                           <img className="h-6 w-6 mx-1 rounded-full" src={dp} alt="DP" />
                           <span className="">{item.name}</span>
                         </div>
                       </td>
 
-                      <td className="px-1 py-4 border-b border-gray-300 text-sm w-[12%]">
+                      {/* Mobile No */}
+                      <td className="px-1 py-4 border-b border-gray-300 text-sm min-w-20 max-w-24 ">
                         <div className="flex gap-2 items-center">
                           {item.mobileNo}
                           <MdCall className="text-red-600" />
@@ -951,8 +953,8 @@ if(startDate<=endDate){
                       </td>
 
                       {/* Segments */}
-                      <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
-                      <div className="grid grid-cols-2 gap-1 items-center">
+                      <td className="px-1 py-4 border-b border-gray-300 text-sm  ">
+                      <div>
                        {item.segments && (
                               <span className="">
                                 {item.segments
@@ -972,10 +974,10 @@ if(startDate<=endDate){
                       </td>
 
                        {/* Assigned To and User Role */}
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm  w-[15%] ">
+                      <td className="px-2 py-4 border-b border-gray-300 text-sm  w-[20%] ">
                         {matchedUser && (
                           <div
-                            className="text-xs font-semibold text-white  py-2  mx-auto rounded-full w-[90%]"
+                            className="text-xs font-semibold text-white py-2 mx-auto rounded-full w-[90%]"
                             style={{
                               backgroundColor: roleColor ? roleColor : "#000",
                               borderRadius: "8px",
@@ -995,7 +997,7 @@ if(startDate<=endDate){
                       {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
                        <td className = "text-center">
                         <button
-                          className="bg-black p-1 text-white text-xm rounded mx-auto"
+                          className="bg-blue-600 p-1 text-white text-xm rounded mx-auto"
                           onClick={() => navigate(`/sidebar/contact/create/so/${item.id}`)}
                         >SO</button>
                       </td>
