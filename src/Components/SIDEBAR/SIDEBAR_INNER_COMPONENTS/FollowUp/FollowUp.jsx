@@ -93,7 +93,7 @@ export default function FollowUp() {
   const toggleFollowupDropdown = () => {
     setFollowupDropdown(!followupDropdown);
   };
-  
+
 
   //   TOGGLE SEARCH DROPDOWN
   const toggleSearchDropdown = () => {
@@ -472,29 +472,31 @@ export default function FollowUp() {
   };
 
   useEffect(() => {
-    const checkTime = () => {
+    const intervalId = setInterval(() => {
       const currentTime = new Date();
-      const formattedCurrentTime = currentTime.toISOString().slice(0, 16).replace(" ", "T");
-
+      // Format current time as "YYYY-MM-DDTHH:mm"
+      const formattedCurrentTime = currentTime.toISOString().slice(0, 16); 
+      console.log("@@@@", formattedCurrentTime);
+  
       followupList.forEach((item) => {
-        const formattedCallbackTime = item.call_bck_DateTime.slice(0, 16).replace(" ", "T");
-
+        // Parse the call_bck_DateTime as a local date
+        const callbackTime = new Date(item.call_bck_DateTime);
+        // Adjust to local time string in the same format
+        const formattedCallbackTime = callbackTime.toISOString().slice(0, 16); 
+        console.log("@@@@", formattedCallbackTime);
+  
+        // Compare the formatted times
         if (formattedCurrentTime === formattedCallbackTime) {
+          console.log("@@@@", "Yes");
           openNotification(item.id);
+          // alert("Working out how long");
         }
       });
-    };
-
-    // Check every minute
-    const interval = setInterval(checkTime, 5000);
+    }, 30000); // Check every minute
     
-    // Check immediately on component mount
-    checkTime();
-    
-    // Clean up interval on component unmount
-    return () => clearInterval(interval);
+    return () => clearInterval(intervalId);
   }, [followupList]);
-
+  
 
 
   return (
