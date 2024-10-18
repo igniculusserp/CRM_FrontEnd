@@ -11,20 +11,8 @@ const FollowupNotificationModal = ({ id, onClose }) => {
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
 
-  const [followupsData, setFollowupsData] = useState({
-    id: "",
-    leadId: "",
-    name: "",
-    language: "",
-    mobileNo: "",
-    phoneNo: "",
-    email: "",
-    assigned_To: "",
-    segments: [],
-    call_bck_DateTime: "",
-    lastModifiedBy: "",
-    description: "",
-  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [followupsData, setFollowupsData] = useState({});
 
   // Fetch Data by ID
   useEffect(() => {
@@ -35,11 +23,8 @@ const FollowupNotificationModal = ({ id, onClose }) => {
 
   // Function to fetch data by ID
   const fetchDataById = async () => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${bearer_token}`,
-      },
-    };
+    setIsLoading(true);
+    const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
 
     try {
       const response = await axios.get(
@@ -48,24 +33,12 @@ const FollowupNotificationModal = ({ id, onClose }) => {
       );
 
       if (response.status === 200 && response.data.isSuccess) {
-        const followup = response.data.data;
-        setFollowupsData({
-          id: followup.id,
-          leadId: followup.leadId || "",
-          name: followup.name || "",
-          language: followup.language || "",
-          mobileNo: followup.mobileNo || "",
-          phoneNo: followup.phoneNo || "",
-          email: followup.email || "",
-          assigned_To: followup.assigned_To || "",
-          segments: followup.segments || [],
-          call_bck_DateTime: followup.call_bck_DateTime || "",
-          lastModifiedBy: followup.lastModifiedBy || "",
-          description: followup.description || "",
-        });
+        setFollowupsData(response.data.data);
       }
     } catch (error) {
       console.error("Error fetching data: ", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -74,9 +47,14 @@ const FollowupNotificationModal = ({ id, onClose }) => {
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
         <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
           <h2 className="text-xl font-semibold mb-4">Follow-Up Details</h2>
-          
+
           <div className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2">
-           
+            <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+              <div className="w-2/4 text-gray-500 text-sm">Lead Id</div>
+              <div className="w-2/4 font-medium text-sm">
+                {followupsData.leadId}
+              </div>
+            </div>
 
             <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
               <div className="w-2/4 text-gray-500 text-sm">Client Name</div>
@@ -87,37 +65,27 @@ const FollowupNotificationModal = ({ id, onClose }) => {
 
             <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
               <div className="w-2/4">
-                <IoIosMail className="text-2xl" />
-              </div>
-              <div className="w-2/4 font-medium text-sm">{followupsData.email}</div>
-            </div>
-
-            <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-              <div className="w-2/4">
                 <FaPhoneAlt className="text-xl" />
               </div>
-              <div className="w-2/4 font-medium text-sm">{followupsData.phoneNo}</div>
-            </div>
-
-            <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-              <div className="w-2/4 text-gray-500 text-sm">Follow Up</div>
               <div className="w-2/4 font-medium text-sm">
-                {followupsData.call_bck_DateTime.replace("T", " ")}
+                {followupsData.phoneNo}
               </div>
             </div>
 
             <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-              <div className="w-2/4 text-gray-500 text-sm">Segment</div>
+              <div className="w-2/4 text-gray-500 text-sm">Follow Up Date</div>
               <div className="w-2/4 font-medium text-sm">
-                {followupsData.segments.length > 0 &&
-                  followupsData.segments
-                    .filter((segment) => segment.length > 1)
-                    .join(", ")}
+                {followupsData.call_bck_DateTime
+                  ? followupsData.call_bck_DateTime.replace("T", " ")
+                  : "No date available"}
               </div>
             </div>
           </div>
 
           <div className="flex justify-end pt-3">
+            <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2">
+              View
+            </button>
             <button
               className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
               onClick={onClose}
