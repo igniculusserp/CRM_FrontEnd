@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { FaBars } from 'react-icons/fa';
+import { FaAngleDown, FaBars } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 
 export default function AccessControl() {
   const [activeComponent, setActiveComponent] = useState('Table');
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const handleAdd = () => {
     setActiveComponent('Add');
@@ -201,6 +202,108 @@ export default function AccessControl() {
 
     const handleOptionClick = (id) => {
       setSelectedId(id);
+    };
+
+    const tableData = ['Fire Fox', 'Internet Explorer', 'Chrome'];
+
+    const ipTableData = [
+      { id: 1, name: 'Rahul', range: 12, ipRangeFrom: 120, ipRangeTo: 120 },
+    ];
+
+    // COUNTRY DROPDOWN
+    const [countryDropdown, setCountryDropdown] = useState(false);
+    const [defaultCountryText, setDefaultCountryText] = useState('Country');
+    const [fromHourDropdown, setFromHourDropdown] = useState(false);
+    const [defaultFromHourText, setDefaultFromHourText] = useState('From');
+    const [toHourDropdown, setToHourDropdown] = useState(false);
+    const [defaultToHourText, setDefaultToHourText] = useState('To');
+    const [minuteDropdown, setMinuteDropdown] = useState(false);
+    const [defaultMinuteText, setDefaultMinuteText] = useState('Minute');
+
+    // TOGGLE COUNTRY
+    const toggleDropdownCountry = () => {
+      setCountryDropdown(!countryDropdown);
+    };
+
+    // DUMMY COUNTRIES
+    const countries = [
+      { id: 1, name: 'India' },
+      { id: 2, name: 'America' },
+      { id: 3, name: 'England' },
+      { id: 4, name: 'Russia' },
+      { id: 5, name: 'Japan' },
+    ];
+
+    const handleDropdownCountry = (name) => {
+      setDefaultCountryText(name);
+      setCountryDropdown(!countryDropdown);
+      setAddAccess((prev) => ({
+        ...prev,
+        name: name,
+      }));
+    };
+
+    // FROM HOUR TOGGLE
+    const toggleDropdownFrom = () => {
+      setFromHourDropdown(!fromHourDropdown);
+    };
+
+    // FROM HOUR DUMMY
+    const fromHour = [
+      { id: 1, name: '12' },
+      { id: 2, name: '1' },
+      { id: 3, name: '10' },
+    ];
+
+    const handleDropdownFrom = (name) => {
+      setDefaultFromHourText(name);
+      setFromHourDropdown(!fromHourDropdown);
+      setAddAccess((prev) => ({
+        ...prev,
+        name: name,
+      }));
+    };
+
+    //   TO HOUR TOGGLE
+    const toggleDropdownTo = () => {
+      setToHourDropdown(!toHourDropdown);
+    };
+
+    // TO HOUR DUMMY
+    const toHour = [
+      { id: 1, name: '12' },
+      { id: 2, name: '1' },
+      { id: 3, name: '10' },
+    ];
+
+    const handleDropdownTo = (name) => {
+      setDefaultToHourText(name);
+      setToHourDropdown(!toHourDropdown);
+      setAddAccess((prev) => ({
+        ...prev,
+        name: name,
+      }));
+    };
+
+    //   MINUTE TOGGLE
+    const toggleDropdownMinute = () => {
+      setMinuteDropdown(!minuteDropdown);
+    };
+
+    // MINUTE DUMMY
+    const minute = [
+      { id: 1, name: 15 },
+      { id: 2, name: 30 },
+      { id: 3, name: 45 },
+    ];
+
+    const handleDropdownMinute = (name) => {
+      setDefaultMinuteText(name);
+      setMinuteDropdown(!minuteDropdown);
+      setAddAccess((prev) => ({
+        ...prev,
+        name: name,
+      }));
     };
 
     return (
@@ -412,15 +515,90 @@ export default function AccessControl() {
                 </button>
               ))}
             </div>
-            {/* WEB SECTION */}
+            {/* BROWSE RESTRICTION */}
             {selectedId === 1 && (
               <>
                 <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
-                    Web Violation
+                  <h1 className="text-white py-2 px-3 bg-cyan-500 rounded-t-xl mt-3">
+                    Browse Restriction
                   </h1>
-                  <div className="mb-6 py-3 flex flex-col gap-2">
+
+                  <div className="grid gap-2 py-3 px-3">
+                    {/* FIRST */}
+                    <div className="flex space-x-4">
+                      {/* Enabled */}
+                      <div className="flex flex-col w1/2 gap-1 justify-start items-start">
+                        <label
+                          htmlFor="enabled"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          Enabled
+                        </label>
+                        <input
+                          type="checkbox"
+                          name="enabled"
+                          className="flex justify-start py-1 px-1 h-5 w-5"
+                        />
+                      </div>
+                    </div>
+                    {/* SECOND */}
+                    <div className="flex space-x-4">
+                      {/* Valid Always */}
+                      <div className="flex flex-col w1/2 gap-1 justify-start items-start">
+                        <label
+                          htmlFor="blockAccess"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          Block Access from mobile browser
+                        </label>
+                        <input
+                          type="checkbox"
+                          name="blockAccess"
+                          className="flex justify-start py-1 px-1 h-5 w-5"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mx-6 py-3">
                     {/* MAIN CART */}
+                    <div className="overflow-x-auto rounded-t-xl rounded-b-md">
+                      <table className="min-w-full table-auto">
+                        <thead>
+                          <tr className="bg-cyan-500 rounded-t-xl">
+                            <th className="px-4 py-2 text-white font-light">
+                              Browser
+                            </th>
+                            <th className="px-4 py-2 text-white font-light">
+                              Enabled
+                            </th>
+                            <th className="px-4 py-2 text-white font-light">
+                              Version
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {tableData.map((item, idx) => (
+                            <tr key={idx} className="bg-gray-100 border-b">
+                              <td className="px-8 py-2">{item}</td>
+                              <td className="py-2 text-center">
+                                <input
+                                  type="checkbox"
+                                  className="form-checkbox"
+                                />
+                              </td>
+                              <td className="px-3 py-2 text-center">
+                                <input
+                                  type="text"
+                                  className="py-1 border border-gray-300 px-6"
+                                  placeholder="Enter browser version"
+                                />
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
 
                     <div className="flex justify-end gap-5 mr-3">
                       <div className="flex justify-end">
@@ -437,15 +615,575 @@ export default function AccessControl() {
               </>
             )}
 
-            {/* DLP SECTION */}
+            {/* IP RESTRICTION */}
             {selectedId === 2 && (
               <>
                 <div className="bg-white rounded-xl">
                   <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
-                    DLP Violation
+                    IP Restriction
+                  </h1>
+
+                  <div className="grid gap-2 py-3 px-3">
+                    {/* FIRST */}
+                    <div className="flex space-x-4">
+                      {/* Enabled */}
+                      <div className="flex flex-col w1/2 gap-1 justify-start items-start">
+                        <label
+                          htmlFor="enable"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          Enable
+                        </label>
+                        <input
+                          type="checkbox"
+                          name="enable"
+                          className="flex justify-start py-1 px-1 h-5 w-5"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mb-6 py-3 flex flex-col gap-2">
+                    {/* MAIN CART */}
+                    <div className="overflow-x-auto rounded-t-xl rounded-b-md">
+                      <table className="min-w-full table-auto">
+                        <thead>
+                          <tr className="bg-cyan-500 rounded-t-xl">
+                            <th className="px-4 py-2 text-white font-light">
+                              Name
+                            </th>
+                            <th className="px-4 py-2 text-white font-light">
+                              Range
+                            </th>
+                            <th className="px-4 py-2 text-white font-light">
+                              IP Range From
+                            </th>
+                            <th className="px-4 py-2 text-white font-light">
+                              IP Range To
+                            </th>
+                            <th className="px-4 py-2 text-white font-light">
+                              Action
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {ipTableData.map((item) => (
+                            <tr key={item.id} className="bg-gray-100 border-b">
+                              <td className="py-2 text-center">{item.name}</td>
+                              <td className="px-3 py-2 text-center">
+                                {item.range}
+                              </td>
+                              <td className="px-3 py-2 text-center">
+                                {item.ipRangeFrom}
+                              </td>
+                              <td className="px-3 py-2 text-center">
+                                {item.ipRangeTo}
+                              </td>
+                              <td className="px-3 py-2 text-center"></td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div className="flex justify-end gap-5 mr-3">
+                      <div className="flex justify-end">
+                        <button
+                          type="submit"
+                          className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+            {/* TIME RESTRICTION */}
+            {selectedId === 3 && (
+              <>
+                <div className="bg-white rounded-xl">
+                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                    Time Restriction
+                  </h1>
+
+                  <div className="grid gap-2 pb-3 w-full px-3">
+                    <div className="flex space-x-4">
+                      {/* ENABLE TIME RESTRICTION */}
+                      <div className="flex flex-col w-1/2">
+                        <label
+                          htmlFor="enableTimeRestriction"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          Enable Time Restriction
+                        </label>
+                        <input
+                          type="checkbox"
+                          name="enableTimeRestriction"
+                          className="flex justify-start py-1 px-1 h-5 w-5"
+                        />
+                      </div>
+                    </div>
+                    {/* SECOND */}
+                    <div className="flex space-x-4">
+                      {/* TIME ZONE */}
+                      <div className="flex flex-col w-1/2">
+                        <label
+                          htmlFor="timeZone"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          Time Zone
+                        </label>
+                        <input
+                          type="text"
+                          name="timeZone"
+                          value={addAccess.timeZone}
+                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          onChange={handleChange}
+                          placeholder="Enter device type"
+                        />
+                      </div>
+                    </div>
+                    {/* THIRD */}
+                    <div className="flex space-x-4 w-full">
+                      {/* FROM (Hours) DROPDOWN */}
+                      <div className="flex flex-col w-1/2 relative">
+                        <label
+                          htmlFor="fromHour"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          From(Hour)
+                        </label>
+                        <div
+                          className="relative"
+                          onClick={toggleDropdownFrom}
+                          onMouseLeave={() => setFromHourDropdown(false)}
+                        >
+                          <button
+                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            id="fromHour"
+                            type="button"
+                          >
+                            {isEditMode
+                              ? addAccess.fromHour
+                              : defaultFromHourText}
+                            <FaAngleDown className="ml-2 text-gray-400" />
+                          </button>
+                          {fromHourDropdown && (
+                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                              <ul className="py-2 text-sm text-gray-700">
+                                {fromHour.map(({ key, name }) => (
+                                  <li
+                                    key={key}
+                                    onClick={() => handleDropdownFrom(name)}
+                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                  >
+                                    {name}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      {/* Minutes DROPDOWN */}
+                      <div className="flex flex-col w-1/2 relative">
+                        <label
+                          htmlFor="minutes"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          Minutes
+                        </label>
+                        <div
+                          className="relative"
+                          onClick={toggleDropdownMinute}
+                          onMouseLeave={() => setMinuteDropdown(false)}
+                        >
+                          <button
+                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            id="minutes"
+                            type="button"
+                          >
+                            {isEditMode ? addAccess.minutes : defaultMinuteText}
+                            <FaAngleDown className="ml-2 text-gray-400" />
+                          </button>
+                          {minuteDropdown && (
+                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                              <ul className="py-2 text-sm text-gray-700">
+                                {minute.map(({ key, name }) => (
+                                  <li
+                                    key={key}
+                                    onClick={() => handleDropdownMinute(name)}
+                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                  >
+                                    {name}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    {/* FOURTH */}
+                    <div className="flex space-x-4 w-full">
+                      {/* TO (Hours) */}
+                      <div className="flex flex-col w-1/2 relative">
+                        <label
+                          htmlFor="toHour"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          To(Hour)
+                        </label>
+                        <div
+                          className="relative"
+                          onClick={toggleDropdownTo}
+                          onMouseLeave={() => setToHourDropdown(false)}
+                        >
+                          <button
+                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            id="toHour"
+                            type="button"
+                          >
+                            {isEditMode ? addAccess.toHour : defaultToHourText}
+                            <FaAngleDown className="ml-2 text-gray-400" />
+                          </button>
+                          {toHourDropdown && (
+                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                              <ul className="py-2 text-sm text-gray-700">
+                                {toHour.map(({ key, name }) => (
+                                  <li
+                                    key={key}
+                                    onClick={() => handleDropdownTo(name)}
+                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                  >
+                                    {name}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      {/* Minutes */}
+                      <div className="flex flex-col w-1/2 relative">
+                        <label
+                          htmlFor="minutes"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          Minutes
+                        </label>
+                        <div
+                          className="relative"
+                          onClick={toggleDropdownMinute}
+                          onMouseLeave={() => setMinuteDropdown(false)}
+                        >
+                          <button
+                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            id="minutes"
+                            type="button"
+                          >
+                            {isEditMode ? addAccess.minutes : defaultMinuteText}
+                            <FaAngleDown className="ml-2 text-gray-400" />
+                          </button>
+                          {minuteDropdown && (
+                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                              <ul className="py-2 text-sm text-gray-700">
+                                {minute.map(({ key, name }) => (
+                                  <li
+                                    key={key}
+                                    onClick={() => handleDropdownMinute(name)}
+                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                  >
+                                    {name}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    {/* FIFTH */}
+                    <div className="flex space-x-4 w-full">
+                      {/* NEXT DAY */}
+                      <div className="flex flex-col w1/2 w-full">
+                        <label
+                          htmlFor="nextDay"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          Next Day
+                        </label>
+                        <input
+                          type="checkbox"
+                          name="nextDay"
+                          className="flex justify-start py-1 px-1 h-5 w-5"
+                        />
+                      </div>
+                      {/* Minutes */}
+                      <div className="flex flex-col w1/2 w-full">
+                        <label
+                          htmlFor="forceLogout"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          Force Logout
+                        </label>
+                        <input
+                          type="checkbox"
+                          name="forceLogout"
+                          className="flex justify-start py-1 px-1 h-5 w-5"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col p-3">
+                    <h1 className="font-light text-lg">Select Days Of Week</h1>
+                    <div className="flex items-center gap-6">
+                      {/* SUNDAY */}
+                      <div className="flex items-center gap-2">
+                        <input type="checkbox" className="w-5 h-5" />
+                        <p className="text-md font-light">Sunday</p>
+                      </div>
+                      {/* MONDAY */}
+                      <div className="flex items-center gap-2">
+                        <input type="checkbox" className="w-5 h-5" />
+                        <p className="text-md font-light">Monday</p>
+                      </div>
+                      {/* TUESDAY */}
+                      <div className="flex items-center gap-2">
+                        <input type="checkbox" className="w-5 h-5" />
+                        <p className="text-md font-light">Tuesday</p>
+                      </div>
+                      {/* WEDNESDAY */}
+                      <div className="flex items-center gap-2">
+                        <input type="checkbox" className="w-5 h-5" />
+                        <p className="text-md font-light">Wednesday</p>
+                      </div>
+                      {/* THURSDAY */}
+                      <div className="flex items-center gap-2">
+                        <input type="checkbox" className="w-5 h-5" />
+                        <p className="text-md font-light">Thursday</p>
+                      </div>
+                      {/* FRIDAY */}
+                      <div className="flex items-center gap-2">
+                        <input type="checkbox" className="w-5 h-5" />
+                        <p className="text-md font-light">Friday</p>
+                      </div>
+                      {/* SATURDAY */}
+                      <div className="flex items-center gap-2">
+                        <input type="checkbox" className="w-5 h-5" />
+                        <p className="text-md font-light">Saturday</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end gap-5 mr-3">
+                    <div className="flex justify-end">
+                      <button
+                        type="submit"
+                        className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+            {/* DEVICE RESTRICTION */}
+            {selectedId === 4 && (
+              <>
+                <div className="bg-white rounded-xl">
+                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                    Device Restriction
                   </h1>
                   <div className="mb-6 py-3 flex flex-col gap-2">
                     {/* MAIN CART */}
+                    <div className="grid gap-2 pb-3 w-full px-3">
+                      <div className="flex space-x-4">
+                        {/* ENABLE */}
+                        <div className="flex flex-col w-1/2">
+                          <label
+                            htmlFor="enable"
+                            className="text-sm font-medium text-gray-700"
+                          >
+                            Enable
+                          </label>
+                          <input
+                            type="checkbox"
+                            name="enable"
+                            className="flex justify-start py-1 px-1 h-5 w-5"
+                          />
+                        </div>
+                        {/* ENABLE MAC BINDING */}
+                        <div className="flex flex-col w-1/2">
+                          <label
+                            htmlFor="enableMacBinding"
+                            className="text-sm font-medium text-gray-700"
+                          >
+                            Enable Mac Binding
+                          </label>
+                          <input
+                            type="checkbox"
+                            name="enableMacBinding"
+                            className="flex justify-start py-1 px-1 h-5 w-5"
+                          />
+                        </div>
+                      </div>
+                      {/* FIFTH */}
+                      <div className="flex space-x-4 w-full">
+                        {/* Certificate Based Device Restriction */}
+                        <div className="flex flex-col w1/2 w-full">
+                          <label
+                            htmlFor="certificate"
+                            className="text-sm font-medium text-gray-700"
+                          >
+                            Certificate Based Device Restriction
+                          </label>
+                          <input
+                            type="checkbox"
+                            name="certificate"
+                            className="flex justify-start py-1 px-1 h-5 w-5"
+                          />
+                        </div>
+                        {/* Minutes */}
+                        <div className="flex flex-col w1/2 w-full">
+                          <label
+                            htmlFor="enableWindow"
+                            className="text-sm font-medium text-gray-700"
+                          >
+                            Enable Windows Login Id Binding
+                          </label>
+                          <input
+                            type="checkbox"
+                            name="enableWindow"
+                            className="flex justify-start py-1 px-1 h-5 w-5"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end gap-5 mr-3">
+                      <div className="flex justify-end">
+                        <button
+                          type="submit"
+                          className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+            {/* GEO LOCATION */}
+            {selectedId === 5 && (
+              <>
+                <div className="bg-white rounded-xl">
+                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                    Geo Location
+                  </h1>
+                  <div className="mb-6 py-3 flex flex-col gap-2">
+                    {/* MAIN CART */}
+                    <div className="grid gap-2 pb-3 w-full px-3">
+                      {/* FIRST */}
+                      <div className="flex space-x-4">
+                        {/* ENABLE */}
+                        <div className="flex flex-col w-1/2">
+                          <label
+                            htmlFor="enable"
+                            className="text-sm font-medium text-gray-700"
+                          >
+                            Enable
+                          </label>
+                          <input
+                            type="checkbox"
+                            name="enable"
+                            className="flex justify-start py-1 px-1 h-5 w-5"
+                          />
+                        </div>
+                      </div>
+                      {/* SECOND */}
+                      <div className="flex space-x-4">
+                        {/* COUNTRY */}
+                        <div className="flex flex-col w-1/2">
+                          <label
+                            htmlFor="country"
+                            className="text-sm font-medium text-gray-700"
+                          >
+                            Country
+                          </label>
+                          <input
+                            type="checkbox"
+                            name="country"
+                            className="flex justify-start py-1 px-1 h-5 w-5"
+                          />
+                        </div>
+                        {/* CUSTOM */}
+                        <div className="flex flex-col w-1/2">
+                          <label
+                            htmlFor="custom"
+                            className="text-sm font-medium text-gray-700"
+                          >
+                            Custom
+                          </label>
+                          <input
+                            type="checkbox"
+                            name="custom"
+                            className="flex justify-start py-1 px-1 h-5 w-5"
+                          />
+                        </div>
+                      </div>
+                      {/* THIRD */}
+                      <div className="flex space-x-4">
+                        {/* COUNTRY DROPDOWN */}
+                        {/* -------------Country------------- */}
+                        <div className="flex flex-col w-1/2 relative">
+                          <label
+                            htmlFor="country"
+                            className="text-sm font-medium text-gray-700"
+                          >
+                            Country
+                          </label>
+                          <div
+                            className="relative"
+                            onClick={toggleDropdownCountry}
+                            onMouseLeave={() => setCountryDropdown(false)}
+                          >
+                            <button
+                              className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                              id="country"
+                              type="button"
+                            >
+                              {isEditMode
+                                ? addAccess.country
+                                : defaultCountryText}
+                              <FaAngleDown className="ml-2 text-gray-400" />
+                            </button>
+                            {countryDropdown && (
+                              <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                                <ul className="py-2 text-sm text-gray-700">
+                                  {countries.map(({ key, name }) => (
+                                    <li
+                                      key={key}
+                                      onClick={() =>
+                                        handleDropdownCountry(name)
+                                      }
+                                      className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    >
+                                      {name}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
                     <div className="flex justify-end gap-5 mr-3">
                       <div className="flex justify-end">
