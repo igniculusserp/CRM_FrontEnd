@@ -64,9 +64,9 @@ export default function FollowUp() {
   useEffect(() => {
     getFollowupLists();
     // Request notification permission on mount
-    if (Notification.permission !== "granted") {
-      Notification.requestPermission();
-    }
+    // if (Notification.permission !== "granted") {
+    //   Notification.requestPermission();
+    // }
   }, []);
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
