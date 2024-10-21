@@ -1,43 +1,44 @@
 //react
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 //external Packages
-import axios from 'axios';
-import * as XLSX from 'xlsx';
-import { jsPDF } from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import axios from "axios";
+import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 
 //React Icons
-import { FaAngleDown, FaPhoneAlt } from 'react-icons/fa';
-import { IoIosMail } from 'react-icons/io';
-import { BiEdit } from 'react-icons/bi';
-import { IoSearchOutline } from 'react-icons/io5';
-import { FaBars } from 'react-icons/fa';
-import { VscSettings } from 'react-icons/vsc';
-import { ImFilter } from 'react-icons/im';
-import { MdCall } from 'react-icons/md';
+import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
+import { IoIosMail } from "react-icons/io";
+import { BiEdit } from "react-icons/bi";
+import { IoSearchOutline } from "react-icons/io5";
+import { FaBars } from "react-icons/fa";
+import { VscSettings } from "react-icons/vsc";
+import { ImFilter } from "react-icons/im";
+import { MdCall } from "react-icons/md";
 
 //Folder Imported
-import dp from './../../../../assets/images/dp.png';
-import { tenant_base_url, protocal_url } from '../../../../Config/config';
-import MassEmail from '../MassEmail/MassEmail';
+import dp from "./../../../../assets/images/dp.png";
+import { tenant_base_url, protocal_url } from "../../../../Config/config";
+import MassEmail from "../MassEmail/MassEmail";
 
-import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
-import LeadOperations from './LeadComponents/LeadOperations';
-import LeadAction from './LeadComponents/LeadAction';
-import UploadLead from './LeadComponents/UploadLead';
+import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import LeadOperations from "./LeadComponents/LeadOperations";
+import LeadAction from "./LeadComponents/LeadAction";
+import UploadLead from "./LeadComponents/UploadLead";
+import LeadAssignModal from "./LeadComponents/LeadAssignModal";
+import LeadStatusModal from "./LeadComponents/LeadStatusModal";
 
 const name = getHostnamePart();
 
 export default function Lead() {
   const navigate = useNavigate(); // Add this line
 
-  
-// Mass Email
-const [isModalOpen, setIsModalOpen] = useState(false);
-const [selectedEmails, setSelectedEmails] = useState([]);
+  // Mass Email
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEmails, setSelectedEmails] = useState([]);
 
   const location = useLocation();
 
@@ -53,7 +54,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   //------------------------------------------------------------------------------------------------
   //----------------GET----------------
   async function handleLead() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -69,7 +70,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
       setGetleads(data);
       setFilteredLeads(data); // Initialize filtered leads
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -77,7 +78,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   //------------------------------------------------------------------------------------------------
   //----------------Managing Color of Assigned To----------------
   const getAllUsers = async () => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -92,7 +93,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
       const data = response.data?.data;
       setUsers(data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
     }
   };
@@ -102,15 +103,15 @@ const [selectedEmails, setSelectedEmails] = useState([]);
     getAllUsers();
   }, []);
 
-  const [leadStatus, setLeadStatus] = useState('All Lead'); // Track the selected lead status
-  const [assignedTo, setAssignedTo] = useState('Assigned to'); // Track the selected assigned user
+  const [leadStatus, setLeadStatus] = useState("All Lead"); // Track the selected lead status
+  const [assignedTo, setAssignedTo] = useState("Assigned to"); // Track the selected assigned user
 
   // Function to handle both filters
   function handle_LeadStatus(statusValue) {
     let filteredLeads = getleads;
 
     // Filter by leadStatus if it's not 'ALL' or null
-    if (statusValue !== null && statusValue !== 'All Leads') {
+    if (statusValue !== null && statusValue !== "All Leads") {
       filteredLeads = filteredLeads.filter(
         (lead) => lead.leadesStatus === statusValue
       );
@@ -121,7 +122,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
 
   function handle_AssignedTo(assignedToValue) {
     let filteredLeads = getleads;
-    if (assignedToValue !== null && assignedToValue !== 'Assigned to') {
+    if (assignedToValue !== null && assignedToValue !== "Assigned to") {
       filteredLeads = filteredLeads.filter(
         (lead) => lead.assigned_To === assignedToValue
       );
@@ -152,7 +153,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   //----------------STATUS DROPDOWN----------------
   const [allLeadData, setallLeadData] = useState([]);
   async function handleLeadStatus() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
@@ -166,7 +167,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
       );
       setallLeadData(response.data.data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -186,7 +187,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   //----------------ASSIGNED_TO DROPDOWN----------------
   const [allAssigned_To_Data, setallAssigned_To_Data] = useState([]);
   async function handleallAssigned_To() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
@@ -200,7 +201,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
       );
       setallAssigned_To_Data(response.data.data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -214,16 +215,16 @@ const [selectedEmails, setSelectedEmails] = useState([]);
 
   // All SearchBar Menu
   const searchBar = [
-    { key: 0, value: 'Search' },
-    { key: 1, value: 'Touched Records' },
-    { key: 2, value: 'Untouched Records' },
-    { key: 3, value: 'Record Action' },
-    { key: 4, value: 'Related Records Action' },
-    { key: 5, value: 'Locked' },
-    { key: 6, value: 'Latest Email Status' },
-    { key: 7, value: 'Activities' },
-    { key: 8, value: 'Notes' },
-    { key: 9, value: 'Campaigns' },
+    { key: 0, value: "Search" },
+    { key: 1, value: "Touched Records" },
+    { key: 2, value: "Untouched Records" },
+    { key: 3, value: "Record Action" },
+    { key: 4, value: "Related Records Action" },
+    { key: 5, value: "Locked" },
+    { key: 6, value: "Latest Email Status" },
+    { key: 7, value: "Activities" },
+    { key: 8, value: "Notes" },
+    { key: 9, value: "Campaigns" },
   ];
 
   const [searchBardropDown, setsearchBardropDown] = useState(false);
@@ -235,8 +236,8 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   //------------------------------------------------------------------------------------------------
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
-    { key: 1, value: 'Table View' },
-    { key: 2, value: 'Grid View' },
+    { key: 1, value: "Table View" },
+    { key: 2, value: "Grid View" },
   ];
 
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
@@ -251,7 +252,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   };
 
   // DROP_LOGO DROPDOWN------------>>>
-  const dropLogoMenu = [{ key: 1, value: 'Import Leads' }];
+  const dropLogoMenu = [{ key: 1, value: "Import Leads" }];
   const [dropLogodropDown, setdropLogodropDown] = useState(false);
 
   const togglesdropLogo = () => {
@@ -266,16 +267,16 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   //----------------ACTION BAR DROPDOWN----------------
   const [dropActionsMenu, setdropActionsMenu] = useState([
     // { key: 0, value: "Actions" },
-    { key: 1, value: 'Mass Delete' },
-    { key: 2, value: 'Mass Update' },
-    { key: 3, value: 'Mass Email' },
-    { key: 4, value: 'Approve Leads' },
-    { key: 5, value: 'Add to Campaign' },
+    { key: 1, value: "Mass Delete" },
+    { key: 2, value: "Mass Update" },
+    { key: 3, value: "Mass Email" },
+    { key: 4, value: "Approve Leads" },
+    { key: 5, value: "Add to Campaign" },
     // { key: 6, value: "Export Leads" },
-    { key: 7, value: 'Export To Excel' },
-    { key: 8, value: 'Export To PDF' },
+    { key: 7, value: "Export To Excel" },
+    { key: 8, value: "Export To PDF" },
     // { key: 9, value: "Create SO" },
-    { key: 10, value: 'Convert Lead to Contact' },
+    { key: 10, value: "Convert Lead to Contact" },
   ]);
 
   const [dropActionsMenudropDown, setdropActionsMenudropDown] = useState(false);
@@ -286,9 +287,9 @@ const [selectedEmails, setSelectedEmails] = useState([]);
 
   const handleActionButton = async (value, leadId) => {
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
-    if (value === 'Mass Delete') {
+    if (value === "Mass Delete") {
       const userConfirmed = confirm(
-        'Are you sure you want to Delete the selected Leads?'
+        "Are you sure you want to Delete the selected Leads?"
       );
       if (userConfirmed) {
         massDelete();
@@ -296,19 +297,19 @@ const [selectedEmails, setSelectedEmails] = useState([]);
     }
 
     // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
-if (value === "Mass Email") {
-  const userConfirmed = confirm(
-    "Are you sure you want to Send E-Mail to the selected Data?"
-  );
-  if (userConfirmed) {
-    openMassEmailModal(selectedEmails);
-  }
-}
+    if (value === "Mass Email") {
+      const userConfirmed = confirm(
+        "Are you sure you want to Send E-Mail to the selected Data?"
+      );
+      if (userConfirmed) {
+        openMassEmailModal(selectedEmails);
+      }
+    }
 
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
-    if (value === 'Sheet View') {
+    if (value === "Sheet View") {
       const userConfirmed = confirm(
-        'Are you sure you want to export the selected Leads?'
+        "Are you sure you want to export the selected Leads?"
       );
       if (userConfirmed) {
         exportToExcel();
@@ -316,9 +317,9 @@ if (value === "Mass Email") {
     }
 
     // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
-    if (value === 'Print View') {
+    if (value === "Print View") {
       const userConfirmed = confirm(
-        'Are you sure you want to export the selected Leads?'
+        "Are you sure you want to export the selected Leads?"
       );
       if (userConfirmed) {
         exportToPDF();
@@ -326,9 +327,9 @@ if (value === "Mass Email") {
     }
 
     // ---------------------->Convert Lead to Contact FUNCTIONALITY*<----------------------
-    if (value === 'Convert Lead to Contact') {
+    if (value === "Convert Lead to Contact") {
       const userConfirmed = confirm(
-        'Are you sure you want to convert this lead to a contact?'
+        "Are you sure you want to convert this lead to a contact?"
       );
       if (userConfirmed) {
         convertType();
@@ -337,13 +338,13 @@ if (value === "Mass Email") {
   };
   // ---------------------->MASS DELETE FUNCTIONALITY---###API###<----------------------
   const massDelete = async () => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         data: { leadIds: selectedIds },
       };
@@ -352,7 +353,7 @@ if (value === "Mass Email") {
         `${protocal_url}${name}.${tenant_base_url}/Lead/lead/massdelete`,
         config
       );
-      alert('Mass Deleted run');
+      alert("Mass Deleted run");
       handleLead();
       console.log(response);
 
@@ -361,7 +362,7 @@ if (value === "Mass Email") {
       );
       setSelectedIds([]);
     } catch (error) {
-      console.error('Error deleting leads:', error);
+      console.error("Error deleting leads:", error);
     }
   };
 
@@ -370,19 +371,20 @@ if (value === "Mass Email") {
     navigate(`/sidebar/editlead/${item.id}`);
   };
 
-   // ---------------------->MASS Email FUNCTIONALITY---<----------------------
-   const openMassEmailModal = () => {
+  // ---------------------->MASS Email FUNCTIONALITY---<----------------------
+  const openMassEmailModal = () => {
     if (selectedEmails.length > 0) {
       setIsModalOpen(true); // Open the modal
     } else {
-      alert('Selected Entity dose not have E-Mail Address.');
+      alert("Selected Entity dose not have E-Mail Address.");
     }
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); // Close the modal
+    setIsModalOpen(false);
+    setAssignModalOpen(false);
+    setStatusModalOpen(false);
   };
-
 
   //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
   //-------> XLSX used here
@@ -392,7 +394,7 @@ if (value === "Mass Email") {
       selectedIds.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
-      alert('No leads selected to export');
+      alert("No leads selected to export");
       return;
     }
 
@@ -401,10 +403,10 @@ if (value === "Mass Email") {
 
     // Create a new workbook and append the worksheet
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Selected Leads');
+    XLSX.utils.book_append_sheet(wb, ws, "Selected Leads");
 
     // Export the workbook to an Excel file
-    XLSX.writeFile(wb, 'SelectedLeadsData.xlsx');
+    XLSX.writeFile(wb, "SelectedLeadsData.xlsx");
   };
 
   //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
@@ -413,18 +415,18 @@ if (value === "Mass Email") {
       selectedIds.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
-      alert('No leads selected to export');
+      alert("No leads selected to export");
       return;
     }
     const doc = new jsPDF();
     // const role = matchedUser?.role;
     const tableColumn = [
-      'ID',
-      'Name',
-      'Email',
-      'Phone No.',
-      'Lead Source',
-      'Assigned To',
+      "ID",
+      "Name",
+      "Email",
+      "Phone No.",
+      "Lead Source",
+      "Assigned To",
     ];
     // Map the leads data to rows
     const tableRows = leadsToExport?.map((lead) => [
@@ -436,36 +438,36 @@ if (value === "Mass Email") {
       lead.assigned_To,
     ]);
     // Add a title to the PDF
-    doc.text('Selected Leads Data', 14, 16);
+    doc.text("Selected Leads Data", 14, 16);
     // Add the table to the PDF
     autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
       startY: 22, // Position the table after the title
     });
-    doc.save('Leads.pdf');
+    doc.save("Leads.pdf");
   };
 
   //---------------------->---------------------->MANAGE_BY/ASSIGNED_TO<----------------------<ARVIND----------------------
   const roleColors = [
     // "#f97316", // Red
-    '#2563eb', // blue
-    '#65a30d', // LimeGreen
-    '#7c3aed', // MediumPurple
-    '#0369a1', //Sky
-    '#e11d48', //Rose
+    "#2563eb", // blue
+    "#65a30d", // LimeGreen
+    "#7c3aed", // MediumPurple
+    "#0369a1", //Sky
+    "#e11d48", //Rose
   ];
 
   //---------------------->---------------------->CONVERT_LEADS_TO_CONTACTS<----------------------<----------------------
 
   const convertType = async () => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       };
 
@@ -475,23 +477,23 @@ if (value === "Mass Email") {
         config
       );
 
-      alert('Converted lead to contact');
+      alert("Converted lead to contact");
       setGetleads((prevLeads) =>
         prevLeads.filter((lead) => !selectedIds.includes(lead.id))
       );
       setSelectedIds([]);
 
       if (response.status === 200) {
-        alert('Lead has been successfully converted to a contact.');
+        alert("Lead has been successfully converted to a contact.");
       } else {
         alert(
-          `Failed to convert lead: ${response.data.message || 'Unknown error'}`
+          `Failed to convert lead: ${response.data.message || "Unknown error"}`
         );
       }
     } catch (error) {
-      console.error('Error converting lead:', error);
+      console.error("Error converting lead:", error);
       alert(
-        'An error occurred while converting the lead. Please try again later.'
+        "An error occurred while converting the lead. Please try again later."
       );
     }
   };
@@ -516,26 +518,26 @@ if (value === "Mass Email") {
   const [selectedIds, setSelectedIds] = useState([]);
   const handleOnCheckBox = (e, item) => {
     e.stopPropagation();
-  
+
     // Toggle selected IDs
     setSelectedIds((prevSelected) =>
       prevSelected.includes(item.id)
         ? prevSelected.filter((id) => id !== item.id)
         : [...prevSelected, item.id]
     );
-  
+
     // Update selected emails
     setSelectedEmails((prevSelectedEmails) => {
       const newSelectedEmails = prevSelectedEmails.includes(item.email)
         ? prevSelectedEmails.filter((email) => email !== item.email)
         : [...prevSelectedEmails, item.email];
-  
+
       // Log the updated selectedEmails
       console.log("Updated Selected Emails:", newSelectedEmails);
       return newSelectedEmails;
     });
   };
-      
+
   //---------------------->---------------------->̧CHECKBOX -> MULTIPLE<----------------------<----------------------
   const [isSelectAllChecked, setIsSelectAllChecked] = useState(false);
   const handleSelectAllCheckbox = (e) => {
@@ -550,17 +552,15 @@ if (value === "Mass Email") {
       setSelectedIds((prevSelected) => [
         ...new Set([...prevSelected, ...currentPageIds]),
       ]);
-   } else {
+    } else {
       // Remove all current page leads from selectedIds
       const currentPageIds = currentLeads?.map((lead) => lead.id);
-      setSelectedEmails([]); 
+      setSelectedEmails([]);
       setSelectedIds((prevSelected) =>
         prevSelected.filter((id) => !currentPageIds.includes(id))
       );
     }
   };
-
-
 
   // Update "Select All" checkbox state when individual checkboxes are clicked
   useEffect(() => {
@@ -574,24 +574,22 @@ if (value === "Mass Email") {
   // DYNAMIC RENDERING BUTTONS - TABLE
   // DYNAMIC LEAD BUTTONS
   const dynamicButtons = [
-    { id: 1, name: 'Leads' },
-    { id: 2, name: 'Upload Leads' },
-    { id: 3, name: 'Lead Operations' },
-    { id: 4, name: 'Lead Action' },
+    { id: 1, name: "Leads" },
+    { id: 2, name: "Upload Leads" },
+    { id: 3, name: "Lead Operations" },
+    { id: 4, name: "Lead Action" },
   ];
 
   // State to keep track of the selected button and button text
- 
 
   const [activeButtonId, setActiveButtonId] = useState(
-    () => parseInt(localStorage.getItem('activeButtonId')) || 1
+    () => parseInt(localStorage.getItem("activeButtonId")) || 1
   );
 
   const handleDynamicButtonsClick = (id) => {
     setActiveButtonId(id);
-    localStorage.setItem('activeButtonId', id);
+    localStorage.setItem("activeButtonId", id);
   };
-
 
   useEffect(() => {
     return () => {
@@ -600,10 +598,9 @@ if (value === "Mass Email") {
     };
   }, [location]);
 
-
   // ----------------------------- Date Filter -----------------------------
 
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(today);
 
@@ -634,16 +631,43 @@ if (value === "Mass Email") {
     }
   }, [startDate, endDate]);
 
+  //------------------------------------------------------------------------------------------------
+  //----------------leadOperations BAR DROPDOWN----------------
+  const leadOperations = [
+    { key: 0, value: "Operations" },
+    { key: 1, value: "Lead Assign" },
+    { key: 2, value: "Lead Status" },
+  ];
+
+  const [selectedValue, setSelectedValue] = useState(leadOperations[0].value);
+  const [assignModalOpen, setAssignModalOpen] = useState(false);
+  const [statusModalOpen, setStatusModalOpen] = useState(false);
+
+  const handleChange = (event) => {
+    const selected = event.target.value;
+    setSelectedValue(selected);
+    console.log("Selected Value:", selected);
+
+    if (selected === "Lead Assign") {
+      setAssignModalOpen(true);
+    }
+    if (selected === "Lead Status") {
+      setStatusModalOpen(true);
+    }
+  };
+
   return (
     //parent
     <div className="min-h-screen flex flex-col m-3 ">
-        {/* Render the modal only when `isModalOpen` is true */}
-        {isModalOpen && (
+      {/* Render the modal only when `isModalOpen` is true */}
+      {isModalOpen && (
         <MassEmail
           emails={selectedEmails}
           onClose={closeModal} // Pass function to close modal
         />
       )}
+      {assignModalOpen && <LeadAssignModal onClose={closeModal} />}
+      {statusModalOpen && <LeadStatusModal onClose={closeModal} />}
       {/* containerbar*/}
       <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg">
         {/* PART-I */}
@@ -853,8 +877,8 @@ if (value === "Mass Email") {
           </div>
         </div>
       </div>
-      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{' '}
-      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{' '}
+      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{" "}
+      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{" "}
       {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}
       <div className="mt-3 flex justify-between items-center gap-3">
         <div className="flex gap-3 items-center justify-center">
@@ -871,12 +895,36 @@ if (value === "Mass Email") {
                 onClick={() => handleDynamicButtonsClick(id)}
                 className={`px-2 py-1.5 rounded font-light text-md
           ${
-            activeButtonId === id? 'bg-cyan-500 text-white': 'bg-gray-100 text-gray-700'}`}>
+            activeButtonId === id
+              ? "bg-cyan-500 text-white"
+              : "bg-gray-100 text-gray-700"
+          }`}
+              >
                 {name}
               </button>
             ))}
           </div>
         </div>
+
+        {/* ---------------------Multi Assign and Multi Change------------------- */}
+
+        {activeButtonId === 3 && (
+          <>
+            <div className="relative inline-block text-left">
+              <select
+                value={selectedValue}
+                onChange={handleChange}
+                className="block w-full px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              >
+                {leadOperations.map((operation) => (
+                  <option key={operation.key} value={operation.value}>
+                    {operation.value}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </>
+        )}
 
         <div>
           {/* ------------------- Filter by date ----------------- */}
@@ -912,7 +960,7 @@ if (value === "Mass Email") {
       {/*-------Table-------*/}
       <div className="overflow-x-auto mt-3 ">
         <div className="min-w-full overflow-hidden rounded-md shadow-lg">
-          {selectedViewValue === 'Table View' && activeButtonId === 1 && (
+          {selectedViewValue === "Table View" && activeButtonId === 1 && (
             <table className="min-w-full bg-white">
               <thead>
                 <tr className="border-gray-300 border-b-2">
@@ -1027,21 +1075,21 @@ if (value === "Mass Email") {
                       <td className="px-1 py-4 border-b border-gray-300 text-sm">
                         {
                           item.call_bck_DateTime
-                            ?.replace('T', ' ')
-                            .split(':00')[0]
+                            ?.replace("T", " ")
+                            .split(":00")[0]
                         }
                       </td>
                       {/* Segments */}
                       <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
-                      <div>
-                       {item.segments && (
-                              <span className="">
-                                {item.segments
-                                  .filter((segment) => segment.length > 1)
-                                  .join(", ")}
-                              </span>
-                            )}
-                      </div>
+                        <div>
+                          {item.segments && (
+                            <span className="">
+                              {item.segments
+                                .filter((segment) => segment.length > 1)
+                                .join(", ")}
+                            </span>
+                          )}
+                        </div>
                       </td>
                       {/* Assigned To and User Role */}
                       <td className="px-2 py-4 border-b border-gray-300 text-sm text-center">
@@ -1049,10 +1097,10 @@ if (value === "Mass Email") {
                           <div
                             className="text-xs font-semibold text-white px-2 py-2 rounded-full w-[100%]"
                             style={{
-                              backgroundColor: roleColor ? roleColor : '#000',
-                              borderRadius: '8px',
+                              backgroundColor: roleColor ? roleColor : "#000",
+                              borderRadius: "8px",
                               padding: 8,
-                              textAlign: 'center',
+                              textAlign: "center",
                             }}
                           >
                             {item.assigned_To} - ({matchedUser?.role})
@@ -1083,7 +1131,7 @@ if (value === "Mass Email") {
           {/* ------------GRID------------ */}
           {/* ------------GRID------------ */}
           {/* ------------GRID------------ */}
-          {selectedViewValue === 'Grid View' && (
+          {selectedViewValue === "Grid View" && (
             <>
               <div className="min-w-full">
                 <div className="grid grid-cols-3 gap-3">
@@ -1160,7 +1208,7 @@ if (value === "Mass Email") {
         {/* LEAD OPERATIONS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {/* MONITORING TABLE */}
-          {selectedViewValue === 'Table View' && activeButtonId === 2 && (
+          {selectedViewValue === "Table View" && activeButtonId === 2 && (
             <UploadLead />
           )}
         </div>
@@ -1168,18 +1216,18 @@ if (value === "Mass Email") {
         {/* LEAD ACTION TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {/* LEAD ACTION TABLE */}
-          {selectedViewValue === 'Table View' && activeButtonId === 3 && (
+          {selectedViewValue === "Table View" && activeButtonId === 3 && (
             <LeadOperations currentLeads={currentLeads} />
           )}
           {/* RENDERING UPLOAD LEADS PAGE */}
           {activeButtonId === 4 && <LeadAction currentLeads={currentLeads} />}
         </div>
 
-        {selectedViewValue === 'Table View' && (
+        {selectedViewValue === "Table View" && (
           <>
             <div
               className={`flex justify-end m-4 ${
-                activeButtonId === 2 ? 'hidden' : 'flex'
+                activeButtonId === 2 ? "hidden" : "flex"
               }`}
             >
               <nav>
@@ -1194,8 +1242,8 @@ if (value === "Mass Email") {
                           onClick={() => paginate(i + 1)}
                           className={`px-4 py-2 mx-1 ${
                             currentPage === i + 1
-                              ? 'bg-blue-500 text-white'
-                              : 'bg-white text-gray-700 border'
+                              ? "bg-blue-500 text-white"
+                              : "bg-white text-gray-700 border"
                           }`}
                         >
                           {i + 1}
