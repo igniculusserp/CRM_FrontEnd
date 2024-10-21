@@ -69,6 +69,7 @@ export default function Lead() {
         );
   
         const data = response.data.data;
+        setCurrentPage(1);
         setGetleads(data);
         setFilteredLeads(data);
       } else {
@@ -78,6 +79,7 @@ export default function Lead() {
         );
   
         const data = response.data.data;
+        setCurrentPage(1);
         setGetleads(data);
         setFilteredLeads(data);
       }
