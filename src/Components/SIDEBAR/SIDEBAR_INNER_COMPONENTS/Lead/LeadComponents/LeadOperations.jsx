@@ -1,7 +1,45 @@
+// import { useState, useEffect } from "react";
+
 import { FaBars, FaPhone } from 'react-icons/fa';
 
 export default function LeadOperations({ currentLeads }) {
+
+  
+  //This is to store the upcoming data from API
+  // const [getleads, setGetleads] = useState([]);
+
+  //------------------------------------------------------------------------------------------------
+  //----------------GET----------------
+  // async function handleLead() {
+  //   const bearer_token = localStorage.getItem('token');
+  //   try {
+  //     const config = {
+  //       headers: {
+  //         Authorization: `Bearer ${bearer_token}`,
+  //       },
+  //     };
+  //     const response = await axios.get(
+  //       `${protocal_url}${name}.${tenant_base_url}/Lead/leads/byusertoken`,
+  //       config
+  //     );
+
+  //     const data = await response.data.data;
+  //     setGetleads(data);
+  //   } catch (error) {
+  //     console.error('Error fetching leads:', error);
+  //     // Optionally, set an error state to display a user-friendly message
+  //   }
+  // }
+
+
+  // useEffect(() => {
+  //   handleLead();
+  // }, []);
+
+
+
   return (
+    <>
     <table className="min-w-full bg-white">
       {/* ----------------- TABLE HEAD START ----------------- */}
       <thead>
@@ -78,34 +116,42 @@ export default function LeadOperations({ currentLeads }) {
             {/* CLIENT NAME */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
               <div className="flex items-center">
-                <img className="h-8 w-8 rounded-full" src={lead.img} alt="DP" />
+                {/* <img className="h-8 w-8 rounded-full" src={lead.img} alt="DP" /> */}
                 <span className="ml-2 w-[80px] break-words">
-                  {lead.clientName}
+                  {lead.name}
                 </span>
               </div>
             </td>
             {/* MOBILE */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
               <div className="flex items-center gap-2">
-                {lead.mobile}
+                {lead.mobileNo}
                 <FaPhone className="text-red-400 text-sm" />
               </div>
             </td>
             {/* ASSIGNED TO */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {lead.assignedTo}
+              {lead.assigned_To}
             </td>
             {/* LEAD STATUS */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {lead.leadStatus}
+              {lead.leadesStatus}
             </td>
             {/* LEAD SOURCE */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              <p className="text-blue-600">{lead.leadSource}</p>
+              <p className="text-blue-600">{lead.leadsSource}</p>
             </td>
             {/* SEGMENT */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {lead.segment}
+            <div>
+                       {lead.segments && (
+                              <span className="">
+                                {lead.segments
+                                  .filter((segment) => segment.length > 1)
+                                  .join(", ")}
+                              </span>
+                            )}
+                      </div>
             </td>
             {/* BP NAME */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
@@ -116,5 +162,6 @@ export default function LeadOperations({ currentLeads }) {
       </tbody>
       {/* ----------------- TABLE BODY END ----------------- */}
     </table>
+    </>
   );
 }
