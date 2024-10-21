@@ -24,6 +24,8 @@ import CallingExtension from './SIDEBAR_SETTING_COMPONENTS/CallingExtension/Call
 import AccessDevice from "./SIDEBAR_SETTING_COMPONENTS/AccessDevice/AccessDevice";
 import Dlp from './SIDEBAR_SETTING_COMPONENTS/DLP/Dlp';
 import Alert from './SIDEBAR_SETTING_COMPONENTS/Alert/Alert';
+import AccessControl from './SIDEBAR_SETTING_COMPONENTS/AccessControl/AccessControl';
+import PasswordPolicy from './SIDEBAR_SETTING_COMPONENTS/PasswordPolicy/PasswordPolicy';
 
 export default function Setting() {
   const location = useLocation();
@@ -84,6 +86,8 @@ export default function Setting() {
     21: AccessDevice,
     22: Dlp,
     23: Alert,
+    24: AccessControl,
+    25: PasswordPolicy,
   };
 
   const handleButtonClick = (key) => {
