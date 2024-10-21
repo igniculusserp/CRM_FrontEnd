@@ -984,7 +984,7 @@ export default function Lead() {
           onMouseLeave={() => setSelectOperationDropdown(false)}
         >
           <button
-            className="py-2 px-4 border rounded-lg gap-2 flex justify-between bg-white items-center text-gray-600  border-gray-600"
+            className="py-2 px-4 border rounded-lg gap-2 flex justify-between bg-white items-center text-gray-600 shadow-md"
             id="dropdownDefaultButton"
             type="button"
           >
