@@ -53,7 +53,7 @@ const LeadStatusModal = ({ onClose }) => {
 
       alert("Status Change successfully!");
       onClose();
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.error("Error response:", error.response);
     } finally {
