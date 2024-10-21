@@ -55,7 +55,7 @@ const LeadAssignModal = ({ onClose }) => {
 
       alert("Assign Leads successfully!");
       onClose();
-    window.location.reload();
+    // window.location.reload();
     } catch (error) {
       console.error("Error response:", error.response);
     } finally {

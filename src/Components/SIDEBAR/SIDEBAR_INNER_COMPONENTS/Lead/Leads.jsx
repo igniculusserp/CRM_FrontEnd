@@ -648,20 +648,18 @@ export default function Lead() {
   //------------------------------------------------------------------------------------------------
   //----------------leadOperations BAR DROPDOWN----------------
   const leadOperations = [
-    { key: 0, value: 'Operations' },
     { key: 1, value: 'Lead Assign' },
     { key: 2, value: 'Lead Status' },
   ];
 
-  const [selectedValue, setSelectedValue] = useState(leadOperations[0].value);
+  const [selectedValue, setSelectedValue] = useState("");
   const [assignModalOpen, setAssignModalOpen] = useState(false);
   const [statusModalOpen, setStatusModalOpen] = useState(false);
 
-  const handleChange = (event) => {
-    const selected = event.target.value;
+  const handleSelect = (selected) => {
     setSelectedValue(selected);
     console.log('Selected Value:', selected);
-
+  
     if (selected === 'Lead Assign') {
       setAssignModalOpen(true);
     }
@@ -997,6 +995,7 @@ export default function Lead() {
                 {leadOperations.map(({ key, value }) => (
                   <li
                     key={key}
+                    onClick={() => handleSelect(value)}
                     className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                   >
                     {value}
