@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 //reactIcon
 import { FaAngleDown } from "react-icons/fa";
+import { IoInformationCircle } from "react-icons/io5";
+
 //reactPackages
 import { Link, useNavigate, useParams } from "react-router-dom";
 
@@ -10,7 +12,7 @@ import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 //file
-import {tenant_base_url, protocal_url} from "../../../../Config/config";
+import { tenant_base_url, protocal_url } from "../../../../Config/config";
 //Images
 import profilepic from "./../../../../assets/images/profilePicEditLead.png";
 
@@ -18,7 +20,7 @@ export default function Createlead() {
   //to make id unique
   const { id } = useParams();
   const navigate = useNavigate();
-  
+
   //form description is kept-out
   const [description, setdescription] = useState("Add Text Here");
   const [editLead, seteditLead] = useState({
@@ -165,6 +167,7 @@ export default function Createlead() {
         config
       );
       setleadStatus(response.data.data);
+
       console.log("status:", response.data.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
@@ -252,14 +255,14 @@ export default function Createlead() {
     console.log("Selected segments:", updatedSegments);
   };
   // Segment GET API Is being used here
- 
 
-  
+
+
 
 
   //----------------------------------------------------------------------------------------
   //assigned_ToDropDown
-  const [assigned_ToDropDown, setassigned_ToDropDown ] = useState([])
+  const [assigned_ToDropDown, setassigned_ToDropDown] = useState([])
 
 
   async function handleAssigned_To() {
@@ -296,7 +299,7 @@ export default function Createlead() {
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
   };
 
-  const handleDropdownassigned_ToDropDown = (assigned_To_Username, assigned_To_Role ) => {
+  const handleDropdownassigned_ToDropDown = (assigned_To_Username, assigned_To_Role) => {
     setdefaultTextassigned_ToDropDown(assigned_To_Username + " " + assigned_To_Role);
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     seteditLead((prevTask) => ({
@@ -350,10 +353,10 @@ export default function Createlead() {
         investment: editLead.investmet,
         advisaryExp: editLead.advisoryExp,
         segments: editLead.segments,
-        trialStartDate: editLead.trialStartDate  || null,
-        trialEndDate: editLead.trialEndDate  || null,
+        trialStartDate: editLead.trialStartDate || null,
+        trialEndDate: editLead.trialEndDate || null,
         trading_yrs: editLead.tradingYears,
-        call_bck_DateTime: editLead.callBackDateTime  || null,  
+        call_bck_DateTime: editLead.callBackDateTime || null,
         contactID: editLead.contactId,
         lastModifiedBy: editLead.lastModifiedBy,
         //----------------//
@@ -380,7 +383,7 @@ export default function Createlead() {
         tradingType: editLead.tradingType,
         investment: editLead.investmet,
         advisaryExp: editLead.advisoryExp,
-        segments  : editLead.segments,
+        segments: editLead.segments,
         trialStartDate: editLead.trialStartDate || null,
         trialEndDate: editLead.trialEndDate || null,
         trading_yrs: editLead.tradingYears,
@@ -422,7 +425,7 @@ export default function Createlead() {
       <div className="min-h-screen flex flex-col mt-3">
         <div className="flex justify-between mx-3  bg-white border rounded p-3">
           <div className="flex items-center justify-center gap-3">
-            <h1 className="text-xl">{isEditMode? <h1>Edit Lead</h1>: <>Create Lead</> }</h1>
+            <h1 className="text-xl">{isEditMode ? <h1>Edit Lead</h1> : <>Create Lead</>}</h1>
             <h1 className="bg-blue-500 text-xs text-white px-4 py-1 font-medium rounded-lg">
               Edit Page Layout
             </h1>
@@ -546,15 +549,15 @@ export default function Createlead() {
                     <div
                       className="relative"
                       onClick={toggleDropdownLeadSource}
-                      onMouseLeave={()=>(setisDropdownVisibleLeadSource(false))}
+                      onMouseLeave={() => (setisDropdownVisibleLeadSource(false))}
                     >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="LeadSourceDropDown"
                         type="button"
                       >
-                      {isEditMode ? editLead.leadSource : defaultTextLeadSourceDropDown}
-                      <FaAngleDown className="ml-2 text-gray-400" />
+                        {isEditMode ? editLead.leadSource : defaultTextLeadSourceDropDown}
+                        <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLeadSource && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
@@ -575,17 +578,15 @@ export default function Createlead() {
                   </div>
 
                   {/* -------------Lead Status------------- */}
+
                   <div className="flex flex-col w-1/2 relative">
-                    <label
-                      htmlFor="leadesStatus"
-                      className="text-sm font-medium text-gray-700"
-                    >
+                    <label htmlFor="leadesStatus" className="text-sm font-medium text-gray-700">
                       Lead Status
                     </label>
                     <div
                       className="relative"
                       onClick={toggleDropdownLeadStatus}
-                      onMouseLeave={()=>(setisDropdownVisibleLeadStatus(false ))}
+                      onMouseLeave={() => setisDropdownVisibleLeadStatus(false)}
                     >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
@@ -598,15 +599,22 @@ export default function Createlead() {
                       {isDropdownVisibleLeadStatus && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
                           <ul className="py-2 text-sm text-gray-700">
-                            {leadStatus.map(({ key, status }) => (
-                              <li
-                                key={key}
-                                onClick={() => handleDropdownLeadStatus(status)}
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                              >
-                                {status}
-                              </li>
-                            ))}
+                            {leadStatus.length > 0 ?
+                              (
+                                leadStatus.map(({ key, status }) => (
+                                  <li
+                                    key={key}
+                                    onClick={() => handleDropdownLeadStatus(status)}
+                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                  >
+                                    {status}
+                                  </li>
+                                ))
+                              ) : (
+                                <li className="flex items-center px-4 py-2 text-center gap-1">
+                                  <IoInformationCircle size={25} className="text-cyan-600" />  Lead status not available. Go to <span className="font-bold">Settings - Add Lead Status  </span>.
+                                </li>
+                              )}
                           </ul>
                         </div>
                       )}
@@ -672,45 +680,45 @@ export default function Createlead() {
                   </div>
                   {/* -------------Assigned to------------- */}
                   <div className="flex flex-col w-1/2 relative">
-                  <label
-                    htmlFor="leadesStatus"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                  Assigned to 
-                  </label>
-                  <div
-                    className="relative"
-                    onClick={toggleDropdownassigned_ToDropDown}
-                    onMouseLeave={()=>(setisDropdownassigned_ToDropDown(false ))}
-                  >
-                    <button
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                      id="LeadStatusDropDown"
-                      type="button"
+                    <label
+                      htmlFor="leadesStatus"
+                      className="text-sm font-medium text-gray-700"
                     >
-                      {isEditMode ? editLead.assigned_To : defaultTextassigned_ToDropDown}
-                      <FaAngleDown className="ml-2 text-gray-400" />
-                    </button>
-                    {isDropdownassigned_ToDropDown && (
-                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                      <ul className="py-2 text-sm text-gray-700">
-                      {assigned_ToDropDown.map(({ key, userName, role }) => (
-                        <li
-                          key={key}
-                          onClick={() => handleDropdownassigned_ToDropDown( userName, role)}
-                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                        >
-                          {userName}-({role})
-                        </li>
-                      ))}
-                    </ul>
-                    
-                      </div>
-                    )}
+                      Assigned to
+                    </label>
+                    <div
+                      className="relative"
+                      onClick={toggleDropdownassigned_ToDropDown}
+                      onMouseLeave={() => (setisDropdownassigned_ToDropDown(false))}
+                    >
+                      <button
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        id="LeadStatusDropDown"
+                        type="button"
+                      >
+                        {isEditMode ? editLead.assigned_To : defaultTextassigned_ToDropDown}
+                        <FaAngleDown className="ml-2 text-gray-400" />
+                      </button>
+                      {isDropdownassigned_ToDropDown && (
+                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                          <ul className="py-2 text-sm text-gray-700">
+                            {assigned_ToDropDown.map(({ userName, role }, index) => (
+                              <li
+                                key={index}
+                                onClick={() => handleDropdownassigned_ToDropDown(userName, role)}
+                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              >
+                                {userName}-({role})
+                              </li>
+                            ))}
+                          </ul>
+
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-            </div>
-            </div>
+              </div>
             </div>
             {/* -------------Address INFORMATION STARTS FROM HERE------------- */}
             <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow ">
@@ -718,7 +726,7 @@ export default function Createlead() {
                 Address Information
               </h2>
 
-                  {/* -------------Address Information STARTS FROM HERE------------- */}
+              {/* -------------Address Information STARTS FROM HERE------------- */}
               {/* -------------6------------- */}
               {/* -------------Street------------- */}
               <div className="grid gap-2 p-2">
@@ -906,46 +914,53 @@ export default function Createlead() {
                       placeholder="Enter your Advisory"
                     />
                   </div>
-         {/* -------------Segments------------- */}
-        <div className="flex flex-col w-1/2 relative">
-          <label htmlFor="segment" className="text-sm font-medium text-gray-700">
-            Segment
-          </label>
-          <div
-            className="relative"
-            onClick={toggleDropdownSegment}
-            onMouseLeave={() => setisDropdownVisibleSegment(false)}
-          >
-            <button
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-              id="LeadStatusDropDown"
-              type="button"
-            >
-              {defaultTextSegmentDropDown}
-              <FaAngleDown className="ml-2 text-gray-400" />
-            </button>
-            {isDropdownVisibleSegment && (
-              <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                <ul className="py-2 text-sm text-gray-700">
-                  {segments.map((segment) => (
-                    <li
-                      key={segment.id}
-                      className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                  {/* -------------Segments------------- */}
+                  <div className="flex flex-col w-1/2 relative">
+                    <label htmlFor="segment" className="text-sm font-medium text-gray-700">
+                      Segment
+                    </label>
+                    <div
+                      className="relative"
+                      onClick={toggleDropdownSegment}
+                      onMouseLeave={() => setisDropdownVisibleSegment(false)}
                     >
-                      <input
-                        type="checkbox"
-                        checked={editLead.segments.includes(segment.segment)}
-                        onChange={() => handleCheckboxChange(segment)}
-                        className="mr-2"
-                      />
-                      {segment.segment} {/* Assuming 'segment' is the property you want to display */}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        </div>
+                      <button
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        id="LeadStatusDropDown"
+                        type="button"
+                      >
+                        {defaultTextSegmentDropDown}
+                        <FaAngleDown className="ml-2 text-gray-400" />
+                      </button>
+                      {isDropdownVisibleSegment && (
+                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                          <ul className="py-2 text-sm text-gray-700">
+                            {segments.length > 0 ? (
+                              segments.map((segment) => (
+                                <li
+                                  key={segment.id}
+                                  className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={editLead.segments.includes(segment.segment)}
+                                    onChange={() => handleCheckboxChange(segment)}
+                                    className="mr-2"
+                                  />
+                                  {segment.segment} {/* Assuming 'segment' is the property you want to display */}
+                                </li>
+                              ))
+                            ) : (
+                              <li className="flex items-center px-4 py-2 text-center gap-1">
+                                <IoInformationCircle size={25} className="text-cyan-600" />  Segments not available. Go to <span className="font-bold">Settings - Add Segment  </span>.
+                              </li>
+                            )}
+
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
                 {/* -------------11------------- */}
                 {/* -------------Trail Start Date------------- */}
@@ -1080,12 +1095,12 @@ export default function Createlead() {
                 </div>
               </div>
               <div className="flex justify-end px-2">
-                  <button
-                    type="submit"
-                    className="px-32 py-4 mt-20 mb-2 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
-                  >
-                    {isEditMode ? "Update" : "Save"}
-                  </button>
+                <button
+                  type="submit"
+                  className="px-32 py-4 mt-20 mb-2 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+                >
+                  {isEditMode ? "Update" : "Save"}
+                </button>
               </div>
             </div>
           </div>
