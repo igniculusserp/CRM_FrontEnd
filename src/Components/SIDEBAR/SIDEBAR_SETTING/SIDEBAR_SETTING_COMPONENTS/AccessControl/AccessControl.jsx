@@ -178,6 +178,8 @@ export default function AccessControl() {
       toHour: '', // DROPDOWN
       minutes: '',
       country: '', // DROPDOWN
+      latitude: '',
+      longitude: '',
     });
 
     const handleChange = (e) => {
@@ -219,6 +221,16 @@ export default function AccessControl() {
     const [defaultToHourText, setDefaultToHourText] = useState('To');
     const [minuteDropdown, setMinuteDropdown] = useState(false);
     const [defaultMinuteText, setDefaultMinuteText] = useState('Minute');
+    const [latitudeDropdown, setLatitudeDropdown] = useState(false);
+    const [defaultLatitudeText, setDefaultLatitudeText] = useState('Latitude');
+    const [longitudeDropdown, setLongitudeDropdown] = useState(false);
+    const [defaultLongitudeText, setDefaultLongitudeText] =
+      useState('Longitude');
+    const [radiusDropdown, setRadiusDropdown] = useState(false);
+    const [defaultRadiusText, setDefaultRadiusText] = useState('Radius');
+
+    // FOR CHECKBOX CONTENT
+    const [checked, setChecked] = useState(false);
 
     // TOGGLE COUNTRY
     const toggleDropdownCountry = () => {
@@ -300,6 +312,70 @@ export default function AccessControl() {
     const handleDropdownMinute = (name) => {
       setDefaultMinuteText(name);
       setMinuteDropdown(!minuteDropdown);
+      setAddAccess((prev) => ({
+        ...prev,
+        name: name,
+      }));
+    };
+
+    // LATITUDE TOGGLE
+    const toggleDropdownLatitude = () => {
+      setLatitudeDropdown(!latitudeDropdown);
+    };
+
+    // LATITUDE DUMMY
+    const latitude = [
+      { id: 1, name: 'latitude' },
+      { id: 2, name: 'latitude' },
+      { id: 3, name: 'latitude' },
+      { id: 4, name: 'latitude' },
+    ];
+
+    const handleDropdownLatitude = (name) => {
+      setDefaultLatitudeText(name);
+      setLatitudeDropdown(!latitudeDropdown);
+      setAddAccess((prev) => ({
+        ...prev,
+        name: name,
+      }));
+    };
+
+    //   LONGITUDE
+    const toggleDropdownLongitude = () => {
+      setLongitudeDropdown(!longitudeDropdown);
+    };
+
+    // LONGITUDE DUMMY
+    const longitude = [
+      { id: 1, name: 'longitude' },
+      { id: 2, name: 'longitude' },
+      { id: 3, name: 'longitude' },
+    ];
+
+    const handleDropdownLongitude = (name) => {
+      setDefaultLongitudeText(name);
+      setLongitudeDropdown(!longitudeDropdown);
+      setAddAccess((prev) => ({
+        ...prev,
+        name: name,
+      }));
+    };
+
+    // TOGGLE RADIUS
+    const toggleDropdownRadius = () => {
+      setRadiusDropdown(!radiusDropdown);
+    };
+
+    // RADIUS DUMMY
+    const radius = [
+      { id: 1, name: 'radius' },
+      { id: 2, name: 'radius' },
+      { id: 3, name: 'radius' },
+    ];
+
+    const handleDropdownRadius = (name) => {
+      setDefaultRadiusText(name);
+      setRadiusDropdown(!radiusDropdown);
       setAddAccess((prev) => ({
         ...prev,
         name: name,
@@ -497,7 +573,7 @@ export default function AccessControl() {
               </div>
             </div>
             {/* SECOND SECTION */}
-            <div className="flex gap-3 mt-3">
+            <div className="flex gap-3 my-3 items-center">
               <h1 className="text-2xl font-medium">Events</h1>
               {buttons.map(({ id, text }) => (
                 <button
@@ -1081,12 +1157,12 @@ export default function AccessControl() {
             )}
             {/* GEO LOCATION */}
             {selectedId === 5 && (
-              <>
+              <div className='bg-white rounded-xl'>
                 <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                  <h1 className="text-white py-2 px-3 bg-cyan-500 rounded-t-xl mt-3">
                     Geo Location
                   </h1>
-                  <div className="mb-6 py-3 flex flex-col gap-2">
+                  <div className="py-3 flex flex-col gap-2">
                     {/* MAIN CART */}
                     <div className="grid gap-2 pb-3 w-full px-3">
                       {/* FIRST */}
@@ -1134,14 +1210,15 @@ export default function AccessControl() {
                             type="checkbox"
                             name="custom"
                             className="flex justify-start py-1 px-1 h-5 w-5"
+                            onClick={() => setChecked(!checked)}
                           />
                         </div>
                       </div>
                       {/* THIRD */}
-                      <div className="flex space-x-4">
+                      <div className="flex space-x-4 w-[49%]">
                         {/* COUNTRY DROPDOWN */}
                         {/* -------------Country------------- */}
-                        <div className="flex flex-col w-1/2 relative">
+                        <div className="flex flex-col flex-1 relative">
                           <label
                             htmlFor="country"
                             className="text-sm font-medium text-gray-700"
@@ -1183,6 +1260,145 @@ export default function AccessControl() {
                           </div>
                         </div>
                       </div>
+                      {/* FOURTH AND CHECKBOX CONDITIONALING */}
+                      <div className="flex flex-col">
+                        {checked && (
+                          <>
+                            {/* FIRST */}
+                            <div className="flex space-x-4 w-full">
+                                {/* LATITUDE DROPDOWN */}
+                              <div className="flex flex-col flex-1 relative w-[49%]">
+                                <label
+                                  htmlFor="latitude"
+                                  className="text-sm font-medium text-gray-700"
+                                >
+                                  Latitude
+                                </label>
+                                <div
+                                  className="relative"
+                                  onClick={toggleDropdownLatitude}
+                                  onMouseLeave={() => setLatitudeDropdown(false)}
+                                >
+                                  <button
+                                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                                    id="latitude"
+                                    type="button"
+                                  >
+                                    {isEditMode
+                                      ? addAccess.latitude
+                                      : defaultLatitudeText}
+                                    <FaAngleDown className="ml-2 text-gray-400" />
+                                  </button>
+                                  {latitudeDropdown && (
+                                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                                      <ul className="py-2 text-sm text-gray-700">
+                                        {latitude.map(({ key, name }) => (
+                                          <li
+                                            key={key}
+                                            onClick={() =>
+                                              handleDropdownLatitude(name)
+                                            }
+                                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                          >
+                                            {name}
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              {/* LONGITUDE DROPDOWN */}
+                              <div className="flex flex-col flex-1 w-1/2 relative">
+                                <label
+                                  htmlFor="longitude"
+                                  className="text-sm font-medium text-gray-700"
+                                >
+                                  Longitude
+                                </label>
+                                <div
+                                  className="relative"
+                                  onClick={toggleDropdownLongitude}
+                                  onMouseLeave={() => setLongitudeDropdown(false)}
+                                >
+                                  <button
+                                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                                    id="longitude"
+                                    type="button"
+                                  >
+                                    {isEditMode
+                                      ? addAccess.longitude
+                                      : defaultLongitudeText}
+                                    <FaAngleDown className="ml-2 text-gray-400" />
+                                  </button>
+                                  {longitudeDropdown && (
+                                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                                      <ul className="py-2 text-sm text-gray-700">
+                                        {longitude.map(({ key, name }) => (
+                                          <li
+                                            key={key}
+                                            onClick={() =>
+                                              handleDropdownLongitude(name)
+                                            }
+                                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                          >
+                                            {name}
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                            {/* SECOND */}
+                            <div className="flex-1 w-[49%]">
+                                {/* RADIUS DROPDOWN */}
+                              <div className="flex flex-col flex-1 relative">
+                                <label
+                                  htmlFor="radius"
+                                  className="text-sm font-medium text-gray-700"
+                                >
+                                  Radius
+                                </label>
+                                <div
+                                  className="relative"
+                                  onClick={toggleDropdownRadius}
+                                  onMouseLeave={() => setRadiusDropdown(false)}
+                                >
+                                  <button
+                                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                                    id="radius"
+                                    type="button"
+                                  >
+                                    {isEditMode
+                                      ? addAccess.radius
+                                      : defaultRadiusText}
+                                    <FaAngleDown className="ml-2 text-gray-400" />
+                                  </button>
+                                  {radiusDropdown && (
+                                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                                      <ul className="py-2 text-sm text-gray-700">
+                                        {radius.map(({ key, name }) => (
+                                          <li
+                                            key={key}
+                                            onClick={() =>
+                                              handleDropdownRadius(name)
+                                            }
+                                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                          >
+                                            {name}
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        )}
+                      </div>
                     </div>
 
                     <div className="flex justify-end gap-5 mr-3">
@@ -1197,7 +1413,7 @@ export default function AccessControl() {
                     </div>
                   </div>
                 </div>
-              </>
+              </div>
             )}
           </form>
         </div>
