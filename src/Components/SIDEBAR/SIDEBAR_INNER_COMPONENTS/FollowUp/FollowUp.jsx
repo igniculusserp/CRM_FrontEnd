@@ -60,7 +60,6 @@ export default function FollowUp() {
 
   useEffect(() => {
     getFollowupLists();
-    
   }, []);
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
