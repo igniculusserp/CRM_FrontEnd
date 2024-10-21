@@ -198,9 +198,9 @@ export default function Createlead() {
     }));
   };
 
-  const [segments, setSegments] = useState([]);
-
+  
   // Segment GET API Is being used here
+  const [segments, setSegments] = useState([]);
   async function handleSegment() {
     const bearer_token = localStorage.getItem("token");
 

@@ -4,40 +4,6 @@ import { FaBars, FaPhone } from 'react-icons/fa';
 
 export default function LeadOperations({ currentLeads }) {
 
-  
-  //This is to store the upcoming data from API
-  // const [getleads, setGetleads] = useState([]);
-
-  //------------------------------------------------------------------------------------------------
-  //----------------GET----------------
-  // async function handleLead() {
-  //   const bearer_token = localStorage.getItem('token');
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         Authorization: `Bearer ${bearer_token}`,
-  //       },
-  //     };
-  //     const response = await axios.get(
-  //       `${protocal_url}${name}.${tenant_base_url}/Lead/leads/byusertoken`,
-  //       config
-  //     );
-
-  //     const data = await response.data.data;
-  //     setGetleads(data);
-  //   } catch (error) {
-  //     console.error('Error fetching leads:', error);
-  //     // Optionally, set an error state to display a user-friendly message
-  //   }
-  // }
-
-
-  // useEffect(() => {
-  //   handleLead();
-  // }, []);
-
-
-
   return (
     <>
     <table className="min-w-full bg-white">

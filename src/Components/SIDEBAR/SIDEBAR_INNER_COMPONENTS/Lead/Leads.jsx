@@ -53,7 +53,7 @@ export default function Lead() {
 
   //------------------------------------------------------------------------------------------------
   //----------------GET----------------
-  async function handleLead() {
+  async function handleLead(id) {
     const bearer_token = localStorage.getItem("token");
     try {
       const config = {
@@ -61,17 +61,30 @@ export default function Lead() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Lead/leads/byusertoken`,
-        config
-      );
-
-      const data = await response.data.data;
-      setGetleads(data);
-      setFilteredLeads(data); // Initialize filtered leads
+  
+      if (id === 4) {
+        const response = await axios.get(
+          `${protocal_url}${name}.${tenant_base_url}/LeadOpration/leads/byusertoken/count`,
+          config
+        );
+  
+        const data = response.data.data;
+        setCurrentPage(1);
+        setGetleads(data);
+        setFilteredLeads(data);
+      } else {
+        const response = await axios.get(
+          `${protocal_url}${name}.${tenant_base_url}/Lead/leads/byusertoken`,
+          config
+        );
+  
+        const data = response.data.data;
+        setCurrentPage(1);
+        setGetleads(data);
+        setFilteredLeads(data);
+      }
     } catch (error) {
       console.error("Error fetching leads:", error);
-      // Optionally, set an error state to display a user-friendly message
     }
   }
 
@@ -587,8 +600,9 @@ export default function Lead() {
   );
 
   const handleDynamicButtonsClick = (id) => {
-    setActiveButtonId(id);
+    setActiveButtonId(id); // Update state first
     localStorage.setItem("activeButtonId", id);
+    handleLead(id); // Pass the clicked button's id directly
   };
 
   useEffect(() => {

@@ -1,19 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import { FaAngleDown } from "react-icons/fa";
 
-const LeadAssignModal = ({ onClose }) => {
+const LeadStatusModal = ({ onClose }) => {
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
 
   const [loading, setLoading] = useState(false);
   const [leadCount, setLeadCount] = useState("");
   const [leadeStatus, setLeadeStatus] = useState("");
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const defaultTextassigned_ToDropDown = "Select Lead Status";
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,18 +20,8 @@ const LeadAssignModal = ({ onClose }) => {
     }
   };
 
-  // Dropdown toggle function
-  const toggleDropdownassigned_ToDropDown = () => {
-    setIsDropdownOpen((prev) => !prev);
-  };
 
-  // Handle dropdown selection
-  const handleDropdownassigned_ToDropDown = (status) => {
-    setLeadeStatus(status);
-    setIsDropdownOpen(false);
-  };
-
-  // Submit function
+  //----------------------------------------------- Submit function----------------------------------------------------
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -63,7 +51,7 @@ const LeadAssignModal = ({ onClose }) => {
         config
       );
 
-      alert("Assign Leads successfully!");
+      alert("Status Change successfully!");
       onClose();
       window.location.reload();
     } catch (error) {
@@ -72,6 +60,54 @@ const LeadAssignModal = ({ onClose }) => {
       setLoading(false);
     }
   };
+
+
+    //----------------------------------------------------------------------------------------
+  //LeadStatusDropDown GET API Is being used here
+  const [leadStatus, setleadStatus] = useState("");
+
+  async function handleLeadStatus() {
+    const bearer_token = localStorage.getItem("token");
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
+        config
+      );
+      setleadStatus(response.data.data);
+      console.log("status:", response.data.data);
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+      // Optionally, set an error state to display a user-friendly message
+    }
+  }
+
+  useEffect(() => {
+    handleLeadStatus();
+  }, []);
+
+
+  const [defaultTextLeadStatusDropDown, setdefaultTextLeadStatusDropDown] =
+    useState('Select Status');
+  const [isDropdownVisibleLeadStatus, setisDropdownVisibleLeadStatus] =
+    useState(false);
+
+  const toggleDropdownLeadStatus = () => {
+    setisDropdownVisibleLeadStatus(!isDropdownVisibleLeadStatus);
+  };
+
+  const handleDropdownLeadStatus = (leadStatus) => {
+    setLeadeStatus(leadStatus);
+    setisDropdownVisibleLeadStatus(!isDropdownVisibleLeadStatus);
+  };
+
+
+
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -105,47 +141,41 @@ const LeadAssignModal = ({ onClose }) => {
                   </div>
                 </div>
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-full">
-                    <div className="flex flex-col w-full relative">
-                      <label
-                        htmlFor="leadStatus"
-                        className="text-sm font-medium text-gray-700"
+                  <div className="flex flex-col w-full relative">
+                    <label
+                      htmlFor="leadesStatus"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Lead Status
+                    </label>
+                    <div
+                      className="relative"
+                      onClick={toggleDropdownLeadStatus}
+                      onMouseLeave={()=>(setisDropdownVisibleLeadStatus(false ))}
+                    >
+                      <button
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        id="LeadStatusDropDown"
+                        type="button"
                       >
-                        Lead Status
-                      </label>
-                      <div
-                        className="relative"
-                        onClick={toggleDropdownassigned_ToDropDown}
-                        onMouseLeave={() => setIsDropdownOpen(false)}
-                      >
-                        <button
-                          className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                          id="LeadStatusDropDown"
-                          type="button"
-                        >
-                          {leadeStatus === ""
-                            ? defaultTextassigned_ToDropDown
-                            : leadeStatus}
-                          <FaAngleDown className="ml-2 text-gray-400" />
-                        </button>
-                        {isDropdownOpen && (
-                          <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                            <ul className="py-2 text-sm text-gray-700">
-                              {["Pending", "Assigned"].map((status) => (
-                                <li
-                                  key={status}
-                                  onClick={() =>
-                                    handleDropdownassigned_ToDropDown(status)
-                                  }
-                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                                >
-                                  {status}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                      </div>
+                        {leadeStatus!="" ? leadeStatus : defaultTextLeadStatusDropDown}
+                        <FaAngleDown className="ml-2 text-gray-400" />
+                      </button>
+                      {isDropdownVisibleLeadStatus && (
+                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                          <ul className="py-2 text-sm text-gray-700">
+                            {leadStatus.map(({ key, status }) => (
+                              <li
+                                key={key}
+                                onClick={() => handleDropdownLeadStatus(status)}
+                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              >
+                                {status}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -176,8 +206,8 @@ const LeadAssignModal = ({ onClose }) => {
   );
 };
 
-LeadAssignModal.propTypes = {
+LeadStatusModal.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default LeadAssignModal;
+export default LeadStatusModal;
