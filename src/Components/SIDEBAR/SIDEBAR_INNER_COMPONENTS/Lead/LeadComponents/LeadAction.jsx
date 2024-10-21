@@ -39,15 +39,15 @@ export default function LeadAction({ currentLeads }) {
             {/* CLIENT NAME */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
               <div className="flex items-center">
-                <img className="h-8 w-8 rounded-full" src={lead.img} alt="DP" />
+                {/* <img className="h-8 w-8 rounded-full" src={lead.img} alt="DP" /> */}
                 <span className="ml-2 w-[80px] break-words">
-                  {lead.clientName}
+                  {lead.userName}
                 </span>
               </div>
             </td>
             {/* LEAD COUNT */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              <p>{lead.leadCount}</p>
+              <p>{lead.totalLeads}</p>
             </td>
           </tr>
         ))}
