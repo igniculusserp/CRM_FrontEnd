@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import { BiEdit } from "react-icons/bi";
 import { FaPhoneAlt } from "react-icons/fa";
-import { IoIosMail } from "react-icons/io";
 import axios from "axios";
 
-import { tenant_base_url, protocal_url } from "../../../../Config/config";
-import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import { tenant_base_url, protocal_url } from "./Config/config";
+import { getHostnamePart } from "./Components/SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 const FollowupNotificationModal = ({ id, onClose }) => {
   const bearer_token = localStorage.getItem("token");
@@ -19,7 +17,15 @@ const FollowupNotificationModal = ({ id, onClose }) => {
     if (id) {
       fetchDataById();
     }
-  }, [id]);
+
+    // Close the modal after 30 seconds
+    const timer = setTimeout(() => {
+      onClose();
+    }, 60000);
+
+    // Clean up the timer when the component unmounts
+    return () => clearTimeout(timer);
+  }, [id, onClose]); // Include onClose in the dependency array
 
   // Function to fetch data by ID
   const fetchDataById = async () => {

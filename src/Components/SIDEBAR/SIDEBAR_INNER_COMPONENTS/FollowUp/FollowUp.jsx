@@ -16,7 +16,6 @@ import { MdCall } from "react-icons/md";
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import MassEmail from "../MassEmail/MassEmail";
-import FollowupNotificationModal from "./FollowupNotificationModal";
 
 export default function FollowUp() {
   const navigate = useNavigate();
@@ -29,8 +28,6 @@ export default function FollowUp() {
   // Mass Email
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEmails, setSelectedEmails] = useState([]);
-  const [isNotification, setIsNotification] = useState(false);
-  const [notificationData, setNotificationData] = useState("");
   const [followupList, setFollowupList] = useState([]);
   const [followupDropdown, setFollowupDropdown] = useState(false);
   const [searchDropdown, setSearchDropdown] = useState(false);
@@ -63,10 +60,6 @@ export default function FollowUp() {
 
   useEffect(() => {
     getFollowupLists();
-    // Request notification permission on mount
-    // if (Notification.permission !== "granted") {
-    //   Notification.requestPermission();
-    // }
   }, []);
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
@@ -456,46 +449,37 @@ export default function FollowUp() {
 
 
   // ---------------------------- Notifications ----------------------------
-  const openNotification = (id) => {
-    if (id) {
-      setNotificationData(id);
-      setIsNotification(true); 
-    } else {
-      alert("Process Failed");
-      console.log("@@@@@=====", id);
-    }
-  };
+  // const openNotification = (id) => {
+  //   if (id) {
+  //     setNotificationData(id);
+  //     setIsNotification(true); 
+  //   } else {
+  //     alert("Process Failed");
+  //     console.log("@@@@@=====", id);
+  //   }
+  // };
 
-  const closeNotification = () => {
-    setIsNotification(false); 
-    setNotificationData("");
-  };
+  // const closeNotification = () => {
+  //   setIsNotification(false); 
+  //   setNotificationData("");
+  // };
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const currentTime = new Date();
-      // Format current time as "YYYY-MM-DDTHH:mm"
-      const formattedCurrentTime = currentTime.toISOString().slice(0, 16); 
-      console.log("@@@@", formattedCurrentTime);
-  
-      followupList.forEach((item) => {
-        // Parse the call_bck_DateTime as a local date
-        const callbackTime = new Date(item.call_bck_DateTime);
-        // Adjust to local time string in the same format
-        const formattedCallbackTime = callbackTime.toISOString().slice(0, 16); 
-        console.log("@@@@", formattedCallbackTime);
-  
-        // Compare the formatted times
-        if (formattedCurrentTime === formattedCallbackTime) {
-          console.log("@@@@", "Yes");
-          openNotification(item.id);
-          // alert("Working out how long");
-        }
-      });
-    }, 30000); // Check every minute
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     const currentTime = new Date();
+  //     const formattedCurrentTime = currentTime.toISOString().slice(0, 16); 
+  //     console.log("@@@@", formattedCurrentTime);
+  //     followupList.forEach((item) => {
+  //       const callbackTime = new Date(item.call_bck_DateTime);
+  //       const formattedCallbackTime = callbackTime.toISOString().slice(0, 16);
+  //       if (formattedCurrentTime === formattedCallbackTime) {
+  //         openNotification(item.id);
+  //       }
+  //     });
+  //   }, 30000);
     
-    return () => clearInterval(intervalId);
-  }, [followupList]);
+  //   return () => clearInterval(intervalId);
+  // }, [followupList]);
   
 
 
@@ -512,12 +496,12 @@ export default function FollowUp() {
           />
         )}
         {/* Render the Notification modal */}
-        { isNotification && (
+        {/* { isNotification && (
           <FollowupNotificationModal
           id={notificationData}
-          onClose={closeNotification} // Pass function to close modal
+          onClose={closeNotification} 
           />
-        )}
+        )} */}
         {/* containerbar*/}
         <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg">
           {/* PART-I */}
