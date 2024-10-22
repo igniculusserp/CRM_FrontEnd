@@ -285,6 +285,56 @@ export default function CreateSO() {
     }));
   };
 
+  //----------------------------------------------------------------------------------------
+  //PooL_ToDropDown
+  const [poolToDropDown, setPoolToDropDown] = useState([]);
+  const [defaultTextPool, setDefaultTextPool] = useState("Select Lead Source");
+  const [isPoolDropdownOpen, setIsPoolDropdownOpen] = useState(false);
+  const [error, setError] = useState(null); // New error state
+  const [poolEdit, setPoolEdit] = useState("");
+
+  const handlePool = async () => {
+    const bearerToken = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`,
+      },
+    };
+
+    try {
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
+        config
+      );
+      setPoolToDropDown(response.data.data);
+      console.log("status:", response.data.data);
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+      setError("Failed to fetch pools."); // Set error message
+    }
+  };
+
+  useEffect(() => {
+    handlePool();
+  }, []);
+
+  const toggleDropdown = () => {
+    setIsPoolDropdownOpen((prev) => !prev);
+    // console.log("@@@===",isPoolDropdownOpen);
+  };
+
+  const handleDropdownSelection = (poolName) => {
+    setIsPoolDropdownOpen(false);
+    setDefaultTextPool(poolName);
+    console.log("@@@===", isPoolDropdownOpen);
+    seteditLead((prev) => ({
+      ...prev,
+      leadSource: poolName,
+    }));
+    setPoolEdit(poolName);
+  };
+
+
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
   const handleSubmit = async (event) => {
@@ -302,6 +352,7 @@ export default function CreateSO() {
       const formData_POST = {
         //Personal Details
         leadId: editLead.leadId,
+        leadSource: editLead.leadSource || null,
         clientName: editLead.clientName,
         language: editLead.language,
         fatherName: editLead.fatherName,
@@ -810,6 +861,55 @@ export default function CreateSO() {
                       onChange={handleChange}
                       placeholder="Enter years"
                     />
+                  </div>
+                </div>
+                {/* -------------IX--1--------------- */}
+                {/* -------------Lead Source------------- */}
+                <div className="flex space-x-4">
+                  <div className="flex flex-col w-1/2 relative">
+                    <label
+                      htmlFor="Pool"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Lead Source
+                    </label>
+                    <div
+                      className="relative"
+                      onMouseLeave={() => setIsPoolDropdownOpen(false)}
+                    >
+                      <button
+                        onClick={toggleDropdown}
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        id="LeadPoolDropDown"
+                        type="button"
+                      >
+                        {poolEdit ===""
+                          ? defaultTextPool
+                          : editLead.leadSource}
+                        <FaAngleDown className="ml-2 text-gray-400" />
+                      </button>
+                      {isPoolDropdownOpen && (
+                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                          {error ? (
+                            <div className="py-2 text-red-600">{error}</div>
+                          ) : (
+                            <ul className="py-2 text-sm text-gray-700">
+                              {poolToDropDown.map(({ id, poolName }) => (
+                                <li
+                                  key={id}
+                                  onClick={() =>
+                                    handleDropdownSelection(poolName)
+                                  }
+                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                >
+                                  {poolName}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

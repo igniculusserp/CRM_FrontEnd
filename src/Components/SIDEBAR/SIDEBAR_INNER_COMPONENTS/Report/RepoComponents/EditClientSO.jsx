@@ -1,17 +1,17 @@
 //react
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 //reactIcon
-import { FaAngleDown } from 'react-icons/fa';
+import { FaAngleDown } from "react-icons/fa";
 //reactPackages
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 //external Packages
-import axios from 'axios';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import axios from "axios";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 //file
-import { getHostnamePart } from '../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
-import { tenant_base_url, protocal_url } from '../../../../../Config/config';
+import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import { tenant_base_url, protocal_url } from "../../../../../Config/config";
 
 export default function EditClientSO() {
   //to make id unique
@@ -19,52 +19,53 @@ export default function EditClientSO() {
   const navigate = useNavigate();
 
   //form description is kept-out
-  const [description, setdescription] = useState('Add Text Here');
+  const [description, setdescription] = useState("Add Text Here");
 
   //IMP used as ${name} in an API
   const name = getHostnamePart();
 
-  const [isEditMode, setIsEditMode] = useState(false)
+  const [isEditMode, setIsEditMode] = useState(false);
   const [editLead, seteditLead] = useState({
-    id: '',
-    leadId: '',
-    clientName: '',
-    fatherName: '',
-    motherName: '',
-    uidaI_Id_No: '',
-    panCard_No: '',
-    language: '',
-    bank_name: '',
-    branch_name: '',
-    paymenT_MODE: '',
-    saleS_ODR_NO: '',
-    mobileNo: '',
-    phoneNo: '',
-    email: '',
-    assigned_To: '',
-    street: '',
-    postalCode: '',
-    country: '',
-    city: '',
-    state: '',
-    reference_Number: '',
-    totalAmount: '',
-    due_Amount: '',
-    amount_paid: '',
-    discount: '',
-    advisaryExp: '',
+    id: "",
+    leadId: "",
+    leadSource: "",
+    clientName: "",
+    fatherName: "",
+    motherName: "",
+    uidaI_Id_No: "",
+    panCard_No: "",
+    language: "",
+    bank_name: "",
+    branch_name: "",
+    paymenT_MODE: "",
+    saleS_ODR_NO: "",
+    mobileNo: "",
+    phoneNo: "",
+    email: "",
+    assigned_To: "",
+    street: "",
+    postalCode: "",
+    country: "",
+    city: "",
+    state: "",
+    reference_Number: "",
+    totalAmount: "",
+    due_Amount: "",
+    amount_paid: "",
+    discount: "",
+    advisaryExp: "",
     segments: [],
-    subscription_start_date: '',
-    subscription_end_date: '',
-    period_of_Subscription: '',
-    term: '',
-    service: '',
-    chequeOrDD_no: '',
-    remarks: '',
+    subscription_start_date: "",
+    subscription_end_date: "",
+    period_of_Subscription: "",
+    term: "",
+    service: "",
+    chequeOrDD_no: "",
+    remarks: "",
     status: false,
-    dob: '',
-    business: '',
-    paymentDate: '',
+    dob: "",
+    business: "",
+    paymentDate: "",
   });
 
   useEffect(() => {
@@ -73,7 +74,7 @@ export default function EditClientSO() {
 
   //GET by ID---------------------------//GET---------------------------//GET---------------------------by ID-----------by ID
   async function handleLeadById() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
@@ -87,61 +88,62 @@ export default function EditClientSO() {
         config
       );
       const data = response.data.data;
-      console.log('Fetched segments:', response.data.data);
+      console.log("Fetched segments:", response.data.data);
       const segmentsArray =
-        typeof data.segments === 'string'
-          ? data.segments.split(',')
+        typeof data.segments === "string"
+          ? data.segments.split(",")
           : Array.isArray(data.segments)
           ? data.segments
           : [];
 
       seteditLead({
         id: data.id,
-        leadId: data.leadId || '',
-        clientName: data.clientName || '',
-        fatherName: data.fatherName || '',
-        motherName: data.motherName || '',
-        uidaI_Id_No: data.uidaI_Id_No || '',
-        panCard_No: data.panCard_No || '',
-        language: data.language || '',
-        bank_name: data.bank_name || '',
-        branch_name: data.branch_name || '',
-        paymenT_MODE: data.paymenT_MODE || '',
-        saleS_ODR_NO: data.saleS_ODR_NO || '',
-        mobileNo: data.mobileNo || '',
-        phoneNo: data.phoneNo || '',
-        email: data.email || '',
-        assigned_To: data.assigned_To || '',
-        street: data.street || '',
-        postalCode: data.postalCode || '',
-        country: data.country || '',
-        city: data.city || '',
-        state: data.state || '',
-        
-        reference_Number: data.reference_Number || '',
-        totalAmount: data.totalAmount || '',
-        due_Amount: data.due_Amount || '',
-        amount_paid: data.amount_paid || '',
-        discount: data.discount || '',
-        advisaryExp: data.advisaryExp || '',
+        leadId: data.leadId || "",
+        leadSource: data.leadSource || null,
+        clientName: data.clientName || "",
+        fatherName: data.fatherName || "",
+        motherName: data.motherName || "",
+        uidaI_Id_No: data.uidaI_Id_No || "",
+        panCard_No: data.panCard_No || "",
+        language: data.language || "",
+        bank_name: data.bank_name || "",
+        branch_name: data.branch_name || "",
+        paymenT_MODE: data.paymenT_MODE || "",
+        saleS_ODR_NO: data.saleS_ODR_NO || "",
+        mobileNo: data.mobileNo || "",
+        phoneNo: data.phoneNo || "",
+        email: data.email || "",
+        assigned_To: data.assigned_To || "",
+        street: data.street || "",
+        postalCode: data.postalCode || "",
+        country: data.country || "",
+        city: data.city || "",
+        state: data.state || "",
+
+        reference_Number: data.reference_Number || "",
+        totalAmount: data.totalAmount || "",
+        due_Amount: data.due_Amount || "",
+        amount_paid: data.amount_paid || "",
+        discount: data.discount || "",
+        advisaryExp: data.advisaryExp || "",
         segments: segmentsArray,
         subscription_start_date:
-          data.subscription_start_date?.split('T')[0] || null,
+          data.subscription_start_date?.split("T")[0] || null,
         subscription_end_date:
-          data.subscription_end_date?.split('T')[0] || null,
+          data.subscription_end_date?.split("T")[0] || null,
         period_of_Subscription: data.period_of_Subscription,
-        term: data.term || '',
-        service: data.service || '',
-        chequeOrDD_no: data.chequeOrDD_no || '',
-        remarks: data.remarks || '',
+        term: data.term || "",
+        service: data.service || "",
+        chequeOrDD_no: data.chequeOrDD_no || "",
+        remarks: data.remarks || "",
         // status: data.status || '',
-        dob: data.dob?.split('T')[0] || null,
-        business: data.business || '',
-        paymentDate: data.paymentDate?.split('T')[0] || null,
+        dob: data.dob?.split("T")[0] || null,
+        business: data.business || "",
+        paymentDate: data.paymentDate?.split("T")[0] || null,
       });
-      setdescription(data.description || '');
+      setdescription(data.description || "");
     } catch (error) {
-      console.error('Error fetching lead by ID:', error);
+      console.error("Error fetching lead by ID:", error);
     }
   }
 
@@ -152,7 +154,7 @@ export default function EditClientSO() {
 
   // Segment GET API Is being used here
   async function handleSegment() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
@@ -167,7 +169,7 @@ export default function EditClientSO() {
       setSegments(response.data.data);
       // console.log("segment:", response.data.data);
     } catch (error) {
-      console.error('Error fetching segments:', error);
+      console.error("Error fetching segments:", error);
     }
   }
 
@@ -176,7 +178,7 @@ export default function EditClientSO() {
   }, []);
 
   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
-    useState('Select Product');
+    useState("Select Product");
   const [isDropdownVisibleSegment, setisDropdownVisibleSegment] =
     useState(false);
 
@@ -205,7 +207,7 @@ export default function EditClientSO() {
       segments: updatedSegments,
     }));
 
-    console.log('Selected segments:', updatedSegments);
+    console.log("Selected segments:", updatedSegments);
   };
   // Segment GET API Is being used here
 
@@ -214,7 +216,7 @@ export default function EditClientSO() {
   const [assigned_ToDropDown, setassigned_ToDropDown] = useState({});
 
   async function handleAssigned_To() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
@@ -228,7 +230,7 @@ export default function EditClientSO() {
       );
       setassigned_ToDropDown(response.data.data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -251,7 +253,7 @@ export default function EditClientSO() {
     assigned_To_Role
   ) => {
     setdefaultTextassigned_ToDropDown(
-      assigned_To_Username + ' ' + assigned_To_Role
+      assigned_To_Username + " " + assigned_To_Role
     );
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     seteditLead((prevTask) => ({
@@ -269,15 +271,62 @@ export default function EditClientSO() {
   };
 
   //----------------------------------------------------------------------------------------
+  //PooL_ToDropDown
+  const [poolToDropDown, setPoolToDropDown] = useState([]);
+  const [defaultTextPool, setDefaultTextPool] = useState("Select Lead Source");
+  const [isPoolDropdownOpen, setIsPoolDropdownOpen] = useState(false);
+  const [error, setError] = useState(null); // New error state
+
+  const handlePool = async () => {
+    const bearerToken = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`,
+      },
+    };
+
+    try {
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
+        config
+      );
+      setPoolToDropDown(response.data.data);
+      console.log("status:", response.data.data);
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+      setError("Failed to fetch pools."); // Set error message
+    }
+  };
+
+  useEffect(() => {
+    handlePool();
+  }, []);
+
+  const toggleDropdown = () => {
+    setIsPoolDropdownOpen((prev) => !prev);
+    // console.log("@@@===",isPoolDropdownOpen);
+  };
+
+  const handleDropdownSelection = (poolName) => {
+    setIsPoolDropdownOpen(false);
+    setDefaultTextPool(poolName);
+    console.log("@@@===", isPoolDropdownOpen);
+    seteditLead((prev) => ({
+      ...prev,
+      leadSource: poolName,
+    }));
+  };
+
+  //----------------------------------------------------------------------------------------
   //Service
   const Service_DropDown = [
-    { key: 1, name: 'SMS' },
-    { key: 3, name: 'Call' },
+    { key: 1, name: "SMS" },
+    { key: 3, name: "Call" },
     { key: 2, name: "What's App" },
   ];
 
   const [defaultText_Service_DropDown, setDefaultText_Service_DropDown] =
-    useState('Select Service');
+    useState("Select Service");
 
   const [isDropdownVisible_Service_, setisDropdownVisible_Service_] =
     useState(false);
@@ -298,14 +347,14 @@ export default function EditClientSO() {
   //----------------------------------------------------------------------------------------
   //TERM
   const Term_DropDown = [
-    { key: 1, name: 'Monthly' },
-    { key: 2, name: 'Quartely' },
-    { key: 3, name: 'Half Yearly' },
-    { key: 4, name: 'Yearly' },
+    { key: 1, name: "Monthly" },
+    { key: 2, name: "Quartely" },
+    { key: 3, name: "Half Yearly" },
+    { key: 4, name: "Yearly" },
   ];
 
   const [defaultText_Term_DropDown, setDefaultText_Term_DropDown] =
-    useState('Select Term');
+    useState("Select Term");
 
   const [isDropdownVisible_Term_, setisDropdownVisible_Term_] = useState(false);
 
@@ -325,14 +374,14 @@ export default function EditClientSO() {
   //----------------------------------------------------------------------------------------
   //Business Type
   const BusinessTypeDropDown = [
-    { key: 1, name: 'IT' },
-    { key: 2, name: 'eCommerce' },
-    { key: 3, name: 'Marketing' },
-    { key: 4, name: 'Hospitality' },
+    { key: 1, name: "IT" },
+    { key: 2, name: "eCommerce" },
+    { key: 3, name: "Marketing" },
+    { key: 4, name: "Hospitality" },
   ];
 
   const [defaultTextbusinessTypeDropDown, setDefaultTextbusinessTypeDropDown] =
-    useState('Select Business Type');
+    useState("Select Business Type");
 
   const [isDropdownVisiblebusinessType, setisDropdownVisiblebusinessType] =
     useState(false);
@@ -354,57 +403,58 @@ export default function EditClientSO() {
   //two different models one for PUT and one for POST
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       };
 
       const formData_PUT = {
         id: editLead.id,
-        leadId: editLead.leadId || '',
-        clientName: editLead.clientName || '',
-        fatherName: editLead.fatherName || '',
-        motherName: editLead.motherName || '',
-        uidaI_Id_No: editLead.uidaI_Id_No || '',
-        panCard_No: editLead.panCard_No || '',
-        language: editLead.language || '',
-        bank_name: editLead.bank_name || '',
-        branch_name: editLead.branch_name || '',
-        paymenT_MODE: editLead.paymenT_MODE || '',
-        saleS_ODR_NO: editLead.saleS_ODR_NO || '',
-        mobileNo: editLead.mobileNo || '',
-        phoneNo: editLead.phoneNo || '',
-        email: editLead.email || '',
-        assigned_To: editLead.assigned_To || '',
-        street: editLead.street || '',
-        postalCode: editLead.postalCode || '',
-        country: editLead.country || '',
-        city: editLead.city || '',
-        state: editLead.state || '',
-        description: description || '',
-        reference_Number: editLead.reference_Number || '',
-        totalAmount: editLead.totalAmount || '',
-        due_Amount: editLead.due_Amount || '',
-        amount_paid: editLead.amount_paid || '',
-        discount: editLead.discount || '',
-        advisaryExp: editLead.advisaryExp || '',
+        leadId: editLead.leadId || "",
+        leadSource: editLead.leadSource || null,
+        clientName: editLead.clientName || "",
+        fatherName: editLead.fatherName || "",
+        motherName: editLead.motherName || "",
+        uidaI_Id_No: editLead.uidaI_Id_No || "",
+        panCard_No: editLead.panCard_No || "",
+        language: editLead.language || "",
+        bank_name: editLead.bank_name || "",
+        branch_name: editLead.branch_name || "",
+        paymenT_MODE: editLead.paymenT_MODE || "",
+        saleS_ODR_NO: editLead.saleS_ODR_NO || "",
+        mobileNo: editLead.mobileNo || "",
+        phoneNo: editLead.phoneNo || "",
+        email: editLead.email || "",
+        assigned_To: editLead.assigned_To || "",
+        street: editLead.street || "",
+        postalCode: editLead.postalCode || "",
+        country: editLead.country || "",
+        city: editLead.city || "",
+        state: editLead.state || "",
+        description: description || "",
+        reference_Number: editLead.reference_Number || "",
+        totalAmount: editLead.totalAmount || "",
+        due_Amount: editLead.due_Amount || "",
+        amount_paid: editLead.amount_paid || "",
+        discount: editLead.discount || "",
+        advisaryExp: editLead.advisaryExp || "",
         segments: editLead.segments || [],
         subscription_start_date: editLead.subscription_start_date || null,
         subscription_end_date: editLead.subscription_end_date || null,
-        period_of_Subscription: editLead.period_of_Subscription || '',
-        term: editLead.term || '',
-        service: editLead.service || '',
-        chequeOrDD_no: editLead.chequeOrDD_no || '',
-        remarks: editLead.remarks || '',
+        period_of_Subscription: editLead.period_of_Subscription || "",
+        term: editLead.term || "",
+        service: editLead.service || "",
+        chequeOrDD_no: editLead.chequeOrDD_no || "",
+        remarks: editLead.remarks || "",
         status: false,
         dob: editLead.dob || null,
-        business: editLead.business || '',
-        paymentDate: editLead.paymentDate?.split('T')[0] || null,
+        business: editLead.business || "",
+        paymentDate: editLead.paymentDate?.split("T")[0] || null,
       };
 
       await axios.post(
@@ -413,15 +463,19 @@ export default function EditClientSO() {
         config
       );
 
-      alert('Lead updated successfully!');
-      setTimeout(() => navigate(`/sidebar/reports`), 500); // Optional delay for navigation
+      alert("Lead updated successfully!");
+      setTimeout(() => navigate(-1), 500); // Optional delay for navigation
     } catch (error) {
-      console.error('Error updating lead:', error);
-      alert('An error occurred. Please try again.');
+      console.error("Error updating lead:", error);
+      if (error.response && error.response.data) {
+        alert(`Error: ${error.response.data.message || "An error occurred."}`);
+      } else {
+        alert("An unexpected error occurred. Please try again.");
+      }
     }
   };
 
-    const goBack = () => {
+  const goBack = () => {
     navigate(-1); // Goes back to the previous page
   };
 
@@ -815,7 +869,7 @@ export default function EditClientSO() {
                         id="businessTypeDropDown"
                         type="button"
                       >
-                        {editLead.business === ''
+                        {editLead.business === ""
                           ? defaultTextbusinessTypeDropDown
                           : editLead.business}
                         <FaAngleDown className="ml-2 text-gray-400" />
@@ -865,8 +919,58 @@ export default function EditClientSO() {
                     />
                   </div>
                 </div>
+                {/* -------------IX--1--------------- */}
+                {/* -------------Lead Source------------- */}
+                <div className="flex space-x-4">
+                  <div className="flex flex-col w-1/2 relative">
+                    <label
+                      htmlFor="Pool"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Lead Source
+                    </label>
+                    <div
+                      className="relative"
+                      onMouseLeave={() => setIsPoolDropdownOpen(false)}
+                    >
+                      <button
+                        onClick={toggleDropdown}
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        id="LeadPoolDropDown"
+                        type="button"
+                      >
+                        {editLead.leadSource === null || ""
+                          ? defaultTextPool
+                          : editLead.leadSource}
+                        <FaAngleDown className="ml-2 text-gray-400" />
+                      </button>
+                      {isPoolDropdownOpen && (
+                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                          {error ? (
+                            <div className="py-2 text-red-600">{error}</div>
+                          ) : (
+                            <ul className="py-2 text-sm text-gray-700">
+                              {poolToDropDown.map(({ id, poolName }) => (
+                                <li
+                                  key={id}
+                                  onClick={() =>
+                                    handleDropdownSelection(poolName)
+                                  }
+                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                >
+                                  {poolName}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+
             {/* -------------Payment Details INFORMATION STARTS FROM HERE------------- */}
             <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
@@ -1175,7 +1279,7 @@ export default function EditClientSO() {
                         id="termDropDown"
                         type="button"
                       >
-                        {editLead.term === ''
+                        {editLead.term === ""
                           ? defaultText_Term_DropDown
                           : editLead.term}
                         <FaAngleDown className="ml-2 text-gray-400" />
@@ -1257,7 +1361,7 @@ export default function EditClientSO() {
                         id="serviceDropDown"
                         type="button"
                       >
-                        {editLead.service === ''
+                        {editLead.service === ""
                           ? defaultText_Service_DropDown
                           : editLead.service}
                         <FaAngleDown className="ml-2 text-gray-400" />
@@ -1283,7 +1387,6 @@ export default function EditClientSO() {
                   </div>
                   {/* -------------XVII--2------------- */}
                   {/* -------------Status------------- */}
-                  
                 </div>
                 <div className="flex space-x-4">
                   {/* -------------Service------------- */} {/* sms , wp,  */}
@@ -1335,7 +1438,7 @@ export default function EditClientSO() {
                   type="submit"
                   className="px-32 py-4 mt-20 mb-2 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
                 >
-                  {isEditMode ? 'Update' : 'Save'}
+                  {isEditMode ? "Update" : "Save"}
                 </button>
               </div>
             </div>
