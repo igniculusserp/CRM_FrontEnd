@@ -5,6 +5,7 @@ import { RiDeleteBin6Fill } from 'react-icons/ri';
 
 export default function Alert() {
   const [activeComponent, setActiveComponent] = useState('Table');
+  const [idGet, setIdGet] = useState('');
 
   const handleAdd = () => {
     setActiveComponent('Add');
@@ -12,6 +13,11 @@ export default function Alert() {
 
   const handleCancel = () => {
     setActiveComponent('Table');
+  };
+
+  const handleEdit = (id) => {
+    setActiveComponent('Update');
+    setIdGet(id);
   };
 
   const data = [
@@ -87,7 +93,10 @@ export default function Alert() {
     return (
       <div className="m-3 min-w-screen">
         <div className="flex min-w-screen justify-between items-center">
-          <h1 className="text-3xl font-medium">Alert</h1>
+        <div className="flex items-center gap-2">
+            <h1 className="text-3xl font-medium">Alert</h1>
+            <h2 className='text-xl font-medium text-red-500 text-center'>(This feature is coming soon...)</h2>
+          </div>
           <button
             onClick={handleAdd}
             className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
@@ -151,6 +160,7 @@ export default function Alert() {
                         size={25}
                         color="white"
                         className="bg-blue-500 rounded"
+                        onClick={() => handleEdit(device.id)}
                       />
                       <RiDeleteBin6Fill size={25} color="red" />
                     </td>
@@ -410,7 +420,249 @@ export default function Alert() {
   };
 
   const UpdateAlert = () => {
-    return <h1>Update</h1>;
+    const [addAlert, setAddAlert] = useState({
+      id: '',
+      title: '',
+      description: '',
+    });
+
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setAddAlert({
+        ...addAlert,
+        [name]: value,
+      });
+    };
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+    };
+
+    const [selectedId, setSelectedId] = useState(1);
+
+    const buttons = [
+      { id: 1, text: 'Web Violation' },
+      { id: 2, text: 'DLP Violation' },
+    ];
+
+    const handleOptionClick = (id) => {
+      setSelectedId(id);
+    };
+
+    const web = [
+      'Login Page',
+      'Browser Restriction',
+      'IP Restriction',
+      'Time Restriction',
+      'Geo Location',
+      'Account Lock',
+      'Password Change',
+      'Device Request',
+    ];
+
+    const dlp = [
+      'Download',
+      'Dropbox Consumer Account',
+      'Download Email Attachment',
+      'Share',
+      'Whitelist IP',
+      'Print',
+      'Sync Dropbox',
+      'Document Delete',
+      'Screen Capture',
+      'Across OU',
+      'Email Compliance',
+      'Clipboard',
+      'Containerize Email',
+      'Containerize Drive',
+      'Github Account Violation',
+    ];
+
+    return (
+      <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
+        <div className="flex py-2 px-2 items-center justify-between bg-white rounded-md shadow-md">
+          <h1 className="text-xl">Add Alert</h1>
+          <div
+            onClick={handleCancel}
+            className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
+          >
+            Cancel
+          </div>
+        </div>
+        <div className="overflow-hidden shadow-md">
+          <div className="py-2 px-3 bg-cyan-500 rounded-t-xl mt-3">
+            <h1 className="text-white">Alert Details</h1>
+          </div>
+          {/* CREATE DLP FORM */}
+          <form onSubmit={handleSubmit}>
+            <div className="flex flex-col py-2 px-4 bg-white rounded-b-xl">
+              <div className="flex gap-4">
+                <div className="grid gap-2 pb-3 w-full">
+                  <div className="flex space-x-4">
+                    {/* TITLE */}
+                    <div className="flex flex-col w-1/2">
+                      <label
+                        htmlFor="title"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Title
+                      </label>
+                      <input
+                        type="text"
+                        name="title"
+                        value={addAlert.title}
+                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        onChange={handleChange}
+                        placeholder="Enter device type"
+                      />
+                    </div>
+                    <div className="flex flex-col w-1/2">
+                      {/* DESCRIPTION */}
+                      <label
+                        htmlFor="description"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Description
+                      </label>
+                      <input
+                        type="text"
+                        name="description"
+                        value={addAlert.description}
+                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        onChange={handleChange}
+                        placeholder="Enter device type"
+                      />
+                    </div>
+                  </div>
+                  {/* SECOND */}
+                  <div className="flex space-x-4">
+                    {/* Enabled */}
+                    <div className="flex flex-col w1/2 gap-1 justify-start items-start">
+                      <label
+                        htmlFor="enabled"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Enabled
+                      </label>
+                      <input
+                        type="checkbox"
+                        name="enabled"
+                        className="flex justify-start py-1 px-1 h-5 w-5"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-5">
+                <div className="flex justify-end">
+                  <button
+                    type="submit"
+                    className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+            {/* SECOND SECTION */}
+            <div className="flex gap-3 mt-3">
+              <h1 className="text-2xl font-medium">Events</h1>
+              {buttons.map(({ id, text }) => (
+                <button
+                  key={id}
+                  onClick={() => handleOptionClick(id)}
+                  className={`px-3 py-2 rounded font-light text-md
+              ${
+                selectedId === id
+                  ? 'bg-cyan-500 text-white'
+                  : 'bg-gray-100 text-gray-700'
+              }
+            `}
+                >
+                  {text}
+                </button>
+              ))}
+            </div>
+            {/* WEB SECTION */}
+            {selectedId === 1 && (
+              <>
+                <div className="bg-white rounded-xl">
+                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                    Web Violation
+                  </h1>
+                  <div className="mb-6 py-3 flex flex-col gap-2">
+                    {/* MAIN CART */}
+                    <div className="p-4">
+                      <div className="grid grid-cols-4 gap-x-6 gap-y-4">
+                        {web.map((item, idx) => (
+                          <label
+                            key={idx}
+                            className="flex items-center space-x-2"
+                          >
+                            <input type="checkbox" className="w-5 h-5" />
+                            <span className="text-md font-light">{item}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end gap-5 mr-3">
+                      <div className="flex justify-end">
+                        <button
+                          type="submit"
+                          className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {/* DLP SECTION */}
+            {selectedId === 2 && (
+              <>
+                <div className="bg-white rounded-xl">
+                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                    DLP Violation
+                  </h1>
+                  <div className="mb-6 py-3 flex flex-col gap-2">
+                    {/* MAIN CART */}
+                    <div className="p-4">
+                      <div className="grid grid-cols-4 gap-x-6 gap-y-4">
+                        {dlp.map((item, idx) => (
+                          <label
+                            key={idx}
+                            className="flex items-center space-x-2"
+                          >
+                            <input type="checkbox" className="w-5 h-5" />
+                            <span className="text-md font-light">{item}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end gap-5 mr-3">
+                      <div className="flex justify-end">
+                        <button
+                          type="submit"
+                          className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+          </form>
+        </div>
+      </div>
+    );
   };
 
   return (

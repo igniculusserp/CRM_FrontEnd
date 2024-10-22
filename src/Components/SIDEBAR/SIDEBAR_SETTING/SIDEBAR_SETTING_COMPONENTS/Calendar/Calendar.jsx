@@ -1,52 +1,50 @@
-import { useState, useEffect } from "react";
-import { FaAngleDown, FaBars } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { useState, useEffect } from 'react';
+import { FaAngleDown, FaBars } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 
-export default function Department(){
-
-const { id } = useParams();
-const [active, setActive] = useState(true);
-const [users, setUsers] = useState([
+export default function Department() {
+  const { id } = useParams();
+  const [active, setActive] = useState(true);
+  const [users, setUsers] = useState([
     {
       id: 1,
       depatmentID: 101,
-      depatmentName: "Group-Tambi",
+      depatmentName: 'Group-Tambi',
     },
     {
-        id: 2,
-        depatmentID: 102,
-        depatmentName: "Group-Lambi",
+      id: 2,
+      depatmentID: 102,
+      depatmentName: 'Group-Lambi',
     },
-]);
+  ]);
   const [formData, setFormData] = useState({
-    id: "",
-    depatmentID: "",
-    depatmentName: "",
+    id: '',
+    depatmentID: '',
+    depatmentName: '',
   });
   const [editLead, setEditLead] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-
   //department
   const [department, setdepartment] = useState([]);
-  const [defaultTextdepartmentDropDown, setDefaultTextdepartmentDropDown] =useState("Select Department Na,e");
-  const [isDropdownVisibledepartment, setIsDropdownVisibledepartment] = useState(false);
-
+  const [defaultTextdepartmentDropDown, setDefaultTextdepartmentDropDown] =
+    useState('Select Department Na,e');
+  const [isDropdownVisibledepartment, setIsDropdownVisibledepartment] =
+    useState(false);
 
   const handleActiveState = () => {
     setActive(!active);
     setIsEditMode(false); // Reset edit mode when switching views
     setFormData({
-        id: "",
-        depatmentID: "",
-        depatmentName: "",
+      id: '',
+      depatmentID: '',
+      depatmentName: '',
     }); // Reset form data
   };
-
 
   const handleClick = (userId) => {
     const userToEdit = users.find((user) => user.id === userId);
@@ -71,15 +69,15 @@ const [users, setUsers] = useState([
 
     // Validation check
     if (!formData.depatmentID || !formData.depatmentName) {
-      alert("Please fill in all fields before submitting.");
+      alert('Please fill in all fields before submitting.');
       return;
     }
 
     if (isEditMode) {
-      console.log("Edit User:", formData);
+      console.log('Edit User:', formData);
       // Add logic to submit the edited user data
     } else {
-      console.log("Add User:", formData);
+      console.log('Add User:', formData);
       setActive(true); // Switch to the form view
 
       // Add logic to add a new user
@@ -91,48 +89,49 @@ const [users, setUsers] = useState([
     console.log(`Checkbox clicked for user: ${userId}`);
   };
 
-    //---------------Group---------------
-    const toggleDropdownGroup = () => {
-        setIsDropdownVisibleGroup(!isDropdownVisibleGroup);
-      };
-    
-      const handleDropdownGroup = (groupName) => {
-        setFormData((prevData) => ({
-          ...prevData,
-          groupName,
-        }));
-        setDefaultTextGroupDropDown(groupName);
-        setIsDropdownVisibleGroup(false);
-      };
-    
-      async function handleGroup() {
-        const bearer_token = localStorage.getItem("token");
-    
-        try {
-          const config = {
-            headers: {
-              Authorization: `Bearer ${bearer_token}`,
-            },
-          };
-          const response = await axios.get(
-            `${protocal_url}${
-              window.location.hostname.split(".")[0]}.${tenant_base_url}/Admin/leadstatus/getall`,
-            config
-          );
-          setdepartment(response.data.data);
-          console.log("Group data:", response.data.data);
-        } catch (error) {
-          console.error("Error fetching groups:", error);
-        }
-      }
-    
-      useEffect(() => {
-        handleGroup();
-      }, []);
+  //---------------Group---------------
+  const toggleDropdownGroup = () => {
+    setIsDropdownVisibleGroup(!isDropdownVisibleGroup);
+  };
 
-    return(
-        <>
-        <div className="m-3 min-w-screen">
+  const handleDropdownGroup = (groupName) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      groupName,
+    }));
+    setDefaultTextGroupDropDown(groupName);
+    setIsDropdownVisibleGroup(false);
+  };
+
+  async function handleGroup() {
+    const bearer_token = localStorage.getItem('token');
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${
+          window.location.hostname.split('.')[0]
+        }.${tenant_base_url}/Admin/leadstatus/getall`,
+        config
+      );
+      setdepartment(response.data.data);
+      console.log('Group data:', response.data.data);
+    } catch (error) {
+      console.error('Error fetching groups:', error);
+    }
+  }
+
+  useEffect(() => {
+    handleGroup();
+  }, []);
+
+  return (
+    <>
+      <div className="m-3 min-w-screen">
         {active ? (
           <>
             <div className="flex min-w-screen justify-between items-center">
@@ -158,29 +157,28 @@ const [users, setUsers] = useState([
                           <FaBars />
                         </div>
                       </th>
-  
+
                       <th className="px-2 py-3 text-left border-r font-medium">
                         <div className="flex justify-between items-center text-sm">
                           <span>User Count</span>
                           <FaBars />
                         </div>
                       </th>
-  
+
                       <th className="px-2 py-3 text-left border-r font-medium">
                         <div className="flex justify-between items-center text-sm">
                           <span>Lead Limit</span>
                           <FaBars />
                         </div>
                       </th>
-  
+
                       <th className="px-2 py-3 text-left border-r font-medium">
                         <div className="flex justify-between items-center text-sm">
                           <span>Fetch Limit</span>
                           <FaBars />
                         </div>
                       </th>
-  
-  
+
                       <th className="px-2 py-3 text-left border-r font-medium">
                         <div className="flex justify-between items-center text-sm">
                           <span>Action</span>
@@ -232,7 +230,7 @@ const [users, setUsers] = useState([
           <>
             <div className="flex min-w-screen justify-between items-center">
               <h1 className="text-3xl font-medium">
-                {isEditMode ? "Edit User Operation" : "Add user Operation"}
+                {isEditMode ? 'Edit User Operation' : 'Add user Operation'}
               </h1>
               <button
                 onClick={handleActiveState}
@@ -241,7 +239,7 @@ const [users, setUsers] = useState([
                 Cancel
               </button>
             </div>
-  
+
             <form onSubmit={handleSubmit} className="flex">
               <div className="w-full">
                 <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
@@ -250,7 +248,7 @@ const [users, setUsers] = useState([
                   </h2>
                   {/* -------------1------------- */}
                   <div className="py-2 px-4 min-h-screen relative">
-                  {/* -------------groupID------------- */}
+                    {/* -------------groupID------------- */}
                     <div className="flex space-x-4">
                       <div className="flex flex-col w-1/2">
                         <label
@@ -262,13 +260,13 @@ const [users, setUsers] = useState([
                         <input
                           type="text"
                           name="groupID"
-                          value={formData.groupID || ""}
+                          value={formData.groupID || ''}
                           onChange={handleChange}
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                         />
                       </div>
                       {/* -------------Group------------- */}
-                       {/* -------------Group------------- */}
+                      {/* -------------Group------------- */}
                       <div className="flex flex-col w-1/2 relative">
                         <label
                           htmlFor="group"
@@ -307,7 +305,7 @@ const [users, setUsers] = useState([
                         </div>
                       </div>
                     </div>
-  
+
                     {/* -------------2------------- */}
                     <div className="flex space-x-4">
                       {/* -------------UserCount------------- */}
@@ -321,14 +319,14 @@ const [users, setUsers] = useState([
                         <input
                           type="text"
                           name="userCount"
-                          value={formData.userCount || ""}
+                          value={formData.userCount || ''}
                           onChange={handleChange}
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                         />
                       </div>
 
-                        {/* -------------Lead Limit------------- */}
-                       <div className="flex flex-col w-1/2">
+                      {/* -------------Lead Limit------------- */}
+                      <div className="flex flex-col w-1/2">
                         <label
                           htmlFor="leadLimit"
                           className="text-sm font-medium text-gray-700"
@@ -338,11 +336,11 @@ const [users, setUsers] = useState([
                         <input
                           type="text"
                           name="leadLimit"
-                          value={formData.leadLimit || ""}
+                          value={formData.leadLimit || ''}
                           onChange={handleChange}
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                         />
-                      </div>         
+                      </div>
                     </div>
                     {/* -------------3------------- */}
                     <div className="flex space-x-4">
@@ -357,20 +355,19 @@ const [users, setUsers] = useState([
                         <input
                           type="text"
                           name="fetchLimit"
-                          value={formData.fetchLimit || ""}
+                          value={formData.fetchLimit || ''}
                           onChange={handleChange}
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                         />
                       </div>
                     </div>
-  
-                    
+
                     {/* -------------Button------------- */}
                     <button
                       type="submit"
                       className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute  top-[300px]"
                     >
-                      {isEditMode ? "Update User" : "Save User"}
+                      {isEditMode ? 'Update User' : 'Save User'}
                     </button>
                   </div>
                 </div>
@@ -379,7 +376,6 @@ const [users, setUsers] = useState([
           </>
         )}
       </div>
-            
-        </>
-    )    
+    </>
+  );
 }

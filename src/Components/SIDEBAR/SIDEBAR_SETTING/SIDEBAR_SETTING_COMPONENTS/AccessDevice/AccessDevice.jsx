@@ -1,22 +1,22 @@
-import { useState, useEffect } from "react";
-import { FaBars } from "react-icons/fa";
-import { FaAngleDown } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import axios from "axios";
-import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { useState, useEffect } from 'react';
+import { FaBars } from 'react-icons/fa';
+import { FaAngleDown } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+import axios from 'axios';
+import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 
 export default function AccessDevice() {
   const [data, setData] = useState([]);
-  const [activeComponent, setActiveComponent] = useState("Table");
+  const [activeComponent, setActiveComponent] = useState('Table');
   const fullURL = window.location.href;
   const url = new URL(fullURL);
-  const name = url.hostname.split(".")[0];
-  const [idGet, setIdGet] = useState("");
+  const name = url.hostname.split('.')[0];
+  const [idGet, setIdGet] = useState('');
 
   // -------------------Fetch All Access Devices---------------------
   async function handleLead() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -29,7 +29,7 @@ export default function AccessDevice() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
     }
   }
 
@@ -39,7 +39,7 @@ export default function AccessDevice() {
 
   // ------------------Delete Access Devices By ID---------------------
   const handleDelete = async (id) => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -51,24 +51,24 @@ export default function AccessDevice() {
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert("Access Device deleted successfully");
+      alert('Access Device deleted successfully');
     } catch (error) {
       console.log(error);
-      alert("Failed to delete pool. Please try again.");
+      alert('Failed to delete pool. Please try again.');
     }
   };
 
   // Handle cancel form action
   const handleCancel = () => {
-    setActiveComponent("Table");
+    setActiveComponent('Table');
   };
 
   const handleAdd = () => {
-    setActiveComponent("Add");
+    setActiveComponent('Add');
   };
 
   const handleEdit = (id) => {
-    setActiveComponent("Update");
+    setActiveComponent('Update');
     setIdGet(id);
   };
 
@@ -174,6 +174,15 @@ export default function AccessDevice() {
             </table>
           </div>
         </div>
+
+        {/* ------------------- COMING SOON TAB ----------------------- */}
+        <div className="mt-[10rem] mx-auto flex items-center w-[300px] justify-center py-8 bg-white rounded-md shadow-lg gap-3">
+          <h1 className="text-xl font-medium text-red-500 text-center">
+            This feature is coming soon...
+          </h1>
+        </div>
+        {/* ------------------- END ------------------- */}
+
       </div>
     );
   };
@@ -182,24 +191,24 @@ export default function AccessDevice() {
 
   const AccessDeviceAdd = () => {
     const [addDevice, setAddDevice] = useState({
-      userId: "",
-      userName: "",
-      deviceType: "",
-      deviceAddress: "",
-      deviceToken: "",
+      userId: '',
+      userName: '',
+      deviceType: '',
+      deviceAddress: '',
+      deviceToken: '',
     });
 
     //----------------------------------------------------------------------------------------
     //Status_ToDropDown
     const [statusToDropDown, setStatusToDropDown] = useState([]);
     const [defaultTextStatus, setDefaultTextStatus] = useState(
-      "Select User Name..."
+      'Select User Name...'
     );
     const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
     const [errorStatus, setStatusError] = useState(null); // New error state
 
     const handleStatus = async () => {
-      const bearerToken = localStorage.getItem("token");
+      const bearerToken = localStorage.getItem('token');
       const config = {
         headers: {
           Authorization: `Bearer ${bearerToken}`,
@@ -212,11 +221,11 @@ export default function AccessDevice() {
           config
         );
         setStatusToDropDown(response.data.data);
-        console.log("status:", response.data.data);
+        console.log('status:', response.data.data);
       } catch (error) {
-        console.error("Error fetching leads:", errorStatus);
-        console.error("Error fetching leads:", error);
-        setStatusError("Failed to fetch pools.");
+        console.error('Error fetching leads:', errorStatus);
+        console.error('Error fetching leads:', error);
+        setStatusError('Failed to fetch pools.');
       }
     };
 
@@ -231,7 +240,7 @@ export default function AccessDevice() {
     const handleDropdownStatusSelection = (device) => {
       setIsStatusDropdownOpen(false);
       setDefaultTextStatus(device.userName);
-      console.log("@@@===", isStatusDropdownOpen);
+      console.log('@@@===', isStatusDropdownOpen);
       setAddDevice((prev) => ({
         ...prev,
         userName: device.firstName,
@@ -251,13 +260,13 @@ export default function AccessDevice() {
     // Handle form submission
     const handleSubmit = async (event) => {
       event.preventDefault();
-      const bearer_token = localStorage.getItem("token");
+      const bearer_token = localStorage.getItem('token');
 
       try {
         const config = {
           headers: {
             Authorization: `Bearer ${bearer_token}`,
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         };
 
@@ -267,16 +276,16 @@ export default function AccessDevice() {
           addDevice, // Data to send
           config
         );
-        alert("Access Device added successfully");
+        alert('Access Device added successfully');
         window.location.reload();
         // Redirect or reset form after successful submission
       } catch (error) {
         if (error.response) {
-          console.error("Error data:", error.response.data);
+          console.error('Error data:', error.response.data);
         } else {
-          console.error("Error:", error.message);
+          console.error('Error:', error.message);
         }
-        alert("An error occurred. Please try again.");
+        alert('An error occurred. Please try again.');
       }
     };
 
@@ -318,7 +327,7 @@ export default function AccessDevice() {
                       id="LeadStatusDropDown"
                       type="button"
                     >
-                      {addDevice.userName === ""
+                      {addDevice.userName === ''
                         ? defaultTextStatus
                         : addDevice.userName}
                       <FaAngleDown className="ml-2 text-gray-400" />
@@ -437,34 +446,34 @@ export default function AccessDevice() {
 
   const AccessDeviceUpdate = () => {
     const [addDevice, setAddDevice] = useState({
-      id: "",
-      userId: "",
-      userName: "",
-      deviceType: "",
-      deviceAddress: "",
-      deviceToken: "",
+      id: '',
+      userId: '',
+      userName: '',
+      deviceType: '',
+      deviceAddress: '',
+      deviceToken: '',
     });
-  
+
     const [statusToDropDown, setStatusToDropDown] = useState([]);
     const [defaultTextStatus, setDefaultTextStatus] = useState(
-      "Select User Name..."
+      'Select User Name...'
     );
     const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
     const [errorStatus, setStatusError] = useState(null);
-  
+
     // Fetch the Access Device by ID
     useEffect(() => {
       if (idGet) {
         handleDeviceId();
       }
     }, [idGet, name, protocal_url, tenant_base_url]);
-  
+
     const handleDeviceId = async () => {
-      const bearer_token = localStorage.getItem("token");
+      const bearer_token = localStorage.getItem('token');
       const config = {
         headers: { Authorization: `Bearer ${bearer_token}` },
       };
-  
+
       try {
         const response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Setting/getAccessDeviceById/${idGet}`,
@@ -472,29 +481,29 @@ export default function AccessDevice() {
         );
         const data = response.data.data;
         setAddDevice({
-          id: data.id || "",
-          userId: data.userId || "",
-          userName: data.userName || "",
-          deviceType: data.deviceType || "",
-          deviceAddress: data.deviceAddress || "",
-          deviceToken: data.deviceToken || "",
+          id: data.id || '',
+          userId: data.userId || '',
+          userName: data.userName || '',
+          deviceType: data.deviceType || '',
+          deviceAddress: data.deviceAddress || '',
+          deviceToken: data.deviceToken || '',
         });
       } catch (error) {
-        console.error("Error fetching Access Device by ID:", error);
+        console.error('Error fetching Access Device by ID:', error);
       }
     };
-  
+
     // Fetch Users for the dropdown
     useEffect(() => {
       handleStatus();
     }, [name, protocal_url, tenant_base_url]);
-  
+
     const handleStatus = async () => {
-      const bearerToken = localStorage.getItem("token");
+      const bearerToken = localStorage.getItem('token');
       const config = {
         headers: { Authorization: `Bearer ${bearerToken}` },
       };
-  
+
       try {
         const response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
@@ -502,15 +511,15 @@ export default function AccessDevice() {
         );
         setStatusToDropDown(response.data.data);
       } catch (error) {
-        console.error("Error fetching users:", error);
-        setStatusError("Failed to fetch users.");
+        console.error('Error fetching users:', error);
+        setStatusError('Failed to fetch users.');
       }
     };
-  
+
     const toggleStatusDropdown = () => {
       setIsStatusDropdownOpen((prev) => !prev);
     };
-  
+
     const handleDropdownStatusSelection = (device) => {
       setIsStatusDropdownOpen(false);
       setDefaultTextStatus(device.userName);
@@ -520,7 +529,7 @@ export default function AccessDevice() {
         userId: device.userId,
       }));
     };
-  
+
     const handleChange = (e) => {
       const { name, value } = e.target;
       setAddDevice((prevDevice) => ({
@@ -528,16 +537,16 @@ export default function AccessDevice() {
         [name]: value,
       }));
     };
-  
+
     const handleSubmit = async (event) => {
       event.preventDefault();
-      const bearer_token = localStorage.getItem("token");
-  
+      const bearer_token = localStorage.getItem('token');
+
       try {
         const config = {
           headers: {
             Authorization: `Bearer ${bearer_token}`,
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         };
         const formData_PUT = {
@@ -553,14 +562,14 @@ export default function AccessDevice() {
           formData_PUT,
           config
         );
-        alert("Access Device updated successfully!");
+        alert('Access Device updated successfully!');
         window.location.reload();
       } catch (error) {
-        console.error("Error updating Access Device:", error);
-        alert("An error occurred. Please try again.");
+        console.error('Error updating Access Device:', error);
+        alert('An error occurred. Please try again.');
       }
     };
-  
+
     return (
       <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
         <div className="flex py-2 px-2 items-center justify-between bg-white rounded-md shadow-md">
@@ -581,17 +590,25 @@ export default function AccessDevice() {
               <div className="flex gap-4">
                 {/* Left Column */}
                 <div className="flex-1 flex flex-col">
-                  <label htmlFor="Pool" className="text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="Pool"
+                    className="text-sm font-medium text-gray-700"
+                  >
                     Status
                   </label>
-                  <div className="relative" onMouseLeave={() => setIsStatusDropdownOpen(false)}>
+                  <div
+                    className="relative"
+                    onMouseLeave={() => setIsStatusDropdownOpen(false)}
+                  >
                     <button
                       onClick={toggleStatusDropdown}
                       className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                       id="LeadStatusDropDown"
                       type="button"
                     >
-                      {addDevice.userName === "" ? defaultTextStatus : addDevice.userName}
+                      {addDevice.userName === ''
+                        ? defaultTextStatus
+                        : addDevice.userName}
                       <FaAngleDown className="ml-2 text-gray-400" />
                     </button>
                     {isStatusDropdownOpen && (
@@ -603,7 +620,9 @@ export default function AccessDevice() {
                             {statusToDropDown.map((device) => (
                               <li
                                 key={device.id}
-                                onClick={() => handleDropdownStatusSelection(device)}
+                                onClick={() =>
+                                  handleDropdownStatusSelection(device)
+                                }
                                 className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                               >
                                 {device.firstName}
@@ -614,8 +633,11 @@ export default function AccessDevice() {
                       </div>
                     )}
                   </div>
-  
-                  <label htmlFor="deviceType" className="text-sm font-medium text-gray-700">
+
+                  <label
+                    htmlFor="deviceType"
+                    className="text-sm font-medium text-gray-700"
+                  >
                     Device Type
                   </label>
                   <input
@@ -626,8 +648,11 @@ export default function AccessDevice() {
                     onChange={handleChange}
                     placeholder="Enter device type"
                   />
-  
-                  <label htmlFor="deviceToken" className="text-sm font-medium text-gray-700">
+
+                  <label
+                    htmlFor="deviceToken"
+                    className="text-sm font-medium text-gray-700"
+                  >
                     Device Token
                   </label>
                   <input
@@ -639,10 +664,13 @@ export default function AccessDevice() {
                     placeholder="Enter device token"
                   />
                 </div>
-  
+
                 {/* Right Column */}
                 <div className="flex-1 flex flex-col">
-                  <label htmlFor="userId" className="text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="userId"
+                    className="text-sm font-medium text-gray-700"
+                  >
                     User ID
                   </label>
                   <input
@@ -654,8 +682,11 @@ export default function AccessDevice() {
                     onChange={handleChange}
                     placeholder="Enter user ID"
                   />
-  
-                  <label htmlFor="deviceAddress" className="text-sm font-medium text-gray-700">
+
+                  <label
+                    htmlFor="deviceAddress"
+                    className="text-sm font-medium text-gray-700"
+                  >
                     Device Address
                   </label>
                   <input
@@ -668,7 +699,7 @@ export default function AccessDevice() {
                   />
                 </div>
               </div>
-  
+
               <div className="flex justify-end gap-5 mr-10">
                 <button
                   type="submit"
@@ -683,18 +714,17 @@ export default function AccessDevice() {
       </div>
     );
   };
-  
 
   return (
     <>
-      {activeComponent === "Table" ? (
+      {activeComponent === 'Table' ? (
         <AccessDeviceTable />
-      ) : activeComponent === "Add" ? (
+      ) : activeComponent === 'Add' ? (
         <AccessDeviceAdd />
-      ) : activeComponent === "Update" ? (
+      ) : activeComponent === 'Update' ? (
         <AccessDeviceUpdate />
       ) : (
-        ""
+        ''
       )}
     </>
   );

@@ -1,10 +1,9 @@
-
-import { useState, useEffect } from "react";
-import { FaBars } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import axios from "axios";
-import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { useState, useEffect } from 'react';
+import { FaBars } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+import axios from 'axios';
+import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 
 export default function SMSTemplate() {
   const [data, setData] = useState([]);
@@ -14,11 +13,11 @@ export default function SMSTemplate() {
 
   const fullURL = window.location.href;
   const url = new URL(fullURL);
-  const name = url.hostname.split(".")[0];
+  const name = url.hostname.split('.')[0];
 
   // Fetch all  data
   async function handleLead() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -31,7 +30,7 @@ export default function SMSTemplate() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
     }
   }
 
@@ -41,7 +40,7 @@ export default function SMSTemplate() {
 
   // Delete  by ID
   const handleDelete = async (id) => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -53,10 +52,10 @@ export default function SMSTemplate() {
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert("Deleted successfully");
+      alert('Deleted successfully');
     } catch (error) {
       console.log(error);
-      alert("Failed to delete. Please try again.");
+      alert('Failed to delete. Please try again.');
     }
   };
 
@@ -68,14 +67,14 @@ export default function SMSTemplate() {
   };
 
   const handleAdd = () => {
-    setSelectedData({ id: "", templateDescription: "" });
+    setSelectedData({ id: '', templateDescription: '' });
     setActive(false);
     setIsEditMode(false);
   };
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
@@ -89,14 +88,14 @@ export default function SMSTemplate() {
           { templateDescription: formData.templateDescription },
           config
         );
-        alert("Updated successfully");
+        alert('Updated successfully');
       } else {
         await axios.post(
           `${protocal_url}${name}.${tenant_base_url}/Admin/smstemplates/add`,
           { templateDescription: formData.templateDescription },
           config
         );
-        alert("Added successfully");
+        alert('Added successfully');
       }
 
       handleLead(); // Refresh the list
@@ -104,8 +103,8 @@ export default function SMSTemplate() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      console.error("Error saving name", error);
-      alert("Failed to save . Please try again.");
+      console.error('Error saving name', error);
+      alert('Failed to save . Please try again.');
     }
   };
 
@@ -118,10 +117,13 @@ export default function SMSTemplate() {
 
   // Form Component for Adding/Updating
   const EditForm = ({ data, isEditMode }) => {
-    const [formData, setFormData] = useState({ id: "", templateDescription: "" });
+    const [formData, setFormData] = useState({
+      id: '',
+      templateDescription: '',
+    });
 
     useEffect(() => {
-      setFormData(data || { id: "", templateDescription: "" });
+      setFormData(data || { id: '', templateDescription: '' });
     }, [data]);
 
     // Handle form input changes
@@ -141,7 +143,7 @@ export default function SMSTemplate() {
       <div>
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">
-            {isEditMode ? "Edit" : "Add"}
+            {isEditMode ? 'Edit' : 'Add'}
           </h1>
           <button
             onClick={handleCancel}
@@ -169,7 +171,7 @@ export default function SMSTemplate() {
                     <input
                       type="text"
                       name="templateDescription"
-                      value={formData.templateDescription || ""}
+                      value={formData.templateDescription || ''}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
@@ -180,7 +182,7 @@ export default function SMSTemplate() {
                   type="submit"
                   className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute top-[200px]"
                 >
-                  {isEditMode ? "Update" : "Save"}
+                  {isEditMode ? 'Update' : 'Save'}
                 </button>
               </div>
             </div>
@@ -254,6 +256,13 @@ export default function SMSTemplate() {
                 </tbody>
               </table>
             </div>
+            {/* ------------------- COMING SOON TAB ----------------------- */}
+        <div className="mt-[10rem] mx-auto flex items-center w-[300px] justify-center py-8 bg-white rounded-md shadow-lg gap-3">
+          <h1 className="text-xl font-medium text-red-500 text-center">
+            This feature is coming soon...
+          </h1>
+        </div>
+        {/* ------------------- END ------------------- */}
           </div>
         </>
       ) : (
