@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { FaAngleDown, FaBars } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { useState, useEffect } from 'react';
+import { FaAngleDown, FaBars } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 
 export default function SMSSetting() {
   const { id } = useParams();
@@ -13,22 +13,22 @@ export default function SMSSetting() {
     {
       id: 1,
       APISenderID: 101,
-      APIServerName: "Group-Tambi",
-      template: "Plan is very Big",
+      APIServerName: 'Group-Tambi',
+      template: 'Plan is very Big',
     },
     {
       id: 2,
       APISenderID: 102,
-      APIServerName: "Group-Lompi",
-      template: "Plan is Incredible",
+      APIServerName: 'Group-Lompi',
+      template: 'Plan is Incredible',
     },
   ]);
 
   const [formData, setFormData] = useState({
-    id: "",
-    APISenderID: "",
-    APIServerName: "",
-    template: "",
+    id: '',
+    APISenderID: '',
+    APIServerName: '',
+    template: '',
   });
 
   const [editLead, setEditLead] = useState(null);
@@ -36,17 +36,23 @@ export default function SMSSetting() {
 
   // APIServerName Type State
   const [APIServerName, setAPIServerName] = useState([]);
-  const [defaultTextAPIServerNameTypeDropDown, setDefaultTextAPIServerNameTypeDropDown] = useState("Select API Server Name");
-  const [isDropdownVisibleAPIServerNameType, setIsDropdownVisibleAPIServerNameType] =useState(false); 
+  const [
+    defaultTextAPIServerNameTypeDropDown,
+    setDefaultTextAPIServerNameTypeDropDown,
+  ] = useState('Select API Server Name');
+  const [
+    isDropdownVisibleAPIServerNameType,
+    setIsDropdownVisibleAPIServerNameType,
+  ] = useState(false);
 
   const handleActiveState = () => {
     setActive(!active);
     setIsEditMode(false); // Reset edit mode when switching views
     setFormData({
-      id: "",
-      APISenderID: "",
-      APIServerName: "",
-      template: "",
+      id: '',
+      APISenderID: '',
+      APIServerName: '',
+      template: '',
     }); // Reset form data
   };
 
@@ -68,20 +74,29 @@ export default function SMSSetting() {
     }));
   };
 
+  const [errors, setErrors] = useState({});
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation check
-    if (!formData.APIServerName || !formData.template) {
-      alert("Please fill in all fields before submitting.");
+    const errors = {};
+
+    if (!formData.APISenderID || formData.APISenderID.trim() === '') {
+      errors.APISenderID = 'API Server is required';
+    } else if (!formData.APIServerName || formData.APIServerName.trim() === '') {
+      errors.APIServerName = 'API Server Name is required';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
       return;
     }
 
     if (isEditMode) {
-      console.log("Edit User:", formData);
+      console.log('Edit User:', formData);
       // Add logic to submit the edited user data
     } else {
-      console.log("Add User:", formData);
+      console.log('Add User:', formData);
       setActive(true); // Switch to the form view
 
       // Add logic to add a new user
@@ -108,7 +123,7 @@ export default function SMSSetting() {
   };
 
   async function handleGroup() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
@@ -118,14 +133,14 @@ export default function SMSSetting() {
       };
       const response = await axios.get(
         `${protocal_url}${
-          window.location.hostname.split(".")[0]
+          window.location.hostname.split('.')[0]
         }.${tenant_base_url}/Admin/leadstatus/getall`,
         config
       );
       setplanType(response.data.data);
-      console.log("Plan data:", response.data.data);
+      console.log('Plan data:', response.data.data);
     } catch (error) {
-      console.error("Error fetching plans:", error);
+      console.error('Error fetching plans:', error);
     }
   }
 
@@ -144,7 +159,7 @@ export default function SMSSetting() {
                 onClick={handleActiveState}
                 className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
               >
-             Add SMS Setting
+                Add SMS Setting
               </button>
             </div>
             <div className="overflow-x-auto mt-3">
@@ -221,7 +236,7 @@ export default function SMSSetting() {
           <>
             <div className="flex min-w-screen justify-between items-center">
               <h1 className="text-3xl font-medium">
-                {isEditMode ? "Edit SMS Setting" : "Add SMS Setting"}
+                {isEditMode ? 'Edit SMS Setting' : 'Add SMS Setting'}
               </h1>
               <button
                 onClick={handleActiveState}
@@ -231,7 +246,7 @@ export default function SMSSetting() {
               </button>
             </div>
 
-           <form onSubmit={handleSubmit} className="flex">
+            <form onSubmit={handleSubmit} className="flex">
               <div className="w-full">
                 <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
                   <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
@@ -244,7 +259,8 @@ export default function SMSSetting() {
                       <div className="flex flex-col w-1/2">
                         <label
                           htmlFor="APISenderID"
-                          className="text-sm font-medium text-gray-700">
+                          className="text-sm font-medium text-gray-700"
+                        >
                           API Server ID
                         </label>
                         <input
@@ -255,25 +271,32 @@ export default function SMSSetting() {
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                           placeholder="Enter API Sender ID"
                         />
+                        {errors.APISenderID && (
+                        <span style={{ color: 'red' }}>{errors.APISenderID}</span>
+                      )}
                       </div>
                       {/* -------------API Server Name------------- */}
                       <div className="flex flex-col w-1/2 relative">
                         <label
                           htmlFor="name"
-                          className="text-sm font-medium text-gray-700">
+                          className="text-sm font-medium text-gray-700"
+                        >
                           API Server Name
                         </label>
                         <div
                           className="relative"
                           onClick={toggleDropdownAPIServerNameType}
-                          onMouseLeave={() => setIsDropdownVisibleAPIServerNameType(false)}
+                          onMouseLeave={() =>
+                            setIsDropdownVisibleAPIServerNameType(false)
+                          }
                         >
                           <button
                             className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                             id="DropDown"
                             type="button"
                           >
-                            {formData.APIServerName ||defaultTextAPIServerNameTypeDropDown}
+                            {formData.APIServerName ||
+                              defaultTextAPIServerNameTypeDropDown}
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
 
@@ -295,10 +318,11 @@ export default function SMSSetting() {
                             </div>
                           )}
                         </div>
+                        {errors.APIServerName && (
+                        <span style={{ color: 'red' }}>{errors.APIServerName}</span>
+                      )}
                       </div>
                     </div>
-
-
 
                     {/* -------------2------------- */}
                     <div className="flex space-x-4">
@@ -320,16 +344,14 @@ export default function SMSSetting() {
                       </div>
                     </div>
 
-
                     {/* -------------Button------------- */}
                     <button
                       type="submit"
                       className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute  top-[300px]"
                     >
-                      {isEditMode ? "Edit Plan" : "Add Plan"}
+                      {isEditMode ? 'Edit Plan' : 'Add Plan'}
                     </button>
                   </div>
-
                 </div>
               </div>
             </form>

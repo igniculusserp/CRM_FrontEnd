@@ -1,47 +1,46 @@
-import { useState, useEffect } from "react";
-import { FaAngleDown, FaBars } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
-import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
+import { useState, useEffect } from 'react';
+import { FaAngleDown, FaBars } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { tenant_base_url, protocal_url } from './../../../../../Config/config';
+import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
 
 export default function Group() {
-  const bearer_token = localStorage.getItem("token");
-  const name = getHostnamePart()
+  const bearer_token = localStorage.getItem('token');
+  const name = getHostnamePart();
   const { id } = useParams();
   const [active, setActive] = useState(true);
   const [formData, setFormData] = useState({
-    groupName: "",
-    userCount: "",
-    leadLimit: "",
-    fetchLimit: "",
+    groupName: '',
+    userCount: '',
+    leadLimit: '',
+    fetchLimit: '',
   });
   const [editLead, setEditLead] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-
   //group
   const [group, setGroup] = useState([]);
-  const [defaultTextGroupDropDown, setDefaultTextGroupDropDown] = useState("Select Group");
+  const [defaultTextGroupDropDown, setDefaultTextGroupDropDown] =
+    useState('Select Group');
   const [isDropdownVisibleGroup, setIsDropdownVisibleGroup] = useState(false);
-
 
   const handleActiveState = () => {
     setActive(!active);
     setIsEditMode(false); // Reset edit mode when switching views
     setFormData({
-      groupName: "",
-      userCount: "",
-      leadLimit: "",
-      fetchLimit: "",
+      groupName: '',
+      userCount: '',
+      leadLimit: '',
+      fetchLimit: '',
     }); // Reset form data
   };
 
   useEffect(() => {
-    getGroupsLists()
-  }, [])
+    getGroupsLists();
+  }, []);
 
   // get groups lists
   const getGroupsLists = async () => {
@@ -52,16 +51,17 @@ export default function Group() {
         },
       };
       const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/group/all`, config);
+        `${protocal_url}${name}.${tenant_base_url}/Admin/group/all`,
+        config
+      );
       if (response.status === 200) {
         const groups = response.data; // Get the user data
         setGroup(groups?.data); // Set the user data for editing
       }
     } catch (error) {
-      console.error("Error fetching user for edit:", error);
+      console.error('Error fetching user for edit:', error);
     }
   };
-
 
   const handleClick = (userId) => {
     const userToEdit = group.find((user) => user.id === userId);
@@ -81,22 +81,29 @@ export default function Group() {
     }));
   };
 
+  const [errors, setErrors] = useState({});
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation check
-    if (!formData.userCount || !formData.leadLimit || !formData.groupName) {
-      alert("Please fill in all fields before submitting.");
+    const errors = {};
+
+    if (!formData.groupName || formData.groupName.trim() === '') {
+      errors.groupName = 'Group name is required';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
       return;
     }
 
     if (isEditMode) {
-      handleUpdateGroup()
-      console.log("Edit User:", formData);
+      handleUpdateGroup();
+      console.log('Edit User:', formData);
       // Add logic to submit the edited user data
     } else {
-      handleCreateGroup()
-      console.log("Add User:", formData);
+      handleCreateGroup();
+      console.log('Add User:', formData);
       setActive(true); // Switch to the form view
 
       // Add logic to add a new user
@@ -131,16 +138,17 @@ export default function Group() {
         },
       };
       const response = await axios.post(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/group/add`, formData,
+        `${protocal_url}${name}.${tenant_base_url}/Admin/group/add`,
+        formData,
         config
       );
-      getGroupsLists()
+      getGroupsLists();
       setActive(!active);
-      alert(response.data.message)
+      alert(response.data.message);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error('Error fetching users:', error);
     }
-  }
+  };
 
   //delete  group
   const handleDeleteGroup = async (id) => {
@@ -151,18 +159,19 @@ export default function Group() {
         },
       };
       const response = await axios.delete(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/group/delete/${id}`, config
+        `${protocal_url}${name}.${tenant_base_url}/Admin/group/delete/${id}`,
+        config
       );
-      getGroupsLists()
-      alert(response.data.message)
+      getGroupsLists();
+      alert(response.data.message);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error('Error fetching users:', error);
     }
-  }
+  };
 
   //update  group
   const handleUpdateGroup = async () => {
-    console.log(formData)
+    console.log(formData);
     try {
       const config = {
         headers: {
@@ -170,15 +179,17 @@ export default function Group() {
         },
       };
       const response = await axios.put(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/group/edit/${formData?.id}`, formData, config
+        `${protocal_url}${name}.${tenant_base_url}/Admin/group/edit/${formData?.id}`,
+        formData,
+        config
       );
-      getGroupsLists()
-      handleActiveState()
-      alert(response.data.message)
+      getGroupsLists();
+      handleActiveState();
+      alert(response.data.message);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error('Error fetching users:', error);
     }
-  }
+  };
   return (
     <>
       <div className="m-3 min-w-screen">
@@ -229,7 +240,6 @@ export default function Group() {
                         </div>
                       </th>
 
-
                       <th className="px-2 py-3 text-left border-r font-medium">
                         <div className="flex justify-between items-center text-sm">
                           <span>Action</span>
@@ -268,7 +278,13 @@ export default function Group() {
                             className="bg-blue-500 rounded"
                             onClick={() => handleClick(user.id)}
                           />
-                          <RiDeleteBin6Fill size={25} color="red" onClick={() => { handleDeleteGroup(user.id) }} />
+                          <RiDeleteBin6Fill
+                            size={25}
+                            color="red"
+                            onClick={() => {
+                              handleDeleteGroup(user.id);
+                            }}
+                          />
                         </td>
                       </tr>
                     ))}
@@ -281,7 +297,7 @@ export default function Group() {
           <>
             <div className="flex min-w-screen justify-between items-center">
               <h1 className="text-3xl font-medium">
-                {isEditMode ? "Edit Group" : "Add New Group"}
+                {isEditMode ? 'Edit Group' : 'Add New Group'}
               </h1>
               <button
                 onClick={handleActiveState}
@@ -311,10 +327,15 @@ export default function Group() {
                         <input
                           type="text"
                           name="groupName"
-                          value={formData.groupName || ""}
+                          value={formData.groupName || ''}
                           onChange={handleChange}
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                         />
+                        {errors.groupName && (
+                          <span style={{ color: 'red' }}>
+                            {errors.groupName}
+                          </span>
+                        )}
                       </div>
                       {/* -------------Group------------- */}
                       {/* -------------Fetch Limit------------- */}
@@ -328,12 +349,11 @@ export default function Group() {
                         <input
                           type="number"
                           name="fetchLimit"
-                          value={formData.fetchLimit || ""}
+                          value={formData.fetchLimit || ''}
                           onChange={handleChange}
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                         />
                       </div>
-
                     </div>
 
                     {/* -------------2------------- */}
@@ -349,7 +369,7 @@ export default function Group() {
                         <input
                           type="number"
                           name="userCount"
-                          value={formData.userCount || ""}
+                          value={formData.userCount || ''}
                           onChange={handleChange}
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                         />
@@ -366,7 +386,7 @@ export default function Group() {
                         <input
                           type="number"
                           name="leadLimit"
-                          value={formData.leadLimit || ""}
+                          value={formData.leadLimit || ''}
                           onChange={handleChange}
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                         />
@@ -374,19 +394,16 @@ export default function Group() {
                     </div>
                     {/* -------------3------------- */}
 
-
                     {/* -------------Button------------- */}
-
 
                     <div className="grid justify-end mt-56  ">
                       <button
                         type="submit"
                         className="px-32 py-4 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
                       >
-                        {isEditMode ? "Update" : "Save"}
+                        {isEditMode ? 'Update' : 'Save'}
                       </button>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -394,7 +411,6 @@ export default function Group() {
           </>
         )}
       </div>
-
     </>
-  )
+  );
 }

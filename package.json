@@ -32,7 +32,8 @@
         "react-switch": "^7.0.0",
         "react-toastify": "^10.0.5",
         "recharts": "^2.12.7",
-        "xlsx": "^0.18.5"
+        "xlsx": "^0.18.5",
+        "zod": "^3.23.8"
     },
     "browserslist": {
         "production": [

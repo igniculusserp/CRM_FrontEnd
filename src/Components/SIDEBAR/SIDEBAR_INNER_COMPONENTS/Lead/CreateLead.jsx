@@ -1,20 +1,21 @@
-//react 
-import { useState, useEffect } from "react";
+//react
+import { useState, useEffect } from 'react';
+
 //reactIcon
-import { FaAngleDown } from "react-icons/fa";
-import { IoInformationCircle } from "react-icons/io5";
+import { FaAngleDown } from 'react-icons/fa';
+import { IoInformationCircle } from 'react-icons/io5';
 
 //reactPackages
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 //external Packages
-import axios from "axios";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import axios from 'axios';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 //file
-import { tenant_base_url, protocal_url } from "../../../../Config/config";
+import { tenant_base_url, protocal_url } from '../../../../Config/config';
 //Images
-import profilepic from "./../../../../assets/images/profilePicEditLead.png";
+import profilepic from './../../../../assets/images/profilePicEditLead.png';
 
 export default function Createlead() {
   //to make id unique
@@ -22,35 +23,35 @@ export default function Createlead() {
   const navigate = useNavigate();
 
   //form description is kept-out
-  const [description, setdescription] = useState("Add Text Here");
+  const [description, setdescription] = useState('Add Text Here');
   const [editLead, seteditLead] = useState({
-    id: "",
-    name: "",
-    language: "",
-    company: "",
-    email: "",
-    title: "",
-    leadSource: "",
-    leadesStatus: "",
-    mobNo: "",
-    phNo: "",
-    assigned_To: "",
-    street: "",
-    pinCode: "",
-    country: "",
-    city: "",
-    state: "",
-    riskCapcity: "",
-    tradingTime: "",
-    tradingType: "",
-    investmet: "",
-    advisoryExp: "",
-    trialStartDate: "",
-    trialEndDate: "",
-    tradingYears: "",
-    callBackDateTime: "",
-    contactId: "",
-    lastModifiedBy: "",
+    id: '',
+    name: '',
+    language: '',
+    company: '',
+    email: '',
+    title: '',
+    leadSource: '',
+    leadesStatus: '',
+    mobNo: '',
+    phNo: '',
+    assigned_To: '',
+    street: '',
+    pinCode: '',
+    country: '',
+    city: '',
+    state: '',
+    riskCapcity: '',
+    tradingTime: '',
+    tradingType: '',
+    investmet: '',
+    advisoryExp: '',
+    trialStartDate: '',
+    trialEndDate: '',
+    tradingYears: '',
+    callBackDateTime: '',
+    contactId: '',
+    lastModifiedBy: '',
     segments: [],
   });
 
@@ -58,7 +59,7 @@ export default function Createlead() {
   //to make code for particluar company
   const fullURL = window.location.href;
   const url = new URL(fullURL);
-  const name = url.hostname.split(".")[0];
+  const name = url.hostname.split('.')[0];
 
   //imp to identify mode
   const [isEditMode, setIsEditMode] = useState(false);
@@ -73,7 +74,7 @@ export default function Createlead() {
 
   //GET by ID---------------------------//GET---------------------------//GET---------------------------by ID-----------by ID
   async function handleLead() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -87,51 +88,51 @@ export default function Createlead() {
       const data = response.data.data;
       setdescription(data.description);
       seteditLead({
-        id: data.id || "",
-        name: data.name || "",
-        language: data.language || "",
-        company: data.company || "",
-        title: data.tital || "",
-        leadSource: data.leadsSource || "N/A",
-        leadesStatus: data.leadesStatus || "N/A",
-        mobNo: data.mobileNo || "",
-        phNo: data.phoneNo || "",
-        email: data.email || "",
-        assigned_To: data.assigned_To || "",
-        street: data.street || "",
-        pinCode: data.postalCode || "",
-        country: data.country || "",
-        city: data.city || "",
-        state: data.state || "",
-        riskCapcity: data.risk_Capacity || "",
-        tradingTime: data.tradingTime || "",
-        tradingType: data.tradingType || "",
-        investmet: data.investment || "",
-        advisoryExp: data.advisaryExp || "",
+        id: data.id || '',
+        name: data.name || '',
+        language: data.language || '',
+        company: data.company || '',
+        title: data.tital || '',
+        leadSource: data.leadsSource || 'N/A',
+        leadesStatus: data.leadesStatus || 'N/A',
+        mobNo: data.mobileNo || '',
+        phNo: data.phoneNo || '',
+        email: data.email || '',
+        assigned_To: data.assigned_To || '',
+        street: data.street || '',
+        pinCode: data.postalCode || '',
+        country: data.country || '',
+        city: data.city || '',
+        state: data.state || '',
+        riskCapcity: data.risk_Capacity || '',
+        tradingTime: data.tradingTime || '',
+        tradingType: data.tradingType || '',
+        investmet: data.investment || '',
+        advisoryExp: data.advisaryExp || '',
         segments: data.segments || [],
         trialStartDate: data.trialStartDate || null,
         trialEndDate: data.trialEndDate || null,
-        tradingYears: data.trading_yrs || "",
+        tradingYears: data.trading_yrs || '',
         callBackDateTime: data.call_bck_DateTime || null,
-        contactId: data.contactId || "",
-        lastModifiedBy: data.lastModifiedBy || "",
+        contactId: data.contactId || '',
+        lastModifiedBy: data.lastModifiedBy || '',
       });
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
     }
   }
 
   //----------------------------------------------------------------------------------------
   //LeadSourceDropDown
   const LeadSourceDropDown = [
-    { key: 1, name: "Cold Call" },
-    { key: 2, name: "Advertisement" },
-    { key: 3, name: "Web Download" },
-    { key: 4, name: "Seminar Partner" },
+    { key: 1, name: 'Cold Call' },
+    { key: 2, name: 'Advertisement' },
+    { key: 3, name: 'Web Download' },
+    { key: 4, name: 'Seminar Partner' },
   ];
 
   const [defaultTextLeadSourceDropDown, setDefaultTextLeadSourceDropDown] =
-    useState("Select Lead");
+    useState('Select Lead');
 
   const [isDropdownVisibleLeadSource, setisDropdownVisibleLeadSource] =
     useState(false);
@@ -151,10 +152,10 @@ export default function Createlead() {
 
   //----------------------------------------------------------------------------------------
   //LeadStatusDropDown GET API Is being used here
-  const [leadStatus, setleadStatus] = useState("");
+  const [leadStatus, setleadStatus] = useState('');
 
   async function handleLeadStatus() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
@@ -168,9 +169,9 @@ export default function Createlead() {
       );
       setleadStatus(response.data.data);
 
-      console.log("status:", response.data.data);
+      console.log('status:', response.data.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -178,7 +179,6 @@ export default function Createlead() {
   useEffect(() => {
     handleLeadStatus();
   }, []);
-
 
   const [defaultTextLeadStatusDropDown, setdefaultTextLeadStatusDropDown] =
     useState('Select Status');
@@ -198,11 +198,10 @@ export default function Createlead() {
     }));
   };
 
-  
   // Segment GET API Is being used here
   const [segments, setSegments] = useState([]);
   async function handleSegment() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
@@ -217,7 +216,7 @@ export default function Createlead() {
       setSegments(response.data.data);
       // console.log("segment:", response.data.data);
     } catch (error) {
-      console.error("Error fetching segments:", error);
+      console.error('Error fetching segments:', error);
     }
   }
 
@@ -225,10 +224,10 @@ export default function Createlead() {
     handleSegment();
   }, []);
 
-  const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] = useState(
-    "Select Segment"
-  );
-  const [isDropdownVisibleSegment, setisDropdownVisibleSegment] = useState(false);
+  const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
+    useState('Select Segment');
+  const [isDropdownVisibleSegment, setisDropdownVisibleSegment] =
+    useState(false);
 
   const toggleDropdownSegment = () => {
     setisDropdownVisibleSegment(true);
@@ -252,21 +251,16 @@ export default function Createlead() {
       segments: updatedSegments,
     }));
 
-    console.log("Selected segments:", updatedSegments);
+    console.log('Selected segments:', updatedSegments);
   };
   // Segment GET API Is being used here
 
-
-
-
-
   //----------------------------------------------------------------------------------------
   //assigned_ToDropDown
-  const [assigned_ToDropDown, setassigned_ToDropDown] = useState([])
-
+  const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
 
   async function handleAssigned_To() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
@@ -279,9 +273,9 @@ export default function Createlead() {
         config
       );
       setassigned_ToDropDown(response.data?.data);
-      console.log("status:", response.data);
+      console.log('status:', response.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -291,7 +285,7 @@ export default function Createlead() {
   }, []);
 
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
-    useState("Select Assigned");
+    useState('Select Assigned');
   const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
     useState(false);
 
@@ -299,8 +293,13 @@ export default function Createlead() {
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
   };
 
-  const handleDropdownassigned_ToDropDown = (assigned_To_Username, assigned_To_Role) => {
-    setdefaultTextassigned_ToDropDown(assigned_To_Username + " " + assigned_To_Role);
+  const handleDropdownassigned_ToDropDown = (
+    assigned_To_Username,
+    assigned_To_Role
+  ) => {
+    setdefaultTextassigned_ToDropDown(
+      assigned_To_Username + ' ' + assigned_To_Role
+    );
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     seteditLead((prevTask) => ({
       ...prevTask,
@@ -316,18 +315,37 @@ export default function Createlead() {
     }));
   };
 
-
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
+  const [errors, setErrors] = useState({});
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const bearer_token = localStorage.getItem("token");
+
+    const errors = {};
+
+    // MOBILE NUMBER VALIDATION
+    if (
+      !editLead.mobNo ||
+      isNaN(editLead.mobNo) ||
+      editLead.mobNo.length !== 10 ||
+      editLead.mobNo.trim() === ""
+    ) {
+      errors.mobileNo = 'Enter a valid 10-digit mobile number';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+      return;
+    }
+
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       };
       const formData_PUT = {
@@ -399,24 +417,32 @@ export default function Createlead() {
           formData_PUT,
           config
         );
-        alert("Lead updated successfully!");
-        navigate(`/sidebar/lead`)
+        alert('Lead updated successfully!');
+        navigate(`/sidebar/lead`);
       } else {
-
         await axios.post(
           `${protocal_url}${name}.${tenant_base_url}/Lead/lead/add`,
           formData_POST,
           config
         );
-        console.log(formData_POST)
-        alert("Lead created successfully!");
-        navigate(`/sidebar/lead`)
+
+        if (
+          !formData_POST.mobileNo &&
+          isNaN(formData_POST.mobileNo) &&
+          formData_POST.mobileNo < 10
+        ) {
+          setErrors({ mobileNo: 'Enter valid mobile number' });
+        }
+
+        console.log(formData_POST);
+        alert('Lead created successfully!');
+        navigate(`/sidebar/lead`);
       }
 
       // Redirect after a short delay
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error occurred. Please try again.");
+      console.error('Error:', error);
+      alert('An error occurred. Please try again.');
     }
   };
 
@@ -425,7 +451,9 @@ export default function Createlead() {
       <div className="min-h-screen flex flex-col mt-3">
         <div className="flex justify-between mx-3  bg-white border rounded p-3">
           <div className="flex items-center justify-center gap-3">
-            <h1 className="text-xl">{isEditMode ? <h1>Edit Lead</h1> : <>Create Lead</>}</h1>
+            <h1 className="text-xl">
+              {isEditMode ? <h1>Edit Lead</h1> : <>Create Lead</>}
+            </h1>
             <h1 className="bg-blue-500 text-xs text-white px-4 py-1 font-medium rounded-lg">
               Edit Page Layout
             </h1>
@@ -495,7 +523,6 @@ export default function Createlead() {
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter your Language"
-                      required
                     />
                   </div>
                 </div>
@@ -549,14 +576,16 @@ export default function Createlead() {
                     <div
                       className="relative"
                       onClick={toggleDropdownLeadSource}
-                      onMouseLeave={() => (setisDropdownVisibleLeadSource(false))}
+                      onMouseLeave={() => setisDropdownVisibleLeadSource(false)}
                     >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="LeadSourceDropDown"
                         type="button"
                       >
-                        {isEditMode ? editLead.leadSource : defaultTextLeadSourceDropDown}
+                        {isEditMode
+                          ? editLead.leadSource
+                          : defaultTextLeadSourceDropDown}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLeadSource && (
@@ -580,7 +609,10 @@ export default function Createlead() {
                   {/* -------------Lead Status------------- */}
 
                   <div className="flex flex-col w-1/2 relative">
-                    <label htmlFor="leadesStatus" className="text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="leadesStatus"
+                      className="text-sm font-medium text-gray-700"
+                    >
                       Lead Status
                     </label>
                     <div
@@ -593,28 +625,39 @@ export default function Createlead() {
                         id="LeadStatusDropDown"
                         type="button"
                       >
-                        {isEditMode ? editLead.leadesStatus : defaultTextLeadStatusDropDown}
+                        {isEditMode
+                          ? editLead.leadesStatus
+                          : defaultTextLeadStatusDropDown}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLeadStatus && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
                           <ul className="py-2 text-sm text-gray-700">
-                            {leadStatus.length > 0 ?
-                              (
-                                leadStatus.map(({ key, status }) => (
-                                  <li
-                                    key={key}
-                                    onClick={() => handleDropdownLeadStatus(status)}
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                                  >
-                                    {status}
-                                  </li>
-                                ))
-                              ) : (
-                                <li className="flex items-center px-4 py-2 text-center gap-1">
-                                  <IoInformationCircle size={25} className="text-cyan-600" />  Lead status not available. Go to <span className="font-bold">Settings - Add Lead Status  </span>.
+                            {leadStatus.length > 0 ? (
+                              leadStatus.map(({ key, status }) => (
+                                <li
+                                  key={key}
+                                  onClick={() =>
+                                    handleDropdownLeadStatus(status)
+                                  }
+                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                >
+                                  {status}
                                 </li>
-                              )}
+                              ))
+                            ) : (
+                              <li className="flex items-center px-4 py-2 text-center gap-1">
+                                <IoInformationCircle
+                                  size={25}
+                                  className="text-cyan-600"
+                                />{' '}
+                                Lead status not available. Go to{' '}
+                                <span className="font-bold">
+                                  Settings - Add Lead Status{' '}
+                                </span>
+                                .
+                              </li>
+                            )}
                           </ul>
                         </div>
                       )}
@@ -640,6 +683,9 @@ export default function Createlead() {
                       onChange={handleChange}
                       placeholder="Enter your Mobile Number"
                     />
+                    {errors.mobileNo && (
+                      <span style={{ color: 'red' }}>{errors.mobileNo}</span>
+                    )}
                   </div>
                   {/* -------------Phone Number------------- */}
                   <div className="flex flex-col w-1/2">
@@ -689,30 +735,40 @@ export default function Createlead() {
                     <div
                       className="relative"
                       onClick={toggleDropdownassigned_ToDropDown}
-                      onMouseLeave={() => (setisDropdownassigned_ToDropDown(false))}
+                      onMouseLeave={() =>
+                        setisDropdownassigned_ToDropDown(false)
+                      }
                     >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="LeadStatusDropDown"
                         type="button"
                       >
-                        {isEditMode ? editLead.assigned_To : defaultTextassigned_ToDropDown}
+                        {isEditMode
+                          ? editLead.assigned_To
+                          : defaultTextassigned_ToDropDown}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownassigned_ToDropDown && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                           <ul className="py-2 text-sm text-gray-700">
-                            {assigned_ToDropDown.map(({ userName, role }, index) => (
-                              <li
-                                key={index}
-                                onClick={() => handleDropdownassigned_ToDropDown(userName, role)}
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                              >
-                                {userName}-({role})
-                              </li>
-                            ))}
+                            {assigned_ToDropDown.map(
+                              ({ userName, role }, index) => (
+                                <li
+                                  key={index}
+                                  onClick={() =>
+                                    handleDropdownassigned_ToDropDown(
+                                      userName,
+                                      role
+                                    )
+                                  }
+                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                >
+                                  {userName}-({role})
+                                </li>
+                              )
+                            )}
                           </ul>
-
                         </div>
                       )}
                     </div>
@@ -822,7 +878,7 @@ export default function Createlead() {
                     />
                   </div>
                   {/* -------------Description------------- */}
-                </div>{" "}
+                </div>{' '}
                 {/* -------------9------------- */}
                 {/* -------------Risk Capcity------------- */}
                 <div className="flex space-x-4">
@@ -916,7 +972,10 @@ export default function Createlead() {
                   </div>
                   {/* -------------Segments------------- */}
                   <div className="flex flex-col w-1/2 relative">
-                    <label htmlFor="segment" className="text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="segment"
+                      className="text-sm font-medium text-gray-700"
+                    >
                       Segment
                     </label>
                     <div
@@ -943,19 +1002,31 @@ export default function Createlead() {
                                 >
                                   <input
                                     type="checkbox"
-                                    checked={editLead.segments.includes(segment.segment)}
-                                    onChange={() => handleCheckboxChange(segment)}
+                                    checked={editLead.segments.includes(
+                                      segment.segment
+                                    )}
+                                    onChange={() =>
+                                      handleCheckboxChange(segment)
+                                    }
                                     className="mr-2"
                                   />
-                                  {segment.segment} {/* Assuming 'segment' is the property you want to display */}
+                                  {segment.segment}{' '}
+                                  {/* Assuming 'segment' is the property you want to display */}
                                 </li>
                               ))
                             ) : (
                               <li className="flex items-center px-4 py-2 text-center gap-1">
-                                <IoInformationCircle size={25} className="text-cyan-600" />  Segments not available. Go to <span className="font-bold">Settings - Add Segment  </span>.
+                                <IoInformationCircle
+                                  size={25}
+                                  className="text-cyan-600"
+                                />{' '}
+                                Segments not available. Go to{' '}
+                                <span className="font-bold">
+                                  Settings - Add Segment{' '}
+                                </span>
+                                .
                               </li>
                             )}
-
                           </ul>
                         </div>
                       )}
@@ -1099,7 +1170,7 @@ export default function Createlead() {
                   type="submit"
                   className="px-32 py-4 mt-20 mb-2 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
                 >
-                  {isEditMode ? "Update" : "Save"}
+                  {isEditMode ? 'Update' : 'Save'}
                 </button>
               </div>
             </div>

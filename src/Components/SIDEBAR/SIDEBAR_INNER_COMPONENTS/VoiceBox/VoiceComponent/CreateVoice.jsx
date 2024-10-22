@@ -135,8 +135,32 @@ const CreateVoice = () => {
 
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
+  const [errors, setErrors] = useState({});
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const errors = {};
+
+    // VALIDATION
+    if (!editVoice.leadNo || isNaN(editVoice.leadNo)) {
+      errors.leadNumber = 'Lead number is required';
+    } else if (
+      !editVoice.employeeName ||
+      editVoice.employeeName.trim() === ''
+    ) {
+      errors.empName = 'Employee Name is required';
+    } else if (!editVoice.uniqueId) {
+      errors.uId = 'Enter Unique Id';
+    } else if (editVoice.type || editVoice.type.trim() === '') {
+      errors.typeDropdown = 'Type is required';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+      return;
+    }
+
     const bearer_token = localStorage.getItem('token');
 
     try {
@@ -193,13 +217,13 @@ const CreateVoice = () => {
         </Link>
       </div>
       <div className="overflow-hidden shadow-md">
-        <div className="py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+        <div className="py-2 px-3 bg-cyan-500 rounded-t-xl mt-3">
           <h1 className="text-white">Voice Box Details</h1>
         </div>
         {/* CREATE VOICE FORM */}
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col py-2 px-4 bg-white rounded-b-xl">
-            <div className="grid gap-2 p-2">
+          <div className="flex flex-col py-2 px-3 bg-white rounded-b-xl">
+            <div className="grid gap-2 py-2">
               {/* FIRST ROW */}
               <div className="flex space-x-4">
                 {/* LEAD ID FIELD */}
@@ -219,6 +243,9 @@ const CreateVoice = () => {
                     onChange={handleChange}
                     placeholder="Entere verox peron"
                   />
+                  {errors.leadNo && (
+                    <span style={{ color: 'red' }}>{errors.leadNumber}</span>
+                  )}
                 </div>
                 {/* CLIENT NAME FIELD */}
                 <div className="flex flex-col w-1/2">
@@ -258,6 +285,9 @@ const CreateVoice = () => {
                     onChange={handleChange}
                     placeholder="Entere verox peron"
                   />
+                  {errors.employeeName && (
+                    <span style={{ color: 'red' }}>{errors.empName}</span>
+                  )}
                 </div>
                 {/* phoneNo FIELD */}
                 <div className="flex flex-col w-1/2">
@@ -336,6 +366,9 @@ const CreateVoice = () => {
                     onChange={handleChange}
                     placeholder="Entere verox peron"
                   />
+                  {errors.uniqueId && (
+                    <span style={{ color: 'red' }}>{errors.uId}</span>
+                  )}
                 </div>
                 {/* DURATION FIELD */}
                 <div className="flex flex-col w-1/2">
@@ -401,6 +434,9 @@ const CreateVoice = () => {
                         </div>
                       )}
                     </div>
+                    {errors.type && (
+                    <span style={{ color: 'red' }}>{errors.typeData}</span>
+                  )}
                   </div>
                 </div>
                 {/* STATUS TO DROPDOWN */}
