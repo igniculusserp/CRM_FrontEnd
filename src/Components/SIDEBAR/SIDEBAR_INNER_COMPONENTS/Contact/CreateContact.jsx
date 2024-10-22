@@ -291,9 +291,28 @@ export default function CreateContact() {
 
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
+  const [errors, setErrors] = useState({});
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const bearer_token = localStorage.getItem('token');
+
+    const errors = {};
+
+    // MOBILE NUMBER VALIDATION
+    if (
+      !editLead.mobNo ||
+      isNaN(editLead.mobNo) ||
+      editLead.mobNo.length !== 10 ||
+      editLead.mobNo.trim() === ''
+    ) {
+      errors.mobileNo = 'Enter a valid 10-digit mobile number';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+      return;
+    }
 
     try {
       const config = {
@@ -615,6 +634,9 @@ export default function CreateContact() {
                       onChange={handleChange}
                       placeholder="Enter your Mobile Number"
                     />
+                    {errors.mobileNo && (
+                      <span style={{ color: 'red' }}>{errors.mobileNo}</span>
+                    )}
                   </div>
                   {/* -------------Phone Number------------- */}
                   <div className="flex flex-col w-1/2">

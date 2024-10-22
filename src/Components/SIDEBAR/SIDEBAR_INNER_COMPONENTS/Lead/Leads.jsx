@@ -652,14 +652,14 @@ export default function Lead() {
     { key: 2, value: 'Lead Status' },
   ];
 
-  const [selectedValue, setSelectedValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState('');
   const [assignModalOpen, setAssignModalOpen] = useState(false);
   const [statusModalOpen, setStatusModalOpen] = useState(false);
 
   const handleSelect = (selected) => {
     setSelectedValue(selected);
     console.log('Selected Value:', selected);
-  
+
     if (selected === 'Lead Assign') {
       setAssignModalOpen(true);
     }

@@ -1,10 +1,9 @@
-
-import { useState, useEffect } from "react";
-import { FaBars } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import axios from "axios";
-import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { useState, useEffect } from 'react';
+import { FaBars } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+import axios from 'axios';
+import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 
 export default function Department() {
   const [data, setData] = useState([]);
@@ -14,11 +13,11 @@ export default function Department() {
 
   const fullURL = window.location.href;
   const url = new URL(fullURL);
-  const name = url.hostname.split(".")[0];
+  const name = url.hostname.split('.')[0];
 
   // Fetch all  data
   async function handleLead() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -31,7 +30,7 @@ export default function Department() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
     }
   }
 
@@ -41,7 +40,7 @@ export default function Department() {
 
   // Delete  by ID
   const handleDelete = async (id) => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -53,10 +52,10 @@ export default function Department() {
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert("Deleted successfully");
+      alert('Deleted successfully');
     } catch (error) {
       console.log(error);
-      alert("Failed to delete. Please try again.");
+      alert('Failed to delete. Please try again.');
     }
   };
 
@@ -68,14 +67,14 @@ export default function Department() {
   };
 
   const handleAdd = () => {
-    setSelectedData({ id: "", departmentName: "" });
+    setSelectedData({ id: '', departmentName: '' });
     setActive(false);
     setIsEditMode(false);
   };
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
@@ -89,14 +88,14 @@ export default function Department() {
           { departmentName: formData.departmentName },
           config
         );
-        alert("Updated successfully");
+        alert('Updated successfully');
       } else {
         await axios.post(
           `${protocal_url}${name}.${tenant_base_url}/Admin/department/add`,
           { departmentName: formData.departmentName },
           config
         );
-        alert("Added successfully");
+        alert('Added successfully');
       }
 
       handleLead(); // Refresh the list
@@ -104,8 +103,8 @@ export default function Department() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      console.error("Error saving name", error);
-      alert("Failed to save . Please try again.");
+      console.error('Error saving name', error);
+      alert('Failed to save . Please try again.');
     }
   };
 
@@ -118,10 +117,10 @@ export default function Department() {
 
   // Form Component for Adding/Updating
   const EditForm = ({ data, isEditMode }) => {
-    const [formData, setFormData] = useState({ id: "", departmentName: "" });
+    const [formData, setFormData] = useState({ id: '', departmentName: '' });
 
     useEffect(() => {
-      setFormData(data || { id: "", departmentName: "" });
+      setFormData(data || { id: '', departmentName: '' });
     }, [data]);
 
     // Handle form input changes
@@ -132,8 +131,22 @@ export default function Department() {
       });
     };
 
+    const [errors, setErrors] = useState({});
+
     const handleSubmit = (e) => {
       e.preventDefault();
+
+      const errors = {};
+
+      if (!formData.name || formData.name.trim() === '') {
+        errors.name = 'Group name is required';
+      }
+
+      if (Object.keys(errors).length > 0) {
+        setErrors(errors);
+        return;
+      }
+
       handleFormSubmit(formData);
     };
 
@@ -141,7 +154,7 @@ export default function Department() {
       <div>
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">
-            {isEditMode ? "Edit" : "Add"}
+            {isEditMode ? 'Edit' : 'Add'}
           </h1>
           <button
             onClick={handleCancel}
@@ -169,10 +182,13 @@ export default function Department() {
                     <input
                       type="text"
                       name="departmentName"
-                      value={formData.departmentName || ""}
+                      value={formData.departmentName || ''}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
+                    {errors.name && (
+                      <span style={{ color: 'red' }}>{errors.name}</span>
+                    )}
                   </div>
                 </div>
 
@@ -180,7 +196,7 @@ export default function Department() {
                   type="submit"
                   className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute top-[200px]"
                 >
-                  {isEditMode ? "Update" : "Save"}
+                  {isEditMode ? 'Update' : 'Save'}
                 </button>
               </div>
             </div>

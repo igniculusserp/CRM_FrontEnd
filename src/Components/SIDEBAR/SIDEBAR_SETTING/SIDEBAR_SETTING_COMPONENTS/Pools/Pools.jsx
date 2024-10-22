@@ -131,8 +131,27 @@ export default function Pools() {
       });
     };
 
+
+    const [errors, setErrors] = useState({})
+
     const handleSubmit = (e) => {
       e.preventDefault();
+
+      const errors = {};
+
+    if (
+      !formData.poolName ||
+      formData.poolName.trim() === ''
+    ) {
+      errors.poolName = 'Pool name is required';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+      return;
+    }
+
+
       handleFormSubmit(formData);
     };
 
@@ -172,6 +191,11 @@ export default function Pools() {
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
+                    {errors.poolName && (
+                      <span style={{ color: 'red' }}>
+                        {errors.poolName}
+                      </span>
+                    )}
                   </div>
                 </div>
 
