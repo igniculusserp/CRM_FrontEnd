@@ -152,7 +152,10 @@ export default function MISReports() {
       href: '/sidebar/createpaid',
     },
     'User Report': { text: 'Add User Report', href: '/sidebar/createuser' },
-    'Calling Report': { text: 'Add Calling Report', href: '/sidebar/createcalling' },
+    'Calling Report': {
+      text: 'Add Calling Report',
+      href: '/sidebar/createcalling',
+    },
     'DND Report': { text: 'Add DND Report', href: '/sidebar/creatednd' },
     // 'Track Sheet': { text: 'Add Track Sheet', href: '/sidebar/createtrack' },
     // 'Research Report': { text: 'Add Research Report', href: '/sidebar/createresearch' },
@@ -195,28 +198,33 @@ export default function MISReports() {
           </div>
         </div>
         <div className="flex items-center justify-between my-3">
-          <h1 className="text-3xl px-1">
-            {(() => {
-              switch (selectedButton) {
-                case 'General Report':
-                  return 'General Report';
-                case 'Ft Report':
-                  return 'Ft Report';
-                case 'Paid Client Report':
-                  return 'Paid Client Report';
-                case 'User Report':
-                  return 'User Report';
-                case 'Calling Report':
-                  return 'Calling Report';
-                case 'DND Report':
-                  return 'DND Report';
-                case 'Track Sheet':
-                  return 'Track Sheet';
-                default:
-                  return 'General Report';
-              }
-            })()}
-          </h1>
+          <div className="flex gap-2 items-center justify-center">
+            <h1 className="text-3xl px-1">
+              {(() => {
+                switch (selectedButton) {
+                  case 'General Report':
+                    return 'General Report';
+                  case 'Ft Report':
+                    return 'Ft Report';
+                  case 'Paid Client Report':
+                    return 'Paid Client Report';
+                  case 'User Report':
+                    return 'User Report';
+                  case 'Calling Report':
+                    return 'Calling Report';
+                  case 'DND Report':
+                    return 'DND Report';
+                  case 'Track Sheet':
+                    return 'Track Sheet';
+                  default:
+                    return 'General Report';
+                }
+              })()}
+            </h1>
+            <h2 className="text-xl font-medium text-red-500 text-center">
+              (This feature is coming soon...)
+            </h2>
+          </div>
           <Link to={buttonText.href}>
             <button className="px-3 py-2 bg-blue-600 text-center text-md text-white rounded-md">
               {buttonText.text || 'Add General Report'}

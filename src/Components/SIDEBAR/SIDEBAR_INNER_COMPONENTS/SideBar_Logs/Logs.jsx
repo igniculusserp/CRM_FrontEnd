@@ -30,7 +30,7 @@ export default function Logs() {
       givenTime: '12:03 Am',
       ipAddress: '45.117.73.26',
       macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.'
+      loginTime: '1 hr ago.',
     },
     {
       id: 2,
@@ -48,7 +48,7 @@ export default function Logs() {
       givenTime: '12:03 Am',
       ipAddress: '45.117.73.26',
       macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.'
+      loginTime: '1 hr ago.',
     },
     {
       id: 3,
@@ -66,7 +66,7 @@ export default function Logs() {
       givenTime: '12:03 Am',
       ipAddress: '45.117.73.26',
       macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.'
+      loginTime: '1 hr ago.',
     },
     {
       id: 4,
@@ -84,7 +84,7 @@ export default function Logs() {
       givenTime: '12:03 Am',
       ipAddress: '45.117.73.26',
       macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.'
+      loginTime: '1 hr ago.',
     },
     {
       id: 5,
@@ -102,7 +102,7 @@ export default function Logs() {
       givenTime: '12:03 Am',
       ipAddress: '45.117.73.26',
       macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.'
+      loginTime: '1 hr ago.',
     },
     {
       id: 6,
@@ -120,7 +120,7 @@ export default function Logs() {
       givenTime: '12:03 Am',
       ipAddress: '45.117.73.26',
       macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.'
+      loginTime: '1 hr ago.',
     },
     {
       id: 7,
@@ -138,7 +138,7 @@ export default function Logs() {
       givenTime: '12:03 Am',
       ipAddress: '45.117.73.26',
       macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.'
+      loginTime: '1 hr ago.',
     },
     {
       id: 8,
@@ -156,7 +156,7 @@ export default function Logs() {
       givenTime: '12:03 Am',
       ipAddress: '45.117.73.26',
       macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.'
+      loginTime: '1 hr ago.',
     },
     {
       id: 9,
@@ -174,7 +174,7 @@ export default function Logs() {
       givenTime: '12:03 Am',
       ipAddress: '45.117.73.26',
       macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.'
+      loginTime: '1 hr ago.',
     },
     {
       id: 10,
@@ -192,7 +192,7 @@ export default function Logs() {
       givenTime: '12:03 Am',
       ipAddress: '45.117.73.26',
       macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.'
+      loginTime: '1 hr ago.',
     },
     {
       id: 11,
@@ -210,7 +210,7 @@ export default function Logs() {
       givenTime: '12:03 Am',
       ipAddress: '45.117.73.26',
       macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.'
+      loginTime: '1 hr ago.',
     },
     {
       id: 12,
@@ -228,7 +228,7 @@ export default function Logs() {
       givenTime: '12:03 Am',
       ipAddress: '45.117.73.26',
       macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.'
+      loginTime: '1 hr ago.',
     },
     {
       id: 13,
@@ -246,7 +246,7 @@ export default function Logs() {
       givenTime: '12:03 Am',
       ipAddress: '45.117.73.26',
       macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.'
+      loginTime: '1 hr ago.',
     },
     {
       id: 14,
@@ -264,7 +264,7 @@ export default function Logs() {
       givenTime: '12:03 Am',
       ipAddress: '45.117.73.26',
       macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.'
+      loginTime: '1 hr ago.',
     },
     {
       id: 15,
@@ -282,7 +282,7 @@ export default function Logs() {
       givenTime: '12:03 Am',
       ipAddress: '45.117.73.26',
       macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.'
+      loginTime: '1 hr ago.',
     },
   ];
 
@@ -355,7 +355,12 @@ export default function Logs() {
 
       {/* CREATE CLIENT LOGS */}
       <div className="flex py-3 px-1 items-center justify-between">
-        <h1 className="text-3xl font-medium">View Client Logs</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-3xl font-medium">View Client Logs</h1>
+          <h2 className="text-xl font-medium text-red-500 text-center">
+            (This feature is coming soon...)
+          </h2>
+        </div>
         <div className="flex gap-2">
           <Link to={buttonText.href}>
             <button className="px-4 py-2 bg-blue-600 text-center text-md text-white rounded-md">
@@ -495,10 +500,9 @@ export default function Logs() {
         {/* LOGIN TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {/*-------Table-------*/}
-          {selectedViewValue === 'Table View' &&
-            selectedButton === 'Login' && (
-              <LoginTable currentLogs={currentLogs} />
-            )}
+          {selectedViewValue === 'Table View' && selectedButton === 'Login' && (
+            <LoginTable currentLogs={currentLogs} />
+          )}
         </div>
         {/* EXTENSION TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">

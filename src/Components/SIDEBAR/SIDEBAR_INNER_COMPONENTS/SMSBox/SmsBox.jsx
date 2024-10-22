@@ -439,7 +439,11 @@ export default function SmsBox() {
             </button>
           </div>
           {/* ACTION DROPDOWN */}
-          <div className="relative" onClick={toggleActionDropdown} onMouseLeave={() => setActionDropdown(false)}>
+          <div
+            className="relative"
+            onClick={toggleActionDropdown}
+            onMouseLeave={() => setActionDropdown(false)}
+          >
             <button
               className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
               id="dropdownDefaultButton"
@@ -450,7 +454,7 @@ export default function SmsBox() {
             </button>
             {actionDropdown && (
               <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
-                <ul className="text-sm text-gray-700 " >
+                <ul className="text-sm text-gray-700 ">
                   {dropActionsMenu.map(({ key, value }) => (
                     <li
                       key={key}
@@ -468,10 +472,13 @@ export default function SmsBox() {
 
       {/* FILTER BY SECTION */}
       <div className="mt-3 flex justify-between items-center gap-3">
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-center">
           <h1 className="text-3xl font-medium ">SMS Box</h1>
           <h1 className="bg-blue-600 text-white px-2 py-2 min-w-10 text-center rounded-md text-md shadow-md">
             {smsBoxData.length}
+          </h1>
+          <h1 className="text-xl font-medium text-red-500 text-center">
+            (This feature is coming soon...)
           </h1>
         </div>
 
