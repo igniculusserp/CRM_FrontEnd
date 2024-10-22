@@ -1,28 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import { FaAngleDown } from "react-icons/fa";
 
-const LeadAssignModal = ({ onClose }) => {
+const MultipleAssignModal = ({ onClose, multiIds }) => {
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
 
   const [loading, setLoading] = useState(false);
-  const [leadCount, setLeadCount] = useState("");
   const [assignedTo, setAssignedTo] = useState("");
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "leadCount") {
-      setLeadCount(value);
-    } else if (name === "assignedTo") {
-      setAssignedTo(value);
-    }
-  };
-
-//   --------------------------------------------------SUBMIT-----------------------------------
+  const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
+  const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
+    useState("Select Assigned");
+  const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
+    useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -43,37 +36,27 @@ const LeadAssignModal = ({ onClose }) => {
       };
 
       const formData_POST = {
-        leadCount: leadCount,
+        leadIds: multiIds,
         assignedTo: assignedTo,
       };
 
       await axios.post(
-        `${protocal_url}${name}.${tenant_base_url}/LeadOpration/leads/multipleAssign`,
+        `${protocal_url}${name}.${tenant_base_url}/Lead/leads/changemultipleAssignTo`,
         formData_POST,
         config
       );
 
-      alert("Leads Allotment successfully!");
+      alert("Assign Leads successfully!");
       onClose();
-    // window.location.reload();
     } catch (error) {
       console.error("Error response:", error.response);
+      alert("Failed to assign leads. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  
-
-  // ------------------------------------Assigned To Dropdown -----------------------------------
-
-  const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
-  const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
-    useState("Select Assigned");
-  const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
-    useState(false);
-
-  const handleAssigned_To = async () => {
+  const handleAssigned_To = useCallback(async () => {
     try {
       const config = {
         headers: {
@@ -89,11 +72,11 @@ const LeadAssignModal = ({ onClose }) => {
       console.error("Error fetching leads:", error);
       alert("Failed to fetch user data. Please try again.");
     }
-  };
+  }, [bearer_token, name]);
 
   useEffect(() => {
     handleAssigned_To();
-  }, []);
+  }, [handleAssigned_To]);
 
   const toggleDropdownassigned_ToDropDown = () => {
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
@@ -101,16 +84,16 @@ const LeadAssignModal = ({ onClose }) => {
 
   const handleDropdownassigned_ToDropDown = (assigned_To_Username) => {
     setdefaultTextassigned_ToDropDown(assigned_To_Username);
-    setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
-    setAssignedTo(assigned_To_Username); 
+    setisDropdownassigned_ToDropDown(false);
+    setAssignedTo(assigned_To_Username);
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
-        <h2 className="text-xl font-semibold mb-4">Leads Allotment</h2>
+        <h2 className="text-xl font-semibold mb-4">Multiple Assign</h2>
         <form onSubmit={handleSubmit}>
-          <div className=" shadow-lg">
+          <div className="shadow-lg">
             <h1 className="py-2 px-1 rounded-t-lg bg-cyan-500 text-white text-md font-medium">
               Details
             </h1>
@@ -118,25 +101,7 @@ const LeadAssignModal = ({ onClose }) => {
               <div className="grid gap-2 p-2">
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-full">
-                    <label
-                      htmlFor="leadCount"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Lead Count:
-                    </label>
-                    <input
-                      type="number"
-                      name="leadCount"
-                      id="leadCount"
-                      value={leadCount}
-                      onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                </div>
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-full">
-                    <div className="flex flex-col w-1/1 relative">
+                    <div className="flex flex-col w-full relative">
                       <label
                         htmlFor="assignedTo"
                         className="text-sm font-medium text-gray-700"
@@ -151,9 +116,10 @@ const LeadAssignModal = ({ onClose }) => {
                         }
                       >
                         <button
+                          type="button"
                           className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                           id="LeadStatusDropDown"
-                          type="button"
+                          aria-haspopup="menu"
                         >
                           {assignedTo === ""
                             ? defaultTextassigned_ToDropDown
@@ -161,12 +127,16 @@ const LeadAssignModal = ({ onClose }) => {
                           <FaAngleDown className="ml-2 text-gray-400" />
                         </button>
                         {isDropdownassigned_ToDropDown && (
-                          <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                          <div
+                            className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10"
+                            role="menu"
+                          >
                             <ul className="py-2 text-sm text-gray-700">
                               {assigned_ToDropDown.map(
                                 ({ key, userName, role }) => (
                                   <li
                                     key={key}
+                                    role="menuitem"
                                     onClick={() =>
                                       handleDropdownassigned_ToDropDown(
                                         userName
@@ -191,14 +161,16 @@ const LeadAssignModal = ({ onClose }) => {
           <div className="flex justify-end mt-4 gap-5">
             <button
               type="submit"
-              className={`shadow-md px-12 py-1 mb-2 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+              className={`shadow-md px-12 py-1 mb-2 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
               disabled={loading}
             >
               {loading ? "Sending..." : "Submit"}
             </button>
             <button
               type="button"
-              className="shadow-md px-12 py-1 bg-gray-300 text-black rounded hover:bg-gray-400 mb-2  border-2 "
+              className="shadow-md px-12 py-1 bg-gray-300 text-black rounded hover:bg-gray-400 mb-2 border-2"
               onClick={onClose}
             >
               Close
@@ -210,8 +182,9 @@ const LeadAssignModal = ({ onClose }) => {
   );
 };
 
-LeadAssignModal.propTypes = {
+MultipleAssignModal.propTypes = {
+  multiIds: PropTypes.arrayOf(PropTypes.number).isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
-export default LeadAssignModal;
+export default MultipleAssignModal;

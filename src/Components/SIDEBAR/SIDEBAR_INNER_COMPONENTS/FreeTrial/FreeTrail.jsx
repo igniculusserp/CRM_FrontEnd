@@ -10,7 +10,7 @@ import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
 //reactIcons
-import { FaAngleDown, FaBars,FaPhoneAlt } from "react-icons/fa";
+import { FaAngleDown, FaBars, FaPhoneAlt } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
 import { IoSearchOutline } from "react-icons/io5";
@@ -816,33 +816,37 @@ export default function FreeTrail() {
                     {/* SEGMENT */}
                     <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
                       <div>
-                       {order.segments && (
-                              <span className="">
-                                {order.segments
-                                  .filter((segment) => segment.length > 1)
-                                  .join(", ")}
-                              </span>
-                            )}
+                        {order.segments && (
+                          <span className="">
+                            {order.segments
+                              .filter((segment) => segment.length > 1)
+                              .join(", ")}
+                          </span>
+                        )}
                       </div>
                     </td>
                     {/* Trial Start Date */}
                     <td className="px-1 py-4 border-b border-gray-300 text-sm leading-5 ">
                       <div className="flex items-center break-words">
                         {order.trialStartDate
-                          .replace("T", " ")
-                          ?.split(":")
-                          .slice(0, 2)
-                          .join(":")}
+                          ? order.trialStartDate
+                              .replace("T", " ")
+                              .split(":")
+                              .slice(0, 2)
+                              .join(":")
+                          : "N/A"}
                       </div>
                     </td>
                     {/* Trial End Date */}
                     <td className="pr-3 pl-1 py-4 border-b border-gray-300 text-sm leading-5 ">
                       <div className="flex items-center break-words">
                         {order.trialEndDate
-                          .replace("T", " ")
-                          ?.split(":")
-                          .slice(0, 2)
-                          .join(":")}
+                          ? order.trialEndDate
+                              .replace("T", " ")
+                              .split(":")
+                              .slice(0, 2)
+                              .join(":")
+                          : "N/A"}
                       </div>
                     </td>
                   </tr>
@@ -856,97 +860,99 @@ export default function FreeTrail() {
 
       {selectedViewValue === "Grid View" && (
         <>
-        <div className="min-w-full">
-                <div className="grid grid-cols-3 gap-3">
-                  {/*---------Card starts Here */}
-                  {currentTrials.map((item) => (
-                    <div className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2" key={item.id}>
-                      <div className="flex items-center gap-3" >
-                        <img src={item.img} height={60} width={60} />
-                        <div className="flex flex-col grow">
-                          <div className="flex justify-between font-medium">
-                            <span className="text-indigo-500">{item.name}</span>
-                            <BiEdit
-                              size={25}
-                              className="bg-white rounded-full shadow-md text-blue-500 p-1"
-                              onClick={() => handleClick(item.id)}
-                            />
-                          </div>
-                          <div className="flex items-center gap-2 text-sm font-medium">
-                            {item.leadesStatus}
-                          </div>
-                        </div>
+          <div className="min-w-full">
+            <div className="grid grid-cols-3 gap-3">
+              {/*---------Card starts Here */}
+              {currentTrials.map((item) => (
+                <div
+                  className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2"
+                  key={item.id}
+                >
+                  <div className="flex items-center gap-3">
+                    <img src={item.img} height={60} width={60} />
+                    <div className="flex flex-col grow">
+                      <div className="flex justify-between font-medium">
+                        <span className="text-indigo-500">{item.name}</span>
+                        <BiEdit
+                          size={25}
+                          className="bg-white rounded-full shadow-md text-blue-500 p-1"
+                          onClick={() => handleClick(item.id)}
+                        />
                       </div>
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4 text-gray-500 text-sm">
-                          Client Name
-                        </div>
-                        <div className="2-2/4 font-medium text-sm">
-                          {item.name}
-                        </div>
-                      </div>
-
-
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4">
-                          <IoIosMail className="text-2xl" />
-                        </div>
-                        <div className="2-2/4 font-medium  text-sm">
-                          {item.email}
-                        </div>
-                      </div>
-
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4">
-                          <FaPhoneAlt className="text-xl" />
-                        </div>
-                        <div className="2-2/4 font-medium text-sm">
-                          {item.phoneNo}
-                        </div>
-                      </div>
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4 text-gray-500 text-sm">Trail Start Date</div>
-                        <div className="2-2/4 font-medium text-sm">
-                          {item.trialStartDate}
-                        </div>
-                      </div>
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4 text-gray-500 text-sm">
-                          Trail End Date  
-                        </div>
-                        <div className="2-2/4 font-medium  text-sm">
-                          {item.trialEndDate}
-                        </div>
+                      <div className="flex items-center gap-2 text-sm font-medium">
+                        {item.leadesStatus}
                       </div>
                     </div>
-                  ))}
+                  </div>
+                  <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                    <div className="w-2/4 text-gray-500 text-sm">
+                      Client Name
+                    </div>
+                    <div className="2-2/4 font-medium text-sm">{item.name}</div>
+                  </div>
+
+                  <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                    <div className="w-2/4">
+                      <IoIosMail className="text-2xl" />
+                    </div>
+                    <div className="2-2/4 font-medium  text-sm">
+                      {item.email}
+                    </div>
+                  </div>
+
+                  <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                    <div className="w-2/4">
+                      <FaPhoneAlt className="text-xl" />
+                    </div>
+                    <div className="2-2/4 font-medium text-sm">
+                      {item.phoneNo}
+                    </div>
+                  </div>
+                  <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                    <div className="w-2/4 text-gray-500 text-sm">
+                      Trail Start Date
+                    </div>
+                    <div className="2-2/4 font-medium text-sm">
+                      {item.trialStartDate}
+                    </div>
+                  </div>
+                  <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                    <div className="w-2/4 text-gray-500 text-sm">
+                      Trail End Date
+                    </div>
+                    <div className="2-2/4 font-medium  text-sm">
+                      {item.trialEndDate}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
+            </div>
+          </div>
         </>
       )}
-          <div className="flex justify-end m-4">
-            <nav>
-              <ul className="inline-flex items-center">
-                {Array.from(
-                  { length: Math.ceil(freeTrial.length / itemsPerPage) },
-                  (_, i) => (
-                    <li key={i + 1}>
-                      <button
-                        onClick={() => paginate(i + 1)}
-                        className={`px-4 py-2 mx-1 ${
-                          currentPage === i + 1
-                            ? "bg-blue-500 text-white"
-                            : "bg-white text-gray-700 border"
-                        }`}
-                      >
-                        {i + 1}
-                      </button>
-                    </li>
-                  )
-                )}
-              </ul>
-            </nav>
-          </div>
+      <div className="flex justify-end m-4">
+        <nav>
+          <ul className="inline-flex items-center">
+            {Array.from(
+              { length: Math.ceil(freeTrial.length / itemsPerPage) },
+              (_, i) => (
+                <li key={i + 1}>
+                  <button
+                    onClick={() => paginate(i + 1)}
+                    className={`px-4 py-2 mx-1 ${
+                      currentPage === i + 1
+                        ? "bg-blue-500 text-white"
+                        : "bg-white text-gray-700 border"
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                </li>
+              )
+            )}
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 }
