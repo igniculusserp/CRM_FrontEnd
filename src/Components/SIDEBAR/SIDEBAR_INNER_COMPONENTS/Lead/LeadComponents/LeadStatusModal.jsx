@@ -182,19 +182,17 @@ const LeadStatusModal = ({ onClose }) => {
               </div>
             </div>
           </div>
-          <div className="flex justify-end mt-4 gap-4">
+          <div className="flex justify-end mt-4 gap-5">
             <button
               type="submit"
-              className={`px-12 py-4 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white ${
-                loading ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+              className={`shadow-md px-12 py-1 mb-2 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
               disabled={loading}
             >
               {loading ? "Sending..." : "Submit"}
             </button>
             <button
               type="button"
-              className="px-12 py-2 bg-gray-300 text-black rounded hover:bg-gray-400 mb-3 border-2"
+              className="shadow-md px-12 py-1 bg-gray-300 text-black rounded hover:bg-gray-400 mb-2  border-2 "
               onClick={onClose}
             >
               Close
