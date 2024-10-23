@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { FaAngleDown, FaBars } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { useState, useEffect } from 'react';
+import { FaAngleDown, FaBars } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 
 export default function Plan() {
   const { id } = useParams();
@@ -13,22 +13,22 @@ export default function Plan() {
     {
       id: 1,
       planAmount: 101,
-      planType: "Group-Tambi",
-      description: "Plan is very Big",
+      planType: 'Group-Tambi',
+      description: 'Plan is very Big',
     },
     {
       id: 2,
       planAmount: 102,
-      planType: "Group-Lompi",
-      description: "Plan is Incredible",
+      planType: 'Group-Lompi',
+      description: 'Plan is Incredible',
     },
   ]);
 
   const [formData, setFormData] = useState({
-    id: "",
-    planAmount: "",
-    planType: "",
-    description: "",
+    id: '',
+    planAmount: '',
+    planType: '',
+    description: '',
   });
 
   const [editLead, setEditLead] = useState(null);
@@ -36,17 +36,19 @@ export default function Plan() {
 
   // Plan Type State
   const [planType, setplanType] = useState([]);
-  const [defaultTextplanTypeDropDown, setDefaultTextplanTypeDropDown] = useState("Select Plan");
-  const [isDropdownVisibleplanType, setIsDropdownVisibleplanType] = useState(false);
+  const [defaultTextplanTypeDropDown, setDefaultTextplanTypeDropDown] =
+    useState('Select Plan');
+  const [isDropdownVisibleplanType, setIsDropdownVisibleplanType] =
+    useState(false);
 
   const handleActiveState = () => {
     setActive(!active);
     setIsEditMode(false); // Reset edit mode when switching views
     setFormData({
-      id: "",
-      planAmount: "",
-      planType: "",
-      description: "",
+      id: '',
+      planAmount: '',
+      planType: '',
+      description: '',
     }); // Reset form data
   };
 
@@ -68,20 +70,29 @@ export default function Plan() {
     }));
   };
 
+  const [errors, setErrors] = useState({});
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation check
-    if (!formData.planAmount || !formData.planType) {
-      alert("Please fill in all fields before submitting.");
+    const errors = {};
+
+    if (!formData.planType || formData.planType.trim() === '') {
+      errors.planType = 'Plan Type is required';
+    } else if (!formData.planAmount || formData.planAmount.trim() === '') {
+      errors.planAmount = 'Plan Amount is required';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
       return;
     }
 
     if (isEditMode) {
-      console.log("Edit User:", formData);
+      console.log('Edit User:', formData);
       // Add logic to submit the edited user data
     } else {
-      console.log("Add User:", formData);
+      console.log('Add User:', formData);
       setActive(true); // Switch to the form view
 
       // Add logic to add a new user
@@ -106,10 +117,9 @@ export default function Plan() {
     setDefaultTextplanTypeDropDown(p);
     setIsDropdownVisibleplanType(false);
   };
-  
 
   async function handleGroup() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
@@ -118,14 +128,15 @@ export default function Plan() {
         },
       };
       const response = await axios.get(
-        `${protocal_url}${window.location.hostname.split(".")[0]
+        `${protocal_url}${
+          window.location.hostname.split('.')[0]
         }.${tenant_base_url}/Admin/leadstatus/getall`,
         config
       );
       setplanType(response.data.data);
-      console.log("Plan data:", response.data.data);
+      console.log('Plan data:', response.data.data);
     } catch (error) {
-      console.error("Error fetching plans:", error);
+      console.error('Error fetching plans:', error);
     }
   }
 
@@ -221,7 +232,7 @@ export default function Plan() {
           <>
             <div className="flex min-w-screen justify-between items-center">
               <h1 className="text-3xl font-medium">
-                {isEditMode ? "Edit Plan Operation" : "Add Plan Operation"}
+                {isEditMode ? 'Edit Plan Operation' : 'Add Plan Operation'}
               </h1>
               <button
                 onClick={handleActiveState}
@@ -244,7 +255,8 @@ export default function Plan() {
                       <div className="flex flex-col w-1/2">
                         <label
                           htmlFor="planAmount"
-                          className="text-sm font-medium text-gray-700">
+                          className="text-sm font-medium text-gray-700"
+                        >
                           Plan Amount
                         </label>
                         <input
@@ -255,25 +267,31 @@ export default function Plan() {
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                           placeholder="Enter Plan Amount"
                         />
+                        {errors.planAmount && (
+                        <span style={{ color: 'red' }}>{errors.planAmount}</span>
+                      )}
                       </div>
                       {/* -------------planType------------- */}
                       <div className="flex flex-col w-1/2 relative">
                         <label
                           htmlFor="planType"
-                          className="text-sm font-medium text-gray-700">
+                          className="text-sm font-medium text-gray-700"
+                        >
                           Plan Type
                         </label>
                         <div
                           className="relative"
                           onClick={toggleDropdownplanType}
-                          onMouseLeave={() => setIsDropdownVisibleplanType(false)}
+                          onMouseLeave={() =>
+                            setIsDropdownVisibleplanType(false)
+                          }
                         >
                           <button
                             className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                             id="planDropDown"
                             type="button"
                           >
-                          {formData.planType || defaultTextplanTypeDropDown}
+                            {formData.planType || defaultTextplanTypeDropDown}
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
 
@@ -295,10 +313,11 @@ export default function Plan() {
                             </div>
                           )}
                         </div>
+                        {errors.planType && (
+                        <span style={{ color: 'red' }}>{errors.planType}</span>
+                      )}
                       </div>
                     </div>
-
-
 
                     {/* -------------2------------- */}
                     <div className="flex space-x-4">
@@ -320,16 +339,14 @@ export default function Plan() {
                       </div>
                     </div>
 
-
                     {/* -------------Button------------- */}
                     <button
                       type="submit"
                       className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute  top-[300px]"
                     >
-                      {isEditMode ? "Edit Plan" : "Add Plan"}
+                      {isEditMode ? 'Edit Plan' : 'Add Plan'}
                     </button>
                   </div>
-
                 </div>
               </div>
             </form>
