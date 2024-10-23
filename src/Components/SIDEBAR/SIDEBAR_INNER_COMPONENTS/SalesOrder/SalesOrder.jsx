@@ -202,7 +202,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
     { key: 1, value: "Mass Delete" },
     { key: 2, value: "Mass Update" },
     { key: 3, value: "Mass Email" },
-    { key: 5, value: "Add to Campaign" },
+    // { key: 5, value: "Add to Campaign" },
     { key: 7, value: "Export To Excel" },
     { key: 8, value: "Export To PDF" },
     { key: 10, value: "Send SMS" },

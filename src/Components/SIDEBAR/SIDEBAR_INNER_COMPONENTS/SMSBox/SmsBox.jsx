@@ -283,7 +283,7 @@ export default function SmsBox() {
     { key: 2, value: 'Mass Update' },
     { key: 3, value: 'Mass Email' },
     { key: 4, value: 'Approve Leads' },
-    { key: 5, value: 'Add to Campaign' },
+    // { key: 5, value: 'Add to Campaign' },
     { key: 6, value: 'Export Leads' },
     { key: 7, value: 'Sheet View' },
     { key: 8, value: 'Print View' },
