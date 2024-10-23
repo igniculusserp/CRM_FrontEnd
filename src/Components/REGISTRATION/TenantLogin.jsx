@@ -22,18 +22,27 @@ import {protocal_url, tenant_base_url, urlchange_base } from "./../../Config/con
 
 export default function TenantLogin() {
 
+  //username
   const [userName, setuserName] = useState("")
+  //password
   const [password, setPassword] = useState("")
+
+  //not resolved yet 23/10/2024
   const deviceType = "";
   const deviceAddress ="";
 
+  //
   const [emailError, setEmailError] = useState(false)
   const [passwordError, setPasswordError] = useState(false)
 
+  //naviagate fuction
   const navigate = useNavigate()
 
+  //to read url
   const name = getHostnamePart();
 
+
+  //it is just to verify companyName in URL 
   useEffect(() => {
     const apiUrl = `${protocal_url}${name}.${tenant_base_url}/Tenants/check`;
     console.log("Constructed API URL:", apiUrl); 
@@ -68,13 +77,6 @@ export default function TenantLogin() {
     verifyTenant();
   }, []);
 
-
-    const data = JSON.parse(localStorage.getItem('dat'));
-
-
-    const fullURL = window.location.href;
-    const url = new URL(fullURL);
-    const subdomain = url.hostname.split('.')[0];
 
     
     const emailRegex = /^[A-Za-z0-9](([a-zA-Z0-9,=\.!\-#|\$%\^&\*\+/\?_`\{\}~]+)*)@(?:[0-9a-zA-Z-]+\.)+[a-zA-Z]{2,9}$/
@@ -119,27 +121,9 @@ export default function TenantLogin() {
           //Password Regex match
         const passwordRegex = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
 
-
-        if(userName.length === 0 && password.length === 0){
-          showErrorToast('Please fill details')
-        }
-        else if(userName.length === 0){
-          showErrorToast('Please fill email')
-        }
-        else if(password.length === 0){
-          showErrorToast('Please fill password')
-        }
-        else if(!userName.match(emailRegex)) {
-          showErrorToast('Enter Valid Email')
-            return;
-        }
-        else if(!password.match(passwordRegex)) {
-          showErrorToast('Incorrect Password')
-            return;
-        }
         
         try {
-            const response = await axios.post(`${protocal_url}${subdomain}.${tenant_base_url}/Users/login`, {
+            const response = await axios.post(`${protocal_url}${name}.${tenant_base_url}/Users/login`, {
                 userName: userName,
                 password: password,
                 deviceType: deviceType,
@@ -149,12 +133,13 @@ export default function TenantLogin() {
             localStorage.setItem("token", response.data.data.token);
             localStorage.setItem("userDetail", JSON.stringify(logindetail))
             localStorage.setItem("myData_forget", userName);
+            
             navigate('/tenantloginOTP')
         }
         catch (error) {
             if (error.response.data) {
               console.log(error)
-              showErrorToast(error)
+              showErrorToast(error.response.data.message)
             } else {
               console.log(error)
             }

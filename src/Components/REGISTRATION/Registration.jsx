@@ -112,7 +112,7 @@ export default function Registration() {
     code.countryName.toLowerCase().includes(searchQueryCode.toLowerCase())
 );
 
-//Cuntires
+//countryName
   const filteredCountries = countries.filter((country) =>
     country.countryName.toLowerCase().includes(searchQueryCountry.toLowerCase())
   );
@@ -129,6 +129,7 @@ export default function Registration() {
   //Handle <---> Submit
   const handleSubmit = async (event) => {
     event.preventDefault();
+  
     const {
       userId,
       firstName,
@@ -139,12 +140,12 @@ export default function Registration() {
       confirmPassword,
       businessType,
     } = formValues;
-   
+  
     // Check if country code and contact number are available
     const contactNumberWithCode = selectedCode ? `${selectedCode.value}${contactNo}` : contactNo;
   
     const predefinedValues = {
-      userId: userId,
+      userId,
       firstName,
       lastName,
       email,
@@ -155,23 +156,39 @@ export default function Registration() {
       confirmPassword,
       createdDate: new Date().toISOString(),
       deletedDate: new Date().toISOString(),
-      isActive  : true,
+      isActive: true,
     };
   
+    // Validation
+    if (!formValues.firstName) {
+      showErrorToast('First Name is not available');
+      return; // Exit function if validation fails
+    }
+  
+    if (!formValues.lastName) {
+      showErrorToast('Last Name is not available');
+      return; // Exit function if validation fails
+    }
+  
+    if (!formValues.businessType) {
+      showErrorToast('Business Type is not available');
+      return; // Exit function if validation fails
+    }
+  
+    // All validations passed, proceed with submission
     try {
-      const response = await axios.post(`${main_base_url}/Users`,predefinedValues);  
-      // Store response data in local storage
+      const response = await axios.post(`${main_base_url}/Users`, predefinedValues);
       localStorage.setItem("myData", response.data.userId);
       localStorage.setItem("registrationdata", JSON.stringify(response));
-      const userId = response.data.userId;
   
-      // Navigate to the verify OTP page
+      const { userId } = response.data;
       navigate(`/verifyotp/${userId}`);
     } catch (error) {
       console.error("Error:", error.response.data.message);
-      showErrorToast(error);
+      showErrorToast(error.response.data.message);
     }
   };
+  
   
 
   function togglePasswordEye() {

@@ -81,8 +81,6 @@ import EditClientSO from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/R
 import CreateClient from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Client/CreateClient.jsx";
 import CreateLogin from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateLogin.jsx";
 
-import { OTPProvider } from "./store/OTPContext.jsx";
-
 import MISReports from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx";
 import GeneralReport from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/GeneralReport.jsx";
 import FtReport from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/FtReport.jsx";
@@ -187,9 +185,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <OTPProvider>
     <FollowUpNotificationProvider>
       <RouterProvider router={router} />
     </FollowUpNotificationProvider>
-  </OTPProvider>
 );

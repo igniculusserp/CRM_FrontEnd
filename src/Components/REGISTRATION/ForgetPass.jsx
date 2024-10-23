@@ -1,53 +1,71 @@
-//react
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { GiDiamonds } from "react-icons/gi";
-import { Link } from "react-router-dom";
+import { main_base_url } from "./../../Config/config";
+
+import axios from "axios";
 
 import forgetPassword from "./../../assets/images/forgetPassword.png";
 import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
-import { showErrorToast, showSuccessToast } from "./../../utils/toastNotifications";
-import { useOTP } from "../../store/OTPContext";
+
+import { GiDiamonds } from "react-icons/gi";
+import { Link, useNavigate } from "react-router-dom";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {showSuccessToast, showErrorToast,} from "./../../utils/toastNotifications";
 
 export default function ForgetPass() {
-  const [forgetemail, setForgetEmail] = useState("");
-  const { handleResend } = useOTP(); // Use OTP context for OTP sending
+  const [forgetemail, setforgetemail] = useState("");
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setForgetEmail(e.target.value);
+    let fEmail = e.target.value;
+    setforgetemail(fEmail);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const emailRegex = /^[A-Za-z0-9](([a-zA-Z0-9,=\.!\-#|\$%\^&\*\+/\?_`\{\}~]+)*)@(?:[0-9a-zA-Z-]+\.)+[a-zA-Z]{2,9}$/;
-
-    if (forgetemail.length === 0) {
+  
+    if(forgetemail.length === 0){
       showErrorToast("Please enter Email");
-      return;
     }
 
-    if (!forgetemail.match(emailRegex)) {
+    else if (!forgetemail.match(emailRegex)) {
       showErrorToast("Invalid Email");
-      return;
+    return;
     }
 
     try {
-      // Store email in localStorage for OTPContext to pick up
-      localStorage.setItem("myData_forget", forgetemail);
+      const response = await axios.post(`${main_base_url}/Users/send/otp`, {
+        email: forgetemail,
+      });
 
-      // Trigger OTP resend using the context
-      await handleResend();
+      const emailFromResponse = response.data.email || response.data.forgetemail || forgetemail;
 
-      showSuccessToast("OTP successfully sent to your registered email");
+      const {message} = response.data;
 
-      // Navigate to OTP page
+      localStorage.setItem("myData_forget", emailFromResponse);
+      console.log(emailFromResponse);
+
+      localStorage.setItem("forgetpass", JSON.stringify(response));
+      showSuccessToast(message)
+
+
+      //Dont use it ----> 25-08-2024-ii
+      // setTimeout(() => {
+      //   //locahost
+      //      const newUrl = `http://localhost:5173/forgetpasswordotp`;
+         
+          //forServer
+        //  const newUrl = `http://forgetpasswordotp `
+        
+      //   window.location.href = newUrl;
+      // }, 100);
       navigate("/forgetpasswordotp");
-    } catch (error) {
-      showErrorToast("Failed to send OTP: " + error.toString());
+    } 
+    catch (error) {
+      showErrorToast(error.response.dat.message)
     }
   };
 
@@ -55,6 +73,7 @@ export default function ForgetPass() {
     <>
       <ToastContainer />
       <div className="bg-cyan-500 min-h-screen flex flex-col md:flex-row">
+        {/*----------> Part-I <---------- */}
         <div className="hidden md:flex w-2/3 bg-cyan min-h-screen flex-col justify-center items-center">
           <div className="bg-white flex flex-col justify-center items-center py-10 px-16 gap-2 rounded-md">
             <img src={IgniculussLogo} alt="Brandlogo" width={80} height={80} />
@@ -76,12 +95,14 @@ export default function ForgetPass() {
           </div>
         </div>
 
+        {/*----------> Part-II <---------- */}
         <div className="w-full md:w-1/3 bg-cyan-500 md:bg-white flex min-h-screen flex-col justify-center ">
+          {/* Image on Top for Small Screens */}
           <div className="flex md:hidden justify-center">
             <img src={IgniculussLogo} alt="sample" width={100} height={50} />
           </div>
 
-          <div className="flex flex-col justify-center mx-10 md:mx-4 px-3 mt-8 bg-white py-3 rounded-2xl">
+          <div className="flex flex-col justify-center mx-10 md:mx-4 px-3 mt-8  bg-white py-3 rounded-2xl">
             <div className="flex text-2xl font-semibold gap-3 items-center">
               <GiDiamonds className="text-3xl hidden md:block mb-6" />
               <h1 className="">
@@ -117,7 +138,7 @@ export default function ForgetPass() {
                 </div>
                 <div className="relative inline-block px-4 bg-white text-sm">
                   <span className="font-light">Back to</span>
-                  <Link to="/tenantlogin">
+                  <Link to="/">
                     <span className="text-cyan-500"> Login</span>
                   </Link>
                 </div>

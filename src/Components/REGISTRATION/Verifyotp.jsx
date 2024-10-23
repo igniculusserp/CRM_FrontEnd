@@ -74,23 +74,37 @@ const VerifyOtp = () => {
   };
 
   const handleSubmit = async (event) => {
+
   event.preventDefault();
-  const formValues = { emailid: emailreg, otp: otp };
+
+   //validation Added for OTP
+   if(otp.length < 1 ){
+    showErrorToast('OTP field is empty')
+  }
+  else if(otp.length > 6){
+    showErrorToast('OTP cannot be more than 6 digits')
+  }
+  else if(otp.length < 6){
+    showErrorToast('OTP cannot be less than 6 digits')
+  }
+
+  const formValues = { 
+    emailid: emailreg, 
+    otp: otp 
+  };
 
   try {
     const response = await axios.post(`${main_base_url}/Users/verify/otp`, formValues);
     if (response.data.status === 200) {
       // Toggle the modal to open it
       toggleModal();
-    } else {
-      // Handle error case (e.g., wrong OTP)
-      showErrorToast('OTP verification failed');
-    }
+    } 
   } catch (error) {
-    console.error('Error:', error);
-    showErrorToast('OTP verification failed: ' + error.message);
+    showErrorToast(error.response.data.message);
   }
 };
+
+
 
   const handleResend = async (event) => {
     event.preventDefault();
