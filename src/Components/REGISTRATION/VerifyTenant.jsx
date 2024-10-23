@@ -74,31 +74,25 @@ export default function VerifyTenant() {
    
   async function handleSubmit(e) {
     e.preventDefault();
-    const emailRegex =
-      /^[A-Za-z0-9](([a-zA-Z0-9,=\.!\-#|\$%\^&\*\+/\?_`\{\}~]+)*)@(?:[0-9a-zA-Z-]+\.)+[a-zA-Z]{2,9}$/;
-    if (!userName.match(emailRegex)) {
-      showErrorToast('Please Enter Registered Email ');
-      return;
-    }
-
+    const emailRegex = /^[A-Za-z0-9](([a-zA-Z0-9,=\.!\-#|\$%\^&\*\+/\?_`\{\}~]+)*)@(?:[0-9a-zA-Z-]+\.)+[a-zA-Z]{2,9}$/;
     try {
       const response = await axios.post(`${main_base_url}/Tenants/check1`, {
         emailId: userName,
       });
     
-      const host = response.data.data;
-      if(host === null){
-        showErrorToast("Email Not Found")
-        }
-      else
-        {
+      const {isSuccess, data, message} = response.data
+
+      if(!isSuccess){
+          showErrorToast(message)
+      }
+      else{
           showSuccessToast("Login Successful!");
           setTimeout(() => {
             //localhost
-              const newUrl = `http://${host}.localhost:5173/tenantlogin`;
+              const newUrl = `http://${data}.localhost:5173/tenantlogin`;
             
             //forServer
-            //  const newUrl = `http://${host}.${urlchange_base}/tenantlogin `
+            //  const newUrl = `http://${data}.${urlchange_base}/tenantlogin `
             window.location.href = newUrl;
           }, 100);
         }

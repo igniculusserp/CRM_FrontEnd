@@ -1,4 +1,3 @@
-import { useOTP } from "../../store/OTPContext";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
@@ -11,42 +10,105 @@ import { useState, useEffect } from "react";
 
 
 export default function TenantLoginOTP() {
-  const { otp, resendDisabled, countdown,  handleResend, handleChange } = useOTP();
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [resendDisabled, setResendDisabled] = useState(true); // Initialize to true
+  const [countdown, setCountdown] = useState(120);
 
+  const [count, setCount] = useState(0)
 
-  const [email, setemail] = useState("")
+  // Countdown logic for OTP resend
+  useEffect(() => {
+    let timer;
+    if (resendDisabled) {
+      timer = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev === 1) {
+            clearInterval(timer);
+            setResendDisabled(false); // Re-enable resend after countdown finishes
+            return 120;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [resendDisabled]);
 
+  // Fetch email from localStorage on component mount
   useEffect(() => {
     const storedEmail = localStorage.getItem("myData_forget");
     if (storedEmail) {
-      setemail(storedEmail);
+      setEmail(storedEmail);
     } else {
       console.error("Email is not available in localStorage.");
     }
   }, []);
 
-  // Handle OTP verification
+  // Handle OTP input change
+  const handleChange = (event) => {
+    setOtp(event.target.value);
+  };
+
+  // Handle OTP submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formValues = { 
-            emailid: email, 
-            otp: otp 
-          };
+
+
+    //validation Added for OTP
+    if(otp.length < 1 ){
+      showErrorToast('OTP field is empty')
+    }
+    else if(otp.length > 6){
+      showErrorToast('OTP cannot be more than 6 digits')
+    }
+    else if(otp.length < 6){
+      showErrorToast('OTP cannot be less than 6 digits')
+    }
+
+    const formValues = { emailid: email, otp: otp };
 
     try {
       const response = await axios.post(`${main_base_url}/Users/verify/otp`, formValues);
-      if (response.data.status === 200) {
-        showSuccessToast("OTP Verified");
+      const { isSucess, message } = response.data;
+
+      if (isSucess) {
+        showErrorToast(message);
+      } else if(!isSucess) {
+        showSuccessToast(message);
         navigate("/sidebar");
+      }
+    } catch (error) {
+      showErrorToast(error.response.data.message);
+    }
+  };
+
+  // Handle OTP resend logic
+  const handleResend = async () => {
+    try {
+      const storedEmail = localStorage.getItem("myData_forget");
+      if (!storedEmail) {
+        throw new Error("Email not found");
+      }
+      
+      const response = await axios.post(`${main_base_url}/Users/send/otp`, {
+        Email: storedEmail,
+      });
+  
+      if (response.data.status === 200) {
+        setResendDisabled(true);
+        showSuccessToast("OTP Sent");
       } else {
-        showErrorToast("OTP verification failed");
+        showErrorToast("Failed To Send OTP");
       }
     } catch (error) {
       console.error("Error:", error);
-      showErrorToast("OTP verification failed: " + error.message);
+      showErrorToast("Failed to resend OTP: " + error.message);
     }
   };
+  
+
 
   return (
     <>
@@ -58,8 +120,8 @@ export default function TenantLoginOTP() {
             <img src={forgetPassword} alt="sample" width={300} height={150} />
             <div className="flex text-3xl font-semibold">
               <GiDiamonds className="mt-1 text-cyan-500" />
-              <h1 className="">
-                Two Factor  <br />
+              <h1>
+                Two Factor <br />
                 Authentication
               </h1>
             </div>
@@ -98,10 +160,10 @@ export default function TenantLoginOTP() {
                 <input
                   type="number"
                   name="otp"
-                  value={otp}
+                  value={otp} // Added OTP state binding
                   className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm"
-                  onChange={handleChange}
-                  placeholder="000000"
+                  onChange={handleChange} // Added onChange handler
+                  placeholder="000-000"
                 />
                 <div className="flex flex-col justify-center items-center gap-2 mt-6">
                   <div className="text-sm">
