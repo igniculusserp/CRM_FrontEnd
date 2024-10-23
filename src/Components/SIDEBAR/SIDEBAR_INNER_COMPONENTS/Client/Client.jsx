@@ -1,12 +1,12 @@
-//react 
+//react
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 //external Packages
 import axios from "axios";
-import * as XLSX from 'xlsx';
+import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
-import autoTable from 'jspdf-autotable'
+import autoTable from "jspdf-autotable";
 
 //React Icons
 import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
@@ -19,12 +19,12 @@ import { ImFilter } from "react-icons/im";
 import { MdCall } from "react-icons/md";
 
 //Folder Imported
-import dp from "./../../../../assets/images/dp.png"
+import dp from "./../../../../assets/images/dp.png";
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
-import MassEmail from '../MassEmail/MassEmail';
+import MassEmail from "../MassEmail/MassEmail";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
-const name = getHostnamePart()
+const name = getHostnamePart();
 
 export default function Client() {
   const navigate = useNavigate(); // Add this line
@@ -32,10 +32,9 @@ export default function Client() {
   //This is to store the upcoming data from API
   const [getleads, setGetleads] = useState([]);
 
-  
-// Mass Email
-const [isModalOpen, setIsModalOpen] = useState(false);
-const [selectedEmails, setSelectedEmails] = useState([]);
+  // Mass Email
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEmails, setSelectedEmails] = useState([]);
 
   //DND
   const [users, setUsers] = useState([]);
@@ -58,11 +57,11 @@ const [selectedEmails, setSelectedEmails] = useState([]);
         config
       );
 
-      const data = response.data.data
+      const data = response.data.data;
       setGetleads(data);
       setFilteredLeads(data); // Initialize filtered leads
 
-      setfilteredLeads_assigned_To(data)
+      setfilteredLeads_assigned_To(data);
     } catch (error) {
       console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
@@ -84,66 +83,64 @@ const [selectedEmails, setSelectedEmails] = useState([]);
         config
       );
 
-      const data = response.data?.data
+      const data = response.data?.data;
       setUsers(data);
     } catch (error) {
       console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
     }
-  }
+  };
 
   useEffect(() => {
     handleLead();
-    getAllUsers()
+    getAllUsers();
   }, []);
 
-
-
-  const [leadStatus, setLeadStatus] = useState('All Lead');   // Track the selected lead status
-  const [assignedTo, setAssignedTo] = useState('Managed By');   // Track the selected assigned user
+  const [leadStatus, setLeadStatus] = useState("All Lead"); // Track the selected lead status
+  const [assignedTo, setAssignedTo] = useState("Managed By"); // Track the selected assigned user
 
   // Function to handle both filters
   function handle_LeadStatus(statusValue) {
     let filteredLeads = getleads;
 
     // Filter by leadStatus if it's not 'ALL' or null
-    if (statusValue !== null && statusValue !== 'All Leads') {
-      filteredLeads = filteredLeads.filter(lead => lead.leadesStatus === statusValue);
-      console.log(filteredLeads)
+    if (statusValue !== null && statusValue !== "All Leads") {
+      filteredLeads = filteredLeads.filter(
+        (lead) => lead.leadesStatus === statusValue
+      );
+      console.log(filteredLeads);
     }
-    setFilteredLeads(filteredLeads);  // Set the filtered results
+    setFilteredLeads(filteredLeads); // Set the filtered results
   }
 
   function handle_AssignedTo(assignedToValue) {
     let filteredLeads = getleads;
-    if (assignedToValue !== null && assignedToValue !== 'Assigned to') {
-      filteredLeads = filteredLeads.filter(lead => lead.assigned_To === assignedToValue);
+    if (assignedToValue !== null && assignedToValue !== "Assigned to") {
+      filteredLeads = filteredLeads.filter(
+        (lead) => lead.assigned_To === assignedToValue
+      );
     }
-    setFilteredLeads(filteredLeads);  // Set the filtered result
+    setFilteredLeads(filteredLeads); // Set the filtered result
   }
 
   // Handle selecting a lead status
   function handleLeadStatusSelection(status) {
-    setLeadStatus(status);  // Update leadStatus state
-    handle_LeadStatus(status);  // Apply both filters
+    setLeadStatus(status); // Update leadStatus state
+    handle_LeadStatus(status); // Apply both filters
   }
 
   // Handle selecting an assigned user
   function handleAssignedToSelection(user) {
-    setAssignedTo(user);  // Update assignedTo state
-    handle_AssignedTo(user);  // Apply both filters
+    setAssignedTo(user); // Update assignedTo state
+    handle_AssignedTo(user); // Apply both filters
   }
-
-
-
-
 
   //-----------------------------------------------> ALL-> LEADS <-functionality <-----------------------------------------------
 
   const [allLeaddropDown, setAllLeaddropDown] = useState(false);
   const toggleMenuAllLead = () => {
     setAllLeaddropDown(!allLeaddropDown);
-  }
+  };
 
   //-----------------------------------------------> ALL LEADS DATA <-----------------------------------------------
   //----------------STATUS DROPDOWN----------------
@@ -157,7 +154,8 @@ const [selectedEmails, setSelectedEmails] = useState([]);
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
         config
       );
       setallLeadData(response.data.data);
@@ -176,7 +174,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   const [allAssigned_To_DROPDOWN, setallAssigned_To_DROPDOWN] = useState(false);
   const toggleMenuAssigned_To = () => {
     setallAssigned_To_DROPDOWN(!allAssigned_To_DROPDOWN);
-  }
+  };
 
   //-----------------------------------------------> ALL ASSIGNED_TO DATA <-----------------------------------------------
   //----------------ASSIGNED_TO DROPDOWN----------------
@@ -206,31 +204,6 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   }, []);
 
   //------------------------------------------------------------------------------------------------
-  //----------------SEARCH BAR DROPDOWN----------------
-
-  // All SearchBar Menu
-  const searchBar = [
-    { key: 0, value: "Search" },
-    { key: 1, value: "Touched Records" },
-    { key: 2, value: "Untouched Records" },
-    { key: 3, value: "Record Action" },
-    { key: 4, value: "Related Records Action" },
-    { key: 5, value: "Locked" },
-    { key: 6, value: "Latest Email Status" },
-    { key: 7, value: "Activities" },
-    { key: 8, value: "Notes" },
-    { key: 9, value: "Campaigns" },
-  ];
-
-  const [searchBardropDown, setsearchBardropDown] = useState(false);
-
-  const togglesearchBar = () => {
-    setsearchBardropDown(!searchBardropDown);
-  };
-
-
-
-  //------------------------------------------------------------------------------------------------
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
     { key: 1, value: "Table View" },
@@ -240,22 +213,24 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
 
   const handleStripeButton = (value) => {
-    console.log(value)
+    console.log(value);
     setSelectedViewValue(value);
-  }
+  };
 
   const togglestripeBar = () => {
     setstripeBardropDown(!stripeBardropDown);
-  }
+  };
 
   // DROP_LOGO DROPDOWN------------>>>
   const [dropLogodropDown, setdropLogodropDown] = useState(false);
 
   const togglesdropLogo = () => {
     setdropLogodropDown(!dropLogodropDown);
-  }
+  };
 
-  const [selectedViewValue, setSelectedViewValue] = useState(stripeBar[0].value);
+  const [selectedViewValue, setSelectedViewValue] = useState(
+    stripeBar[0].value
+  );
 
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
@@ -280,28 +255,31 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   };
 
   const handleActionButton = async (value, leadId) => {
-
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
     if (value === "Mass Delete") {
-      const userConfirmed = confirm('Are you sure you want to Delete the selected Leads?');
+      const userConfirmed = confirm(
+        "Are you sure you want to Delete the selected Leads?"
+      );
       if (userConfirmed) {
         massDelete();
       }
     }
 
-   // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
-   if (value === "Mass Email") {
-    const userConfirmed = confirm(
-      "Are you sure you want to Send E-Mail to the selected Data?"
-    );
-    if (userConfirmed) {
-      openMassEmailModal(selectedEmails);
+    // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
+    if (value === "Mass Email") {
+      const userConfirmed = confirm(
+        "Are you sure you want to Send E-Mail to the selected Data?"
+      );
+      if (userConfirmed) {
+        openMassEmailModal(selectedEmails);
+      }
     }
-  }
 
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
     if (value === "Sheet View") {
-      const userConfirmed = confirm('Are you sure you want to export the selected Leads?');
+      const userConfirmed = confirm(
+        "Are you sure you want to export the selected Leads?"
+      );
       if (userConfirmed) {
         exportToExcel();
       }
@@ -309,7 +287,9 @@ const [selectedEmails, setSelectedEmails] = useState([]);
 
     // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
     if (value === "Print View") {
-      const userConfirmed = confirm('Are you sure you want to export the selected Leads?');
+      const userConfirmed = confirm(
+        "Are you sure you want to export the selected Leads?"
+      );
       if (userConfirmed) {
         exportToPDF();
       }
@@ -317,13 +297,14 @@ const [selectedEmails, setSelectedEmails] = useState([]);
 
     // ---------------------->Convert Lead to Contact FUNCTIONALITY*<----------------------
     if (value === "Convert Lead to Contact") {
-      const userConfirmed = confirm('Are you sure you want to convert this lead to a contact?');
+      const userConfirmed = confirm(
+        "Are you sure you want to convert this lead to a contact?"
+      );
       if (userConfirmed) {
         convertType();
       }
-
-    };
-  }
+    }
+  };
   // ---------------------->MASS DELETE FUNCTIONALITY---###API###<----------------------
   const massDelete = async () => {
     const bearer_token = localStorage.getItem("token");
@@ -359,25 +340,19 @@ const [selectedEmails, setSelectedEmails] = useState([]);
     navigate(`/sidebar/editclient/${item.id}`);
   };
 
+  // ---------------------->MASS Email FUNCTIONALITY---<----------------------
 
-   // ---------------------->MASS Email FUNCTIONALITY---<----------------------
-
-
-   const openMassEmailModal = () => {
+  const openMassEmailModal = () => {
     if (selectedEmails.length > 0) {
       setIsModalOpen(true); // Open the modal
     } else {
-      alert('Please select at least one row for mass emailing.');
+      alert("Please select at least one row for mass emailing.");
     }
   };
 
   const closeModal = () => {
     setIsModalOpen(false); // Close the modal
   };
-
-
-
-
 
   //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
   //-------> XLSX used here
@@ -411,9 +386,16 @@ const [selectedEmails, setSelectedEmails] = useState([]);
       alert("No leads selected to export");
       return;
     }
-    const doc = new jsPDF()
+    const doc = new jsPDF();
     // const role = matchedUser?.role;
-    const tableColumn = ['ID', 'Name', 'Email', "Phone No.", "Lead Source", "Assigned To"];
+    const tableColumn = [
+      "ID",
+      "Name",
+      "Email",
+      "Phone No.",
+      "Lead Source",
+      "Assigned To",
+    ];
     // Map the leads data to rows
     const tableRows = leadsToExport?.map((lead) => [
       lead.id,
@@ -431,10 +413,8 @@ const [selectedEmails, setSelectedEmails] = useState([]);
       body: tableRows,
       startY: 22, // Position the table after the title
     });
-    doc.save('Leads.pdf')
+    doc.save("Leads.pdf");
   };
-
-
 
   //---------------------->---------------------->MANAGE_BY/ASSIGNED_TO<----------------------<ARVIND----------------------
   const roleColors = [
@@ -442,8 +422,8 @@ const [selectedEmails, setSelectedEmails] = useState([]);
     "#2563eb", // blue
     "#65a30d", // LimeGreen
     "#7c3aed", // MediumPurple
-    "#0369a1",  //Sky
-    "#e11d48",  //Rose
+    "#0369a1", //Sky
+    "#e11d48", //Rose
   ];
 
   // //---------------------->---------------------->CONVERT_LEADS_TO_CONTACTS<----------------------<----------------------
@@ -482,13 +462,10 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   //   }
   // };
 
-
   // Function to get the color for a role based on its index
   const getRoleColorByIndex = (index) => {
     return roleColors[index % roleColors?.length]; // Use modulo for wrapping
   };
-
-
 
   //---------------------->---------------------->PAGINATION<----------------------<----------------------
   const [currentPage, setCurrentPage] = useState(1);
@@ -500,38 +477,31 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-
   //---------------------->---------------------->̧CHECKBOX<----------------------<----------------------
 
- //---------------------->---------------------->̧CHECKBOX -> SINGLE<----------------------<----------------------
- const [selectedIds, setSelectedIds] = useState([]);
- const handleOnCheckBox = (e, item) => {
-   e.stopPropagation();
- 
-   // Toggle selected IDs
-   setSelectedIds((prevSelected) =>
-     prevSelected.includes(item.id)
-       ? prevSelected.filter((id) => id !== item.id)
-       : [...prevSelected, item.id]
-   );
- 
-   // Update selected emails
-   setSelectedEmails((prevSelectedEmails) => {
-     const newSelectedEmails = prevSelectedEmails.includes(item.email)
-       ? prevSelectedEmails.filter((email) => email !== item.email)
-       : [...prevSelectedEmails, item.email];
- 
-     // Log the updated selectedEmails
-     console.log("Updated Selected Emails:", newSelectedEmails);
-     return newSelectedEmails;
-   });
- };
- 
-   
+  //---------------------->---------------------->̧CHECKBOX -> SINGLE<----------------------<----------------------
+  const [selectedIds, setSelectedIds] = useState([]);
+  const handleOnCheckBox = (e, item) => {
+    e.stopPropagation();
 
+    // Toggle selected IDs
+    setSelectedIds((prevSelected) =>
+      prevSelected.includes(item.id)
+        ? prevSelected.filter((id) => id !== item.id)
+        : [...prevSelected, item.id]
+    );
 
+    // Update selected emails
+    setSelectedEmails((prevSelectedEmails) => {
+      const newSelectedEmails = prevSelectedEmails.includes(item.email)
+        ? prevSelectedEmails.filter((email) => email !== item.email)
+        : [...prevSelectedEmails, item.email];
 
- 
+      // Log the updated selectedEmails
+      console.log("Updated Selected Emails:", newSelectedEmails);
+      return newSelectedEmails;
+    });
+  };
 
   //---------------------->---------------------->̧CHECKBOX -> MULTIPLE<----------------------<----------------------
   const [isSelectAllChecked, setIsSelectAllChecked] = useState(false);
@@ -547,18 +517,15 @@ const [selectedEmails, setSelectedEmails] = useState([]);
       setSelectedIds((prevSelected) => [
         ...new Set([...prevSelected, ...currentPageIds]),
       ]);
-   } else {
+    } else {
       // Remove all current page leads from selectedIds
       const currentPageIds = currentLeads?.map((lead) => lead.id);
-      setSelectedEmails([]); 
+      setSelectedEmails([]);
       setSelectedIds((prevSelected) =>
         prevSelected.filter((id) => !currentPageIds.includes(id))
       );
     }
   };
-
-
-
 
   // Update "Select All" checkbox state when individual checkboxes are clicked
   useEffect(() => {
@@ -569,63 +536,61 @@ const [selectedEmails, setSelectedEmails] = useState([]);
     setIsSelectAllChecked(isAllSelected);
   }, [selectedIds, currentLeads]);
 
-
-  
   // ----------------------------- Date Filter -----------------------------
 
-const today = new Date().toISOString().split("T")[0]; 
-const [startDate, setStartDate] = useState(today);
-const [endDate, setEndDate] = useState(today);
+  const today = new Date().toISOString().split("T")[0];
+  const [startDate, setStartDate] = useState(today);
+  const [endDate, setEndDate] = useState(today);
 
+  // Function to filter based on date range
+  function handle_DateRange(startDate, endDate) {
+    let filteredFollows = currentLeads;
 
-// Function to filter based on date range
-function handle_DateRange(startDate, endDate) {
-let filteredFollows = currentLeads;
+    // Convert startDate to the beginning of the day and endDate to the end of the day
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
 
-// Convert startDate to the beginning of the day and endDate to the end of the day
-const start = new Date(startDate);
-start.setHours(0, 0, 0, 0); // Set time to 00:00:00
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999); // Set time to 23:59:59
 
-const end = new Date(endDate);
-end.setHours(23, 59, 59, 999); // Set time to 23:59:59
+    if (startDate && endDate) {
+      filteredFollows = filteredFollows.filter((follow) => {
+        const callbackDate = new Date(follow.subscription_start_date);
+        return callbackDate >= start && callbackDate <= end;
+      });
+    }
+    setFilteredLeads(filteredFollows); // Update the filtered result
+  }
 
-if (startDate && endDate) {
-  filteredFollows = filteredFollows.filter((follow) => {
-    const callbackDate = new Date(follow.subscription_start_date);
-    return callbackDate >= start && callbackDate <= end;
-  });
-}
-setFilteredLeads(filteredFollows); // Update the filtered result
-}
-
-// UseEffect to trigger handle_DateRange on date change
-useEffect(() => {
-if(startDate<=endDate){
-  handle_DateRange(startDate, endDate);
-}
-}, [startDate, endDate]); 
-
-
-
+  // UseEffect to trigger handle_DateRange on date change
+  useEffect(() => {
+    if (startDate <= endDate) {
+      handle_DateRange(startDate, endDate);
+    }
+  }, [startDate, endDate]);
 
   return (
     //parent
     <div className="min-h-screen flex flex-col m-3 ">
-        {/* Render the modal only when `isModalOpen` is true */}
-        {isModalOpen && (
+      {/* Render the modal only when `isModalOpen` is true */}
+      {isModalOpen && (
         <MassEmail
           emails={selectedEmails}
           onClose={closeModal} // Pass function to close modal
         />
       )}
-
       {/* containerbar*/}
       <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg">
         {/* PART-I */}
         {/* container- Alleads, search */}
         <div className="flex gap-3 items-center justify-center ">
-          {/* PART-I */}{/* All Lead  DropDown*/}
-          <div className="relative" onClick={toggleMenuAllLead} onMouseLeave={() => setAllLeaddropDown(false)}>
+          {/* PART-I */}
+          {/* All Lead  DropDown*/}
+          <div
+            className="relative"
+            onClick={toggleMenuAllLead}
+            onMouseLeave={() => setAllLeaddropDown(false)}
+          >
             <button
               className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 max-w-44 truncate"
               id="dropdownDefaultButton"
@@ -641,7 +606,7 @@ if(startDate<=endDate){
                     <li
                       key={item.id}
                       className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                      onClick={() => handleLeadStatusSelection(item.status)}  // Correct selection logic
+                      onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
                     >
                       {item.status}
                     </li>
@@ -650,8 +615,13 @@ if(startDate<=endDate){
               </div>
             )}
           </div>
-          {/* PART-I-ii */}{/* All ASSIGNED_TO  DropDown*/}
-          <div className="relative" onClick={toggleMenuAssigned_To} onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}>
+          {/* PART-I-ii */}
+          {/* All ASSIGNED_TO  DropDown*/}
+          <div
+            className="relative"
+            onClick={toggleMenuAssigned_To}
+            onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
+          >
             <button
               className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 max-w-44"
               id="dropdownDefaultButton"
@@ -667,7 +637,7 @@ if(startDate<=endDate){
                     <li
                       key={item.id}
                       className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                      onClick={() => handleAssignedToSelection(item.userName)}  // Correct selection logic
+                      onClick={() => handleAssignedToSelection(item.userName)} // Correct selection logic
                     >
                       {item.userName}
                     </li>
@@ -676,38 +646,27 @@ if(startDate<=endDate){
               </div>
             )}
           </div>
-          {/* PART-I */}{/* Search Box */}
-          <div className="relative" onClick={togglesearchBar} onMouseLeave={() => setsearchBardropDown(false)}>
-            <button
-              className="py-2 px-4 border rounded-full gap-2 flex justify-between items-center"
-              id="dropdownDefaultButton"
-              type="button"
-            >
-              {searchBardropDown && (
-                <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
-                  <ul className="py-2 text-sm text-gray-700">
-                    {searchBar.map(({ key, value }) => (
-                      <li
-                        key={key}
-                        className=" flex justify-start gap-3 w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                      >
-                        <input type="checkbox" />
-                        {value}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              <IoSearchOutline />
-              Search
-            </button>
+          {/* PART-I */}
+          {/* Search Box */}
+
+          <div class="flex justify-center items-center">
+            <input
+              type="text"
+              placeholder="Search..."
+              class="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
         </div>
 
         {/* PART-II */}
         <div className="flex gap-3 items-center justify-center">
-          {/* PART-II */}{/* Stripe-BarDropDown */}
-          <div className="relative" onClick={togglestripeBar} onMouseLeave={() => setstripeBardropDown(false)}>
+          {/* PART-II */}
+          {/* Stripe-BarDropDown */}
+          <div
+            className="relative"
+            onClick={togglestripeBar}
+            onMouseLeave={() => setstripeBardropDown(false)}
+          >
             <button
               className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center"
               id="dropdownDefaultButton"
@@ -744,12 +703,17 @@ if(startDate<=endDate){
                 Create Contact
               </button>
             </Link>/}
-            {/* PART-II */}{/*  Create Lead Part-II -> down button */}
-            
+            {/* PART-II */}
+            {/*  Create Lead Part-II -> down button */}
           </div>
 
-          {/* PART-II */}{/*-------Action DropDown */}
-          <div className="relative" onClick={toggleActionsMenuLogo} onMouseLeave={() => setdropActionsMenudropDown(false)}>
+          {/* PART-II */}
+          {/*-------Action DropDown */}
+          <div
+            className="relative"
+            onClick={toggleActionsMenuLogo}
+            onMouseLeave={() => setdropActionsMenudropDown(false)}
+          >
             <button
               className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
               id="dropdownDefaultButton"
@@ -760,7 +724,7 @@ if(startDate<=endDate){
             </button>
             {dropActionsMenudropDown && (
               <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
-                <ul className="text-sm text-gray-700 " >
+                <ul className="text-sm text-gray-700 ">
                   {dropActionsMenu.map(({ key, value }) => (
                     <li
                       key={key}
@@ -776,12 +740,12 @@ if(startDate<=endDate){
           </div>
         </div>
       </div>
-      {/* 2nd bar Leads and lenghtLeads*/}   {/* 2nd bar Leads and lenghtLeads*/}   {/* 2nd bar Leads and lenghtLeads*/}   {/* 2nd bar Leads and lenghtLeads*/}   {/* 2nd bar Leads and lenghtLeads*/}   {/* 2nd bar Leads and lenghtLeads*/}
+      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{" "}
+      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{" "}
+      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}
       <div className="mt-3 flex justify-between items-center gap-3">
         <div className="flex gap-3">
-          <h1 className="text-3xl font-medium ">
-           Client
-          </h1>
+          <h1 className="text-3xl font-medium ">Client</h1>
           <h1 className="bg-blue-600 text-white p-2 min-w-10 text-center rounded text-sm shadow-md">
             {getleads?.length}
           </h1>
@@ -797,11 +761,7 @@ if(startDate<=endDate){
             </button>
 
             {/* Date Range Filter Button */}
-            <button
-              className="border-r border-gray-500 px-3"
-            >
-              Filter By
-            </button>
+            <button className="border-r border-gray-500 px-3">Filter By</button>
 
             {/* Date Range Inputs */}
             <div className="px-3 flex items-center gap-2">
@@ -839,54 +799,41 @@ if(startDate<=endDate){
                       onChange={handleSelectAllCheckbox}
                     />
                   </th>
-                
+
                   <th className="px-1 py-3 text-left border-r font-medium">
                     <div className="flex justify-between items-center">
-                      <span>
-                        Client Name
-                      </span>
-                      <FaBars />
-                    </div>
-                  </th>
-                  <th className="px-1 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center">
-                      <span>
-                        Mobile
-                      </span>
-                      <FaBars />
-                    </div>
-                  </th>
-            
-               
-                  <th className="px-1 py-3 text-left border-r font-medium w-48">
-                    <div className="flex justify-between items-center">
-                      <span>
-                        Segment
-                      </span>
-                      <FaBars />
-                    </div>
-                  </th>
-                  <th className="px-1 py-3 text-left border-r font-medium w-48">
-                    <div className="flex justify-between items-center">
-                      <span>
-                        Service Start Date
-                      </span>
-                      <FaBars />
-                    </div>
-                  </th>
-                  <th className="px-1 py-3 text-left border-r font-medium w-48">
-                    <div className="flex justify-between items-center">
-                      <span>
-                        Service End Date
-                      </span>
+                      <span>Client Name</span>
                       <FaBars />
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium">
                     <div className="flex justify-between items-center">
-                      <span>
-                        Managed By
-                      </span>
+                      <span>Mobile</span>
+                      <FaBars />
+                    </div>
+                  </th>
+
+                  <th className="px-1 py-3 text-left border-r font-medium w-48">
+                    <div className="flex justify-between items-center">
+                      <span>Segment</span>
+                      <FaBars />
+                    </div>
+                  </th>
+                  <th className="px-1 py-3 text-left border-r font-medium w-48">
+                    <div className="flex justify-between items-center">
+                      <span>Service Start Date</span>
+                      <FaBars />
+                    </div>
+                  </th>
+                  <th className="px-1 py-3 text-left border-r font-medium w-48">
+                    <div className="flex justify-between items-center">
+                      <span>Service End Date</span>
+                      <FaBars />
+                    </div>
+                  </th>
+                  <th className="px-1 py-3 text-left border-r font-medium">
+                    <div className="flex justify-between items-center">
+                      <span>Managed By</span>
                       <FaBars />
                     </div>
                   </th>
@@ -897,7 +844,12 @@ if(startDate<=endDate){
               </thead>
               <tbody>
                 {currentLeads?.map((item) => {
-                  const matchedUser = users?.length > 0 ? users?.find((user) => user?.userName === item?.assigned_To) : []
+                  const matchedUser =
+                    users?.length > 0
+                      ? users?.find(
+                          (user) => user?.userName === item?.assigned_To
+                        )
+                      : [];
                   const role = matchedUser?.role;
                   const roleColor = getRoleColorByIndex(role?.length); // Get color for the role
                   return (
@@ -914,11 +866,17 @@ if(startDate<=endDate){
                         />
                       </td>
 
-                    
                       {/* CONTACT NAME */}
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm w-[15%]" onClick={() => handleClick(item)}>
+                      <td
+                        className="px-2 py-4 border-b border-gray-300 text-sm w-[15%]"
+                        onClick={() => handleClick(item)}
+                      >
                         <div className="flex items-center">
-                          <img className="h-6 w-6 mx-1 rounded-full" src={dp} alt="DP" />
+                          <img
+                            className="h-6 w-6 mx-1 rounded-full"
+                            src={dp}
+                            alt="DP"
+                          />
                           <span className="">{item.clientName}</span>
                         </div>
                       </td>
@@ -932,26 +890,26 @@ if(startDate<=endDate){
 
                       {/* Segments */}
                       <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
-                      <div className="grid grid-cols-2 gap-1 items-center">
-                       {item.segments && (
-                              <span className="">
-                                {item.segments
-                                  .filter((segment) => segment.length > 1)
-                                  .join(", ")}
-                              </span>
-                            )}
-                      </div>
+                        <div className="grid grid-cols-2 gap-1 items-center">
+                          {item.segments && (
+                            <span className="">
+                              {item.segments
+                                .filter((segment) => segment.length > 1)
+                                .join(", ")}
+                            </span>
+                          )}
+                        </div>
                       </td>
 
                       <td className="px-1 py-4 border-b border-gray-300 text-sm text-center">
-                        {item.subscription_start_date?.split('T')[0]}
+                        {item.subscription_start_date?.split("T")[0]}
                       </td>
 
                       <td className="px-1 py-4 border-b border-gray-300 text-sm text-center">
-                      {item.subscription_end_date?.split('T')[0]}
+                        {item.subscription_end_date?.split("T")[0]}
                       </td>
 
-                       {/* Assigned To and User Role */}
+                      {/* Assigned To and User Role */}
                       <td className="px-2 py-4 border-b border-gray-300 text-sm  w-[15%] ">
                         {matchedUser && (
                           <div
@@ -960,7 +918,7 @@ if(startDate<=endDate){
                               backgroundColor: roleColor ? roleColor : "#000",
                               borderRadius: "8px",
                               padding: 8,
-                              textAlign: "center"
+                              textAlign: "center",
                             }}
                           >
                             {item.assigned_To} - ({matchedUser?.role})
@@ -968,12 +926,8 @@ if(startDate<=endDate){
                         )}
                       </td>
 
-
-
-
                       {/*------------------<- Create-SO->------------*/}
                       {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
-                      
                     </tr>
                   );
                 })}
@@ -981,15 +935,22 @@ if(startDate<=endDate){
             </table>
           )}
 
-          {/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
           {selectedViewValue === "Grid View" && (
             <>
               <div className="min-w-full">
                 <div className="grid grid-cols-3 gap-3">
                   {/*---------Card starts Here */}
                   {getleads.map((item) => (
-                    <div className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2" key={item.id}>
-                      <div className="flex items-center gap-3" >
+                    <div
+                      className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2"
+                      key={item.id}
+                    >
+                      <div className="flex items-center gap-3">
                         <img src={item.img} height={60} width={60} />
                         <div className="flex flex-col grow">
                           <div className="flex justify-between font-medium">
@@ -1059,15 +1020,18 @@ if(startDate<=endDate){
               <nav>
                 <ul className="inline-flex items-center">
                   {Array.from(
-                    { length: Math?.ceil(filteredLeads?.length / itemsPerPage) },
+                    {
+                      length: Math?.ceil(filteredLeads?.length / itemsPerPage),
+                    },
                     (_, i) => (
                       <li key={i + 1}>
                         <button
                           onClick={() => paginate(i + 1)}
-                          className={`px-4 py-2 mx-1 ${currentPage === i + 1
-                            ? "bg-blue-500 text-white"
-                            : "bg-white text-gray-700 border"
-                            }`}
+                          className={`px-4 py-2 mx-1 ${
+                            currentPage === i + 1
+                              ? "bg-blue-500 text-white"
+                              : "bg-white text-gray-700 border"
+                          }`}
                         >
                           {i + 1}
                         </button>
