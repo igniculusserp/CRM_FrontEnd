@@ -479,9 +479,9 @@ export default function EditClientSO() {
     navigate(-1); // Goes back to the previous page
   };
 
-    //----------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------
   //LanguageDropDown
-  
+
   const LanguageDropDown = [
     { key: 1, name: "English" },
     { key: 2, name: "Portuguese" },
@@ -507,7 +507,6 @@ export default function EditClientSO() {
       language: language,
     }));
   };
-
 
   return (
     <>
@@ -570,7 +569,11 @@ export default function EditClientSO() {
                     >
                       Language
                     </label>
-                    <div className="relative" onClick={toggleDropdownLanguage}>
+                    <div
+                      className="relative"
+                      onClick={toggleDropdownLanguage}
+                      onMouseLeave={() => setisDropdownVisibleLanguage(false)}
+                    >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="LanguageDropDown"
