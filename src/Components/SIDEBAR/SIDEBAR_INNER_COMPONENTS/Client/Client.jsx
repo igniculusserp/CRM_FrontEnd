@@ -249,7 +249,6 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   }
 
   // DROP_LOGO DROPDOWN------------>>>
-  const dropLogoMenu = [{ key: 1, value: "Import Leads" }];
   const [dropLogodropDown, setdropLogodropDown] = useState(false);
 
   const togglesdropLogo = () => {
@@ -746,29 +745,7 @@ if(startDate<=endDate){
               </button>
             </Link>/}
             {/* PART-II */}{/*  Create Lead Part-II -> down button */}
-            <div className="relative" onClick={togglesdropLogo} onMouseLeave={() => setdropLogodropDown(false)}>
-              <button
-                className="py-3 px-2 min border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
-                id="dropdownDefaultButton"
-                type="button"
-              >
-                <FaAngleDown className="text-white" />
-              </button>
-              {dropLogodropDown && (
-                <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
-                  <ul className="text-sm text-gray-700">
-                    {dropLogoMenu.map(({ key, value }) => (
-                      <li
-                        key={key}
-                        className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                      >
-                        {value}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
+            
           </div>
 
           {/* PART-II */}{/*-------Action DropDown */}
