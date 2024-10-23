@@ -110,19 +110,6 @@ export default function FollowUp() {
     { key: 4, value: "Man Insited" },
   ];
 
-  //   SEARCH BAR DATA
-  const searchBar = [
-    { key: 0, value: "Search" },
-    { key: 1, value: "Touched Records" },
-    { key: 2, value: "Untouched Records" },
-    { key: 3, value: "Reecord Action" },
-    { key: 4, value: "Related Records Action" },
-    { key: 5, value: "Locked" },
-    { key: 6, value: "Latest Email Status" },
-    { key: 7, value: "Activities" },
-    { key: 8, value: "Notes" },
-    { key: 9, value: "Campaigns" },
-  ];
 
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
@@ -569,35 +556,13 @@ export default function FollowUp() {
               )}
             </div>
             {/* SEARCH DROPDOWN */}
-            <div
-              className="relative"
-              onClick={toggleSearchDropdown}
-              onMouseLeave={() => setSearchDropdown(false)}
-            >
-              <button
-                className="px-6 py-2 rounded-full border border-gray-300 flex gap-2 items-center justify-between"
-                id="dropdownDefaultButton"
-                type="button"
-              >
-                {searchDropdown && (
-                  <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {searchBar.map((search) => (
-                        <li
-                          className=" flex justify-start gap-3 w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          key={search.key}
-                        >
-                          <input type="checkbox" />
-                          {search.value}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                <IoSearchOutline />
-                Search
-              </button>
-            </div>
+            <div class="flex justify-center items-center">
+            <input
+              type="text"
+              placeholder="Search..."
+              class="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
           </div>
           {/* PART-II */}
           <div className="flex gap-3 items-center justify-center">

@@ -294,19 +294,7 @@ export default function MailBox() {
     { key: 6, value: 'Man Insited' },
   ];
 
-  //   SEARCH BAR DATA
-  const searchBar = [
-    { key: 0, value: 'Search' },
-    { key: 1, value: 'Touched Records' },
-    { key: 2, value: 'Untouched Records' },
-    { key: 3, value: 'Reecord Action' },
-    { key: 4, value: 'Related Records Action' },
-    { key: 5, value: 'Locked' },
-    { key: 6, value: 'Latest Email Status' },
-    { key: 7, value: 'Activities' },
-    { key: 8, value: 'Notes' },
-    { key: 9, value: 'Campaigns' },
-  ];
+
 
   //   FILTER BY DATA
   const filterData = [
@@ -365,33 +353,12 @@ export default function MailBox() {
             )}
           </div>
           {/* SEARCH BAR DROPDOWN */}
-          <div
-            className="relative"
-            onClick={toggleSearchBarDropdown}
-            onMouseLeave={() => setSearchBarDropdown(false)}
-          >
-            <button
-              className="px-3 py-2 rounded-full border border-gray-300 flex gap-2 items-center justify-between"
-              id="dropdownDefaultButton"
-              type="button"
-            >
-              {searchBarDropdown && (
-                <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
-                  <ul className="py-2 text-sm text-gray-700">
-                    {searchBar.map(({ key, value }) => (
-                      <li
-                        className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                        key={key}
-                      >
-                        {value}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              <IoSearchOutline />
-              Search
-            </button>
+          <div class="flex justify-center items-center">
+            <input
+              type="text"
+              placeholder="Search..."
+              class="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
           {/* END SEARCH BAR DROPDOWN */}
         </div>
