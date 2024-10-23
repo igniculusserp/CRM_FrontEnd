@@ -359,10 +359,9 @@ export default function Createlead() {
     if (
       !editLead.mobNo ||
       isNaN(editLead.mobNo) ||
-      editLead.mobNo.length !== 10 ||
       editLead.mobNo.trim() === ""
     ) {
-      errors.mobileNo = 'Enter a valid 10-digit mobile number';
+      errors.mobileNo = 'Enter a valid mobile number';
     }
 
     if (Object.keys(errors).length > 0) {

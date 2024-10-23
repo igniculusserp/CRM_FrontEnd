@@ -214,25 +214,21 @@ export default function CreateTrial() {
     event.preventDefault();
     const bearer_token = localStorage.getItem('token');
 
-    const error = {};
+    const errors = {};
 
     // VALIDATION
     if (
       !editTrail.mobileNo ||
       isNaN(editTrail.mobileNo) ||
-      editTrail.mobileNo.length !== 10 ||
       editTrail.mobileNo.trim() === ''
     ) {
-      errors.mobileNo = 'Enter a valid 10-digit mobile number';
-    } else if (editTrail.segments) {
-      error.segment = 'Segments are required';
-    } else if (
-      !editTrail.trialStartDate ||
-      editTrail.trialStartDate.trim() === ''
-    ) {
-      error.trialStartDate = 'Enter trail start date';
-    } else if (editTrail.trialEndDate || editTrail.trialEndDate.trim() === '') {
-      error.trialEndDate = 'Enter trail end date';
+      errors.mobileNo = 'Enter a valid mobile number';
+    } else if (!editTrail.segments) {
+      errors.segments = 'Segments are required';
+    } else if (!editTrail.trialStartDate) {
+      errors.trialStartDate = 'Enter trail start date';
+    } else if (!editTrail.trialEndDate) {
+      errors.trialEndDate = 'Enter trail end date';
     }
 
     if (Object.keys(errors).length > 0) {
@@ -585,8 +581,8 @@ export default function CreateTrial() {
                         </div>
                       )}
                     </div>
-                    {errors.segment && (
-                      <span style={{ color: 'red' }}>{errors.segment}</span>
+                    {errors.segments && (
+                      <span style={{ color: 'red' }}>{errors.segments}</span>
                     )}
                   </div>
                 </div>
