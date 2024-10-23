@@ -661,7 +661,7 @@ export default function Lead() {
     { key: 4, value: "Multiple Status Change" },
   ];
 
-  const [selectedValue, setSelectedValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState('');
   const [assignModalOpen, setAssignModalOpen] = useState(false);
   const [statusModalOpen, setStatusModalOpen] = useState(false);
   const [multiAssignModal, setMultiAssignModal] = useState(false);
@@ -670,9 +670,11 @@ export default function Lead() {
   selectedIds;
   const handleSelect = (selected) => {
     setSelectedValue(selected);
+
     console.log("Selected Value:", selected, selectedValue);
 
     if (selected === "Lead Allotment") {
+
       setAssignModalOpen(true);
     }
     if (selected === "Change Status") {

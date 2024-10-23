@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { FaBars } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import axios from "axios";
-import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { useState, useEffect } from 'react';
+import { FaBars } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+import axios from 'axios';
+import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 
 export default function Qualification() {
   const [data, setData] = useState([]);
@@ -13,11 +13,11 @@ export default function Qualification() {
 
   const fullURL = window.location.href;
   const url = new URL(fullURL);
-  const name = url.hostname.split(".")[0];
+  const name = url.hostname.split('.')[0];
 
   // Fetch all data
   async function handleLead() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -30,8 +30,8 @@ export default function Qualification() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error("Error fetching qualifications:", error);
-      alert("Failed to fetch data. Please try again.");
+      console.error('Error fetching qualifications:', error);
+      alert('Failed to fetch data. Please try again.');
     }
   }
 
@@ -41,7 +41,7 @@ export default function Qualification() {
 
   // Delete qualification by ID
   const handleDelete = async (id) => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -53,10 +53,10 @@ export default function Qualification() {
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert("Deleted successfully");
+      alert('Deleted successfully');
     } catch (error) {
-      console.error("Error deleting qualification:", error);
-      alert("Failed to delete. Please try again.");
+      console.error('Error deleting qualification:', error);
+      alert('Failed to delete. Please try again.');
     }
   };
 
@@ -69,13 +69,13 @@ export default function Qualification() {
 
   const handleAdd = () => {
     setSelectedData({
-      id: "",
-      userId: "",
-      userName: "",
-      qualification: "",
-      workExpierence: "",
-      skill: "",
-      achievements: "",
+      id: '',
+      userId: '',
+      userName: '',
+      qualification: '',
+      workExpierence: '',
+      skill: '',
+      achievements: '',
     });
     setActive(false);
     setIsEditMode(false);
@@ -83,7 +83,7 @@ export default function Qualification() {
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
@@ -94,31 +94,31 @@ export default function Qualification() {
       if (isEditMode) {
         await axios.put(
           `${protocal_url}${name}.${tenant_base_url}/Admin/qualification/edit/${formData.id}`,
-          { 
+          {
             userId: formData.userId,
             userName: formData.userName,
             qualification: formData.qualification,
-            workExpierence:formData.workExpierence,
+            workExpierence: formData.workExpierence,
             skill: formData.skill,
-            achievements:formData.achievements,
-           },
-          config
-        );
-        alert("Updated successfully");
-      } else {
-        await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/qualification/add`,
-          {       
-            userId: formData.userId,
-            userName: formData.userName,
-            qualification: formData.qualification,
-            workExpierence:formData.workExpierence,
-            skill: formData.skill,
-            achievements:formData.achievements,
+            achievements: formData.achievements,
           },
           config
         );
-        alert("Added successfully");
+        alert('Updated successfully');
+      } else {
+        await axios.post(
+          `${protocal_url}${name}.${tenant_base_url}/Admin/qualification/add`,
+          {
+            userId: formData.userId,
+            userName: formData.userName,
+            qualification: formData.qualification,
+            workExpierence: formData.workExpierence,
+            skill: formData.skill,
+            achievements: formData.achievements,
+          },
+          config
+        );
+        alert('Added successfully');
       }
 
       handleLead(); // Refresh the list
@@ -126,8 +126,8 @@ export default function Qualification() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      console.error("Error saving qualification:", error);
-      alert("Failed to save. Please try again.");
+      console.error('Error saving qualification:', error);
+      alert('Failed to save. Please try again.');
     }
   };
 
@@ -140,24 +140,28 @@ export default function Qualification() {
 
   // Form Component for Adding/Updating
   const EditForm = ({ data, isEditMode }) => {
-    const [formData, setFormData] = useState({ 
-      id: "",
-      userId: "",
-      userName: "",
-      qualification: "",
-      workExpierence: "",
-      skill: "",
-      achievements: "",});
+    const [formData, setFormData] = useState({
+      id: '',
+      userId: '',
+      userName: '',
+      qualification: '',
+      workExpierence: '',
+      skill: '',
+      achievements: '',
+    });
 
     useEffect(() => {
-      setFormData(data || { 
-        id: "",
-        userId: "",
-        userName: "",
-        qualification: "",
-        workExpierence: "",
-        skill: "",
-        achievements: "",});
+      setFormData(
+        data || {
+          id: '',
+          userId: '',
+          userName: '',
+          qualification: '',
+          workExpierence: '',
+          skill: '',
+          achievements: '',
+        }
+      );
     }, [data]);
 
     // Handle form input changes
@@ -168,8 +172,26 @@ export default function Qualification() {
       });
     };
 
+    const [errors, setErrors] = useState({});
+
     const handleSubmit = (e) => {
       e.preventDefault();
+
+      const errors = {};
+
+      if (
+        !formData.userId ||
+        isNaN(formData.userId) ||
+        formData.userId.trim() === ''
+      ) {
+        errors.userId = 'User Id is required';
+      }
+
+      if (Object.keys(errors).length > 0) {
+        setErrors(errors);
+        return;
+      }
+
       handleFormSubmit(formData);
     };
 
@@ -177,7 +199,7 @@ export default function Qualification() {
       <div>
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-medium">
-            {isEditMode ? "Edit Qualification" : "Add Qualification"}
+            {isEditMode ? 'Edit Qualification' : 'Add Qualification'}
           </h1>
           <button
             onClick={handleCancel}
@@ -229,6 +251,11 @@ export default function Qualification() {
                           onChange={handleChange}
                           placeholder="Enter User Id"
                         />
+                        {errors.userId && (
+                      <span style={{ color: 'red' }}>
+                        {errors.userId}
+                      </span>
+                    )}
                       </div>
                       {/* CLIENT NAME FIELD */}
                       <div className="flex flex-col w-1/2">
@@ -335,7 +362,7 @@ export default function Qualification() {
                 type="submit"
                 className="mt-4 bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md"
               >
-                {isEditMode ? "Update" : "Save"}
+                {isEditMode ? 'Update' : 'Save'}
               </button>
             </div>
           </div>

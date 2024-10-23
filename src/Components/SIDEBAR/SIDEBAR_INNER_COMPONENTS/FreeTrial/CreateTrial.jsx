@@ -21,7 +21,7 @@ export default function CreateTrial() {
 
   //form description is kept-out
   const [description, setdescription] = useState('Add Text Here');
-  const [isEditMode, setIsEditMode] = useState(false)
+  const [isEditMode, setIsEditMode] = useState(false);
   const [editTrail, setEditTrail] = useState({
     id: '',
     leadId: '',
@@ -208,9 +208,37 @@ export default function CreateTrial() {
 
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
+  const [errors, setErrors] = useState({});
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const bearer_token = localStorage.getItem('token');
+
+    const error = {};
+
+    // VALIDATION
+    if (
+      !editTrail.mobileNo ||
+      isNaN(editTrail.mobileNo) ||
+      editTrail.mobileNo.length !== 10 ||
+      editTrail.mobileNo.trim() === ''
+    ) {
+      errors.mobileNo = 'Enter a valid 10-digit mobile number';
+    } else if (editTrail.segments) {
+      error.segment = 'Segments are required';
+    } else if (
+      !editTrail.trialStartDate ||
+      editTrail.trialStartDate.trim() === ''
+    ) {
+      error.trialStartDate = 'Enter trail start date';
+    } else if (editTrail.trialEndDate || editTrail.trialEndDate.trim() === '') {
+      error.trialEndDate = 'Enter trail end date';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+      return;
+    }
 
     try {
       const config = {
@@ -367,6 +395,9 @@ export default function CreateTrial() {
                       onChange={handleChange}
                       placeholder="Enter your Mobile Number"
                     />
+                    {errors.mobileNo && (
+                      <span style={{ color: 'red' }}>{errors.mobileNo}</span>
+                    )}
                   </div>
                 </div>
                 {/* -------------3------------- */}
@@ -504,6 +535,9 @@ export default function CreateTrial() {
                         </div>
                       )}
                     </div>
+                    {errors.segment && (
+                      <span style={{ color: 'red' }}>{errors.segment}</span>
+                    )}
                   </div>
                 </div>
                 {/* -------------5------------- */}
@@ -523,6 +557,11 @@ export default function CreateTrial() {
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                     />
+                    {errors.trialStartDate && (
+                      <span style={{ color: 'red' }}>
+                        {errors.trialStartDate}
+                      </span>
+                    )}
                   </div>
                   {/* -------------Trail End Date------------- */}
                   <div className="flex flex-col w-1/2">
@@ -539,6 +578,11 @@ export default function CreateTrial() {
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
+                    {errors.trialEndDate && (
+                      <span style={{ color: 'red' }}>
+                        {errors.trialEndDate}
+                      </span>
+                    )}
                   </div>
                 </div>
                 {/* -------------6------------- */}
