@@ -123,6 +123,36 @@ export default function Createlead() {
   }
 
   //----------------------------------------------------------------------------------------
+  //LanguageDropDown
+  const LanguageDropDown = [
+    { key: 1, name: "English" },
+    { key: 2, name: "Hindi" },
+    { key: 3, name: "Arabic" },
+    { key: 4, name: "Japanese" },
+  ];
+
+  const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] =
+    useState("Select Language");
+
+  const [isDropdownVisibleLanguage, setisDropdownVisibleLanguage] =
+    useState(false);
+
+  const toggleDropdownLanguage = () => {
+    setisDropdownVisibleLanguage(!isDropdownVisibleLanguage);
+  };
+
+  const handleDropdownLanguage = (Language) => {
+    setDefaultTextLanguageDropDown(Language);
+    setisDropdownVisibleLanguage(!isDropdownVisibleLanguage);
+    seteditLead((prevTask) => ({
+      ...prevTask,
+      language: Language,
+    }));
+  };
+
+
+
+  //----------------------------------------------------------------------------------------
   //LeadSourceDropDown
   const LeadSourceDropDown = [
     { key: 1, name: 'Cold Call' },
@@ -509,21 +539,42 @@ export default function Createlead() {
                     />
                   </div>
                   {/* -------------Language------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex flex-col w-1/2 relative">
                     <label
                       htmlFor="language"
                       className="text-sm font-medium text-gray-700"
                     >
                       Language
                     </label>
-                    <input
-                      type="text"
-                      name="language"
-                      value={editLead.language}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                      placeholder="Enter your Language"
-                    />
+
+                    <div
+                      className="relative"
+                      onClick={toggleDropdownLanguage}
+                    >
+                      <button
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        id="LanguageDropDown"
+                        type="button"
+                      >
+                        {isEditMode ? editLead.language : defaultTextLanguageDropDown}
+                        <FaAngleDown className="ml-2 text-gray-400" />
+                      </button>
+                      {isDropdownVisibleLanguage && (
+                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                          <ul className="py-2 text-sm text-gray-700">
+                            {LanguageDropDown.map(({ key, name }) => (
+                              <li
+                                key={key}
+                                onClick={() => handleDropdownLanguage(name)}
+                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              >
+                                {name}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
                 {/* -------------2------------- */}
@@ -551,7 +602,7 @@ export default function Createlead() {
                       htmlFor="title"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Title
+                      Lead Title
                     </label>
                     <input
                       type="text"
