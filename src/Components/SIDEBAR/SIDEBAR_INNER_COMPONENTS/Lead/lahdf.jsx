@@ -10,7 +10,7 @@ export default function Createlead() {
 
   const [description, setdescription] = useState("Add Text Here");
   const [editLead, seteditLead] = useState({ language: "" });
-  
+
   const fullURL = window.location.href;
   const url = new URL(fullURL);
   const name = url.hostname.split(".")[0];
@@ -43,7 +43,7 @@ export default function Createlead() {
       console.error("Error fetching leads:", error);
     }
   }
-  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const bearer_token = localStorage.getItem("token");
@@ -80,15 +80,21 @@ export default function Createlead() {
     }
   };
 
+  //----------------------------------------------------------------------------------------
+  //LanguageDropDown
+  
   const LanguageDropDown = [
     { key: 1, name: "English" },
-    { key: 2, name: "Hindi" },
-    { key: 3, name: "Arabic" },
-    { key: 4, name: "Japanese" },
+    { key: 2, name: "Portuguese" },
+    { key: 3, name: "Hindi" },
+    { key: 4, name: "Arabic" },
+    { key: 5, name: "Japanese" },
   ];
 
-  const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] = useState("Select Language");
-  const [isDropdownVisibleLanguage, setisDropdownVisibleLanguage] = useState(false);
+  const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] =
+    useState("Select Language");
+  const [isDropdownVisibleLanguage, setisDropdownVisibleLanguage] =
+    useState(false);
 
   const toggleDropdownLanguage = () => {
     setisDropdownVisibleLanguage(!isDropdownVisibleLanguage);
@@ -118,16 +124,17 @@ export default function Createlead() {
                     >
                       Language
                     </label>
-                    <div
-                      className="relative"
-                      onClick={toggleDropdownLanguage}
-                    >
+                    <div className="relative" onClick={toggleDropdownLanguage}>
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="LanguageDropDown"
                         type="button"
                       >
-                        {isEditMode ? editLead.language : defaultTextLanguageDropDown}
+                        {!isEditMode
+                          ? defaultTextLanguageDropDown
+                          : editLead.language === ""
+                          ? defaultTextLanguageDropDown
+                          : editLead.language}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLanguage && (
@@ -147,9 +154,9 @@ export default function Createlead() {
                       )}
                     </div>
                   </div>
-               </div>
-          </div>
-          </div>
+                </div>
+              </div>
+            </div>
           </div>
         </form>
       </div>
