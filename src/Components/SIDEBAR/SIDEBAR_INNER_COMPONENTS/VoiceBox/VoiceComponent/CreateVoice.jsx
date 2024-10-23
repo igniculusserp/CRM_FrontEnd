@@ -268,7 +268,7 @@ const CreateVoice = () => {
               </div>
               {/* SECOND ROW */}
               <div className="flex space-x-4">
-                {/* LANGUAGE FIELD */}
+                {/* Employee FIELD */}
                 <div className="flex flex-col w-1/2">
                   <label
                     htmlFor="employeeName"

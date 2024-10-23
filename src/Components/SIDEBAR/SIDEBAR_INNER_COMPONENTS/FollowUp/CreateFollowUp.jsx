@@ -291,6 +291,37 @@ const CreateFollowUp = () => {
     }));
   };
 
+
+    //----------------------------------------------------------------------------------------
+  //LanguageDropDown
+  
+  const LanguageDropDown = [
+    { key: 1, name: "English" },
+    { key: 2, name: "Portuguese" },
+    { key: 3, name: "Hindi" },
+    { key: 4, name: "Arabic" },
+    { key: 5, name: "Japanese" },
+  ];
+
+  const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] =
+    useState("Select Language");
+  const [isDropdownVisibleLanguage, setisDropdownVisibleLanguage] =
+    useState(false);
+
+  const toggleDropdownLanguage = () => {
+    setisDropdownVisibleLanguage(!isDropdownVisibleLanguage);
+  };
+
+  const handleDropdownLanguage = (language) => {
+    setDefaultTextLanguageDropDown(language);
+    setisDropdownVisibleLanguage(false);
+    seteditLead((prevTask) => ({
+      ...prevTask,
+      language: language,
+    }));
+  };
+
+  
   return (
     <>
       {/* TOP PART */}
@@ -353,23 +384,43 @@ const CreateFollowUp = () => {
               {/* SECOND ROW */}
               <div className="flex space-x-4">
                 {/* LANGUAGE FIELD */}
-                <div className="flex flex-col w-1/2">
-                  <label
-                    htmlFor="language"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Language
-                  </label>
-                  <input
-                    type="text"
-                    name="language"
-                    id="language"
-                    value={followupsData.language}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                    onChange={handleChange}
-                    placeholder="Entere verox peron"
-                  />
-                </div>
+                <div className="flex flex-col w-1/2 relative">
+                    <label
+                      htmlFor="language"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Language
+                    </label>
+                    <div className="relative" onClick={toggleDropdownLanguage}>
+                      <button
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        id="LanguageDropDown"
+                        type="button"
+                      >
+                        {!isEditMode
+                          ? defaultTextLanguageDropDown
+                          : editLead.language === ""
+                          ? defaultTextLanguageDropDown
+                          : editLead.language}
+                        <FaAngleDown className="ml-2 text-gray-400" />
+                      </button>
+                      {isDropdownVisibleLanguage && (
+                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                          <ul className="py-2 text-sm text-gray-700">
+                            {LanguageDropDown.map(({ key, name }) => (
+                              <li
+                                key={key}
+                                onClick={() => handleDropdownLanguage(name)}
+                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              >
+                                {name}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 {/* phoneNo FIELD */}
                 <div className="flex flex-col w-1/2">
                   <label

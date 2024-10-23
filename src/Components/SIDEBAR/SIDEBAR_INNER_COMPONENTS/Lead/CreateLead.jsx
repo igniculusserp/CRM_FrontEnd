@@ -126,9 +126,10 @@ export default function Createlead() {
   //LanguageDropDown
   const LanguageDropDown = [
     { key: 1, name: "English" },
-    { key: 2, name: "Hindi" },
-    { key: 3, name: "Arabic" },
-    { key: 4, name: "Japanese" },
+    { key: 2, name: "Portuguese" },
+    { key: 3, name: "Hindi" },
+    { key: 4, name: "Arabic" },
+    { key: 5, name: "Japanese" },
   ];
 
   const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] =
@@ -556,7 +557,7 @@ export default function Createlead() {
                         id="LanguageDropDown"
                         type="button"
                       >
-                        {isEditMode ? editLead.language : defaultTextLanguageDropDown}
+                         {!isEditMode ?  defaultTextLanguageDropDown:editLead.language===""?defaultTextLanguageDropDown:editLead.language}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLanguage && (
