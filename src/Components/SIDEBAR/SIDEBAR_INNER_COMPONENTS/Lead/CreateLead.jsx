@@ -154,31 +154,52 @@ export default function Createlead() {
 
 
   //----------------------------------------------------------------------------------------
-  //LeadSourceDropDown
-  const LeadSourceDropDown = [
-    { key: 1, name: 'Cold Call' },
-    { key: 2, name: 'Advertisement' },
-    { key: 3, name: 'Web Download' },
-    { key: 4, name: 'Seminar Partner' },
-  ];
+  //PooL / Lead Source ToDropDown
+  const [poolToDropDown, setPoolToDropDown] = useState([]);
+  const [defaultTextPool, setDefaultTextPool] = useState("Select Lead Source");
+  const [isPoolDropdownOpen, setIsPoolDropdownOpen] = useState(false);
+  const [error, setError] = useState(null); // New error state
+  const [poolEdit, setPoolEdit] = useState("");
 
-  const [defaultTextLeadSourceDropDown, setDefaultTextLeadSourceDropDown] =
-    useState('Select Lead');
+  const handlePool = async () => {
+    const bearerToken = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`,
+      },
+    };
 
-  const [isDropdownVisibleLeadSource, setisDropdownVisibleLeadSource] =
-    useState(false);
-
-  const toggleDropdownLeadSource = () => {
-    setisDropdownVisibleLeadSource(!isDropdownVisibleLeadSource);
+    try {
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
+        config
+      );
+      setPoolToDropDown(response.data.data);
+      console.log("status:", response.data.data);
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+      setError("Failed to fetch pools."); // Set error message
+    }
   };
 
-  const handleDropdownLeadSource = (leadSource) => {
-    setDefaultTextLeadSourceDropDown(leadSource);
-    setisDropdownVisibleLeadSource(!isDropdownVisibleLeadSource);
-    seteditLead((prevTask) => ({
-      ...prevTask,
-      leadSource: leadSource,
+  useEffect(() => {
+    handlePool();
+  }, []);
+
+  const toggleDropdown = () => {
+    setIsPoolDropdownOpen((prev) => !prev);
+    // console.log("@@@===",isPoolDropdownOpen);
+  };
+
+  const handleDropdownSelection = (poolName) => {
+    setIsPoolDropdownOpen(false);
+    setDefaultTextPool(poolName);
+    console.log("@@@===", isPoolDropdownOpen);
+    seteditLead((prev) => ({
+      ...prev,
+      leadSource: poolName,
     }));
+    setPoolEdit(poolName);
   };
 
   //----------------------------------------------------------------------------------------
@@ -617,41 +638,47 @@ export default function Createlead() {
                 {/* -------------3------------- */}
                 {/* -------------Lead Source------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2 relative">
+                <div className="flex flex-col w-1/2 relative">
                     <label
-                      htmlFor="leadSource"
+                      htmlFor="Pool"
                       className="text-sm font-medium text-gray-700"
                     >
                       Lead Source
                     </label>
                     <div
                       className="relative"
-                      onClick={toggleDropdownLeadSource}
-                      onMouseLeave={() => setisDropdownVisibleLeadSource(false)}
+                      onMouseLeave={() => setIsPoolDropdownOpen(false)}
                     >
                       <button
+                        onClick={toggleDropdown}
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                        id="LeadSourceDropDown"
+                        id="LeadPoolDropDown"
                         type="button"
                       >
-                        {isEditMode
-                          ? editLead.leadSource
-                          : defaultTextLeadSourceDropDown}
+                        {poolEdit === ""
+                          ? defaultTextPool
+                          : editLead.leadSource}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
-                      {isDropdownVisibleLeadSource && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
-                          <ul className="py-2 text-sm text-gray-700">
-                            {LeadSourceDropDown.map(({ key, name }) => (
-                              <li
-                                key={key}
-                                onClick={() => handleDropdownLeadSource(name)}
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                              >
-                                {name}
-                              </li>
-                            ))}
-                          </ul>
+                      {isPoolDropdownOpen && (
+                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                          {error ? (
+                            <div className="py-2 text-red-600">{error}</div>
+                          ) : (
+                            <ul className="py-2 text-sm text-gray-700">
+                              {poolToDropDown.map(({ id, poolName }) => (
+                                <li
+                                  key={id}
+                                  onClick={() =>
+                                    handleDropdownSelection(poolName)
+                                  }
+                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                >
+                                  {poolName}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
                         </div>
                       )}
                     </div>
