@@ -1,134 +1,155 @@
-//react
 import { useState, useEffect } from "react";
-//reactIcon
 import { FaAngleDown } from "react-icons/fa";
-//reactPackages
-import { Link, useNavigate, useParams } from "react-router-dom";
-
-//external Packages
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-//file
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
-import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
-export default function CreateSO() {
-  //to make id unique
-  const { id, leadId } = useParams();
+export default function Createlead() {
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  //form description is kept-out
   const [description, setdescription] = useState("Add Text Here");
-  const [editLead, seteditLead] = useState({});
+  const [editLead, seteditLead] = useState({ language: "" });
 
-  //IMP used as ${name} in an API
-  const name = getHostnamePart();
+  const fullURL = window.location.href;
+  const url = new URL(fullURL);
+  const name = url.hostname.split(".")[0];
 
-  //imp to identify mode
   const [isEditMode, setIsEditMode] = useState(false);
 
+  useEffect(() => {
+    if (id) {
+      setIsEditMode(true);
+      handleLead(); // Fetch lead data for editing
+    }
+  }, [id]);
 
-
-  //----------------------------------------------------------------------------------------
-  //PooL / Lead Source ToDropDown
-  const [poolToDropDown, setPoolToDropDown] = useState([]);
-  const [defaultTextPool, setDefaultTextPool] = useState("Select Lead Source");
-  const [isPoolDropdownOpen, setIsPoolDropdownOpen] = useState(false);
-  const [error, setError] = useState(null); // New error state
-  const [poolEdit, setPoolEdit] = useState("");
-
-  const handlePool = async () => {
-    const bearerToken = localStorage.getItem("token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${bearerToken}`,
-      },
-    };
-
+  async function handleLead() {
+    const bearer_token = localStorage.getItem("token");
     try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
       const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
+        `${protocal_url}${name}.${tenant_base_url}/Lead/lead/${id}`,
         config
       );
-      setPoolToDropDown(response.data.data);
-      console.log("status:", response.data.data);
+      const data = response.data.data;
+      setdescription(data.description);
+      seteditLead({ language: data.language || "" });
     } catch (error) {
       console.error("Error fetching leads:", error);
-      setError("Failed to fetch pools."); // Set error message
+    }
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const bearer_token = localStorage.getItem("token");
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+          "Content-Type": "application/json",
+        },
+      };
+      const formData_PUT = { language: editLead.language };
+      const formData_POST = { language: editLead.language };
+
+      if (isEditMode) {
+        await axios.put(
+          `${protocal_url}${name}.${tenant_base_url}/Lead/lead/update`,
+          formData_PUT,
+          config
+        );
+        alert("Lead updated successfully!");
+        navigate(`/sidebar/lead`);
+      } else {
+        await axios.post(
+          `${protocal_url}${name}.${tenant_base_url}/Lead/lead/add`,
+          formData_POST,
+          config
+        );
+        alert("Lead created successfully!");
+        navigate(`/sidebar/lead`);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
     }
   };
 
-  useEffect(() => {
-    handlePool();
-  }, []);
+  //----------------------------------------------------------------------------------------
+  //LanguageDropDown
 
-  const toggleDropdown = () => {
-    setIsPoolDropdownOpen((prev) => !prev);
-    // console.log("@@@===",isPoolDropdownOpen);
+  const LanguageDropDown = [
+    { key: 1, name: "English" },
+    { key: 2, name: "Portuguese" },
+    { key: 3, name: "Hindi" },
+    { key: 4, name: "Arabic" },
+    { key: 5, name: "Japanese" },
+  ];
+
+  const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] =
+    useState("Select Language");
+  const [isDropdownVisibleLanguage, setisDropdownVisibleLanguage] =
+    useState(false);
+
+  const toggleDropdownLanguage = () => {
+    setisDropdownVisibleLanguage(!isDropdownVisibleLanguage);
   };
 
-  const handleDropdownSelection = (poolName) => {
-    setIsPoolDropdownOpen(false);
-    setDefaultTextPool(poolName);
-    console.log("@@@===", isPoolDropdownOpen);
-    seteditLead((prev) => ({
-      ...prev,
-      leadSource: poolName,
+  const handleDropdownLanguage = (language) => {
+    setDefaultTextLanguageDropDown(language);
+    setisDropdownVisibleLanguage(false);
+    seteditLead((prevTask) => ({
+      ...prevTask,
+      language: language,
     }));
-    setPoolEdit(poolName);
   };
 
   return (
     <>
       <div className="min-h-screen flex flex-col mt-3">
-        <form onSubmit={handleSubmit} className="flex">
+        <form onSubmit={handleSubmit} className="flex mb-6">
           <div className="w-full">
-            <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
-              <div className="py-2 px-4">
-                {/* -------------Lead Source------------- */}
-                <div className="flex space-x-4">
+            <div className="mx-3 bg-white rounded-xl shadow-md ">
+              <div className="grid gap-2 p-2">
+                <div className="flex space-x-4 ">
                   <div className="flex flex-col w-1/2 relative">
                     <label
-                      htmlFor="Pool"
+                      htmlFor="language"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Lead Source
+                      Language
                     </label>
-                    <div
-                      className="relative"
-                      onMouseLeave={() => setIsPoolDropdownOpen(false)}
-                    >
+                    <div className="relative" onClick={toggleDropdownLanguage}>
                       <button
-                        onClick={toggleDropdown}
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                        id="LeadPoolDropDown"
+                        id="LanguageDropDown"
                         type="button"
                       >
-                        {poolEdit === ""
-                          ? defaultTextPool
-                          : editLead.leadSource}
+                        {!isEditMode
+                          ? defaultTextLanguageDropDown
+                          : editLead.language === ""
+                          ? defaultTextLanguageDropDown
+                          : editLead.language}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
-                      {isPoolDropdownOpen && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                          {error ? (
-                            <div className="py-2 text-red-600">{error}</div>
-                          ) : (
-                            <ul className="py-2 text-sm text-gray-700">
-                              {poolToDropDown.map(({ id, poolName }) => (
-                                <li
-                                  key={id}
-                                  onClick={() =>
-                                    handleDropdownSelection(poolName)
-                                  }
-                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                                >
-                                  {poolName}
-                                </li>
-                              ))}
-                            </ul>
-                          )}
+                      {isDropdownVisibleLanguage && (
+                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                          <ul className="py-2 text-sm text-gray-700">
+                            {LanguageDropDown.map(({ key, name }) => (
+                              <li
+                                key={key}
+                                onClick={() => handleDropdownLanguage(name)}
+                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              >
+                                {name}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                       )}
                     </div>

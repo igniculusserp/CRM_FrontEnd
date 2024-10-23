@@ -1,16 +1,16 @@
 //react
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 //reactIcon
-import { FaAngleDown } from 'react-icons/fa';
+import { FaAngleDown } from "react-icons/fa";
 //reactPackages
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 //external Packages
-import axios from 'axios';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import axios from "axios";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 //file
-import { tenant_base_url, protocal_url } from '../../../../Config/config';
+import { tenant_base_url, protocal_url } from "../../../../Config/config";
 //Images
 // import profilepic from "./../../../../assets/images/profilePicEditLead.png";
 
@@ -20,21 +20,21 @@ export default function CreateTrial() {
   const navigate = useNavigate();
 
   //form description is kept-out
-  const [description, setdescription] = useState('Add Text Here');
+  const [description, setdescription] = useState("Add Text Here");
   const [isEditMode, setIsEditMode] = useState(false);
   const [editTrail, setEditTrail] = useState({
-    id: '',
-    leadId: '',
-    name: '',
-    language: '',
-    mobileNo: '',
-    phoneNo: '',
-    email: '',
-    assigned_To: '',
-    trialStartDate: '',
-    trialEndDate: '',
-    call_bck_DateTime: '',
-    lastModifiedBy: '',
+    id: "",
+    leadId: "",
+    name: "",
+    language: "",
+    mobileNo: "",
+    phoneNo: "",
+    email: "",
+    assigned_To: "",
+    trialStartDate: "",
+    trialEndDate: "",
+    call_bck_DateTime: "",
+    lastModifiedBy: "",
     segments: [],
   });
 
@@ -42,7 +42,7 @@ export default function CreateTrial() {
   //to make code for particluar company
   const fullURL = window.location.href;
   const url = new URL(fullURL);
-  const name = url.hostname.split('.')[0];
+  const name = url.hostname.split(".")[0];
 
   useEffect(() => {
     handleFreeTrail(); // Fetch lead data for editing
@@ -50,7 +50,7 @@ export default function CreateTrial() {
 
   //GET by ID---------------------------//GET---------------------------//GET---------------------------by ID-----------by ID
   async function handleFreeTrail() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -63,24 +63,24 @@ export default function CreateTrial() {
       );
       const data = response.data.data;
       setdescription(data.description);
-      console.log('@@@@=====', response.data.data);
+      console.log("@@@@=====", response.data.data);
       setEditTrail({
-        id: data.id || '',
-        leadId: data.leadId || '',
-        name: data.name || '',
-        language: data.language || '',
-        mobileNo: data.mobileNo || '',
-        phoneNo: data.phoneNo || '',
-        email: data.email || '',
-        assigned_To: data.assigned_To || '',
-        call_bck_DateTime: data.call_bck_DateTime || '',
+        id: data.id || "",
+        leadId: data.leadId || "",
+        name: data.name || "",
+        language: data.language || "",
+        mobileNo: data.mobileNo || "",
+        phoneNo: data.phoneNo || "",
+        email: data.email || "",
+        assigned_To: data.assigned_To || "",
+        call_bck_DateTime: data.call_bck_DateTime || "",
         segments: data.segments || [],
-        trialStartDate: data.trialStartDate || '',
-        trialEndDate: data.trialEndDate || '',
-        lastModifiedBy: data.lastModifiedBy || '',
+        trialStartDate: data.trialStartDate || "",
+        trialEndDate: data.trialEndDate || "",
+        lastModifiedBy: data.lastModifiedBy || "",
       });
     } catch (error) {
-      console.error('Error fetching Trail:', error);
+      console.error("Error fetching Trail:", error);
     }
   }
 
@@ -92,7 +92,7 @@ export default function CreateTrial() {
 
   // Segment GET API Is being used here
   async function handleSegment() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
@@ -107,7 +107,7 @@ export default function CreateTrial() {
       setSegments(response.data.data);
       // console.log("segment:", response.data.data);
     } catch (error) {
-      console.error('Error fetching segments:', error);
+      console.error("Error fetching segments:", error);
     }
   }
 
@@ -116,7 +116,7 @@ export default function CreateTrial() {
   }, []);
 
   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
-    useState('Select Segment');
+    useState("Select Segment");
   const [isDropdownVisibleSegment, setisDropdownVisibleSegment] =
     useState(false);
 
@@ -142,7 +142,7 @@ export default function CreateTrial() {
       segments: updatedSegments,
     }));
 
-    console.log('Selected segments:', updatedSegments);
+    console.log("Selected segments:", updatedSegments);
   };
   // Segment GET API Is being used here
 
@@ -151,7 +151,7 @@ export default function CreateTrial() {
   const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
 
   async function handleAssigned_To() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
@@ -164,9 +164,9 @@ export default function CreateTrial() {
         config
       );
       setassigned_ToDropDown(response.data?.data);
-      console.log('status:', response.data);
+      console.log("status:", response.data);
     } catch (error) {
-      console.error('Error fetching Trail:', error);
+      console.error("Error fetching Trail:", error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -176,7 +176,7 @@ export default function CreateTrial() {
   }, []);
 
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
-    useState('Select Assigned');
+    useState("Select Assigned");
   const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
     useState(false);
 
@@ -189,7 +189,7 @@ export default function CreateTrial() {
     assigned_To_Role
   ) => {
     setdefaultTextassigned_ToDropDown(
-      assigned_To_Username + ' ' + assigned_To_Role
+      assigned_To_Username + " " + assigned_To_Role
     );
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     setEditTrail((prevTask) => ({
@@ -212,7 +212,7 @@ export default function CreateTrial() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     const errors = {};
 
@@ -220,15 +220,15 @@ export default function CreateTrial() {
     if (
       !editTrail.mobileNo ||
       isNaN(editTrail.mobileNo) ||
-      editTrail.mobileNo.trim() === ''
+      editTrail.mobileNo.trim() === ""
     ) {
-      errors.mobileNo = 'Enter a valid mobile number';
+      errors.mobileNo = "Enter a valid mobile number";
     } else if (!editTrail.segments) {
-      errors.segments = 'Segments are required';
+      errors.segments = "Segments are required";
     } else if (!editTrail.trialStartDate) {
-      errors.trialStartDate = 'Enter trail start date';
+      errors.trialStartDate = "Enter trail start date";
     } else if (!editTrail.trialEndDate) {
-      errors.trialEndDate = 'Enter trail end date';
+      errors.trialEndDate = "Enter trail end date";
     }
 
     if (Object.keys(errors).length > 0) {
@@ -240,7 +240,7 @@ export default function CreateTrial() {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       };
       const formData_PUT = {
@@ -268,20 +268,19 @@ export default function CreateTrial() {
         formData_PUT,
         config
       );
-      alert('Free Trail updated successfully!');
+      alert("Free Trail updated successfully!");
       navigate(`/sidebar/freeTrail`);
 
       // Redirect after a short delay
     } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred. Please try again.');
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
     }
   };
 
-
   //----------------------------------------------------------------------------------------
   //LanguageDropDown
-  
+
   const LanguageDropDown = [
     { key: 1, name: "English" },
     { key: 2, name: "Portuguese" },
@@ -395,7 +394,11 @@ export default function CreateTrial() {
                     >
                       Language
                     </label>
-                    <div className="relative" onClick={toggleDropdownLanguage}>
+                    <div
+                      className="relative"
+                      onClick={toggleDropdownLanguage}
+                      onMouseLeave={() => setisDropdownVisibleLanguage(false)}
+                    >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="LanguageDropDown"
@@ -442,7 +445,7 @@ export default function CreateTrial() {
                       placeholder="Enter your Mobile Number"
                     />
                     {errors.mobileNo && (
-                      <span style={{ color: 'red' }}>{errors.mobileNo}</span>
+                      <span style={{ color: "red" }}>{errors.mobileNo}</span>
                     )}
                   </div>
                 </div>
@@ -507,7 +510,7 @@ export default function CreateTrial() {
                         id="LeadStatusDropDown"
                         type="button"
                       >
-                        {editTrail.assigned_To === ''
+                        {editTrail.assigned_To === ""
                           ? editTrail.assigned_To
                           : defaultTextassigned_ToDropDown}
                         <FaAngleDown className="ml-2 text-gray-400" />
@@ -573,7 +576,7 @@ export default function CreateTrial() {
                                   onChange={() => handleCheckboxChange(segment)}
                                   className="mr-2"
                                 />
-                                {segment.segment}{' '}
+                                {segment.segment}{" "}
                                 {/* Assuming 'segment' is the property you want to display */}
                               </li>
                             ))}
@@ -582,7 +585,7 @@ export default function CreateTrial() {
                       )}
                     </div>
                     {errors.segments && (
-                      <span style={{ color: 'red' }}>{errors.segments}</span>
+                      <span style={{ color: "red" }}>{errors.segments}</span>
                     )}
                   </div>
                 </div>
@@ -599,12 +602,12 @@ export default function CreateTrial() {
                     <input
                       type="date"
                       name="trialStartDate"
-                      value={editTrail.trialStartDate.split('T')[0]}
+                      value={editTrail.trialStartDate.split("T")[0]}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                     />
                     {errors.trialStartDate && (
-                      <span style={{ color: 'red' }}>
+                      <span style={{ color: "red" }}>
                         {errors.trialStartDate}
                       </span>
                     )}
@@ -620,12 +623,12 @@ export default function CreateTrial() {
                     <input
                       type="date"
                       name="trialEndDate"
-                      value={editTrail.trialEndDate.split('T')[0]}
+                      value={editTrail.trialEndDate.split("T")[0]}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
                     {errors.trialEndDate && (
-                      <span style={{ color: 'red' }}>
+                      <span style={{ color: "red" }}>
                         {errors.trialEndDate}
                       </span>
                     )}
@@ -644,7 +647,7 @@ export default function CreateTrial() {
                     <input
                       type="date"
                       name="callBackDateTime"
-                      value={editTrail.call_bck_DateTime.split('T')[0]}
+                      value={editTrail.call_bck_DateTime.split("T")[0]}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
@@ -697,7 +700,7 @@ export default function CreateTrial() {
                   type="submit"
                   className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
                 >
-                  {isEditMode ? 'Update' : 'Save'}
+                  {isEditMode ? "Update" : "Save"}
                 </button>
               </div>
             </div>

@@ -571,6 +571,7 @@ export default function Createlead() {
                     <div
                       className="relative"
                       onClick={toggleDropdownLanguage}
+                      onMouseLeave={() => setisDropdownVisibleLanguage(false)}
                     >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"

@@ -1,18 +1,18 @@
 //react
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 //reactIcon->
-import { FaAngleDown } from 'react-icons/fa';
+import { FaAngleDown } from "react-icons/fa";
 //reactPackages
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 //external Packages
-import axios from 'axios';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import axios from "axios";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 //file
-import { tenant_base_url, protocal_url } from '../../../../Config/config';
+import { tenant_base_url, protocal_url } from "../../../../Config/config";
 //Images
-import profilepic from './../../../../assets/images/profilePicEditLead.png';
+import profilepic from "./../../../../assets/images/profilePicEditLead.png";
 //------------------------------------------------------------------------------->CODE STARTS FROM HERE<-------------------------------------------------------------------------------
 export default function CreateContact() {
   //to make id unique
@@ -20,35 +20,35 @@ export default function CreateContact() {
   const navigate = useNavigate();
 
   //form description is kept-out
-  const [description, setdescription] = useState('Add Text Here');
+  const [description, setdescription] = useState("Add Text Here");
   const [editLead, seteditLead] = useState({
-    id: '',
-    name: '',
-    language: '',
-    company: '',
-    email: '',
-    title: '',
-    leadSource: '',
-    leadesStatus: '',
-    mobNo: '',
-    phNo: '',
-    assigned_To: '',
-    street: '',
-    pinCode: '',
-    country: '',
-    city: '',
-    state: '',
-    riskCapcity: '',
-    tradingTime: '',
-    tradingType: '',
-    investmet: '',
-    advisoryExp: '',
-    trialStartDate: '',
-    trialEndDate: '',
-    tradingYears: '',
-    callBackDateTime: '',
-    contactId: '',
-    lastModifiedBy: '',
+    id: "",
+    name: "",
+    language: "",
+    company: "",
+    email: "",
+    title: "",
+    leadSource: "",
+    leadesStatus: "",
+    mobNo: "",
+    phNo: "",
+    assigned_To: "",
+    street: "",
+    pinCode: "",
+    country: "",
+    city: "",
+    state: "",
+    riskCapcity: "",
+    tradingTime: "",
+    tradingType: "",
+    investmet: "",
+    advisoryExp: "",
+    trialStartDate: "",
+    trialEndDate: "",
+    tradingYears: "",
+    callBackDateTime: "",
+    contactId: "",
+    lastModifiedBy: "",
     segments: [],
   });
 
@@ -56,7 +56,7 @@ export default function CreateContact() {
   //to make code for particluar company
   const fullURL = window.location.href;
   const url = new URL(fullURL);
-  const name = url.hostname.split('.')[0];
+  const name = url.hostname.split(".")[0];
 
   //imp to identify mode
   const [isEditMode, setIsEditMode] = useState(false);
@@ -73,7 +73,7 @@ export default function CreateContact() {
 
   //GET by ID
   async function handleLead() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -87,37 +87,37 @@ export default function CreateContact() {
       const data = response.data.data;
       setdescription(data.description);
       seteditLead({
-        id: data.id || '',
-        name: data.name || '',
-        language: data.language || '',
-        company: data.company || '',
-        title: data.tital || '',
-        leadSource: data.leadsSource || '',
-        leadesStatus: data.leadesStatus || '',
-        mobNo: data.mobileNo || '',
-        phNo: data.phoneNo || '',
-        email: data.email || '',
-        assigned_To: data.assigned_To || '',
-        callBackDateTime: data.call_bck_DateTime || '',
-        street: data.street || '',
-        pinCode: data.postalCode || '',
-        country: data.country || '',
-        city: data.city || '',
-        state: data.state || '',
-        riskCapcity: data.risk_Capacity || '',
-        tradingTime: data.tradingTime || '',
-        tradingType: data.tradingType || '',
-        investmet: data.investment || '',
-        advisoryExp: data.advisaryExp || '',
+        id: data.id || "",
+        name: data.name || "",
+        language: data.language || "",
+        company: data.company || "",
+        title: data.tital || "",
+        leadSource: data.leadsSource || "",
+        leadesStatus: data.leadesStatus || "",
+        mobNo: data.mobileNo || "",
+        phNo: data.phoneNo || "",
+        email: data.email || "",
+        assigned_To: data.assigned_To || "",
+        callBackDateTime: data.call_bck_DateTime || "",
+        street: data.street || "",
+        pinCode: data.postalCode || "",
+        country: data.country || "",
+        city: data.city || "",
+        state: data.state || "",
+        riskCapcity: data.risk_Capacity || "",
+        tradingTime: data.tradingTime || "",
+        tradingType: data.tradingType || "",
+        investmet: data.investment || "",
+        advisoryExp: data.advisaryExp || "",
         segments: data.segments || [],
-        trialStartDate: data.trialStartDate || '',
-        trialEndDate: data.trialEndDate || '',
-        tradingYears: data.trading_yrs || '',
-        contactId: data.contactId || '',
-        lastModifiedBy: data.lastModifiedBy || '',
+        trialStartDate: data.trialStartDate || "",
+        trialEndDate: data.trialEndDate || "",
+        tradingYears: data.trading_yrs || "",
+        contactId: data.contactId || "",
+        lastModifiedBy: data.lastModifiedBy || "",
       });
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      console.error("Error fetching leads:", error);
     }
   }
 
@@ -170,13 +170,12 @@ export default function CreateContact() {
     setPoolEdit(poolName);
   };
 
-
   //----------------------------------------------------------------------------------------
   //LeadStatusDropDown GET API Is being used here
-  const [leadStatus, setleadStatus] = useState('');
+  const [leadStatus, setleadStatus] = useState("");
 
   async function handleLeadStatus() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
@@ -189,9 +188,9 @@ export default function CreateContact() {
         config
       );
       setleadStatus(response.data.data);
-      console.log('status:', response.data.data);
+      console.log("status:", response.data.data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -201,7 +200,7 @@ export default function CreateContact() {
   }, []);
 
   const [defaultTextLeadStatusDropDown, setdefaultTextLeadStatusDropDown] =
-    useState('Select Status');
+    useState("Select Status");
   const [isDropdownVisibleLeadStatus, setisDropdownVisibleLeadStatus] =
     useState(false);
 
@@ -222,7 +221,7 @@ export default function CreateContact() {
 
   // Segment GET API Is being used here
   async function handleSegment() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
@@ -237,7 +236,7 @@ export default function CreateContact() {
       setSegments(response.data.data);
       // console.log("segment:", response.data.data);
     } catch (error) {
-      console.error('Error fetching segments:', error);
+      console.error("Error fetching segments:", error);
     }
   }
 
@@ -246,7 +245,7 @@ export default function CreateContact() {
   }, []);
 
   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
-    useState('Select Segment');
+    useState("Select Segment");
   const [isDropdownVisibleSegment, setisDropdownVisibleSegment] =
     useState(false);
 
@@ -272,21 +271,21 @@ export default function CreateContact() {
       segments: updatedSegments,
     }));
 
-    console.log('Selected segments:', updatedSegments);
+    console.log("Selected segments:", updatedSegments);
   };
   // Segment GET API Is being used here
 
   //----------------------------------------------------------------------------------------
   //assigned_ToDropDown
   const assigned_ToDropDown = [
-    { key: 1, name: 'Staff' },
-    { key: 2, name: 'Manager' },
-    { key: 3, name: 'Company' },
-    { key: 4, name: 'Employee' },
+    { key: 1, name: "Staff" },
+    { key: 2, name: "Manager" },
+    { key: 3, name: "Company" },
+    { key: 4, name: "Employee" },
   ];
 
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
-    useState('Select Assigned');
+    useState("Select Assigned");
   const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
     useState(false);
 
@@ -317,7 +316,7 @@ export default function CreateContact() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     const errors = {};
 
@@ -325,9 +324,9 @@ export default function CreateContact() {
     if (
       !editLead.mobNo ||
       isNaN(editLead.mobNo) ||
-      editLead.mobNo.trim() === ''
+      editLead.mobNo.trim() === ""
     ) {
-      errors.mobileNo = 'Enter a valid mobile number';
+      errors.mobileNo = "Enter a valid mobile number";
     }
 
     if (Object.keys(errors).length > 0) {
@@ -339,7 +338,7 @@ export default function CreateContact() {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       };
       const formData_PUT = {
@@ -414,7 +413,7 @@ export default function CreateContact() {
           formData_PUT,
           config
         );
-        alert('Contact updated successfully!');
+        alert("Contact updated successfully!");
         navigate(`/sidebar/contact`);
       } else {
         // POST request to create
@@ -423,21 +422,20 @@ export default function CreateContact() {
           formData_POST,
           config
         );
-        alert('Contact created successfully!');
+        alert("Contact created successfully!");
         navigate(`/sidebar/contact`);
       }
 
       // Redirect after a short delay
     } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred. Please try again.');
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
     }
   };
 
-
-    //----------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------
   //LanguageDropDown
-  
+
   const LanguageDropDown = [
     { key: 1, name: "English" },
     { key: 2, name: "Portuguese" },
@@ -463,7 +461,6 @@ export default function CreateContact() {
       language: language,
     }));
   };
-
 
   return (
     <>
@@ -535,7 +532,11 @@ export default function CreateContact() {
                     >
                       Language
                     </label>
-                    <div className="relative" onClick={toggleDropdownLanguage}>
+                    <div
+                      className="relative"
+                      onClick={toggleDropdownLanguage}
+                      onMouseLeave={() => setisDropdownVisibleLanguage(false)}
+                    >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="LanguageDropDown"
@@ -606,7 +607,7 @@ export default function CreateContact() {
                 {/* -------------3------------- */}
                 {/* -------------Lead Source------------- */}
                 <div className="flex space-x-4">
-                <div className="flex flex-col w-1/2 relative">
+                  <div className="flex flex-col w-1/2 relative">
                     <label
                       htmlFor="Pool"
                       className="text-sm font-medium text-gray-700"
@@ -713,7 +714,7 @@ export default function CreateContact() {
                       placeholder="Enter your Mobile Number"
                     />
                     {errors.mobileNo && (
-                      <span style={{ color: 'red' }}>{errors.mobileNo}</span>
+                      <span style={{ color: "red" }}>{errors.mobileNo}</span>
                     )}
                   </div>
                   {/* -------------Phone Number------------- */}
@@ -907,7 +908,7 @@ export default function CreateContact() {
                     />
                   </div>
                   {/* -------------Description------------- */}
-                </div>{' '}
+                </div>{" "}
                 {/* -------------9------------- */}
                 {/* -------------Risk Capcity------------- */}
                 <div className="flex space-x-4">
@@ -1036,7 +1037,7 @@ export default function CreateContact() {
                                   onChange={() => handleCheckboxChange(segment)}
                                   className="mr-2"
                                 />
-                                {segment.segment}{' '}
+                                {segment.segment}{" "}
                                 {/* Assuming 'segment' is the property you want to display */}
                               </li>
                             ))}
@@ -1059,7 +1060,7 @@ export default function CreateContact() {
                     <input
                       type="date"
                       name="trialStartDate"
-                      value={editLead.trialStartDate?.split('T')[0]}
+                      value={editLead.trialStartDate?.split("T")[0]}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                     />
@@ -1075,7 +1076,7 @@ export default function CreateContact() {
                     <input
                       type="date"
                       name="trialEndDate"
-                      value={editLead.trialEndDate?.split('T')[0]}
+                      value={editLead.trialEndDate?.split("T")[0]}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
@@ -1184,7 +1185,7 @@ export default function CreateContact() {
                   type="submit"
                   className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
                 >
-                  {isEditMode ? 'Update' : 'Save'}
+                  {isEditMode ? "Update" : "Save"}
                 </button>
               </div>
             </div>

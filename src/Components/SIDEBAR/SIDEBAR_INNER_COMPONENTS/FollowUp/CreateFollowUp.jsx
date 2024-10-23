@@ -1,35 +1,35 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { FaAngleDown } from 'react-icons/fa';
-import ReactQuill from 'react-quill';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { FaAngleDown } from "react-icons/fa";
+import ReactQuill from "react-quill";
+import axios from "axios";
 
-import { tenant_base_url, protocal_url } from './../../../../Config/config';
+import { tenant_base_url, protocal_url } from "./../../../../Config/config";
 
-import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
+import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 const CreateFollowUp = () => {
   const { id } = useParams();
-  const bearer_token = localStorage.getItem('token');
+  const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
   const navigate = useNavigate();
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [followupsData, setFollowupsData] = useState({
-    id: '',
-    leadId: '',
-    name: '',
-    language: '',
-    mobileNo: '',
-    phoneNo: '',
-    email: '',
-    assigned_To: '',
+    id: "",
+    leadId: "",
+    name: "",
+    language: "",
+    mobileNo: "",
+    phoneNo: "",
+    email: "",
+    assigned_To: "",
     segments: [],
-    call_bck_DateTime: '',
-    lastModifiedBy: '',
+    call_bck_DateTime: "",
+    lastModifiedBy: "",
   });
 
-  const [description, setDescription] = useState(''); // For Quill editor
+  const [description, setDescription] = useState(""); // For Quill editor
 
   // Fetch Data by ID
   useEffect(() => {
@@ -54,23 +54,23 @@ const CreateFollowUp = () => {
         const followup = response.data.data;
         setFollowupsData({
           id: followup.id,
-          leadId: followup.leadId || '',
-          name: followup.name || '',
-          language: followup.language || '',
-          mobileNo: followup.mobileNo || '',
-          phoneNo: followup.phoneNo || '',
-          email: followup.email || '',
-          assigned_To: followup.assigned_To || '',
+          leadId: followup.leadId || "",
+          name: followup.name || "",
+          language: followup.language || "",
+          mobileNo: followup.mobileNo || "",
+          phoneNo: followup.phoneNo || "",
+          email: followup.email || "",
+          assigned_To: followup.assigned_To || "",
           segments: followup.segments || [],
-          call_bck_DateTime: followup.call_bck_DateTime || '',
-          lastModifiedBy: followup.lastModifiedBy || '',
+          call_bck_DateTime: followup.call_bck_DateTime || "",
+          lastModifiedBy: followup.lastModifiedBy || "",
         });
 
         // Set description in Quill editor
-        setDescription(followup.description || '');
+        setDescription(followup.description || "");
       }
     } catch (error) {
-      console.error('Error fetching data: ', error);
+      console.error("Error fetching data: ", error);
     }
   };
 
@@ -96,11 +96,14 @@ const CreateFollowUp = () => {
       !followupsData.mobileNo ||
       isNaN(followupsData.mobileNo) ||
       followupsData.mobileNo !== 10 ||
-      followupsData.mobileNo === ''
+      followupsData.mobileNo === ""
     ) {
-      errors.mobileNo = 'Enter a valid 10-digit mobile number';
-    } else if (!followupsData.call_bck_DateTime || followupsData.call_bck_DateTime.trim() === "") {
-      errors.call_bck_DateTime = 'Callback date time required';
+      errors.mobileNo = "Enter a valid 10-digit mobile number";
+    } else if (
+      !followupsData.call_bck_DateTime ||
+      followupsData.call_bck_DateTime.trim() === ""
+    ) {
+      errors.call_bck_DateTime = "Callback date time required";
     }
 
     if (Object.keys(errors).length > 0) {
@@ -108,10 +111,10 @@ const CreateFollowUp = () => {
       return;
     }
 
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     if (!bearer_token) {
-      alert('No token found, please log in again.');
+      alert("No token found, please log in again.");
       return;
     }
 
@@ -119,7 +122,7 @@ const CreateFollowUp = () => {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       };
 
@@ -140,10 +143,10 @@ const CreateFollowUp = () => {
 
       // Log the URL and payload for debugging
       console.log(
-        'PUT URL:',
+        "PUT URL:",
         `${protocal_url}${name}.${tenant_base_url}/FollowUp/update`
       );
-      console.log('formData_PUT:', formData_PUT);
+      console.log("formData_PUT:", formData_PUT);
 
       // Make the PUT request
       await axios.put(
@@ -152,26 +155,26 @@ const CreateFollowUp = () => {
         config
       );
 
-      alert('Follow updated successfully!');
+      alert("Follow updated successfully!");
       navigate(`/sidebar/followup`);
     } catch (error) {
       // Log the detailed error response
-      console.error('Error response:', error.response);
+      console.error("Error response:", error.response);
 
       if (error.response && error.response.data && error.response.data.errors) {
         const validationErrors = error.response.data.errors;
-        console.error('Validation errors:', validationErrors);
+        console.error("Validation errors:", validationErrors);
 
         // Create a readable error message from the validation errors
-        let errorMessage = 'Validation errors:\n';
+        let errorMessage = "Validation errors:\n";
         for (const field in validationErrors) {
           if (validationErrors.hasOwnProperty(field)) {
-            errorMessage += `${field}: ${validationErrors[field].join(', ')}\n`;
+            errorMessage += `${field}: ${validationErrors[field].join(", ")}\n`;
           }
         }
         alert(errorMessage);
       } else {
-        alert('An error occurred. Please try again.');
+        alert("An error occurred. Please try again.");
       }
     }
   };
@@ -182,7 +185,7 @@ const CreateFollowUp = () => {
 
   // Segment GET API Is being used here
   async function handleSegment() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
@@ -197,7 +200,7 @@ const CreateFollowUp = () => {
       setSegments(response.data.data);
       // console.log("segment:", response.data.data);
     } catch (error) {
-      console.error('Error fetching segments:', error);
+      console.error("Error fetching segments:", error);
     }
   }
 
@@ -206,7 +209,7 @@ const CreateFollowUp = () => {
   }, []);
 
   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
-    useState('Select Segment');
+    useState("Select Segment");
   const [isDropdownVisibleSegment, setisDropdownVisibleSegment] =
     useState(false);
 
@@ -234,7 +237,7 @@ const CreateFollowUp = () => {
       segments: updatedSegments,
     }));
 
-    console.log('Selected segments:', updatedSegments);
+    console.log("Selected segments:", updatedSegments);
   };
 
   // Segment GET API Is being used here
@@ -244,7 +247,7 @@ const CreateFollowUp = () => {
   const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
 
   async function handleAssigned_To() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
@@ -257,9 +260,9 @@ const CreateFollowUp = () => {
         config
       );
       setassigned_ToDropDown(response.data);
-      console.log('status:', response.data);
+      console.log("status:", response.data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -269,7 +272,7 @@ const CreateFollowUp = () => {
   }, []);
 
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
-    useState('Select Assigned');
+    useState("Select Assigned");
   const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
     useState(false);
 
@@ -282,7 +285,7 @@ const CreateFollowUp = () => {
     assigned_To_Role
   ) => {
     setdefaultTextassigned_ToDropDown(
-      assigned_To_Username + ' ' + assigned_To_Role
+      assigned_To_Username + " " + assigned_To_Role
     );
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     setFollowupsData((prevTask) => ({
@@ -291,10 +294,9 @@ const CreateFollowUp = () => {
     }));
   };
 
-
-    //----------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------
   //LanguageDropDown
-  
+
   const LanguageDropDown = [
     { key: 1, name: "English" },
     { key: 2, name: "Portuguese" },
@@ -321,7 +323,6 @@ const CreateFollowUp = () => {
     }));
   };
 
-  
   return (
     <>
       {/* TOP PART */}
@@ -385,42 +386,46 @@ const CreateFollowUp = () => {
               <div className="flex space-x-4">
                 {/* LANGUAGE FIELD */}
                 <div className="flex flex-col w-1/2 relative">
-                    <label
-                      htmlFor="language"
-                      className="text-sm font-medium text-gray-700"
+                  <label
+                    htmlFor="language"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Language
+                  </label>
+                  <div
+                    className="relative"
+                    onClick={toggleDropdownLanguage}
+                    onMouseLeave={() => setisDropdownVisibleLanguage(false)}
+                  >
+                    <button
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                      id="LanguageDropDown"
+                      type="button"
                     >
-                      Language
-                    </label>
-                    <div className="relative" onClick={toggleDropdownLanguage}>
-                      <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                        id="LanguageDropDown"
-                        type="button"
-                      >
-                        {!isEditMode
-                          ? defaultTextLanguageDropDown
-                          : editLead.language === ""
-                          ? defaultTextLanguageDropDown
-                          : editLead.language}
-                        <FaAngleDown className="ml-2 text-gray-400" />
-                      </button>
-                      {isDropdownVisibleLanguage && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
-                          <ul className="py-2 text-sm text-gray-700">
-                            {LanguageDropDown.map(({ key, name }) => (
-                              <li
-                                key={key}
-                                onClick={() => handleDropdownLanguage(name)}
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                              >
-                                {name}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
+                      {!isEditMode
+                        ? defaultTextLanguageDropDown
+                        : editLead.language === ""
+                        ? defaultTextLanguageDropDown
+                        : editLead.language}
+                      <FaAngleDown className="ml-2 text-gray-400" />
+                    </button>
+                    {isDropdownVisibleLanguage && (
+                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                        <ul className="py-2 text-sm text-gray-700">
+                          {LanguageDropDown.map(({ key, name }) => (
+                            <li
+                              key={key}
+                              onClick={() => handleDropdownLanguage(name)}
+                              className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            >
+                              {name}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
+                </div>
                 {/* phoneNo FIELD */}
                 <div className="flex flex-col w-1/2">
                   <label
@@ -460,7 +465,7 @@ const CreateFollowUp = () => {
                     placeholder="Entere verox peron"
                   />
                   {errors.mobileNo && (
-                    <span style={{ color: 'red' }}>{errors.mobileNo}</span>
+                    <span style={{ color: "red" }}>{errors.mobileNo}</span>
                   )}
                 </div>
                 {/* EMAIL FIELD */}
@@ -505,7 +510,7 @@ const CreateFollowUp = () => {
                         id="LeadStatusDropDown"
                         type="button"
                       >
-                        {followupsData.assigned_To === ''
+                        {followupsData.assigned_To === ""
                           ? defaultTextassigned_ToDropDown
                           : followupsData.assigned_To}
 
@@ -554,7 +559,9 @@ const CreateFollowUp = () => {
                     // min={new Date().toISOString().slice(0, 16)}
                   />
                   {errors.call_bck_DateTime && (
-                    <span style={{ color: 'red' }}>{errors.call_bck_DateTime}</span>
+                    <span style={{ color: "red" }}>
+                      {errors.call_bck_DateTime}
+                    </span>
                   )}
                 </div>
               </div>
@@ -610,7 +617,7 @@ const CreateFollowUp = () => {
               type="submit"
               className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
             >
-              {isEditMode ? 'Update' : 'Save'}
+              {isEditMode ? "Update" : "Save"}
             </button>
           </div>
         </div>

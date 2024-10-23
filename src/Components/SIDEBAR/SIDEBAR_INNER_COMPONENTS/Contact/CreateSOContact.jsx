@@ -1,4 +1,4 @@
-//react 
+//react
 import { useState, useEffect } from "react";
 //reactIcon
 import { FaAngleDown } from "react-icons/fa";
@@ -14,7 +14,6 @@ import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 export default function CreateSOContact() {
-  
   //to make id unique
   const { id, leadId } = useParams();
   const navigate = useNavigate();
@@ -24,7 +23,7 @@ export default function CreateSOContact() {
   const [editLead, seteditLead] = useState({});
 
   //IMP used as ${name} in an API
-  const name = getHostnamePart()
+  const name = getHostnamePart();
 
   //imp to identify mode
   const [isEditMode, setIsEditMode] = useState(false);
@@ -34,9 +33,8 @@ export default function CreateSOContact() {
     if (id) {
       setIsEditMode(false);
       handleLeadbyId(); // Fetch lead data for editing
-    }
-    else{
-      setIsEditMode(true)
+    } else {
+      setIsEditMode(true);
     }
   }, [id]);
 
@@ -54,7 +52,7 @@ export default function CreateSOContact() {
         config
       );
       const data = response.data.data;
-    
+
       seteditLead({
         //Personal Details
         leadId: data.id || "",
@@ -70,22 +68,20 @@ export default function CreateSOContact() {
         city: data.city || "",
         state: data.state || "",
         advisaryExp: data.advisaryExp || "",
-        
+
         //Payment Details
         segments: data.segments || [],
-        
+
         //Service Details
-        subscription_start_date: data.trialStartDate.split('T')[0] || null,
-        subscription_end_date: data.trialEndDate.split('T')[0] || null,
+        subscription_start_date: data.trialStartDate.split("T")[0] || null,
+        subscription_end_date: data.trialEndDate.split("T")[0] || null,
       });
-        //Description Information
-        setdescription(data.description);
+      //Description Information
+      setdescription(data.description);
     } catch (error) {
       console.error("Error fetching leads:", error);
     }
   }
-
-  
 
   //----------------------------------------------------------------------------------------
   //SEGMENETS API Is being used here
@@ -117,10 +113,10 @@ export default function CreateSOContact() {
     handleSegment();
   }, []);
 
-  const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] = useState(
-    "Select Product"
-  );
-  const [isDropdownVisibleSegment, setisDropdownVisibleSegment] = useState(false);
+  const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
+    useState("Select Product");
+  const [isDropdownVisibleSegment, setisDropdownVisibleSegment] =
+    useState(false);
 
   const toggleDropdownSegment = () => {
     setisDropdownVisibleSegment(true);
@@ -148,11 +144,9 @@ export default function CreateSOContact() {
   };
   // Segment GET API Is being used here
 
-
-   //----------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------
   //assigned_ToDropDown  Is being used here
-  const [assigned_ToDropDown, setassigned_ToDropDown] = useState({})
-
+  const [assigned_ToDropDown, setassigned_ToDropDown] = useState({});
 
   async function handleAssigned_To() {
     const bearer_token = localStorage.getItem("token");
@@ -178,15 +172,22 @@ export default function CreateSOContact() {
     handleAssigned_To();
   }, []);
 
-  const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] = useState();
-  const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] = useState(false);
+  const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
+    useState();
+  const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
+    useState(false);
 
   const toggleDropdownassigned_ToDropDown = () => {
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
   };
 
-  const handleDropdownassigned_ToDropDown = (assigned_To_Username, assigned_To_Role) => {
-    setdefaultTextassigned_ToDropDown(assigned_To_Username + " " + assigned_To_Role);
+  const handleDropdownassigned_ToDropDown = (
+    assigned_To_Username,
+    assigned_To_Role
+  ) => {
+    setdefaultTextassigned_ToDropDown(
+      assigned_To_Username + " " + assigned_To_Role
+    );
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     seteditLead((prevTask) => ({
       ...prevTask,
@@ -229,9 +230,6 @@ export default function CreateSOContact() {
     }));
   };
 
- 
-
-
   //----------------------------------------------------------------------------------------
   //TERM
   const Term_DropDown = [
@@ -244,8 +242,7 @@ export default function CreateSOContact() {
   const [defaultText_Term_DropDown, setDefaultText_Term_DropDown] =
     useState("Select Term");
 
-  const [isDropdownVisible_Term_, setisDropdownVisible_Term_] =
-    useState(false);
+  const [isDropdownVisible_Term_, setisDropdownVisible_Term_] = useState(false);
 
   const toggleDropdown_Term_ = () => {
     setisDropdownVisible_Term_(!isDropdownVisible_Term_);
@@ -259,7 +256,6 @@ export default function CreateSOContact() {
       term: term,
     }));
   };
-
 
   //----------------------------------------------------------------------------------------
   //Business Type
@@ -289,7 +285,6 @@ export default function CreateSOContact() {
     }));
   };
 
-
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
   const handleSubmit = async (event) => {
@@ -309,12 +304,12 @@ export default function CreateSOContact() {
         leadId: editLead.leadId,
         clientName: editLead.clientName,
         language: editLead.language,
-        fatherName : editLead.fatherName,
-        motherName : editLead.motherName,
+        fatherName: editLead.fatherName,
+        motherName: editLead.motherName,
         mobileNo: editLead.mobileNo,
         phoneNo: editLead.phoneNo,
-        uidaI_Id_No : editLead.uidaI_Id_No,
-        panCard_No : editLead.panCard_No, 
+        uidaI_Id_No: editLead.uidaI_Id_No,
+        panCard_No: editLead.panCard_No,
         email: editLead.email,
         assigned_To: editLead.assigned_To,
         state: editLead.state,
@@ -323,30 +318,27 @@ export default function CreateSOContact() {
         postalCode: editLead.pinCode,
         advisaryExp: editLead.advisaryExp,
         //Payment Details
-        bank_name : editLead.bank_name,
-        branch_name : editLead.branch_name,
+        bank_name: editLead.bank_name,
+        branch_name: editLead.branch_name,
         paymenT_MODE: editLead.paymenT_MODE,
         reference_Number: editLead.reference_Number,
-        totalAmount : editLead.totalAmount,
-        due_Amount : editLead.due_Amount,
-        amount_paid : editLead.amount_paid,
+        totalAmount: editLead.totalAmount,
+        due_Amount: editLead.due_Amount,
+        amount_paid: editLead.amount_paid,
         discount: editLead.discount,
 
         chequeOrDD_no: editLead.chequeOrDD_no,
         segments: editLead.segments,
         saleS_ODR_NO: editLead.saleS_ODR_NO,
 
-
-        
         //Service Details
         period_of_subscription: editLead.period_of_subscription || null,
-        term : editLead.term,
+        term: editLead.term,
         subscription_start_date: editLead.subscription_start_date || null,
         subscription_end_date: editLead.subscription_end_date || null,
-        service: editLead.service|| null,
+        service: editLead.service || null,
         status: false,
         description: description,
-
       };
 
       if (isEditMode) {
@@ -356,17 +348,16 @@ export default function CreateSOContact() {
           config
         );
         alert("Lead updated successfully!");
-        navigate(`/sidebar/lead`)
+        navigate(`/sidebar/lead`);
       } else {
-
         await axios.post(
           `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/add`,
           formData_POST,
           config
         );
-        console.log(formData_POST)
+        console.log(formData_POST);
         alert("Sales Order created successfully!");
-        navigate(`/sidebar/contact`)
+        navigate(`/sidebar/contact`);
       }
 
       // Redirect after a short delay
@@ -376,9 +367,9 @@ export default function CreateSOContact() {
     }
   };
 
-    //----------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------
   //LanguageDropDown
-  
+
   const LanguageDropDown = [
     { key: 1, name: "English" },
     { key: 2, name: "Portuguese" },
@@ -405,14 +396,12 @@ export default function CreateSOContact() {
     }));
   };
 
-
   return (
     <>
       <div className="min-h-screen flex flex-col mt-3">
         <div className="flex justify-between mx-3 px-3 bg-white border rounded py-3">
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-xl">
-
               {/*  {isEditMode? <h1>Edit Lead</h1>: <>Create Lead</> } */}
               Create Sales Order
             </h1>
@@ -437,7 +426,6 @@ export default function CreateSOContact() {
           {/*Parent Div */}
           <div className="w-full">
             {/*CHILD Div------ Image Input */}
-
 
             <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
@@ -474,7 +462,11 @@ export default function CreateSOContact() {
                     >
                       Language
                     </label>
-                    <div className="relative" onClick={toggleDropdownLanguage}>
+                    <div
+                      className="relative"
+                      onClick={toggleDropdownLanguage}
+                      onMouseLeave={() => setisDropdownVisibleLanguage(false)}
+                    >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="LanguageDropDown"
@@ -542,7 +534,7 @@ export default function CreateSOContact() {
                     />
                   </div>
                 </div>
-              {/* -------------III--1------------- */}
+                {/* -------------III--1------------- */}
                 {/* -------------Mobile Number------------- */}
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
@@ -581,7 +573,6 @@ export default function CreateSOContact() {
                   </div>
                 </div>
 
-
                 {/* -------------IV--1--------------- */}
                 {/* -------------UIDAI Id------------- */}
                 <div className="flex space-x-4">
@@ -617,7 +608,6 @@ export default function CreateSOContact() {
                       className="mt-1 p-2 border border-gray-300 rounded-md uppercase"
                       onChange={handleChange}
                       placeholder="Enter your Pan Card Details"
-
                     />
                   </div>
                 </div>
@@ -652,115 +642,124 @@ export default function CreateSOContact() {
                     <div
                       className="relative"
                       onClick={toggleDropdownassigned_ToDropDown}
-                      onMouseLeave={() => (setisDropdownassigned_ToDropDown(false))}
+                      onMouseLeave={() =>
+                        setisDropdownassigned_ToDropDown(false)
+                      }
                     >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="LeadStatusDropDown"
                         type="button"
                       >
- 
-                        {isEditMode ? defaultTextassigned_ToDropDown :  editLead.assigned_To }
+                        {isEditMode
+                          ? defaultTextassigned_ToDropDown
+                          : editLead.assigned_To}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownassigned_ToDropDown && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-9.9 z-10 ">
                           <ul className="py-2 text-sm text-gray-700">
-                            {assigned_ToDropDown.map(({ key, userName, role }) => (
-                              <li
-                                key={key}
-                                onClick={() => handleDropdownassigned_ToDropDown(userName, role)}
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                              >
-                                {userName}-({role})
-                              </li>
-                            ))}
+                            {assigned_ToDropDown.map(
+                              ({ key, userName, role }) => (
+                                <li
+                                  key={key}
+                                  onClick={() =>
+                                    handleDropdownassigned_ToDropDown(
+                                      userName,
+                                      role
+                                    )
+                                  }
+                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                >
+                                  {userName}-({role})
+                                </li>
+                              )
+                            )}
                           </ul>
-
                         </div>
                       )}
                     </div>
                   </div>
-                </div>                  
+                </div>
 
                 {/* -------------0--1--------------- */}
                 {/* -------------DOB------------- */}
                 <div className="flex space-x-4">
-                <div className="flex flex-col w-1/2">
-                  <label
-                    htmlFor="DOB"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                  DOB
-                  </label>
-                  <input
-                    type="date"
-                    name="state"
-                    value={editLead.DOB}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                    onChange={handleChange}
-                    placeholder="Enter your DOB"
-                  />
-                </div>
-                {/* -------------0--2--------------- */}
-                {/* -------------Country------------- */}
-                <div className="flex flex-col w-1/2">
-                  <label
-                    htmlFor="country"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                   Country
-                  </label>
-                  <input
-                    type="text"
-                    name="city"
-                    value={editLead.country}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                    onChange={handleChange}
-                    placeholder="Enter your Country"
-                  />
-                </div>
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="DOB"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      DOB
+                    </label>
+                    <input
+                      type="date"
+                      name="state"
+                      value={editLead.DOB}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Enter your DOB"
+                    />
+                  </div>
+                  {/* -------------0--2--------------- */}
+                  {/* -------------Country------------- */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="country"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Country
+                    </label>
+                    <input
+                      type="text"
+                      name="city"
+                      value={editLead.country}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Enter your Country"
+                    />
+                  </div>
                 </div>
 
                 {/* -------------VI--1--------------- */}
                 {/* -------------State------------- */}
                 <div className="flex space-x-4">
-                <div className="flex flex-col w-1/2">
-                  <label
-                    htmlFor="state"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                  State
-                  </label>
-                  <input
-                    type="text"
-                    name="state"
-                    value={editLead.state}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                    onChange={handleChange}
-                    placeholder="Enter your State"
-                  />
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="state"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      State
+                    </label>
+                    <input
+                      type="text"
+                      name="state"
+                      value={editLead.state}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Enter your State"
+                    />
+                  </div>
+                  {/* -------------VI--2--------------- */}
+                  {/* -------------City------------- */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="city"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      City
+                    </label>
+                    <input
+                      type="text"
+                      name="city"
+                      value={editLead.city}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Enter your City"
+                    />
+                  </div>
                 </div>
-                {/* -------------VI--2--------------- */}
-                {/* -------------City------------- */}
-                <div className="flex flex-col w-1/2">
-                  <label
-                    htmlFor="city"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    City
-                  </label>
-                  <input
-                    type="text"
-                    name="city"
-                    value={editLead.city}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                    onChange={handleChange}
-                    placeholder="Enter your City"
-                  />
-                </div>
-                </div>
-                 
+
                 {/* -------------VII--1--------------- */}
                 {/* -------------Street------------- */}
                 <div className="flex space-x-4">
@@ -813,14 +812,18 @@ export default function CreateSOContact() {
                     <div
                       className="relative"
                       onClick={toggleDropdownbusinessType}
-                      onMouseLeave={() => (setisDropdownVisiblebusinessType(false))}
+                      onMouseLeave={() =>
+                        setisDropdownVisiblebusinessType(false)
+                      }
                     >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="businessTypeDropDown"
                         type="button"
                       >
-                        {isEditMode ? editLead.businessType : defaultTextbusinessTypeDropDown}
+                        {isEditMode
+                          ? editLead.businessType
+                          : defaultTextbusinessTypeDropDown}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisiblebusinessType && (
@@ -829,19 +832,22 @@ export default function CreateSOContact() {
                             {BusinessTypeDropDown.map(({ key, name }) => (
                               <li
                                 key={key}
-                                onClick={() => handleDropdownisDropdownVisiblebusinessType(name)}
+                                onClick={() =>
+                                  handleDropdownisDropdownVisiblebusinessType(
+                                    name
+                                  )
+                                }
                                 className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                               >
                                 {name}
                               </li>
                             ))}
                           </ul>
-
                         </div>
                       )}
                     </div>
                   </div>
-                  {/* -------------VIII--2--------------- */}                  
+                  {/* -------------VIII--2--------------- */}
                   {/* -------------Advisory Experience------------- */}
                   <div className="flex flex-col w-1/2">
                     <label
@@ -860,7 +866,6 @@ export default function CreateSOContact() {
                     />
                   </div>
                 </div>
-
               </div>
             </div>
             {/* -------------Payment Details INFORMATION STARTS FROM HERE------------- */}
@@ -869,7 +874,7 @@ export default function CreateSOContact() {
                 Payment Details
               </h2>
               <div className="py-2 px-4">
-                {/* -------------IX--1----------------- */}                  
+                {/* -------------IX--1----------------- */}
                 {/* -------------Bank Name------------- */}
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
@@ -887,8 +892,8 @@ export default function CreateSOContact() {
                       onChange={handleChange}
                       placeholder="Bank Name"
                     />
-                  </div>                
-                  {/* -------------IX--2----------------- */}                  
+                  </div>
+                  {/* -------------IX--2----------------- */}
                   {/* -------------Branch Name------------- */}
                   <div className="flex flex-col w-1/2">
                     <label
@@ -907,7 +912,7 @@ export default function CreateSOContact() {
                     />
                   </div>
                 </div>
-                {/* -------------X--1----------------- */}                  
+                {/* -------------X--1----------------- */}
                 {/* -------------Payment Mode------------- */}
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
@@ -1020,7 +1025,6 @@ export default function CreateSOContact() {
                   </div>
                 </div>
 
-
                 {/* -------------XIII--1------------- */}
                 {/* -------------Payment Date------------- */}
                 <div className="flex space-x-4">
@@ -1063,7 +1067,10 @@ export default function CreateSOContact() {
                 <div className="flex space-x-4">
                   {/* -------------Product-------------> Means Segments */}
                   <div className="flex flex-col w-1/2">
-                    <label htmlFor="segment" className="text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="segment"
+                      className="text-sm font-medium text-gray-700"
+                    >
                       Product
                     </label>
                     <div
@@ -1089,11 +1096,14 @@ export default function CreateSOContact() {
                               >
                                 <input
                                   type="checkbox"
-                                  checked={editLead.segments.includes(segment.segment)}
+                                  checked={editLead.segments.includes(
+                                    segment.segment
+                                  )}
                                   onChange={() => handleCheckboxChange(segment)}
                                   className="mr-2"
                                 />
-                                {segment.segment} {/* Assuming 'segment' is the property you want to display */}
+                                {segment.segment}{" "}
+                                {/* Assuming 'segment' is the property you want to display */}
                               </li>
                             ))}
                           </ul>
@@ -1160,7 +1170,7 @@ export default function CreateSOContact() {
                     <div
                       className="relative"
                       onClick={toggleDropdown_Term_}
-                      onMouseLeave={() => (setisDropdownVisible_Term_(false))}
+                      onMouseLeave={() => setisDropdownVisible_Term_(false)}
                     >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
@@ -1176,20 +1186,20 @@ export default function CreateSOContact() {
                             {Term_DropDown.map(({ key, name }) => (
                               <li
                                 key={key}
-                                onClick={() => handleDropdownisDropdown_Term_(name)}
+                                onClick={() =>
+                                  handleDropdownisDropdown_Term_(name)
+                                }
                                 className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                               >
                                 {name}
                               </li>
                             ))}
                           </ul>
-
                         </div>
                       )}
                     </div>
                   </div>
                 </div>
-
 
                 {/* -------------XVI--1------------- */}
                 {/* -------------Subscription Start Date------------- */}
@@ -1240,14 +1250,16 @@ export default function CreateSOContact() {
                     <div
                       className="relative"
                       onClick={toggleDropdown_Service_}
-                      onMouseLeave={() => (setisDropdownVisible_Service_(false))}
+                      onMouseLeave={() => setisDropdownVisible_Service_(false)}
                     >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="serviceDropDown"
                         type="button"
                       >
-                        {isEditMode ? editLead.service : defaultText_Service_DropDown}
+                        {isEditMode
+                          ? editLead.service
+                          : defaultText_Service_DropDown}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisible_Service_ && (
@@ -1256,14 +1268,15 @@ export default function CreateSOContact() {
                             {Service_DropDown.map(({ key, name }) => (
                               <li
                                 key={key}
-                                onClick={() => handleDropdownisDropdown_Service_(name)}
+                                onClick={() =>
+                                  handleDropdownisDropdown_Service_(name)
+                                }
                                 className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                               >
                                 {name}
                               </li>
                             ))}
                           </ul>
-
                         </div>
                       )}
                     </div>
@@ -1271,24 +1284,21 @@ export default function CreateSOContact() {
                   {/* -------------XVII--2------------- */}
                   {/* -------------Status------------- */}
                   <div className="flex flex-col w-1/2">
-                  <label
-                    htmlFor="status"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Status
-                  </label>
-                  <input
-                    readOnly
-                    type="test"
-                    name="status"
-                    value='Pending'
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                  />
+                    <label
+                      htmlFor="status"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Status
+                    </label>
+                    <input
+                      readOnly
+                      type="test"
+                      name="status"
+                      value="Pending"
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
                 </div>
-
-
-                </div>
-
               </div>
             </div>
 
