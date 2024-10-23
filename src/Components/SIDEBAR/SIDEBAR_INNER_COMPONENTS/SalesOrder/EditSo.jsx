@@ -325,48 +325,24 @@ export default function CreateSO() {
     event.preventDefault();
     const bearer_token = localStorage.getItem('token');
 
+    const errors = {}
+
     // VALIDATION
-    const validationRules = {
-      mobileNo: {
-        rule: (value) => value && !isNaN(value) && value.length === 10,
-        message: 'Enter a valid 10-digit mobile number',
-      },
-      uidaI_Id_No: {
-        rule: (value) => value && !isNaN(value),
-        message: 'Enter adhar number',
-      },
-      panCard_No: {
-        rule: (value) => value && value.trim() !== '',
-        message: 'Pan Number is required',
-      },
-      reference_Number: {
-        rule: (value) => value && value.trim() !== '',
-        message: 'Reference Number is required',
-      },
-      amount_paid: {
-        rule: (value) => value && value.trim() !== '',
-        message: 'Amount paid is required',
-      },
-      subscription_start_date: {
-        rule: (value) => value && value.trim() !== '',
-        message: 'Enter subscription start date',
-      },
-      subscription_end_date: {
-        rule: (value) => value && value.trim() !== '',
-        message: 'Enter subscription end date',
-      },
-      // Add more fields and rules here
-    };
-
-    // Iterate through validation rules
-    Object.keys(validationRules).forEach((field) => {
-      const value = editLead[field];
-      const { rule, message } = validationRules[field];
-
-      if (!rule(value)) {
-        errors[field] = message;
-      }
-    });
+    if (!editLead.mobileNo || editLead.mobileNo.trim() === '') {
+      errors.mobileNo = 'Enter a valid mobile number'
+    } else if (!editLead.uidaI_Id_No || editLead.uidaI_Id_No.trim() === '' ||  /^\d{12}$/.test(editLead.uidaI_Id_No)) {
+      errors.uidaI_Id_No = 'Enter a valid adhar number'
+    } else if (!editLead.panCard_No || !editLead.panCard_No.trim() === '' || /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(editLead.panCard_No)) {
+      errors.panCard_No = 'Enter a valid pan number'
+    } else if (!editLead.reference_Number || editLead.reference_Number.trim() === '') {
+      errors.reference_Number = 'Reference Number is required'
+    } else if (!editLead.amount_paid || editLead.amount_paid.trim() === '') {
+      errors.amount_paid = 'Amount paid is required'
+    } else if (!editLead.subscription_start_date || editLead.subscription_start_date.trim() === '') {
+      errors.subscription_start_date = 'Enter subscription start date'
+    } else if (!editLead.subscription_end_date || editLead.subscription_end_date.trim() === '') {
+      errors.subscription_end_date = 'Enter subscription end date'
+    }
 
     if (Object.keys(errors).length > 0) {
       setErrors(errors);
@@ -612,7 +588,7 @@ export default function CreateSO() {
                       placeholder="Enter your Mobile Number"
                     />
                     {errors.mobileNo && (
-                      <span style={{ color: 'red' }}>{errors.mobileNo}</span>
+                      <span className='text-red-500'>{errors.mobileNo}</span>
                     )}
                   </div>
                   {/* -------------III--2------------- */}
@@ -654,7 +630,7 @@ export default function CreateSO() {
                       placeholder="9009 9009 9009"
                     />
                     {errors.mobileNo && (
-                      <span style={{ color: 'red' }}>{errors.uidaI_Id_No}</span>
+                      <span className='text-red-500'>{errors.uidaI_Id_No}</span>
                     )}
                   </div>
                   {/* -------------IV--2--------------- */}
@@ -675,7 +651,7 @@ export default function CreateSO() {
                       placeholder="Enter your Pan Card Details"
                     />
                     {errors.mobileNo && (
-                      <span style={{ color: 'red' }}>{errors.panCard_No}</span>
+                      <span className='text-red-500'>{errors.panCard_No}</span>
                     )}
                   </div>
                 </div>
@@ -975,7 +951,7 @@ export default function CreateSO() {
                       onChange={handleChange}
                     />
                     {errors.mobileNo && (
-                      <span style={{ color: 'red' }}>{errors.reference_Number}</span>
+                      <span className='text-red-500'>{errors.reference_Number}</span>
                     )}
                   </div>
                 </div>
@@ -1036,7 +1012,7 @@ export default function CreateSO() {
                       placeholder="Amount Paid"
                     />
                     {errors.mobileNo && (
-                      <span style={{ color: 'red' }}>{errors.amount_paid}</span>
+                      <span className='text-red-500'>{errors.amount_paid}</span>
                     )}
                   </div>
                   {/* -------------XII--2------------- */}
@@ -1253,7 +1229,7 @@ export default function CreateSO() {
                       onChange={handleChange}
                     />
                     {errors.mobileNo && (
-                      <span style={{ color: 'red' }}>{errors.subscription_start_date}</span>
+                      <span className='text-red-500'>{errors.subscription_start_date}</span>
                     )}
                   </div>
                   {/* -------------XVI--2------------- */}
@@ -1273,7 +1249,7 @@ export default function CreateSO() {
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
                     {errors.mobileNo && (
-                      <span style={{ color: 'red' }}>{errors.subscription_end_date}</span>
+                      <span className='text-red-500'>{errors.subscription_end_date}</span>
                     )}
                   </div>
                 </div>
