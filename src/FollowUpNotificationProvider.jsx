@@ -5,6 +5,7 @@ import axios from "axios";
 import { tenant_base_url, protocal_url } from "./Config/config";
 import { getHostnamePart } from "./Components/SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import FollowupNotificationModal from "./FollowupNotificationModal";
+import moment from "moment";
 
 export default function FollowUpNotificationProvider({ children }) {
   const bearer_token = localStorage.getItem("token");
@@ -60,23 +61,32 @@ export default function FollowUpNotificationProvider({ children }) {
     setNotificationData("");
   };
 
+
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const currentTime = new Date();
-      const formattedCurrentTime = currentTime.toISOString().slice(0, 16);
-      
+      const currentTime = moment(); // Current time using moment.js
+      const oneBeforeCurrent = currentTime.clone().subtract(20, 'minute');
+      const TwoBeforeCurrent = currentTime.clone().subtract(40, 'minute');
+      const ThreeBeforeCurrent = currentTime.clone().subtract(60, 'minute');
+      const FourBeforeCurrent = currentTime.clone().subtract(80, 'minute');
+  
       followupList.forEach((item) => {
-        const callbackTime = new Date(item.call_bck_DateTime);
-        const formattedCallbackTime = callbackTime.toISOString().slice(0, 16);
-        
-        if (formattedCurrentTime === formattedCallbackTime) {
+        const callbackTime = moment(item.call_bck_DateTime);
+        if (
+          currentTime.isSame(callbackTime, 'minute') || 
+          oneBeforeCurrent.isSame(callbackTime, 'minute')|| 
+          TwoBeforeCurrent.isSame(callbackTime, 'minute')|| 
+          ThreeBeforeCurrent.isSame(callbackTime, 'minute')|| 
+          FourBeforeCurrent.isSame(callbackTime, 'minute')
+        ) {
           openNotification(item.id);
         }
       });
-    }, 30000);
-
+    }, 35000); // Check every 30 seconds
+  
     return () => clearInterval(intervalId);
   }, [followupList]);
+  
 
 
   return (
