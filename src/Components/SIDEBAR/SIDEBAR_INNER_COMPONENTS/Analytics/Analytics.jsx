@@ -83,9 +83,9 @@ export default function Analytics() {
         <FirstChart text={`Top 5 TL`} />
         <FirstChart text={`Top SR-TL`} />
       </div>
-      <div className="mx-3 grid grid-cols-2 grid-rows-1 gap-3">
+      <div className="mx-3 grid grid-cols-2 gap-3">
         <BottomChart text={`Leads By Stage`} color={`#2B6CB0`} />
-        <BottomChart text={`Sales By Stage`} color={`#29b6f6`} />
+        <BottomChart text={`Sales By Stage`} color={`#34d399`} />
       </div>
     </main>
   );
