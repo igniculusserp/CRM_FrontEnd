@@ -28,7 +28,6 @@ import SalesOrder from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SalesOrder
 import Logs from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/Logs.jsx";
 
 import MailBox from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MailBox.jsx";
-import Analytics from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Analytics.jsx";
 import GroupChat from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/GroupChat.jsx";
 
 //Shivam ---> CreateTrial-->|-->|-->CreateVoice
@@ -91,6 +90,7 @@ import DNDReport from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/
 import TrackSheet from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/TrackSheet.jsx";
 import ResearchReport from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/ResearchReport.jsx";
 import FollowUpNotificationProvider from "./FollowUpNotificationProvider.jsx";
+import Analytics from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Analytics/Analytics.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
