@@ -92,24 +92,24 @@ const CreateFollowUp = () => {
     const errors = {};
 
     // MOBILE NUMBER VALIDATION
-    if (
-      !followupsData.mobileNo ||
-      isNaN(followupsData.mobileNo) ||
-      followupsData.mobileNo !== 10 ||
-      followupsData.mobileNo === ""
-    ) {
-      errors.mobileNo = "Enter a valid 10-digit mobile number";
-    } else if (
-      !followupsData.call_bck_DateTime ||
-      followupsData.call_bck_DateTime.trim() === ""
-    ) {
-      errors.call_bck_DateTime = "Callback date time required";
-    }
+    // if (
+    //   !followupsData.mobileNo ||
+    //   isNaN(followupsData.mobileNo) ||
+    //   followupsData.mobileNo !== 10 ||
+    //   followupsData.mobileNo === ""
+    // ) {
+    //   errors.mobileNo = "Enter a valid 10-digit mobile number";
+    // } else if (
+    //   !followupsData.call_bck_DateTime ||
+    //   followupsData.call_bck_DateTime.trim() === ""
+    // ) {
+    //   errors.call_bck_DateTime = "Callback date time required";
+    // }
 
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
-      return;
-    }
+    // if (Object.keys(errors).length > 0) {
+    //   setErrors(errors);
+    //   return;
+    // }
 
     const bearer_token = localStorage.getItem("token");
 
@@ -464,9 +464,9 @@ const CreateFollowUp = () => {
                     onChange={handleChange}
                     placeholder="Entere verox peron"
                   />
-                  {errors.mobileNo && (
+                  {/* {errors.mobileNo && (
                     <span style={{ color: "red" }}>{errors.mobileNo}</span>
-                  )}
+                  )} */}
                 </div>
                 {/* EMAIL FIELD */}
                 <div className="flex flex-col w-1/2">
@@ -556,13 +556,13 @@ const CreateFollowUp = () => {
                     value={followupsData.call_bck_DateTime}
                     className="mt-1 p-2 border border-gray-300 rounded-md"
                     onChange={handleChange}
-                    // min={new Date().toISOString().slice(0, 16)}
+                    min={new Date().toISOString().slice(0, 16)}
                   />
-                  {errors.call_bck_DateTime && (
+                  {/* {errors.call_bck_DateTime && (
                     <span style={{ color: "red" }}>
                       {errors.call_bck_DateTime}
                     </span>
-                  )}
+                  )} */}
                 </div>
               </div>
               {/* FIFTH ROW */}

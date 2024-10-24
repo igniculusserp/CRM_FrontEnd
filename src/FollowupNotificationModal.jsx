@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 import { tenant_base_url, protocal_url } from "./Config/config";
 import { getHostnamePart } from "./Components/SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
@@ -8,6 +9,7 @@ import { getHostnamePart } from "./Components/SIDEBAR/SIDEBAR_SETTING/ReusableCo
 const FollowupNotificationModal = ({ id, onClose }) => {
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
+  const navigate = useNavigate(); // Initialize navigate
 
   const [isLoading, setIsLoading] = useState(false);
   const [followupsData, setFollowupsData] = useState({});
@@ -46,6 +48,11 @@ const FollowupNotificationModal = ({ id, onClose }) => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Function to handle navigation on View button click
+  const handleViewClick = () => {
+    navigate(`/sidebar/editlead/${id}`); // Navigate to the specified route
   };
 
   return (
@@ -89,7 +96,10 @@ const FollowupNotificationModal = ({ id, onClose }) => {
           </div>
 
           <div className="flex justify-end pt-3">
-            <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2">
+            <button
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
+              onClick={handleViewClick} // Add onClick handler
+            >
               View
             </button>
             <button
