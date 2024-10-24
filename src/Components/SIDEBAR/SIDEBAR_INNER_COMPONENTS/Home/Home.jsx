@@ -126,7 +126,7 @@ export default function Home() {
     <main className="min-h-screen flex flex-col my-3 gap-1 mx-1">
       {/* ------- TOP CARDS ------- */}
       <div className="flex items-center px-2 gap-3">
-        {/* ------- CARD ------- */}
+        {/* ------- CARDS ------- */}
         <div className="flex flex-col justify-between bg-white py-4 px-4 rounded-md shadow-lg h-[210px] w-1/4">
           <div className="flex flex-col gap-2">
             <h1 className="font-light uppercase text-sm">Lead this month</h1>
