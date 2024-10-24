@@ -1,4 +1,5 @@
 import {
+  LineChart,
   Line,
   BarChart,
   Bar,
@@ -11,53 +12,45 @@ import {
 } from 'recharts';
 
 const data = [
-  { name: 'Khusi Rana', salesRevenue: 13000, salesVolume: 9000 },
-  { name: 'Rajat', salesRevenue: 15000, salesVolume: 12000 },
-  { name: 'Suyash', salesRevenue: 14000, salesVolume: 10000 },
-  { name: 'Rajesh', salesRevenue: 8000, salesVolume: 7000 },
-  { name: 'Rajesh', salesRevenue: 12000, salesVolume: 9000 },
-  { name: 'Suyash', salesRevenue: 13000, salesVolume: 10000 },
-  { name: 'Rajat', salesRevenue: 10000, salesVolume: 8000 },
-  { name: 'Khusi Rana', salesRevenue: 18000, salesVolume: 15000 },
-  { name: 'Suyash', salesRevenue: 15000, salesVolume: 12000 },
-  { name: 'Rajat', salesRevenue: 17000, salesVolume: 13000 },
-  { name: 'Rajesh', salesRevenue: 16000, salesVolume: 11000 },
-  { name: 'Rajat', salesRevenue: 12000, salesVolume: 8000 },
+  { name: 'Khusi Rana', salesVolume: 8000, salesRevenue: 12000 },
+  { name: 'Rajat', salesVolume: 7000, salesRevenue: 9000 },
+  { name: 'Suyash', salesVolume: 10000, salesRevenue: 14000 },
+  { name: 'Rajesh', salesVolume: 5000, salesRevenue: 10000 },
+  { name: 'Rajat', salesVolume: 9000, salesRevenue: 11000 },
+  { name: 'Khusi Rana', salesVolume: 12000, salesRevenue: 15000 },
+  { name: 'Suyash', salesVolume: 6000, salesRevenue: 13000 },
+  { name: 'Rajat', salesVolume: 11000, salesRevenue: 9000 },
+  { name: 'Rajesh', salesVolume: 5000, salesRevenue: 11000 },
+  { name: 'Rajat', salesVolume: 7000, salesRevenue: 10000 },
 ];
 
-const FirstChart = ({ text }) => {
+const FirstChart = () => {
   return (
-    <div className="p-4 rounded-lg shadow-lg bg-white w-full h-auto">
-      <div className="w-full flex items-center justify-between">
-        <h2 className="text-xl font-semibold mb-4">{ text }</h2>
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-3">
-            <div className="h-3 w-3 bg-blue-500"></div>
-            <h1>Sales Revenue</h1>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="h-3 w-3 bg-cyan-500"></div>
-            <h1>Sales Volume</h1>
-          </div>
-        </div>
-      </div>
-      <ResponsiveContainer width="100%" height={250}>
-        <BarChart data={data}>
-          <CartesianGrid strokeDasharray="1 2" />
+    <div className="bg-white py-4 px-4 rounded-md shadow-lg">
+      <ResponsiveContainer
+        width="95%"
+        height={250}
+        className="ml-[-1.5rem] mb-[-1.4rem] h-10 w-10 rounded-md"
+      >
+        <BarChart data={data} className='rounded-md'>
+          <CartesianGrid strokeDasharray="1 3" className='rounded-md z-10' />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="salesVolume" fill="#29b6f6" />
+          <Bar dataKey="salesVolume" fill="#34d399" radius={[10, 10, 10, 10]} />
+        </BarChart>
+        <LineChart data={data} width="100%" className="mt-[-17.4rem] ml-12">
+          <CartesianGrid strokeDasharray="3 3" className='z-0' />
+          <Tooltip />
+          <Legend className='hidden' />
           <Line
             type="monotone"
             dataKey="salesRevenue"
-            stroke="#29b6f6"
-            strokeWidth={5}
-            dot={false}
-            fillOpacity={1}
+            stroke="#6366f1"
+            activeDot={{ r: 6 }}
           />
-        </BarChart>
+        </LineChart>
       </ResponsiveContainer>
     </div>
   );
