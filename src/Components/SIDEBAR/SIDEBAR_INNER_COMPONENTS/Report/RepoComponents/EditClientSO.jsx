@@ -122,9 +122,9 @@ export default function EditClientSO() {
 
         reference_Number: data.reference_Number || "",
         totalAmount: data.totalAmount || "",
-        due_Amount: data.due_Amount || "",
+        due_Amount: data?.due_Amount || "00",
         amount_paid: data.amount_paid || "",
-        discount: data.discount || "",
+        discount: data?.discount || "00",
         advisaryExp: data.advisaryExp || "",
         segments: segmentsArray,
         subscription_start_date:
@@ -463,7 +463,7 @@ export default function EditClientSO() {
         config
       );
 
-      alert("Lead updated successfully!");
+      alert("Client Details updated successfully!");
       setTimeout(() => navigate(-1), 500); // Optional delay for navigation
     } catch (error) {
       console.error("Error updating lead:", error);

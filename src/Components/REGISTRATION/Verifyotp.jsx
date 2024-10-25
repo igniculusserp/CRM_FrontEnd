@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import {  useParams, Link } from "react-router-dom";
-import { main_base_url,localBase,urlchange_base } from "./../../Config/config";
-
+import { main_base_url,localBase, urlchange_base } from "./../../Config/config";
 
 //images
 import VerifyOTP from "./../../assets/images/verifyOTP.png";
+import companyUploadIMG from "./../../assets/images/companyUploadIMG.png";
 import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
 import { GiDiamonds } from "react-icons/gi";
 
@@ -79,7 +79,7 @@ const VerifyOtp = () => {
 
    //validation Added for OTP
    if(otp.length < 1 ){
-    showErrorToast('OTP field is empty')
+    showErrorToast('Please enter OTP')
   }
   else if(otp.length > 6){
     showErrorToast('OTP cannot be more than 6 digits')
@@ -329,12 +329,12 @@ const Modal = ({
           />
           <img
             id="profileImage"
-            src={base64Image ? `data:image/png;base64,${base64Image}` : './../../assets/images/VerifyOtpModalimg.png'}
+            src={base64Image ? `data:image/png;base64,${base64Image}` : `companyUploadIMG`}
             alt="Profile"
             onClick={handleImageClick}
             className="w-24 h-24 rounded-full cursor-pointer border text-center mx-auto"
           />
-          <p className ="text-center text-xs text-gray-500">Supported formates: JPEG, PNG, GIF, MP4, PDF,</p>
+          <p className ="text-center text-xs text-gray-500">Supported formates: JPEG, PNG</p>
           <label
            htmlFor="companyName"
                   className="text-md font-medium text-gray-700" 

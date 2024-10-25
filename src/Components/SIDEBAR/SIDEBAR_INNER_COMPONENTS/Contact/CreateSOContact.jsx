@@ -323,9 +323,9 @@ export default function CreateSOContact() {
         paymenT_MODE: editLead.paymenT_MODE,
         reference_Number: editLead.reference_Number,
         totalAmount: editLead.totalAmount,
-        due_Amount: editLead.due_Amount,
-        amount_paid: editLead.amount_paid,
-        discount: editLead.discount,
+        due_Amount: editLead?.due_Amount || "00",
+        amount_paid: editLead?.amount_paid ,
+        discount: editLead?.discount || "00",
 
         chequeOrDD_no: editLead.chequeOrDD_no,
         segments: editLead.segments,
@@ -347,7 +347,7 @@ export default function CreateSOContact() {
           formData_PUT,
           config
         );
-        alert("Lead updated successfully!");
+        alert("SO Updated successfully!");
         navigate(`/sidebar/lead`);
       } else {
         await axios.post(

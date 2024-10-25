@@ -97,28 +97,21 @@ export default function UserSettingForm({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const errors = {};
+      // const errors = {};
 
-    // MOBILE NUMBER VALIDATION
-    if (
-      !formData.email ||
-      formData.email.trim() === '' ||
-      !/\S+@\S+\.\S+/.test(formData.email)
-    ) {
-      errors.email = 'Enter a valid email';
-    } else if (
-      !formData.password ||
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-        formData.password
-      )
-    ) {
-      errors.password = 'Password is required';
-    }
+      // // MOBILE NUMBER VALIDATION
+      // if (!formData.email || formData.email.trim() === '' || !/\S+@\S+\.\S+/.test(formData.email)) {
+      //   errors.email = 'Enter a valid email';
+      // } 
+      // else if (!formData.password || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(formData.password)) 
+      //   {
+      //   errors.password = 'Password is required';
+      // }
 
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
-      return;
-    }
+      // if (Object.keys(errors).length > 0) {
+      //   setErrors(errors);
+      //   return;
+      // }
 
     const selectedRole = ROLE.find((item) => item.groupName === formData.Role);
     const bearer_token = localStorage.getItem('token');

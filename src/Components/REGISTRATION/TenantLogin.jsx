@@ -76,11 +76,8 @@ export default function TenantLogin() {
     };
     verifyTenant();
   }, []);
-
-
     
     const emailRegex = /^[A-Za-z0-9](([a-zA-Z0-9,=\.!\-#|\$%\^&\*\+/\?_`\{\}~]+)*)@(?:[0-9a-zA-Z-]+\.)+[a-zA-Z]{2,9}$/
-
     function handleusername(e) {
         let userName = e.target.value;
         if (!userName.match(emailRegex)) {
@@ -91,8 +88,8 @@ export default function TenantLogin() {
         }
         setuserName(e.target.value)
     }
-    const passwordRegex = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
 
+    const passwordRegex = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
     function handlepassword(e) {
         let password = e.target.value;
         if (!password.match(passwordRegex)) {
@@ -103,13 +100,11 @@ export default function TenantLogin() {
         }
         setPassword(e.target.value)
     }
-
     const [passwordEye, setPasswordEye] = useState(false);
-
-
-  function togglePasswordEye() {
-    setPasswordEye(!passwordEye);
-  }
+  
+    function togglePasswordEye() {
+      setPasswordEye(!passwordEye);
+    }
 
 
     async function handleSubmit(e) {
