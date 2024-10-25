@@ -60,9 +60,9 @@ const FollowupNotificationModal = ({ id, onClose }) => {
 
           <div className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2">
             <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-              <div className="w-2/4 text-gray-500 text-sm">Lead Id</div>
+              <div className="w-2/4 text-gray-500 text-sm">Id</div>
               <div className="w-2/4 font-medium text-sm">
-                {followupsData.leadId}
+                {followupsData.id}
               </div>
             </div>
 
