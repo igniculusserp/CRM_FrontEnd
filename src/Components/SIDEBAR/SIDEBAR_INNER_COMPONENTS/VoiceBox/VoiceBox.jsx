@@ -431,7 +431,9 @@ export default function VoiceBox() {
             )}
           </div>
           {/* SEARCH DROPDOWN */}
-          <div className="flex justify-center items-center w-[10rem]">
+
+          <div className="flex justify-center items-center">
+
             <input
               type="text"
               placeholder="Search..."

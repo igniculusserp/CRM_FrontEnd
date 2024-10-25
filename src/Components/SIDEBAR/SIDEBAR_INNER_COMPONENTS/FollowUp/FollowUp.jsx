@@ -556,11 +556,11 @@ export default function FollowUp() {
               )}
             </div>
             {/* SEARCH DROPDOWN */}
-            <div class="flex justify-center items-center">
+            <div className="flex justify-center items-center">
             <input
               type="text"
               placeholder="Search..."
-              class="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           </div>
