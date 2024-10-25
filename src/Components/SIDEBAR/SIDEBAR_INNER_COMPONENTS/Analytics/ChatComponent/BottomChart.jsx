@@ -1,3 +1,4 @@
+import { FaAngleDown } from 'react-icons/fa';
 import {
   BarChart,
   Bar,
@@ -17,8 +18,16 @@ const data = [
 
 const BottomChart = ({ text, color }) => {
   return (
-    <div className="w-full h-60 p-6 bg-white rounded shadow-lg">
-      <h2 className="text-lg font-semibold mb-[2px]">{ text }</h2>
+    <div className="w-full h-60 py-9 px-4 bg-white rounded shadow-lg">
+      <div className="flex items-center justify-between mt-[-.8rem]">
+        <h2 className="text-lg font-semibold mb-[2px]">{text}</h2>
+        <button className="py-2 px-4 bg-white border border-gray-600 text-gray-700 flex items-center justify-between gap-2 rounded-md">
+          <span>Last 30 Days</span>
+          <span>
+            <FaAngleDown />
+          </span>
+        </button>
+      </div>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={data}
