@@ -431,21 +431,21 @@ export default function VoiceBox() {
             )}
           </div>
           {/* SEARCH DROPDOWN */}
-          <div class="flex justify-center items-center">
+          <div className="flex justify-center items-center w-[10rem]">
             <input
               type="text"
               placeholder="Search..."
-              class="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
         </div>
         {/* MIDDLE */}
-        <div className="flex gap-4">
+        <div className="flex gap-2">
           {Object.keys(dynamicButtons).map((key) => (
             <button
               key={key}
               onClick={() => handleOptionClick(key)}
-              className={`px-5 py-1.5 rounded font-light text-md
+              className={`px-3 py-1.5 rounded font-light text-md shadow-md
                 ${
                   selectedButton === key
                     ? 'bg-cyan-500 text-white'
