@@ -12,7 +12,7 @@ import "react-quill/dist/quill.snow.css";
 //file
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
 //Images
-// import profilepic from "./../../../../assets/images/profilePicEditLead.png";
+// import profilepic from "./../../../../assets/images/profilePicsetEditTrail.png";
 
 export default function CreateTrial() {
   //to make id unique
@@ -301,7 +301,7 @@ export default function CreateTrial() {
   const handleDropdownLanguage = (language) => {
     setDefaultTextLanguageDropDown(language);
     setisDropdownVisibleLanguage(false);
-    seteditLead((prevTask) => ({
+    setEditTrail((prevTask) => ({
       ...prevTask,
       language: language,
     }));
@@ -406,9 +406,9 @@ export default function CreateTrial() {
                       >
                         {!isEditMode
                           ? defaultTextLanguageDropDown
-                          : editLead.language === ""
+                          : setEditTrail.language === ""
                           ? defaultTextLanguageDropDown
-                          : editLead.language}
+                          : setEditTrail.language}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLanguage && (

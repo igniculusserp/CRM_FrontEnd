@@ -27,6 +27,7 @@ const CreateFollowUp = () => {
     segments: [],
     call_bck_DateTime: "",
     lastModifiedBy: "",
+    leadesStatus:""
   });
 
   const [description, setDescription] = useState(""); // For Quill editor
@@ -51,6 +52,7 @@ const CreateFollowUp = () => {
       );
 
       if (response.status === 200 && response.data.isSuccess) {
+        
         const followup = response.data.data;
         setFollowupsData({
           id: followup.id,
@@ -64,11 +66,11 @@ const CreateFollowUp = () => {
           segments: followup.segments || [],
           call_bck_DateTime: followup.call_bck_DateTime || "",
           lastModifiedBy: followup.lastModifiedBy || "",
+          leadesStatus: followup.leadesStatus || "",
         });
-
         // Set description in Quill editor
-        setDescription(followup.description || "");
-      }
+          setDescription(followup.description || "");
+        }
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -82,9 +84,6 @@ const CreateFollowUp = () => {
       [name]: value,
     }));
   };
-
-  // Handle PUT request for submitting data
-  const [errors, setErrors] = useState({});
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -138,6 +137,7 @@ const CreateFollowUp = () => {
         segments: followupsData.segments,
         call_bck_DateTime: followupsData.call_bck_DateTime,
         lastModifiedBy: followupsData.lastModifiedBy,
+        leadesStatus: followupsData.leadesStatus,
         description: description,
       };
 
@@ -317,11 +317,62 @@ const CreateFollowUp = () => {
   const handleDropdownLanguage = (language) => {
     setDefaultTextLanguageDropDown(language);
     setisDropdownVisibleLanguage(false);
-    seteditLead((prevTask) => ({
+    setFollowupsData((prevTask) => ({
       ...prevTask,
       language: language,
     }));
   };
+
+  //----------------------------------------------------------------------------------------
+  //LeadStatusDropDown GET API Is being used here
+  const [leadStatus, setleadStatus] = useState('');
+
+  async function handleLeadStatus() {
+    const bearer_token = localStorage.getItem('token');
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
+        config
+      );
+      setleadStatus(response.data.data);
+
+      console.log('status:', response.data.data);
+    } catch (error) {
+      console.error('Error fetching leads:', error);
+      // Optionally, set an error state to display a user-friendly message
+    }
+  }
+
+  useEffect(() => {
+    handleLeadStatus();
+  }, []);
+
+  const [defaultTextLeadStatusDropDown, setdefaultTextLeadStatusDropDown] =
+    useState('Select Status');
+  const [isDropdownVisibleLeadStatus, setisDropdownVisibleLeadStatus] =
+    useState(false);
+
+  const toggleDropdownLeadStatus = () => {
+    setisDropdownVisibleLeadStatus(!isDropdownVisibleLeadStatus);
+  };
+
+  const handleDropdownLeadStatus = (leadStatus) => {
+    setdefaultTextLeadStatusDropDown(leadStatus);
+    setisDropdownVisibleLeadStatus(!isDropdownVisibleLeadStatus);
+    setFollowupsData((prevTask) => ({
+      ...prevTask,
+      leadesStatus: leadStatus,
+    }));
+  };
+
+
+  
 
   return (
     <>
@@ -360,7 +411,7 @@ const CreateFollowUp = () => {
                     value={followupsData.leadId}
                     className="mt-1 p-2 border border-gray-300 rounded-md"
                     onChange={handleChange}
-                    placeholder="Entere verox peron"
+                    placeholder="Enter Lead Id"
                   />
                 </div>
                 {/* CLIENT NAME FIELD */}
@@ -378,7 +429,7 @@ const CreateFollowUp = () => {
                     value={followupsData.name}
                     className="mt-1 p-2 border border-gray-300 rounded-md"
                     onChange={handleChange}
-                    placeholder="Entere verox peron"
+                    placeholder="Enter Client Name"
                   />
                 </div>
               </div>
@@ -404,9 +455,9 @@ const CreateFollowUp = () => {
                     >
                       {!isEditMode
                         ? defaultTextLanguageDropDown
-                        : editLead.language === ""
+                        : followupsData.language === ""
                         ? defaultTextLanguageDropDown
-                        : editLead.language}
+                        : followupsData.language}
                       <FaAngleDown className="ml-2 text-gray-400" />
                     </button>
                     {isDropdownVisibleLanguage && (
@@ -441,7 +492,7 @@ const CreateFollowUp = () => {
                     value={followupsData.phoneNo}
                     className="mt-1 p-2 border border-gray-300 rounded-md"
                     onChange={handleChange}
-                    placeholder="Entere verox peron"
+                    placeholder="Enter Phone Number"
                   />
                 </div>
               </div>
@@ -462,7 +513,7 @@ const CreateFollowUp = () => {
                     value={followupsData.mobileNo}
                     className="mt-1 p-2 border border-gray-300 rounded-md"
                     onChange={handleChange}
-                    placeholder="Entere verox peron"
+                    placeholder="Enter Mobile Number"
                   />
                   {/* {errors.mobileNo && (
                     <span style={{ color: "red" }}>{errors.mobileNo}</span>
@@ -483,7 +534,7 @@ const CreateFollowUp = () => {
                     value={followupsData.email}
                     className="mt-1 p-2 border border-gray-300 rounded-md"
                     onChange={handleChange}
-                    placeholder="Entere verox peron"
+                    placeholder="Enter E-Mail ID"
                   />
                 </div>
               </div>
@@ -582,9 +633,66 @@ const CreateFollowUp = () => {
                     value={followupsData.lastModifiedBy}
                     className="mt-1 p-2 border border-gray-300 rounded-md"
                     onChange={handleChange}
-                    placeholder="Entere verox peron"
+                    placeholder="Who Modify"
                   />
                 </div>
+                 {/* -------------Lead Status------------- */}
+
+                 <div className="flex flex-col w-1/2 relative">
+                    <label
+                      htmlFor="leadesStatus"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Lead Status
+                    </label>
+                    <div
+                      className="relative"
+                      onClick={toggleDropdownLeadStatus}
+                      onMouseLeave={() => setisDropdownVisibleLeadStatus(false)}
+                    >
+                      <button
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        id="LeadStatusDropDown"
+                        type="button"
+                      >
+                        {followupsData.leadesStatus!=""
+                          ? followupsData.leadesStatus
+                          : defaultTextLeadStatusDropDown}
+                        <FaAngleDown className="ml-2 text-gray-400" />
+                      </button>
+                      {isDropdownVisibleLeadStatus && (
+                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                          <ul className="py-2 text-sm text-gray-700">
+                            {leadStatus.length > 0 ? (
+                              leadStatus.map(({ key, status }) => (
+                                <li
+                                  key={key}
+                                  onClick={() =>
+                                    handleDropdownLeadStatus(status)
+                                  }
+                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                >
+                                  {status}
+                                </li>
+                              ))
+                            ) : (
+                              <li className="flex items-center px-4 py-2 text-center gap-1">
+                                <IoInformationCircle
+                                  size={25}
+                                  className="text-cyan-600"
+                                />{' '}
+                                Lead status not available. Go to{' '}
+                                <span className="font-bold">
+                                  Settings - Add Lead Status{' '}
+                                </span>
+                                .
+                              </li>
+                            )}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
