@@ -398,7 +398,7 @@ export default function CreateSO() {
           formData_PUT,
           config
         );
-        alert("Lead updated successfully!");
+        alert("SO updated successfully!");
         navigate(`/sidebar/lead`);
       } else {
         await axios.post(

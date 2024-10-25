@@ -161,17 +161,37 @@ export default function Registration() {
   
     // Validation
     if (!formValues.firstName) {
-      showErrorToast('First Name is not available');
+      showErrorToast('Please enter first name');
       return; // Exit function if validation fails
     }
   
     if (!formValues.lastName) {
-      showErrorToast('Last Name is not available');
+      showErrorToast('Please enter last name');
       return; // Exit function if validation fails
+    }
+
+    if (!formValues.email) {
+      showErrorToast('Please enter email');
+      return; // Exit function if validation fails
+    }
+
+    if (!formValues.password ) {
+      showErrorToast('Please enter password');
+      return; // Exit function if validation fails
+    }
+
+    if (!formValues.confirmPassword ) {
+      showErrorToast('Please enter confirm password ');
+      return; // Exit function if validation fails
+    }
+
+    if(formValues.password !== formValues.confirmPassword ){
+      showErrorToast("Password doesn't match ")
+      return;
     }
   
     if (!formValues.businessType) {
-      showErrorToast('Business Type is not available');
+      showErrorToast('Please select business type ');
       return; // Exit function if validation fails
     }
   
