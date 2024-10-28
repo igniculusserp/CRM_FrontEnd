@@ -249,7 +249,7 @@ export default function Plan() {
                     Plan Information
                   </h2>
                   {/* -------------1------------- */}
-                  <div className="py-2 px-4 min-h-screen relative">
+                  <div className="py-2 px-4 grid gap-2">
                     {/* -------------planAmount------------- */}
                     <div className="flex space-x-4">
                       <div className="flex flex-col w-1/2">
@@ -268,8 +268,10 @@ export default function Plan() {
                           placeholder="Enter Plan Amount"
                         />
                         {errors.planAmount && (
-                        <span style={{ color: 'red' }}>{errors.planAmount}</span>
-                      )}
+                          <span style={{ color: 'red' }}>
+                            {errors.planAmount}
+                          </span>
+                        )}
                       </div>
                       {/* -------------planType------------- */}
                       <div className="flex flex-col w-1/2 relative">
@@ -314,8 +316,10 @@ export default function Plan() {
                           )}
                         </div>
                         {errors.planType && (
-                        <span style={{ color: 'red' }}>{errors.planType}</span>
-                      )}
+                          <span style={{ color: 'red' }}>
+                            {errors.planType}
+                          </span>
+                        )}
                       </div>
                     </div>
 
@@ -340,12 +344,14 @@ export default function Plan() {
                     </div>
 
                     {/* -------------Button------------- */}
-                    <button
-                      type="submit"
-                      className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute  top-[300px]"
-                    >
-                      {isEditMode ? 'Edit Plan' : 'Add Plan'}
-                    </button>
+                    <div className="mb-3 flex items-center justify-end max-w-full">
+                      <button
+                        type="submit"
+                        className="mt-4 w-full hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-6 py-4 rounded-md"
+                      >
+                        {isEditMode ? 'Update User' : 'Save User'}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
