@@ -314,7 +314,7 @@ export default function Group() {
                     Lead Information
                   </h2>
                   {/* -------------1------------- */}
-                  <div className="py-2 px-4 min-h-screen ">
+                  <div className="py-2 px-4 grid gap-2 ">
                     {/* -------------groupID------------- */}
                     <div className="flex space-x-4">
                       <div className="flex flex-col w-1/2">

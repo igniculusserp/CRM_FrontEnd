@@ -83,7 +83,10 @@ export default function SMSSetting() {
 
     if (!formData.APISenderID || formData.APISenderID.trim() === '') {
       errors.APISenderID = 'API Server is required';
-    } else if (!formData.APIServerName || formData.APIServerName.trim() === '') {
+    } else if (
+      !formData.APIServerName ||
+      formData.APIServerName.trim() === ''
+    ) {
       errors.APIServerName = 'API Server Name is required';
     }
 
@@ -253,7 +256,7 @@ export default function SMSSetting() {
                     SMS Setting
                   </h2>
                   {/* -------------1------------- */}
-                  <div className="py-2 px-4 min-h-screen relative">
+                  <div className="py-2 px-4 grid gap-2">
                     {/* -------------API Server ID------------- */}
                     <div className="flex space-x-4">
                       <div className="flex flex-col w-1/2">
@@ -272,8 +275,10 @@ export default function SMSSetting() {
                           placeholder="Enter API Sender ID"
                         />
                         {errors.APISenderID && (
-                        <span style={{ color: 'red' }}>{errors.APISenderID}</span>
-                      )}
+                          <span style={{ color: 'red' }}>
+                            {errors.APISenderID}
+                          </span>
+                        )}
                       </div>
                       {/* -------------API Server Name------------- */}
                       <div className="flex flex-col w-1/2 relative">
@@ -319,8 +324,10 @@ export default function SMSSetting() {
                           )}
                         </div>
                         {errors.APIServerName && (
-                        <span style={{ color: 'red' }}>{errors.APIServerName}</span>
-                      )}
+                          <span style={{ color: 'red' }}>
+                            {errors.APIServerName}
+                          </span>
+                        )}
                       </div>
                     </div>
 
@@ -345,12 +352,14 @@ export default function SMSSetting() {
                     </div>
 
                     {/* -------------Button------------- */}
-                    <button
-                      type="submit"
-                      className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute  top-[300px]"
-                    >
-                      {isEditMode ? 'Edit Plan' : 'Add Plan'}
-                    </button>
+                    <div className="mb-3 flex items-center justify-end max-w-full">
+                      <button
+                        type="submit"
+                        className="mt-4 w-full hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-6 py-4 rounded-md"
+                      >
+                        {isEditMode ? 'Update User' : 'Save User'}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

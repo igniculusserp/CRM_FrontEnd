@@ -229,7 +229,7 @@ export default function UserSettingForm({
               Lead Information
             </h2>
 
-            <div className="py-2 px-4 min-h-screen relative">
+            <div className="grid gap-2 px-3 py-2">
               {/*<---------------1--------------->*/}
               {/*<---------------First Name--------------->*/}
               <div className="flex space-x-4">
@@ -456,12 +456,14 @@ export default function UserSettingForm({
 
               {/* -------------createdDate------------- */}
 
-              <button
-                type="submit"
-                className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md "
-              >
-                {isEditMode ? 'Update User' : 'Save User'}
-              </button>
+              <div className="mb-3 flex items-center justify-end max-w-full">
+                <button
+                  type="submit"
+                  className="mt-4 w-full hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-6 py-4 rounded-md"
+                >
+                  {isEditMode ? 'Update User' : 'Save User'}
+                </button>
+              </div>
             </div>
           </div>
         </div>
