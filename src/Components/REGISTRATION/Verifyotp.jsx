@@ -19,26 +19,42 @@ import {
 
 
 const VerifyOtp = () => {
+
   const { userId } = useParams();
+  
+  //otp
   const [otp, setOtp] = useState("");
   const [resendDisabled, setResendDisabled] = useState(false);
   const [countdown, setCountdown] = useState(60);
+  
+  //modal
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  
+  //companyDetails
   const [companyName, setCompanyName] = useState("");
   const [base64Image, setBase64Image] = useState("");
+  
+
+  //localStoarge 
   const [emailreg, setEmailreg] = useState("");
 
+
+    //------------------------------------------------------------------------------------------------
+                                  //TO GET INFO FROM LOCAL STORAGE FOR EMAIL
 
   useEffect(() => {
     const registration = JSON.parse(localStorage.getItem('registrationdata'));
     if (registration && registration.data && registration.data.email) {
-      // console.log(registration.data.email)  
       setEmailreg(registration.data.email);
     } else {
       console.error('Registration data or email is not available.');
     }
   }, []);
 
+
+  //------------------------------------------------------------------------------------------------
+                                //OTP RESENDER
   useEffect(() => {
     let timer;
     if (resendDisabled) {
@@ -57,6 +73,8 @@ const VerifyOtp = () => {
     return () => clearInterval(timer);
   }, [resendDisabled]);
 
+//------------------------------------------------------------------------------------------------
+                                //HANDLE IMAGE 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -73,10 +91,13 @@ const VerifyOtp = () => {
     document.getElementById('imageInput').click();
   };
 
+
+
+  //------------------------------------------------------------------------------------------------
+  //OTP SUBMIT BUTTON
   const handleSubmit = async (event) => {
-
   event.preventDefault();
-
+  
    //validation Added for OTP
    if(otp.length < 1 ){
     showErrorToast('Please enter OTP')
@@ -105,7 +126,8 @@ const VerifyOtp = () => {
 };
 
 
-
+//------------------------------------------------------------------------------------------------
+  //OTP RESEND BUTTON
   const handleResend = async (event) => {
     event.preventDefault();
 
@@ -122,6 +144,8 @@ const VerifyOtp = () => {
     }
   };
 
+  //------------------------------------------------------------------------------------------------
+  //HANDLE UPLOAD 
   const handleUpload = async (e) => {
     e.preventDefault();
     const formData = {
@@ -133,6 +157,12 @@ const VerifyOtp = () => {
       tenantEmail: emailreg,
       domain: "",
     };
+
+    // Validation
+    if(!formData.name){
+      showErrorToast("Please enter company name")
+    }
+
     try {
       const response = await axios.post(`${main_base_url}/Tenants`, formData, {
         headers: {
@@ -142,15 +172,17 @@ const VerifyOtp = () => {
       console.log(response.data)
       const data = response.data
       if (data.isSuccess === false) {
-        // console.log('Success:', response.data.tenantId);
         showErrorToast(data.message);
       } else {
+        
         showSuccessToast("Company Added Successfully");
+        
+        //localStorage is being used here to store data
         localStorage.setItem('companyData', JSON.stringify(data));
         localStorage.setItem('myData', response.data.tenantId);
+        
+        //host and tenandId
         const host = response.data.tenant.host;
-        console.log(response)
-
         const tenantId = response.data.tenant.tenantId
         
         //localhost
@@ -164,8 +196,7 @@ const VerifyOtp = () => {
 
       }
     } catch (error) {
-      console.error('Error:', error.response.data.errors.tenant);
-      showSuccessToast(error.response.data.errors.tenant);
+      showErrorToast(error.response.data.message);
     }
   };
 

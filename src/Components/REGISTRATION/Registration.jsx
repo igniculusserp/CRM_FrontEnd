@@ -161,55 +161,63 @@ export default function Registration() {
   
     // Validation
     if (!formValues.firstName) {
-      showErrorToast('Please enter first name');
-      return; // Exit function if validation fails
+      showErrorToast("Please enter first name");
+      return;
     }
   
     if (!formValues.lastName) {
-      showErrorToast('Please enter last name');
-      return; // Exit function if validation fails
+      showErrorToast("Please enter last name");
+      return;
     }
 
     if (!formValues.email) {
       showErrorToast('Please enter email');
-      return; // Exit function if validation fails
+      return;
     }
 
     if (!formValues.password ) {
       showErrorToast('Please enter password');
-      return; // Exit function if validation fails
+      return;
     }
 
     if (!formValues.confirmPassword ) {
       showErrorToast('Please enter confirm password ');
-      return; // Exit function if validation fails
+      return;
     }
 
     if(formValues.password !== formValues.confirmPassword ){
       showErrorToast("Password doesn't match ")
       return;
     }
+
+    if(!formValues.contactNo){
+      showErrorToast("Please enter contact number ")
+      return;
+    }
+
+    if(!formValues.country){
+      showErrorToast("Please enter country")
+      return;
+    }
   
-    if (!formValues.businessType) {
-      showErrorToast('Please select business type ');
-      return; // Exit function if validation fails
+    if (!formValues.businessType){
+      showErrorToast('Please select business type');
+      return;
     }
   
     // All validations passed, proceed with submission
     try {
       const response = await axios.post(`${main_base_url}/Users`, predefinedValues);
+      showSuccessToast('Registration Completed')
       localStorage.setItem("myData", response.data.userId);
       localStorage.setItem("registrationdata", JSON.stringify(response));
-  
       const { userId } = response.data;
       navigate(`/verifyotp/${userId}`);
     } catch (error) {
-      console.error("Error:", error.response.data.message);
+      // console.error("Error:", error.response.data.message);
       showErrorToast(error.response.data.message);
-    }
-  };
-  
-  
+    }  
+  }
 
   function togglePasswordEye() {
     setPasswordEye(!passwordEye);

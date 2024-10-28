@@ -17,6 +17,8 @@ import { tenant_base_url, protocal_url } from '../../../../Config/config';
 //Images
 import profilepic from './../../../../assets/images/profilePicEditLead.png';
 
+import { ToastContainer } from 'react-toastify';
+
 export default function Createlead() {
   //to make id unique
   const { id } = useParams();
@@ -374,22 +376,7 @@ export default function Createlead() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const errors = {};
-
-    // MOBILE NUMBER VALIDATION
-    if (
-      !editLead.mobNo ||
-      isNaN(editLead.mobNo) ||
-      editLead.mobNo.trim() === ""
-    ) {
-      errors.mobileNo = 'Enter a valid mobile number';
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
-      return;
-    }
-
+  
     const bearer_token = localStorage.getItem('token');
 
     try {
@@ -477,15 +464,6 @@ export default function Createlead() {
           config
         );
 
-        if (
-          !formData_POST.mobileNo &&
-          isNaN(formData_POST.mobileNo) &&
-          formData_POST.mobileNo < 10
-        ) {
-          setErrors({ mobileNo: 'Enter valid mobile number' });
-        }
-
-        console.log(formData_POST);
         alert('Lead created successfully!');
         navigate(`/sidebar/lead`);
       }
@@ -493,12 +471,12 @@ export default function Createlead() {
       // Redirect after a short delay
     } catch (error) {
       console.error('Error:', error);
-      alert('An error occurred. Please try again.');
     }
   };
 
   return (
     <>
+    <ToastContainer/>
       <div className="min-h-screen flex flex-col mt-3">
         <div className="flex justify-between mx-3  bg-white border rounded p-3">
           <div className="flex items-center justify-center gap-3">
