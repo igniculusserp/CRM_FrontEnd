@@ -18,6 +18,7 @@ import { tenant_base_url, protocal_url } from '../../../../Config/config';
 import profilepic from './../../../../assets/images/profilePicEditLead.png';
 
 import { ToastContainer } from 'react-toastify';
+import {showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
 
 export default function Createlead() {
   //to make id unique
@@ -100,7 +101,7 @@ export default function Createlead() {
         mobNo: data.mobileNo || '',
         phNo: data.phoneNo || '',
         email: data.email || '',
-        assigned_To: data.assigned_To || '',
+        assigned_To: data.assigned_To || 'N/A',
         street: data.street || '',
         pinCode: data.postalCode || '',
         country: data.country || '',
@@ -123,6 +124,9 @@ export default function Createlead() {
       console.error('Error fetching leads:', error);
     }
   }
+
+  //Date Logic Validation
+  const today = new Date().toISOString().split('T')[0];
 
   //----------------------------------------------------------------------------------------
   //LanguageDropDown
@@ -196,7 +200,7 @@ export default function Createlead() {
   const handleDropdownSelection = (poolName) => {
     setIsPoolDropdownOpen(false);
     setDefaultTextPool(poolName);
-    console.log("@@@===", isPoolDropdownOpen);
+    // console.log("@@@===", isPoolDropdownOpen);
     seteditLead((prev) => ({
       ...prev,
       leadSource: poolName,
@@ -252,6 +256,7 @@ export default function Createlead() {
     }));
   };
 
+  //----------------------------------------------------------------------------------------
   // Segment GET API Is being used here
   const [segments, setSegments] = useState([]);
   async function handleSegment() {
@@ -370,7 +375,7 @@ export default function Createlead() {
   };
 
   //---------->handleSubmit<----------
-  //two different models one for PUT and one for POST
+  //two different schemas, one for PUT and one for POST
   const [errors, setErrors] = useState({});
 
   const handleSubmit = async (event) => {
@@ -449,28 +454,67 @@ export default function Createlead() {
         description: description,
       };
 
-      if (isEditMode) {
-        await axios.put(
-          `${protocal_url}${name}.${tenant_base_url}/Lead/lead/update`,
-          formData_PUT,
-          config
-        );
-        alert('Lead updated successfully!');
-        navigate(`/sidebar/lead`);
-      } else {
-        await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/Lead/lead/add`,
-          formData_POST,
-          config
-        );
 
-        alert('Lead created successfully!');
-        navigate(`/sidebar/lead`);
+      //------------------------------------------------------------------------------------> Validations//--> Validations//--> Validations//--> Validations//--> Validations
+
+
+      if(!formData_POST.segments){
+        console.log('ssss')
+        return
       }
 
-      // Redirect after a short delay
-    } catch (error) {
-      console.error('Error:', error);
+      if(!formData_POST.name || !formData_PUT.name){
+        showErrorToast('Please enter name')
+        return;
+      }
+
+      if(!formData_POST.mobileNo){
+        showErrorToast('Please enter mobile number')
+        return;
+      }
+
+      if(formData_POST.phoneNo && (formData_POST.phoneNo.length < 9  || formData_PUT.phoneNo.length > 15 )){
+        showErrorToast('Please check phone no')
+        return;
+      }
+
+      if(formData_POST.mobileNo.length < 9   ||  formData_PUT.mobileNo.length > 15 ){
+        showErrorToast('Invalid mobile number')
+        return;
+      }
+
+
+      // if((formData_POST.trialStartDate && formData_PUT.trialEndDate ) && !formData_POST.segments){
+      //   console.log('please select segment ')
+      // }
+
+
+
+      if (isEditMode) {
+        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Lead/lead/update`, formData_PUT, config);
+          alert('Lead updated successfully!');
+        navigate(`/sidebar/lead`);
+      } else {
+        
+        if(formData_POST.trialStartDate < today){
+          showErrorToast('Previous Date cannot be selected')
+          return;
+        }
+
+
+        const response =  await axios.post(`${protocal_url}${name}.${tenant_base_url}/Lead/lead/add`, formData_POST, config );
+        if(!response.data.isSuccess){
+          showErrorToast(response.data.message)
+          return;
+        }
+        else{
+          navigate(`/sidebar/lead`);
+          alert('Lead created successfully!');
+        }
+      }
+    } catch (error){
+      showErrorToast(error.response.data.message)
+
     }
   };
 
