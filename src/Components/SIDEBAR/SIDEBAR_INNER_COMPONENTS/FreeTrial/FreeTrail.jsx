@@ -578,7 +578,7 @@ export default function FreeTrail() {
             onMouseLeave={() => setdropActionsMenudropDown(false)}
           >
             <button
-              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center   border-blue-600"
+              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600   border-blue-600"
               id="dropdownDefaultButton"
               type="button"
             >
