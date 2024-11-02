@@ -1,26 +1,26 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { FaAngleDown } from "react-icons/fa";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { FaAngleDown } from 'react-icons/fa';
 
-import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 
-import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import { getHostnamePart } from '../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 
 export default function UploadLead() {
   const name = getHostnamePart();
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [editLead, setEditLead] = useState({
-    assignedTo: "",
-    pool: "",
-    status: "",
-    namecolumnno: "",
-    mobilecolno: "",
-    emailcolno: "",
-    citycoluno: "",
-    statecolno: "",
-    occupationcolno: "",
-    descolumnno: "",
+    assignedTo: '',
+    pool: '',
+    status: '',
+    namecolumnno: '',
+    mobilecolno: '',
+    emailcolno: '',
+    citycoluno: '',
+    statecolno: '',
+    occupationcolno: '',
+    descolumnno: '',
     file: null,
   });
 
@@ -41,13 +41,12 @@ export default function UploadLead() {
     }));
   };
 
-
   //----------------------------------------------------------------------------------------
   //assigned_ToDropDown
   const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
 
   async function handleAssigned_To() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
@@ -60,9 +59,9 @@ export default function UploadLead() {
         config
       );
       setassigned_ToDropDown(response.data);
-      console.log("status:", response.data);
+      console.log('status:', response.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -72,7 +71,7 @@ export default function UploadLead() {
   }, []);
 
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
-    useState("Select Assigned");
+    useState('Select Assigned');
   const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
     useState(false);
 
@@ -85,7 +84,7 @@ export default function UploadLead() {
     assigned_To_Role
   ) => {
     setdefaultTextassigned_ToDropDown(
-      assigned_To_Username + " " + assigned_To_Role
+      assigned_To_Username + ' ' + assigned_To_Role
     );
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     setEditLead((prevTask) => ({
@@ -97,12 +96,12 @@ export default function UploadLead() {
   //----------------------------------------------------------------------------------------
   //PooL_ToDropDown
   const [poolToDropDown, setPoolToDropDown] = useState([]);
-  const [defaultTextPool, setDefaultTextPool] = useState("Select Pool");
+  const [defaultTextPool, setDefaultTextPool] = useState('Select Pool');
   const [isPoolDropdownOpen, setIsPoolDropdownOpen] = useState(false);
   const [error, setError] = useState(null); // New error state
 
   const handlePool = async () => {
-    const bearerToken = localStorage.getItem("token");
+    const bearerToken = localStorage.getItem('token');
     const config = {
       headers: {
         Authorization: `Bearer ${bearerToken}`,
@@ -115,10 +114,10 @@ export default function UploadLead() {
         config
       );
       setPoolToDropDown(response.data.data);
-      console.log("status:", response.data.data);
+      console.log('status:', response.data.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
-      setError("Failed to fetch pools."); // Set error message
+      console.error('Error fetching leads:', error);
+      setError('Failed to fetch pools.'); // Set error message
     }
   };
 
@@ -134,22 +133,22 @@ export default function UploadLead() {
   const handleDropdownSelection = (poolName) => {
     setIsPoolDropdownOpen(false);
     setDefaultTextPool(poolName);
-    console.log("@@@===", isPoolDropdownOpen);
+    console.log('@@@===', isPoolDropdownOpen);
     setEditLead((prev) => ({
       ...prev,
       pool: poolName,
     }));
   };
 
-   //----------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------
   //Status_ToDropDown
   const [statusToDropDown, setStatusToDropDown] = useState([]);
-  const [defaultTextStatus, setDefaultTextStatus] = useState("Select Status");
+  const [defaultTextStatus, setDefaultTextStatus] = useState('Select Status');
   const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
   const [errorStatus, setStatusError] = useState(null); // New error state
 
   const handleStatus = async () => {
-    const bearerToken = localStorage.getItem("token");
+    const bearerToken = localStorage.getItem('token');
     const config = {
       headers: {
         Authorization: `Bearer ${bearerToken}`,
@@ -162,11 +161,11 @@ export default function UploadLead() {
         config
       );
       setStatusToDropDown(response.data.data);
-      console.log("status:", response.data.data);
+      console.log('status:', response.data.data);
     } catch (error) {
-      console.error("Error fetching leads:", errorStatus);
-      console.error("Error fetching leads:", error);
-      setStatusError("Failed to fetch pools."); // Set error message
+      console.error('Error fetching leads:', errorStatus);
+      console.error('Error fetching leads:', error);
+      setStatusError('Failed to fetch pools.'); // Set error message
     }
   };
 
@@ -181,27 +180,25 @@ export default function UploadLead() {
   const handleDropdownStatusSelection = (status) => {
     setIsStatusDropdownOpen(false);
     setDefaultTextStatus(status);
-    console.log("@@@===", isStatusDropdownOpen);
+    console.log('@@@===', isStatusDropdownOpen);
     setEditLead((prev) => ({
       ...prev,
       Status: status,
     }));
   };
 
- 
-
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       // Axios config with headers and query parameters
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          "Content-Type": "multipart/form-data", // Correct content type for file uploads
+          'Content-Type': 'multipart/form-data', // Correct content type for file uploads
         },
         params: {
           // Attach the query parameters
@@ -220,7 +217,7 @@ export default function UploadLead() {
 
       // FormData for the file upload
       const formData_POST = new FormData();
-      formData_POST.append("file", editLead.file);
+      formData_POST.append('file', editLead.file);
 
       // Send POST request with file and config (query params + headers)
       await axios.post(
@@ -229,23 +226,22 @@ export default function UploadLead() {
         config
       );
 
-      alert("Lead uploaded successfully!");
+      alert('Lead uploaded successfully!');
       // Save selected button to localStorage
-    localStorage.setItem("selectedButton", "Leads");
-      window.location.reload(); 
+      localStorage.setItem('selectedButton', 'Leads');
+      window.location.reload();
     } catch (error) {
       if (error.response) {
-        console.error("Error data:", error.response.data);
+        console.error('Error data:', error.response.data);
       } else {
-        console.error("Error:", error.message);
+        console.error('Error:', error.message);
       }
-      alert("An error occurred. Please try again.");
+      alert('An error occurred. Please try again.');
     }
   };
 
   return (
     <div className="flex flex-col overflow-x-auto overflow-y-hidden bg-gray-300">
-    
       {/* FORM STAT FROM HERE */}
       <div className="overflow-hidden">
         {/* CREATE CONTACT FORM */}
@@ -257,149 +253,162 @@ export default function UploadLead() {
             </h1>
           </div>
           {/* ----- FIELDS START FROM HERE ------ */}
-          <div className="bg-white px-3 py-1">
-            <label
-              htmlFor="file"
-              className="text-sm font-medium text-gray-700 block"
-            >
-              Select File
-            </label>
-            <input
-              type="file"
-              name="file"
-              id="file"
-              placeholder="Upload"
-              accept=".xls,.xlsx"
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-              onChange={handleFileChange} // File selection is handled here
-            />
-          </div>
-          <div className="flex gap-3 bg-white py-2 px-3 rounded-b-xl">
-            {/* FIRST SECTION */}
-            <div className="flex-1 flex flex-col">
-              {/* ASSIGNED TO DROPDOWN */}
-              <label
-                htmlFor="leadesStatus"
-                className="text-sm font-medium text-gray-700"
-              >
-                Assigned to
-              </label>
-              <div
-                className="relative"
-                onClick={toggleDropdownassigned_ToDropDown}
-                onMouseLeave={() => setisDropdownassigned_ToDropDown(false)}
-              >
-                <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="LeadStatusDropDown"
-                  type="button"
+          <div className="grid gap-2 p-2 bg-white px-3 py-2 rounded-b-xl">
+            {/* FIRST */}
+            <div className="flex space-x-4">
+              {/* FILE UPLOAD FIELD */}
+              <div className="flex flex-col w-full">
+                <label
+                  htmlFor="file"
+                  className="text-sm font-medium text-gray-700 block"
                 >
-                  {editLead.assignedTo === ""
-                    ? defaultTextassigned_ToDropDown
-                    : editLead.assignedTo}
-
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {isDropdownassigned_ToDropDown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                    <ul className="py-2 text-sm text-gray-700">
-                      {assigned_ToDropDown.map(({ key, userName, role }) => (
-                        <li
-                          key={key}
-                          onClick={() =>
-                            handleDropdownassigned_ToDropDown(userName, role)
-                          }
-                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                        >
-                          {userName}-({role})
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-              {/* POOL DROPDOWN */}
-              <label
-                htmlFor="Pool"
-                className="text-sm font-medium text-gray-700"
-              >
-                Pool
-              </label>
-              <div
-                className="relative"
-                onMouseLeave={() => setIsPoolDropdownOpen(false)}
-              >
-                <button
-                  onClick={toggleDropdown}
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="LeadPoolDropDown"
-                  type="button"
-                >
-                  {editLead.pool === "" ? defaultTextPool : editLead.pool}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {isPoolDropdownOpen && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                    {error ? (
-                      <div className="py-2 text-red-600">{error}</div>
-                    ) : (
-                      <ul className="py-2 text-sm text-gray-700">
-                        {poolToDropDown.map(({ id, poolName }) => (
-                          <li
-                            key={id}
-                            onClick={() => handleDropdownSelection(poolName)}
-                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          >
-                            {poolName}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                )}
+                  Select File
+                </label>
+                <input
+                  type="file"
+                  name="file"
+                  id="file"
+                  placeholder="Upload"
+                  accept=".xls,.xlsx"
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                  onChange={handleFileChange} // File selection is handled here
+                />
               </div>
             </div>
-            {/* SECOND SECTION */}
-            <div className="flex-1 flex flex-col">
-              {/* STATUS DROPDOWN */}
-              <label
-                htmlFor="Pool"
-                className="text-sm font-medium text-gray-700"
-              >
-                Status
-              </label>
-              <div
-                className="relative"
-                onMouseLeave={() => setIsStatusDropdownOpen(false)}
-              >
-                <button
-                  onClick={toggleStatusDropdown}
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                  id="LeadStatusDropDown"
-                  type="button"
+            {/* SECOND */}
+            <div className="flex space-x-4">
+              {/* ASSIGNED TO DROPDOWN */}
+              <div className="flex flex-col w-1/2">
+                <label
+                  htmlFor="leadesStatus"
+                  className="text-sm font-medium text-gray-700"
                 >
-                  {editLead.status === "" ? defaultTextStatus : editLead.status}
-                  <FaAngleDown className="ml-2 text-gray-400" />
-                </button>
-                {isStatusDropdownOpen && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                    {errorStatus ? (
-                      <div className="py-2 text-red-600">{errorStatus}</div>
-                    ) : (
+                  Assigned to
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownassigned_ToDropDown}
+                  onMouseLeave={() => setisDropdownassigned_ToDropDown(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="LeadStatusDropDown"
+                    type="button"
+                  >
+                    {editLead.assignedTo === ''
+                      ? defaultTextassigned_ToDropDown
+                      : editLead.assignedTo}
+
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {isDropdownassigned_ToDropDown && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                       <ul className="py-2 text-sm text-gray-700">
-                        {statusToDropDown.map(({ id, status }) => (
+                        {assigned_ToDropDown.map(({ key, userName, role }) => (
                           <li
-                            key={id}
-                            onClick={() => handleDropdownStatusSelection(status)}
+                            key={key}
+                            onClick={() =>
+                              handleDropdownassigned_ToDropDown(userName, role)
+                            }
                             className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                           >
-                            {status}
+                            {userName}-({role})
                           </li>
                         ))}
                       </ul>
-                    )}
-                  </div>
-                )}
+                    </div>
+                  )}
+                </div>
+              </div>
+              {/* POOL DROPDOWN */}
+              <div className="flex flex-col w-1/2">
+                <label
+                  htmlFor="Pool"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Pool
+                </label>
+                <div
+                  className="relative"
+                  onMouseLeave={() => setIsPoolDropdownOpen(false)}
+                >
+                  <button
+                    onClick={toggleDropdown}
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="LeadPoolDropDown"
+                    type="button"
+                  >
+                    {editLead.pool === '' ? defaultTextPool : editLead.pool}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {isPoolDropdownOpen && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                      {error ? (
+                        <div className="py-2 text-red-600">{error}</div>
+                      ) : (
+                        <ul className="py-2 text-sm text-gray-700">
+                          {poolToDropDown.map(({ id, poolName }) => (
+                            <li
+                              key={id}
+                              onClick={() => handleDropdownSelection(poolName)}
+                              className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            >
+                              {poolName}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="flex space-x-4">
+              {/* STATUS DROPDOWN */}
+              <div className="flex flex-col w-1/2">
+                <label
+                  htmlFor="Pool"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Status
+                </label>
+                <div
+                  className="relative"
+                  onMouseLeave={() => setIsStatusDropdownOpen(false)}
+                >
+                  <button
+                    onClick={toggleStatusDropdown}
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="LeadStatusDropDown"
+                    type="button"
+                  >
+                    {editLead.status === ''
+                      ? defaultTextStatus
+                      : editLead.status}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {isStatusDropdownOpen && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                      {errorStatus ? (
+                        <div className="py-2 text-red-600">{errorStatus}</div>
+                      ) : (
+                        <ul className="py-2 text-sm text-gray-700">
+                          {statusToDropDown.map(({ id, status }) => (
+                            <li
+                              key={id}
+                              onClick={() =>
+                                handleDropdownStatusSelection(status)
+                              }
+                              className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            >
+                              {status}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -409,134 +418,152 @@ export default function UploadLead() {
             <h2 className="font-medium py-2 px-3 shadow-md rounded-t-xl text-white bg-cyan-500">
               Column Number Information
             </h2>
-            <div className="flex gap-3 px-3 py-2">
+            <div className="grid gap-2 px-3 py-2">
               {/* FIRST SECTION */}
-              <div className="flex-1 flex flex-col">
+              <div className="flex space-x-4">
                 {/* NAME COLUMN */}
-                <label
-                  htmlFor="nameColNum"
-                  className="text-sm font-medium text-gray-700 block"
-                >
-                  Name Column Number
-                </label>
-                <input
-                  type="number"
-                  name="namecolumnno" // Use state property name directly
-                  id="nameColNum"
-                  value={editLead.namecolumnno}
-                  placeholder="Enter name column"
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  onChange={handleChange}
-                />
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="nameColNum"
+                    className="text-sm font-medium text-gray-700 block"
+                  >
+                    Name Column Number
+                  </label>
+                  <input
+                    type="number"
+                    name="namecolumnno" // Use state property name directly
+                    id="nameColNum"
+                    value={editLead.namecolumnno}
+                    placeholder="Enter name column"
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    onChange={handleChange}
+                  />
+                </div>
                 {/* MOBILE COLUMN */}
-                <label
-                  htmlFor="mobColNum"
-                  className="text-sm font-medium text-gray-700 block"
-                >
-                  Mobile Column Number
-                </label>
-                <input
-                  type="number"
-                  name="mobilecolno" // Use state property name directly
-                  id="mobColNum"
-                  value={editLead.mobilecolno}
-                  placeholder="Enter mobile column"
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  onChange={handleChange}
-                />
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="mobColNum"
+                    className="text-sm font-medium text-gray-700 block"
+                  >
+                    Mobile Column Number
+                  </label>
+                  <input
+                    type="number"
+                    name="mobilecolno" // Use state property name directly
+                    id="mobColNum"
+                    value={editLead.mobilecolno}
+                    placeholder="Enter mobile column"
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="flex space-x-4">
                 {/* EMAIL COLUMN */}
-                <label
-                  htmlFor="emailColNum"
-                  className="text-sm font-medium text-gray-700 block"
-                >
-                  Email Column Number
-                </label>
-                <input
-                  type="number"
-                  name="emailcolno" // Use state property name directly
-                  id="emailColNum"
-                  value={editLead.emailcolno}
-                  placeholder="Enter email column"
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  onChange={handleChange}
-                />
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="emailColNum"
+                    className="text-sm font-medium text-gray-700 block"
+                  >
+                    Email Column Number
+                  </label>
+                  <input
+                    type="number"
+                    name="emailcolno" // Use state property name directly
+                    id="emailColNum"
+                    value={editLead.emailcolno}
+                    placeholder="Enter email column"
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    onChange={handleChange}
+                  />
+                </div>
                 {/* CITY COLUMN */}
-                <label
-                  htmlFor="cityColNum"
-                  className="text-sm font-medium text-gray-700 block"
-                >
-                  City Column Number
-                </label>
-                <input
-                  type="number"
-                  name="citycoluno" // Use state property name directly
-                  id="cityColNum"
-                  value={editLead.citycoluno}
-                  placeholder="Enter city column"
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  onChange={handleChange}
-                />
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="cityColNum"
+                    className="text-sm font-medium text-gray-700 block"
+                  >
+                    City Column Number
+                  </label>
+                  <input
+                    type="number"
+                    name="citycoluno" // Use state property name directly
+                    id="cityColNum"
+                    value={editLead.citycoluno}
+                    placeholder="Enter city column"
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
               {/* SECOND SECTION */}
-              <div className="flex-1 flex flex-col">
+              <div className="flex space-x-4">
                 {/* STATE COLUMN */}
-                <label
-                  htmlFor="stateColNum"
-                  className="text-sm font-medium text-gray-700 block"
-                >
-                  State Column Number
-                </label>
-                <input
-                  type="number"
-                  name="statecolno" // Use state property name directly
-                  id="stateColNum"
-                  value={editLead.statecolno}
-                  placeholder="Enter state column"
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  onChange={handleChange}
-                />
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="stateColNum"
+                    className="text-sm font-medium text-gray-700 block"
+                  >
+                    State Column Number
+                  </label>
+                  <input
+                    type="number"
+                    name="statecolno" // Use state property name directly
+                    id="stateColNum"
+                    value={editLead.statecolno}
+                    placeholder="Enter state column"
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    onChange={handleChange}
+                  />
+                </div>
                 {/* OCCUPATION COLUMN */}
-                <label
-                  htmlFor="occupationColNum"
-                  className="text-sm font-medium text-gray-700 block"
-                >
-                  Occupation Column Number
-                </label>
-                <input
-                  type="number"
-                  name="occupationcolno" // Use state property name directly
-                  id="occupationColNum"
-                  value={editLead.occupationcolno}
-                  placeholder="Enter occupation column"
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  onChange={handleChange}
-                />
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="occupationColNum"
+                    className="text-sm font-medium text-gray-700 block"
+                  >
+                    Occupation Column Number
+                  </label>
+                  <input
+                    type="number"
+                    name="occupationcolno" // Use state property name directly
+                    id="occupationColNum"
+                    value={editLead.occupationcolno}
+                    placeholder="Enter occupation column"
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="flex space-x-4">
                 {/* DESCRIPTION COLUMN */}
-                <label
-                  htmlFor="descriptionColNum"
-                  className="text-sm font-medium text-gray-700 block"
-                >
-                  Description Column Number
-                </label>
-                <input
-                  type="number"
-                  name="descolumnno" // Use state property name directly
-                  id="descriptionColNum"
-                  value={editLead.descolumnno}
-                  placeholder="Enter description column"
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  onChange={handleChange}
-                />
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="descriptionColNum"
+                    className="text-sm font-medium text-gray-700 block"
+                  >
+                    Description Column Number
+                  </label>
+                  <input
+                    type="number"
+                    name="descolumnno" // Use state property name directly
+                    id="descriptionColNum"
+                    value={editLead.descolumnno}
+                    placeholder="Enter description column"
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
             </div>
             {/* BUTTONS */}
-            <div className="flex justify-end gap-5 mr-10">
-              <div className="flex justify-end mr-20">
+            <div className="flex justify-end gap-5">
+              <div className="flex justify-end mr-5">
                 <button
                   type="submit"
-                  className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                  className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
                 >
-                  {isEditMode ? "Update" : "Save"}
+                  {isEditMode ? 'Update' : 'Save'}
                 </button>
               </div>
             </div>

@@ -182,7 +182,7 @@ const CreateMailBox = () => {
                 <div className="flex flex-col w-1/2">
                   <label
                     htmlFor="mailType"
-                    className="text-sm font-medium text-gray-700 mt-2"
+                    className="text-sm font-medium text-gray-700"
                   >
                     Mail Type
                   </label>
@@ -220,7 +220,7 @@ const CreateMailBox = () => {
                 <div className="flex flex-col w-1/2">
                   <label
                     htmlFor="type"
-                    className="text-sm font-medium text-gray-700 mt-2"
+                    className="text-sm font-medium text-gray-700"
                   >
                     Type
                   </label>
