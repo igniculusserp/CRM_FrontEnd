@@ -1,45 +1,43 @@
-//react 
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+//react
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 //external Packages
-import axios from "axios";
+import axios from 'axios';
 import * as XLSX from 'xlsx';
-import { jsPDF } from "jspdf";
-import autoTable from 'jspdf-autotable'
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 //React Icons
-import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
-import { IoIosMail } from "react-icons/io";
-import { BiEdit } from "react-icons/bi";
-import { IoSearchOutline } from "react-icons/io5";
-import { FaBars } from "react-icons/fa";
-import { VscSettings } from "react-icons/vsc";
-import { ImFilter } from "react-icons/im";
-import { MdCall } from "react-icons/md";
+import { FaAngleDown, FaPhoneAlt } from 'react-icons/fa';
+import { IoIosMail } from 'react-icons/io';
+import { BiEdit } from 'react-icons/bi';
+import { IoSearchOutline } from 'react-icons/io5';
+import { FaBars } from 'react-icons/fa';
+import { VscSettings } from 'react-icons/vsc';
+import { ImFilter } from 'react-icons/im';
+import { MdCall } from 'react-icons/md';
 
 //Folder Imported
-import dp from "./../../../../assets/images/dp.png"
-import { tenant_base_url, protocal_url } from "../../../../Config/config";
+import dp from './../../../../assets/images/dp.png';
+import { tenant_base_url, protocal_url } from '../../../../Config/config';
 import MassEmail from '../MassEmail/MassEmail';
-import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 
-const name = getHostnamePart()
+const name = getHostnamePart();
 
 export default function SalesOrder() {
   const navigate = useNavigate();
 
-  
-// Mass Email
-const [isModalOpen, setIsModalOpen] = useState(false);
-const [selectedEmails, setSelectedEmails] = useState([]);
+  // Mass Email
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEmails, setSelectedEmails] = useState([]);
 
   //This is to store the upcoming data from API
   const [getleads, setGetleads] = useState([]);
 
   //stores the initial value of status
   const [isStatusChanged, setIsStatusChanged] = useState(false); // State to track status change
-
 
   //DND
   const [users, setUsers] = useState([]);
@@ -50,7 +48,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   //------------------------------------------------------------------------------------------------
   //----------------GET----------------
   async function handleLead() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -62,12 +60,12 @@ const [selectedEmails, setSelectedEmails] = useState([]);
         config
       );
 
-      const data = response.data.data
-      setGetleads(data)
+      const data = response.data.data;
+      setGetleads(data);
       setFilteredLeads(data);
-      setIsStatusChanged(data.status)
+      setIsStatusChanged(data.status);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -75,7 +73,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   //------------------------------------------------------------------------------------------------
   //----------------Managing Color of Assigned To----------------
   const getAllUsers = async () => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -87,31 +85,32 @@ const [selectedEmails, setSelectedEmails] = useState([]);
         config
       );
 
-      const data = response.data?.data
+      const data = response.data?.data;
       setUsers(data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
     }
-  }
+  };
 
   useEffect(() => {
     handleLead();
     getAllUsers();
   }, []);
 
-
   //------------------------------------------------------------------------------------------------//------------------------------------------------------------------------------------------------
   //----------------STATUS BAR DROPDOWN----------------
   const status = [
-    { key: 0, value: "All Sales Order" },
-    { key: 1, value: "Pending Records" },
-    { key: 2, value: "Approved Records" },
+    { key: 0, value: 'All Sales Order' },
+    { key: 1, value: 'Pending Records' },
+    { key: 2, value: 'Approved Records' },
   ];
 
   const [salesOrderStatus, setsalesOrderStatus] = useState(status[0].value); // Track the selected lead status
-  const [isDropdownVisible_salesOrderStatus, setisDropdownVisible_salesOrderStatus] = useState(false);
-
+  const [
+    isDropdownVisible_salesOrderStatus,
+    setisDropdownVisible_salesOrderStatus,
+  ] = useState(false);
 
   useEffect(() => {
     setFilteredLeads(getleads);
@@ -123,14 +122,14 @@ const [selectedEmails, setSelectedEmails] = useState([]);
 
   const handleStatus = (value) => {
     setsalesOrderStatus(value);
-    console.log(salesOrderStatus)
+    console.log(salesOrderStatus);
     setisDropdownVisible_salesOrderStatus(false);
     let filteredLeads = getleads;
 
     if (value === 'Pending Records') {
-      filteredLeads = filteredLeads.filter(item => item.status === false);
+      filteredLeads = filteredLeads.filter((item) => item.status === false);
     } else if (value === 'Approved Records') {
-      filteredLeads = filteredLeads.filter(item => item.status === true);
+      filteredLeads = filteredLeads.filter((item) => item.status === true);
     }
 
     // If "All Sales Order" is selected, show all leads
@@ -142,51 +141,49 @@ const [selectedEmails, setSelectedEmails] = useState([]);
     console.log(filteredLeads); // For debugging
   };
 
-
   //------------------------------------------------------------------------------------------------
   //----------------SEARCH BAR DROPDOWN----------------
-
-
-
 
   //------------------------------------------------------------------------------------------------
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
-    { key: 1, value: "Table View" },
-    { key: 2, value: "Grid View" },
+    { key: 1, value: 'Table View' },
+    { key: 2, value: 'Grid View' },
   ];
 
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
 
   const handleStripeButton = (value) => {
-    console.log(value)
+    console.log(value);
     setSelectedViewValue(value);
-  }
+  };
 
   const togglestripeBar = () => {
     setstripeBardropDown(!stripeBardropDown);
-  }
+  };
 
   // DROP_LOGO DROPDOWN------------>>>
   const [dropLogodropDown, setdropLogodropDown] = useState(false);
 
   const togglesdropLogo = () => {
     setdropLogodropDown(!dropLogodropDown);
-  }
+  };
 
-  const [selectedViewValue, setSelectedViewValue] = useState(stripeBar[0].value);
+  const [selectedViewValue, setSelectedViewValue] = useState(
+    stripeBar[0].value
+  );
 
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
   const [dropActionsMenu, setdropActionsMenu] = useState([
     // { key: 0, value: "Actions" },
-    { key: 1, value: "Mass Delete" },
-    { key: 2, value: "Mass Update" },
-    { key: 3, value: "Mass Email" },
+    { key: 1, value: 'Mass Delete' },
+    { key: 2, value: 'Mass Update' },
+    { key: 3, value: 'Mass Email' },
     // { key: 5, value: "Add to Campaign" },
-    { key: 7, value: "Export To Excel" },
-    { key: 8, value: "Export To PDF" },
-    { key: 10, value: "Send SMS" },
+    { key: 7, value: 'Export To Excel' },
+    { key: 8, value: 'Export To PDF' },
+    { key: 10, value: 'Send SMS' },
   ]);
 
   const [dropActionsMenudropDown, setdropActionsMenudropDown] = useState(false);
@@ -196,60 +193,65 @@ const [selectedEmails, setSelectedEmails] = useState([]);
   };
 
   const handleActionButton = async (value, leadId) => {
-
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
-    if (value === "Mass Delete") {
-      const userConfirmed = confirm('Are you sure you want to Delete the selected Leads?');
+    if (value === 'Mass Delete') {
+      const userConfirmed = confirm(
+        'Are you sure you want to Delete the selected Leads?'
+      );
       if (userConfirmed) {
         massDelete();
       }
     }
 
-   // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
-   if (value === "Mass Email") {
-    const userConfirmed = confirm(
-      "Are you sure you want to Send E-Mail to the selected Data?"
-    );
-    if (userConfirmed) {
-      openMassEmailModal(selectedEmails);
+    // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
+    if (value === 'Mass Email') {
+      const userConfirmed = confirm(
+        'Are you sure you want to Send E-Mail to the selected Data?'
+      );
+      if (userConfirmed) {
+        openMassEmailModal(selectedEmails);
+      }
     }
-  }
-  
 
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
-    if (value === "Sheet View") {
-      const userConfirmed = confirm('Are you sure you want to export the selected Leads?');
+    if (value === 'Sheet View') {
+      const userConfirmed = confirm(
+        'Are you sure you want to export the selected Leads?'
+      );
       if (userConfirmed) {
         exportToExcel();
       }
     }
 
     // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
-    if (value === "Print View") {
-      const userConfirmed = confirm('Are you sure you want to export the selected Leads?');
+    if (value === 'Print View') {
+      const userConfirmed = confirm(
+        'Are you sure you want to export the selected Leads?'
+      );
       if (userConfirmed) {
         exportToPDF();
       }
     }
 
     // ---------------------->Convert Lead to Contact FUNCTIONALITY*<----------------------
-    if (value === "Convert Lead to Contact") {
-      const userConfirmed = confirm('Are you sure you want to convert this lead to a contact?');
+    if (value === 'Convert Lead to Contact') {
+      const userConfirmed = confirm(
+        'Are you sure you want to convert this lead to a contact?'
+      );
       if (userConfirmed) {
         convertType();
       }
-
-    };
-  }
+    }
+  };
   // ---------------------->MASS DELETE FUNCTIONALITY---###API###<----------------------
   const massDelete = async () => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         data: { soIds: selectedIds },
       };
@@ -258,7 +260,7 @@ const [selectedEmails, setSelectedEmails] = useState([]);
         `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/massdelete`,
         config
       );
-      alert("Mass Deleted run");
+      alert('Mass Deleted run');
       handleLead();
       console.log(response);
 
@@ -267,29 +269,23 @@ const [selectedEmails, setSelectedEmails] = useState([]);
       );
       setSelectedIds([]);
     } catch (error) {
-      console.error("Error deleting leads:", error);
+      console.error('Error deleting leads:', error);
     }
   };
 
+  // ---------------------->MASS Email FUNCTIONALITY---<----------------------
 
- // ---------------------->MASS Email FUNCTIONALITY---<----------------------
+  const openMassEmailModal = () => {
+    if (selectedEmails.length > 0) {
+      setIsModalOpen(true); // Open the modal
+    } else {
+      alert('Selected Entity dose not have E-Mail Address.');
+    }
+  };
 
-
- const openMassEmailModal = () => {
-  if (selectedEmails.length > 0) {
-    setIsModalOpen(true); // Open the modal
-  } else {
-    alert('Selected Entity dose not have E-Mail Address.');
-  }
-};
-
-const closeModal = () => {
-  setIsModalOpen(false); // Close the modal
-};
-
-
-
-
+  const closeModal = () => {
+    setIsModalOpen(false); // Close the modal
+  };
 
   //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
   //-------> XLSX used here
@@ -299,7 +295,7 @@ const closeModal = () => {
       selectedIds.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
-      alert("No leads selected to export");
+      alert('No leads selected to export');
       return;
     }
 
@@ -308,10 +304,10 @@ const closeModal = () => {
 
     // Create a new workbook and append the worksheet
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Selected Leads");
+    XLSX.utils.book_append_sheet(wb, ws, 'Selected Leads');
 
     // Export the workbook to an Excel file
-    XLSX.writeFile(wb, "SelectedLeadsData.xlsx");
+    XLSX.writeFile(wb, 'SelectedLeadsData.xlsx');
   };
 
   //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
@@ -320,12 +316,19 @@ const closeModal = () => {
       selectedIds.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
-      alert("No leads selected to export");
+      alert('No leads selected to export');
       return;
     }
-    const doc = new jsPDF()
+    const doc = new jsPDF();
     // const role = matchedUser?.role;
-    const tableColumn = ['ID', 'Name', 'Email', "Phone No.", "Lead Source", "Assigned To"];
+    const tableColumn = [
+      'ID',
+      'Name',
+      'Email',
+      'Phone No.',
+      'Lead Source',
+      'Assigned To',
+    ];
     // Map the leads data to rows
     const tableRows = leadsToExport?.map((lead) => [
       lead.id,
@@ -336,37 +339,30 @@ const closeModal = () => {
       lead.assigned_To,
     ]);
     // Add a title to the PDF
-    doc.text("Selected Leads Data", 14, 16);
+    doc.text('Selected Leads Data', 14, 16);
     // Add the table to the PDF
     autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
       startY: 22, // Position the table after the title
     });
-    doc.save('Leads.pdf')
+    doc.save('Leads.pdf');
   };
-
-
 
   //---------------------->---------------------->MANAGE_BY/ASSIGNED_TO<----------------------<ARVIND----------------------
   const roleColors = [
     // "#f97316", // Red
-    "#2563eb", // blue
-    "#65a30d", // LimeGreen
-    "#7c3aed", // MediumPurple
-    "#0369a1",  //Sky
-    "#e11d48",  //Rose
+    '#2563eb', // blue
+    '#65a30d', // LimeGreen
+    '#7c3aed', // MediumPurple
+    '#0369a1', //Sky
+    '#e11d48', //Rose
   ];
-
-
-
 
   // Function to get the color for a role based on its index
   const getRoleColorByIndex = (index) => {
     return roleColors[index % roleColors?.length]; // Use modulo for wrapping
   };
-
-
 
   //---------------------->---------------------->PAGINATION<----------------------<----------------------
   const [currentPage, setCurrentPage] = useState(1);
@@ -378,36 +374,31 @@ const closeModal = () => {
   const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-
   //---------------------->---------------------->̧CHECKBOX<----------------------<----------------------
 
- //---------------------->---------------------->̧CHECKBOX -> SINGLE<----------------------<----------------------
- const [selectedIds, setSelectedIds] = useState([]);
- const handleOnCheckBox = (e, item) => {
-   e.stopPropagation();
- 
-   // Toggle selected IDs
-   setSelectedIds((prevSelected) =>
-     prevSelected.includes(item.id)
-       ? prevSelected.filter((id) => id !== item.id)
-       : [...prevSelected, item.id]
-   );
- 
-   // Update selected emails
-   setSelectedEmails((prevSelectedEmails) => {
-     const newSelectedEmails = prevSelectedEmails.includes(item.email)
-       ? prevSelectedEmails.filter((email) => email !== item.email)
-       : [...prevSelectedEmails, item.email];
- 
-     // Log the updated selectedEmails
-     console.log("Updated Selected Emails:", newSelectedEmails);
-     return newSelectedEmails;
-   });
- };
- 
-   
+  //---------------------->---------------------->̧CHECKBOX -> SINGLE<----------------------<----------------------
+  const [selectedIds, setSelectedIds] = useState([]);
+  const handleOnCheckBox = (e, item) => {
+    e.stopPropagation();
 
+    // Toggle selected IDs
+    setSelectedIds((prevSelected) =>
+      prevSelected.includes(item.id)
+        ? prevSelected.filter((id) => id !== item.id)
+        : [...prevSelected, item.id]
+    );
 
+    // Update selected emails
+    setSelectedEmails((prevSelectedEmails) => {
+      const newSelectedEmails = prevSelectedEmails.includes(item.email)
+        ? prevSelectedEmails.filter((email) => email !== item.email)
+        : [...prevSelectedEmails, item.email];
+
+      // Log the updated selectedEmails
+      console.log('Updated Selected Emails:', newSelectedEmails);
+      return newSelectedEmails;
+    });
+  };
 
   //---------------------->---------------------->̧CHECKBOX -> MULTIPLE<----------------------<----------------------
   const [isSelectAllChecked, setIsSelectAllChecked] = useState(false);
@@ -423,16 +414,15 @@ const closeModal = () => {
       setSelectedIds((prevSelected) => [
         ...new Set([...prevSelected, ...currentPageIds]),
       ]);
-   } else {
+    } else {
       // Remove all current page leads from selectedIds
       const currentPageIds = currentLeads?.map((lead) => lead.id);
-      setSelectedEmails([]); 
+      setSelectedEmails([]);
       setSelectedIds((prevSelected) =>
         prevSelected.filter((id) => !currentPageIds.includes(id))
       );
     }
   };
-
 
   // Update "Select All" checkbox state when individual checkboxes are clicked
   useEffect(() => {
@@ -443,55 +433,49 @@ const closeModal = () => {
     setIsSelectAllChecked(isAllSelected);
   }, [selectedIds, currentLeads]);
 
-
   // ----------------------------- Date Filter -----------------------------
 
-  const today = new Date().toISOString().split("T")[0]; 
+  const today = new Date().toISOString().split('T')[0];
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(today);
-  
-  
+
   // Function to filter based on date range
   function handle_DateRange(startDate, endDate) {
-  let filteredFollows = currentLeads;
-  console.log("@@@@@======",currentLeads);
-  
-  // Convert startDate to the beginning of the day and endDate to the end of the day
-  const start = new Date(startDate);
-  start.setHours(0, 0, 0, 0); // Set time to 00:00:00
-  
-  const end = new Date(endDate);
-  end.setHours(23, 59, 59, 999); // Set time to 23:59:59
-  
-  if (startDate && endDate) {
-    filteredFollows = filteredFollows.filter((follow) => {
-      const callbackDate = new Date(follow.subscription_start_date);
-      return callbackDate >= start && callbackDate <= end;
-    });
+    let filteredFollows = currentLeads;
+    console.log('@@@@@======', currentLeads);
+
+    // Convert startDate to the beginning of the day and endDate to the end of the day
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
+
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999); // Set time to 23:59:59
+
+    if (startDate && endDate) {
+      filteredFollows = filteredFollows.filter((follow) => {
+        const callbackDate = new Date(follow.subscription_start_date);
+        return callbackDate >= start && callbackDate <= end;
+      });
+    }
+    setFilteredLeads(filteredFollows); // Update the filtered result
   }
-  setFilteredLeads(filteredFollows); // Update the filtered result
-  }
-  
+
   // UseEffect to trigger handle_DateRange on date change
   useEffect(() => {
-  if(startDate<=endDate){
-    handle_DateRange(startDate, endDate);
-  }
-  }, [startDate, endDate]); 
-  
-
-
-
+    if (startDate <= endDate) {
+      handle_DateRange(startDate, endDate);
+    }
+  }, [startDate, endDate]);
 
   useEffect(() => {
     handleLead();
   }, [isStatusChanged]); // Fetch data when status changes
 
   const handlePendingStatus = async (id, status) => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     if (status === true) {
-      alert("This order is already approved.");
+      alert('This order is already approved.');
       return;
     }
 
@@ -509,22 +493,21 @@ const closeModal = () => {
         config
       );
       console.log(response);
-      alert("Order has been approved successfully!");
+      alert('Order has been approved successfully!');
 
       // After approval, set state to trigger reload
       setIsStatusChanged(!isStatusChanged); // Toggle the status change state
     } catch (error) {
       console.log(error);
-      alert("There was an error approving the order.");
+      alert('There was an error approving the order.');
     }
   };
-
 
   return (
     //parent
     <div className="min-h-screen flex flex-col m-3 ">
-        {/* Render the modal only when `isModalOpen` is true */}
-        {isModalOpen && (
+      {/* Render the modal only when `isModalOpen` is true */}
+      {isModalOpen && (
         <MassEmail
           emails={selectedEmails}
           onClose={closeModal} // Pass function to close modal
@@ -536,8 +519,13 @@ const closeModal = () => {
         {/* PART-I */}
         {/* container- Alleads, search */}
         <div className="flex gap-3 items-center justify-center ">
-          {/* PART-I */}{/* All Lead  DropDown*/}
-          <div className="relative" onClick={toggleDropdown_salesOrderStatus} onMouseLeave={() => setisDropdownVisible_salesOrderStatus(false)}>
+          {/* PART-I */}
+          {/* All Lead  DropDown*/}
+          <div
+            className="relative"
+            onClick={toggleDropdown_salesOrderStatus}
+            onMouseLeave={() => setisDropdownVisible_salesOrderStatus(false)}
+          >
             <button
               className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 max-w-44 truncate"
               id="dropdownDefaultButton"
@@ -553,7 +541,7 @@ const closeModal = () => {
                     <li
                       key={index}
                       className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                      onClick={() => handleStatus(item.value)}  // Correct selection logic
+                      onClick={() => handleStatus(item.value)} // Correct selection logic
                     >
                       {item.value}
                     </li>
@@ -563,7 +551,8 @@ const closeModal = () => {
             )}
           </div>
 
-          {/* PART-I */}{/* Search Box */}
+          {/* PART-I */}
+          {/* Search Box */}
           <div className="flex justify-center items-center">
             <input
               type="text"
@@ -575,8 +564,13 @@ const closeModal = () => {
 
         {/* PART-II */}
         <div className="flex gap-3 items-center justify-center">
-          {/* PART-II */}{/* Stripe-BarDropDown */}
-          <div className="relative" onClick={togglestripeBar} onMouseLeave={() => setstripeBardropDown(false)}>
+          {/* PART-II */}
+          {/* Stripe-BarDropDown */}
+          <div
+            className="relative"
+            onClick={togglestripeBar}
+            onMouseLeave={() => setstripeBardropDown(false)}
+          >
             <button
               className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center"
               id="dropdownDefaultButton"
@@ -601,14 +595,20 @@ const closeModal = () => {
               </div>
             )}
           </div>
-          {/* PART-II */}{/*  Create Lead */}
+          {/* PART-II */}
+          {/*  Create Lead */}
           <div className="flex gap-1">
-            {/* PART-II */}{/*  Create Lead Part-II -> down button */}
-          
+            {/* PART-II */}
+            {/*  Create Lead Part-II -> down button */}
           </div>
 
-          {/* PART-II */}{/*-------Action DropDown */}
-          <div className="relative" onClick={toggleActionsMenuLogo} onMouseLeave={() => setdropActionsMenudropDown(false)}>
+          {/* PART-II */}
+          {/*-------Action DropDown */}
+          <div
+            className="relative"
+            onClick={toggleActionsMenuLogo}
+            onMouseLeave={() => setdropActionsMenudropDown(false)}
+          >
             <button
               className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
               id="dropdownDefaultButton"
@@ -619,7 +619,7 @@ const closeModal = () => {
             </button>
             {dropActionsMenudropDown && (
               <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
-                <ul className="text-sm text-gray-700 " >
+                <ul className="text-sm text-gray-700 ">
                   {dropActionsMenu.map(({ key, value }) => (
                     <li
                       key={key}
@@ -638,9 +638,7 @@ const closeModal = () => {
       {/* 2nd bar Leads and lenghtLeads*/}
       <div className="mt-3 flex justify-between items-center gap-3">
         <div className="flex gap-3">
-          <h1 className="text-3xl font-medium ">
-            Sales Order
-          </h1>
+          <h1 className="text-3xl font-medium ">Sales Order</h1>
           <h1 className="bg-blue-600 text-white p-2 min-w-10 text-center rounded text-sm shadow-md">
             {getleads?.length}
           </h1>
@@ -656,11 +654,7 @@ const closeModal = () => {
             </button>
 
             {/* Date Range Filter Button */}
-            <button
-              className="border-r border-gray-500 px-3"
-            >
-              Filter By
-            </button>
+            <button className="border-r border-gray-500 px-3">Filter By</button>
 
             {/* Date Range Inputs */}
             <div className="px-3 flex items-center gap-2">
@@ -686,7 +680,7 @@ const closeModal = () => {
       {/*-------Table-------*/}
       <div className="overflow-x-auto mt-3">
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === "Table View" && (
+          {selectedViewValue === 'Table View' && (
             <table className="min-w-full bg-white">
               <thead>
                 <tr className="border-gray-300 border-b-2">
@@ -701,7 +695,8 @@ const closeModal = () => {
                   <th className="px-1 py-3 text-left border-r font-medium max-w-56  ">
                     <div className="flex justify-between">
                       <span>Client Name</span>
-                      <span className="flex items-center"><FaAngleDown />
+                      <span className="flex items-center">
+                        <FaAngleDown />
                       </span>
                       <span className="flex items-center">
                         <FaBars />
@@ -754,7 +749,12 @@ const closeModal = () => {
               </thead>
               <tbody>
                 {currentLeads?.map((item) => {
-                  const matchedUser = users?.length > 0 ? users?.find((user) => user?.userName === item?.assigned_To) : []
+                  const matchedUser =
+                    users?.length > 0
+                      ? users?.find(
+                          (user) => user?.userName === item?.assigned_To
+                        )
+                      : [];
                   const role = matchedUser?.role;
                   const roleColor = getRoleColorByIndex(role?.length); // Get color for the role
                   return (
@@ -771,29 +771,31 @@ const closeModal = () => {
                         />
                       </td>
                       {/* CONTACT NAME */}
-                      <td className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600"  onClick={() =>
-              navigate(`/sidebar/Client_SO/${item.id}`)
-            }>
+                      <td
+                        className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600"
+                        onClick={() =>
+                          navigate(`/sidebar/Client_SO/${item.id}`)
+                        }
+                      >
                         <div className="flex items-center">
-                          <img className="h-6 w-6 mx-1 rounded-full" src={dp} alt="DP" />
+                          <img
+                            className="h-6 w-6 mx-1 rounded-full"
+                            src={dp}
+                            alt="DP"
+                          />
                           <span className="">{item.clientName}</span>
                         </div>
                         <div className="flex justify-start text-center w-[100%]">
-                          {item.status === true ?
-                            (<div className="border bg-green-200 text-center text-xs font-medium text-green-600 rounded-full w-full mx-4 py-1 px-4">
+                          {item.status === true ? (
+                            <div className="border bg-green-200 text-center text-xs font-medium text-green-600 rounded-full w-full mx-4 py-1 px-4">
                               Approved
                             </div>
-                            )
-                            :
-                            (<div className="border bg-red-200 text-center text-xs font-medium text-red-600 rounded-full w-full mx-4 py-1 px-4">
+                          ) : (
+                            <div className="border bg-red-200 text-center text-xs font-medium text-red-600 rounded-full w-full mx-4 py-1 px-4">
                               Pending
                             </div>
-                            )
-                          }</div>
-
-
-
-
+                          )}
+                        </div>
                       </td>
 
                       {/* <------------------------------------Email------------------------------------> */}
@@ -809,23 +811,23 @@ const closeModal = () => {
                       </td>
                       {/* <------------------------------------subscription_start_date------------------------------------> */}
                       <td className="px-4 py-4 border-b text- border-gray-300 text-sm  break-all max-w-48 min-w-24">
-                        {(item.subscription_start_date?.split('T')[0])}
+                        {item.subscription_start_date?.split('T')[0]}
                       </td>
                       {/* <------------------------------------subscription_end_date------------------------------------> */}
                       <td className="px-4 py-4 border-b text- border-gray-300 text-sm  break-all max-w-48 min-w-24">
-                        {(item.subscription_end_date?.split('T')[0])}
+                        {item.subscription_end_date?.split('T')[0]}
                       </td>
                       {/* Segments */}
                       <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
-                      <div>
-                       {item.segments && (
-                              <span className="">
-                                {item.segments
-                                  .filter((segment) => segment.length > 1)
-                                  .join(", ")}
-                              </span>
-                            )}
-                      </div>
+                        <div>
+                          {item.segments && (
+                            <span className="">
+                              {item.segments
+                                .filter((segment) => segment.length > 1)
+                                .join(', ')}
+                            </span>
+                          )}
+                        </div>
                       </td>
                       {/* Assigned To and User Role */}
                       <td className="px-2 py-4 border-b border-gray-300 text-sm text-center">
@@ -833,10 +835,10 @@ const closeModal = () => {
                           <div
                             className="text-xs font-semibold text-white px-2 py-2 rounded-full w-[90%]"
                             style={{
-                              backgroundColor: roleColor ? roleColor : "#000",
-                              borderRadius: "8px",
+                              backgroundColor: roleColor ? roleColor : '#000',
+                              borderRadius: '8px',
                               padding: 8,
-                              textAlign: "center"
+                              textAlign: 'center',
                             }}
                           >
                             {item.assigned_To} - ({matchedUser?.role})
@@ -849,9 +851,14 @@ const closeModal = () => {
                       {/*------------------<- Handle Pending Status ->------------*/}
 
                       <td>
-                        <button onClick={() => handlePendingStatus(item.id, item.status)} className=" w-[90%] px-1">
+                        <button
+                          onClick={() =>
+                            handlePendingStatus(item.id, item.status)
+                          }
+                          className=" w-[90%]"
+                        >
                           {item.status === true ? (
-                            <div className="border bg-green-200 text-center text-xs font-medium text-green-600  rounded-full px-2 py-1">
+                            <div className="border text-xs pl-2 pr-4 font-medium bg-green-200 text-green-600 rounded-full text-center py-1">
                               Approved
                             </div>
                           ) : (
@@ -868,15 +875,22 @@ const closeModal = () => {
             </table>
           )}
 
-          {/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}
-          {selectedViewValue === "Grid View" && (
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {selectedViewValue === 'Grid View' && (
             <>
               <div className="min-w-full">
                 <div className="grid grid-cols-3 gap-3">
                   {/*---------Card starts Here */}
                   {getleads.map((item) => (
-                    <div className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2" key={item.id}>
-                      <div className="flex items-center gap-3" >
+                    <div
+                      className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2"
+                      key={item.id}
+                    >
+                      <div className="flex items-center gap-3">
                         <img src={item.img} height={60} width={60} />
                         <div className="flex flex-col grow">
                           <div className="flex justify-between font-medium">
@@ -940,21 +954,24 @@ const closeModal = () => {
           )}
         </div>
 
-        {selectedViewValue === "Table View" && (
+        {selectedViewValue === 'Table View' && (
           <>
             <div className="flex justify-end m-4">
               <nav>
                 <ul className="inline-flex items-center">
                   {Array.from(
-                    { length: Math?.ceil(filteredLeads?.length / itemsPerPage) },
+                    {
+                      length: Math?.ceil(filteredLeads?.length / itemsPerPage),
+                    },
                     (_, i) => (
                       <li key={i + 1}>
                         <button
                           onClick={() => paginate(i + 1)}
-                          className={`px-4 py-2 mx-1 ${currentPage === i + 1
-                            ? "bg-blue-500 text-white"
-                            : "bg-white text-gray-700 border"
-                            }`}
+                          className={`px-4 py-2 mx-1 ${
+                            currentPage === i + 1
+                              ? 'bg-blue-500 text-white'
+                              : 'bg-white text-gray-700 border'
+                          }`}
                         >
                           {i + 1}
                         </button>
