@@ -483,7 +483,6 @@ export default function Createlead() {
           alert('Lead updated successfully!');
         navigate(`/sidebar/lead`);
       } else {
-        
         if(formData_POST.trialStartDate < today){
           showErrorToast('Previous Date cannot be selected')
           return;
