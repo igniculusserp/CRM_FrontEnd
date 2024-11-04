@@ -9,9 +9,13 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+
 //file
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+
+import { ToastContainer } from 'react-toastify';
+import {showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
 
 export default function CreateSO() {
   //to make id unique
@@ -84,65 +88,63 @@ export default function CreateSO() {
   }
 
   //----------------------------------------------------------------------------------------
-  //SEGMENETS API Is being used here
-
-  const [segments, setSegments] = useState([]);
-
-  // Segment GET API Is being used here
-  async function handleSegment() {
-    const bearer_token = localStorage.getItem("token");
-
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${bearer_token}`,
-        },
-      };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
-        config
-      );
-      setSegments(response.data.data);
-      // console.log("segment:", response.data.data);
-    } catch (error) {
-      console.error("Error fetching segments:", error);
-    }
-  }
-
-  useEffect(() => {
-    handleSegment();
-  }, []);
-
-  const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
-    useState("Select Product");
-  const [isDropdownVisibleSegment, setisDropdownVisibleSegment] =
-    useState(false);
-
-  const toggleDropdownSegment = () => {
-    setisDropdownVisibleSegment(true);
-  };
-
-  const handleCheckboxChange = (segment) => {
-    const isChecked = editLead.segments.includes(segment.segment);
-
-    let updatedSegments;
-    if (isChecked) {
-      // Remove segment if already selected
-      updatedSegments = editLead.segments.filter(
-        (selectedSegment) => selectedSegment !== segment.segment
-      );
-    } else {
-      // Add segment if not already selected
-      updatedSegments = [...editLead.segments, segment.segment];
-    }
-    seteditLead((prev) => ({
-      ...prev,
-      segments: updatedSegments,
-    }));
-
-    console.log("Selected segments:", updatedSegments);
-  };
-  // Segment GET API Is being used here
+  
+   // Segment GET API Is being used here
+   const [segments, setSegments] = useState([]);
+   async function handleSegment() {
+     const bearer_token = localStorage.getItem('token');
+ 
+     try {
+       const config = {
+         headers: {
+           Authorization: `Bearer ${bearer_token}`,
+         },
+       };
+       const response = await axios.get(
+         `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
+         config
+       );
+       setSegments(response.data.data);
+       // console.log("segment:", response.data.data);
+     } catch (error) {
+       console.error('Error fetching segments:', error);
+     }
+   }
+ 
+   useEffect(() => {
+     handleSegment();
+   }, []);
+ 
+   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
+     useState('Select Segment');
+   const [isDropdownVisibleSegment, setisDropdownVisibleSegment] =
+     useState(false);
+ 
+   const toggleDropdownSegment = () => {
+     setisDropdownVisibleSegment(true);
+   };
+ 
+   const handleCheckboxChange = (segment) => {
+     const isChecked = editLead.segments.includes(segment.segment);
+ 
+     let updatedSegments;
+     if (isChecked) {
+       // Remove segment if already selected
+       updatedSegments = editLead.segments.filter(
+         (selectedSegment) => selectedSegment !== segment.segment
+       );
+     } else {
+       // Add segment if not already selected
+       updatedSegments = [...editLead.segments, segment.segment];
+     }
+     seteditLead((prev) => ({
+       ...prev,
+       segments: updatedSegments,
+     }));
+ 
+     console.log('Selected segments:', updatedSegments);
+   };
+   // Segment GET API Is being used here
 
   //----------------------------------------------------------------------------------------
   //assigned_ToDropDown  Is being used here
@@ -334,11 +336,42 @@ export default function CreateSO() {
     setPoolEdit(poolName);
   };
 
+    //----------------------------------------------------------------------------------------
+  //LanguageDropDown
+
+  const LanguageDropDown = [
+    { key: 1, name: "English" },
+    { key: 2, name: "Portuguese" },
+    { key: 3, name: "Hindi" },
+    { key: 4, name: "Arabic" },
+    { key: 5, name: "Japanese" },
+  ];
+
+  const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] =
+    useState("Select Language");
+  const [isDropdownVisibleLanguage, setisDropdownVisibleLanguage] =
+    useState(false);
+
+  const toggleDropdownLanguage = () => {
+    setisDropdownVisibleLanguage(!isDropdownVisibleLanguage);
+  };
+
+  const handleDropdownLanguage = (language) => {
+    setDefaultTextLanguageDropDown(language);
+    setisDropdownVisibleLanguage(false);
+    seteditLead((prevTask) => ({
+      ...prevTask,
+      language: language,
+    }));
+  };
+
+
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
   const handleSubmit = async (event) => {
     event.preventDefault();
     const bearer_token = localStorage.getItem("token");
+
 
     try {
       const config = {
@@ -347,7 +380,7 @@ export default function CreateSO() {
           "Content-Type": "application/json",
         },
       };
-      const formData_PUT = {};
+
       const formData_POST = {
         //Personal Details
         leadId: editLead.leadId,
@@ -392,63 +425,79 @@ export default function CreateSO() {
         description: description,
       };
 
-      if (isEditMode) {
-        await axios.put(
-          `${protocal_url}${name}.${tenant_base_url}/Lead/lead/update`,
-          formData_PUT,
-          config
-        );
-        alert("SO updated successfully!");
-        navigate(`/sidebar/lead`);
-      } else {
-        await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/add`,
-          formData_POST,
-          config
-        );
-        console.log(formData_POST);
-        alert("Sales Order created successfully!");
-        navigate(`/sidebar/lead`);
+
+      //------------------------------------------------------------------------------------> Validations//--> Validations//--> Validations//--> Validations//--> Validations
+      if(!formData_POST.clientName  ){
+        showErrorToast("Please enter name")
+        return;
       }
 
+      if(!formData_POST.mobileNo){
+        showErrorToast('Please enter mobile number')
+        return;
+      }
+
+      if(!formData_POST.uidaI_Id_No){
+        showErrorToast("Please enter UIDAI Id")
+        return;
+      }
+
+      if(!formData_POST.panCard_No){
+        showErrorToast("Please enter pan card number")
+        return;
+      }
+
+      if(!formData_POST.assigned_To){
+        showErrorToast("Please select Managed by")
+        return;
+      }
+
+
+      if(!formData_POST.reference_Number){
+        showErrorToast("Please enter reference number")
+        return;
+      }
+
+      if(!formData_POST.amount_paid){
+        showErrorToast("Please enter paid amount")
+        return;
+      }
+
+      if(!formData_POST.paymentDate){
+        showErrorToast("Please enter payment date")
+        return;
+      }
+  
+
+      if(!formData_POST.subscription_start_date){
+        showErrorToast("Please select subscription start date")
+        return
+      }
+   
+      if(!formData_POST.subscription_end_date){
+        showErrorToast("Please select subscription end date")
+        return
+      }
+   
+
+        const response =  await axios.post(`${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/add`,formData_POST, config);
+        if(response.data.isSuccess){
+        alert("Sales Order created successfully!")
+        navigate(`/sidebar/lead`);
+        }
       // Redirect after a short delay
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error occurred. Please try again.");
+      console.log(error.response) 
+      showErrorToast(error.response.data.message);
+
     }
   };
 
-  //----------------------------------------------------------------------------------------
-  //LanguageDropDown
 
-  const LanguageDropDown = [
-    { key: 1, name: "English" },
-    { key: 2, name: "Portuguese" },
-    { key: 3, name: "Hindi" },
-    { key: 4, name: "Arabic" },
-    { key: 5, name: "Japanese" },
-  ];
-
-  const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] =
-    useState("Select Language");
-  const [isDropdownVisibleLanguage, setisDropdownVisibleLanguage] =
-    useState(false);
-
-  const toggleDropdownLanguage = () => {
-    setisDropdownVisibleLanguage(!isDropdownVisibleLanguage);
-  };
-
-  const handleDropdownLanguage = (language) => {
-    setDefaultTextLanguageDropDown(language);
-    setisDropdownVisibleLanguage(false);
-    seteditLead((prevTask) => ({
-      ...prevTask,
-      language: language,
-    }));
-  };
 
   return (
     <>
+    <ToastContainer/>
       <div className="min-h-screen flex flex-col mt-3">
         <div className="flex justify-between mx-3 px-3 bg-white border rounded py-3">
           <div className="flex items-center justify-center gap-3">
@@ -1165,51 +1214,65 @@ export default function CreateSO() {
                 {/* -------------XIV--1------------- */}
                 <div className="flex space-x-4">
                   {/* -------------Product-------------> Means Segments */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="segment"
-                      className="text-sm font-medium text-gray-700"
+                  <div className="flex flex-col w-1/2 relative">
+                  <label
+                    htmlFor="segment"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Segment
+                  </label>
+                  <div
+                    className="relative"
+                    onClick={toggleDropdownSegment}
+                    onMouseLeave={() => setisDropdownVisibleSegment(false)}
+                  >
+                    <button
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                      id="LeadStatusDropDown"
+                      type="button"
                     >
-                      Product
-                    </label>
-                    <div
-                      className="relative"
-                      onClick={toggleDropdownSegment}
-                      onMouseLeave={() => setisDropdownVisibleSegment(false)}
-                    >
-                      <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                        id="LeadStatusDropDown"
-                        type="button"
-                      >
-                        {defaultTextSegmentDropDown}
-                        <FaAngleDown className="ml-2 text-gray-400" />
-                      </button>
-                      {isDropdownVisibleSegment && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                          <ul className="py-2 text-sm text-gray-700">
-                            {segments.map((segment) => (
+                      {defaultTextSegmentDropDown}
+                      <FaAngleDown className="ml-2 text-gray-400" />
+                    </button>
+                    {isDropdownVisibleSegment && (
+                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                        <ul className="py-2 text-sm text-gray-700">
+                          {segments.length > 0 ? (
+                            segments.map((segment) => (
                               <li
                                 key={segment.id}
                                 className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                               >
                                 <input
                                   type="checkbox"
-                                  checked={editLead.segments.includes(
+                                  checked={editLead.segments?.includes(
                                     segment.segment
                                   )}
-                                  onChange={() => handleCheckboxChange(segment)}
+                                  onChange={() =>handleCheckboxChange(segment)}
                                   className="mr-2"
                                 />
-                                {segment.segment}{" "}
-                                {/* Assuming 'segment' is the property you want to display */}
+                                {segment.segment}{' '}
+                                {/* Assuming segment is the property you want to display */}
                               </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
+                            ))
+                          ) : (
+                            <li className="flex items-center px-4 py-2 text-center gap-1">
+                              <IoInformationCircle
+                                size={25}
+                                className="text-cyan-600"
+                              />{' '}
+                              Segments not available. Go to{' '}
+                              <span className="font-bold">
+                                Settings - Add Segment{' '}
+                              </span>
+                              .
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    )}
                   </div>
+                </div>
                   {/* -------------XIV--2------------- */}
                   {/* -------------Sales Order No------------- */}
                   <div className="flex flex-col w-1/2">
@@ -1449,7 +1512,7 @@ export default function CreateSO() {
                     type="submit"
                     className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
                   >
-                    {isEditMode ? "Update" : "Save"}
+                    Save
                   </button>
                 </div>
               </div>
