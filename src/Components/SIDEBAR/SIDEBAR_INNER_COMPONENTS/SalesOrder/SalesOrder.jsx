@@ -12,7 +12,6 @@ import autoTable from 'jspdf-autotable';
 import { FaAngleDown, FaPhoneAlt } from 'react-icons/fa';
 import { IoIosMail } from 'react-icons/io';
 import { BiEdit } from 'react-icons/bi';
-import { IoSearchOutline } from 'react-icons/io5';
 import { FaBars } from 'react-icons/fa';
 import { VscSettings } from 'react-icons/vsc';
 import { ImFilter } from 'react-icons/im';
@@ -23,6 +22,7 @@ import dp from './../../../../assets/images/dp.png';
 import { tenant_base_url, protocal_url } from '../../../../Config/config';
 import MassEmail from '../MassEmail/MassEmail';
 import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
+import {SearchElement} from "../SearchElement/SearchElement";
 
 const name = getHostnamePart();
 
@@ -503,6 +503,25 @@ export default function SalesOrder() {
     }
   };
 
+
+    
+  // ------------------------------ Search Function ----------------------------------
+
+  
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
+
+
+  useEffect(() => {
+    const filtered = getleads.filter((lead) =>
+      lead.clientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      lead.contactNo.includes(searchTerm)
+    );
+    setFilteredLeads(filtered);
+  }, [searchTerm, getleads]);
+
+
+
+
   return (
     //parent
     <div className="min-h-screen flex flex-col m-3 ">
@@ -553,13 +572,7 @@ export default function SalesOrder() {
 
           {/* PART-I */}
           {/* Search Box */}
-          <div className="flex justify-center items-center">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+          <SearchElement value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
         </div>
 
         {/* PART-II */}

@@ -13,7 +13,6 @@ import autoTable from "jspdf-autotable";
 import { FaAngleDown, FaBars, FaPhoneAlt } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
-import { IoSearchOutline } from "react-icons/io5";
 import { ImFilter } from "react-icons/im";
 import { MdCall } from "react-icons/md";
 
@@ -21,6 +20,7 @@ import { MdCall } from "react-icons/md";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
 import MassEmail from "../MassEmail/MassEmail";
+import {SearchElement} from "../SearchElement/SearchElement";
 
 //------------------------------------------------------------------------------->CODE STARTS FROM HERE<-------------------------------------------------------------------------------
 export default function FreeTrail() {
@@ -324,17 +324,15 @@ export default function FreeTrail() {
   };
 
   //---------------------->---------------------->PAGINATION<----------------------<----------------------
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Define items per page
+const [currentPage, setCurrentPage] = useState(1);
+const itemsPerPage = 10; // Define items per page
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
-  const currentTrials = filteredTrails?.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+const indexOfLastItem = currentPage * itemsPerPage;
+const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+const currentTrials = filteredTrails.slice(indexOfFirstItem, indexOfLastItem);
+
+// Update the paginate function
+const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   //-----------------------------------------------> ALL-> ASSIGNED_TO <-functionality <-----------------------------------------------
 
@@ -376,18 +374,6 @@ export default function FreeTrail() {
 
   // ------------------------------------------Fillters---------------------------------
 
-  // Function to handle both filters
-  // function handle_LeadStatus(statusValue) {
-  //   let filteredLeads = followupList;
-
-  //   if (statusValue !== null && statusValue !== "All Leads") {
-  //     filteredLeads = filteredLeads.filter(
-  //       (lead) => lead.leadesStatus === statusValue
-  //     );
-  //     console.log(filteredLeads);
-  //   }
-  //   setFilteredLeads(filteredLeads);
-  // }
 
   function handle_AssignedTo(assignedToValue) {
     let filteredLeads = freeTrial;
@@ -399,11 +385,6 @@ export default function FreeTrail() {
     setFilteredTrails(filteredLeads); // Set the filtered result
   }
 
-  // Handle selecting a lead status
-  // function handleLeadStatusSelection(status) {
-  //   setLeadStatus(status);
-  //   handle_LeadStatus(status);
-  // }
 
   // Handle selecting an assigned user
   function handleAssignedToSelection(user) {
@@ -447,6 +428,27 @@ export default function FreeTrail() {
       handle_DateRange(startDate, endDate);
     }
   }, [startDate, endDate]);
+
+
+  
+// ------------------------------ Search Function ----------------------------------
+const [searchTerm, setSearchTerm] = useState(""); // State for search term
+
+useEffect(() => {
+  // Reset to the first page when search results change
+  setCurrentPage(1);
+
+  const filtered = freeTrial.filter((lead) =>
+    lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    lead.mobileNo.includes(searchTerm)
+  );
+  setFilteredTrails(filtered);
+}, [searchTerm, freeTrial]);
+
+// Calculate total pages based on filtered data length
+const totalPages = Math.ceil(filteredTrails.length / itemsPerPage);
+
+
 
   return (
     <div className="min-h-screen flex flex-col m-3">
@@ -523,13 +525,7 @@ export default function FreeTrail() {
           </div>
 
           {/* SEARCH DROPDOWN */}
-          <div className="flex justify-center items-center">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+          <SearchElement value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
         </div>
 
         <div className="flex items-center gap-3">
@@ -896,7 +892,7 @@ export default function FreeTrail() {
           </div>
         </>
       )}
-      <div className="flex justify-end m-4">
+      {/* <div className="flex justify-end m-4">
         <nav>
           <ul className="inline-flex items-center">
             {Array.from(
@@ -918,7 +914,27 @@ export default function FreeTrail() {
             )}
           </ul>
         </nav>
-      </div>
+      </div> */}
+      <div className="flex justify-end m-4">
+      <nav>
+        <ul className="inline-flex items-center">
+          {[...Array(totalPages).keys()].map((_, i) => (
+            <li key={i + 1}>
+              <button
+                onClick={() => paginate(i + 1)}
+                className={`px-4 py-2 mx-1 ${
+                  currentPage === i + 1
+                    ? "bg-blue-500 text-white"
+                    : "bg-white text-gray-700 border"
+                }`}
+              >
+                {i + 1}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
     </div>
   );
 }

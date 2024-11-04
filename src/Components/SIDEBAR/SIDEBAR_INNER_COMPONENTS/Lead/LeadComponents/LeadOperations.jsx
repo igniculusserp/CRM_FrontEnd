@@ -1,4 +1,5 @@
 import { FaBars, FaPhone } from "react-icons/fa";
+import PropTypes from "prop-types";
 
 export default function LeadOperations({
   currentLeads,
@@ -77,7 +78,6 @@ export default function LeadOperations({
           {currentLeads.map((lead, index) => (
             <tr
               key={index}
-              // onClick={() => handleOnCheckBox(null, lead)}
               className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
             >
               {/* CHECKBOX */}
@@ -138,3 +138,23 @@ export default function LeadOperations({
     </>
   );
 }
+
+// PropTypes validation
+LeadOperations.propTypes = {
+  currentLeads: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string,
+      mobileNo: PropTypes.string,
+      assigned_To: PropTypes.string,
+      leadesStatus: PropTypes.string,
+      leadsSource: PropTypes.string,
+      segments: PropTypes.arrayOf(PropTypes.string),
+      bpName: PropTypes.string,
+    })
+  ).isRequired,
+  selectedIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  handleOnCheckBox: PropTypes.func.isRequired,
+  isSelectAllChecked: PropTypes.bool.isRequired,
+  handleSelectAllCheckbox: PropTypes.func.isRequired,
+};

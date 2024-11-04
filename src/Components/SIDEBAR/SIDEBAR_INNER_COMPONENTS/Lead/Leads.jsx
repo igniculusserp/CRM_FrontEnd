@@ -13,7 +13,7 @@ import autoTable from "jspdf-autotable";
 import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
-import { IoSearchOutline } from "react-icons/io5";
+
 import { FaBars } from "react-icons/fa";
 import { VscSettings } from "react-icons/vsc";
 import { ImFilter } from "react-icons/im";
@@ -32,6 +32,8 @@ import LeadAssignModal from "./LeadComponents/LeadAssignModal";
 import LeadStatusModal from "./LeadComponents/LeadStatusModal";
 import MultipleAssignModal from "./LeadComponents/MultipleAssignModal";
 import MultipuleStatusModal from "./LeadComponents/MultipleStatusModal";
+
+import {SearchElement} from "../SearchElement/SearchElement";
 
 const name = getHostnamePart();
 
@@ -684,6 +686,36 @@ export default function Lead() {
     setSelectOperationDropdown(!selectOperationDropdown);
   };
 
+
+
+    // ------------------------------ Search Function ----------------------------------
+
+  
+    const [searchTerm, setSearchTerm] = useState(""); // State for search term
+
+
+
+    useEffect(() => {
+      let filtered;
+      
+      if (activeButtonId === 4) {
+        // Filter for Lead Action (id === 4)
+        filtered = getleads.filter((lead) =>
+          lead.userName && lead.userName.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      } else {
+        // General filtering for other lead types
+        filtered = getleads.filter((lead) =>
+          lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          lead.mobileNo.includes(searchTerm)
+        );
+      }
+      
+      setFilteredLeads(filtered);
+    }, [searchTerm, getleads, activeButtonId]);
+  
+  
+
   return (
     //parent
     <div className="min-h-screen flex flex-col m-3 ">
@@ -785,13 +817,8 @@ export default function Lead() {
           </div>
           {/* PART-I */}
           {/* Search Box */}
-          <div className="flex justify-center items-center">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+          
+    <SearchElement value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
         </div>
 
         {/* PART-II */}
@@ -1169,7 +1196,7 @@ export default function Lead() {
               <div className="min-w-full">
                 <div className="grid grid-cols-3 gap-3">
                   {/*---------Card starts Here */}
-                  {getleads.map((item) => (
+                  {currentLeads.map((item) => (
                     <div
                       className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2"
                       key={item.id}

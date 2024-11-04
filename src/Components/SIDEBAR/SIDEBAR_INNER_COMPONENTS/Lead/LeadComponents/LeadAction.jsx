@@ -1,4 +1,5 @@
 import { FaBars } from "react-icons/fa";
+import PropTypes from "prop-types";
 
 export default function LeadAction({ currentLeads }) {
   return (
@@ -56,3 +57,13 @@ export default function LeadAction({ currentLeads }) {
     </table>
   );
 }
+
+// PropTypes validation
+LeadAction.propTypes = {
+  currentLeads: PropTypes.arrayOf(
+    PropTypes.shape({
+      userName: PropTypes.string,
+      totalLeads: PropTypes.number,
+    })
+  ).isRequired,
+};
