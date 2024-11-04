@@ -164,8 +164,8 @@ export default function SidebaBar() {
                 } hover:bg-gradient-to-b from-cyan-300 to-cyan-600`}
                 key={key}
               >
-                <h1 className="flex items-center gap-3 px-3">
-                  <span className='text-xl'>{icon}</span>
+                <h1 className="flex items-center gap-2 px-3">
+                  {icon}
                   {data}
                 </h1>
               </li>
