@@ -270,7 +270,7 @@ export default function BranchTarget() {
                     Branch Target
                   </h2>
                   {/* -------------1------------- */}
-                  <div className="py-2 px-4 min-h-screen relative">
+                  <div className="py-2 px-4 grid gap-2">
                     {/* -------------Target Prior------------- */}
                     <div className="flex space-x-4">
                       <div className="flex flex-col w-1/2">
@@ -394,12 +394,14 @@ export default function BranchTarget() {
 
 
                     {/* -------------Button------------- */}
+                    <div className="mb-8">
                     <button
                       type="submit"
-                      className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute  top-[300px]"
+                      className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md w-max"
                     >
                       {isEditMode ? "Edit Plan" : "Add Plan"}
                     </button>
+                    </div>
                   </div>
 
                 </div>

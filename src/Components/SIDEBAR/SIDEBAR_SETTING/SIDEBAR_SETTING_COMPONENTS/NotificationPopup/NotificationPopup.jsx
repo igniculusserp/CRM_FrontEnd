@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import { FaBars } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import Switch from "react-switch"; // Import react-switch
-import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { useState, useEffect } from 'react';
+import { FaBars } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import Switch from 'react-switch'; // Import react-switch
+import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 
 export default function BranchTarget() {
   const { id } = useParams();
@@ -13,24 +13,22 @@ export default function BranchTarget() {
 
   //forImgUpload
 
-
-
   const [users, setUsers] = useState([
     {
-      id: "1",
-      jaisonDocument: "Verify your Account",
+      id: '1',
+      jaisonDocument: 'Verify your Account',
       popup: true, // Use true/false for toggle state
     },
     {
-      id: "2",
-      jaisonDocument: "Verify your Account",
+      id: '2',
+      jaisonDocument: 'Verify your Account',
       popup: false, // Another user with toggle off
     },
   ]);
 
   const [formData, setFormData] = useState({
-    id: "",
-    jaisonDocument: "",
+    id: '',
+    jaisonDocument: '',
     popup: false, // Default to false for the toggle
   });
 
@@ -40,8 +38,8 @@ export default function BranchTarget() {
     setActive(!active);
     setIsEditMode(false); // Reset edit mode when switching views
     setFormData({
-      id: "",
-      jaisonDocument: "",
+      id: '',
+      jaisonDocument: '',
       popup: false, // Reset popup to false (disabled)
     });
   };
@@ -77,20 +75,20 @@ export default function BranchTarget() {
     e.preventDefault();
 
     if (!formData.jaisonDocument) {
-      alert("Please fill in all fields before submitting.");
+      alert('Please fill in all fields before submitting.');
       return;
     }
 
     const submittedData = {
       ...formData,
-      popup: formData.popup ? "enabled" : "disabled", // Convert boolean to string for submission
+      popup: formData.popup ? 'enabled' : 'disabled', // Convert boolean to string for submission
     };
 
     if (isEditMode) {
-      console.log("Edit User:", submittedData);
+      console.log('Edit User:', submittedData);
       // Add logic to submit the edited user data
     } else {
-      console.log("Add User:", submittedData);
+      console.log('Add User:', submittedData);
       setActive(true); // Switch back to view mode
       // Add logic to add a new user
     }
@@ -150,7 +148,11 @@ export default function BranchTarget() {
                         <td className="px-1 py-3 text-center">
                           <input
                             type="checkbox"
-                            onClick={(e) => console.log(`Checkbox clicked for user: ${user.id}`)}
+                            onClick={(e) =>
+                              console.log(
+                                `Checkbox clicked for user: ${user.id}`
+                              )
+                            }
                           />
                         </td>
                         <td className="px-2 py-4 text-sm max-w-24 break-words">
@@ -159,7 +161,9 @@ export default function BranchTarget() {
                         <td className="px-2 py-4 text-sm max-w-24 break-words">
                           <Switch
                             checked={user.popup}
-                            onChange={() => console.log(`Toggle changed for user: ${user.id}`)}
+                            onChange={() =>
+                              console.log(`Toggle changed for user: ${user.id}`)
+                            }
                             height={20}
                             width={48}
                             onColor="#86d3ff"
@@ -190,7 +194,9 @@ export default function BranchTarget() {
           <>
             <div className="flex min-w-screen justify-between items-center">
               <h1 className="text-3xl font-medium">
-                {isEditMode ? "Edit Push Notification Details" : "Add Push Notification Details"}
+                {isEditMode
+                  ? 'Edit Push Notification Details'
+                  : 'Add Push Notification Details'}
               </h1>
               <button
                 onClick={handleActiveState}
@@ -199,24 +205,21 @@ export default function BranchTarget() {
                 Cancel
               </button>
             </div>
-{/* Form Starts From Here -------------------------------------------> */}
+            {/* Form Starts From Here -------------------------------------------> */}
             <form onSubmit={handleSubmit} className="flex">
               <div className="w-full">
                 <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
                   <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                     Notification Details
                   </h2>
-                  <div className="py-2 px-4 min-h-screen relative">
-                    
-
-
+                  <div className="py-2 px-4 grid gap-2">
                     <div className="flex space-x-4">
                       <div className="flex flex-col w-1/2">
                         <label
                           htmlFor="Token"
                           className="text-sm font-medium text-gray-700"
                         >
-                        Token
+                          Token
                         </label>
                         <input
                           type="text"
@@ -235,7 +238,7 @@ export default function BranchTarget() {
                         >
                           Title
                         </label>
-                         <input
+                        <input
                           type="text"
                           name="Title"
                           value={formData.Title}
@@ -246,14 +249,13 @@ export default function BranchTarget() {
                       </div>
                     </div>
 
-
                     <div className="flex space-x-4">
                       <div className="flex flex-col w-1/2">
                         <label
                           htmlFor="Body"
                           className="text-sm font-medium text-gray-700"
                         >
-                        Body
+                          Body
                         </label>
                         <input
                           type="text"
@@ -285,19 +287,18 @@ export default function BranchTarget() {
                           className="react-switch"
                         />
                         <span className="text-sm">
-                          {formData.popup ? "Enabled" : "Disabled"}
+                          {formData.popup ? 'Enabled' : 'Disabled'}
                         </span>
                       </div>
                     </div>
 
-
-                     <div className="flex space-x-4">
+                    <div className="flex space-x-4">
                       <div className="flex flex-col w-1/2">
                         <label
                           htmlFor="img"
                           className="text-sm font-medium text-gray-700"
                         >
-                        Image
+                          Image
                         </label>
                         <input
                           type="file"
@@ -308,16 +309,16 @@ export default function BranchTarget() {
                           placeholder="Please paste token here"
                         />
                       </div>
-
-                      
                     </div>
 
-                    <button
-                      type="submit"
-                      className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute  top-[300px]"
-                    >
-                      {isEditMode ? "Edit Plan" : "Add Plan"}
-                    </button>
+                    <div className="mb-8">
+                      <button
+                        type="submit"
+                        className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md w-max"
+                      >
+                        {isEditMode ? 'Edit Plan' : 'Add Plan'}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

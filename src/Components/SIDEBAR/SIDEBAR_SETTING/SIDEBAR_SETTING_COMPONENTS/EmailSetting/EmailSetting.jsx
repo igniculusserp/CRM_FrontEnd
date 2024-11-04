@@ -253,7 +253,7 @@ export default function EmailSetting() {
                     Email Setting
                   </h2>
                   {/* -------------1------------- */}
-                  <div className="py-2 px-4 grip gap-2">
+                  <div className="py-1 px-3 grid gap-2">
                     {/* -------------Sender Email------------- */}
                     <div className="flex space-x-4">
                       <div className="flex flex-col w-1/2">
@@ -353,10 +353,10 @@ export default function EmailSetting() {
                     </div>
 
                     {/* -------------Button------------- */}
-                    <div className="mb-3 flex items-center justify-end max-w-full">
+                    <div className="mb-3 flex items-center justify-start max-w-full mb-8">
                       <button
                         type="submit"
-                        className="mt-4 w-full hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-6 py-4 rounded-md"
+                        className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-6 py-4 rounded-md w-max"
                       >
                         {isEditMode ? 'Update User' : 'Save User'}
                       </button>

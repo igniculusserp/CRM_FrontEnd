@@ -182,7 +182,6 @@ export default function AccessDevice() {
           </h1>
         </div>
         {/* ------------------- END ------------------- */}
-
       </div>
     );
   };
@@ -306,10 +305,10 @@ export default function AccessDevice() {
           </div>
           {/* CREATE DEVICE FORM */}
           <form onSubmit={handleSubmit}>
-            <div className="flex flex-col py-2 px-4 bg-white rounded-b-xl">
-              <div className="flex gap-4">
+            <div className="grid gap-2 py-2 px-3 bg-white rounded-b-xl">
+              <div className="flex space-x-4">
                 {/* Left Column */}
-                <div className="flex-1 flex flex-col">
+                <div className="flex flex-col w-1/2 relative">
                   {/* User Name */}
                   <label
                     htmlFor="Pool"
@@ -354,8 +353,10 @@ export default function AccessDevice() {
                       </div>
                     )}
                   </div>
+                </div>
 
-                  {/* Device Type */}
+                {/* Device Type */}
+                <div className="flex flex-col w-1/2">
                   <label
                     htmlFor="deviceType"
                     className="text-sm font-medium text-gray-700"
@@ -370,8 +371,12 @@ export default function AccessDevice() {
                     onChange={handleChange}
                     placeholder="Enter device type"
                   />
+                </div>
+              </div>
 
-                  {/* Device Token */}
+              <div className="flex space-x-4">
+                {/* Device Token */}
+                <div className="flex flex-col w-1/2">
                   <label
                     htmlFor="deviceToken"
                     className="text-sm font-medium text-gray-700"
@@ -387,10 +392,8 @@ export default function AccessDevice() {
                     placeholder="Enter device token"
                   />
                 </div>
-
-                {/* Right Column */}
-                <div className="flex-1 flex flex-col">
-                  {/* User ID */}
+                {/* User ID */}
+                <div className="flex flex-col w-1/2">
                   <label
                     htmlFor="userId"
                     className="text-sm font-medium text-gray-700"
@@ -406,8 +409,13 @@ export default function AccessDevice() {
                     onChange={handleChange}
                     placeholder="Enter user ID"
                   />
+                </div>
+              </div>
 
-                  {/* Device Address */}
+              {/* Right Column */}
+              <div className="flex space-x-4">
+                {/* Device Address */}
+                <div className="flex flex-col w-1/2">
                   <label
                     htmlFor="deviceAddress"
                     className="text-sm font-medium text-gray-700"
@@ -425,15 +433,13 @@ export default function AccessDevice() {
                 </div>
               </div>
 
-              <div className="flex justify-end gap-5 mr-10">
-                <div className="flex justify-end mr-20">
-                  <button
-                    type="submit"
-                    className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
-                  >
-                    Save
-                  </button>
-                </div>
+              <div className="flex justify-start mb-8 mt-3">
+                <button
+                  type="submit"
+                  className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md"
+                >
+                  Save
+                </button>
               </div>
             </div>
           </form>

@@ -1,31 +1,31 @@
-import { useState, useEffect } from "react";
-import { FaAngleDown, FaBars } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { useState, useEffect } from 'react';
+import { FaAngleDown, FaBars } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 
 export default function CallingExtension() {
   const { id } = useParams();
   const [active, setActive] = useState(true);
   const [users, setUsers] = useState([
     {
-      id: "1",
-      callingName: "Vibrant Call",
-      callingType: "Direct Call",
+      id: '1',
+      callingName: 'Vibrant Call',
+      callingType: 'Direct Call',
     },
     {
-      id: "2",
-      callingName: "Vibrant Call",
-      callingType: "Direct Call",
+      id: '2',
+      callingName: 'Vibrant Call',
+      callingType: 'Direct Call',
     },
   ]);
 
   const [formData, setFormData] = useState({
-    id: "",
-    callingName: "",
-    callingType: "",
+    id: '',
+    callingName: '',
+    callingType: '',
   });
 
   const [editLead, setEditLead] = useState(null);
@@ -34,7 +34,7 @@ export default function CallingExtension() {
   // Calling Type Dropdown
   const [callingTypes, setCallingTypes] = useState([]);
   const [defaultTextCallingTypeDropDown, setDefaultTextCallingTypeDropDown] =
-    useState("Select Calling Type");
+    useState('Select Calling Type');
   const [isDropdownVisibleCallingType, setIsDropdownVisibleCallingType] =
     useState(false);
 
@@ -42,9 +42,9 @@ export default function CallingExtension() {
     setActive(!active);
     setIsEditMode(false); // Reset edit mode when switching views
     setFormData({
-      id: "",
-      callingName: "",
-      callingType: "",
+      id: '',
+      callingName: '',
+      callingType: '',
     }); // Reset form data
   };
 
@@ -71,15 +71,15 @@ export default function CallingExtension() {
 
     // Validation check
     if (!formData.callingName || !formData.callingType) {
-      alert("Please fill in all fields before submitting.");
+      alert('Please fill in all fields before submitting.');
       return;
     }
 
     if (isEditMode) {
-      console.log("Edit Calling Extension:", formData);
+      console.log('Edit Calling Extension:', formData);
       // Add logic to submit the edited data
     } else {
-      console.log("Add Calling Extension:", formData);
+      console.log('Add Calling Extension:', formData);
       setActive(true); // Switch to list view after adding
       // Add logic to add a new user
     }
@@ -105,7 +105,7 @@ export default function CallingExtension() {
   };
 
   async function fetchCallingTypes() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
@@ -115,14 +115,14 @@ export default function CallingExtension() {
       };
       const response = await axios.get(
         `${protocal_url}${
-          window.location.hostname.split(".")[0]
+          window.location.hostname.split('.')[0]
         }.${tenant_base_url}/Admin/callingtypes/getall`,
         config
       );
       setCallingTypes(response.data.data);
-      console.log("Calling Types:", response.data.data);
+      console.log('Calling Types:', response.data.data);
     } catch (error) {
-      console.error("Error fetching calling types:", error);
+      console.error('Error fetching calling types:', error);
     }
   }
 
@@ -209,7 +209,9 @@ export default function CallingExtension() {
           <>
             <div className="flex min-w-screen justify-between items-center">
               <h1 className="text-3xl font-medium">
-                {isEditMode ? "Edit Calling Extension" : "Add Calling Extension"}
+                {isEditMode
+                  ? 'Edit Calling Extension'
+                  : 'Add Calling Extension'}
               </h1>
               <button
                 onClick={handleActiveState}
@@ -225,7 +227,7 @@ export default function CallingExtension() {
                   <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                     Calling Extension Form
                   </h2>
-                  <div className="py-2 px-4 min-h-screen relative">
+                  <div className="py-2 px-3 grid gap-2">
                     {/* Calling Name */}
                     <div className="flex space-x-4">
                       <div className="flex flex-col w-1/2">
@@ -240,7 +242,7 @@ export default function CallingExtension() {
                           name="callingName"
                           value={formData.callingName}
                           onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          className="p-2 border border-gray-300 rounded-md"
                           placeholder="Enter Calling Name"
                         />
                       </div>
@@ -284,12 +286,14 @@ export default function CallingExtension() {
                     </div>
                     {/* -------------Button------------- */}
 
-                  <button
-                      type="submit"
-                      className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute  top-[300px]"
-                    >
-                      {isEditMode ? "Edit Extension" : "Add Extension"}
-                    </button>
+                    <div className="mb-8">
+                      <button
+                        type="submit"
+                        className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md"
+                      >
+                        {isEditMode ? 'Edit Extension' : 'Add Extension'}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
