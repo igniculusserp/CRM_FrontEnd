@@ -609,7 +609,7 @@ export default function AccessControl() {
                     Browse Restriction
                   </h1>
 
-                  <div className="grid gap-2 py-3 px-3">
+                  <div className="grid gap-2 py-2 px-3">
                     {/* FIRST */}
                     <div className="flex space-x-4">
                       {/* Enabled */}
@@ -709,7 +709,7 @@ export default function AccessControl() {
                     IP Restriction
                   </h1>
 
-                  <div className="grid gap-2 py-3 px-3">
+                  <div className="grid gap-2 py-2 px-3">
                     {/* FIRST */}
                     <div className="flex space-x-4">
                       {/* Enabled */}
@@ -794,7 +794,7 @@ export default function AccessControl() {
                     Time Restriction
                   </h1>
 
-                  <div className="grid gap-2 pb-3 w-full px-3">
+                  <div className="grid gap-2 py-2 w-full px-3">
                     <div className="flex space-x-4">
                       {/* ENABLE TIME RESTRICTION */}
                       <div className="flex flex-col w-1/2">
@@ -1085,7 +1085,7 @@ export default function AccessControl() {
                   <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
                     Device Restriction
                   </h1>
-                  <div className="mb-6 py-3 flex flex-col gap-2">
+                  <div className="mb-6 py-2 flex flex-col gap-2">
                     {/* MAIN CART */}
                     <div className="grid gap-2 pb-3 w-full px-3">
                       <div className="flex space-x-4">
@@ -1172,7 +1172,7 @@ export default function AccessControl() {
                   <h1 className="text-white py-2 px-3 bg-cyan-500 rounded-t-xl mt-3">
                     Geo Location
                   </h1>
-                  <div className="py-3 flex flex-col gap-2">
+                  <div className="py-2 flex flex-col gap-2">
                     {/* MAIN CART */}
                     <div className="grid gap-2 pb-3 w-full px-3">
                       {/* FIRST */}
@@ -1970,7 +1970,7 @@ export default function AccessControl() {
                     IP Restriction
                   </h1>
 
-                  <div className="grid gap-2 py-3 px-3">
+                  <div className="grid gap-2 py-2 px-3">
                     {/* FIRST */}
                     <div className="flex space-x-4">
                       {/* Enabled */}
@@ -1990,7 +1990,7 @@ export default function AccessControl() {
                     </div>
                   </div>
 
-                  <div className="mb-6 py-3 flex flex-col gap-2">
+                  <div className="mb-6 py-2 flex flex-col gap-2">
                     {/* MAIN CART */}
                     <div className="overflow-x-auto rounded-t-xl rounded-b-md">
                       <table className="min-w-full table-auto">
@@ -2055,7 +2055,7 @@ export default function AccessControl() {
                     Time Restriction
                   </h1>
 
-                  <div className="grid gap-2 pb-3 w-full px-3">
+                  <div className="grid gap-2 py-2 w-full px-3">
                     <div className="flex space-x-4">
                       {/* ENABLE TIME RESTRICTION */}
                       <div className="flex flex-col w-1/2">

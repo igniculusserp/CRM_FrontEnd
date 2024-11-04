@@ -259,7 +259,6 @@ export default function Leadstatus() {
                       <input
                         type="text"
                         name="status"
-                        value={addStatus.status || ''}
                         onChange={handleChange}
                         className="mt-1 p-2 border border-gray-300 rounded-md"
                       />
