@@ -17,6 +17,8 @@ import { tenant_base_url, protocal_url } from '../../../../Config/config';
 //Images
 import profilepic from './../../../../assets/images/profilePicEditLead.png';
 
+import { ToastContainer } from 'react-toastify';
+import {showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
 
 export default function Createlead() {
   //to make id unique
@@ -379,22 +381,7 @@ export default function Createlead() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const errors = {};
-
-    // MOBILE NUMBER VALIDATION
-    if (
-      !editLead.mobNo ||
-      isNaN(editLead.mobNo) ||
-      editLead.mobNo.trim() === ""
-    ) {
-      errors.mobileNo = 'Enter a valid mobile number';
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
-      return;
-    }
-
+  
     const bearer_token = localStorage.getItem('token');
 
     try {
@@ -515,9 +502,25 @@ export default function Createlead() {
         }
 
 
+        const response =  await axios.post(`${protocal_url}${name}.${tenant_base_url}/Lead/lead/add`, formData_POST, config );
+        if(!response.data.isSuccess){
+          showErrorToast(response.data.message)
+          return;
+        }
+        else{
+          navigate(`/sidebar/lead`);
+          alert('Lead created successfully!');
+        }
+      }
+    } catch (error){
+      showErrorToast(error.response.data.message)
+
+    }
+  };
 
   return (
     <>
+    <ToastContainer/>
       <div className="min-h-screen flex flex-col mt-3">
         <div className="flex justify-between mx-3  bg-white border rounded p-3">
           <div className="flex items-center justify-center gap-3">
@@ -1278,3 +1281,4 @@ export default function Createlead() {
     </>
   );
 }
+
