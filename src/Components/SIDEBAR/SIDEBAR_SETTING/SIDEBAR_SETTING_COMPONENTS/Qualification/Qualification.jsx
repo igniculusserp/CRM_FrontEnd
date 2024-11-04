@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
-import { FaBars } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
-import axios from 'axios';
-import { tenant_base_url, protocal_url } from './../../../../../Config/config';
+import { useState, useEffect } from "react";
+import { FaBars } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { FaAngleDown } from "react-icons/fa";
+import axios from "axios";
+import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 
 export default function Qualification() {
   const [data, setData] = useState([]);
@@ -13,11 +14,11 @@ export default function Qualification() {
 
   const fullURL = window.location.href;
   const url = new URL(fullURL);
-  const name = url.hostname.split('.')[0];
+  const name = url.hostname.split(".")[0];
 
   // Fetch all data
   async function handleLead() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -30,8 +31,8 @@ export default function Qualification() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error('Error fetching qualifications:', error);
-      alert('Failed to fetch data. Please try again.');
+      console.error("Error fetching qualifications:", error);
+      alert("Failed to fetch data. Please try again.");
     }
   }
 
@@ -41,7 +42,7 @@ export default function Qualification() {
 
   // Delete qualification by ID
   const handleDelete = async (id) => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -53,10 +54,10 @@ export default function Qualification() {
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert('Deleted successfully');
+      alert("Deleted successfully");
     } catch (error) {
-      console.error('Error deleting qualification:', error);
-      alert('Failed to delete. Please try again.');
+      console.error("Error deleting qualification:", error);
+      alert("Failed to delete. Please try again.");
     }
   };
 
@@ -69,13 +70,13 @@ export default function Qualification() {
 
   const handleAdd = () => {
     setSelectedData({
-      id: '',
-      userId: '',
-      userName: '',
-      qualification: '',
-      workExpierence: '',
-      skill: '',
-      achievements: '',
+      id: "",
+      userId: "",
+      userName: "",
+      qualification: "",
+      workExpierence: "",
+      skill: "",
+      achievements: "",
     });
     setActive(false);
     setIsEditMode(false);
@@ -83,7 +84,7 @@ export default function Qualification() {
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
@@ -104,7 +105,7 @@ export default function Qualification() {
           },
           config
         );
-        alert('Updated successfully');
+        alert("Updated successfully");
       } else {
         await axios.post(
           `${protocal_url}${name}.${tenant_base_url}/Admin/qualification/add`,
@@ -118,7 +119,7 @@ export default function Qualification() {
           },
           config
         );
-        alert('Added successfully');
+        alert("Added successfully");
       }
 
       handleLead(); // Refresh the list
@@ -126,8 +127,8 @@ export default function Qualification() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      console.error('Error saving qualification:', error);
-      alert('Failed to save. Please try again.');
+      console.error("Error saving qualification:", error);
+      alert("Failed to save. Please try again.");
     }
   };
 
@@ -141,25 +142,25 @@ export default function Qualification() {
   // Form Component for Adding/Updating
   const EditForm = ({ data, isEditMode }) => {
     const [formData, setFormData] = useState({
-      id: '',
-      userId: '',
-      userName: '',
-      qualification: '',
-      workExpierence: '',
-      skill: '',
-      achievements: '',
+      id: "",
+      userId: "",
+      userName: "",
+      qualification: "",
+      workExpierence: "",
+      skill: "",
+      achievements: "",
     });
 
     useEffect(() => {
       setFormData(
         data || {
-          id: '',
-          userId: '',
-          userName: '',
-          qualification: '',
-          workExpierence: '',
-          skill: '',
-          achievements: '',
+          id: "",
+          userId: "",
+          userName: "",
+          qualification: "",
+          workExpierence: "",
+          skill: "",
+          achievements: "",
         }
       );
     }, [data]);
@@ -175,31 +176,65 @@ export default function Qualification() {
     const [errors, setErrors] = useState({});
 
     const handleSubmit = (e) => {
-      e.preventDefault();
-
-      const errors = {};
-
-      if (
-        !formData.userId ||
-        isNaN(formData.userId) ||
-        formData.userId.trim() === ''
-      ) {
-        errors.userId = 'User Id is required';
-      }
-
-      if (Object.keys(errors).length > 0) {
-        setErrors(errors);
-        return;
-      }
-
-      handleFormSubmit(formData);
+      e.preventDefault(); // Prevent default form submission
+      handleFormSubmit(formData); // Call to submit the form data
     };
 
+    //----------------------------------------------------------------------------------------
+    //assigned_ToDropDown
+    const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
+
+    async function handleAssigned_To() {
+      const bearer_token = localStorage.getItem("token");
+
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${bearer_token}`,
+          },
+        };
+        const response = await axios.get(
+          `${protocal_url}${name}.${tenant_base_url}/Setting/Alluser`,
+          config
+        );
+        setassigned_ToDropDown(response.data);
+        console.log("status:", response.data);
+      } catch (error) {
+        console.error("Error fetching leads:", error);
+        // Optionally, set an error state to display a user-friendly message
+      }
+    }
+
+    useEffect(() => {
+      handleAssigned_To();
+    }, []);
+
+    const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
+      useState("Select User Name");
+    const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
+      useState(false);
+
+    const toggleDropdownassigned_ToDropDown = () => {
+      setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
+    };
+
+    const handleDropdownassigned_ToDropDown = (assigned_To_Username, userId) => {
+      setdefaultTextassigned_ToDropDown(assigned_To_Username);
+      setisDropdownassigned_ToDropDown(false);
+      setFormData((prevTask) => ({
+        ...prevTask,
+        userName: assigned_To_Username,
+        userId: userId,
+      }));
+    };
+    // const handleLog = () => {
+    //   console.log("clicked");
+    // };
     return (
       <div>
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-medium">
-            {isEditMode ? 'Edit Qualification' : 'Add Qualification'}
+            {isEditMode ? "Edit Qualification" : "Add Qualification"}
           </h1>
           <button
             onClick={handleCancel}
@@ -212,20 +247,6 @@ export default function Qualification() {
         <form onSubmit={handleSubmit} className="flex mt-3">
           <div className="w-full">
             <div className="bg-white rounded-xl shadow-md p-6">
-              {/* <label
-                htmlFor="qualificationName"
-                className="text-sm font-medium text-gray-700"
-              >
-                Qualification Name
-              </label>
-              <input
-                type="text"
-                name="qualificationName"
-                value={formData.userName || ""}
-                onChange={handleChange}
-                className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-              /> */}
-
               <div className="m-3 shadow-lg">
                 <h1 className="py-2 px-3 rounded-t-lg bg-cyan-500 text-white text-md font-medium">
                   Qualification Details
@@ -244,37 +265,92 @@ export default function Qualification() {
                         </label>
                         <input
                           type="number"
+                          disabled
                           name="userId"
                           id="userId"
                           value={formData.userId}
                           className="mt-1 p-2 border border-gray-300 rounded-md"
-                          onChange={handleChange}
                           placeholder="Enter User Id"
                         />
                         {errors.userId && (
-                      <span style={{ color: 'red' }}>
-                        {errors.userId}
-                      </span>
-                    )}
+                          <span style={{ color: "red" }}>{errors.userId}</span>
+                        )}
                       </div>
                       {/* CLIENT NAME FIELD */}
-                      <div className="flex flex-col w-1/2">
-                        <label
-                          htmlFor="userName"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          User Name
-                        </label>
-                        <input
-                          type="text"
-                          name="userName"
-                          id="userName"
-                          value={formData.userName}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
-                          onChange={handleChange}
-                          placeholder="Enter your User Name"
-                        />
-                      </div>
+                      {isEditMode ? (
+                        <div className="flex flex-col w-1/2">
+                          <label
+                            htmlFor="userName"
+                            className="text-sm font-medium text-gray-700"
+                          >
+                            User Name
+                          </label>
+                          <input
+                            type="text"
+                            disabled
+                            name="userName"
+                            id="userName"
+                            value={formData.userName}
+                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                            onChange={handleChange}
+                            placeholder="Enter your User Name"
+                          />
+                        </div>
+                      ) : (
+                        <>
+                          {/* ASSIGNED TO DROPDOWN */}
+                          <div className="flex flex-col w-1/2">
+                            <div className="flex flex-col w-full relative">
+                              <label
+                                htmlFor="userName"
+                                className="text-sm font-medium text-gray-700"
+                              >
+                                User Name
+                              </label>
+                              <div
+                                className="relative"
+                                onClick={toggleDropdownassigned_ToDropDown}
+                                onMouseLeave={() =>
+                                  setisDropdownassigned_ToDropDown(false)
+                                }
+                              >
+                                <button
+                                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                                  id="LeadStatusDropDown"
+                                  type="button"
+                                >
+                                  {formData.userName === ""
+                                    ? defaultTextassigned_ToDropDown
+                                    : formData.userName}
+                                  <FaAngleDown className="ml-2 text-gray-400" />
+                                </button>
+                                {isDropdownassigned_ToDropDown && (
+                                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                                    <ul className="py-2 text-sm text-gray-700">
+                                      {assigned_ToDropDown.map(
+                                        ({ key, userName, userId }) => (
+                                          <li
+                                            key={key}
+                                            onClick={() =>
+                                              handleDropdownassigned_ToDropDown(
+                                                userName,
+                                                userId
+                                              )
+                                            }
+                                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                          >
+                                            {userName}
+                                          </li>
+                                        )
+                                      )}
+                                    </ul>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      )}
                     </div>
                     {/* SECOND ROW */}
                     <div className="flex space-x-4">
@@ -361,8 +437,9 @@ export default function Qualification() {
               <button
                 type="submit"
                 className="mt-4 bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md"
+                // onClick={handleLog}
               >
-                {isEditMode ? 'Update' : 'Save'}
+                {isEditMode ? "Update" : "Save"}
               </button>
             </div>
           </div>

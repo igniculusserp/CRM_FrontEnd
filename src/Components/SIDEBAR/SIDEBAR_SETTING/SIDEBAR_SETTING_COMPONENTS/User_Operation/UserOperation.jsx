@@ -1,29 +1,29 @@
-import { useState, useEffect } from 'react';
-import { FaAngleDown, FaBars } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { tenant_base_url, protocal_url } from './../../../../../Config/config';
-import GlobalUserNameComponent from '../../ReusableComponents/GlobalUserNameComponent';
+import { useState, useEffect } from "react";
+import { FaAngleDown, FaBars } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import GlobalUserNameComponent from "../../ReusableComponents/GlobalUserNameComponent";
 
 export default function UserOperation() {
   const fullURL = window.location.href;
   const url = new URL(fullURL);
-  const name = url.hostname.split('.')[0];
+  const name = url.hostname.split(".")[0];
 
   const { id } = useParams();
-  const bearer_token = localStorage.getItem('token');
+  const bearer_token = localStorage.getItem("token");
   const [active, setActive] = useState(true);
   const [formData, setFormData] = useState({
-    fullName: '',
-    userName: '',
-    teamMember: '',
-    reportedTo: '',
-    groupName: '',
-    currencyCode: '',
-    extensions: '',
-    did: '',
+    fullName: "",
+    userName: "",
+    teamMember: "",
+    reportedTo: "",
+    groupName: "",
+    currencyCode: "",
+    extensions: "",
+    did: "",
   });
 
   const [users, setUsers] = useState([]);
@@ -33,7 +33,7 @@ export default function UserOperation() {
 
   //show edit prefield
   const [isShowFields, setIsShowFields] = useState(false);
-  const [selectedUserName, setSelectedUserName] = useState('');
+  const [selectedUserName, setSelectedUserName] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
 
   //getting user operation lists and groups lists here
@@ -47,16 +47,16 @@ export default function UserOperation() {
     setIsShowFields(false);
     setIsEditMode(false); // Reset edit mode when switching views
     setFormData({
-      fullName: '',
-      userName: '',
-      teamMember: '',
-      reportedTo: '',
-      groupName: '',
-      currencyCode: '',
-      extensions: '',
-      did: '',
+      fullName: "",
+      userName: "",
+      teamMember: "",
+      reportedTo: "",
+      groupName: "",
+      currencyCode: "",
+      extensions: "",
+      did: "",
     }); // Reset form dataa
-    setSelectedUserName('');
+    setSelectedUserName("");
   };
 
   const handleClick = (user) => {
@@ -96,8 +96,8 @@ export default function UserOperation() {
         setUsers(opration?.data); // Set the user data for editing
       }
     } catch (error) {
-      console.error('Error fetching user for edit:', error);
-      alert('Error occurred while trying to get data');
+      console.error("Error fetching user for edit:", error);
+      alert("Error occurred while trying to get data");
     }
   };
 
@@ -118,8 +118,8 @@ export default function UserOperation() {
         setGroupNames(opration?.data); // Set the user data for editing
       }
     } catch (error) {
-      console.error('Error fetching user for edit:', error);
-      alert('Error occurred while trying to get data');
+      console.error("Error fetching user for edit:", error);
+      alert("Error occurred while trying to get data");
     }
   };
 
@@ -155,12 +155,12 @@ export default function UserOperation() {
 
     const errors = {};
 
-    if (!formData.reportedTo || formData.reportedTo.trim() === '') {
-      errors.reportedTo = 'Reported to is required';
-    } else if (!formData.groupName || formData.groupName.trim() === '') {
-      errors.groupName = 'Group name is required';
-    } else if (!formData.target || formData.target.trim() === '') {
-      errors.target = 'Target is required';
+    if (!formData.reportedTo || formData.reportedTo.trim() === "") {
+      errors.reportedTo = "Reported to is required";
+    } else if (!formData.groupName || formData.groupName.trim() === "") {
+      errors.groupName = "Group name is required";
+    } else if (!formData.target || formData.target.trim() === "") {
+      errors.target = "Target is required";
     }
 
     if (Object.keys(errors).length > 0) {
@@ -169,12 +169,12 @@ export default function UserOperation() {
     }
 
     if (isEditMode) {
-      console.log('Edit User:', formData);
+      console.log("Edit User:", formData);
       // Submit edited user logic
       handleUpdateOpration();
     } else {
       handleCreateOperation();
-      console.log('Add User:', formData);
+      console.log("Add User:", formData);
       // Add new user logic
     }
   };
@@ -196,7 +196,7 @@ export default function UserOperation() {
       setActive(!active);
       alert(response.data.message);
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error("Error fetching users:", error);
     }
   };
 
@@ -215,7 +215,7 @@ export default function UserOperation() {
       getOprationLists();
       alert(response.data.message);
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error("Error fetching users:", error);
     }
   };
 
@@ -236,7 +236,7 @@ export default function UserOperation() {
       handleActiveState();
       alert(response.data.message);
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error("Error fetching users:", error);
     }
   };
 
@@ -394,7 +394,7 @@ export default function UserOperation() {
         <>
           <div className="flex min-w-screen justify-between items-center">
             <h1 className="text-3xl font-medium">
-              {isEditMode ? 'Edit User Operation' : 'Add user Operation'}
+              {isEditMode ? "Edit User Operation" : "Add user Operation"}
             </h1>
             <button
               onClick={handleActiveState}
@@ -413,8 +413,8 @@ export default function UserOperation() {
                 {/* -------------1------------- */}
                 <div className="px-4 grid gap-2 py-2">
                   <div className="flex space-x-4">
+                    {/* Username field */}
                     <div className="flex flex-col w-1/2">
-                      {/* -------------Username------------- */}
                       <label
                         htmlFor="username"
                         className="text-sm font-medium text-gray-700"
@@ -422,38 +422,38 @@ export default function UserOperation() {
                         Username
                       </label>
                       <GlobalUserNameComponent
-                        name={'userName'}
+                        name="userName"
                         fieldName="userName"
                         selectedValue={selectedUserName || formData?.userName}
                         setSelectedValue={setSelectedUserName}
                         setSelectedUser={(e) => {
                           handleSelectUser(e);
                           setSelectedUser(e);
-                        }} // Capture the full user object
-                        className="mt-1 p-2 border border-gray-300 rounded-md" // Custom class for styling
+                        }}
+                        className="mt-1 p-2 border border-gray-300 rounded-md"
                       />
                     </div>
-                    {isShowFields ? (
-                      <div className="grid gap-2">
-                        {/* -------------fullName------------- */}
-                        <div className="flex flex-1 flex-col w-1/2">
-                          <label
-                            htmlFor="fullName"
-                            className="text-sm font-medium text-gray-700"
-                          >
-                            Full Name
-                          </label>
-                          <input
-                            disabled
-                            value={formData?.fullName || ''}
-                            type="text"
-                            name="fullName"
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                          />
-                        </div>
+
+                    {/* Conditional Full Name field */}
+                    {isShowFields && (
+                      <div className="flex flex-col w-1/2">
+                        <label
+                          htmlFor="fullName"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          Full Name
+                        </label>
+                        <input
+                          disabled
+                          value={formData?.fullName || ""}
+                          type="text"
+                          name="fullName"
+                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                        />
                       </div>
-                    ) : null}
+                    )}
                   </div>
+
                   {isShowFields && (
                     <div className="grid gap-2">
                       <div className="flex space-x-4">
@@ -468,7 +468,7 @@ export default function UserOperation() {
                           <input
                             type="text"
                             name="currencyCode"
-                            value={formData?.currencyCode || ''}
+                            value={formData?.currencyCode || ""}
                             onChange={handleChange}
                             className="mt-1 p-2 border border-gray-300 rounded-md"
                           />
@@ -505,13 +505,13 @@ export default function UserOperation() {
                             Group Name
                           </label>
                           <select
-                            name={'groupName'}
+                            name={"groupName"}
                             className="mt-1 p-2 border border-gray-300 rounded-md"
                             value={formData?.groupName}
                             onChange={handleChange}
                           >
                             <option value={formData?.groupName} disabled>
-                              {formData?.groupName || 'Select'}
+                              {formData?.groupName || "Select"}
                             </option>
                             {groupNames?.map((item) => (
                               <option key={item.id} value={item.groupName}>
@@ -520,7 +520,7 @@ export default function UserOperation() {
                             ))}
                           </select>
                           {errors.groupName && (
-                            <span style={{ color: 'red' }}>
+                            <span style={{ color: "red" }}>
                               {errors.groupName}
                             </span>
                           )}
@@ -537,12 +537,12 @@ export default function UserOperation() {
                           <input
                             type="number"
                             name="target"
-                            value={formData?.target || ''}
+                            value={formData?.target || ""}
                             onChange={handleChange}
                             className="mt-1 p-2 border border-gray-300 rounded-md"
                           />
                           {errors.target && (
-                            <span style={{ color: 'red' }}>
+                            <span style={{ color: "red" }}>
                               {errors.target}
                             </span>
                           )}
@@ -561,7 +561,7 @@ export default function UserOperation() {
                           <input
                             type="text"
                             name="extensions"
-                            value={formData?.extensions || ''}
+                            value={formData?.extensions || ""}
                             onChange={handleChange}
                             className="mt-1 p-2 border border-gray-300 rounded-md"
                           />
@@ -578,7 +578,7 @@ export default function UserOperation() {
                           <input
                             type="text"
                             name="did"
-                            value={formData?.did || ''}
+                            value={formData?.did || ""}
                             onChange={handleChange}
                             className="mt-1 p-2 border border-gray-300 rounded-md"
                           />
@@ -591,7 +591,7 @@ export default function UserOperation() {
                           type="submit"
                           className="mt-4 w-full hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-6 py-4 rounded-md"
                         >
-                          {isEditMode ? 'Update User' : 'Save User'}
+                          {isEditMode ? "Update User" : "Save User"}
                         </button>
                       </div>
                     </div>
