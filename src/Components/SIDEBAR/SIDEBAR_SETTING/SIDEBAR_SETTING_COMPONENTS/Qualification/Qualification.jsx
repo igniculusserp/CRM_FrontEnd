@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { FaBars } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import { FaAngleDown } from "react-icons/fa";
-import axios from "axios";
-import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { useState, useEffect } from 'react';
+import { FaBars } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { FaAngleDown } from 'react-icons/fa';
+import axios from 'axios';
+import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 
 export default function Qualification() {
   const [data, setData] = useState([]);
@@ -14,11 +14,11 @@ export default function Qualification() {
 
   const fullURL = window.location.href;
   const url = new URL(fullURL);
-  const name = url.hostname.split(".")[0];
+  const name = url.hostname.split('.')[0];
 
   // Fetch all data
   async function handleLead() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -31,8 +31,8 @@ export default function Qualification() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error("Error fetching qualifications:", error);
-      alert("Failed to fetch data. Please try again.");
+      console.error('Error fetching qualifications:', error);
+      alert('Failed to fetch data. Please try again.');
     }
   }
 
@@ -42,7 +42,7 @@ export default function Qualification() {
 
   // Delete qualification by ID
   const handleDelete = async (id) => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -54,10 +54,10 @@ export default function Qualification() {
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert("Deleted successfully");
+      alert('Deleted successfully');
     } catch (error) {
-      console.error("Error deleting qualification:", error);
-      alert("Failed to delete. Please try again.");
+      console.error('Error deleting qualification:', error);
+      alert('Failed to delete. Please try again.');
     }
   };
 
@@ -70,13 +70,13 @@ export default function Qualification() {
 
   const handleAdd = () => {
     setSelectedData({
-      id: "",
-      userId: "",
-      userName: "",
-      qualification: "",
-      workExpierence: "",
-      skill: "",
-      achievements: "",
+      id: '',
+      userId: '',
+      userName: '',
+      qualification: '',
+      workExpierence: '',
+      skill: '',
+      achievements: '',
     });
     setActive(false);
     setIsEditMode(false);
@@ -84,7 +84,7 @@ export default function Qualification() {
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
@@ -105,7 +105,7 @@ export default function Qualification() {
           },
           config
         );
-        alert("Updated successfully");
+        alert('Updated successfully');
       } else {
         await axios.post(
           `${protocal_url}${name}.${tenant_base_url}/Admin/qualification/add`,
@@ -119,7 +119,7 @@ export default function Qualification() {
           },
           config
         );
-        alert("Added successfully");
+        alert('Added successfully');
       }
 
       handleLead(); // Refresh the list
@@ -127,8 +127,8 @@ export default function Qualification() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      console.error("Error saving qualification:", error);
-      alert("Failed to save. Please try again.");
+      console.error('Error saving qualification:', error);
+      alert('Failed to save. Please try again.');
     }
   };
 
@@ -142,25 +142,25 @@ export default function Qualification() {
   // Form Component for Adding/Updating
   const EditForm = ({ data, isEditMode }) => {
     const [formData, setFormData] = useState({
-      id: "",
-      userId: "",
-      userName: "",
-      qualification: "",
-      workExpierence: "",
-      skill: "",
-      achievements: "",
+      id: '',
+      userId: '',
+      userName: '',
+      qualification: '',
+      workExpierence: '',
+      skill: '',
+      achievements: '',
     });
 
     useEffect(() => {
       setFormData(
         data || {
-          id: "",
-          userId: "",
-          userName: "",
-          qualification: "",
-          workExpierence: "",
-          skill: "",
-          achievements: "",
+          id: '',
+          userId: '',
+          userName: '',
+          qualification: '',
+          workExpierence: '',
+          skill: '',
+          achievements: '',
         }
       );
     }, [data]);
@@ -185,7 +185,7 @@ export default function Qualification() {
     const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
 
     async function handleAssigned_To() {
-      const bearer_token = localStorage.getItem("token");
+      const bearer_token = localStorage.getItem('token');
 
       try {
         const config = {
@@ -198,9 +198,9 @@ export default function Qualification() {
           config
         );
         setassigned_ToDropDown(response.data);
-        console.log("status:", response.data);
+        console.log('status:', response.data);
       } catch (error) {
-        console.error("Error fetching leads:", error);
+        console.error('Error fetching leads:', error);
         // Optionally, set an error state to display a user-friendly message
       }
     }
@@ -210,7 +210,7 @@ export default function Qualification() {
     }, []);
 
     const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
-      useState("Select User Name");
+      useState('Select User Name');
     const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
       useState(false);
 
@@ -218,7 +218,10 @@ export default function Qualification() {
       setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     };
 
-    const handleDropdownassigned_ToDropDown = (assigned_To_Username, userId) => {
+    const handleDropdownassigned_ToDropDown = (
+      assigned_To_Username,
+      userId
+    ) => {
       setdefaultTextassigned_ToDropDown(assigned_To_Username);
       setisDropdownassigned_ToDropDown(false);
       setFormData((prevTask) => ({
@@ -234,11 +237,11 @@ export default function Qualification() {
       <div>
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-medium">
-            {isEditMode ? "Edit Qualification" : "Add Qualification"}
+            {isEditMode ? 'Edit Qualification' : 'Add Qualification'}
           </h1>
           <button
             onClick={handleCancel}
-            className="border border-blue-600 bg-white text-blue-600 px-4 py-2 rounded"
+            className="border border-blue-600 bg-white text-blue-600 px-4 py-1.5 rounded"
           >
             Cancel
           </button>
@@ -246,8 +249,8 @@ export default function Qualification() {
 
         <form onSubmit={handleSubmit} className="flex mt-3">
           <div className="w-full">
-            <div className="bg-white rounded-xl shadow-md p-6">
-              <div className="m-3 shadow-lg">
+            <div className="bg-white rounded-xl shadow-md pb-6">
+              <div className="">
                 <h1 className="py-2 px-3 rounded-t-lg bg-cyan-500 text-white text-md font-medium">
                   Qualification Details
                 </h1>
@@ -273,7 +276,7 @@ export default function Qualification() {
                           placeholder="Enter User Id"
                         />
                         {errors.userId && (
-                          <span style={{ color: "red" }}>{errors.userId}</span>
+                          <span style={{ color: 'red' }}>{errors.userId}</span>
                         )}
                       </div>
                       {/* CLIENT NAME FIELD */}
@@ -319,7 +322,7 @@ export default function Qualification() {
                                   id="LeadStatusDropDown"
                                   type="button"
                                 >
-                                  {formData.userName === ""
+                                  {formData.userName === ''
                                     ? defaultTextassigned_ToDropDown
                                     : formData.userName}
                                   <FaAngleDown className="ml-2 text-gray-400" />
@@ -434,13 +437,15 @@ export default function Qualification() {
                 </div>
               </div>
 
-              <button
-                type="submit"
-                className="mt-4 bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md"
-                // onClick={handleLog}
-              >
-                {isEditMode ? "Update" : "Save"}
-              </button>
+              <div className="px-4 mb-8">
+                <button
+                  type="submit"
+                  className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md"
+                  // onClick={handleLog}
+                >
+                  {isEditMode ? 'Update' : 'Save'}
+                </button>
+              </div>
             </div>
           </div>
         </form>
@@ -456,7 +461,7 @@ export default function Qualification() {
             <h1 className="text-3xl font-medium">Qualifications</h1>
             <button
               onClick={handleAdd}
-              className="bg-blue-600 text-white p-2 rounded"
+              className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
             >
               Add Qualification
             </button>
@@ -465,39 +470,41 @@ export default function Qualification() {
             <table className="min-w-full bg-white rounded-md">
               <thead>
                 <tr className="border-b-2">
-                  <th className="px-2 py-3 text-left font-medium">Select</th>
                   <th className="px-2 py-3 text-left font-medium">
-                    <div className="flex justify-between items-center">
+                  <span className='text-sm'>Status</span>
+                  </th>
+                  <th className="px-2 py-3 text-left font-medium">
+                    <div className="flex justify-between items-center text-sm">
                       <span>User Name</span>
                       <FaBars />
                     </div>
                   </th>
                   <th className="px-2 py-3 text-left font-medium">
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center text-sm">
                       <span>Qualification</span>
                       <FaBars />
                     </div>
                   </th>
                   <th className="px-2 py-3 text-left font-medium">
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center text-sm">
                       <span>work Experience</span>
                       <FaBars />
                     </div>
                   </th>
                   <th className="px-2 py-3 text-left font-medium">
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center text-sm">
                       <span>Skills</span>
                       <FaBars />
                     </div>
                   </th>
                   <th className="px-2 py-3 text-left font-medium">
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center text-sm">
                       <span>Achievements</span>
                       <FaBars />
                     </div>
                   </th>
                   <th className="px-2 py-3 text-left font-medium">
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center text-sm">
                       <span>Action</span>
                     </div>
                   </th>
@@ -505,24 +512,24 @@ export default function Qualification() {
               </thead>
               <tbody>
                 {data.map((item) => (
-                  <tr key={item.id} className="hover:bg-gray-200 border-b">
+                  <tr key={item.id} className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b">
                     <td className="px-2 py-3">
                       <input type="checkbox" />
                     </td>
-                    <td className="px-2 py-3">{item.userName}</td>
-                    <td className="px-2 py-3">{item.qualification}</td>
-                    <td className="px-2 py-3">{item.workExpierence}</td>
-                    <td className="px-2 py-3">{item.skill}</td>
-                    <td className="px-2 py-3">{item.achievements}</td>
-                    <td className="px-2 py-3 flex gap-2">
+                    <td className="px-2 py-3 text-sm">{item.userName}</td>
+                    <td className="px-2 py-3 text-sm">{item.qualification}</td>
+                    <td className="px-2 py-3 text-sm">{item.workExpierence}</td>
+                    <td className="px-2 py-3 text-sm">{item.skill}</td>
+                    <td className="px-2 py-3 text-sm">{item.achievements}</td>
+                    <td className="px-2 py-4 flex gap-3 justify-center">
                       <MdEdit
-                        size={20}
-                        className="cursor-pointer text-blue-500"
+                        size={25}
+                        className="bg-blue-500 rounded text-white"
                         onClick={() => handleEdit(item)}
                       />
                       <RiDeleteBin6Fill
-                        size={20}
-                        className="cursor-pointer text-red-500"
+                        size={25}
+                        color="red"
                         onClick={() => handleDelete(item.id)}
                       />
                     </td>

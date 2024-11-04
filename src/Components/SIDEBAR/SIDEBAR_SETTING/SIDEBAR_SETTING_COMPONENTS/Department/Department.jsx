@@ -186,8 +186,8 @@ export default function Department() {
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
-                    {errors.name && (
-                      <span style={{ color: 'red' }}>{errors.name}</span>
+                    {errors.groupName && (
+                      <span style={{ color: 'red' }}>{errors.groupName}</span>
                     )}
                   </div>
                 </div>
