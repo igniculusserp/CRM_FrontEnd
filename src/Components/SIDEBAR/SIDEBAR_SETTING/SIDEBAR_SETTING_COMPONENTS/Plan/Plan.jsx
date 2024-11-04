@@ -344,10 +344,10 @@ export default function Plan() {
                     </div>
 
                     {/* -------------Button------------- */}
-                    <div className="mb-3 flex items-center justify-end max-w-full">
+                    <div className="mb-3 flex items-center justify-start max-w-full">
                       <button
                         type="submit"
-                        className="mt-4 w-full hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-6 py-4 rounded-md"
+                        className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-6 py-4 rounded-md w-max"
                       >
                         {isEditMode ? 'Update User' : 'Save User'}
                       </button>
