@@ -16,15 +16,17 @@ import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/Global
 
 export default function Analytics() {
   const [totalSales, setTotalSales] = useState([]);
+  const [todaySales, setTodaySales] = useState([]);
   const [growthPercentage, setGrowthPercentage] = useState("");
   const [percentageStatus, setPercentageStatus] = useState("");
+  const [todaysGrowthPercentage, setTodaysGrowthPercentage] = useState("");
+  const [todaysPercentageStatus, setTodaysPercentageStatus] = useState("");
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
 
-  // Get Analytics lists
 
-  // Get Analytics lists
-  const getAnalytics = async () => {
+  // Get Total Sales Analytics lists
+  const getTotalSaleAnalytics = async () => {
     if (!bearer_token) {
       console.log("No token found in localStorage");
       return;
@@ -51,8 +53,37 @@ export default function Analytics() {
     }
   };
 
+    // Get Today's Sales Analytics lists
+    const getTodaySaleAnalytics = async () => {
+      if (!bearer_token) {
+        console.log("No token found in localStorage");
+        return;
+      }
+  
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${bearer_token}`,
+          },
+        };
+        const response = await axios.get(
+          `${protocal_url}${name}.${tenant_base_url}/Analytics/todaytotalsales/byusertoken`,
+          config
+        );
+  
+        if (response.status === 200) {
+          const sales = response.data;
+          console.log("SalesData", sales);
+          setTodaySales(sales?.data);
+        }
+      } catch (error) {
+        console.error("Error fetching analytics", error);
+      }
+    };
+
   useEffect(() => {
-    getAnalytics();
+    getTotalSaleAnalytics();
+    getTodaySaleAnalytics();
   }, []);
 
   useEffect(() => {
@@ -87,8 +118,37 @@ export default function Analytics() {
   };
 
   useEffect(() => {
-    console.log("Updated Percentage Status:", percentageStatus); // Log to check if `percentageStats` updates
-  }, [percentageStatus]);
+    if (todaySales) {
+      console.log("Total Sales", todaySales);
+      const growthPercentage = calculateTodaysGrowthPercentage(
+        todaySales.todaySalesAmount,
+        todaySales.previousDaySalesAmount
+      );
+      console.log("Growth Percentage:", growthPercentage + "%");
+      setTodaysGrowthPercentage(growthPercentage);
+      if (
+        todaySales.todaySalesAmount -
+          todaySales.previousDaySalesAmount >
+        0
+      ) {
+        setTodaysPercentageStatus("Plus");
+        console.log("True");
+      } else {
+        setTodaysPercentageStatus("Minus");
+        console.log("False");
+      }
+    }
+  }, [todaySales]);
+
+  const calculateTodaysGrowthPercentage = (current, previous) => {
+    if (previous === 0) {
+      return current > 0 ? 100 : 0;
+    }
+    const growth = ((current - previous) / previous) * 100;
+    return growth.toFixed(2);
+  };
+
+
 
   return (
     <main className="min-h-screen flex flex-col my-3 gap-1 mx-1">
@@ -131,15 +191,31 @@ export default function Analytics() {
           {/* ------------ CARD ------------ */}
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-[5px]">
-              <h1>Today's Sales</h1>
-              <strong>400</strong>
-              <button className="flex items-center justify-start gap-1 px-1 py-1 bg-green-100 w-max rounded-md">
-                <FaArrowAltCircleUp />
-                <span>43%</span>
+              <h1>Today&apos;s Sales</h1>
+              <strong>$ {todaySales.todaySalesAmount}</strong>
+              <button 
+               className={
+                todaysPercentageStatus === "Plus"
+                  ? "flex items-center justify-start gap-1 px-1 py-1 bg-green-100 w-max rounded-md"
+                  : "flex items-center justify-start gap-1 px-1 py-1 bg-red-100 w-max rounded-md"
+              }
+              >
+                <FaArrowAltCircleUp 
+                style={{
+                  transform:
+                  todaysPercentageStatus === "Minus"
+                      ? "rotate(180deg)"
+                      : "rotate(0deg)",
+                }}
+                />
+                <span>{todaysGrowthPercentage}%</span>
               </button>
             </div>
             {/* ------------ CIRCLE ------------ */}
-            <SalesCircle />
+            <SalesCircle 
+                todaysGrowthPercentage={todaysGrowthPercentage}
+                color={todaysPercentageStatus === "Plus" ? "green" : "red"} // Color based on growth status
+            />
           </div>
         </div>
         {/* ------------ CARD ------------ */}

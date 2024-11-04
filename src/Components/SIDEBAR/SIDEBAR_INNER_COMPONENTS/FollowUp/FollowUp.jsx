@@ -10,12 +10,12 @@ import { FaAngleDown, FaBars, FaPhoneAlt } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
 import { ImFilter } from "react-icons/im";
-import { IoSearchOutline } from "react-icons/io5";
 import { MdCall } from "react-icons/md";
 //Folder Imported
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import MassEmail from "../MassEmail/MassEmail";
+import {SearchElement} from "../SearchElement/SearchElement";
 
 export default function FollowUp() {
   const navigate = useNavigate();
@@ -30,7 +30,6 @@ export default function FollowUp() {
   const [selectedEmails, setSelectedEmails] = useState([]);
   const [followupList, setFollowupList] = useState([]);
   const [followupDropdown, setFollowupDropdown] = useState(false);
-  const [searchDropdown, setSearchDropdown] = useState(false);
   const [actionDropdown, setActionDropdown] = useState(false);
   //created such that to filter leads according to leadStatus
   const [filteredLeads, setFilteredLeads] = useState([]); // Filtered
@@ -87,11 +86,6 @@ export default function FollowUp() {
     setFollowupDropdown(!followupDropdown);
   };
 
-
-  //   TOGGLE SEARCH DROPDOWN
-  const toggleSearchDropdown = () => {
-    setSearchDropdown(!searchDropdown);
-  };
 
   //   TOGGLE STRIPEBAR DROPDOWN
   const toggleActionDropdown = () => {
@@ -365,18 +359,6 @@ export default function FollowUp() {
 
   // ------------------------------------------Fillters---------------------------------
 
-  // Function to handle both filters
-  // function handle_LeadStatus(statusValue) {
-  //   let filteredLeads = followupList;
-
-  //   if (statusValue !== null && statusValue !== "All Leads") {
-  //     filteredLeads = filteredLeads.filter(
-  //       (lead) => lead.leadesStatus === statusValue
-  //     );
-  //     console.log(filteredLeads);
-  //   }
-  //   setFilteredLeads(filteredLeads);
-  // }
 
   function handle_AssignedTo(assignedToValue) {
     let filteredLeads = followupList;
@@ -387,12 +369,6 @@ export default function FollowUp() {
     }
     setFilteredLeads(filteredLeads); // Set the filtered result
   }
-
-  // Handle selecting a lead status
-  // function handleLeadStatusSelection(status) {
-  //   setLeadStatus(status);
-  //   handle_LeadStatus(status);
-  // }
 
   // Handle selecting an assigned user
   function handleAssignedToSelection(user) {
@@ -435,39 +411,22 @@ export default function FollowUp() {
   }, [startDate, endDate]);
 
 
-  // ---------------------------- Notifications ----------------------------
-  // const openNotification = (id) => {
-  //   if (id) {
-  //     setNotificationData(id);
-  //     setIsNotification(true); 
-  //   } else {
-  //     alert("Process Failed");
-  //     console.log("@@@@@=====", id);
-  //   }
-  // };
 
-  // const closeNotification = () => {
-  //   setIsNotification(false); 
-  //   setNotificationData("");
-  // };
+  // ------------------------------ Search Function ----------------------------------
 
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     const currentTime = new Date();
-  //     const formattedCurrentTime = currentTime.toISOString().slice(0, 16); 
-  //     console.log("@@@@", formattedCurrentTime);
-  //     followupList.forEach((item) => {
-  //       const callbackTime = new Date(item.call_bck_DateTime);
-  //       const formattedCallbackTime = callbackTime.toISOString().slice(0, 16);
-  //       if (formattedCurrentTime === formattedCallbackTime) {
-  //         openNotification(item.id);
-  //       }
-  //     });
-  //   }, 30000);
-    
-  //   return () => clearInterval(intervalId);
-  // }, [followupList]);
   
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
+
+
+  useEffect(() => {
+    const filtered = followupList.filter((lead) =>
+      lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      lead.mobileNo.includes(searchTerm)
+    );
+    setFilteredLeads(filtered);
+  }, [searchTerm, followupList]);
+
+
 
 
   return (
@@ -482,13 +441,6 @@ export default function FollowUp() {
           onClose={closeModal} // Pass function to close modal
           />
         )}
-        {/* Render the Notification modal */}
-        {/* { isNotification && (
-          <FollowupNotificationModal
-          id={notificationData}
-          onClose={closeNotification} 
-          />
-        )} */}
         {/* containerbar*/}
         <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg">
           {/* PART-I */}
@@ -556,22 +508,10 @@ export default function FollowUp() {
               )}
             </div>
             {/* SEARCH DROPDOWN */}
-            <div className="flex justify-center items-center">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+            <SearchElement value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
           </div>
           {/* PART-II */}
           <div className="flex gap-3 items-center justify-center">
-            {/* <Link
-              to="/sidebar/createfollowup"
-              className="py-2 px-4 border rounded-md bg-blue-600 text-white"
-            >
-              Create Follow Up
-            </Link> */}
             {/* PART-II */}
             {/* Stripe-BarDropDown */}
             <div

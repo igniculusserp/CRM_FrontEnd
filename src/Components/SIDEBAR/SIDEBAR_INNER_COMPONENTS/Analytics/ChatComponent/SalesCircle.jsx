@@ -1,13 +1,30 @@
+
+import { useState, useEffect } from "react";
 import { PieChart, Pie, Cell } from 'recharts';
 
-const data = [
-  { name: 'Group A', value: 50 },
-  { name: 'Group B', value: 50 },
-];
+const SalesCircle = ({ todaysGrowthPercentage, color }) => {
+  const [growthCircle, setGrowthCircle] = useState(0); 
 
-const COLORS = ['#FFEDD5', '#F6AD55'];
+  useEffect(() => {
+    // Check the todaysGrowthPercentage
+    if (todaysGrowthPercentage >= 100) {
+      setGrowthCircle(100);
+    } else if (todaysGrowthPercentage < 0) {
+      setGrowthCircle(Math.abs(todaysGrowthPercentage)); 
+    } else {
+      setGrowthCircle(todaysGrowthPercentage);
+    }
+  }, [todaysGrowthPercentage]);
 
-const SalesCircle = () => {
+  // Data for the pie chart
+  const data = [
+    { name: 'Growth', value: growthCircle }, 
+    { name: 'Remaining', value: 100 - growthCircle } 
+  ];
+
+  // Define colors based on the provided color prop
+  const COLORS = color === "green" ? ["green", "#EBF8FF"] : ["red", "#FFCCCC"]; 
+
   return (
     <PieChart width={80} height={80}>
       <Pie
@@ -16,8 +33,7 @@ const SalesCircle = () => {
         startAngle={360}
         endAngle={0}
         innerRadius={25}
-        outerRadius={38}
-        fill="#8884d8"
+        outerRadius={38} 
         paddingAngle={0}
         stroke="none"
       >
