@@ -1,59 +1,54 @@
 import {
-  LineChart,
-  Line,
-  BarChart,
   Bar,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   Legend,
+  CartesianGrid,
   ResponsiveContainer,
+  ComposedChart,
+  Area
 } from 'recharts';
-
+ 
 const data = [
-  { name: 'Khusi Rana', salesVolume: 8000, salesRevenue: 12000 },
-  { name: 'Rajat', salesVolume: 7000, salesRevenue: 9000 },
-  { name: 'Suyash', salesVolume: 10000, salesRevenue: 14000 },
-  { name: 'Rajesh', salesVolume: 5000, salesRevenue: 10000 },
-  { name: 'Rajat', salesVolume: 9000, salesRevenue: 11000 },
-  { name: 'Khusi Rana', salesVolume: 12000, salesRevenue: 15000 },
-  { name: 'Suyash', salesVolume: 6000, salesRevenue: 13000 },
-  { name: 'Rajat', salesVolume: 11000, salesRevenue: 9000 },
-  { name: 'Rajesh', salesVolume: 5000, salesRevenue: 11000 },
-  { name: 'Rajat', salesVolume: 7000, salesRevenue: 10000 },
+  { name: 'Khusi Rana', salesRevenue: 293380, salesVolume: 80000 },
+  { name: 'Rajat', salesRevenue: 120000, salesVolume: 60000 },
+  { name: 'Suyash', salesRevenue: 150000, salesVolume: 30000 },
+  { name: 'Rajesh', salesRevenue: 120000, salesVolume: 40000 },
+  { name: 'Suyash', salesRevenue: 180000, salesVolume: 50000 },
 ];
-
-const FirstChart = () => {
+ 
+const SalesChart = () => {
   return (
-    <div className="bg-white py-4 px-4 rounded-md shadow-lg">
-      <ResponsiveContainer
-        width="95%"
-        height={250}
-        className="ml-[-1.5rem] mb-[-1.4rem] h-10 w-10 rounded-md"
-      >
-        <BarChart data={data} className='rounded-md'>
-          <CartesianGrid strokeDasharray="1 3" className='rounded-md z-10' />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="salesVolume" fill="#34d399" radius={[10, 10, 10, 10]} />
-        </BarChart>
-        <LineChart data={data} width="100%" className="mt-[-17.4rem] ml-12">
-          <CartesianGrid strokeDasharray="3 3" className='z-0' />
-          <Tooltip />
-          <Legend className='hidden' />
-          <Line
-            type="monotone"
-            dataKey="salesRevenue"
-            stroke="#6366f1"
-            activeDot={{ r: 6 }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+    <div className="bg-white py-4 px-2 rounded-md shadow-lg">
+    <ResponsiveContainer width="100%" height={300}>
+      <ComposedChart data={data}>
+        <defs>
+          <linearGradient id="colorSalesRevenue" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
+            <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+          </linearGradient>
+        </defs>
+       
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+       
+        <Bar dataKey="salesVolume" fill="#00C49F" radius={[10, 10, 10, 10]} />
+        <Area
+          type="monotone"
+          dataKey="salesRevenue"
+          stroke="#8884d8"
+          fill="url(#colorSalesRevenue)"
+          fillOpacity={1}
+          name="Sales Revenue"
+        />
+      </ComposedChart>
+    </ResponsiveContainer>
     </div>
   );
 };
-
-export default FirstChart;
+ 
+export default SalesChart;
