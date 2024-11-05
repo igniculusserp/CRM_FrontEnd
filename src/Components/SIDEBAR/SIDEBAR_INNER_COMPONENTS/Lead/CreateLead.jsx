@@ -19,6 +19,7 @@ import profilepic from './../../../../assets/images/profilePicEditLead.png';
 
 import { ToastContainer } from 'react-toastify';
 import {showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
+import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 
 export default function Createlead() {
   //to make id unique
@@ -59,10 +60,8 @@ export default function Createlead() {
   });
 
   //----------------------------------------------------------------------------------------
-  //to make code for particluar company
-  const fullURL = window.location.href;
-  const url = new URL(fullURL);
-  const name = url.hostname.split('.')[0];
+  //using a global name
+  const name = getHostnamePart();
 
   //imp to identify mode
   const [isEditMode, setIsEditMode] = useState(false);
