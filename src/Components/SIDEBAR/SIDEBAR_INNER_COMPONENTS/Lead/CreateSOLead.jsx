@@ -76,9 +76,10 @@ export default function CreateSO() {
         //Payment Details
         segments: data.segments || [],
 
-        //Service Details
-        subscription_start_date: data.trialStartDate.split("T")[0] || null,
-        subscription_end_date: data.trialEndDate.split("T")[0] || null,
+        // Service Details
+        subscription_start_date: data?.trialStartDate ? data.trialStartDate.split("T")[0] : null,
+        subscription_end_date: data?.trialEndDate ? data.trialEndDate.split("T")[0] : null,
+
       });
       //Description Information
       setdescription(data.description);
