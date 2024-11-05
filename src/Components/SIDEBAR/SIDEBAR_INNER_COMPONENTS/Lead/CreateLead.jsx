@@ -455,6 +455,8 @@ export default function Createlead() {
 
 
       //------------------------------------------------------------------------------------> Validations//--> Validations//--> Validations//--> Validations//--> Validations
+      const date =  (formData_POST.trialEndDate.split('-')[2] - formData_POST.trialStartDate.split('-')[2] )
+
 
 
       if(!formData_POST.name || !formData_PUT.name){
@@ -476,6 +478,17 @@ export default function Createlead() {
         showErrorToast('Invalid mobile number')
         return;
       }
+
+
+      console.log(typeof formData_POST.segments)
+
+      if((formData_POST.trialStartDate && formData_POST.trialEndDate) && date == 1  ){
+        if(formData_POST.segments.length == 0){
+          showErrorToast('Please Select segments')
+          return;
+        }
+      }
+     
 
       if (isEditMode) {
         await axios.put(`${protocal_url}${name}.${tenant_base_url}/Lead/lead/update`, formData_PUT, config);
