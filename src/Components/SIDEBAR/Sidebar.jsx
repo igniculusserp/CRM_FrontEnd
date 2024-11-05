@@ -165,7 +165,7 @@ export default function SidebaBar() {
                 key={key}
               >
                 <h1 className="flex items-center gap-2 px-3">
-                  {icon}
+                  <span className='text-xl'>{icon}</span>
                   {data}
                 </h1>
               </li>
