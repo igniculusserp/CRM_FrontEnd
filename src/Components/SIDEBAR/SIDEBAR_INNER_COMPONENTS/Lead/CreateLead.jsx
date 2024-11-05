@@ -453,12 +453,9 @@ export default function Createlead() {
         description: description,
       };
 
+      console.log(formData_POST)
 
       //------------------------------------------------------------------------------------> Validations//--> Validations//--> Validations//--> Validations//--> Validations
-      const date =  (formData_POST.trialEndDate.split('-')[2] - formData_POST.trialStartDate.split('-')[2] )
-
-
-
       if(!formData_POST.name || !formData_PUT.name){
         showErrorToast('Please enter name')
         return;
@@ -479,15 +476,32 @@ export default function Createlead() {
         return;
       }
 
-
-      console.log(typeof formData_POST.segments)
+      const date =  (formData_POST.trialEndDate?.split('-')[2] - formData_POST.trialStartDate?.split('-')[2] )
 
       if((formData_POST.trialStartDate && formData_POST.trialEndDate) && date == 1  ){
         if(formData_POST.segments.length == 0){
-          showErrorToast('Please Select segments')
-          return;
+          showErrorToast('Please Select segments') 
         }
+        return;
       }
+
+      
+      if(formData_POST.trialStartDate){
+        if(!formData_POST.trialEndDate){
+          showErrorToast("Please Select trail end date")
+        }
+        return;
+      }
+
+
+      if(formData_POST.trialEndDate){
+        if(!formData_POST.trialStartDate){
+          showErrorToast("Please Select trail start date")
+        }
+        return;
+      }
+
+    
      
 
       if (isEditMode) {
@@ -495,21 +509,10 @@ export default function Createlead() {
           alert('Lead updated successfully!');
         navigate(`/sidebar/lead`);
       } else {
-        if(formData_POST.trialStartDate < today){
-          showErrorToast('Previous Date cannot be selected')
-          return;
-        }
-
-
-        const response =  await axios.post(`${protocal_url}${name}.${tenant_base_url}/Lead/lead/add`, formData_POST, config );
-        if(!response.data.isSuccess){
-          showErrorToast(response.data.message)
-          return;
-        }
-        else{
+          await axios.post(`${protocal_url}${name}.${tenant_base_url}/Lead/lead/add`, formData_POST, config );
+          console.log(';')
           navigate(`/sidebar/lead`);
           alert('Lead created successfully!');
-        }
       }
     } catch (error){
       showErrorToast(error.response.data.message)
