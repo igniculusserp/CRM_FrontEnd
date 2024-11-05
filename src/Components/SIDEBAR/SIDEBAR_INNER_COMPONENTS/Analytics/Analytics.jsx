@@ -49,7 +49,6 @@ export default function Analytics() {
         `${protocal_url}${name}.${tenant_base_url}/Analytics/totalsales/byusertoken`,
         config
       );
-
       if (response.status === 200) {
         const sales = response.data;
         console.log("SalesData", sales);
