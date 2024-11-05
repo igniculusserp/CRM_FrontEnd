@@ -174,14 +174,6 @@ export default function AccessDevice() {
             </table>
           </div>
         </div>
-
-        {/* ------------------- COMING SOON TAB ----------------------- */}
-        <div className="mt-[10rem] mx-auto flex items-center w-[300px] justify-center py-8 bg-white rounded-md shadow-lg gap-3">
-          <h1 className="text-xl font-medium text-red-500 text-center">
-            This feature is coming soon...
-          </h1>
-        </div>
-        {/* ------------------- END ------------------- */}
       </div>
     );
   };

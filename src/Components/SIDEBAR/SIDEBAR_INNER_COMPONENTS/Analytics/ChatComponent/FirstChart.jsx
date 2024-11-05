@@ -18,9 +18,10 @@ const data = [
   { name: 'Suyash', salesRevenue: 180000, salesVolume: 50000 },
 ];
  
-const SalesChart = () => {
+const SalesChart = ({ text }) => {
   return (
     <div className="bg-white py-4 px-2 rounded-md shadow-lg">
+        <h1 className='text-xl font-medium mb-1'>{ text }</h1>
     <ResponsiveContainer width="100%" height={300}>
       <ComposedChart data={data}>
         <defs>
