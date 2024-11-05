@@ -18,7 +18,7 @@ import { tenant_base_url, protocal_url } from '../../../../Config/config';
 import profilepic from './../../../../assets/images/profilePicEditLead.png';
 
 import { ToastContainer } from 'react-toastify';
-import {showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
+import { showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
 import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 
 export default function Createlead() {
@@ -380,7 +380,7 @@ export default function Createlead() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-  
+
     const bearer_token = localStorage.getItem('token');
 
     try {
@@ -456,73 +456,65 @@ export default function Createlead() {
       console.log(formData_POST)
 
       //------------------------------------------------------------------------------------> Validations//--> Validations//--> Validations//--> Validations//--> Validations
-      if(!formData_POST.name || !formData_PUT.name){
+      if (!formData_POST.name || !formData_PUT.name) {
         showErrorToast('Please enter name')
         return;
       }
 
-      if(!formData_POST.mobileNo){
+      if (!formData_POST.mobileNo) {
         showErrorToast('Please enter mobile number')
         return;
       }
 
-      if(formData_POST.phoneNo && (formData_POST.phoneNo.length < 9  || formData_PUT.phoneNo.length > 15 )){
+      if (formData_POST.phoneNo && (formData_POST.phoneNo.length < 9 || formData_PUT.phoneNo.length > 15)) {
         showErrorToast('Please check phone no')
         return;
       }
 
-      if(formData_POST.mobileNo.length < 9   ||  formData_PUT.mobileNo.length > 15 ){
+      if (formData_POST.mobileNo.length < 9 || formData_PUT.mobileNo.length > 15) {
         showErrorToast('Invalid mobile number')
         return;
       }
 
-      const date =  (formData_POST.trialEndDate?.split('-')[2] - formData_POST.trialStartDate?.split('-')[2] )
+      const date = (formData_POST.trialEndDate?.split('-')[2] - formData_POST.trialStartDate?.split('-')[2])
 
-      if((formData_POST.trialStartDate && formData_POST.trialEndDate) && date == 1  ){
-        if(formData_POST.segments.length == 0){
-          showErrorToast('Please Select segments') 
+
+      if (formData_POST.trialStartDate && formData_POST.trialEndDate && date === 1) {
+        if (formData_POST.segments.length === 0) {
+          showErrorToast('Please Select segments');
+          return; // Stop if segments are empty
         }
+      }
+
+      if (formData_POST.trialStartDate && !formData_POST.trialEndDate) {
+        showErrorToast("Please Select trial end date");
         return;
       }
 
-      
-      if(formData_POST.trialStartDate){
-        if(!formData_POST.trialEndDate){
-          showErrorToast("Please Select trail end date")
-        }
+      if (formData_POST.trialEndDate && !formData_POST.trialStartDate) {
+        showErrorToast("Please Select trial start date");
         return;
       }
 
-
-      if(formData_POST.trialEndDate){
-        if(!formData_POST.trialStartDate){
-          showErrorToast("Please Select trail start date")
-        }
-        return;
-      }
-
-    
-     
-
+      // Check if isEditMode and handle API calls accordingly
       if (isEditMode) {
         await axios.put(`${protocal_url}${name}.${tenant_base_url}/Lead/lead/update`, formData_PUT, config);
-          alert('Lead updated successfully!');
+        alert('Lead updated successfully!');
         navigate(`/sidebar/lead`);
       } else {
-          await axios.post(`${protocal_url}${name}.${tenant_base_url}/Lead/lead/add`, formData_POST, config );
-          console.log(';')
-          navigate(`/sidebar/lead`);
-          alert('Lead created successfully!');
+        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Lead/lead/add`, formData_POST, config);
+        alert('Lead created successfully!');
+        navigate(`/sidebar/lead`);
       }
-    } catch (error){
-      showErrorToast(error.response.data.message)
-
+    } catch (error) {
+      // Handle errors from the API call
+      showErrorToast(error.response?.data?.message || "An error occurred");
     }
-  };
+  }
 
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       <div className="min-h-screen flex flex-col mt-3">
         <div className="flex justify-between mx-3  bg-white border rounded p-3">
           <div className="flex items-center justify-center gap-3">
@@ -602,7 +594,7 @@ export default function Createlead() {
                         id="LanguageDropDown"
                         type="button"
                       >
-                         {!isEditMode ?  defaultTextLanguageDropDown:editLead.language===""?defaultTextLanguageDropDown:editLead.language}
+                        {!isEditMode ? defaultTextLanguageDropDown : editLead.language === "" ? defaultTextLanguageDropDown : editLead.language}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLanguage && (
@@ -663,7 +655,7 @@ export default function Createlead() {
                 {/* -------------3------------- */}
                 {/* -------------Lead Source------------- */}
                 <div className="flex space-x-4">
-                <div className="flex flex-col w-1/2 relative">
+                  <div className="flex flex-col w-1/2 relative">
                     <label
                       htmlFor="Pool"
                       className="text-sm font-medium text-gray-700"
