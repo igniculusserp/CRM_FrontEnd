@@ -1,29 +1,14 @@
-
-import { useState, useEffect } from "react";
-import { PieChart, Pie, Cell } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import PropTypes from "prop-types"; 
 
 const SalesCircle = ({ todaysGrowthPercentage, color }) => {
-  const [growthCircle, setGrowthCircle] = useState(0); 
-
-  useEffect(() => {
-    // Check the todaysGrowthPercentage
-    if (todaysGrowthPercentage >= 100) {
-      setGrowthCircle(100);
-    } else if (todaysGrowthPercentage < 0) {
-      setGrowthCircle(Math.abs(todaysGrowthPercentage)); 
-    } else {
-      setGrowthCircle(todaysGrowthPercentage);
-    }
-  }, [todaysGrowthPercentage]);
-
-  // Data for the pie chart
+  // Data for the pie chart using the direct todaysGrowthPercentage prop
   const data = [
-    { name: 'Growth', value: growthCircle }, 
-    { name: 'Remaining', value: 100 - growthCircle } 
+    { name: "Growth", value: todaysGrowthPercentage >= 0 ? Math.min(todaysGrowthPercentage, 100) : Math.abs(todaysGrowthPercentage) },
+    { name: "Remaining", value: Math.max(0, 100 - Math.abs(todaysGrowthPercentage)) },
   ];
 
-  // Define colors based on the provided color prop
-  const COLORS = color === "green" ? ["green", "#EBF8FF"] : ["red", "#FFCCCC"]; 
+  const COLORS = color === "green" ? ["green", "#EBF8FF"] : ["red", "#FFCCCC"];
 
   return (
     <PieChart width={80} height={80}>
@@ -33,16 +18,23 @@ const SalesCircle = ({ todaysGrowthPercentage, color }) => {
         startAngle={360}
         endAngle={0}
         innerRadius={25}
-        outerRadius={38} 
-        paddingAngle={0}
+        outerRadius={38}
         stroke="none"
+        isAnimationActive={true} // Enable animation
       >
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
+      <Tooltip formatter={(value, name) => `${name}: ${value}%`} /> {/* Optional Tooltip */}
     </PieChart>
   );
+};
+
+// Prop validation
+SalesCircle.propTypes = {
+  todaysGrowthPercentage: PropTypes.number.isRequired,
+  color: PropTypes.oneOf(["green", "red"]).isRequired,
 };
 
 export default SalesCircle;

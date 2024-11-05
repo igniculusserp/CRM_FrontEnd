@@ -1,13 +1,15 @@
-import { PieChart, Pie, Cell } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import PropTypes from "prop-types"; 
 
-const data = [
-  { name: 'Group A', value: 50 },
-  { name: 'Group B', value: 50 },
-];
+const FollowCircle = ({ followUpGrowthPercentage, color }) => {
+  // Data for the pie chart using the direct followUpGrowthPercentage prop
+  const data = [
+    { name: "Growth", value: followUpGrowthPercentage >= 0 ? Math.min(followUpGrowthPercentage, 100) : Math.abs(followUpGrowthPercentage) },
+    { name: "Remaining", value: Math.max(0, 100 - Math.abs(followUpGrowthPercentage)) },
+  ];
 
-const COLORS = ['#FEE2E2', '#EF4444'];
+  const COLORS = color === "green" ? ["green", "#EBF8FF"] : ["red", "#FFCCCC"];
 
-const FollowCircle = () => {
   return (
     <PieChart width={80} height={80}>
       <Pie
@@ -17,16 +19,22 @@ const FollowCircle = () => {
         endAngle={0}
         innerRadius={25}
         outerRadius={38}
-        fill="#8884d8"
-        paddingAngle={0}
         stroke="none"
+        isAnimationActive={true} // Enable animation
       >
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
+      <Tooltip formatter={(value, name) => `${name}: ${value}%`} /> {/* Optional Tooltip */}
     </PieChart>
   );
+};
+
+// Prop validation
+FollowCircle.propTypes = {
+  followUpGrowthPercentage: PropTypes.number.isRequired,
+  color: PropTypes.oneOf(["green", "red"]).isRequired,
 };
 
 export default FollowCircle;

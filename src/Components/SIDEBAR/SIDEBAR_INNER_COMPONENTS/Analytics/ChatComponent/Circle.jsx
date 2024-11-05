@@ -1,28 +1,14 @@
-import { useState, useEffect } from "react";
-import { PieChart, Pie, Cell } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import PropTypes from "prop-types"; 
 
 const Circle = ({ growthPercentage, color }) => {
-  const [growthCircle, setGrowthCircle] = useState(0); 
-
-  useEffect(() => {
-    // Check the growthPercentage
-    if (growthPercentage >= 100) {
-      setGrowthCircle(100);
-    } else if (growthPercentage < 0) {
-      setGrowthCircle(Math.abs(growthPercentage)); 
-    } else {
-      setGrowthCircle(growthPercentage);
-    }
-  }, [growthPercentage]);
-
-  // Data for the pie chart
+  // Data for the pie chart using the direct growthPercentage prop
   const data = [
-    { name: 'Growth', value: growthCircle }, 
-    { name: 'Remaining', value: 100 - growthCircle } 
+    { name: "Growth", value: growthPercentage >= 0 ? Math.min(growthPercentage, 100) : Math.abs(growthPercentage) },
+    { name: "Remaining", value: Math.max(0, 100 - Math.abs(growthPercentage)) },
   ];
 
-  // Define colors based on the provided color prop
-  const COLORS = color === "green" ? ["green", "#EBF8FF"] : ["red", "#FFCCCC"]; 
+  const COLORS = color === "green" ? ["green", "#EBF8FF"] : ["red", "#FFCCCC"];
 
   return (
     <PieChart width={80} height={80}>
@@ -32,16 +18,23 @@ const Circle = ({ growthPercentage, color }) => {
         startAngle={360}
         endAngle={0}
         innerRadius={25}
-        outerRadius={38} 
-        paddingAngle={0}
+        outerRadius={38}
         stroke="none"
+        isAnimationActive={true} // Enable animation
       >
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
+      <Tooltip formatter={(value, name) => `${name}: ${value}%`} /> {/* Optional Tooltip */}
     </PieChart>
   );
+};
+
+// Prop validation
+Circle.propTypes = {
+  growthPercentage: PropTypes.number.isRequired,
+  color: PropTypes.oneOf(["green", "red"]).isRequired,
 };
 
 export default Circle;
