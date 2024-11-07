@@ -124,9 +124,6 @@ export default function Createlead() {
     }
   }
 
-  //Date Logic Validation
-  const today = new Date().toISOString().split('T')[0];
-
   //----------------------------------------------------------------------------------------
   //LanguageDropDown
   const LanguageDropDown = [
@@ -193,13 +190,11 @@ export default function Createlead() {
 
   const toggleDropdown = () => {
     setIsPoolDropdownOpen((prev) => !prev);
-    // console.log("@@@===",isPoolDropdownOpen);
   };
 
   const handleDropdownSelection = (poolName) => {
     setIsPoolDropdownOpen(false);
     setDefaultTextPool(poolName);
-    // console.log("@@@===", isPoolDropdownOpen);
     seteditLead((prev) => ({
       ...prev,
       leadSource: poolName,
@@ -476,16 +471,31 @@ export default function Createlead() {
         return;
       }
 
-      const date = (formData_POST.trialEndDate?.split('-')[2] - formData_POST.trialStartDate?.split('-')[2])
+       //Date Logic Validation
+       const today = new Date().toISOString().split('T')[0];
+      
+      //Previous date cannot be selected
+      if(formData_POST.trialStartDate < today ){
+        showErrorToast('Previous date cannot be selected')
+        return;
+      }
 
+      if(formData_POST.trialEndDate < today ){
+        showErrorToast('Previous date cannot be selected')
+        return;
+      }
+
+      //Date should not be more than 1 or less than 1
+      const date = (formData_POST.trialEndDate?.split('-')[2] - formData_POST.trialStartDate?.split('-')[2])
 
       if (formData_POST.trialStartDate && formData_POST.trialEndDate && date === 1) {
         if (formData_POST.segments.length === 0) {
           showErrorToast('Please Select segments');
-          return; // Stop if segments are empty
+          return; 
         }
       }
 
+     
       if (formData_POST.trialStartDate && !formData_POST.trialEndDate) {
         showErrorToast("Please Select trial end date");
         return;
@@ -500,10 +510,12 @@ export default function Createlead() {
       if (isEditMode) {
         await axios.put(`${protocal_url}${name}.${tenant_base_url}/Lead/lead/update`, formData_PUT, config);
         alert('Lead updated successfully!');
+        showSuccessToast('Lead updated successfully!')
         navigate(`/sidebar/lead`);
       } else {
         await axios.post(`${protocal_url}${name}.${tenant_base_url}/Lead/lead/add`, formData_POST, config);
         alert('Lead created successfully!');
+        showSuccessToast('Lead created successfully')
         navigate(`/sidebar/lead`);
       }
     } catch (error) {
