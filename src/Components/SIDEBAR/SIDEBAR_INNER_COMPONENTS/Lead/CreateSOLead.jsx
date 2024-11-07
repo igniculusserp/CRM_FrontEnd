@@ -106,7 +106,6 @@ export default function CreateSO() {
          config
        );
        setSegments(response.data.data);
-       // console.log("segment:", response.data.data);
      } catch (error) {
        console.error('Error fetching segments:', error);
      }
@@ -142,8 +141,6 @@ export default function CreateSO() {
        ...prev,
        segments: updatedSegments,
      }));
- 
-     console.log('Selected segments:', updatedSegments);
    };
    // Segment GET API Is being used here
 
@@ -310,7 +307,7 @@ export default function CreateSO() {
         config
       );
       setPoolToDropDown(response.data.data);
-      console.log("status:", response.data.data);
+
     } catch (error) {
       console.error("Error fetching leads:", error);
       setError("Failed to fetch pools."); // Set error message
@@ -323,13 +320,12 @@ export default function CreateSO() {
 
   const toggleDropdown = () => {
     setIsPoolDropdownOpen((prev) => !prev);
-    // console.log("@@@===",isPoolDropdownOpen);
   };
 
   const handleDropdownSelection = (poolName) => {
     setIsPoolDropdownOpen(false);
     setDefaultTextPool(poolName);
-    console.log("@@@===", isPoolDropdownOpen);
+
     seteditLead((prev) => ({
       ...prev,
       leadSource: poolName,
@@ -488,7 +484,6 @@ export default function CreateSO() {
         }
       // Redirect after a short delay
     } catch (error) {
-      console.log(error.response) 
       showErrorToast(error.response.data.message);
 
     }
