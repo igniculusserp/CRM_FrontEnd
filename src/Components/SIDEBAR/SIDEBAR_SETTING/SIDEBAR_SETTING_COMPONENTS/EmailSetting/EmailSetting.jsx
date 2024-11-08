@@ -15,6 +15,7 @@ export default function EmailSetting() {
       senderEmail: '12a02',
       port: 'Vibarant',
       serverObligRelay: 'Font Share',
+      key: 'dfadklfa',
       keyEmailTemplate: 'Targeted',
     },
     {
@@ -22,6 +23,7 @@ export default function EmailSetting() {
       senderEmail: '12a02',
       port: 'Vibarant',
       serverObligRelay: 'Font Share',
+      key: 'dfadklfa',
       keyEmailTemplate: 'Targeted',
     },
   ]);
@@ -31,6 +33,7 @@ export default function EmailSetting() {
     senderEmail: '',
     port: '',
     serverObligRelay: '',
+    key: 'dfadklfa',
     keyEmailTemplate: '',
   });
 
@@ -168,20 +171,26 @@ export default function EmailSetting() {
                       </th>
                       <th className="px-2 py-3 text-left border-r font-medium">
                         <div className="flex justify-between items-center text-sm">
-                          <span>Port</span>
+                          <span>Port Number</span>
                           <FaBars />
                         </div>
                       </th>
                       <th className="px-2 py-3 text-left border-r font-medium">
                         <div className="flex justify-between items-center text-sm">
-                          <span>Server Oblig Relay</span>
+                          <span>Relay Server Name</span>
                           <FaBars />
                         </div>
                       </th>
 
                       <th className="px-2 py-3 text-left border-r font-medium">
                         <div className="flex justify-between items-center text-sm">
-                          <span>Key Email Template</span>
+                          <span>Email</span>
+                          <FaBars />
+                        </div>
+                      </th>
+                      <th className="px-2 py-3 text-left border-r font-medium">
+                        <div className="flex justify-between items-center text-sm">
+                          <span>Key</span>
                           <FaBars />
                         </div>
                       </th>
@@ -215,6 +224,9 @@ export default function EmailSetting() {
                         </td>
                         <td className="px-2 py-4 text-sm max-w-24 break-words">
                           {user.keyEmailTemplate}
+                        </td>
+                        <td className="px-2 py-4 text-sm max-w-24 break-words">
+                          {user.key}
                         </td>
                         <td className="px-2 py-4 flex gap-3 justify-center">
                           <MdEdit
@@ -278,7 +290,7 @@ export default function EmailSetting() {
                           htmlFor="port"
                           className="text-sm font-medium text-gray-700"
                         >
-                          Port
+                          Port Number
                         </label>
                         <div
                           className="relative"
@@ -323,7 +335,7 @@ export default function EmailSetting() {
                           htmlFor="userCount"
                           className="text-sm font-medium text-gray-700"
                         >
-                          Server Oblig Relay
+                          Relay Server Name
                         </label>
                         <input
                           type="text"
@@ -340,12 +352,31 @@ export default function EmailSetting() {
                           htmlFor="KeyEmailTemplate"
                           className="text-sm font-medium text-gray-700"
                         >
-                          Key Email Template
+                          Email
                         </label>
                         <input
                           type="text"
                           name="keyEmailTemplate"
                           value={formData.keyEmailTemplate}
+                          onChange={handleChange}
+                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                        />
+                      </div>
+                    </div>
+
+                    {/* -------------3------------- */}
+                    <div className="flex space-x-4">
+                      <div className="flex flex-col w-1/2">
+                        <label
+                          htmlFor="key"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          Key
+                        </label>
+                        <input
+                          type="text"
+                          name="key"
+                          value={formData.key}
                           onChange={handleChange}
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                         />
