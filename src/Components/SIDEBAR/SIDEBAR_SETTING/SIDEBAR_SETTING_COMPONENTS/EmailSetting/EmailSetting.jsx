@@ -292,38 +292,13 @@ export default function EmailSetting() {
                         >
                           Port Number
                         </label>
-                        <div
-                          className="relative"
-                          onClick={toggleDropdownPortType}
-                          onMouseLeave={() => setIsDropdownVisiblePort(false)}
-                        >
-                          <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                            id="DropDown"
-                            type="button"
-                          >
-                            {formData.port || defaultTextPortTypeDropDown}
-                            <FaAngleDown className="ml-2 text-gray-400" />
-                          </button>
-
-                          {isDropdownVisiblePort && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                              <ul className="py-2 text-sm text-gray-700">
-                                {port.map((port) => (
-                                  <li
-                                    key={port.id}
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                                    onClick={() =>
-                                      handleDropdownPlanType(port.name)
-                                    }
-                                  >
-                                    {port.name}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-                        </div>
+                        <input
+                          type="number"
+                          name="port"
+                          value={formData.port}
+                          onChange={handleChange}
+                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                        />
                       </div>
                     </div>
 
@@ -335,7 +310,7 @@ export default function EmailSetting() {
                           htmlFor="userCount"
                           className="text-sm font-medium text-gray-700"
                         >
-                          Relay Server Name
+                          Relay Server Name / Host Name
                         </label>
                         <input
                           type="text"

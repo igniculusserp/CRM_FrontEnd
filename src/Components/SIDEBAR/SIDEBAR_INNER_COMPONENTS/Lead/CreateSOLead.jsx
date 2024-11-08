@@ -1510,15 +1510,15 @@ export default function CreateSO() {
                   <ReactQuill
                     name="remarks"
                     value={description}
-                    className=" text-balance hyphens-auto max-w-5xl  max-h-60 h-60"
+                    className=" text-balance hyphens-auto  max-h-60 h-60"
                     theme="snow"
                     onChange={setdescription}
                     placeholder="Add Description"
                   />
                 </div>
               </div>
-              <div className="flex justify-end gap-5 mr-10">
-                <div className="flex justify-end mr-20">
+              <div className="flex justify-end gap-5 mb-6">
+                <div className="flex justify-end mr-5">
                   <button
                     type="submit"
                     className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
