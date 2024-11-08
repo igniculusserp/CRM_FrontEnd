@@ -5,6 +5,11 @@ import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
 import { FaAngleDown } from 'react-icons/fa'; // Ensure necessary icons are imported
 import { tenant_base_url, protocal_url } from '../../../../../Config/config';
 import GlobalUserNameComponent from '../../ReusableComponents/GlobalUserNameComponent';
+import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
+import { ToastContainer } from 'react-toastify';
+
+import {showSuccessToast, showErrorToast} from './../../../../../utils/toastNotifications'
+
 
 export default function UserSettingForm({
   handleActiveState,
@@ -12,13 +17,16 @@ export default function UserSettingForm({
   isEditMode,
   onSave,
   isAddUserActive,
-}) {
-  const fullURL = window.location.href;
-  const url = new URL(fullURL);
-  const name = url.hostname.split('.')[0];
+}) 
+{
+
 
   // id is to fetch the user id from the URL
   const { id } = useParams();
+
+
+  //IMP used as ${name} in an API
+  const name = getHostnamePart();
 
   // Default form data
   const [formData, setFormData] = useState({
@@ -91,60 +99,82 @@ export default function UserSettingForm({
     }));
   };
 
-  // Handle form submit
-  const [errors, setErrors] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-      // const errors = {};
-
-      // // MOBILE NUMBER VALIDATION
-      // if (!formData.email || formData.email.trim() === '' || !/\S+@\S+\.\S+/.test(formData.email)) {
-      //   errors.email = 'Enter a valid email';
-      // } 
-      // else if (!formData.password || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(formData.password)) 
-      //   {
-      //   errors.password = 'Password is required';
-      // }
-
-      // if (Object.keys(errors).length > 0) {
-      //   setErrors(errors);
-      //   return;
-      // }
-
+      
     const selectedRole = ROLE.find((item) => item.groupName === formData.Role);
+
     const bearer_token = localStorage.getItem('token');
+    
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
       },
     };
+    
+
+    const formData_POST ={
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      contactNo: formData.contactNo,
+      country: formData.country,
+      businessType: formData.businessType || '',
+      password: formData.password,
+      confirmPassword: formData.confirmPassword,
+      role: formData.role || '',
+      reportedTo: formData.reportedTo,
+      isActive: true,
+      createdDate: new Date().toISOString(),
+      deletedDate: new Date().toISOString(),
+      groupId: selectedRole?.id,
+    }
+
+    const formData_PUT ={
+      userId: formData.userId,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      contactNo: formData.contactNo,
+      country: formData.country,
+      businessType: formData.businessType || '',
+      userName: formData.username,
+      password: formData.password,
+      confirmPassword: formData.confirmPassword,
+      role: formData.role,
+      groupId: selectedRole,
+      reportedTo: formData.reportedTo,
+      isActive: true,
+      createdDate: formData.createdDate || null,
+      deletedDate: formData.deletedDate || null,
+}
+
+  if(!formData_POST.firstName){
+    showErrorToast('Please enter name')
+    return;
+  }
+
+  if(!formData_POST.email){
+    showErrorToast('Please enter email')
+    return;
+  }
+
+  if(!formData_POST.contactNo){
+    showErrorToast('Please enter contact number')
+    return;
+  }
+
+  if(!formData_POST.password !== formData_POST.confirmPassword){
+    showErrorToast('Password doesnt match')
+    return;
+  }
 
     try {
       if (isEditMode) {
         console.log('active editMode');
         await axios.put(
-          `${protocal_url}${name}.${tenant_base_url}/Setting/update`,
-          {
-            userId: formData.userId,
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            email: formData.email,
-            contactNo: formData.contactNo,
-            country: formData.country,
-            businessType: formData.businessType || '',
-            userName: formData.username,
-            password: formData.password,
-            confirmPassword: formData.confirmPassword,
-            role: formData.role,
-            groupId: selectedRole,
-            reportedTo: formData.reportedTo,
-            isActive: true,
-            createdDate: formData.createdDate || null,
-            deletedDate: formData.deletedDate || null,
-          },
-          config
+          `${protocal_url}${name}.${tenant_base_url}/Setting/update`,formData_PUT,  config
         );
         alert('User updated successfully');
         onSave();
@@ -152,24 +182,7 @@ export default function UserSettingForm({
       } else {
         console.log('non-active editMode');
         await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/Setting`,
-          {
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            email: formData.email,
-            contactNo: formData.contactNo,
-            country: formData.country,
-            businessType: formData.businessType || '',
-            password: formData.password,
-            confirmPassword: formData.confirmPassword,
-            role: formData.role || '',
-            reportedTo: formData.reportedTo,
-            isActive: true,
-            createdDate: new Date().toISOString(),
-            deletedDate: new Date().toISOString(),
-            groupId: selectedRole?.id,
-          },
-          config
+          `${protocal_url}${name}.${tenant_base_url}/Setting`,config
         );
         // console.log('non-active editMode')
         alert('User added successfully');
@@ -177,7 +190,7 @@ export default function UserSettingForm({
         handleActiveState(); // Switch back to table view
       }
     } catch (error) {
-      console.error('Error saving user:', error);
+      console.error(error);
       alert('Error occurred while saving the user. Please try again.');
     }
   };
@@ -210,6 +223,7 @@ export default function UserSettingForm({
 
   return (
     <>
+    <ToastContainer/>
       <div className="flex min-w-screen justify-between items-center">
         <h1 className="text-3xl font-medium">
           {isEditMode ? 'Edit User' : 'Add User'}
@@ -281,10 +295,7 @@ export default function UserSettingForm({
                     value={formData.email || ''}
                     onChange={handleChange}
                     className="mt-1 p-2 border border-gray-300 rounded-md"
-                  />
-                  {errors.email && (
-                    <span style={{ color: 'red' }}>{errors.email}</span>
-                  )}
+                  />                  
                 </div>
                 {/*<---------------contactNo--------------->*/}
                 <div className="flex flex-col w-1/2">
@@ -340,9 +351,7 @@ export default function UserSettingForm({
                       onChange={handleChange}
                       placeholder="********"
                     />
-                    {errors.password && (
-                      <span style={{ color: 'red' }}>{errors.password}</span>
-                    )}
+
                     <button
                       type="button"
                       onClick={togglePasswordEye}
