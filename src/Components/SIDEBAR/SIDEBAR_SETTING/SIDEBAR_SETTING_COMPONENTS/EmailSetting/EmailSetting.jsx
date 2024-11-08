@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FaAngleDown, FaBars } from 'react-icons/fa';
+import { FaBars } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 import { useParams } from 'react-router-dom';

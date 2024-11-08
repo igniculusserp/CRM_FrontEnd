@@ -252,7 +252,7 @@ export default function SMSSetting() {
             <form onSubmit={handleSubmit} className="flex">
               <div className="w-full">
                 <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
-                  <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+                  <h2 className="font-medium text-3xl py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                     SMS Setting
                   </h2>
                   {/* -------------1------------- */}
