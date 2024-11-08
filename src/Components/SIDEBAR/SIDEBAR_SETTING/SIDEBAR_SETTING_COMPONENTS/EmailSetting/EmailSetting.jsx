@@ -5,10 +5,11 @@ import { RiDeleteBin6Fill } from 'react-icons/ri';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { tenant_base_url, protocal_url } from './../../../../../Config/config';
+import EditEmail from './Edit_Page/EditEmail';
+import AddEmail from './Add_Page/AddEmail';
 
 export default function EmailSetting() {
-  const { id } = useParams();
-  const [active, setActive] = useState(true);
+  const [activeComponent, setActiveComponent] = useState('Table');
   const [users, setUsers] = useState([
     {
       id: '1',
@@ -28,91 +29,19 @@ export default function EmailSetting() {
     },
   ]);
 
-  const [formData, setFormData] = useState({
-    id: '',
-    senderEmail: '',
-    port: '',
-    serverObligRelay: '',
-    key: 'dfadklfa',
-    keyEmailTemplate: '',
-  });
-
-  const [editLead, setEditLead] = useState(null);
-  const [isEditMode, setIsEditMode] = useState(false);
-
-  // Port
-  const [port, setPort] = useState([]);
-  const [defaultTextPortTypeDropDown, setDefaultTextPortTypeDropDown] =
-    useState('Select Port');
-  const [isDropdownVisiblePort, setIsDropdownVisiblePort] = useState(false);
-
-  const handleActiveState = () => {
-    setActive(!active);
-    setIsEditMode(false); // Reset edit mode when switching views
-    setFormData({
-      id: '',
-      senderEmail: '',
-      port: '',
-      serverObligRelay: '',
-      keyEmailTemplate: '',
-    }); // Reset form data
+  // Handle cancel form action
+  const handleAdd = () => {
+    setActiveComponent('Add');
   };
 
-  const handleClick = (userId) => {
-    const userToEdit = users.find((user) => user.id === userId);
-    if (userToEdit) {
-      setEditLead(userToEdit);
-      setFormData(userToEdit); // Populate form with user data
-      setIsEditMode(true);
-      setActive(false); // Switch to form view
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Validation check
-    if (!formData.senderEmail || !formData.port) {
-      alert('Please fill in all fields before submitting.');
-      return;
-    }
-
-    if (isEditMode) {
-      console.log('Edit User:', formData);
-      // Add logic to submit the edited user data
-    } else {
-      console.log('Add User:', formData);
-      setActive(true); // Switch to the form view
-
-      // Add logic to add a new user
-    }
+  const handleEdit = (id) => {
+    setActiveComponent('Update');
+    // setIdGet(id);
   };
 
   const handleCheckboxClick = (e, userId) => {
     e.stopPropagation();
     console.log(`Checkbox clicked for user: ${userId}`);
-  };
-
-  // Plan Type Dropdown
-  const toggleDropdownPortType = () => {
-    setIsDropdownVisiblePort(!isDropdownVisiblePort);
-  };
-
-  const handleDropdownPlanType = (port) => {
-    setFormData((port) => ({
-      ...port,
-      port,
-    }));
-    setDefaultTextPortTypeDropDown(port);
-    setIsDropdownVisiblePort(false);
   };
 
   async function handleGroup() {
@@ -141,239 +70,124 @@ export default function EmailSetting() {
     handleGroup();
   }, []);
 
+  //
+  const EmailSettingTable = () => {
+    return (
+      <div className="m-3 min-w-screen">
+        <>
+          <div className="flex min-w-screen justify-between items-center">
+            <h1 className="text-3xl font-medium">Email Setting</h1>
+            <button
+              onClick={handleAdd}
+              className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
+            >
+              Add Email Setting
+            </button>
+          </div>
+          <div className="overflow-x-auto mt-3">
+            <div className="min-w-full overflow-hidden rounded-md">
+              <table className="min-w-full bg-white">
+                <thead>
+                  <tr className="border-gray-300 border-b-2">
+                    <th className="px-1 py-3">
+                      <input type="checkbox" />
+                    </th>
+                    <th className="px-2 py-3 text-left border-r font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Sender Email</span>
+                        <FaBars />
+                      </div>
+                    </th>
+                    <th className="px-2 py-3 text-left border-r font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Port Number</span>
+                        <FaBars />
+                      </div>
+                    </th>
+                    <th className="px-2 py-3 text-left border-r font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Relay Server Name</span>
+                        <FaBars />
+                      </div>
+                    </th>
+
+                    <th className="px-2 py-3 text-left border-r font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Email</span>
+                        <FaBars />
+                      </div>
+                    </th>
+                    <th className="px-2 py-3 text-left border-r font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Key</span>
+                        <FaBars />
+                      </div>
+                    </th>
+                    <th className="px-2 py-3 text-left border-r font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Action</span>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map((user) => (
+                    <tr
+                      key={user.id}
+                      className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                    >
+                      <td className="px-1 py-3 text-center">
+                        <input
+                          type="checkbox"
+                          onClick={(e) => handleCheckboxClick(e, user.id)}
+                        />
+                      </td>
+                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        {user.senderEmail}
+                      </td>
+                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        {user.port}
+                      </td>
+                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        {user.serverObligRelay}
+                      </td>
+                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        {user.keyEmailTemplate}
+                      </td>
+                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        {user.key}
+                      </td>
+                      <td className="px-2 py-4 flex gap-3 justify-center">
+                        <MdEdit
+                          size={25}
+                          color="white"
+                          className="bg-blue-500 rounded"
+                          onClick={() => handleEdit(user.id)}
+                        />
+                        <RiDeleteBin6Fill size={25} color="red" />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
+      </div>
+    );
+  };
+
   return (
     <>
-      <div className="m-3 min-w-screen">
-        {active ? (
-          <>
-            <div className="flex min-w-screen justify-between items-center">
-              <h1 className="text-3xl font-medium">Email Setting</h1>
-              <button
-                onClick={handleActiveState}
-                className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
-              >
-                Add Email Setting
-              </button>
-            </div>
-            <div className="overflow-x-auto mt-3">
-              <div className="min-w-full overflow-hidden rounded-md">
-                <table className="min-w-full bg-white">
-                  <thead>
-                    <tr className="border-gray-300 border-b-2">
-                      <th className="px-1 py-3">
-                        <input type="checkbox" />
-                      </th>
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
-                          <span>Sender Email</span>
-                          <FaBars />
-                        </div>
-                      </th>
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
-                          <span>Port Number</span>
-                          <FaBars />
-                        </div>
-                      </th>
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
-                          <span>Relay Server Name</span>
-                          <FaBars />
-                        </div>
-                      </th>
-
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
-                          <span>Email</span>
-                          <FaBars />
-                        </div>
-                      </th>
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
-                          <span>Key</span>
-                          <FaBars />
-                        </div>
-                      </th>
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
-                          <span>Action</span>
-                        </div>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {users.map((user) => (
-                      <tr
-                        key={user.id}
-                        className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
-                      >
-                        <td className="px-1 py-3 text-center">
-                          <input
-                            type="checkbox"
-                            onClick={(e) => handleCheckboxClick(e, user.id)}
-                          />
-                        </td>
-                        <td className="px-2 py-4 text-sm max-w-24 break-words">
-                          {user.senderEmail}
-                        </td>
-                        <td className="px-2 py-4 text-sm max-w-24 break-words">
-                          {user.port}
-                        </td>
-                        <td className="px-2 py-4 text-sm max-w-24 break-words">
-                          {user.serverObligRelay}
-                        </td>
-                        <td className="px-2 py-4 text-sm max-w-24 break-words">
-                          {user.keyEmailTemplate}
-                        </td>
-                        <td className="px-2 py-4 text-sm max-w-24 break-words">
-                          {user.key}
-                        </td>
-                        <td className="px-2 py-4 flex gap-3 justify-center">
-                          <MdEdit
-                            size={25}
-                            color="white"
-                            className="bg-blue-500 rounded"
-                            onClick={() => handleClick(user.id)}
-                          />
-                          <RiDeleteBin6Fill size={25} color="red" />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="flex min-w-screen justify-between items-center">
-              <h1 className="text-3xl font-medium">
-                {isEditMode ? 'Edit Email Setting' : 'Add Email Setting'}
-              </h1>
-              <button
-                onClick={handleActiveState}
-                className="border border-blue-600 bg-white text-blue-600 px-4 py-2 min-w-10 text-sm rounded"
-              >
-                Cancel
-              </button>
-            </div>
-
-            <form onSubmit={handleSubmit} className="flex">
-              <div className="w-full">
-                <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
-                  <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-                    Email Setting
-                  </h2>
-                  {/* -------------1------------- */}
-                  <div className="py-1 px-3 grid gap-2">
-                    {/* -------------Sender Email------------- */}
-                    <div className="flex space-x-4">
-                      <div className="flex flex-col w-1/2">
-                        <label
-                          htmlFor="senderEmail"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Sender Email
-                        </label>
-                        <input
-                          type="text"
-                          name="senderEmail"
-                          value={formData.senderEmail}
-                          onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
-                          placeholder="Enter Sender Email"
-                        />
-                      </div>
-                      {/* -------------Port------------- */}
-                      <div className="flex flex-col w-1/2 relative">
-                        <label
-                          htmlFor="port"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Port Number
-                        </label>
-                        <input
-                          type="number"
-                          name="port"
-                          value={formData.port}
-                          onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
-                        />
-                      </div>
-                    </div>
-
-                    {/* -------------2------------- */}
-                    <div className="flex space-x-4">
-                      {/* -------------Server Oblig Relay------------- */}
-                      <div className="flex flex-col w-1/2">
-                        <label
-                          htmlFor="userCount"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Relay Server Name / Host Name
-                        </label>
-                        <input
-                          type="text"
-                          name="serverObligRelay"
-                          value={formData.serverObligRelay}
-                          onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
-                        />
-                      </div>
-
-                      {/* -------------Key Email Template------------- */}
-                      <div className="flex flex-col w-1/2">
-                        <label
-                          htmlFor="KeyEmailTemplate"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Email
-                        </label>
-                        <input
-                          type="text"
-                          name="keyEmailTemplate"
-                          value={formData.keyEmailTemplate}
-                          onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
-                        />
-                      </div>
-                    </div>
-
-                    {/* -------------3------------- */}
-                    <div className="flex space-x-4">
-                      <div className="flex flex-col w-1/2">
-                        <label
-                          htmlFor="key"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Key
-                        </label>
-                        <input
-                          type="text"
-                          name="key"
-                          value={formData.key}
-                          onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
-                        />
-                      </div>
-                    </div>
-
-                    {/* -------------Button------------- */}
-                    <div className="mb-3 flex items-center justify-start max-w-full mb-8">
-                      <button
-                        type="submit"
-                        className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-6 py-4 rounded-md w-max"
-                      >
-                        {isEditMode ? 'Update User' : 'Save User'}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </>
-        )}
-      </div>
+      {activeComponent === 'Table' ? (
+        <EmailSettingTable />
+      ) : activeComponent === 'Add' ? (
+        <AddEmail setActiveComponent={setActiveComponent} />
+      ) : activeComponent === 'Update' ? (
+        <EditEmail setActiveComponent={setActiveComponent} />
+      ) : (
+        ''
+      )}
     </>
   );
 }
