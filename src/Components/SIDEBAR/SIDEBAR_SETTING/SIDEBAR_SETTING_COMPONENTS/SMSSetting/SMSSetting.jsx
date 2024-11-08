@@ -51,7 +51,7 @@ export default function SMSSetting() {
     setFormData({
       id: '',
       APISenderID: '',
-      APIServerName: '',
+      APIKey: '',
       template: '',
     }); // Reset form data
   };
@@ -84,10 +84,10 @@ export default function SMSSetting() {
     if (!formData.APISenderID || formData.APISenderID.trim() === '') {
       errors.APISenderID = 'API Server is required';
     } else if (
-      !formData.APIServerName ||
-      formData.APIServerName.trim() === ''
+      !formData.APIKey ||
+      formData.APIKey.trim() === ''
     ) {
-      errors.APIServerName = 'API Server Name is required';
+      errors.APIKey = 'API Key is required';
     }
 
     if (Object.keys(errors).length > 0) {
@@ -181,7 +181,7 @@ export default function SMSSetting() {
                       </th>
                       <th className="px-2 py-3 text-left border-r font-medium">
                         <div className="flex justify-between items-center text-sm">
-                          <span>API Server Name</span>
+                          <span>API Key</span>
                           <FaBars />
                         </div>
                       </th>
@@ -286,7 +286,7 @@ export default function SMSSetting() {
                           htmlFor="name"
                           className="text-sm font-medium text-gray-700"
                         >
-                          API Server Name
+                          API Key
                         </label>
                         <div
                           className="relative"
@@ -300,7 +300,7 @@ export default function SMSSetting() {
                             id="DropDown"
                             type="button"
                           >
-                            {formData.APIServerName ||
+                            {formData.APIKey ||
                               defaultTextAPIServerNameTypeDropDown}
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>

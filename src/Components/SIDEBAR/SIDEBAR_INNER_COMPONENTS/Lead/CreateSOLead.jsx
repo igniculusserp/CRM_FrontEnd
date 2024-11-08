@@ -546,7 +546,7 @@ export default function CreateSO() {
               {/* -------------SALES ORDER INFORMATION STARTS FROM HERE------------- */}
               {/* -------------I--1------------- */}
               {/* -------------Client Name------------- */}
-              <div className="py-2 px-4">
+              <div className="py-2 px-4 grid gap-2">
                 <div className="flex space-x-4  ">
                   <div className="flex flex-col w-1/2">
                     <label
@@ -1032,7 +1032,7 @@ export default function CreateSO() {
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                 Payment Details
               </h2>
-              <div className="py-2 px-4">
+              <div className="py-2 px-4 grid gap-2">
                 {/* -------------IX--1----------------- */}
                 {/* -------------Bank Name------------- */}
                 <div className="flex space-x-4">
@@ -1310,7 +1310,7 @@ export default function CreateSO() {
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                 Service Details
               </h2>
-              <div className="py-2 px-4">
+              <div className="py-2 px-4 grid gap-2">
                 {/* -------------SALES ORDER INFORMATION FORM STARTS FROM HERE------------- */}
                 {/* -------------XV--1------------- */}
                 {/* -------------period_of_Subscription------------- */}
@@ -1499,7 +1499,7 @@ export default function CreateSO() {
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                 Description Information
               </h2>
-              <div className="px-2 py-4 ">
+              <div className="px-2 py-4 grid gap-2">
                 <div className="flex flex-col ">
                   <label
                     htmlFor="remarks"
