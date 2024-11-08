@@ -466,6 +466,21 @@ export default function CreateSO() {
       }
   
 
+        //Date Logic Validation
+        const today = new Date().toISOString().split('T')[0];
+      
+        //Previous date cannot be selected
+        if(formData_POST.subscription_start_date < today ){
+          showErrorToast('Previous date cannot be selected')
+          return;
+        }
+  
+        if(formData_POST.subscription_start_date < today ){
+          showErrorToast('Previous date cannot be selected')
+          return;
+        }
+  
+
       if(!formData_POST.subscription_start_date){
         showErrorToast("Please select subscription start date")
         return
