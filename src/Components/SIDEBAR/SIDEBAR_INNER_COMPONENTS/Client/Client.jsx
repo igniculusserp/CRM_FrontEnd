@@ -579,8 +579,8 @@ export default function Client() {
 
   useEffect(() => {
     const filtered = getleads.filter((lead) =>
-      lead.clientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      lead.mobileNo.includes(searchTerm)
+      lead.clientName?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+      lead.mobileNo?.includes(searchTerm)
     );
     setFilteredLeads(filtered);
   }, [searchTerm, getleads]);

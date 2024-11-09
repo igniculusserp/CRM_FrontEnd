@@ -439,8 +439,8 @@ useEffect(() => {
   setCurrentPage(1);
 
   const filtered = freeTrial.filter((lead) =>
-    lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    lead.mobileNo.includes(searchTerm)
+    lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+    lead.mobileNo?.includes(searchTerm)
   );
   setFilteredTrails(filtered);
 }, [searchTerm, freeTrial]);

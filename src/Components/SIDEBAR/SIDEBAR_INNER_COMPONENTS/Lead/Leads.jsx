@@ -701,13 +701,13 @@ export default function Lead() {
       if (activeButtonId === 4) {
         // Filter for Lead Action (id === 4)
         filtered = getleads.filter((lead) =>
-          lead.userName && lead.userName?.toLowerCase().includes(searchTerm?.toLowerCase())
+          lead.userName && lead.userName?.toLowerCase()?.includes(searchTerm?.toLowerCase())
         );
       } else {
         // General filtering for other lead types
         filtered = getleads.filter((lead) =>
-          lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          lead.mobileNo.includes(searchTerm)
+          lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+          lead.mobileNo?.includes(searchTerm)
         );
       }
       

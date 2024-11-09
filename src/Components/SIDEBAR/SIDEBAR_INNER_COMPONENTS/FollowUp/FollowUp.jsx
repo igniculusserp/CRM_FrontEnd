@@ -420,8 +420,8 @@ export default function FollowUp() {
 
   useEffect(() => {
     const filtered = followupList.filter((lead) =>
-      lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      lead.mobileNo.includes(searchTerm)
+      lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+      lead.mobileNo?.includes(searchTerm)
     );
     setFilteredLeads(filtered);
   }, [searchTerm, followupList]);
