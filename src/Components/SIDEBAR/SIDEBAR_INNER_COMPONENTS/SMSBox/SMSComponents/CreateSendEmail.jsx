@@ -24,9 +24,11 @@ export default function CreateSendEmail() {
     e.preventDefault();
   };
 
-  //   DROPDOWN
+  //   DROPDOWNS
   const [textMsgDropdown, setTextMsgDropdown] = useState(false);
-  const [defaultTextMsgText, setDefaultTextMsgText] = useState('Text Message');
+  const [defaultTextMsgText, setDefaultTextMsgText] = useState('Message');
+  const [productsDropdown, setProductsDropdown] = useState(false);
+  const [defaultProductsText, setDefaultProductsText] = useState('Products');
 
   // DUMMY TEST MSG
   const textMsgData = [
@@ -43,6 +45,25 @@ export default function CreateSendEmail() {
   const handleDropdownTextMsg = (name) => {
     setDefaultTextMsgText(name);
     setTextMsgDropdown(!textMsgDropdown);
+    setEditSms((prev) => ({
+      ...prev,
+      name: name,
+    }));
+  };
+
+  const products = [
+    { id: 1, name: 'cash' },
+    { id: 2, name: 'future' },
+    { id: 3, name: 'option' },
+  ];
+
+  const toggleDropdownProducts = () => {
+    setProductsDropdown(!productsDropdown);
+  };
+
+  const handleDropdownProducts = (name) => {
+    setDefaultProductsText(name);
+    setProductsDropdown(!productsDropdown);
     setEditSms((prev) => ({
       ...prev,
       name: name,
@@ -81,47 +102,6 @@ export default function CreateSendEmail() {
             <div className="flex gap-2 items-center">
               <input type="checkbox" />
               <p className="text-sm text-gray-700">Telegram</p>
-            </div>
-          </div>
-          <div className="flex flex-col bg-white px-3 py-1">
-            <h1 className="text-xl font-medium text-gray-700 mb-2">Products</h1>
-            <div className="flex items-center flex-wrap gap-3">
-              <div className="flex gap-2 items-center">
-                <input type="checkbox" />
-                <p className="text-sm text-gray-700">All</p>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input type="checkbox" />
-                <p className="text-sm text-gray-700">Stock Cash(25, 0)</p>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input type="checkbox" />
-                <p className="text-sm text-gray-700">HINI Cash(24, 0)</p>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input type="checkbox" />
-                <p className="text-sm text-gray-700">Stock Future(24, 0)</p>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input type="checkbox" />
-                <p className="text-sm text-gray-700">HINI Future(24, 0)</p>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input type="checkbox" />
-                <p className="text-sm text-gray-700">Stock Option(24, 0)</p>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input type="checkbox" />
-                <p className="text-sm text-gray-700">Index Future(24, 0)</p>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input type="checkbox" />
-                <p className="text-sm text-gray-700">Index Option(24, 0)</p>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input type="checkbox" />
-                <p className="text-sm text-gray-700">HINI Option(24, 0)</p>
-              </div>
             </div>
           </div>
 
@@ -169,36 +149,53 @@ export default function CreateSendEmail() {
             </div>
             {/* DROPDOWNS FIELD */}
             <div className="flex space-x-4">
-              {/* MAIL TYPE DROPDOWN */}
+              {/* MESSAGE DROPDOWN */}
               <div className="flex flex-col w-1/2">
-                {/* SUBJECT FIELD */}
                 <label
-                  htmlFor="textMsg"
+                  htmlFor="msg"
                   className="text-sm font-medium text-gray-700"
                 >
-                Message
+                  Message
+                </label>
+                <input
+                  type="text"
+                  name="msg"
+                  id="msg"
+                  value={editSms.msg}
+                  className="p-2 border border-gray-300 rounded-md"
+                  onChange={handleChange}
+                  placeholder="Entere verox peron"
+                />
+              </div>
+              {/* PRODUCTS DROPDOWN */}
+              <div className="flex flex-col w-1/2">
+                <label
+                  htmlFor="products"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Products
                 </label>
                 <div
                   className="relative"
-                  onClick={toggleDropdownTextMsg}
-                  onMouseLeave={() => setTextMsgDropdown(false)}
+                  onClick={toggleDropdownProducts}
+                  onMouseLeave={() => setProductsDropdown(false)}
                 >
                   <button
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                    id="textMsg"
+                    id="products"
                     type="button"
                   >
-                    {isEditMode ? editSms.msg : defaultTextMsgText}
+                    {isEditMode ? editSms.products : defaultProductsText}
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
-                  {textMsgDropdown && (
+                  {productsDropdown && (
                     <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
                       <ul className="py-2 text-sm text-gray-700">
-                        {textMsgData.map(({ key, name }) => (
+                        {products.map(({ key, name }) => (
                           <li
                             className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer z-10"
                             key={key}
-                            onClick={() => handleDropdownTextMsg(name)}
+                            onClick={() => handleDropdownProducts(name)}
                           >
                             {name}
                           </li>
@@ -207,6 +204,13 @@ export default function CreateSendEmail() {
                     </div>
                   )}
                 </div>
+              </div>
+            </div>
+
+            {/* HIDDEN INPUT */}
+            <div className="flex space-x-4">
+              <div className="flex flex-col w-full">
+                <input className="mt-1 p-2 border border-gray-300 rounded-md hidden" />
               </div>
             </div>
           </div>
