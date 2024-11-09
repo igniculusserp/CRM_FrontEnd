@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { FaBars } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { tenant_base_url, protocal_url } from './../../../../../Config/config';
+
+// ------------------- CHILD COMPONENTS -------------------
 import EditEmail from './Edit_Page/EditEmail';
 import AddEmail from './Add_Page/AddEmail';
 
