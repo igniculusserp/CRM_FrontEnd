@@ -31,16 +31,16 @@ export default function AccessControl() {
     setActiveComponent("Update");
   };
 
-  // ------------------------------ Access Control Get All  ------------------------
-
+  //------------------------------------Access Control Table -----------------------------
   const AccessControlTable = () => {
     const [data, setData] = useState([]);
-
+    
     const fullURL = window.location.href;
     const url = new URL(fullURL);
     const name = url.hostname.split(".")[0];
-
-    async function handleLead() {
+    
+    // ------------------------------ Access Control Get All  ------------------------
+    async function handleGetAll() {
       const bearer_token = localStorage.getItem("token");
       try {
         const config = {
@@ -59,7 +59,7 @@ export default function AccessControl() {
     }
 
     useEffect(() => {
-      handleLead();
+      handleGetAll();
     }, []);
 
     // ------------------------------ Access Control Handle Delete ------------------------
@@ -78,7 +78,7 @@ export default function AccessControl() {
         );
         setData((prevData) => prevData.filter((item) => item.id !== id));
         alert("Successfully deleted");
-        handleLead();
+        handleGetAll();
       } catch (error) {
         console.log(error);
         alert("Failed to delete pool. Please try again.");

@@ -1,40 +1,77 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
+import { tenant_base_url, protocal_url } from "./../../../../../../Config/config";
+import { getHostnamePart } from "../../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
-export default function AddEmail({setActiveComponent}) {
-  const [formData, setFormData] = useState({
-    id: '',
-    senderEmail: '',
-    port: '',
-    serverObligRelay: '',
-    key: 'dfadklfa',
-    keyEmailTemplate: '',
+//----------------------------Add Email Setting -----------------------
+export default function AddEmailSetting({ setActiveComponent, handleGetAll }) {
+  const name = getHostnamePart();
+
+  // ------------------------------ Add Email Setting State ------------------------
+  const [data, setData] = useState({
+    senderEmailId: "",
+    relayServerName: "",
+    relayPortNo: "",
+    serveremail: "",
+    key: "",
   });
-  const [isEditMode, setIsEditMode] = useState(false);
 
-  // Handle cancel form action
+  // -------------------------------Add Email Setting Handle Cancel Button ------------------------
   const handleCancel = () => {
-    setActiveComponent('Table');
+    setActiveComponent("Table");
+    handleGetAll();
   };
 
+  // -------------------------------Add Email Setting Handle Change ------------------------
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // ------------------------------ Add Email Setting Handle Submit ------------------------
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    const bearer_token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${bearer_token}`,
+      },
+    };
+
+    // Constructing the request body
+    const requestBody = {
+      senderEmailId: data.senderEmailId,
+      relayServerName: data.relayServerName,
+      relayPortNo: data.relayPortNo,
+      serveremail: data.serveremail,
+      key: data.key,
+    };
+
+    console.log("Request Body on Submit:", requestBody);
+
+    try {
+      await axios.post(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/emailsetting/add`,
+        requestBody,
+        config
+      );
+      alert("Successfully Added");
+      handleCancel();
+    } catch (error) {
+      console.error("Error saving email setting", error);
+      alert("Failed to save settings. Please try again.");
+    }
   };
 
   return (
     <div className="m-3 min-w-screen">
       <>
         <div className="flex min-w-screen justify-between items-center">
-          <h1 className="text-3xl font-medium">
-            {isEditMode ? 'Edit Email Setting' : 'Add Email Setting'}
-          </h1>
+          <h1 className="text-3xl font-medium">Add Email Setting</h1>
           <button
             onClick={handleCancel}
             className="border border-blue-600 bg-white text-blue-600 px-4 py-2 min-w-10 text-sm rounded"
@@ -43,7 +80,7 @@ export default function AddEmail({setActiveComponent}) {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex">
+        <form onSubmit={handleFormSubmit} className="flex">
           <div className="w-full">
             <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
@@ -51,36 +88,36 @@ export default function AddEmail({setActiveComponent}) {
               </h2>
               {/* -------------1------------- */}
               <div className="py-1 px-3 grid gap-2">
-                {/* -------------Sender Email------------- */}
+                {/* -------------Sender Email ID------------- */}
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
-                      htmlFor="senderEmail"
+                      htmlFor="senderEmailId"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Sender Email
+                      Sender Email ID
                     </label>
                     <input
                       type="text"
-                      name="senderEmail"
-                      value={formData.senderEmail}
+                      name="senderEmailId"
+                      value={data.senderEmailId}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
-                      placeholder="Enter Sender Email"
+                      placeholder="Enter Sender Email ID"
                     />
                   </div>
-                  {/* -------------Port------------- */}
+                  {/* -------------Port Number------------- */}
                   <div className="flex flex-col w-1/2 relative">
                     <label
-                      htmlFor="port"
+                      htmlFor="relayPortNo"
                       className="text-sm font-medium text-gray-700"
                     >
                       Port Number
                     </label>
                     <input
-                      type="number"
-                      name="port"
-                      value={formData.port}
+                      type="text"
+                      name="relayPortNo"
+                      value={data.relayPortNo}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
@@ -89,35 +126,35 @@ export default function AddEmail({setActiveComponent}) {
 
                 {/* -------------2------------- */}
                 <div className="flex space-x-4">
-                  {/* -------------Server Oblig Relay------------- */}
+                  {/* -------------Relay Server Name------------- */}
                   <div className="flex flex-col w-1/2">
                     <label
-                      htmlFor="userCount"
+                      htmlFor="relayServerName"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Relay Server Name / Host Name
+                      Relay Server Name
                     </label>
                     <input
                       type="text"
-                      name="serverObligRelay"
-                      value={formData.serverObligRelay}
+                      name="relayServerName"
+                      value={data.relayServerName}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
                   </div>
 
-                  {/* -------------Key Email Template------------- */}
+                  {/* -------------Server Email------------- */}
                   <div className="flex flex-col w-1/2">
                     <label
-                      htmlFor="KeyEmailTemplate"
+                      htmlFor="serveremail"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Email
+                      Server Email
                     </label>
                     <input
                       type="text"
-                      name="keyEmailTemplate"
-                      value={formData.keyEmailTemplate}
+                      name="serveremail"
+                      value={data.serveremail}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
@@ -136,7 +173,7 @@ export default function AddEmail({setActiveComponent}) {
                     <input
                       type="text"
                       name="key"
-                      value={formData.key}
+                      value={data.key}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
@@ -144,12 +181,12 @@ export default function AddEmail({setActiveComponent}) {
                 </div>
 
                 {/* -------------Button------------- */}
-                <div className="mb-3 flex items-center justify-start max-w-full mb-8">
+                <div className="flex items-center justify-start max-w-full mb-8">
                   <button
                     type="submit"
                     className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-6 py-4 rounded-md w-max"
                   >
-                    {isEditMode ? 'Update User' : 'Save User'}
+                    Save
                   </button>
                 </div>
               </div>
@@ -160,3 +197,8 @@ export default function AddEmail({setActiveComponent}) {
     </div>
   );
 }
+
+AddEmailSetting.propTypes = {
+  setActiveComponent: PropTypes.func.isRequired,
+  handleGetAll: PropTypes.func.isRequired,
+};
