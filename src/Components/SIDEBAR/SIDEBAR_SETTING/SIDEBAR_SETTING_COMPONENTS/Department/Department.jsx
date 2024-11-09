@@ -4,18 +4,27 @@ import { MdEdit } from 'react-icons/md';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 import axios from 'axios';
 import { tenant_base_url, protocal_url } from './../../../../../Config/config';
+import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
+
+
+import { ToastContainer } from 'react-toastify';
+import { showErrorToast } from '../../../../../utils/toastNotifications';
 
 export default function Department() {
+
+  const name = getHostnamePart(); 
+  const bearer_token = localStorage.getItem('token');
+
   const [data, setData] = useState([]);
   const [active, setActive] = useState(true);
   const [selectedData, setSelectedData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const fullURL = window.location.href;
-  const url = new URL(fullURL);
-  const name = url.hostname.split('.')[0];
+
+
 
   // Fetch all  data
+  //-------------------get-------------------get-------------------get-------------------get-------------------
   async function handleLead() {
     const bearer_token = localStorage.getItem('token');
     try {
@@ -74,7 +83,7 @@ export default function Department() {
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
-    const bearer_token = localStorage.getItem('token');
+    
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
@@ -83,18 +92,19 @@ export default function Department() {
 
     try {
       if (isEditMode) {
-        await axios.put(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/department/edit/${formData.id}`,
-          { departmentName: formData.departmentName },
-          config
-        );
+
+        if(!formData.departmentName){
+          showErrorToast('Please enter department name')
+          return;
+        }
+        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/department/edit/${formData.id}`,formData, config);
         alert('Updated successfully');
       } else {
-        await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/department/add`,
-          { departmentName: formData.departmentName },
-          config
-        );
+        if(!formData.departmentName){
+          showErrorToast('Please enter department name')
+          return;
+        }
+        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/department/add`, formData, config);
         alert('Added successfully');
       }
 
@@ -135,18 +145,6 @@ export default function Department() {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-
-      const errors = {};
-
-      if (!formData.name || formData.name.trim() === '') {
-        errors.name = 'Group name is required';
-      }
-
-      if (Object.keys(errors).length > 0) {
-        setErrors(errors);
-        return;
-      }
-
       handleFormSubmit(formData);
     };
 
