@@ -12,7 +12,9 @@ import {showSuccessToast, showErrorToast} from './../../../../../utils/toastNoti
 
 export default function Group() {
   const bearer_token = localStorage.getItem('token');
+  
   const name = getHostnamePart();
+  
   const { id } = useParams();
   const [active, setActive] = useState(true);
   const [formData, setFormData] = useState({
