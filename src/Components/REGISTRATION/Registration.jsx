@@ -109,12 +109,12 @@ export default function Registration() {
 
   //countryCode
   const filteredCountryCodes = countryCodes.filter((code) =>
-    code.countryName.toLowerCase().includes(searchQueryCode.toLowerCase())
+    code.countryName?.toLowerCase()?.includes(searchQueryCode?.toLowerCase())
 );
 
 //countryName
   const filteredCountries = countries.filter((country) =>
-    country.countryName.toLowerCase().includes(searchQueryCountry.toLowerCase())
+    country.countryName?.toLowerCase()?.includes(searchQueryCountry?.toLowerCase())
   );
 
   //Handle <---> Change

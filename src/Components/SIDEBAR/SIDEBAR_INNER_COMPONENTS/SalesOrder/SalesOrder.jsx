@@ -513,8 +513,8 @@ export default function SalesOrder() {
 
   useEffect(() => {
     const filtered = getleads.filter((lead) =>
-      lead.clientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      lead.contactNo.includes(searchTerm)
+      lead.clientName?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+      lead.contactNo?.includes(searchTerm)
     );
     setFilteredLeads(filtered);
   }, [searchTerm, getleads]);

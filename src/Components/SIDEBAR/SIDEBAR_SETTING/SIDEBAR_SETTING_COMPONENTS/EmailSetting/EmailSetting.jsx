@@ -9,34 +9,30 @@ import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 import EditEmail from './Edit_Page/EditEmail';
 import AddEmail from './Add_Page/AddEmail';
 
+
 export default function EmailSetting() {
-  const [activeComponent, setActiveComponent] = useState('Table');
+  const [activeComponent, setActiveComponent] = useState("Table");
   const [users, setUsers] = useState([
     {
-      id: '1',
-      senderEmail: '12a02',
-      port: 'Vibarant',
-      serverObligRelay: 'Font Share',
-      key: 'dfadklfa',
-      keyEmailTemplate: 'Targeted',
-    },
-    {
-      id: '2',
-      senderEmail: '12a02',
-      port: 'Vibarant',
-      serverObligRelay: 'Font Share',
-      key: 'dfadklfa',
-      keyEmailTemplate: 'Targeted',
+      id: "",
+      senderEmailId: "",
+      relayServerName: "",
+      relayPortNo: "",
+      serveremail: "",
+      key: "",
     },
   ]);
 
-  // Handle cancel form action
+  
+  // ------------------------------ E-Mail Settings Handle Add Button --------------------------
   const handleAdd = () => {
-    setActiveComponent('Add');
+    setActiveComponent("Add");
   };
 
-  const handleEdit = (id) => {
-    setActiveComponent('Update');
+   // ------------------------------ E-Mail Settings Handle Edit Button --------------------------
+
+  const handleEdit = () => {
+    setActiveComponent("Update");
     // setIdGet(id);
   };
 
@@ -46,7 +42,7 @@ export default function EmailSetting() {
   };
 
   async function handleGroup() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
@@ -56,14 +52,14 @@ export default function EmailSetting() {
       };
       const response = await axios.get(
         `${protocal_url}${
-          window.location.hostname.split('.')[0]
+          window.location.hostname.split(".")[0]
         }.${tenant_base_url}/Admin/leadstatus/getall`,
         config
       );
       setplanType(response.data.data);
-      console.log('Plan data:', response.data.data);
+      console.log("Plan data:", response.data.data);
     } catch (error) {
-      console.error('Error fetching plans:', error);
+      console.error("Error fetching plans:", error);
     }
   }
 
@@ -180,14 +176,14 @@ export default function EmailSetting() {
 
   return (
     <>
-      {activeComponent === 'Table' ? (
+      {activeComponent === "Table" ? (
         <EmailSettingTable />
-      ) : activeComponent === 'Add' ? (
+      ) : activeComponent === "Add" ? (
         <AddEmail setActiveComponent={setActiveComponent} />
-      ) : activeComponent === 'Update' ? (
+      ) : activeComponent === "Update" ? (
         <EditEmail setActiveComponent={setActiveComponent} />
       ) : (
-        ''
+        ""
       )}
     </>
   );

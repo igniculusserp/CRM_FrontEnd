@@ -590,8 +590,8 @@ export default function Contact() {
 
   useEffect(() => {
     const filtered = getleads.filter((lead) =>
-      lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      lead.mobileNo.includes(searchTerm)
+      lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+      lead.mobileNo?.includes(searchTerm)
     );
     setFilteredLeads(filtered);
   }, [searchTerm, getleads]);
