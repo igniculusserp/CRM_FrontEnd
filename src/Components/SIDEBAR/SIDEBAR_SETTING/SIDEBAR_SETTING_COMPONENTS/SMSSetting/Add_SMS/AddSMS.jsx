@@ -4,16 +4,6 @@ import { FaAngleDown } from 'react-icons/fa';
 export default function AddSMS({ setActiveComponent }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [errors, setErrors] = useState({});
-  // APIServerName Type State
-  const [APIServerName, setAPIServerName] = useState([]);
-  const [
-    defaultTextAPIServerNameTypeDropDown,
-    setDefaultTextAPIServerNameTypeDropDown,
-  ] = useState('Select API Server Name');
-  const [
-    isDropdownVisibleAPIServerNameType,
-    setIsDropdownVisibleAPIServerNameType,
-  ] = useState(false);
 
   // Handle cancel form action
   const handleCancel = () => {
@@ -61,20 +51,6 @@ export default function AddSMS({ setActiveComponent }) {
     }
   };
 
-  // Plan Type Dropdown
-  const toggleDropdownAPIServerNameType = () => {
-    setIsDropdownVisibleAPIServerNameType(!isDropdownVisibleAPIServerNameType);
-  };
-
-  const handleDropdownPlanType = (APIServerName) => {
-    setFormData((APIServerName) => ({
-      ...APIServerName,
-      APIServerName,
-    }));
-    setDefaultTextAPIServerNameTypeDropDown(APIServerName);
-    setIsDropdownVisibleAPIServerNameType(false);
-  };
-
   return (
     <div className="m-3 min-w-screen">
       <div className="flex min-w-screen justify-between items-center">
@@ -104,7 +80,7 @@ export default function AddSMS({ setActiveComponent }) {
                     htmlFor="APISenderID"
                     className="text-sm font-medium text-gray-700"
                   >
-                    API Server ID
+                    Sender ID
                   </label>
                   <input
                     type="text"
@@ -121,68 +97,22 @@ export default function AddSMS({ setActiveComponent }) {
                 {/* -------------API Server Name------------- */}
                 <div className="flex flex-col w-1/2 relative">
                   <label
-                    htmlFor="name"
+                    htmlFor="APIKey"
                     className="text-sm font-medium text-gray-700"
                   >
                     API Key
                   </label>
-                  <div
-                    className="relative"
-                    onClick={toggleDropdownAPIServerNameType}
-                    onMouseLeave={() =>
-                      setIsDropdownVisibleAPIServerNameType(false)
-                    }
-                  >
-                    <button
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                      id="DropDown"
-                      type="button"
-                    >
-                      {formData.APIKey || defaultTextAPIServerNameTypeDropDown}
-                      <FaAngleDown className="ml-2 text-gray-400" />
-                    </button>
-
-                    {isDropdownVisibleAPIServerNameType && (
-                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                        <ul className="py-2 text-sm text-gray-700">
-                          {APIServerName.map((plan) => (
-                            <li
-                              key={plan.id}
-                              className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                              onClick={() =>
-                                handleDropdownPlanType(plan.APIServerName)
-                              }
-                            >
-                              {plan.APIServerName}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
+                  <input
+                    type="text"
+                    name="APIKey"
+                    value={formData.APIKey}
+                    onChange={handleChange}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    placeholder="Enter API Key"
+                  />
                   {errors.APIServerName && (
                     <span style={{ color: 'red' }}>{errors.APIServerName}</span>
                   )}
-                </div>
-              </div>
-
-              {/* -------------2------------- */}
-              <div className="flex space-x-4">
-                {/* -------------UserCount------------- */}
-                <div className="flex flex-col w-1/2">
-                  <label
-                    htmlFor="userCount"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Template
-                  </label>
-                  <input
-                    type="text"
-                    name="template"
-                    value={formData.template}
-                    onChange={handleChange}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                  />
                 </div>
               </div>
 
