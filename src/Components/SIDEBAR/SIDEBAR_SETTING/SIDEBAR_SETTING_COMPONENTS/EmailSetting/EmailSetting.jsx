@@ -7,6 +7,8 @@ import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 import EditEmailSetting from "./Edit_Page/EditEmailSetting";
 import AddEmailSetting from "./Add_Page/AddEmailSetting";
 
+
+ // ------------------------------ E-Mail Settings --------------------------
 export default function EmailSetting() {
   const [activeComponent, setActiveComponent] = useState("Table");
   const [data, setData] = useState([]);
