@@ -1,24 +1,36 @@
+//react
 import { useState, useEffect } from "react";
+//reactIcon
 import { FaAngleDown, FaBars } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+
 import { useParams } from "react-router-dom";
+
+//external Packages
 import axios from "axios";
+
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
 import GlobalUserNameComponent from "../../ReusableComponents/GlobalUserNameComponent";
 
-import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
+//toastify~
+import { ToastContainer } from "react-toastify";
+import { showSuccessToast, showErrorToast } from "../../../../../utils/toastNotifications";
 
 export default function UserOperation() {
  
-
+  //to make id unique
   const { id } = useParams();
+
   const name = getHostnamePart();
 
   const bearer_token = localStorage.getItem("token");
   
+  //state to show table or form
   const [active, setActive] = useState(true);
   
+  //form
   const [formData, setFormData] = useState({
     fullName: "",
     userName: "",
@@ -32,6 +44,8 @@ export default function UserOperation() {
 
   const [users, setUsers] = useState([]);
   const [groupNames, setGroupNames] = useState([]);
+
+  //editMode
   const [editLead, setEditLead] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -47,9 +61,13 @@ export default function UserOperation() {
   }, []);
 
   const handleActiveState = () => {
+    //table to form and viceversa
     setActive(!active);
+
     setIsShowFields(false);
+    
     setIsEditMode(false); // Reset edit mode when switching views
+
     setFormData({
       fullName: "",
       userName: "",
@@ -75,6 +93,7 @@ export default function UserOperation() {
       extensions: user?.extensions,
       did: user?.did,
     });
+
     if (user) {
       setEditLead(user);
       setFormData(user); // Populate form with user data
@@ -130,7 +149,6 @@ export default function UserOperation() {
   // Handle user selection and update form fields
   const handleSelectUser = (item) => {
     const fullName = `${item.firstName} ${item.lastName}`;
-    // Update form data with user data
     setFormData({
       ...formData,
       fullName: fullName,
@@ -139,9 +157,7 @@ export default function UserOperation() {
       userName: item.userName,
       userId: item.userId,
     });
-    console.log(formData);
-
-    setIsShowFields(true); // Show additional fields when user is selected
+    setIsShowFields(true); 
   };
 
   const handleChange = (e) => {
@@ -154,37 +170,24 @@ export default function UserOperation() {
 
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const errors = {};
-
-    if (!formData.reportedTo || formData.reportedTo.trim() === "") {
-      errors.reportedTo = "Reported to is required";
-    } else if (!formData.groupName || formData.groupName.trim() === "") {
-      errors.groupName = "Group name is required";
-    } else if (!formData.target || formData.target.trim() === "") {
-      errors.target = "Target is required";
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
-      return;
-    }
 
     if (isEditMode) {
       console.log("Edit User:", formData);
-      // Submit edited user logic
       handleUpdateOpration();
     } else {
+      if(!formData.currencyCode){
+        showErrorToast('Please enter currency')
+        return;
+      }
       handleCreateOperation();
       console.log("Add User:", formData);
-      // Add new user logic
     }
-  };
+  
+  }
 
-  //creating new operation
-  const handleCreateOperation = async () => {
+  const handleCreateOperation = async (e)=>{
     try {
       const config = {
         headers: {
@@ -245,6 +248,7 @@ export default function UserOperation() {
   };
 
   return (
+
     <div className="m-3 min-w-screen">
       {active ? (
         <>
