@@ -7,6 +7,9 @@ import axios from 'axios';
 import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
 
+import { ToastContainer } from 'react-toastify';
+import {showSuccessToast, showErrorToast} from './../../../../../utils/toastNotifications'
+
 export default function Group() {
   const bearer_token = localStorage.getItem('token');
   const name = getHostnamePart();
@@ -42,6 +45,7 @@ export default function Group() {
     getGroupsLists();
   }, []);
 
+  //-------------------get-------------------get-------------------get-------------------get-------------------
   // get groups lists
   const getGroupsLists = async () => {
     try {
@@ -86,27 +90,10 @@ export default function Group() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const errors = {};
-
-    if (!formData.groupName || formData.groupName.trim() === '') {
-      errors.groupName = 'Group name is required';
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
-      return;
-    }
-
     if (isEditMode) {
-      handleUpdateGroup();
-      console.log('Edit User:', formData);
-      // Add logic to submit the edited user data
+      handleUpdateGroup();      //Edit   API 
     } else {
-      handleCreateGroup();
-      console.log('Add User:', formData);
-      setActive(true); // Switch to the form view
-
-      // Add logic to add a new user
+      handleCreateGroup();      //Create API
     }
   };
 
@@ -129,24 +116,49 @@ export default function Group() {
     setIsDropdownVisibleGroup(false);
   };
 
-  //creating new group
+//Create API-------------------Create API-------------------Create API-------------------Create API-------------------
   const handleCreateGroup = async () => {
+
+
+   
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.post(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/group/add`,
-        formData,
-        config
-      );
+
+      if(!formData.groupName){
+        showErrorToast('Please enter group name')
+        return;
+      }
+      
+      if(!formData.userCount){
+        showErrorToast('Please enter user count')
+        return;
+      }
+
+      if(!formData.leadLimit){
+        showErrorToast('Please enter lead limit')
+        return;
+      }
+
+      if(!formData.fetchLimit){
+        showErrorToast('Please enter fetch limit')
+        return;
+      }
+
+      
+      
+
+      const response = await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/group/add`, formData, config);
       getGroupsLists();
+      showSuccessToast('Group created successfully')
       setActive(!active);
-      alert(response.data.message);
+
     } catch (error) {
       console.error('Error fetching users:', error);
+      showErrorToast(error.response.data.message)
     }
   };
 
