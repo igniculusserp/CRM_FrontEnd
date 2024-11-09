@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
-import { FaBars } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import axios from "axios";
-import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
-import EditEmail from "./Edit_Page/EditEmail";
-import AddEmail from "./Add_Page/AddEmail";
+import { useState, useEffect } from 'react';
+import { FaBars } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+import axios from 'axios';
+import { tenant_base_url, protocal_url } from './../../../../../Config/config';
+
+// ------------------- CHILD COMPONENTS -------------------
+import EditEmail from './Edit_Page/EditEmail';
+import AddEmail from './Add_Page/AddEmail';
+
 
 export default function EmailSetting() {
   const [activeComponent, setActiveComponent] = useState("Table");
