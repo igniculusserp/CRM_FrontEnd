@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react';
-import { FaBars } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { useState, useEffect } from "react";
+import { FaBars } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 import axios from "axios";
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 
 // ------------------- CHILD COMPONENTS -------------------
-import AddSMS from './Add_SMS/AddSMS';
-import EditSMS from './Edit_SMS/EditSMS';
+import AddSMSSetting from "./Add_SMS/AddSMSSetting";
+import EditSMSSetting from "./Edit_SMS/EditSMSSetting";
 
 // ------------------------------ SMS Settings --------------------------
 export default function SMSSetting() {
-  const [activeComponent, setActiveComponent] = useState('Table');
+  const [activeComponent, setActiveComponent] = useState("Table");
   const [data, setData] = useState([]);
-  const [selectedId, setSelectedId] = useState(null); 
-    
+  const [selectedId, setSelectedId] = useState(null);
+
   const fullURL = window.location.href;
   const url = new URL(fullURL);
   const name = url.hostname.split(".")[0];
@@ -24,65 +24,63 @@ export default function SMSSetting() {
     setActiveComponent("Add");
   };
 
-   // ------------------------------ E-Mail Settings Handle Edit Button --------------------------
+  // ------------------------------ E-Mail Settings Handle Edit Button --------------------------
 
   const handleEdit = (id) => {
     setActiveComponent("Update");
     setSelectedId(id);
   };
 
-    
-    // ------------------------------ E-Mail Settings Get All  ------------------------
-    async function handleGetAll() {
-      const bearer_token = localStorage.getItem("token");
-      try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${bearer_token}`,
-          },
-        };
-        const response = await axios.get(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/smssetting/getall`,
-          config
-        );
-        setData(response.data.data);
-      } catch (error) {
-        console.error("Error fetching leads:", error);
-      }
+  // ------------------------------ E-Mail Settings Get All  ------------------------
+  async function handleGetAll() {
+    const bearer_token = localStorage.getItem("token");
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/smssetting/getall`,
+        config
+      );
+      setData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching leads:", error);
     }
+  }
 
-    useEffect(() => {
+  useEffect(() => {
+    handleGetAll();
+  }, []);
+
+  // ------------------------------ E-Mail Settings Handle Delete ------------------------
+
+  const handleDelete = async (id) => {
+    const bearer_token = localStorage.getItem("token");
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      await axios.delete(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/smssetting/delete/${id}`,
+        config
+      );
+      setData((prevData) => prevData.filter((item) => item.id !== id));
+      alert("Successfully deleted");
       handleGetAll();
-    }, []);
-
-    // ------------------------------ E-Mail Settings Handle Delete ------------------------
-
-    const handleDelete = async (id) => {
-      const bearer_token = localStorage.getItem("token");
-      try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${bearer_token}`,
-          },
-        };
-        await axios.delete(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/smssetting/delete/${id}`,
-          config
-        );
-        setData((prevData) => prevData.filter((item) => item.id !== id));
-        alert("Successfully deleted");
-        handleGetAll();
-      } catch (error) {
-        console.log(error);
-        alert("Failed to delete pool. Please try again.");
-      }
-    };
-
+    } catch (error) {
+      console.log(error);
+      alert("Failed to delete pool. Please try again.");
+    }
+  };
 
   // ------------------------------------ SMS SETTING TABLE ------------------------------------
   const SMSSettingTable = () => {
     return (
-      <div className='m-3 min-w-screen'>
+      <div className="m-3 min-w-screen">
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">SMS Setting</h1>
           <button
@@ -112,12 +110,7 @@ export default function SMSSetting() {
                       <FaBars />
                     </div>
                   </th>
-                  <th className="px-2 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center text-sm">
-                      <span>Template</span>
-                      <FaBars />
-                    </div>
-                  </th>
+
                   <th className="px-2 py-3 text-left border-r font-medium">
                     <div className="flex justify-between items-center text-sm">
                       <span>Action</span>
@@ -132,19 +125,15 @@ export default function SMSSetting() {
                     className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
                   >
                     <td className="px-1 py-3 text-center">
-                      <input
-                        type="checkbox"
-                      />
+                      <input type="checkbox" />
                     </td>
                     <td className="px-2 py-4 text-sm max-w-24 break-words">
-                      {user.APISenderID}
+                      {user.senderId}
                     </td>
                     <td className="px-2 py-4 text-sm max-w-24 break-words">
-                      {user.APIServerName}
+                      {user.apiKey}
                     </td>
-                    <td className="px-2 py-4 text-sm max-w-24 break-words">
-                      {user.template}
-                    </td>
+
                     <td className="px-2 py-4 flex gap-3 justify-center">
                       <MdEdit
                         size={25}
@@ -152,8 +141,11 @@ export default function SMSSetting() {
                         className="bg-blue-500 rounded"
                         onClick={() => handleEdit(user.id)}
                       />
-                      <RiDeleteBin6Fill size={25} color="red"
-                       onClick={() => handleDelete(user.id)} />
+                      <RiDeleteBin6Fill
+                        size={25}
+                        color="red"
+                        onClick={() => handleDelete(user.id)}
+                      />
                     </td>
                   </tr>
                 ))}
@@ -167,14 +159,21 @@ export default function SMSSetting() {
 
   return (
     <>
-      {activeComponent === 'Table' ? (
+      {activeComponent === "Table" ? (
         <SMSSettingTable />
-      ) : activeComponent === 'Add' ? (
-        <AddSMS setActiveComponent={setActiveComponent} />
-      ) : activeComponent === 'Update' ? (
-        <EditSMS setActiveComponent={setActiveComponent} />
+      ) : activeComponent === "Add" ? (
+        <AddSMSSetting
+          setActiveComponent={setActiveComponent}
+          handleGetAll={handleGetAll}
+        />
+      ) : activeComponent === "Update" ? (
+        <EditSMSSetting
+          setActiveComponent={setActiveComponent}
+          handleGetAll={handleGetAll}
+          id={selectedId}
+        />
       ) : (
-        ''
+        ""
       )}
     </>
   );

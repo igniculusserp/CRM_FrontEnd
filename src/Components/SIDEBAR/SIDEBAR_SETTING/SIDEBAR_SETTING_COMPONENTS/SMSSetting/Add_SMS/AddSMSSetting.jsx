@@ -1,62 +1,74 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
+import { useState } from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
+import {
+  tenant_base_url,
+  protocal_url,
+} from "./../../../../../../Config/config";
+import { getHostnamePart } from "../../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
-export default function AddSMS({ setActiveComponent }) {
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [errors, setErrors] = useState({});
+//----------------------------Add SMS Setting -----------------------
 
-  // Handle cancel form action
-  const handleCancel = () => {
-    setActiveComponent('Table');
-  };
+export default function AddSMSSetting({ setActiveComponent, handleGetAll }) {
+  const name = getHostnamePart();
 
-  const [formData, setFormData] = useState({
-    id: '',
-    APISenderID: '',
-    APIServerName: '',
-    template: '',
+  // ------------------------------ Add SMS Setting State ------------------------
+  const [data, setData] = useState({
+    senderId: "",
+    apiKey: "",
   });
 
+  // -------------------------------Add SMS Setting Handle Cancel Button ------------------------
+  const handleCancel = () => {
+    setActiveComponent("Table");
+    handleGetAll();
+  };
+
+  // -------------------------------Add SMS Setting Handle Change ------------------------
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // ------------------------------ Add SMS Setting Handle Submit ------------------------
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    const bearer_token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${bearer_token}`,
+      },
+    };
 
-    const errors = {};
+    // Constructing the request body
+    const requestBody = {
+      senderId: data.senderId,
+      apiKey: data.apiKey,
+    };
 
-    if (!formData.APISenderID || formData.APISenderID.trim() === '') {
-      errors.APISenderID = 'API Server is required';
-    } else if (!formData.APIKey || formData.APIKey.trim() === '') {
-      errors.APIKey = 'API Key is required';
-    }
+    console.log("Request Body on Submit:", requestBody);
 
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
-      return;
-    }
-
-    if (isEditMode) {
-      console.log('Edit User:', formData);
-      // Add logic to submit the edited user data
-    } else {
-      console.log('Add User:', formData);
-
-      // Add logic to add a new user
+    try {
+      await axios.post(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/smssetting/add`,
+        requestBody,
+        config
+      );
+      alert("Successfully Added");
+      handleCancel();
+    } catch (error) {
+      console.error("Error saving email setting", error);
+      alert("Failed to save settings. Please try again.");
     }
   };
 
   return (
     <div className="m-3 min-w-screen">
       <div className="flex min-w-screen justify-between items-center">
-        <h1 className="text-3xl font-medium">
-          {isEditMode ? 'Edit SMS Setting' : 'Add SMS Setting'}
-        </h1>
+        <h1 className="text-3xl font-medium">Add SMS Setting</h1>
         <button
           className="border border-blue-600 bg-white text-blue-600 px-4 py-2 min-w-10 text-sm rounded"
           onClick={handleCancel}
@@ -65,7 +77,7 @@ export default function AddSMS({ setActiveComponent }) {
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex">
+      <form onSubmit={handleFormSubmit} className="flex">
         <div className="w-full">
           <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
             <h2 className="font-medium text-3xl py-2 px-4 rounded-t-xl text-white bg-cyan-500">
@@ -77,42 +89,36 @@ export default function AddSMS({ setActiveComponent }) {
               <div className="flex space-x-4">
                 <div className="flex flex-col w-1/2">
                   <label
-                    htmlFor="APISenderID"
+                    htmlFor="senderId"
                     className="text-sm font-medium text-gray-700"
                   >
                     Sender ID
                   </label>
                   <input
                     type="text"
-                    name="APISenderID"
-                    value={formData.APISenderID}
+                    name="senderId"
+                    value={data.senderId}
                     onChange={handleChange}
                     className="mt-1 p-2 border border-gray-300 rounded-md"
                     placeholder="Enter API Sender ID"
                   />
-                  {errors.APISenderID && (
-                    <span style={{ color: 'red' }}>{errors.APISenderID}</span>
-                  )}
                 </div>
                 {/* -------------API Server Name------------- */}
                 <div className="flex flex-col w-1/2 relative">
                   <label
-                    htmlFor="APIKey"
+                    htmlFor="apiKey"
                     className="text-sm font-medium text-gray-700"
                   >
                     API Key
                   </label>
                   <input
                     type="text"
-                    name="APIKey"
-                    value={formData.APIKey}
+                    name="apiKey"
+                    value={data.apiKey}
                     onChange={handleChange}
                     className="mt-1 p-2 border border-gray-300 rounded-md"
                     placeholder="Enter API Key"
                   />
-                  {errors.APIServerName && (
-                    <span style={{ color: 'red' }}>{errors.APIServerName}</span>
-                  )}
                 </div>
               </div>
 
@@ -122,7 +128,7 @@ export default function AddSMS({ setActiveComponent }) {
                   type="submit"
                   className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-6 py-4 rounded-md w-max"
                 >
-                  {isEditMode ? 'Update User' : 'Save User'}
+                  Save
                 </button>
               </div>
             </div>
@@ -132,3 +138,8 @@ export default function AddSMS({ setActiveComponent }) {
     </div>
   );
 }
+
+AddSMSSetting.propTypes = {
+  setActiveComponent: PropTypes.func.isRequired,
+  handleGetAll: PropTypes.func.isRequired,
+};

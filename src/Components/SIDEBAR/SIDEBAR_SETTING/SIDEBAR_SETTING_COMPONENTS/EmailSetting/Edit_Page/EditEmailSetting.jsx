@@ -10,7 +10,9 @@ import { getHostnamePart } from "../../../../SIDEBAR_SETTING/ReusableComponents/
 //----------------------------Edit Email Setting -----------------------
 
 export default function EditEmailSetting({ setActiveComponent, handleGetAll, id }) {
+
   const name = getHostnamePart();
+  
   // ------------------------------ Edit Email Setting State ------------------------
   const [data, setData] = useState({
     id:"",
