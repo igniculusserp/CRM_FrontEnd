@@ -34,7 +34,7 @@ export default function Department() {
         },
       };
       const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/designation/getall`,
+        `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
         config
       );
       setData(response.data.data);
@@ -57,7 +57,7 @@ export default function Department() {
         },
       };
       await axios.delete(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/designation/delete/${id}`,
+        `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/delete/${id}`,
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
@@ -76,7 +76,7 @@ export default function Department() {
   };
 
   const handleAdd = () => {
-    setSelectedData({ designationName: '' });
+    setSelectedData({ status: '' });
     setActive(false);
     setIsEditMode(false);
   };
@@ -92,19 +92,18 @@ export default function Department() {
 
     try {
       if (isEditMode) {
-
-        if(!formData.designationName){
-          showErrorToast('Please enter designation name')
+        if(!formData.status){
+          showErrorToast('Please enter lead')
           return;
         }
-        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/designation/edit/${formData.id}`,formData, config);
+        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/edit/${formData.id}`,formData, config);
         alert('Updated successfully');
       } else {
-        if(!formData.designationName){
-          showErrorToast('Please enter designation name')
+        if(!formData.status){
+          showErrorToast('Please enter lead ')
           return;
         }
-        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/designation/add`, formData, config);
+        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/add`, formData, config);
         alert('Added successfully');
       }
 
@@ -127,21 +126,20 @@ export default function Department() {
 
   // Form Component for Adding/Updating
   const EditForm = ({ data, isEditMode }) => {
-    const [formData, setFormData] = useState({ id: '', designationName: '' });
+    const [formData, setFormData] = useState({ id: '', status: '' });
 
     useEffect(() => {
-      setFormData(data || { id: '', designationName: '' });
+      setFormData(data || { id: '', status: '' });
     }, [data]);
 
     // Handle form input changes
     const handleChange = (e) => {
       setFormData({
         ...formData,
-        designationName: e.target.value,
+        status: e.target.value,
       });
     };
 
-    const [errors, setErrors] = useState({});
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -166,27 +164,24 @@ export default function Department() {
           <div className="w-full">
             <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-              Designation Information
+              Lead Status
               </h2>
               <div className="py-2 px-4 min-h-screen relative">
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
-                      htmlFor="designationName"
+                      htmlFor="status"
                       className="text-sm font-medium text-gray-700"
                     >
-                    Designation Name
+                    Lead Status
                     </label>
                     <input
                       type="text"
-                      name="designationName"
-                      value={formData.designationName || ''}
+                      name="status"
+                      value={formData.status || ''}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
-                    {errors.groupName && (
-                      <span style={{ color: 'red' }}>{errors.groupName}</span>
-                    )}
                   </div>
                 </div>
 
@@ -210,13 +205,13 @@ export default function Department() {
         <>
           <div className="flex min-w-screen justify-between items-center">
             <h1 className="text-3xl font-medium">
-            Designation
+            Lead 
             </h1>
             <button
               onClick={handleAdd}
               className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
             >
-              Add Designation
+              Add Lead
             </button>
           </div>
           <div className="overflow-x-auto mt-3">
@@ -229,7 +224,7 @@ export default function Department() {
                     </th>
                     <th className="px-2 py-3 text-left border-r font-medium">
                       <div className="flex justify-between items-center text-sm">
-                        <span>Designation Name</span>
+                        <span>Lead Status</span>
                         <FaBars />
                       </div>
                     </th>
@@ -250,7 +245,7 @@ export default function Department() {
                         <input type="checkbox" />
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data.designationName}
+                        {data.status}
                       </td>
                       <td className="px-2 py-4 flex gap-3 justify-center">
                         <MdEdit
