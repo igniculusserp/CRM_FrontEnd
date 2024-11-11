@@ -4,18 +4,27 @@ import { MdEdit } from 'react-icons/md';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 import axios from 'axios';
 import { tenant_base_url, protocal_url } from './../../../../../Config/config';
+import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
 
-export default function Designation() {
+
+import { ToastContainer } from 'react-toastify';
+import { showErrorToast } from '../../../../../utils/toastNotifications';
+
+export default function Department() {
+
+  const name = getHostnamePart(); 
+  const bearer_token = localStorage.getItem('token');
+
   const [data, setData] = useState([]);
   const [active, setActive] = useState(true);
   const [selectedData, setSelectedData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const fullURL = window.location.href;
-  const url = new URL(fullURL);
-  const name = url.hostname.split('.')[0];
+
+
 
   // Fetch all  data
+  //-------------------get-------------------get-------------------get-------------------get-------------------
   async function handleLead() {
     const bearer_token = localStorage.getItem('token');
     try {
@@ -67,14 +76,14 @@ export default function Designation() {
   };
 
   const handleAdd = () => {
-    setSelectedData({ id: '', designationName: '' });
+    setSelectedData({ designationName: '' });
     setActive(false);
     setIsEditMode(false);
   };
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
-    const bearer_token = localStorage.getItem('token');
+    
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
@@ -83,18 +92,19 @@ export default function Designation() {
 
     try {
       if (isEditMode) {
-        await axios.put(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/designation/edit/${formData.id}`,
-          { designationName: formData.designationName },
-          config
-        );
+
+        if(!formData.designationName){
+          showErrorToast('Please enter designation name')
+          return;
+        }
+        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/designation/edit/${formData.id}`,formData, config);
         alert('Updated successfully');
       } else {
-        await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/designation/add`,
-          { designationName: formData.designationName },
-          config
-        );
+        if(!formData.designationName){
+          showErrorToast('Please enter designation name')
+          return;
+        }
+        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/designation/add`, formData, config);
         alert('Added successfully');
       }
 
@@ -135,18 +145,6 @@ export default function Designation() {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-
-      const errors = {};
-
-      if (!formData.designationName || formData.designationName.trim() === '') {
-        errors.designationName = 'Designation name is required';
-      }
-
-      if (Object.keys(errors).length > 0) {
-        setErrors(errors);
-        return;
-      }
-
       handleFormSubmit(formData);
     };
 
@@ -168,7 +166,7 @@ export default function Designation() {
           <div className="w-full">
             <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-                Designation Information
+              Designation Information
               </h2>
               <div className="py-2 px-4 min-h-screen relative">
                 <div className="flex space-x-4">
@@ -177,7 +175,7 @@ export default function Designation() {
                       htmlFor="designationName"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Designation Name
+                    Designation Name
                     </label>
                     <input
                       type="text"
@@ -186,10 +184,8 @@ export default function Designation() {
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
-                    {errors.designationName && (
-                      <span style={{ color: 'red' }}>
-                        {errors.designationName}
-                      </span>
+                    {errors.groupName && (
+                      <span style={{ color: 'red' }}>{errors.groupName}</span>
                     )}
                   </div>
                 </div>
@@ -213,7 +209,9 @@ export default function Designation() {
       {active ? (
         <>
           <div className="flex min-w-screen justify-between items-center">
-            <h1 className="text-3xl font-medium">Designation</h1>
+            <h1 className="text-3xl font-medium">
+            Designation
+            </h1>
             <button
               onClick={handleAdd}
               className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
