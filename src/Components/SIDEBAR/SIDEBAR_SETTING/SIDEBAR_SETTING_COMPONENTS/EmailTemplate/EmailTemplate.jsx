@@ -4,18 +4,27 @@ import { MdEdit } from 'react-icons/md';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 import axios from 'axios';
 import { tenant_base_url, protocal_url } from './../../../../../Config/config';
+import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
+
+
+import { ToastContainer } from 'react-toastify';
+import { showErrorToast } from '../../../../../utils/toastNotifications';
 
 export default function EmailTemplate() {
+
+  const name = getHostnamePart(); 
+  const bearer_token = localStorage.getItem('token');
+
   const [data, setData] = useState([]);
   const [active, setActive] = useState(true);
   const [selectedData, setSelectedData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const fullURL = window.location.href;
-  const url = new URL(fullURL);
-  const name = url.hostname.split('.')[0];
+
+
 
   // Fetch all  data
+  //-------------------get-------------------get-------------------get-------------------get-------------------
   async function handleLead() {
     const bearer_token = localStorage.getItem('token');
     try {
@@ -67,14 +76,14 @@ export default function EmailTemplate() {
   };
 
   const handleAdd = () => {
-    setSelectedData({ id: '', templateDescription: '' });
+    setSelectedData({ templateDescription: '' });
     setActive(false);
     setIsEditMode(false);
   };
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
-    const bearer_token = localStorage.getItem('token');
+    
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
@@ -83,18 +92,19 @@ export default function EmailTemplate() {
 
     try {
       if (isEditMode) {
-        await axios.put(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/emailtemplates/edit/${formData.id}`,
-          { templateDescription: formData.templateDescription },
-          config
-        );
+
+        if(!formData.templateDescription){
+          showErrorToast('Please fill field')
+          return;
+        }
+        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/emailtemplates/edit/${formData.id}`,formData, config);
         alert('Updated successfully');
       } else {
-        await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/emailtemplates/add`,
-          { templateDescription: formData.templateDescription },
-          config
-        );
+        if(!formData.templateDescription){
+          showErrorToast('Please fill field ')
+          return;
+        }
+        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/emailtemplates/add`, formData, config);
         alert('Added successfully');
       }
 
@@ -117,10 +127,7 @@ export default function EmailTemplate() {
 
   // Form Component for Adding/Updating
   const EditForm = ({ data, isEditMode }) => {
-    const [formData, setFormData] = useState({
-      id: '',
-      templateDescription: '',
-    });
+    const [formData, setFormData] = useState({ id: '', templateDescription: '' });
 
     useEffect(() => {
       setFormData(data || { id: '', templateDescription: '' });
@@ -157,7 +164,7 @@ export default function EmailTemplate() {
           <div className="w-full">
             <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-                E-Mail Templates Information
+              Email Templates 
               </h2>
               <div className="py-2 px-4 min-h-screen relative">
                 <div className="flex space-x-4">
@@ -166,7 +173,7 @@ export default function EmailTemplate() {
                       htmlFor="templateDescription"
                       className="text-sm font-medium text-gray-700"
                     >
-                      E-Mail Templates Name
+                    Email Templates 
                     </label>
                     <input
                       type="text"
@@ -197,12 +204,14 @@ export default function EmailTemplate() {
       {active ? (
         <>
           <div className="flex min-w-screen justify-between items-center">
-            <h1 className="text-3xl font-medium">E-Mail Templates</h1>
+            <h1 className="text-3xl font-medium">
+            Email Template
+            </h1>
             <button
               onClick={handleAdd}
               className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
             >
-              Add E-Mail Templates
+            Add Email Template
             </button>
           </div>
           <div className="overflow-x-auto mt-3">
@@ -215,7 +224,7 @@ export default function EmailTemplate() {
                     </th>
                     <th className="px-2 py-3 text-left border-r font-medium">
                       <div className="flex justify-between items-center text-sm">
-                        <span>E-Mail Templates Name</span>
+                        <span>Email Template</span>
                         <FaBars />
                       </div>
                     </th>
