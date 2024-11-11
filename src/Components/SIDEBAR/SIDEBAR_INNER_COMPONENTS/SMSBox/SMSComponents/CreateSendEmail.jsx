@@ -1,13 +1,30 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { FaAngleDown } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { IoInformationCircle } from "react-icons/io5";
+
+//file
+import { tenant_base_url, protocal_url } from "../../../../../Config/config";
+import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 export default function CreateSendEmail() {
-  const [isEditMode, setIsEditMode] = useState(false);
+  const name = getHostnamePart();
+
+  // --------------------------------------------- Check Box Start -------------------------------------------
+
+  const [selectedCheckbox, setSelectedCheckbox] = useState("Free Trail");
+
+  const handleCheckboxChange = (name) => {
+    setSelectedCheckbox(name === selectedCheckbox ? "" : name); // Toggle selection
+  };
+
+  // --------------------------------------------- Check Box End -------------------------------------------
+
   const [editSms, setEditSms] = useState({
-    subject: '',
-    msg: '',
-    attachment: '',
+    subject: "",
+    msg: "",
+    attachment: "",
   });
 
   //   HANDLING INPUTS CHANGE
@@ -24,51 +41,120 @@ export default function CreateSendEmail() {
     e.preventDefault();
   };
 
-  //   DROPDOWNS
-  const [textMsgDropdown, setTextMsgDropdown] = useState(false);
-  const [defaultTextMsgText, setDefaultTextMsgText] = useState('Message');
-  const [productsDropdown, setProductsDropdown] = useState(false);
-  const [defaultProductsText, setDefaultProductsText] = useState('Products');
 
-  // DUMMY TEST MSG
-  const textMsgData = [
-    { key: 1, name: 'text msg' },
-    { key: 2, name: 'text msg' },
-    { key: 3, name: 'text msg' },
-  ];
 
-  // TOGGLE CALL TEST MSG
-  const toggleDropdownTextMsg = () => {
-    setTextMsgDropdown(!textMsgDropdown);
+  //--------------------------------------- Segments OR Product -------------------------------------------------
+  const [segments, setSegments] = useState([]);
+  const [selectedSegments, setSelectedSegments] = useState([]);
+  const [defaultTextSegmentDropDown, setDefaultTextSegmentDropDown] =
+    useState("Select Segment");
+  const [isDropdownVisibleSegment, setIsDropdownVisibleSegment] =
+    useState(false);
+
+  //--------------------------------------- Fatch Segment -------------------------------------------------
+  async function handleSegment() {
+    const bearer_token = localStorage.getItem("token");
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
+        config
+      );
+      setSegments(response.data.data);
+    } catch (error) {
+      console.error("Error fetching segments:", error);
+    }
+  }
+
+  useEffect(() => {
+    handleSegment();
+  }, []);
+
+  //--------------------------------------- DropDown Handling -------------------------------------------------
+
+  const toggleDropdownSegment = () => {
+    setIsDropdownVisibleSegment(!isDropdownVisibleSegment);
   };
 
-  const handleDropdownTextMsg = (name) => {
-    setDefaultTextMsgText(name);
-    setTextMsgDropdown(!textMsgDropdown);
-    setEditSms((prev) => ({
-      ...prev,
-      name: name,
-    }));
+  const handleProductChange = (segment) => {
+    const isChecked = selectedSegments.includes(segment.segment);
+
+    let updatedSegments;
+    if (isChecked) {
+      // Remove segment if already selected
+      updatedSegments = selectedSegments.filter(
+        (selectedSegment) => selectedSegment !== segment.segment
+      );
+    } else {
+      // Add segment if not already selected
+      updatedSegments = [...selectedSegments, segment.segment];
+    }
+
+    setSelectedSegments(updatedSegments);
+
+    setDefaultTextSegmentDropDown(
+      updatedSegments.length > 0 ? updatedSegments.join(", ") : "Select Segment"
+    );
   };
 
-  const products = [
-    { id: 1, name: 'cash' },
-    { id: 2, name: 'future' },
-    { id: 3, name: 'option' },
-  ];
+  //--------------------------------------- Segments END-------------------------------------------------
 
-  const toggleDropdownProducts = () => {
-    setProductsDropdown(!productsDropdown);
-  };
 
-  const handleDropdownProducts = (name) => {
-    setDefaultProductsText(name);
-    setProductsDropdown(!productsDropdown);
-    setEditSms((prev) => ({
-      ...prev,
-      name: name,
-    }));
-  };
+   //--------------------------------------- Get Mobile Number by Segment -------------------------------------------------
+
+   const [getEmailId, setGetEmailId] = useState([]);
+
+   useEffect(() => {
+    
+      fetchMobileNumber();
+    
+  }, [selectedSegments]);
+
+   async function fetchMobileNumber() {
+    const bearer_token = localStorage.getItem("token");
+  
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+  
+      setGetEmailId([]);
+  
+      // Construct the query string with selected segments
+      const segmentQuery = selectedSegments
+        .map((segment) => `segments=${encodeURIComponent(segment)}`)
+        .join("&");
+  
+      let url;
+      if (selectedCheckbox === "Free Trail") {
+        url = `${protocal_url}${name}.${tenant_base_url}/Trail/alltrailEmail/bysegment?${segmentQuery}`;
+      } else if (selectedCheckbox === "Paid Clients") {
+        url = `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/clientEmailbysegments?${segmentQuery}`;
+      }
+  
+      const response = await axios.get(url, config);
+      setGetEmailId(response.data.data);
+      console.log("Fetched Mobile Numbers:", response.data.data);
+    
+      console.log("Fetched Mobile Numbers:", getEmailId);
+  
+    } catch (error) {
+      console.error("Error fetching mobile numbers:", error);
+    }
+  }
+  
+  
+
+
+
+  
 
   return (
     <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
@@ -91,18 +177,34 @@ export default function CreateSendEmail() {
 
           {/* CHECK BOXES */}
           <div className="flex bg-white px-3 py-2 max-w-full items-center gap-3">
+            {/* Free Trail */}
             <div className="flex gap-2 items-center">
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={selectedCheckbox === "Free Trail"}
+                onChange={() => handleCheckboxChange("Free Trail")}
+              />
               <p className="text-sm text-gray-700">Free Trail</p>
             </div>
+            {/* Paid Client */}
             <div className="flex gap-2 items-center">
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={selectedCheckbox === "Paid Clients"}
+                onChange={() => handleCheckboxChange("Paid Clients")}
+              />
               <p className="text-sm text-gray-700">Paid Clients</p>
             </div>
-            <div className="flex gap-2 items-center">
-              <input type="checkbox" />
+
+            {/* Telegram */}
+            {/* <div className="flex gap-2 items-center">
+              <input
+                type="checkbox"
+                checked={selectedCheckbox === "Telegram"}
+                onChange={() => handleCheckboxChange("Telegram")}
+              />
               <p className="text-sm text-gray-700">Telegram</p>
-            </div>
+            </div> */}
           </div>
 
           {/* -------------SMS DETAILS STARTS FROM HERE------------- */}
@@ -110,6 +212,65 @@ export default function CreateSendEmail() {
           {/* -------------Street------------- */}
           <div className="grid gap-2 p-2">
             <div className="flex space-x-4">
+               {/* PRODUCTS DROPDOWN */}
+               <div className="flex flex-col w-1/2 relative">
+                <label
+                  htmlFor="segment"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Products
+                </label>
+                <div
+                  className="relative"
+                  onMouseLeave={() => setIsDropdownVisibleSegment(false)}
+                >
+                  <button
+                    onClick={toggleDropdownSegment}
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="LeadStatusDropDown"
+                    type="button"
+                  >
+                    {defaultTextSegmentDropDown}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {isDropdownVisibleSegment && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                        {segments.length > 0 ? (
+                          segments.map((segment) => (
+                            <li
+                              key={segment.id}
+                              className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            >
+                              <input
+                                type="checkbox"
+                                checked={selectedSegments.includes(
+                                  segment.segment
+                                )}
+                                onChange={() => handleProductChange(segment)}
+                                className="mr-2"
+                              />
+                              {segment.segment}
+                            </li>
+                          ))
+                        ) : (
+                          <li className="flex items-center px-4 py-2 text-center gap-1">
+                            <IoInformationCircle
+                              size={25}
+                              className="text-cyan-600"
+                            />
+                            Segments not available. Go to{" "}
+                            <span className="font-bold">
+                              Settings - Add Segment
+                            </span>
+                            .
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
               {/* CALL STATUS DROPDOWN */}
               <div className="flex flex-col w-1/2">
                 <label
@@ -128,24 +289,7 @@ export default function CreateSendEmail() {
                   placeholder="Entere verox peron"
                 />
               </div>
-              {/* TEXT MESSAGE DROPDOWN */}
-              <div className="flex flex-col w-1/2">
-                <label
-                  htmlFor="attachment"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Attachment
-                </label>
-                <input
-                  type="file"
-                  name="attachment"
-                  id="attachment"
-                  value={editSms.attachment}
-                  className="p-2 border border-gray-300 rounded-md"
-                  onChange={handleChange}
-                  placeholder="Entere verox peron"
-                />
-              </div>
+              
             </div>
             {/* DROPDOWNS FIELD */}
             <div className="flex space-x-4">
@@ -167,43 +311,24 @@ export default function CreateSendEmail() {
                   placeholder="Entere verox peron"
                 />
               </div>
-              {/* PRODUCTS DROPDOWN */}
+              {/* TEXT MESSAGE DROPDOWN */}
               <div className="flex flex-col w-1/2">
                 <label
-                  htmlFor="products"
+                  htmlFor="attachment"
                   className="text-sm font-medium text-gray-700"
                 >
-                  Products
+                  Attachment
                 </label>
-                <div
-                  className="relative"
-                  onClick={toggleDropdownProducts}
-                  onMouseLeave={() => setProductsDropdown(false)}
-                >
-                  <button
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                    id="products"
-                    type="button"
-                  >
-                    {isEditMode ? editSms.products : defaultProductsText}
-                    <FaAngleDown className="ml-2 text-gray-400" />
-                  </button>
-                  {productsDropdown && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
-                      <ul className="py-2 text-sm text-gray-700">
-                        {products.map(({ key, name }) => (
-                          <li
-                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer z-10"
-                            key={key}
-                            onClick={() => handleDropdownProducts(name)}
-                          >
-                            {name}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
+                <input
+                  type="file"
+                  name="attachment"
+                  id="attachment"
+                  value={editSms.attachment}
+                  accept=".pdf"
+                  className="p-2 border border-gray-300 rounded-md"
+                  onChange={handleChange}
+                  placeholder="Entere verox peron"
+                />
               </div>
             </div>
 
@@ -220,7 +345,7 @@ export default function CreateSendEmail() {
               type="submit"
               className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
             >
-              {isEditMode ? 'Update' : 'Save'}
+              Send
             </button>
           </div>
         </div>
