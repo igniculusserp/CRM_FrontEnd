@@ -1,23 +1,32 @@
-import { useState, useEffect } from "react";
-import { FaBars } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import axios from "axios";
-import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { useState, useEffect } from 'react';
+import { FaBars } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+import axios from 'axios';
+import { tenant_base_url, protocal_url } from './../../../../../Config/config';
+import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
+
+
+import { ToastContainer } from 'react-toastify';
+import { showErrorToast } from '../../../../../utils/toastNotifications';
 
 export default function Pools() {
+
+  const name = getHostnamePart(); 
+  const bearer_token = localStorage.getItem('token');
+
   const [data, setData] = useState([]);
   const [active, setActive] = useState(true);
-  const [selectedPool, setSelectedPool] = useState(null);
+  const [selectedData, setSelectedData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const fullURL = window.location.href;
-  const url = new URL(fullURL);
-  const name = url.hostname.split(".")[0];
 
-  // Fetch all pool data
+
+
+  // Fetch all  data
+  //-------------------get-------------------get-------------------get-------------------get-------------------
   async function handleLead() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -30,17 +39,17 @@ export default function Pools() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
     }
   }
 
   useEffect(() => {
-    handleLead(); // Fetch the pools list on initial load
+    handleLead(); // Fetch the  list on initial load
   }, []);
 
-  // Delete pool by ID
+  // Delete  by ID
   const handleDelete = async (id) => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -52,29 +61,29 @@ export default function Pools() {
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert("Pool deleted successfully");
+      alert('Deleted successfully');
     } catch (error) {
       console.log(error);
-      alert("Failed to delete pool. Please try again.");
+      alert('Failed to delete. Please try again.');
     }
   };
 
   // Handle switching to the form for adding or editing
-  const handleEdit = (pool) => {
-    setSelectedPool(pool);
+  const handleEdit = (data) => {
+    setSelectedData(data);
     setActive(false);
     setIsEditMode(true);
   };
 
   const handleAdd = () => {
-    setSelectedPool({ id: "", poolName: "" });
+    setSelectedData({ poolName: '' });
     setActive(false);
     setIsEditMode(false);
   };
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
-    const bearer_token = localStorage.getItem("token");
+    
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
@@ -83,45 +92,46 @@ export default function Pools() {
 
     try {
       if (isEditMode) {
-        await axios.put(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/pool/edit/${formData.id}`,
-          { poolName: formData.poolName },
-          config
-        );
-        alert("Pool updated successfully");
+
+        if(!formData.poolName){
+          showErrorToast('Please enter pool name')
+          return;
+        }
+        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/Pool/edit/${formData.id}`,formData, config);
+        alert('Updated successfully');
       } else {
-        await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/pool/add`,
-          { poolName: formData.poolName },
-          config
-        );
-        alert("Pool added successfully");
+        if(!formData.poolName){
+          showErrorToast('Please enter pool name')
+          return;
+        }
+        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/Pool/add`, formData, config);
+        alert('Added successfully');
       }
 
-      handleLead(); // Refresh the list of pools
+      handleLead(); // Refresh the list
       setActive(true); // Switch back to the list view
-      setSelectedPool(null); // Reset the selected pool
+      setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      console.error("Error saving pool name", error);
-      alert("Failed to save pool. Please try again.");
+      console.error('Error saving name', error);
+      alert('Failed to save . Please try again.');
     }
   };
 
   // Handle cancel form action
   const handleCancel = () => {
     setActive(true);
-    setSelectedPool(null);
+    setSelectedData(null);
     setIsEditMode(false);
   };
 
-  // Form Component for Adding/Updating Pools
-  const PoolForm = ({ pool, isEditMode }) => {
-    const [formData, setFormData] = useState({ id: "", poolName: "" });
+  // Form Component for Adding/Updating
+  const EditForm = ({ data, isEditMode }) => {
+    const [formData, setFormData] = useState({ id: '', poolName: '' });
 
     useEffect(() => {
-      setFormData(pool || { id: "", poolName: "" });
-    }, [pool]);
+      setFormData(data || { id: '', poolName: '' });
+    }, [data]);
 
     // Handle form input changes
     const handleChange = (e) => {
@@ -131,27 +141,8 @@ export default function Pools() {
       });
     };
 
-
-    const [errors, setErrors] = useState({})
-
     const handleSubmit = (e) => {
       e.preventDefault();
-
-      const errors = {};
-
-    if (
-      !formData.poolName ||
-      formData.poolName.trim() === ''
-    ) {
-      errors.poolName = 'Pool name is required';
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
-      return;
-    }
-
-
       handleFormSubmit(formData);
     };
 
@@ -159,7 +150,7 @@ export default function Pools() {
       <div>
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">
-            {isEditMode ? "Edit Pool" : "Add Pool"}
+            {isEditMode ? 'Edit' : 'Add'}
           </h1>
           <button
             onClick={handleCancel}
@@ -173,7 +164,7 @@ export default function Pools() {
           <div className="w-full">
             <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-                Pool Information
+              Pool 
               </h2>
               <div className="py-2 px-4 min-h-screen relative">
                 <div className="flex space-x-4">
@@ -182,20 +173,15 @@ export default function Pools() {
                       htmlFor="poolName"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Pool Name
+                    Pool 
                     </label>
                     <input
                       type="text"
                       name="poolName"
-                      value={formData.poolName || ""}
+                      value={formData.poolName || ''}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
-                    {errors.poolName && (
-                      <span style={{ color: 'red' }}>
-                        {errors.poolName}
-                      </span>
-                    )}
                   </div>
                 </div>
 
@@ -203,7 +189,7 @@ export default function Pools() {
                   type="submit"
                   className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute top-[200px]"
                 >
-                  {isEditMode ? "Update Pool" : "Save Pool"}
+                  {isEditMode ? 'Update' : 'Save'}
                 </button>
               </div>
             </div>
@@ -218,7 +204,9 @@ export default function Pools() {
       {active ? (
         <>
           <div className="flex min-w-screen justify-between items-center">
-            <h1 className="text-3xl font-medium">Pools</h1>
+            <h1 className="text-3xl font-medium">
+            Pool
+            </h1>
             <button
               onClick={handleAdd}
               className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
@@ -236,7 +224,7 @@ export default function Pools() {
                     </th>
                     <th className="px-2 py-3 text-left border-r font-medium">
                       <div className="flex justify-between items-center text-sm">
-                        <span>Pools Name</span>
+                        <span>Pool</span>
                         <FaBars />
                       </div>
                     </th>
@@ -248,28 +236,28 @@ export default function Pools() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((pool) => (
+                  {data.map((data) => (
                     <tr
-                      key={pool.id}
+                      key={data.id}
                       className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
                     >
                       <td className="px-1 py-3 text-center">
                         <input type="checkbox" />
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {pool.poolName}
+                        {data.poolName}
                       </td>
                       <td className="px-2 py-4 flex gap-3 justify-center">
                         <MdEdit
                           size={25}
                           color="white"
                           className="bg-blue-500 rounded"
-                          onClick={() => handleEdit(pool)}
+                          onClick={() => handleEdit(data)}
                         />
                         <RiDeleteBin6Fill
                           size={25}
                           color="red"
-                          onClick={() => handleDelete(pool.id)}
+                          onClick={() => handleDelete(data.id)}
                         />
                       </td>
                     </tr>
@@ -280,7 +268,7 @@ export default function Pools() {
           </div>
         </>
       ) : (
-        <PoolForm pool={selectedPool} isEditMode={isEditMode} />
+        <EditForm data={selectedData} isEditMode={isEditMode} />
       )}
     </div>
   );
