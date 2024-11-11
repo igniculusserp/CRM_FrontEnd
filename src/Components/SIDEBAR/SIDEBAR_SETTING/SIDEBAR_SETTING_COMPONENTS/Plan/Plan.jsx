@@ -70,23 +70,10 @@ export default function Plan() {
     }));
   };
 
-  const [errors, setErrors] = useState({});
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const errors = {};
-
-    if (!formData.planType || formData.planType.trim() === '') {
-      errors.planType = 'Plan Type is required';
-    } else if (!formData.planAmount || formData.planAmount.trim() === '') {
-      errors.planAmount = 'Plan Amount is required';
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
-      return;
-    }
 
     if (isEditMode) {
       console.log('Edit User:', formData);
@@ -109,10 +96,10 @@ export default function Plan() {
     setIsDropdownVisibleplanType(!isDropdownVisibleplanType);
   };
 
-  const handleDropdownPlanType = (p) => {
+  const handleDropdownPlanType = (planType) => {
     setFormData((prevData) => ({
       ...prevData,
-      planType: p, // Ensure you're setting the correct field here
+      planType: planType, 
     }));
     setDefaultTextplanTypeDropDown(p);
     setIsDropdownVisibleplanType(false);
@@ -128,10 +115,7 @@ export default function Plan() {
         },
       };
       const response = await axios.get(
-        `${protocal_url}${
-          window.location.hostname.split('.')[0]
-        }.${tenant_base_url}/Admin/leadstatus/getall`,
-        config
+        `${protocal_url}${window.location.hostname.split('.')[0]}.${tenant_base_url}/Admin/leadstatus/getall`, config
       );
       setplanType(response.data.data);
       console.log('Plan data:', response.data.data);
@@ -267,11 +251,7 @@ export default function Plan() {
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                           placeholder="Enter Plan Amount"
                         />
-                        {errors.planAmount && (
-                          <span style={{ color: 'red' }}>
-                            {errors.planAmount}
-                          </span>
-                        )}
+                        
                       </div>
                       {/* -------------planType------------- */}
                       <div className="flex flex-col w-1/2 relative">
@@ -315,11 +295,7 @@ export default function Plan() {
                             </div>
                           )}
                         </div>
-                        {errors.planType && (
-                          <span style={{ color: 'red' }}>
-                            {errors.planType}
-                          </span>
-                        )}
+                      
                       </div>
                     </div>
 
