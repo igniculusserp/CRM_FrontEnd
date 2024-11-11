@@ -10,7 +10,7 @@ import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
 import { ToastContainer } from 'react-toastify';
 import { showErrorToast } from '../../../../../utils/toastNotifications';
 
-export default function Department() {
+export default function LeadStatus() {
 
   const name = getHostnamePart(); 
   const bearer_token = localStorage.getItem('token');
