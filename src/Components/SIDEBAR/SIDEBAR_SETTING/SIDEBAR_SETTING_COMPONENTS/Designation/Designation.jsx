@@ -141,8 +141,6 @@ export default function Department() {
       });
     };
 
-    const [errors, setErrors] = useState({});
-
     const handleSubmit = (e) => {
       e.preventDefault();
       handleFormSubmit(formData);
@@ -184,9 +182,6 @@ export default function Department() {
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
-                    {errors.groupName && (
-                      <span style={{ color: 'red' }}>{errors.groupName}</span>
-                    )}
                   </div>
                 </div>
 
