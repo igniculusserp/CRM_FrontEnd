@@ -6,15 +6,21 @@ import { FaAngleDown } from 'react-icons/fa';
 import axios from 'axios';
 import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 
+
+import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
+
+import { ToastContainer } from 'react-toastify';
+import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNotifications';
+
+
 export default function Qualification() {
   const [data, setData] = useState([]);
   const [active, setActive] = useState(true);
   const [selectedData, setSelectedData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const fullURL = window.location.href;
-  const url = new URL(fullURL);
-  const name = url.hostname.split('.')[0];
+
+  const name = getHostnamePart();
 
   // Fetch all data
   async function handleLead() {
@@ -91,33 +97,49 @@ export default function Qualification() {
       },
     };
 
+    const formData_POST = {        
+      userId: formData.userId,
+     userName: formData.userName,
+      qualification: formData.qualification,
+      workExpierence: formData.workExpierence,
+      skill: formData.skill,
+      achievements: formData.achievements,
+    }
+
+    const formData_PUT ={  
+        userId: formData.userId,
+        userName: formData.userName,
+        qualification: formData.qualification,
+        workExpierence: formData.workExpierence,
+        skill: formData.skill,
+        achievements: formData.achievements,
+      }
+    
+      if(!formData_POST.userName){
+        showErrorToast('Please select username')
+        return;
+      }
+      if(!formData_POST.qualification){
+        showErrorToast('Please enter qualification')
+        return;
+      } if(!formData_POST.workExpierence){
+        showErrorToast('Please select work expierence')
+        return;
+      } if(!formData_POST.skill){
+        showErrorToast('Please select skill')
+        return;
+      }if(!formData_POST.achievements){
+        showErrorToast('Please select achievements')
+        return;
+      }
+
     try {
       if (isEditMode) {
-        await axios.put(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/qualification/edit/${formData.id}`,
-          {
-            userId: formData.userId,
-            userName: formData.userName,
-            qualification: formData.qualification,
-            workExpierence: formData.workExpierence,
-            skill: formData.skill,
-            achievements: formData.achievements,
-          },
-          config
-        );
+        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/qualification/edit/${formData.id}`,formData_PUT,config);
+        showSuccessToast('Updated successfully')
         alert('Updated successfully');
       } else {
-        await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/qualification/add`,
-          {
-            userId: formData.userId,
-            userName: formData.userName,
-            qualification: formData.qualification,
-            workExpierence: formData.workExpierence,
-            skill: formData.skill,
-            achievements: formData.achievements,
-          },
-          config
+        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/qualification/add`, formData_POST, config
         );
         alert('Added successfully');
       }
@@ -127,8 +149,7 @@ export default function Qualification() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      console.error('Error saving qualification:', error);
-      alert('Failed to save. Please try again.');
+      showErrorToast(error.data.message)
     }
   };
 
@@ -275,9 +296,7 @@ export default function Qualification() {
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                           placeholder="Enter User Id"
                         />
-                        {errors.userId && (
-                          <span style={{ color: 'red' }}>{errors.userId}</span>
-                        )}
+
                       </div>
                       {/* CLIENT NAME FIELD */}
                       {isEditMode ? (
@@ -331,9 +350,9 @@ export default function Qualification() {
                                   <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                                     <ul className="py-2 text-sm text-gray-700">
                                       {assigned_ToDropDown.map(
-                                        ({ key, userName, userId }) => (
+                                        ({ userName, userId }, index) => (
                                           <li
-                                            key={key}
+                                            key={index}
                                             onClick={() =>
                                               handleDropdownassigned_ToDropDown(
                                                 userName,

@@ -76,7 +76,7 @@ export default function Department() {
   };
 
   const handleAdd = () => {
-    setSelectedData({ id: '', departmentName: '' });
+    setSelectedData({ departmentName: '' });
     setActive(false);
     setIsEditMode(false);
   };
