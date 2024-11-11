@@ -95,7 +95,27 @@ export default function EditEmailSetting({ setActiveComponent, handleGetAll, id 
       key: data.key,
     };
 
-    console.log("Request Body on Submit:", requestBody);
+
+    if(!requestBody.senderEmailId){
+      showErrorToast('Please enter sender email id')
+      return;
+    } 
+    if(!requestBody.relayPortNo){
+      showErrorToast('Please enter port number')
+      return;
+    }
+    if(!requestBody.relayServerName){
+      showErrorToast('Please enter server name')
+      return;
+    }  
+    if(!requestBody.senderEmailId){
+      showErrorToast('Please enter server email')
+      return;
+    }
+    if(!requestBody.key){
+      showErrorToast('Please enter key')
+      return;
+    }
 
     try {
       await axios.put(
@@ -106,7 +126,6 @@ export default function EditEmailSetting({ setActiveComponent, handleGetAll, id 
       alert("Successfully Updated");
       handleCancel();
     } catch (error) {
-      console.error("Error saving pool name", error);
       alert("Failed to save pool. Please try again.");
     }
   };
