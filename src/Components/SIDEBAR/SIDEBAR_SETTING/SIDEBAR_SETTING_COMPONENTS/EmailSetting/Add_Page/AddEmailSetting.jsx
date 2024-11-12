@@ -4,6 +4,9 @@ import axios from "axios";
 import { tenant_base_url, protocal_url } from "./../../../../../../Config/config";
 import { getHostnamePart } from "../../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
+import { showErrorToast, showSuccessToast } from "../../../../../../utils/toastNotifications"; 
+import { ToastContainer } from "react-toastify";
+
 //----------------------------Add Email Setting -----------------------
 export default function AddEmailSetting({ setActiveComponent, handleGetAll }) {
   const name = getHostnamePart();
@@ -45,13 +48,33 @@ export default function AddEmailSetting({ setActiveComponent, handleGetAll }) {
     // Constructing the request body
     const requestBody = {
       senderEmailId: data.senderEmailId,
-      relayServerName: data.relayServerName,
       relayPortNo: data.relayPortNo,
+      relayServerName: data.relayServerName,
       serveremail: data.serveremail,
       key: data.key,
     };
 
-    console.log("Request Body on Submit:", requestBody);
+  
+    if(!requestBody.senderEmailId){
+      showErrorToast('Please enter sender email id')
+      return;
+    } 
+    if(!requestBody.relayPortNo){
+      showErrorToast('Please enter port number')
+      return;
+    }
+    if(!requestBody.relayServerName){
+      showErrorToast('Please enter server name')
+      return;
+    }  
+    if(!requestBody.senderEmailId){
+      showErrorToast('Please enter server email')
+      return;
+    }
+    if(!requestBody.key){
+      showErrorToast('Please enter key')
+      return;
+    }
 
     try {
       await axios.post(

@@ -1,11 +1,15 @@
 import { useState } from "react";
+
 import PropTypes from "prop-types";
+
 import axios from "axios";
-import {
-  tenant_base_url,
-  protocal_url,
-} from "./../../../../../../Config/config";
-import { getHostnamePart } from "../../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+
+import {tenant_base_url, protocal_url,} from "./../../../../../../Config/config";
+
+import { getHostnamePart } from "../../../ReusableComponents/GlobalHostUrl";
+
+import { ToastContainer } from 'react-toastify';
+import { showErrorToast } from "../../../../../../utils/toastNotifications"; 
 
 //----------------------------Add SMS Setting -----------------------
 
@@ -49,7 +53,15 @@ export default function AddSMSSetting({ setActiveComponent, handleGetAll }) {
       apiKey: data.apiKey,
     };
 
-    console.log("Request Body on Submit:", requestBody);
+    if(!requestBody.senderId){
+      showErrorToast('Please enter sender-Id')
+      return;
+    }  
+    if(!requestBody.apiKey){
+      showErrorToast('Please enter API-Key')
+      return;
+    }
+
 
     try {
       await axios.post(
