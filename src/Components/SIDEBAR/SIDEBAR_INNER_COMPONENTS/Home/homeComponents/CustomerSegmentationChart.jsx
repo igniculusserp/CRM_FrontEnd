@@ -16,7 +16,7 @@ const data = [
     increase: true,
   },
   {
-    name: 'Enterprise',
+    name: 'Company',
     value: 350,
     color: '#ef4444',
     change: 24,

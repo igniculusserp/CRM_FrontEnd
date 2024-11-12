@@ -1,99 +1,93 @@
-import { FaBars } from 'react-icons/fa';
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
 
-export default function SalesReports({ currentReports, btn }) {
+// Example data
+const data = [
+  { time: '00:00', income: 80, expenses: 60 },
+  { time: '01:00', income: 105, expenses: 93 },
+  { time: '02:00', income: 95, expenses: 70 },
+  { time: '03:00', income: 110, expenses: 80 },
+  { time: '04:00', income: 125, expenses: 115 },
+  { time: '05:00', income: 130, expenses: 120 },
+  { time: '06:00', income: 145, expenses: 125 },
+  { time: '07:00', income: 140, expenses: 130 },
+];
+
+const SalesReportChart = () => {
   return (
-    <>
-      {/* SOURCE WISE TABLE */}
-      {currentReports && btn === 1 && (
-        <table className="min-w-full bg-white">
-          <thead>
-            <tr className="border-gray-300 border-b-2">
-              <th className="px-1 py-3 w-max">
-                <input type="checkbox" />
-              </th>
-              <th className="px-1 py-3 text-left border-r font-medium">
-                <div className="flex items-center justify-between">
-                  <span className="text-nowrap pr-2">Source</span>
-                  <FaBars />
-                </div>
-              </th>
-              <th className="px-2 py-3 text-left border-r font-medium">
-                <div className="flex items-center justify-between">
-                  <span className="text-nowrap pr-2">Net Total</span>
-                  <FaBars />
-                </div>
-              </th>
-              <th className="px-2 py-3 text-left border-r font-medium">
-                <span className="text-nowrap pr-2">Grand Total</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentReports.map((report, i) => (
-              <tr key={i} className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b">
-                <td className="px-1 py-4 text-center w-max">
-                  <input type="checkbox" />
-                </td>
-                <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                  {report.leadSource}
-                </td>
-                <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                  {report.netTotal}
-                </td>
-                <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                  {report.grandTotal}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-      
-      {/* EMPLOYEE WISE TABLE */}
-      {currentReports && btn === 2 && (
-        <table className="min-w-full bg-white">
-          <thead>
-            <tr className="border-gray-300 border-b-2">
-              <th className="px-1 py-3 w-max">
-                <input type="checkbox" />
-              </th>
-              <th className="px-1 py-3 text-left border-r font-medium">
-                <div className="flex items-center justify-between">
-                  <span className="text-nowrap pr-2">Employee Name</span>
-                  <FaBars />
-                </div>
-              </th>
-              <th className="px-2 py-3 text-left border-r font-medium">
-                <div className="flex items-center justify-between">
-                  <span className="text-nowrap pr-2">Net Total</span>
-                  <FaBars />
-                </div>
-              </th>
-              <th className="px-2 py-3 text-left border-r font-medium">
-                <span className="text-nowrap pr-2">Grand Total</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentReports.map((report, i) => (
-              <tr key={i} className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b">
-                <td className="px-1 py-4 text-center w-max">
-                  <input type="checkbox" />
-                </td>
-                <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                  {report.employeeName}
-                </td>
-                <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                  {report.netTotal}
-                </td>
-                <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                  {report.grandTotal}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </>
+    <div className="w-full max-w-4xl mx-auto">
+      <div className="flex w-full items-center justify-between">
+        <h2 className="text-xl font-thin text-left mb-4">Sales Report</h2>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-[#8884d8] rounded-sm"></div>
+            <span>Income</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-[#82ca9d] rounded-sm"></div>
+            <span>Expenses</span>
+          </div>
+        </div>
+      </div>
+      <ResponsiveContainer width="100%" height={250}>
+        <AreaChart
+          data={data}
+          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+        >
+          <defs>
+            {/* Gradient for Incomes */}
+            <linearGradient id="colorIncome" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+            </linearGradient>
+            {/* Gradient for Expenses */}
+            <linearGradient id="colorExpenses" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+            </linearGradient>
+          </defs>
+
+          <XAxis dataKey="time" />
+          <YAxis />
+          <CartesianGrid strokeDasharray="3 3" />
+          <Tooltip />
+          <Legend />
+
+          {/* Area for Incomes */}
+          <Area
+            type="monotone"
+            dataKey="income"
+            stroke="#8884d8"
+            fillOpacity={1}
+            fill="url(#colorIncome)"
+            strokeWidth={3}
+            dot={{ stroke: '#8884d8', strokeWidth: 2, fill: '#8884d8' }}
+            activeDot={{ r: 6 }}
+          />
+
+          {/* Area for Expenses */}
+          <Area
+            type="monotone"
+            dataKey="expenses"
+            stroke="#82ca9d"
+            fillOpacity={1}
+            fill="url(#colorExpenses)"
+            strokeWidth={3}
+            dot={{ stroke: '#82ca9d', strokeWidth: 2, fill: '#82ca9d' }}
+            activeDot={{ r: 6 }}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
   );
-}
+};
+
+export default SalesReportChart;
