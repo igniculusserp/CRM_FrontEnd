@@ -1,28 +1,28 @@
 //react
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 //external Packages
-import axios from "axios";
-import * as XLSX from "xlsx";
-import { jsPDF } from "jspdf";
-import autoTable from "jspdf-autotable";
+import axios from 'axios';
+import * as XLSX from 'xlsx';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 //React Icons
-import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
-import { IoIosMail } from "react-icons/io";
-import { BiEdit } from "react-icons/bi";
-import { FaBars } from "react-icons/fa";
-import { VscSettings } from "react-icons/vsc";
-import { ImFilter } from "react-icons/im";
-import { MdCall } from "react-icons/md";
+import { FaAngleDown, FaPhoneAlt } from 'react-icons/fa';
+import { IoIosMail } from 'react-icons/io';
+import { BiEdit } from 'react-icons/bi';
+import { FaBars } from 'react-icons/fa';
+import { VscSettings } from 'react-icons/vsc';
+import { ImFilter } from 'react-icons/im';
+import { MdCall } from 'react-icons/md';
 
 //Folder Imported
-import dp from "./../../../../assets/images/dp.png";
-import { tenant_base_url, protocal_url } from "../../../../Config/config";
-import MassEmail from "../MassEmail/MassEmail";
-import {SearchElement} from "../SearchElement/SearchElement";
-import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import dp from './../../../../assets/images/dp.png';
+import { tenant_base_url, protocal_url } from '../../../../Config/config';
+import MassEmail from '../MassEmail/MassEmail';
+import { SearchElement } from '../SearchElement/SearchElement';
+import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 
 const name = getHostnamePart();
 
@@ -45,7 +45,7 @@ export default function Client() {
   //------------------------------------------------------------------------------------------------
   //----------------GET----------------
   async function handleLead() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -63,7 +63,7 @@ export default function Client() {
 
       // setfilteredLeads_assigned_To(data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -71,7 +71,7 @@ export default function Client() {
   //------------------------------------------------------------------------------------------------
   //----------------Managing Color of Assigned To----------------
   const getAllUsers = async () => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
     try {
       const config = {
         headers: {
@@ -86,7 +86,7 @@ export default function Client() {
       const data = response.data?.data;
       setUsers(data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
     }
   };
@@ -96,15 +96,15 @@ export default function Client() {
     getAllUsers();
   }, []);
 
-  const [leadStatus, setLeadStatus] = useState("All Lead"); // Track the selected lead status
-  const [assignedTo, setAssignedTo] = useState("Managed By"); // Track the selected assigned user
+  const [leadStatus, setLeadStatus] = useState('All Lead'); // Track the selected lead status
+  const [assignedTo, setAssignedTo] = useState('Managed By'); // Track the selected assigned user
 
   // Function to handle both filters
   function handle_LeadStatus(statusValue) {
     let filteredLeads = getleads;
 
     // Filter by leadStatus if it's not 'ALL' or null
-    if (statusValue !== null && statusValue !== "All Leads") {
+    if (statusValue !== null && statusValue !== 'All Leads') {
       filteredLeads = filteredLeads.filter(
         (lead) => lead.leadesStatus === statusValue
       );
@@ -115,7 +115,7 @@ export default function Client() {
 
   function handle_AssignedTo(assignedToValue) {
     let filteredLeads = getleads;
-    if (assignedToValue !== null && assignedToValue !== "Assigned to") {
+    if (assignedToValue !== null && assignedToValue !== 'Assigned to') {
       filteredLeads = filteredLeads.filter(
         (lead) => lead.assigned_To === assignedToValue
       );
@@ -146,7 +146,7 @@ export default function Client() {
   //----------------STATUS DROPDOWN----------------
   const [allLeadData, setallLeadData] = useState([]);
   async function handleLeadStatus() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
@@ -160,7 +160,7 @@ export default function Client() {
       );
       setallLeadData(response.data.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -180,7 +180,7 @@ export default function Client() {
   //----------------ASSIGNED_TO DROPDOWN----------------
   const [allAssigned_To_Data, setallAssigned_To_Data] = useState([]);
   async function handleallAssigned_To() {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
@@ -194,7 +194,7 @@ export default function Client() {
       );
       setallAssigned_To_Data(response.data.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error('Error fetching leads:', error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -206,8 +206,8 @@ export default function Client() {
   //------------------------------------------------------------------------------------------------
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
-    { key: 1, value: "Table View" },
-    { key: 2, value: "Grid View" },
+    { key: 1, value: 'Table View' },
+    { key: 2, value: 'Grid View' },
   ];
 
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
@@ -236,14 +236,14 @@ export default function Client() {
   //----------------ACTION BAR DROPDOWN----------------
   const [dropActionsMenu, setdropActionsMenu] = useState([
     // { key: 0, value: "Actions" },
-    { key: 1, value: "Mass Delete" },
-    { key: 2, value: "Mass Update" },
-    { key: 3, value: "Mass Email" },
-    { key: 4, value: "Approve Leads" },
+    { key: 1, value: 'Mass Delete' },
+    { key: 2, value: 'Mass Update' },
+    { key: 3, value: 'Mass Email' },
+    { key: 4, value: 'Approve Leads' },
     // { key: 5, value: "Add to Campaign" },
     // { key: 6, value: "Export Leads" },
-    { key: 7, value: "Export To Excel" },
-    { key: 8, value: "Export To PDF" },
+    { key: 7, value: 'Export To Excel' },
+    { key: 8, value: 'Export To PDF' },
     // { key: 9, value: "Create SO" },
     // { key: 10, value: "Convert Lead to Contact" },
   ]);
@@ -256,9 +256,9 @@ export default function Client() {
 
   const handleActionButton = async (value, leadId) => {
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
-    if (value === "Mass Delete") {
+    if (value === 'Mass Delete') {
       const userConfirmed = confirm(
-        "Are you sure you want to Delete the selected Leads?"
+        'Are you sure you want to Delete the selected Leads?'
       );
       if (userConfirmed) {
         massDelete();
@@ -266,9 +266,9 @@ export default function Client() {
     }
 
     // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
-    if (value === "Mass Email") {
+    if (value === 'Mass Email') {
       const userConfirmed = confirm(
-        "Are you sure you want to Send E-Mail to the selected Data?"
+        'Are you sure you want to Send E-Mail to the selected Data?'
       );
       if (userConfirmed) {
         openMassEmailModal(selectedEmails);
@@ -276,9 +276,9 @@ export default function Client() {
     }
 
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
-    if (value === "Sheet View") {
+    if (value === 'Sheet View') {
       const userConfirmed = confirm(
-        "Are you sure you want to export the selected Leads?"
+        'Are you sure you want to export the selected Leads?'
       );
       if (userConfirmed) {
         exportToExcel();
@@ -286,9 +286,9 @@ export default function Client() {
     }
 
     // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
-    if (value === "Print View") {
+    if (value === 'Print View') {
       const userConfirmed = confirm(
-        "Are you sure you want to export the selected Leads?"
+        'Are you sure you want to export the selected Leads?'
       );
       if (userConfirmed) {
         exportToPDF();
@@ -296,9 +296,9 @@ export default function Client() {
     }
 
     // ---------------------->Convert Lead to Contact FUNCTIONALITY*<----------------------
-    if (value === "Convert Lead to Contact") {
+    if (value === 'Convert Lead to Contact') {
       const userConfirmed = confirm(
-        "Are you sure you want to convert this lead to a contact?"
+        'Are you sure you want to convert this lead to a contact?'
       );
       if (userConfirmed) {
         convertType();
@@ -307,13 +307,13 @@ export default function Client() {
   };
   // ---------------------->MASS DELETE FUNCTIONALITY---###API###<----------------------
   const massDelete = async () => {
-    const bearer_token = localStorage.getItem("token");
+    const bearer_token = localStorage.getItem('token');
 
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         data: { contactsIds: selectedIds },
       };
@@ -322,7 +322,7 @@ export default function Client() {
         `${protocal_url}${name}.${tenant_base_url}/Contact/contact/massdelete`,
         config
       );
-      alert("Mass Deleted run");
+      alert('Mass Deleted run');
       handleLead();
       console.log(response);
 
@@ -331,7 +331,7 @@ export default function Client() {
       );
       setSelectedIds([]);
     } catch (error) {
-      console.error("Error deleting leads:", error);
+      console.error('Error deleting leads:', error);
     }
   };
 
@@ -346,7 +346,7 @@ export default function Client() {
     if (selectedEmails.length > 0) {
       setIsModalOpen(true); // Open the modal
     } else {
-      alert("Please select at least one row for mass emailing.");
+      alert('Please select at least one row for mass emailing.');
     }
   };
 
@@ -362,7 +362,7 @@ export default function Client() {
       selectedIds.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
-      alert("No leads selected to export");
+      alert('No leads selected to export');
       return;
     }
 
@@ -371,10 +371,10 @@ export default function Client() {
 
     // Create a new workbook and append the worksheet
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Selected Leads");
+    XLSX.utils.book_append_sheet(wb, ws, 'Selected Leads');
 
     // Export the workbook to an Excel file
-    XLSX.writeFile(wb, "SelectedLeadsData.xlsx");
+    XLSX.writeFile(wb, 'SelectedLeadsData.xlsx');
   };
 
   //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
@@ -383,18 +383,18 @@ export default function Client() {
       selectedIds.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
-      alert("No leads selected to export");
+      alert('No leads selected to export');
       return;
     }
     const doc = new jsPDF();
     // const role = matchedUser?.role;
     const tableColumn = [
-      "ID",
-      "Name",
-      "Email",
-      "Phone No.",
-      "Lead Source",
-      "Assigned To",
+      'ID',
+      'Name',
+      'Email',
+      'Phone No.',
+      'Lead Source',
+      'Assigned To',
     ];
     // Map the leads data to rows
     const tableRows = leadsToExport?.map((lead) => [
@@ -406,24 +406,24 @@ export default function Client() {
       lead.assigned_To,
     ]);
     // Add a title to the PDF
-    doc.text("Selected Leads Data", 14, 16);
+    doc.text('Selected Leads Data', 14, 16);
     // Add the table to the PDF
     autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
       startY: 22, // Position the table after the title
     });
-    doc.save("Leads.pdf");
+    doc.save('Leads.pdf');
   };
 
   //---------------------->---------------------->MANAGE_BY/ASSIGNED_TO<----------------------<ARVIND----------------------
   const roleColors = [
     // "#f97316", // Red
-    "#2563eb", // blue
-    "#65a30d", // LimeGreen
-    "#7c3aed", // MediumPurple
-    "#0369a1", //Sky
-    "#e11d48", //Rose
+    '#2563eb', // blue
+    '#65a30d', // LimeGreen
+    '#7c3aed', // MediumPurple
+    '#0369a1', //Sky
+    '#e11d48', //Rose
   ];
 
   // //---------------------->---------------------->CONVERT_LEADS_TO_CONTACTS<----------------------<----------------------
@@ -498,7 +498,7 @@ export default function Client() {
         : [...prevSelectedEmails, item.email];
 
       // Log the updated selectedEmails
-      console.log("Updated Selected Emails:", newSelectedEmails);
+      console.log('Updated Selected Emails:', newSelectedEmails);
       return newSelectedEmails;
     });
   };
@@ -538,7 +538,7 @@ export default function Client() {
 
   // ----------------------------- Date Filter -----------------------------
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split('T')[0];
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(today);
 
@@ -569,23 +569,18 @@ export default function Client() {
     }
   }, [startDate, endDate]);
 
-
-  
   // ------------------------------ Search Function ----------------------------------
 
-  
-  const [searchTerm, setSearchTerm] = useState(""); // State for search term
-
+  const [searchTerm, setSearchTerm] = useState(''); // State for search term
 
   useEffect(() => {
-    const filtered = getleads.filter((lead) =>
-      lead.clientName?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
-      lead.mobileNo?.includes(searchTerm)
+    const filtered = getleads.filter(
+      (lead) =>
+        lead.clientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        lead.mobileNo.includes(searchTerm)
     );
     setFilteredLeads(filtered);
   }, [searchTerm, getleads]);
-
-
 
   return (
     //parent
@@ -667,7 +662,10 @@ export default function Client() {
           {/* PART-I */}
           {/* Search Box */}
 
-          <SearchElement value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+          <SearchElement
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
 
         {/* PART-II */}
@@ -752,8 +750,8 @@ export default function Client() {
           </div>
         </div>
       </div>
-      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{" "}
-      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{" "}
+      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{' '}
+      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{' '}
       {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}
       <div className="mt-3 flex justify-between items-center gap-3">
         <div className="flex gap-3">
@@ -799,7 +797,7 @@ export default function Client() {
       {/*-------Table-------*/}
       <div className="overflow-x-auto mt-3">
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === "Table View" && (
+          {selectedViewValue === 'Table View' && (
             <table className="min-w-full bg-white">
               <thead>
                 <tr className="border-gray-300 border-b-2">
@@ -848,9 +846,6 @@ export default function Client() {
                       <span>Managed By</span>
                       <FaBars />
                     </div>
-                  </th>
-                  <th className="px-1 py-3">
-                    <VscSettings />
                   </th>
                 </tr>
               </thead>
@@ -907,18 +902,18 @@ export default function Client() {
                             <span className="">
                               {item.segments
                                 .filter((segment) => segment.length > 1)
-                                .join(", ")}
+                                .join(', ')}
                             </span>
                           )}
                         </div>
                       </td>
 
                       <td className="px-1 py-4 border-b border-gray-300 text-sm text-center">
-                        {item.subscription_start_date?.split("T")[0]}
+                        {item.subscription_start_date?.split('T')[0]}
                       </td>
 
                       <td className="px-1 py-4 border-b border-gray-300 text-sm text-center">
-                        {item.subscription_end_date?.split("T")[0]}
+                        {item.subscription_end_date?.split('T')[0]}
                       </td>
 
                       {/* Assigned To and User Role */}
@@ -927,10 +922,10 @@ export default function Client() {
                           <div
                             className="text-xs font-semibold text-white  py-2  mx-auto rounded-full w-[90%]"
                             style={{
-                              backgroundColor: roleColor ? roleColor : "#000",
-                              borderRadius: "8px",
+                              backgroundColor: roleColor ? roleColor : '#000',
+                              borderRadius: '8px',
                               padding: 8,
-                              textAlign: "center",
+                              textAlign: 'center',
                             }}
                           >
                             {item.assigned_To} - ({matchedUser?.role})
@@ -952,7 +947,7 @@ export default function Client() {
           {/* ------------GRID------------ */}
           {/* ------------GRID------------ */}
           {/* ------------GRID------------ */}
-          {selectedViewValue === "Grid View" && (
+          {selectedViewValue === 'Grid View' && (
             <>
               <div className="min-w-full">
                 <div className="grid grid-cols-3 gap-3">
@@ -1026,7 +1021,7 @@ export default function Client() {
           )}
         </div>
 
-        {selectedViewValue === "Table View" && (
+        {selectedViewValue === 'Table View' && (
           <>
             <div className="flex justify-end m-4">
               <nav>
@@ -1041,8 +1036,8 @@ export default function Client() {
                           onClick={() => paginate(i + 1)}
                           className={`px-4 py-2 mx-1 ${
                             currentPage === i + 1
-                              ? "bg-blue-500 text-white"
-                              : "bg-white text-gray-700 border"
+                              ? 'bg-blue-500 text-white'
+                              : 'bg-white text-gray-700 border'
                           }`}
                         >
                           {i + 1}

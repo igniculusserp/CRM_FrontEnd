@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FaAngleDown } from 'react-icons/fa';
 import {
   BarChart,
@@ -22,29 +23,80 @@ const data = [
 ];
 
 const SalesPipelineChart = () => {
+  const [text, setText] = useState({
+    filter: '',
+  });
+  const [filterDropdown, setFilterDropdown] = useState(false);
+  const [filterDropdownText, setFilterDropdownText] = useState('6 Months');
+
+  // TOGGLE FILTER DATE DROPDOWN
+  const toggleFilterDropdown = () => {
+    setFilterDropdown(!filterDropdown);
+  };
+
+  const handleFilterDropdown = (name) => {
+    setFilterDropdownText(name);
+    setFilterDropdown(!filterDropdown);
+    setText((prev) => ({
+      ...prev,
+      [name]: name,
+    }));
+  };
+
+  const filterData = [
+    { id: 1, name: '3 months' },
+    { id: 1, name: '6 months' },
+    { id: 1, name: '1 years' },
+  ];
+
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-thin text-left mb-4">Sales Pipeline</h2>
         <div className="flex items-center gap-3">
-            <div className='flex items-center gap-1'>
-                <div className="w-3 h-3 rounded-sm bg-blue-500"></div>
-                <span>Prospecting</span>
-            </div>
-            <div className='flex items-center gap-1'>
-                <div className="w-3 h-3 rounded-sm bg-cyan-500"></div>
-                <span>Proposal</span>
-            </div>
-            <div className='flex items-center gap-1'>
-                <div className="w-3 h-3 rounded-sm bg-purple-500"></div>
-                <span>Negotiation</span>
-            </div>
-            <button className='py-2 px-4 bg-white border border-gray-600 text-gray-700 flex items-center justify-between gap-2 rounded-md'>
-            <span>6 months</span>
-            <span>
-                <FaAngleDown />
-            </span>
+          <div className="flex items-center gap-1">
+            <div className="w-3 h-3 rounded-sm bg-[#8884d8]"></div>
+            <span>Prospecting</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <div className="w-3 h-3 rounded-sm bg-[#82ca9d]"></div>
+            <span>Proposal</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <div className="w-3 h-3 rounded-sm bg-blue-500"></div>
+            <span>Negotiation</span>
+          </div>
+          {/* ------------- FILTER DROPDOWN */}
+          <div
+            className="relative"
+            onClick={toggleFilterDropdown}
+            onMouseLeave={() => setFilterDropdown(false)}
+          >
+            <button
+              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 max-w-44 truncate"
+              id="filter"
+              type="button"
+            >
+              {filterDropdownText}
+              <FaAngleDown className="ml-2 text-gray-900" />
             </button>
+            {filterDropdown && (
+              <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+                <ul className="py-2 text-sm text-gray-700">
+                  {filterData.map(({ id, name }) => (
+                    <li
+                      key={id}
+                      className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                      onClick={() => handleFilterDropdown(name)}
+                    >
+                      {name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+          {/* -------------- END FILTER DROPDOWN ------------ */}
         </div>
       </div>
       <ResponsiveContainer width="100%" height={200}>
@@ -61,7 +113,7 @@ const SalesPipelineChart = () => {
           {/* Bars for different stages */}
           <Bar dataKey="prospecting" fill="#8884d8" barSize={20} />
           <Bar dataKey="proposal" fill="#82ca9d" barSize={20} />
-          <Bar dataKey="negotiation" fill="#8884d8" barSize={20} />
+          <Bar dataKey="negotiation" fill="#2196F3" barSize={20} />
         </BarChart>
       </ResponsiveContainer>
     </div>
