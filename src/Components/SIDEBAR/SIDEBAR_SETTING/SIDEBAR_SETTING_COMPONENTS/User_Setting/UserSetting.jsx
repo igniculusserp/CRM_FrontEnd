@@ -3,11 +3,12 @@ import { useState, useEffect } from "react";
 import UserSettingForm from "./UserSettingForm";
 import UserSettingTable from "./UserSettingTable";
 import { tenant_base_url, protocal_url } from "../../../../../Config/config";
+import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
+
 
 export default function UserSetting() {
-  const fullURL = window.location.href;
-  const url = new URL(fullURL);
-  const name = url.hostname.split(".")[0];
+
+  const name = getHostnamePart()
 
   const [active, setActive] = useState(true); // Toggle between form and table
   const [isEditMode, setIsEditMode] = useState(false); // Track if we're in edit mode

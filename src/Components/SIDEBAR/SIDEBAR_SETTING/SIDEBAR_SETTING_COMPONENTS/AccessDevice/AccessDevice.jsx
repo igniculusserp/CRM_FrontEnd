@@ -6,12 +6,17 @@ import { RiDeleteBin6Fill } from 'react-icons/ri';
 import axios from 'axios';
 import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 
+import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
+import { ToastContainer } from 'react-toastify';
+import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNotifications';
+
+
+
 export default function AccessDevice() {
   const [data, setData] = useState([]);
   const [activeComponent, setActiveComponent] = useState('Table');
-  const fullURL = window.location.href;
-  const url = new URL(fullURL);
-  const name = url.hostname.split('.')[0];
+
+  const name = getHostnamePart();
   const [idGet, setIdGet] = useState('');
 
   // -------------------Fetch All Access Devices---------------------
@@ -185,8 +190,8 @@ export default function AccessDevice() {
       userId: '',
       userName: '',
       deviceType: '',
-      deviceAddress: '',
       deviceToken: '',
+      deviceAddress: '',
     });
 
     //----------------------------------------------------------------------------------------
@@ -231,7 +236,6 @@ export default function AccessDevice() {
     const handleDropdownStatusSelection = (device) => {
       setIsStatusDropdownOpen(false);
       setDefaultTextStatus(device.userName);
-      console.log('@@@===', isStatusDropdownOpen);
       setAddDevice((prev) => ({
         ...prev,
         userName: device.firstName,
@@ -261,22 +265,31 @@ export default function AccessDevice() {
           },
         };
 
-        // Make sure to pass the `addDevice` data in the request body
-        await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/Setting/addAccessDevice`,
-          addDevice, // Data to send
-          config
-        );
+        if(!addDevice.userName){
+          showErrorToast('Please select user')
+          return;
+        }
+        if(!addDevice.deviceType){
+          showErrorToast('Please enter device type')
+          return;
+        }
+        if(!addDevice.deviceToken){
+          showErrorToast('Please enter device token')
+          return;
+        }
+        if(!addDevice.deviceAddress){
+          showErrorToast('Please enter device address')
+          return;
+        }
+       
+
+        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Setting/addAccessDevice`, addDevice, config);
         alert('Access Device added successfully');
         window.location.reload();
-        // Redirect or reset form after successful submission
+
       } catch (error) {
-        if (error.response) {
-          console.error('Error data:', error.response.data);
-        } else {
-          console.error('Error:', error.message);
-        }
-        alert('An error occurred. Please try again.');
+        console.log(error);
+        alert(error.response.data.message);
       }
     };
 
