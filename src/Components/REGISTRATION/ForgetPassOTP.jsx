@@ -176,7 +176,7 @@ export default function ForgetPassOTP() {
                 />
                 <div className="flex flex-col justify-center items-center gap-2 mt-6  ">
                   <div className="text-sm">
-                    <p>Code was sent to your Mail Address </p>
+                    <p>Code has been sent to your Mail Address </p>
                     <p className="text-center text-cyan-500">{email}</p>
                   </div>
                   <div className="mt-6">

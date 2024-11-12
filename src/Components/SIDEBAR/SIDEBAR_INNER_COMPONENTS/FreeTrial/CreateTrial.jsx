@@ -113,7 +113,10 @@ export default function CreateTrial() {
 
   useEffect(() => {
     handleSegment();
-  }, []);
+    setdefaultTextSegmentDropDown(
+      editTrail.segments.length > 0 ? editTrail.segments.join(", ") : "Select Segment"
+    );
+  }, [editTrail]);
 
   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
     useState("Select Segment");
@@ -141,6 +144,11 @@ export default function CreateTrial() {
       ...prev,
       segments: updatedSegments,
     }));
+
+    setdefaultTextSegmentDropDown(
+      updatedSegments.length > 0 ? updatedSegments.join(", ") : "Select Segment"
+    );
+
 
     console.log("Selected segments:", updatedSegments);
   };
