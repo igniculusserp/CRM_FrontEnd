@@ -20,7 +20,7 @@ export default function EditEmailSetting({ setActiveComponent, handleGetAll, id 
     relayServerName: "",
     relayPortNo: "",
     serveremail: "",
-    key: "",
+    password: '',
   });
 
   // -------------------------------Edit Email Setting Handle Cancel Button ------------------------
@@ -155,15 +155,15 @@ export default function EditEmailSetting({ setActiveComponent, handleGetAll, id 
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
-                      htmlFor="senderEmailId"
+                      htmlFor="serveremail"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Sender Email
+                      Email Id
                     </label>
                     <input
-                      type="text"
-                      name="senderEmailId"
-                      value={data.senderEmailId}
+                      type="email"
+                      name="serveremail"
+                      value={data.serveremail}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       placeholder="Enter Sender Email"
@@ -171,6 +171,43 @@ export default function EditEmailSetting({ setActiveComponent, handleGetAll, id 
                   </div>
                   {/* -------------Port------------- */}
                   <div className="flex flex-col w-1/2 relative">
+                    <label
+                      htmlFor="relayServerName"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Host Name
+                    </label>
+                    <input
+                      type="text"
+                      name="relayServerName"
+                      value={data.relayServerName}
+                      onChange={handleChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
+                </div>
+
+                {/* -------------2------------- */}
+                <div className="flex space-x-4">
+                  {/* -------------Server Oblig Relay------------- */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="password"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      name="password"
+                      value={data.password}
+                      onChange={handleChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
+
+                  {/* -------------Key Email Template------------- */}
+                  <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="relayPortNo"
                       className="text-sm font-medium text-gray-700"
@@ -187,56 +224,20 @@ export default function EditEmailSetting({ setActiveComponent, handleGetAll, id 
                   </div>
                 </div>
 
-                {/* -------------2------------- */}
-                <div className="flex space-x-4">
-                  {/* -------------Server Oblig Relay------------- */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="relayServerName"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Relay Server Name / Host Name
-                    </label>
-                    <input
-                      type="text"
-                      name="relayServerName"
-                      value={data.relayServerName}
-                      onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-
-                  {/* -------------Key Email Template------------- */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="serveremail"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Email
-                    </label>
-                    <input
-                      type="text"
-                      name="serveremail"
-                      value={data.serveremail}
-                      onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                </div>
-
                 {/* -------------3------------- */}
                 <div className="flex space-x-4">
+                  {/* SENDER EMAIL ID */}
                   <div className="flex flex-col w-1/2">
                     <label
-                      htmlFor="key"
+                      htmlFor="senderEmailId"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Key
+                      Sender Email Id
                     </label>
                     <input
-                      type="text"
-                      name="key"
-                      value={data.key}
+                      type="email"
+                      name="senderEmailId"
+                      value={data.senderEmailId}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />

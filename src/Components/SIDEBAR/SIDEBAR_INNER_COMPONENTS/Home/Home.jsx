@@ -138,7 +138,7 @@ export default function Home() {
                 <FaUsersRectangle className="text-3xl" />
               </button>
               <div className="flex flex-col items-center justify-center">
-                <span className="font-bold text-2xl">{currentMonthLeads}</span>
+                <span className="font-bold text-xl">{currentMonthLeads}</span>
                 <button
                   className={`flex text-[12px] font-thin p-1 items-center ${
                     leadStatus == 'up' ? 'bg-green-100' : 'bg-red-100'
@@ -163,7 +163,7 @@ export default function Home() {
               style={{ maxWidth: `${Math.abs(Math.round(leadsPercentage))}%` }}
             ></div>
           </div>
-          <h3 className="font-light">Last Month Relative: {leadsDiffrence}</h3>
+          <h3 className="font-light text-sm">Last Month Relative: <span className='text-sm'>{leadsDiffrence}</span></h3>
         </div>
         {/* ------- CARD ------- */}
         <div className="flex flex-col justify-between py-4 px-4 bg-white rounded-md shadow-lg h-[210px] w-1/4">
@@ -176,7 +176,7 @@ export default function Home() {
                 <CiBadgeDollar className="text-4xl" />
               </button>
               <div className="flex flex-col gap-1">
-                <span className="font-bold text-2xl">
+                <span className="font-bold text-xl">
                   $ {currentMonthSales}
                 </span>
                 <button
@@ -205,8 +205,8 @@ export default function Home() {
               }}
             ></div>
           </div>
-          <h3 className="font-light">
-            Last Month Relative: $ {revenueDiffrence}
+          <h3 className="font-light text-sm">
+            Last Month Relative: $ <span className='text-sm'>{revenueDiffrence}</span>
           </h3>
         </div>
         {/* ------- CARD ------- */}
@@ -220,7 +220,7 @@ export default function Home() {
                 <FcSalesPerformance className="text-white text-3xl" />
               </button>
               <div className="flex flex-col gap-1">
-                <span className="font-bold text-2xl">
+                <span className="font-bold text-xl">
                   {currentMonthInterestedLeads}
                 </span>
                 <button
@@ -249,8 +249,8 @@ export default function Home() {
               }}
             ></div>
           </div>
-          <h3 className="font-light">
-            Last Month Relative: {intrestedLeadsDiffrence}
+          <h3 className="font-light text-sm">
+            Last Month Relative: <span className='text-sm'>{intrestedLeadsDiffrence}</span>
           </h3>
         </div>
         {/* ------- CARD ------- */}
@@ -264,7 +264,7 @@ export default function Home() {
                 <FaUsers className="text-white text-3xl" />
               </button>
               <div className="flex flex-col gap-1">
-                <span className="font-bold text-2xl">
+                <span className="font-bold text-xl">
                   {currentMonthClientCount}
                 </span>
                 <button
@@ -293,7 +293,7 @@ export default function Home() {
               }}
             ></div>
           </div>
-          <h3 className="font-light">Last Month Relative: {clientDiffrence}</h3>
+          <h3 className="font-light text-sm">Last Month Relative: <span className='text-sm'>{clientDiffrence}</span></h3>
         </div>
       </div>
       {/* ------- PROGRESS BAR ------- */}
@@ -325,8 +325,8 @@ export default function Home() {
             </div>
             <div className="flex w-full items-center justify-between">
               <div className="flex items-center gap-1">
-                <div className="w-1 h-3 bg-blue-300"></div>
-                <span className="text-sm">Enterprise</span>
+                <div className="w-1 h-3 bg-blue-600"></div>
+                <span className="text-sm">Company</span>
               </div>
               <div className="flex gap-1">
                 <span className="text-sm text-gray-700">1.650</span>
