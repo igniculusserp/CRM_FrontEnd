@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { FaAngleDown } from "react-icons/fa";
 import ReactQuill from "react-quill";
+import { IoInformationCircle } from "react-icons/io5";
 import axios from "axios";
 
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
@@ -27,7 +28,7 @@ const CreateFollowUp = () => {
     segments: [],
     call_bck_DateTime: "",
     lastModifiedBy: "",
-    leadesStatus:""
+    leadesStatus: "",
   });
 
   const [description, setDescription] = useState(""); // For Quill editor
@@ -52,7 +53,6 @@ const CreateFollowUp = () => {
       );
 
       if (response.status === 200 && response.data.isSuccess) {
-        
         const followup = response.data.data;
         setFollowupsData({
           id: followup.id,
@@ -69,8 +69,8 @@ const CreateFollowUp = () => {
           leadesStatus: followup.leadesStatus || "",
         });
         // Set description in Quill editor
-          setDescription(followup.description || "");
-        }
+        setDescription(followup.description || "");
+      }
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -87,31 +87,7 @@ const CreateFollowUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const errors = {};
-
-    // MOBILE NUMBER VALIDATION
-    // if (
-    //   !followupsData.mobileNo ||
-    //   isNaN(followupsData.mobileNo) ||
-    //   followupsData.mobileNo !== 10 ||
-    //   followupsData.mobileNo === ""
-    // ) {
-    //   errors.mobileNo = "Enter a valid 10-digit mobile number";
-    // } else if (
-    //   !followupsData.call_bck_DateTime ||
-    //   followupsData.call_bck_DateTime.trim() === ""
-    // ) {
-    //   errors.call_bck_DateTime = "Callback date time required";
-    // }
-
-    // if (Object.keys(errors).length > 0) {
-    //   setErrors(errors);
-    //   return;
-    // }
-
     const bearer_token = localStorage.getItem("token");
-
     if (!bearer_token) {
       alert("No token found, please log in again.");
       return;
@@ -206,7 +182,12 @@ const CreateFollowUp = () => {
 
   useEffect(() => {
     handleSegment();
-  }, []);
+    setdefaultTextSegmentDropDown(
+      followupsData.segments.length > 0
+        ? followupsData.segments.join(", ")
+        : "Select Segment"
+    );
+  }, [followupsData]);
 
   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
     useState("Select Segment");
@@ -236,6 +217,10 @@ const CreateFollowUp = () => {
       ...prev,
       segments: updatedSegments,
     }));
+
+    setdefaultTextSegmentDropDown(
+      updatedSegments.length > 0 ? updatedSegments.join(", ") : "Select Segment"
+    );
 
     console.log("Selected segments:", updatedSegments);
   };
@@ -325,10 +310,10 @@ const CreateFollowUp = () => {
 
   //----------------------------------------------------------------------------------------
   //LeadStatusDropDown GET API Is being used here
-  const [leadStatus, setleadStatus] = useState('');
+  const [leadStatus, setleadStatus] = useState("");
 
   async function handleLeadStatus() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
@@ -342,9 +327,9 @@ const CreateFollowUp = () => {
       );
       setleadStatus(response.data.data);
 
-      console.log('status:', response.data.data);
+      console.log("status:", response.data.data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -354,7 +339,7 @@ const CreateFollowUp = () => {
   }, []);
 
   const [defaultTextLeadStatusDropDown, setdefaultTextLeadStatusDropDown] =
-    useState('Select Status');
+    useState("Select Status");
   const [isDropdownVisibleLeadStatus, setisDropdownVisibleLeadStatus] =
     useState(false);
 
@@ -370,9 +355,6 @@ const CreateFollowUp = () => {
       leadesStatus: leadStatus,
     }));
   };
-
-
-  
 
   return (
     <>
@@ -609,11 +591,6 @@ const CreateFollowUp = () => {
                     onChange={handleChange}
                     min={new Date().toISOString().slice(0, 16)}
                   />
-                  {/* {errors.call_bck_DateTime && (
-                    <span style={{ color: "red" }}>
-                      {errors.call_bck_DateTime}
-                    </span>
-                  )} */}
                 </div>
               </div>
               {/* FIFTH ROW */}
@@ -636,63 +613,122 @@ const CreateFollowUp = () => {
                     placeholder="Who Modify"
                   />
                 </div>
-                 {/* -------------Lead Status------------- */}
+                {/* -------------Lead Status------------- */}
 
-                 <div className="flex flex-col w-1/2 relative">
-                    <label
-                      htmlFor="leadesStatus"
-                      className="text-sm font-medium text-gray-700"
+                <div className="flex flex-col w-1/2 relative">
+                  <label
+                    htmlFor="leadesStatus"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Lead Status
+                  </label>
+                  <div
+                    className="relative"
+                    onClick={toggleDropdownLeadStatus}
+                    onMouseLeave={() => setisDropdownVisibleLeadStatus(false)}
+                  >
+                    <button
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                      id="LeadStatusDropDown"
+                      type="button"
                     >
-                      Lead Status
-                    </label>
-                    <div
-                      className="relative"
-                      onClick={toggleDropdownLeadStatus}
-                      onMouseLeave={() => setisDropdownVisibleLeadStatus(false)}
-                    >
-                      <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                        id="LeadStatusDropDown"
-                        type="button"
-                      >
-                        {followupsData.leadesStatus!=""
-                          ? followupsData.leadesStatus
-                          : defaultTextLeadStatusDropDown}
-                        <FaAngleDown className="ml-2 text-gray-400" />
-                      </button>
-                      {isDropdownVisibleLeadStatus && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
-                          <ul className="py-2 text-sm text-gray-700">
-                            {leadStatus.length > 0 ? (
-                              leadStatus.map(({ key, status }) => (
-                                <li
-                                  key={key}
-                                  onClick={() =>
-                                    handleDropdownLeadStatus(status)
-                                  }
-                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                                >
-                                  {status}
-                                </li>
-                              ))
-                            ) : (
-                              <li className="flex items-center px-4 py-2 text-center gap-1">
-                                <IoInformationCircle
-                                  size={25}
-                                  className="text-cyan-600"
-                                />{' '}
-                                Lead status not available. Go to{' '}
-                                <span className="font-bold">
-                                  Settings - Add Lead Status{' '}
-                                </span>
-                                .
+                      {followupsData.leadesStatus != ""
+                        ? followupsData.leadesStatus
+                        : defaultTextLeadStatusDropDown}
+                      <FaAngleDown className="ml-2 text-gray-400" />
+                    </button>
+                    {isDropdownVisibleLeadStatus && (
+                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                        <ul className="py-2 text-sm text-gray-700">
+                          {leadStatus.length > 0 ? (
+                            leadStatus.map(({ key, status }) => (
+                              <li
+                                key={key}
+                                onClick={() => handleDropdownLeadStatus(status)}
+                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              >
+                                {status}
                               </li>
-                            )}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
+                            ))
+                          ) : (
+                            <li className="flex items-center px-4 py-2 text-center gap-1">
+                              <IoInformationCircle
+                                size={25}
+                                className="text-cyan-600"
+                              />{" "}
+                              Lead status not available. Go to{" "}
+                              <span className="font-bold">
+                                Settings - Add Lead Status{" "}
+                              </span>
+                              .
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    )}
                   </div>
+                </div>
+              </div>
+              {/* Sixth ROW */}
+              <div className="flex space-x-4">
+                <div className="flex flex-col w-1/2 relative">
+                  <label
+                    htmlFor="segment"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Segment 
+                  </label>
+                  <div
+                    className="relative"
+                    onClick={toggleDropdownSegment}
+                    onMouseLeave={() => setisDropdownVisibleSegment(false)}
+                  >
+                    <button
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                      id="LeadStatusDropDown"
+                      type="button"
+                    >
+                      {defaultTextSegmentDropDown}
+                      <FaAngleDown className="ml-2 text-gray-400" />
+                    </button>
+                    {isDropdownVisibleSegment && (
+                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                        <ul className="py-2 text-sm text-gray-700">
+                          {segments.length > 0 ? (
+                            segments.map((segment) => (
+                              <li
+                                key={segment.id}
+                                className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={followupsData.segments.includes(
+                                    segment.segment
+                                  )}
+                                  onChange={() => handleCheckboxChange(segment)}
+                                  className="mr-2"
+                                />
+                                {segment.segment}
+                              </li>
+                            ))
+                          ) : (
+                            <li className="flex items-center px-4 py-2 text-center gap-1">
+                              <IoInformationCircle
+                                size={25}
+                                className="text-cyan-600"
+                              />{" "}
+                              Segments not available. Go to{" "}
+                              <span className="font-bold">
+                                Settings - Add Segment{" "}
+                              </span>
+                              .
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

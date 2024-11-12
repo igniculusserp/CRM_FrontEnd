@@ -275,7 +275,10 @@ export default function Createlead() {
 
   useEffect(() => {
     handleSegment();
-  }, []);
+    setdefaultTextSegmentDropDown(
+      editLead.segments.length > 0 ? editLead.segments.join(", ") : "Select Segment"
+    );
+  }, [editLead]);
 
   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
     useState('Select Segment');
@@ -303,6 +306,11 @@ export default function Createlead() {
       ...prev,
       segments: updatedSegments,
     }));
+
+    setdefaultTextSegmentDropDown(
+      updatedSegments.length > 0 ? updatedSegments.join(", ") : "Select Segment"
+    );
+
 
     console.log('Selected segments:', updatedSegments);
   };
