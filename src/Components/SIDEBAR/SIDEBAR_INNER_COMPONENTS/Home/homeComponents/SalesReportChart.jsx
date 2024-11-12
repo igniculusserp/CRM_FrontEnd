@@ -28,11 +28,11 @@ const SalesReportChart = () => {
         <h2 className="text-xl font-thin text-left mb-4">Sales Report</h2>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-blue-500 rounded-sm"></div>
+            <div className="w-3 h-3 bg-[#8884d8] rounded-sm"></div>
             <span>Income</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-cyan-500 rounded-sm"></div>
+            <div className="w-3 h-3 bg-[#82ca9d] rounded-sm"></div>
             <span>Expenses</span>
           </div>
         </div>

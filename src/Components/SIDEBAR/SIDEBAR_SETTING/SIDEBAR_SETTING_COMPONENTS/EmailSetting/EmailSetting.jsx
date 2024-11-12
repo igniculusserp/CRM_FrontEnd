@@ -6,8 +6,8 @@ import axios from 'axios';
 import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 
 // ------------------- CHILD COMPONENTS -------------------
-import EditEmail from './Edit_Page/EditEmail';
-import AddEmail from './Add_Page/AddEmail';
+import EditEmailSetting from './Edit_Page/EditEmailSetting';
+import AddEmailSetting from './Add_Page/AddEmailSetting';
 
 export default function EmailSetting() {
   const [activeComponent, setActiveComponent] = useState('Table');
@@ -183,9 +183,9 @@ export default function EmailSetting() {
       {activeComponent === 'Table' ? (
         <EmailSettingTable />
       ) : activeComponent === 'Add' ? (
-        <AddEmail setActiveComponent={setActiveComponent} />
+        <EditEmailSetting setActiveComponent={setActiveComponent} />
       ) : activeComponent === 'Update' ? (
-        <EditEmail setActiveComponent={setActiveComponent} />
+        <AddEmailSetting setActiveComponent={setActiveComponent} />
       ) : (
         ''
       )}
