@@ -1,83 +1,75 @@
-import { useState, useEffect } from "react";
-import { FaBars } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import axios from "axios";
-import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
-import EditEmailSetting from "./Edit_Page/EditEmailSetting";
-import AddEmailSetting from "./Add_Page/AddEmailSetting";
+import { useState, useEffect } from 'react';
+import { FaBars } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+import axios from 'axios';
+import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 
+// ------------------- CHILD COMPONENTS -------------------
+import EditEmail from './Edit_Page/EditEmail';
+import AddEmail from './Add_Page/AddEmail';
 
- // ------------------------------ E-Mail Settings --------------------------
 export default function EmailSetting() {
-  const [activeComponent, setActiveComponent] = useState("Table");
-  const [data, setData] = useState([]);
-  const [selectedId, setSelectedId] = useState(null); 
-    
-  const fullURL = window.location.href;
-  const url = new URL(fullURL);
-  const name = url.hostname.split(".")[0];
+  const [activeComponent, setActiveComponent] = useState('Table');
+  const [users, setUsers] = useState([
+    {
+      id: '1',
+      senderEmail: '12a02',
+      port: 'Vibarant',
+      serverObligRelay: 'Font Share',
+      key: 'dfadklfa',
+      keyEmailTemplate: 'Targeted',
+    },
+    {
+      id: '2',
+      senderEmail: '12a02',
+      port: 'Vibarant',
+      serverObligRelay: 'Font Share',
+      key: 'dfadklfa',
+      keyEmailTemplate: 'Targeted',
+    },
+  ]);
 
-  
-  // ------------------------------ E-Mail Settings Handle Add Button --------------------------
+  // Handle cancel form action
   const handleAdd = () => {
-    setActiveComponent("Add");
+    setActiveComponent('Add');
   };
-
-   // ------------------------------ E-Mail Settings Handle Edit Button --------------------------
 
   const handleEdit = (id) => {
-    setActiveComponent("Update");
-    setSelectedId(id);
+    setActiveComponent('Update');
+    // setIdGet(id);
   };
 
-    
-    // ------------------------------ E-Mail Settings Get All  ------------------------
-    async function handleGetAll() {
-      const bearer_token = localStorage.getItem("token");
-      try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${bearer_token}`,
-          },
-        };
-        const response = await axios.get(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/emailsetting/getall`,
-          config
-        );
-        setData(response.data.data);
-      } catch (error) {
-        console.error("Error fetching leads:", error);
-      }
+  const handleCheckboxClick = (e, userId) => {
+    e.stopPropagation();
+    console.log(`Checkbox clicked for user: ${userId}`);
+  };
+
+  async function handleGroup() {
+    const bearer_token = localStorage.getItem('token');
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${
+          window.location.hostname.split('.')[0]
+        }.${tenant_base_url}/Admin/leadstatus/getall`,
+        config
+      );
+      setplanType(response.data.data);
+      console.log('Plan data:', response.data.data);
+    } catch (error) {
+      console.error('Error fetching plans:', error);
     }
+  }
 
-    useEffect(() => {
-      handleGetAll();
-    }, []);
-
-    // ------------------------------ E-Mail Settings Handle Delete ------------------------
-
-    const handleDelete = async (id) => {
-      const bearer_token = localStorage.getItem("token");
-      try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${bearer_token}`,
-          },
-        };
-        await axios.delete(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/emailsetting/delete/${id}`,
-          config
-        );
-        setData((prevData) => prevData.filter((item) => item.id !== id));
-        alert("Successfully deleted");
-        handleGetAll();
-      } catch (error) {
-        console.log(error);
-        alert("Failed to delete pool. Please try again.");
-      }
-    };
-
+  useEffect(() => {
+    handleGroup();
+  }, []);
 
   //
   const EmailSettingTable = () => {
@@ -140,7 +132,7 @@ export default function EmailSetting() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((user) => (
+                  {users.map((user) => (
                     <tr
                       key={user.id}
                       className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
@@ -148,20 +140,20 @@ export default function EmailSetting() {
                       <td className="px-1 py-3 text-center">
                         <input
                           type="checkbox"
-                          
+                          onClick={(e) => handleCheckboxClick(e, user.id)}
                         />
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {user.senderEmailId}
+                        {user.senderEmail}
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {user.relayPortNo}
+                        {user.port}
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {user.relayServerName}
+                        {user.serverObligRelay}
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {user.serveremail}
+                        {user.keyEmailTemplate}
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
                         {user.key}
@@ -173,9 +165,7 @@ export default function EmailSetting() {
                           className="bg-blue-500 rounded"
                           onClick={() => handleEdit(user.id)}
                         />
-                        <RiDeleteBin6Fill size={25} color="red"
-                        onClick={() => handleDelete(user.id)}
-                         />
+                        <RiDeleteBin6Fill size={25} color="red" />
                       </td>
                     </tr>
                   ))}
@@ -190,14 +180,14 @@ export default function EmailSetting() {
 
   return (
     <>
-      {activeComponent === "Table" ? (
+      {activeComponent === 'Table' ? (
         <EmailSettingTable />
-      ) : activeComponent === "Add" ? (
-        <AddEmailSetting setActiveComponent={setActiveComponent}  handleGetAll={handleGetAll}  />
-      ) : activeComponent === "Update" ? (
-        <EditEmailSetting setActiveComponent={setActiveComponent}  handleGetAll={handleGetAll}  id={selectedId} />
+      ) : activeComponent === 'Add' ? (
+        <AddEmail setActiveComponent={setActiveComponent} />
+      ) : activeComponent === 'Update' ? (
+        <EditEmail setActiveComponent={setActiveComponent} />
       ) : (
-        ""
+        ''
       )}
     </>
   );
