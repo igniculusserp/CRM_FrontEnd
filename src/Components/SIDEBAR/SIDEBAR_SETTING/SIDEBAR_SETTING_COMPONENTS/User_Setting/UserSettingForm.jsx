@@ -150,47 +150,56 @@ export default function UserSettingForm({
       deletedDate: formData.deletedDate || null,
 }
 
-  if(!formData_POST.firstName){
-    showErrorToast('Please enter name')
-    return;
-  }
-
-  if(!formData_POST.email){
-    showErrorToast('Please enter email')
-    return;
-  }
-
-  if(!formData_POST.contactNo){
-    showErrorToast('Please enter contact number')
-    return;
-  }
-
-  if(!formData_POST.password !== formData_POST.confirmPassword){
-    showErrorToast('Password doesnt match')
-    return;
-  }
+ 
 
     try {
       if (isEditMode) {
         console.log('active editMode');
-        await axios.put(
-          `${protocal_url}${name}.${tenant_base_url}/Setting/update`,formData_PUT,  config
-        );
-        alert('User updated successfully');
+        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Setting/update`,formData_PUT,  config);
+        showSuccessToast('User updated successfully');
         onSave();
         handleActiveState();
       } else {
-        console.log('non-active editMode');
-        await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/Setting`,config
-        );
-        // console.log('non-active editMode')
-        alert('User added successfully');
+        if(!formData_POST.firstName){
+          showErrorToast('Please enter name');
+          return;
+        }
+      
+        if(!formData_POST.email){
+          showErrorToast('Please enter email');
+          return;
+        }
+      
+        if(!formData_POST.contactNo){
+          showErrorToast('Please enter contact number');
+          return;
+        }
+      
+        if(!formData_POST.password){
+          showErrorToast('Please enter password');
+          return;
+        }
+      
+        if(formData_POST.password !== formData_POST.confirmPassword){
+          showErrorToast('Password doesnt match');
+          return;
+        }
+      
+        if(!formData_POST.reportedTo){
+          showErrorToast('Please selected Reported to');
+          return;
+        }
+      
+        if(!formData_POST.role){
+          showErrorToast('Please selected group name');
+          return;
+        }
+        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Setting`,formData_POST, config);
+        showSuccessToast('User added successfully');
         onSave();
         handleActiveState(); // Switch back to table view
       }
     } catch (error) {
-      console.error(error);
       alert('Error occurred while saving the user. Please try again.');
     }
   };
