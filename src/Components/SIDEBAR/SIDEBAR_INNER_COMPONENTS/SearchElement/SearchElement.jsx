@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 // Search Element Component
 export function SearchElement({ value, onChange }) {
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center min-w-[250px]">
       <input
         type="text"
         placeholder="Search by Name or Mobile"
