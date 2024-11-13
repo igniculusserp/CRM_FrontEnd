@@ -1,36 +1,28 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FaAngleDown } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import axios from 'axios';
-import { IoInformationCircle } from 'react-icons/io5';
+import { Link,useNavigate } from "react-router-dom";
+import axios from "axios";
+import { IoInformationCircle } from "react-icons/io5";
 
 //file
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 export default function CreateSendSms() {
-
   const name = getHostnamePart();
-
-  // --------------------------------------------- Check Box Start -------------------------------------------
-
-
-  const [selectedCheckbox, setSelectedCheckbox] = useState("Free Trail");
-
-  const handleCheckboxChange = (name) => {
-    setSelectedCheckbox(name === selectedCheckbox ? "" : name); // Toggle selection
-  };
-
-  // --------------------------------------------- Check Box End -------------------------------------------
-
-
+  const navigate = useNavigate();
+  
   const [editSms, setEditSms] = useState({
-    template: "",
-    textMsg: "",
+    mobilenos: [],
+    smsType: "",
+    products: "",
     callStatus: "",
+    textMessage: "",
+    sentDateTime: "",
+    lastModifiedBy: "",
   });
 
-  //   HANDLING INPUTS CHANGE
+  //  --------------------------------------- HANDLING INPUTS CHANGE ----------------------------------------
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditSms({
@@ -39,14 +31,31 @@ export default function CreateSendSms() {
     });
   };
 
-  //   HANDLING FORM
-  const handleSubmit = (e) => {
-    e.preventDefault();
+
+  // --------------------------------------------- Check Box Start -------------------------------------------
+
+  const [selectedCheckbox, setSelectedCheckbox] = useState("Free Trail");
+
+  const handleCheckboxChange = (name) => {
+    setSelectedCheckbox(name === selectedCheckbox ? "" : name); 
+   
   };
 
-  //   DROPDOWNS
   
+  useEffect(() => {
+    const currentDate = new Date().toISOString();
+    setEditSms((prev) => ({
+      ...prev,
+      smsType: selectedCheckbox,
+      sentDateTime:currentDate,
+    }));
+   }, [selectedCheckbox]);
 
+  // --------------------------------------------- Check Box End -------------------------------------------
+
+
+ 
+  // ---------------------------------------------  Call Status Start -------------------------------------------
 
   // DUMMY CALL STATUS
   const callStatusData = [
@@ -55,11 +64,10 @@ export default function CreateSendSms() {
     { key: 3, name: "Promotional call" },
   ];
 
-  // ---------------------------------------------  Call Status Start -------------------------------------------
   const [callStatusDropdown, setCallStatusDropdown] = useState(false);
   const [defaultCallStatusText, setDefaultCallStatusText] =
     useState("Call Status");
-    
+
   const toggleDropdownCallStatus = () => {
     setCallStatusDropdown(!callStatusDropdown);
   };
@@ -69,7 +77,7 @@ export default function CreateSendSms() {
     setCallStatusDropdown(!callStatusDropdown);
     setEditSms((prev) => ({
       ...prev,
-      name: name,
+      callStatus: name,
     }));
   };
 
@@ -78,11 +86,12 @@ export default function CreateSendSms() {
   // ---------------------------------------------  SMS Templates Start -------------------------------------------
   const [templates, setTemplates] = useState([]);
   const [templateDropdown, setTemplateDropdown] = useState(false);
-  const [defaultTemplateText, setDefaultTemplateText] = useState("Select Template");
+  const [defaultTemplateText, setDefaultTemplateText] =
+    useState("Select Template");
 
-//--------------------------------------- Fatch Templates -------------------------------------------------
+  //--------------------------------------- Fatch Templates -------------------------------------------------
   async function handleLead() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -94,17 +103,16 @@ export default function CreateSendSms() {
         config
       );
       setTemplates(response.data.data);
-      
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      console.error("Error fetching leads:", error);
     }
   }
 
   useEffect(() => {
-    handleLead(); // Fetch the  list on initial load
+    handleLead(); 
   }, []);
 
-   //--------------------------------------- DropDown Handling -------------------------------------------------
+  //--------------------------------------- DropDown Handling -------------------------------------------------
 
   // TOGGLE CALL TEST MSG
   const toggleDropdownTemplate = () => {
@@ -114,12 +122,16 @@ export default function CreateSendSms() {
   const handleDropdownTemplate = (name) => {
     setDefaultTemplateText(name);
     setTemplateDropdown(!templateDropdown);
+  };
+
+  useEffect(() => {
     setEditSms((prev) => ({
       ...prev,
-      name: name,
+      textMessage: defaultTemplateText,
     }));
-  };
-// --------------------------------------------- SMS Templates End -------------------------------------------
+  }, [defaultTemplateText]);
+
+  // --------------------------------------------- SMS Templates End -------------------------------------------
 
   //--------------------------------------- Segments OR Product -------------------------------------------------
   const [segments, setSegments] = useState([]);
@@ -129,7 +141,7 @@ export default function CreateSendSms() {
   const [isDropdownVisibleSegment, setIsDropdownVisibleSegment] =
     useState(false);
 
-    //--------------------------------------- Fatch Segment -------------------------------------------------
+  //--------------------------------------- Fatch Segment -------------------------------------------------
   async function handleSegment() {
     const bearer_token = localStorage.getItem("token");
 
@@ -160,7 +172,6 @@ export default function CreateSendSms() {
   };
 
   const handleProductChange = (segment) => {
-    
     const isChecked = selectedSegments.includes(segment.segment);
 
     let updatedSegments;
@@ -175,60 +186,116 @@ export default function CreateSendSms() {
     }
 
     setSelectedSegments(updatedSegments);
-   
+
     setDefaultTextSegmentDropDown(
-      updatedSegments.length > 0 ? updatedSegments.join(", ") : "Select Segment"
+      updatedSegments.length > 0 ? updatedSegments.join(", ") : "Select Segment",
     );
+   
+   
   };
+
+  useEffect(() => {
+
+    setEditSms((prev) => ({
+      ...prev,
+      products: defaultTextSegmentDropDown,
+    }));
+   }, [defaultTextSegmentDropDown]);
+
 
   //--------------------------------------- Segments END-------------------------------------------------
 
-   //--------------------------------------- Get Mobile Number by Segment -------------------------------------------------
+  //--------------------------------------- Get Mobile Number by Segment Start-------------------------------------------------
 
-   const [getMobileNumber, setGetMobileNumber] = useState([]);
 
-   useEffect(() => {
-    
-      fetchMobileNumber();
-    
+
+  useEffect(() => {
+    fetchMobileNumber();
   }, [selectedSegments]);
 
-   async function fetchMobileNumber() {
+  async function fetchMobileNumber() {
     const bearer_token = localStorage.getItem("token");
-  
+
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-  
-      setGetMobileNumber([]);
-  
+
+      // setEditSms.([]);
+
       // Construct the query string with selected segments
       const segmentQuery = selectedSegments
         .map((segment) => `segments=${encodeURIComponent(segment)}`)
         .join("&");
-  
+
       let url;
       if (selectedCheckbox === "Free Trail") {
         url = `${protocal_url}${name}.${tenant_base_url}/Trail/alltrailmobileno/bysegment?${segmentQuery}`;
       } else if (selectedCheckbox === "Paid Clients") {
         url = `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/clientmobilenobysegments?${segmentQuery}`;
       }
-  
+
       const response = await axios.get(url, config);
-      setGetMobileNumber(response.data.data);
-      console.log("Fetched Mobile Numbers:", response.data.data);
-      
-      console.log("Fetched Mobile Numbers:", getMobileNumber);
-  
+      setEditSms((prev) => ({
+        ...prev,
+        mobilenos: response.data.data,
+      }));
+
     } catch (error) {
       console.error("Error fetching mobile numbers:", error);
     }
   }
+
+
+    //--------------------------------------- Get Mobile Number by Segment End-------------------------------------------------
+
+
+
+   
+  // ------------------------------  Handle Submit ------------------------
+
   
-  
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    const bearer_token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${bearer_token}`,
+      },
+    };
+
+    // Constructing the request body
+    const requestBody = {
+      mobilenos: editSms.mobilenos,
+      requests: {
+        smsType: editSms.smsType,
+        products: editSms.products,
+        callStatus: editSms.callStatus,
+        textMessage: editSms.textMessage,
+        sentDateTime: editSms.sentDateTime,
+        lastModifiedBy: editSms.lastModifiedBy,
+      }
+    };
+
+    console.log("Request Body on Submit:", requestBody); // Log final form submission data
+
+    try {
+      await axios.post(
+        `${protocal_url}${name}.${tenant_base_url}/SMSBox/send-servicesms`,
+        requestBody,
+        config
+      );
+      alert("Successfully Added");
+      navigate(`/sidebar/smsbox`);
+    } catch (error) {
+      console.error("Error saving pool name", error);
+      alert("Failed to save pool. Please try again.");
+    }
+  };
+
 
   return (
     // TOP SECTION
@@ -243,7 +310,7 @@ export default function CreateSendSms() {
         </Link>
       </div>
       {/* -------------FORM Starts FROM HERE------------- */}
-      <form onSubmit={handleSubmit} className="flex flex-col mb-6">
+      <form onSubmit={handleFormSubmit} className="flex flex-col mb-6">
         {/* -------------SMS DETAILS STARTS FROM HERE------------- */}
         <div className="my-3 bg-white rounded-xl shadow-md flex-grow ">
           <h2 className="font-medium py-2 px-3 rounded-t-xl text-white bg-cyan-500">
@@ -287,8 +354,8 @@ export default function CreateSendSms() {
           {/* -------------Street------------- */}
           <div className="grid gap-2 p-2">
             <div className="flex space-x-4">
-               {/* PRODUCTS DROPDOWN */}
-               <div className="flex flex-col w-1/2 relative">
+              {/* PRODUCTS DROPDOWN */}
+              <div className="flex flex-col w-1/2 relative">
                 <label
                   htmlFor="segment"
                   className="text-sm font-medium text-gray-700"
@@ -298,9 +365,9 @@ export default function CreateSendSms() {
                 <div
                   className="relative"
                   onMouseLeave={() => setIsDropdownVisibleSegment(false)}
-                  >
+                >
                   <button
-                  onClick={toggleDropdownSegment}
+                    onClick={toggleDropdownSegment}
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                     id="LeadStatusDropDown"
                     type="button"
@@ -406,7 +473,7 @@ export default function CreateSendSms() {
                     id="template"
                     type="button"
                   >
-                  {defaultTemplateText}
+                    {defaultTemplateText}
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {templateDropdown && (
@@ -416,7 +483,9 @@ export default function CreateSendSms() {
                           <li
                             className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer z-10"
                             key={data.id}
-                            onClick={() => handleDropdownTemplate(data.templateDescription)}
+                            onClick={() =>
+                              handleDropdownTemplate(data.templateDescription)
+                            }
                           >
                             {data.templateDescription}
                           </li>
@@ -426,25 +495,31 @@ export default function CreateSendSms() {
                   )}
                 </div>
               </div>
+            </div>
+
+             {/* Msg FIELD */}
+             <div className="flex space-x-4">
+             
               {/* TEXT MESSAGE DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex flex-col w-full">
                 <label
-                  htmlFor="textMsg"
-                  className="text-sm font-medium text-gray-700 mt-2"
+                  htmlFor="textMessage"
+                  className="text-sm font-medium text-gray-700"
                 >
                   Text Message
                 </label>
                 <input
                   type="text"
-                  name="textMsg"
-                  id="textMsg"
-                  value={editSms.textMsg}
+                  name="textMessage"
+                  id="textMessage"
+                  value={editSms.textMessage}
                   className="mt-1 p-2 border border-gray-300 rounded-md"
                   onChange={handleChange}
-                  placeholder="Entere verox peron"
+                  placeholder="Select Template or Enter Text Message"
                 />
               </div>
             </div>
+
             {/* HIDDEN INPUT */}
             <div className="flex space-x-4">
               <div className="flex flex-col w-full">
