@@ -3,11 +3,13 @@ import { FaBars } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import axios from "axios";
+import { getHostnamePart } from "./../../ReusableComponents/GlobalHostUrl";
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 
 // ------------------- CHILD COMPONENTS -------------------
 import AddSMSSetting from "./Add_SMS/AddSMSSetting";
 import EditSMSSetting from "./Edit_SMS/EditSMSSetting";
+import { showErrorToast, showSuccessToast } from "../../../../../utils/toastNotifications";
 
 // ------------------------------ SMS Settings --------------------------
 export default function SMSSetting() {
@@ -15,9 +17,7 @@ export default function SMSSetting() {
   const [data, setData] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
 
-  const fullURL = window.location.href;
-  const url = new URL(fullURL);
-  const name = url.hostname.split(".")[0];
+  const name = getHostnamePart();
 
   // ------------------------------ E-Mail Settings Handle Add Button --------------------------
   const handleAdd = () => {
@@ -46,7 +46,7 @@ export default function SMSSetting() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      showErrorToast(error.response.data.messsage)
     }
   }
 
@@ -69,7 +69,7 @@ export default function SMSSetting() {
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert("Successfully deleted");
+      showSuccessToast('Deleted successfully')
       handleGetAll();
     } catch (error) {
       console.log(error);

@@ -8,7 +8,7 @@ import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
 
 
 import { ToastContainer } from 'react-toastify';
-import { showErrorToast } from '../../../../../utils/toastNotifications';
+import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNotifications';
 
 export default function Designation() {
 
@@ -60,11 +60,10 @@ export default function Designation() {
         `${protocal_url}${name}.${tenant_base_url}/Admin/designation/delete/${id}`,
         config
       );
+      showSuccessToast('Desigination deleted Successfully')
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert('Deleted successfully');
     } catch (error) {
-      console.log(error);
-      alert('Failed to delete. Please try again.');
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -98,14 +97,14 @@ export default function Designation() {
           return;
         }
         await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/designation/edit/${formData.id}`,formData, config);
-        alert('Updated successfully');
+        showSuccessToast('Desigination Updated successfully');
       } else {
         if(!formData.designationName){
           showErrorToast('Please enter designation name')
           return;
         }
         await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/designation/add`, formData, config);
-        alert('Added successfully');
+        showSuccessToast('Desigination Added successfully');
       }
 
       handleLead(); // Refresh the list
@@ -147,7 +146,8 @@ export default function Designation() {
     };
 
     return (
-      <div>
+      <>
+      <ToastContainer/>
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">
             {isEditMode ? 'Edit' : 'Add'}
@@ -195,11 +195,13 @@ export default function Designation() {
             </div>
           </div>
         </form>
-      </div>
+      </>
     );
   };
 
   return (
+  <>
+  <ToastContainer/>
     <div className="m-3 min-w-screen">
       {active ? (
         <>
@@ -270,6 +272,7 @@ export default function Designation() {
       ) : (
         <EditForm data={selectedData} isEditMode={isEditMode} />
       )}
-    </div>
+    </div> 
+  </>
   );
 }

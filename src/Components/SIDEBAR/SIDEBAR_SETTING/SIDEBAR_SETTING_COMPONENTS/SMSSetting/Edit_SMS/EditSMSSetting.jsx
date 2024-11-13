@@ -6,7 +6,7 @@ import {tenant_base_url, protocal_url} from "./../../../../../../Config/config";
 import { getHostnamePart } from "../../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 import { ToastContainer } from 'react-toastify';
-import { showErrorToast } from "../../../../../../utils/toastNotifications"; 
+import { showErrorToast, showSuccessToast } from "../../../../../../utils/toastNotifications"; 
 //----------------------------Edit SMS Setting -----------------------
 
 export default function EditSMSSetting({setActiveComponent, handleGetAll, id}) {
@@ -66,7 +66,7 @@ export default function EditSMSSetting({setActiveComponent, handleGetAll, id}) {
         });
       }
     } catch (error) {
-      console.error("Error fetching data: ", error);
+      showErrorToast(error.data.response.message)
     }
   };
 
@@ -105,11 +105,10 @@ export default function EditSMSSetting({setActiveComponent, handleGetAll, id}) {
         requestBody,
         config
       );
-      alert("Successfully Updated");
+      showSuccessToast('Updated Successfully')
       handleCancel();
     } catch (error) {
-      console.error("Error saving pool name", error);
-      alert("Failed to save pool. Please try again.");
+      showErrorToast(error.data.response.message)
     }
   };
 

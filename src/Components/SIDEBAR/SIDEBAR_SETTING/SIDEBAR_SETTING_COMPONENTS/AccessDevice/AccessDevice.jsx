@@ -34,7 +34,7 @@ export default function AccessDevice() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      showErrorToast(error.response.data.message)
     }
   }
 
@@ -56,10 +56,9 @@ export default function AccessDevice() {
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert('Access Device deleted successfully');
+      showSuccessToast('Deleted Successfully')
     } catch (error) {
-      console.log(error);
-      alert('Failed to delete pool. Please try again.');
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -81,6 +80,8 @@ export default function AccessDevice() {
 
   const AccessDeviceTable = () => {
     return (
+      <>
+      <ToastContainer/>
       <div className="m-3 min-w-screen">
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">Access Device</h1>
@@ -180,6 +181,7 @@ export default function AccessDevice() {
           </div>
         </div>
       </div>
+      </>
     );
   };
 
@@ -284,16 +286,17 @@ export default function AccessDevice() {
        
 
         await axios.post(`${protocal_url}${name}.${tenant_base_url}/Setting/addAccessDevice`, addDevice, config);
-        alert('Access Device added successfully');
+        showSuccessToast('Access Device Added Sucessfully')
         window.location.reload();
 
       } catch (error) {
-        console.log(error);
-        alert(error.response.data.message);
+        showErrorToast(error.response.data.message);
       }
     };
 
     return (
+      <>
+      <ToastContainer/>
       <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
         <div className="flex py-2 px-2 items-center justify-between bg-white rounded-md shadow-md">
           <h1 className="text-xl">Add Access Device</h1>
@@ -450,6 +453,7 @@ export default function AccessDevice() {
           </form>
         </div>
       </div>
+      </>
     );
   };
 
@@ -573,7 +577,7 @@ export default function AccessDevice() {
           formData_PUT,
           config
         );
-        alert('Access Device updated successfully!');
+        showSuccessToast('Access Device updated successfully!');
         window.location.reload();
       } catch (error) {
         console.error('Error updating Access Device:', error);
@@ -582,6 +586,8 @@ export default function AccessDevice() {
     };
 
     return (
+      <>
+      <ToastContainer/>
       <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
         <div className="flex py-2 px-2 items-center justify-between bg-white rounded-md shadow-md">
           <h1 className="text-xl">Update Access Device</h1>
@@ -723,6 +729,7 @@ export default function AccessDevice() {
           </form>
         </div>
       </div>
+      </>
     );
   };
 
