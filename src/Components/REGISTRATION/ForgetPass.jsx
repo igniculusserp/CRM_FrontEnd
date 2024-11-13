@@ -40,32 +40,18 @@ export default function ForgetPass() {
       const response = await axios.post(`${main_base_url}/Users/send/otp`, {
         email: forgetemail,
       });
-
       const emailFromResponse = response.data.email || response.data.forgetemail || forgetemail;
-
       const {message} = response.data;
-
       localStorage.setItem("myData_forget", emailFromResponse);
-      console.log(emailFromResponse);
-
       localStorage.setItem("forgetpass", JSON.stringify(response));
-      showSuccessToast(message)
+      showSuccessToast('OTP sent successfully')
 
 
-      //Dont use it ----> 25-08-2024-ii
-      // setTimeout(() => {
-      //   //locahost
-      //      const newUrl = `http://localhost:5173/forgetpasswordotp`;
-         
-          //forServer
-        //  const newUrl = `http://forgetpasswordotp `
-        
-      //   window.location.href = newUrl;
-      // }, 100);
+    
       navigate("/forgetpasswordotp");
     } 
     catch (error) {
-      showErrorToast(error.response.dat.message)
+      showErrorToast(error.response.data.message)
     }
   };
 
