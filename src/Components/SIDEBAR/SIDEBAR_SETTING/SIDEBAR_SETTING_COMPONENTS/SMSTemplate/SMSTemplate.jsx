@@ -8,7 +8,7 @@ import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
 
 
 import { ToastContainer } from 'react-toastify';
-import { showErrorToast } from '../../../../../utils/toastNotifications';
+import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNotifications';
 
 export default function SMSTemplate() {
 
@@ -61,10 +61,10 @@ export default function SMSTemplate() {
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert('Deleted successfully');
+      showSuccessToast('SMS Setting deleted successfully');
     } catch (error) {
       console.log(error);
-      alert('Failed to delete. Please try again.');
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -98,14 +98,14 @@ export default function SMSTemplate() {
           return;
         }
         await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/smstemplates/edit/${formData.id}`,formData, config);
-        alert('Updated successfully');
+        showSuccessToast('SMS Template updated successfully');
       } else {
         if(!formData.templateDescription){
           showErrorToast('Please fill field ')
           return;
         }
         await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/smstemplates/add`, formData, config);
-        alert('Added successfully');
+        showSuccessToast('SMS Template added successfully');
       }
 
       handleLead(); // Refresh the list
@@ -113,8 +113,7 @@ export default function SMSTemplate() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      console.error('Error saving name', error);
-      alert('Failed to save . Please try again.');
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -147,7 +146,8 @@ export default function SMSTemplate() {
     };
 
     return (
-      <div>
+      <>
+      <ToastContainer/>
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">
             {isEditMode ? 'Edit' : 'Add'}
@@ -195,7 +195,7 @@ export default function SMSTemplate() {
             </div>
           </div>
         </form>
-      </div>
+      </>
     );
   };
 

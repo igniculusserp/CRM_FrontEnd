@@ -6,6 +6,7 @@ import {
   protocal_url,
 } from "./../../../../../../Config/config";
 import { getHostnamePart } from "../../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import { ToastContainer } from "react-toastify";
 
 //----------------------------Edit Email Setting -----------------------
 
@@ -71,7 +72,7 @@ export default function EditEmailSetting({ setActiveComponent, handleGetAll, id 
         });
       }
     } catch (error) {
-      console.error("Error fetching data: ", error);
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -131,8 +132,10 @@ export default function EditEmailSetting({ setActiveComponent, handleGetAll, id 
   };
 
   return (
+    <>
     <div className="m-3 min-w-screen">
       <>
+      <ToastContainer/>
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">Edit Email Setting</h1>
           <div
@@ -259,6 +262,7 @@ export default function EditEmailSetting({ setActiveComponent, handleGetAll, id 
         </form>
       </>
     </div>
+    </>
   );
 }
 

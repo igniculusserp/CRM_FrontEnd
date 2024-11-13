@@ -8,7 +8,7 @@ import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
 
 
 import { ToastContainer } from 'react-toastify';
-import { showErrorToast } from '../../../../../utils/toastNotifications';
+import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNotifications';
 
 export default function Pools() {
 
@@ -39,7 +39,7 @@ export default function Pools() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      showErrorToast(error.response.data.message)
     }
   }
 
@@ -60,11 +60,10 @@ export default function Pools() {
         `${protocal_url}${name}.${tenant_base_url}/Admin/pool/delete/${id}`,
         config
       );
+      showSuccessToast('Deleted successfully');
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert('Deleted successfully');
     } catch (error) {
-      console.log(error);
-      alert('Failed to delete. Please try again.');
+      showErrorToast(error.responsed.data.message)
     }
   };
 
@@ -98,14 +97,14 @@ export default function Pools() {
           return;
         }
         await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/Pool/edit/${formData.id}`,formData, config);
-        alert('Updated successfully');
+        showSuccessToast('Pool updated successfully');
       } else {
         if(!formData.poolName){
           showErrorToast('Please enter pool name')
           return;
         }
         await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/Pool/add`, formData, config);
-        alert('Added successfully');
+        showSuccessToast('Pool added successfully');
       }
 
       handleLead(); // Refresh the list
@@ -113,8 +112,7 @@ export default function Pools() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      console.error('Error saving name', error);
-      alert('Failed to save . Please try again.');
+      showErrorToast('Failed to save . Please try again.');
     }
   };
 
@@ -147,7 +145,8 @@ export default function Pools() {
     };
 
     return (
-      <div>
+      <>
+      <ToastContainer/>
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">
             {isEditMode ? 'Edit' : 'Add'}
@@ -195,7 +194,7 @@ export default function Pools() {
             </div>
           </div>
         </form>
-      </div>
+      </>
     );
   };
 
