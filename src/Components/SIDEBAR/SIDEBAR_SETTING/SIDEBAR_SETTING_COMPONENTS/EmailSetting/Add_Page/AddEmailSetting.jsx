@@ -4,9 +4,7 @@ import axios from "axios";
 import { tenant_base_url, protocal_url } from "./../../../../../../Config/config";
 import { getHostnamePart } from "../../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
-import { showErrorToast, showSuccessToast } from "../../../../../../utils/toastNotifications"; 
-import { ToastContainer } from "react-toastify";
-
+import { showErrorToast } from "../../../../../../utils/toastNotifications"; 
 //----------------------------Add Email Setting -----------------------
 export default function AddEmailSetting({ setActiveComponent, handleGetAll }) {
   const name = getHostnamePart();
