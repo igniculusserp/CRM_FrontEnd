@@ -17,6 +17,10 @@ import { FaRegHandshake } from 'react-icons/fa6';
 import { MdOutlineEmail } from 'react-icons/md';
 import { MdOutlineKeyboardVoice } from 'react-icons/md';
 
+// TOGGLE ICONS
+import { FaBarsStaggered } from 'react-icons/fa6';
+import { FaBars } from 'react-icons/fa6';
+
 //file_Imported
 import { main_base_url } from './../../Config/config';
 
@@ -120,13 +124,14 @@ export default function SidebaBar() {
     },
   ];
 
-
   const [active, setactive] = useState(sideBar[0].key);
-  
+
   const handlewelcomedata = async () => {
     try {
-      const response = await axios.get(`${main_base_url}/Tenants/gettenant/${name}`);
-      
+      const response = await axios.get(
+        `${main_base_url}/Tenants/gettenant/${name}`
+      );
+
       console.log('Response:', response.data);
       setWelcomeData(response.data);
     } catch (error) {
@@ -141,15 +146,25 @@ export default function SidebaBar() {
   let handleClick = (key) => {
     setactive(key);
   };
+
+  // TOGGLE STATE
+  const [toggle, setToggle] = useState(false);
+
   return (
     <>
-      <div className="flex flex-col  bg-cyan-500 w-full gap-3  ">
+      <div
+        className={`flex flex-col  bg-cyan-500 ${
+          toggle ? 'w-[80px]' : 'w-[250px]'
+        } gap-3`}
+      >
         <div>
           <img
             id="logoImg"
             src={welcomedata.tenentLogo}
             alt="Company Logo"
-            className="w-24 h-24 mt-3 rounded-full object-contain mx-auto border"
+            className={`mt-3 ${
+              toggle ? 'w-14 h-14' : 'w-24 h-24'
+            } rounded-full object-contain mx-auto border`}
           />
         </div>
 
@@ -157,7 +172,9 @@ export default function SidebaBar() {
           {sideBar.map(({ key, data, icon, link }, index) => (
             <Link to={link} onClick={() => handleClick(key)} key={key}>
               <li
-                className={`flex justify-start items-center gap-3 text-white text-md font-small py-3 shadow-md ${
+                className={`flex ${
+                  toggle ? 'justify-center' : 'justify-start'
+                } items-center gap-3 text-white text-md font-small py-3 shadow-md ${
                   index === 0 ? 'border-b-2 border-t-2' : 'border-b-2'
                 } ${
                   index === sideBar.length - 1 ? 'border-b-2' : ''
@@ -165,13 +182,19 @@ export default function SidebaBar() {
                 key={key}
               >
                 <h1 className="flex items-center gap-2 px-3">
-                  <span className='text-xl'>{icon}</span>
-                  {data}
+                  <span className={`${toggle ? 'text-2xl' : 'text-xl'}`}>
+                    {icon}
+                  </span>
+                  {toggle ? '' : data}
                 </h1>
               </li>
             </Link>
           ))}
         </div>
+      </div>
+      
+      <div className="absolute top-0" onClick={() => setToggle(!toggle)}>
+        {toggle ? <FaBarsStaggered /> : <FaBars />}
       </div>
     </>
   );
