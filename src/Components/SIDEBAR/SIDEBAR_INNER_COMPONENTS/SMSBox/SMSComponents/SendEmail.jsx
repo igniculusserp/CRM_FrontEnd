@@ -1,4 +1,5 @@
 import { FaBars } from 'react-icons/fa';
+import PropTypes from "prop-types";
 
 export default function SendEmail({ currentSms }) {
   return (
@@ -44,19 +45,19 @@ export default function SendEmail({ currentSms }) {
         {currentSms.map((sms, index) => (
           <tr
             key={index}
-            onClick={() => handleClick(sms)}
+            // onClick={() => handleClick(sms)}
             className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
           >
             {/*   CHECKBOX */}
             <td className="px-3 py-3 text-center w-max">
               <input
                 type="checkbox"
-                onClick={(e) => handleCheckboxClick(e, sms.id)}
+                // onClick={(e) => handleCheckboxClick(e, sms.id)}
               />
             </td>
             {/* SEGMENT */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              <span>{sms.segment}</span>
+              <span>{sms.products}</span>
             </td>
             {/* SUBJECT */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
@@ -68,11 +69,11 @@ export default function SendEmail({ currentSms }) {
             </td>
             {/* SENT BY */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {sms.sentBy}
+              {sms.lastModifiedBy}
             </td>
             {/* SENT TIME */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {sms.sentTime}
+            {sms.sentDateTime.replace("T", " ")}
             </td>
           </tr>
         ))}
@@ -81,3 +82,7 @@ export default function SendEmail({ currentSms }) {
     </table>
   );
 }
+
+SendEmail.propTypes = {
+  currentSms: PropTypes.array.isRequired,
+};
