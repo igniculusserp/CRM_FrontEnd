@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 
+import PropTypes from 'prop-types';
+
+
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,7 +20,7 @@ import { MdLogout } from 'react-icons/md';
 //toast
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {showSuccessToast, showErrorToast} from './../../utils/toastNotifications';
+import { showSuccessToast, showErrorToast } from './../../utils/toastNotifications';
 
 // TOGGLE ICONS
 import { FaBarsStaggered } from 'react-icons/fa6';
@@ -120,24 +123,26 @@ export default function Header({ toggle, setToggle }) {
 
   return (
     <>
-          
-      <div className="absolute top-0" onClick={() => setToggle(!toggle)}>
-        {toggle ? <FaBarsStaggered /> : <FaBars />}
-      </div>
       <ToastContainer />
       <div className="flex justify-between items-center py-3 mx-3 overflow-visible">
-          <button className="flex items-center justify-center gap-2 border rounded-full py-1 px-2 ml-[70px]">
+        <div className='flex justify-center items-center'>
+          <button className="flex flex-start bg-cyan-500 text-white shadow rounded-full text-lg p-1 " onClick={() => setToggle(!toggle)}>
+            {toggle ? <FaBarsStaggered /> : <FaBars />}
+          </button>
+
+          <button className="flex items-center  gap-2 border rounded-full py-1 px-2 ml-[10px]">
             Igniculuss <FaAngleDown />
           </button>
-        <div className="flex gap-1 justify-center items-center">
+        </div>
+
+        <div className="flex gap-1 justify-end  items-center">
           {menu.map(({ key, logo, link, functionality }) => (
             <div
               key={key}
-              className={`cursor-pointer p-1 ${
-                activeKey === key
+              className={`cursor-pointer p-1 ${activeKey === key
                   ? 'rounded-full p-1 bg-gray-700 text-cyan-500 shadow-md '
                   : 'text-gray-700 '
-              }`}
+                }`}
             >
               <div onClick={() => handleMenuClick(key, functionality)}>
                 {link ? (
