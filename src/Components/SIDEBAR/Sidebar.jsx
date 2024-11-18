@@ -19,6 +19,8 @@ import { MdOutlineEmail } from 'react-icons/md';
 import { MdOutlineKeyboardVoice } from 'react-icons/md';
 import PropTypes from 'prop-types';
 
+import { FaBars } from 'react-icons/fa6';
+import { FaBarsStaggered } from 'react-icons/fa6';
 
 
 import { getHostnamePart } from './SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
@@ -28,11 +30,8 @@ import { main_base_url } from './../../Config/config';
 
 
 export default function SidebaBar({ toggle }) {
-   const name = getHostnamePart();
-
-
+  const name = getHostnamePart();
   const [welcomedata, setWelcomeData] = useState([]);
-
   const sideBar = [
     {
       key: 1,
@@ -179,10 +178,7 @@ export default function SidebaBar({ toggle }) {
           ))}
         </div>
       </div>      
-      <div className="absolute top-1 right-1 text-xl" onClick={() => setToggle(!toggle)}>
-        {toggle ? <FaBarsStaggered /> : <FaBars />}
-      </div>
-
+      
     </>
   );
 }
