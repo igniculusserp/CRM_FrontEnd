@@ -802,13 +802,13 @@ export default function Createlead() {
                       <span style={{ color: 'red' }}>{errors.mobileNo}</span>
                     )}
                   </div>
-                  {/* -------------Phone Number------------- */}
+                  {/* -------------Alternate Number------------- */}
                   <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="phNo"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Phone Number
+                      Alternate Number
                     </label>
                     <input
                       type="text"
@@ -816,7 +816,7 @@ export default function Createlead() {
                       value={editLead.phNo}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
-                      placeholder="Enter your Phone Number"
+                      placeholder="Enter your Alternate Number"
                     />
                   </div>
                 </div>
