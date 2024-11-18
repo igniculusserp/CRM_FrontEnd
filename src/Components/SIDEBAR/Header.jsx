@@ -1,22 +1,23 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+
+import { main_base_url } from './../../Config/config';
+
+//react-Icons
+
 import { RiAddBoxFill } from 'react-icons/ri';
 import { IoMdNotifications } from 'react-icons/io';
 import { TbCalendarMonth } from 'react-icons/tb';
 import { IoMdSettings } from 'react-icons/io';
 import { FaAngleDown } from 'react-icons/fa';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { main_base_url } from './../../Config/config';
-import axios from 'axios';
 import { MdLogout } from 'react-icons/md';
 
+//toast
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import {
-  showSuccessToast,
-  showErrorToast,
-} from './../../utils/toastNotifications';
+import {showSuccessToast, showErrorToast} from './../../utils/toastNotifications';
 
 // TOGGLE ICONS
 import { FaBarsStaggered } from 'react-icons/fa6';
@@ -25,13 +26,16 @@ import { FaBars } from 'react-icons/fa6';
 
 export default function Header({ toggle, setToggle }) {
   const navigate = useNavigate();
+
   const location = useLocation();
+
   const [welcomedata, setWelcomeData] = useState([]);
   const [tenantId, setData] = useState('');
   const [activeKey, setActiveKey] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+
     const registrationdata = localStorage.getItem('registrationdata');
 
     const userDetail = localStorage.getItem('userDetail');
@@ -58,9 +62,7 @@ export default function Header({ toggle, setToggle }) {
 
   const handlewelcomedata = async () => {
     try {
-      const response = await axios.get(
-        `${main_base_url}/Tenants/gettenant/${tenantId}`
-      );
+      const response = await axios.get(`${main_base_url}/Tenants/gettenant/${tenantId}`);
     } catch (error) {
       console.error('Error fetching welcome data:', error);
     }
