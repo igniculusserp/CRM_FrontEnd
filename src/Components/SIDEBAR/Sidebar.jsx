@@ -1,6 +1,7 @@
 //react
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+
 //external
 import axios from 'axios';
 
@@ -21,13 +22,15 @@ import { MdOutlineKeyboardVoice } from 'react-icons/md';
 import { FaBarsStaggered } from 'react-icons/fa6';
 import { FaBars } from 'react-icons/fa6';
 
+
+import { getHostnamePart } from './SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
+
 //file_Imported
 import { main_base_url } from './../../Config/config';
 
 export default function SidebaBar() {
-  const fullURL = window.location.href;
-  const url = new URL(fullURL);
-  const name = url.hostname.split('.')[0];
+  
+  const name = getHostnamePart();
 
   const [welcomedata, setWelcomeData] = useState([]);
 
@@ -128,11 +131,7 @@ export default function SidebaBar() {
 
   const handlewelcomedata = async () => {
     try {
-      const response = await axios.get(
-        `${main_base_url}/Tenants/gettenant/${name}`
-      );
-
-      console.log('Response:', response.data);
+      const response = await axios.get(`${main_base_url}/Tenants/gettenant/${name}`);
       setWelcomeData(response.data);
     } catch (error) {
       console.error('Error fetching welcome data:', error);
@@ -152,19 +151,13 @@ export default function SidebaBar() {
 
   return (
     <>
-      <div
-        className={`flex flex-col  bg-cyan-500 ${
-          toggle ? 'w-[80px]' : 'w-[250px]'
-        } gap-3`}
-      >
-        <div>
+      <div className={`flex flex-col bg-cyan-500 ${toggle ? 'w-[80px]' : 'w-[250px]'} gap-3`}>
+        <div className=' mt-4'>
           <img
             id="logoImg"
             src={welcomedata.tenentLogo}
             alt="Company Logo"
-            className={`mt-3 ${
-              toggle ? 'w-14 h-14' : 'w-24 h-24'
-            } rounded-full object-contain mx-auto border`}
+            className={`mt-3 ${toggle ? 'w-14 h-14' : 'w-24 h-24'} rounded-full shadow-md shadow-cyan-600 object-contain mx-auto border`}
           />
         </div>
 
@@ -172,13 +165,10 @@ export default function SidebaBar() {
           {sideBar.map(({ key, data, icon, link }, index) => (
             <Link to={link} onClick={() => handleClick(key)} key={key}>
               <li
-                className={`flex ${
-                  toggle ? 'justify-center' : 'justify-start'
-                } items-center gap-3 text-white text-md font-small py-3 shadow-md ${
-                  index === 0 ? 'border-b-2 border-t-2' : 'border-b-2'
-                } ${
-                  index === sideBar.length - 1 ? 'border-b-2' : ''
-                } hover:bg-gradient-to-b from-cyan-300 to-cyan-600`}
+                className={`flex ${toggle ? 'justify-center' : 'justify-start'} 
+                  items-center gap-3 text-white text-md font-small py-3 shadow-md 
+                  ${index === 0 ? 'border-b-2 border-t-2' : 'border-b-2'} ${index === sideBar.length - 1 ? 'border-b-2' : ''} 
+                  hover:bg-gradient-to-b from-cyan-300 to-cyan-600`}
                 key={key}
               >
                 <h1 className="flex items-center gap-2 px-3">
@@ -193,7 +183,7 @@ export default function SidebaBar() {
         </div>
       </div>
       
-      <div className="absolute top-0" onClick={() => setToggle(!toggle)}>
+      <div className="absolute top-1 right-1 text-xl" onClick={() => setToggle(!toggle)}>
         {toggle ? <FaBarsStaggered /> : <FaBars />}
       </div>
     </>
