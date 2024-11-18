@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { RiAddBoxFill } from 'react-icons/ri';
 import { IoMdNotifications } from 'react-icons/io';
 import { TbCalendarMonth } from 'react-icons/tb';
@@ -17,7 +18,12 @@ import {
   showErrorToast,
 } from './../../utils/toastNotifications';
 
-export default function Header() {
+// TOGGLE ICONS
+import { FaBarsStaggered } from 'react-icons/fa6';
+import { FaBars } from 'react-icons/fa6';
+
+
+export default function Header({ toggle, setToggle }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [welcomedata, setWelcomeData] = useState([]);
@@ -112,6 +118,10 @@ export default function Header() {
 
   return (
     <>
+          
+      <div className="absolute top-0" onClick={() => setToggle(!toggle)}>
+        {toggle ? <FaBarsStaggered /> : <FaBars />}
+      </div>
       <ToastContainer />
       <div className="flex justify-between items-center py-3 mx-3 overflow-visible">
           <button className="flex items-center justify-center gap-2 border rounded-full py-1 px-2 ml-[70px]">
@@ -143,3 +153,7 @@ export default function Header() {
     </>
   );
 }
+Header.propTypes = {
+  toggle: PropTypes.bool.isRequired,
+  setToggle: PropTypes.func.isRequired,
+};

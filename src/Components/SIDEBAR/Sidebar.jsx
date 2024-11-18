@@ -16,15 +16,13 @@ import { VscGraph } from 'react-icons/vsc';
 import { FaRegHandshake } from 'react-icons/fa6';
 import { MdOutlineEmail } from 'react-icons/md';
 import { MdOutlineKeyboardVoice } from 'react-icons/md';
+import PropTypes from 'prop-types';
 
-// TOGGLE ICONS
-import { FaBarsStaggered } from 'react-icons/fa6';
-import { FaBars } from 'react-icons/fa6';
 
 //file_Imported
 import { main_base_url } from './../../Config/config';
 
-export default function SidebaBar() {
+export default function SidebaBar({ toggle }) {
   const fullURL = window.location.href;
   const url = new URL(fullURL);
   const name = url.hostname.split('.')[0];
@@ -147,8 +145,6 @@ export default function SidebaBar() {
     setactive(key);
   };
 
-  // TOGGLE STATE
-  const [toggle, setToggle] = useState(false);
 
   return (
     <>
@@ -192,10 +188,10 @@ export default function SidebaBar() {
           ))}
         </div>
       </div>
-      
-      <div className="absolute top-0" onClick={() => setToggle(!toggle)}>
-        {toggle ? <FaBarsStaggered /> : <FaBars />}
-      </div>
+
     </>
   );
 }
+SidebaBar.propTypes = {
+  toggle: PropTypes.bool.isRequired,
+};
