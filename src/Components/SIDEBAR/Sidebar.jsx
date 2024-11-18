@@ -17,10 +17,8 @@ import { VscGraph } from 'react-icons/vsc';
 import { FaRegHandshake } from 'react-icons/fa6';
 import { MdOutlineEmail } from 'react-icons/md';
 import { MdOutlineKeyboardVoice } from 'react-icons/md';
+import PropTypes from 'prop-types';
 
-// TOGGLE ICONS
-import { FaBarsStaggered } from 'react-icons/fa6';
-import { FaBars } from 'react-icons/fa6';
 
 
 import { getHostnamePart } from './SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
@@ -28,9 +26,10 @@ import { getHostnamePart } from './SIDEBAR_SETTING/ReusableComponents/GlobalHost
 //file_Imported
 import { main_base_url } from './../../Config/config';
 
-export default function SidebaBar() {
-  
-  const name = getHostnamePart();
+
+export default function SidebaBar({ toggle }) {
+   const name = getHostnamePart();
+
 
   const [welcomedata, setWelcomeData] = useState([]);
 
@@ -146,8 +145,6 @@ export default function SidebaBar() {
     setactive(key);
   };
 
-  // TOGGLE STATE
-  const [toggle, setToggle] = useState(false);
 
   return (
     <>
@@ -181,11 +178,14 @@ export default function SidebaBar() {
             </Link>
           ))}
         </div>
-      </div>
-      
+      </div>      
       <div className="absolute top-1 right-1 text-xl" onClick={() => setToggle(!toggle)}>
         {toggle ? <FaBarsStaggered /> : <FaBars />}
       </div>
+
     </>
   );
 }
+SidebaBar.propTypes = {
+  toggle: PropTypes.bool.isRequired,
+};

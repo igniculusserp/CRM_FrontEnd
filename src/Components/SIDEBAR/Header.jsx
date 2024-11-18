@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 import { main_base_url } from './../../Config/config';
 
 //react-Icons
+
 import { RiAddBoxFill } from 'react-icons/ri';
 import { IoMdNotifications } from 'react-icons/io';
 import { TbCalendarMonth } from 'react-icons/tb';
@@ -17,7 +19,12 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {showSuccessToast, showErrorToast} from './../../utils/toastNotifications';
 
-export default function Header() {
+// TOGGLE ICONS
+import { FaBarsStaggered } from 'react-icons/fa6';
+import { FaBars } from 'react-icons/fa6';
+
+
+export default function Header({ toggle, setToggle }) {
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -113,6 +120,10 @@ export default function Header() {
 
   return (
     <>
+          
+      <div className="absolute top-0" onClick={() => setToggle(!toggle)}>
+        {toggle ? <FaBarsStaggered /> : <FaBars />}
+      </div>
       <ToastContainer />
       <div className="flex justify-between items-center py-3 mx-3 overflow-visible">
           <button className="flex items-center justify-center gap-2 border rounded-full py-1 px-2 ml-[70px]">
@@ -144,3 +155,7 @@ export default function Header() {
     </>
   );
 }
+Header.propTypes = {
+  toggle: PropTypes.bool.isRequired,
+  setToggle: PropTypes.func.isRequired,
+};
