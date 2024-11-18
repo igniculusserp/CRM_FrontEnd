@@ -465,7 +465,7 @@ const CreateFollowUp = () => {
                     htmlFor="phoneNo"
                     className="text-sm font-medium text-gray-700"
                   >
-                    phone Number
+                    Alternate Number
                   </label>
                   <input
                     type="number"
@@ -474,7 +474,7 @@ const CreateFollowUp = () => {
                     value={followupsData.phoneNo}
                     className="mt-1 p-2 border border-gray-300 rounded-md"
                     onChange={handleChange}
-                    placeholder="Enter Phone Number"
+                    placeholder="Enter Alternate Number"
                   />
                 </div>
               </div>

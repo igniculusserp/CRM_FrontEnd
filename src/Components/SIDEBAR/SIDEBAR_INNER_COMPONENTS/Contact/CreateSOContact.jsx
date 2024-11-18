@@ -561,13 +561,13 @@ export default function CreateSOContact() {
                     />
                   </div>
                   {/* -------------III--2------------- */}
-                  {/* -------------Phone Number------------- */}
+                  {/* -------------Alternate Number------------- */}
                   <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="phoneNo"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Phone Number
+                      Alternate Number
                     </label>
                     <input
                       type="text"
@@ -575,7 +575,7 @@ export default function CreateSOContact() {
                       value={editLead.phoneNo}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
-                      placeholder="Enter your Phone Number"
+                      placeholder="Enter your Alternate Number"
                     />
                   </div>
                 </div>
