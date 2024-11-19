@@ -831,7 +831,7 @@ export default function Createlead() {
                       Email
                     </label>
                     <input
-                      type="text"
+                      type="email"
                       name="email"
                       value={editLead.email}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
