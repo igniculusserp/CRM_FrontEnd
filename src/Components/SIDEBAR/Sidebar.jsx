@@ -122,6 +122,12 @@ export default function SidebaBar() {
       link: '/sidebar/misreports',
       icon: <IoDocumentTextOutline />,
     },
+    {
+      key: 16,
+      data: 'Subscription',
+      link: '/sidebar/subscription',
+      icon: <IoDocumentTextOutline />,
+    },
   ];
 
   const [active, setactive] = useState(sideBar[0].key);
@@ -149,6 +155,7 @@ export default function SidebaBar() {
 
   // TOGGLE STATE
   const [toggle, setToggle] = useState(false);
+  const [showLeads, setShowLeads] = useState(false);
 
   return (
     <>
@@ -192,8 +199,15 @@ export default function SidebaBar() {
           ))}
         </div>
       </div>
-      
-      <div className="absolute top-0" onClick={() => setToggle(!toggle)}>
+
+      <div
+        className={`absolute  right-[0.2rem] h-8 w-8 p-2 bg-white rounded-full shadow-md cursor-pointer text-cyan-700 ${
+          toggle
+            ? 'text-center top-[4rem] right-[1.5rem] mt-1 mb-1'
+            : 'top-[2rem]'
+        }`}
+        onClick={() => setToggle(!toggle)}
+      >
         {toggle ? <FaBarsStaggered /> : <FaBars />}
       </div>
     </>
