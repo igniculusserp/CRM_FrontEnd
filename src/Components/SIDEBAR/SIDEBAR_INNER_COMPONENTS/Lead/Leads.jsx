@@ -25,6 +25,7 @@ import { tenant_base_url, protocal_url } from '../../../../Config/config';
 import MassEmail from '../MassEmail/MassEmail';
 
 import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
+
 import LeadOperations from './LeadComponents/LeadOperations';
 import LeadAction from './LeadComponents/LeadAction';
 import UploadLead from './LeadComponents/UploadLead';
@@ -33,14 +34,18 @@ import LeadStatusModal from './LeadComponents/LeadStatusModal';
 import MultipleAssignModal from './LeadComponents/MultipleAssignModal';
 import MultipuleStatusModal from './LeadComponents/MultipleStatusModal';
 
+
 import { SearchElement } from '../SearchElement/SearchElement';
+
+
 import Pagination from '../Pagination/Pagination';
 
-const name = getHostnamePart();
+
 
 export default function Lead() {
   const navigate = useNavigate(); // Add this line
-
+  const name = getHostnamePart();
+  
   // Mass Email
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEmails, setSelectedEmails] = useState([]);

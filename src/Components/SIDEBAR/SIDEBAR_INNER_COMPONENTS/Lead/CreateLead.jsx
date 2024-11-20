@@ -376,6 +376,8 @@ export default function Createlead() {
     }));
   };
 
+
+  //------------------------------------------Mobile Regex------------------------------------------
   const handleContactChange = (event) => {
     const inputValue = event.target.value.replace(/[^0-9]/g, ""); 
     const { name } = event.target;
@@ -387,11 +389,12 @@ export default function Createlead() {
   };
   
 
-  //---------->handleSubmit<----------
-  //two different schemas, one for PUT and one for POST
-  
+  //------------------------------------------Email Regex------------------------------------------
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+
+  //---------->handleSubmit<----------
+  //two different schemas, one for PUT and one for POST
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -493,10 +496,7 @@ export default function Createlead() {
         return;
       }
       
-      if (
-        (formData_POST.email && !emailRegex.test(formData_POST.email)) || 
-        (formData_PUT.email && !emailRegex.test(formData_PUT.email))
-      ) {
+      if ((formData_POST.email && !emailRegex.test(formData_POST.email)) || (formData_PUT.email && !emailRegex.test(formData_PUT.email))) {
         showErrorToast('Invalid email format');
         return;
       }
