@@ -1086,7 +1086,7 @@ export default function Lead() {
                           <MdCall className="text-red-600" />
                         </div>
                       </td>
-                      {/*Follow UP*/}
+                      {/*call_bck_DateTime*/}
                       <td className="px-1 py-4 border-b border-gray-300 text-sm">
                         {
                           item.call_bck_DateTime
@@ -1139,11 +1139,7 @@ export default function Lead() {
             </table>
           )}
 
-          {/* ------------GRID------------ */}
-          {/* ------------GRID------------ */}
-          {/* ------------GRID------------ */}
-          {/* ------------GRID------------ */}
-          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}
           {selectedViewValue === 'Grid View' && (
             <>
               <div className="min-w-full">
