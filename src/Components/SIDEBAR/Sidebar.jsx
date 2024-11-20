@@ -123,6 +123,12 @@ export default function SidebaBar({ toggle }) {
       link: '/sidebar/misreports',
       icon: <IoDocumentTextOutline />,
     },
+    {
+      key: 16,
+      data: 'Subscription',
+      link: '/sidebar/subscription',
+      icon: <IoDocumentTextOutline />,
+    },
   ];
 
   const [active, setactive] = useState(sideBar[0].key);
@@ -143,6 +149,7 @@ export default function SidebaBar({ toggle }) {
   let handleClick = (key) => {
     setactive(key);
   };
+
 
 
   return (
@@ -177,8 +184,7 @@ export default function SidebaBar({ toggle }) {
             </Link>
           ))}
         </div>
-      </div>      
-      
+
     </>
   );
 }

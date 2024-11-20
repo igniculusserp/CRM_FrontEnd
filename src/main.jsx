@@ -92,6 +92,9 @@ import ResearchReport from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisRep
 import FollowUpNotificationProvider from "./FollowUpNotificationProvider.jsx";
 import Analytics from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Analytics/Analytics.jsx";
 
+// SUBSCRIPTION
+import Subscription from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Subscription/Subscription.jsx";
+
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
   { path: "/VerifyTenant", element: <VerifyTenant /> },
@@ -179,6 +182,9 @@ const router = createBrowserRouter([
 
       { path: "/sidebar/groupChat", element: <GroupChat /> },
       { path: "/sidebar/setting", element: <Setting /> },
+
+      { path: "/sidebar/subscription", element: <Subscription /> },
+
       { path: "*", element: <Test /> },
     ],
   },
