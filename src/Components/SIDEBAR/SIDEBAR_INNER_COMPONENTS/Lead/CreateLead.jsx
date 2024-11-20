@@ -376,9 +376,21 @@ export default function Createlead() {
     }));
   };
 
+  const handleContactChange = (event) => {
+    const inputValue = event.target.value.replace(/[^0-9]/g, ""); 
+    const { name } = event.target;
+  
+    seteditLead((prevState) => ({
+      ...prevState,
+      [name]: inputValue,
+    }));
+  };
+  
+
   //---------->handleSubmit<----------
   //two different schemas, one for PUT and one for POST
-  const [errors, setErrors] = useState({});
+  
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -459,6 +471,18 @@ export default function Createlead() {
       console.log(formData_POST)
 
       //------------------------------------------------------------------------------------> Validations//--> Validations//--> Validations//--> Validations//--> Validations
+      
+      if (formData_POST.email === "" || formData_PUT.email === "") {
+        showErrorToast('Email cannot be blank')
+        return;
+      } else if (!emailRegex.test(formData_POST.email) || !emailRegex.test(formData_PUT.email)) {
+        showErrorToast('Invalid email format');
+        return;
+      } else {
+        console.log("Valid email submitted:",formData_POST.email,formData_PUT.email);
+        // Add further submit logic here
+      }
+      
       if (!formData_POST.name || !formData_PUT.name) {
         showErrorToast('Please enter name')
         return;
@@ -529,6 +553,8 @@ export default function Createlead() {
     } catch (error) {
       // Handle errors from the API call
       showErrorToast(error.response?.data?.message || "An error occurred");
+      
+      
     }
   }
 
@@ -793,14 +819,13 @@ export default function Createlead() {
                     <input
                       type="text"
                       name="mobNo"
+                      maxLength="15"
                       value={editLead.mobNo}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
+                      onChange={handleContactChange}
                       placeholder="Enter your Mobile Number"
                     />
-                    {errors.mobileNo && (
-                      <span style={{ color: 'red' }}>{errors.mobileNo}</span>
-                    )}
+                   
                   </div>
                   {/* -------------Alternate Number------------- */}
                   <div className="flex flex-col w-1/2">
@@ -813,9 +838,10 @@ export default function Createlead() {
                     <input
                       type="text"
                       name="phNo"
+                      maxLength="15"
                       value={editLead.phNo}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
+                      onChange={handleContactChange}
                       placeholder="Enter your Alternate Number"
                     />
                   </div>
