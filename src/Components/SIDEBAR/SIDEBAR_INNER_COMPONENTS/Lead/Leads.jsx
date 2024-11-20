@@ -43,14 +43,14 @@ import Pagination from '../Pagination/Pagination';
 
 
 export default function Lead() {
-  const navigate = useNavigate(); // Add this line
+  const navigate = useNavigate();
+  const location = useLocation();
   const name = getHostnamePart();
   
   // Mass Email
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEmails, setSelectedEmails] = useState([]);
 
-  const location = useLocation();
 
   //This is to store the upcoming data from API
   const [getleads, setGetleads] = useState([]);
@@ -83,18 +83,16 @@ export default function Lead() {
         setGetleads(data);
         setFilteredLeads(data);
       } else {
-        const response = await axios.get(
-          `${protocal_url}${name}.${tenant_base_url}/Lead/leads/byusertoken`,
-          config
-        );
+        const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Lead/leads/byusertoken`, config);
 
         const data = response.data.data;
+
         setCurrentPage(1);
         setGetleads(data);
         setFilteredLeads(data);
         setSelectedIds([]);
       }
-    } catch (error) {
+    } catch(error){
       console.error('Error fetching leads:', error);
     }
   }
@@ -109,10 +107,7 @@ export default function Lead() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
-      );
+      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`, config);
 
       const data = response.data?.data;
       setUsers(data);
@@ -185,14 +180,10 @@ export default function Lead() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
-        config
-      );
+      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`, config);
       setallLeadData(response.data.data);
     } catch (error) {
       console.error('Error fetching leads:', error);
-      // Optionally, set an error state to display a user-friendly message
     }
   }
 
@@ -219,14 +210,10 @@ export default function Lead() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
-      );
+      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,config);
       setallAssigned_To_Data(response.data.data);
     } catch (error) {
       console.error('Error fetching leads:', error);
-      // Optionally, set an error state to display a user-friendly message
     }
   }
 
@@ -272,13 +259,9 @@ export default function Lead() {
     { key: 2, value: 'Mass Update' },
     { key: 3, value: 'Mass Email' },
     { key: 4, value: 'Approve Leads' },
-    // { key: 5, value: "Add to Campaign" },
-
-    // { key: 6, value: "Export Leads" },
-    { key: 7, value: 'Export To Excel' },
-    { key: 8, value: 'Export To PDF' },
-    // { key: 9, value: "Create SO" },
-    { key: 10, value: 'Convert Lead to Contact' },
+    { key: 5, value: 'Export To Excel' },
+    { key: 6, value: 'Export To PDF' },
+    { key: 7, value: 'Convert Lead to Contact' },
   ]);
 
   const [dropActionsMenudropDown, setdropActionsMenudropDown] = useState(false);
@@ -290,9 +273,7 @@ export default function Lead() {
   const handleActionButton = async (value, leadId) => {
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
     if (value === 'Mass Delete') {
-      const userConfirmed = confirm(
-        'Are you sure you want to Delete the selected Leads?'
-      );
+      const userConfirmed = confirm('Are you sure you want to Delete the selected Leads?');
       if (userConfirmed) {
         massDelete();
       }
@@ -300,9 +281,7 @@ export default function Lead() {
 
     // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
     if (value === 'Mass Email') {
-      const userConfirmed = confirm(
-        'Are you sure you want to Send E-Mail to the selected Data?'
-      );
+      const userConfirmed = confirm('Are you sure you want to Send E-Mail to the selected Data?');
       if (userConfirmed) {
         openMassEmailModal(selectedEmails);
       }
@@ -310,9 +289,7 @@ export default function Lead() {
 
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
     if (value === 'Sheet View') {
-      const userConfirmed = confirm(
-        'Are you sure you want to export the selected Leads?'
-      );
+      const userConfirmed = confirm('Are you sure you want to export the selected Leads?');
       if (userConfirmed) {
         exportToExcel();
       }
@@ -320,9 +297,7 @@ export default function Lead() {
 
     // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
     if (value === 'Print View') {
-      const userConfirmed = confirm(
-        'Are you sure you want to export the selected Leads?'
-      );
+      const userConfirmed = confirm('Are you sure you want to export the selected Leads?');
       if (userConfirmed) {
         exportToPDF();
       }
@@ -330,9 +305,7 @@ export default function Lead() {
 
     // ---------------------->Convert Lead to Contact FUNCTIONALITY*<----------------------
     if (value === 'Convert Lead to Contact') {
-      const userConfirmed = confirm(
-        'Are you sure you want to convert this lead to a contact?'
-      );
+      const userConfirmed = confirm('Are you sure you want to convert this lead to a contact?');
       if (userConfirmed) {
         convertType();
       }
@@ -378,7 +351,7 @@ export default function Lead() {
     if (selectedEmails.length > 0) {
       setIsModalOpen(true); // Open the modal
     } else {
-      alert('Selected Entity dose not have E-Mail Address.');
+      alert('Selected Entity dose not have eMail Address.');
     }
   };
 
@@ -394,7 +367,6 @@ export default function Lead() {
   //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
   //-------> XLSX used here
   const exportToExcel = () => {
-    // Filter currentLeads based on selectedIds
     const leadsToExport = currentLeads.filter((lead) =>
       selectedIds.includes(lead.id)
     );
@@ -455,7 +427,6 @@ export default function Lead() {
 
   //---------------------->---------------------->MANAGE_BY/ASSIGNED_TO<----------------------<ARVIND----------------------
   const roleColors = [
-    // "#f97316", // Red
     '#2563eb', // blue
     '#65a30d', // LimeGreen
     '#7c3aed', // MediumPurple
@@ -476,8 +447,7 @@ export default function Lead() {
         },
       };
 
-      const response = await axios.post(
-        `${protocal_url}${name}.${tenant_base_url}/Lead/leadtocontact/${selectedIds}`,
+      const response = await axios.post(`${protocal_url}${name}.${tenant_base_url}/Lead/leadtocontact/${selectedIds}`,
         { id: selectedIds }, // Pass data as second parameter
         config
       );
@@ -515,6 +485,7 @@ export default function Lead() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  
   //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
   const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -537,12 +508,7 @@ export default function Lead() {
 
     // Update selected emails
     setSelectedEmails((prevSelectedEmails) => {
-      const newSelectedEmails = prevSelectedEmails.includes(item.email)
-        ? prevSelectedEmails.filter((email) => email !== item.email)
-        : [...prevSelectedEmails, item.email];
-
-      // Log the updated selectedEmails
-      console.log('Updated Selected Emails:', newSelectedEmails);
+      const newSelectedEmails = prevSelectedEmails.includes(item.email) ? prevSelectedEmails.filter((email) => email !== item.email) : [...prevSelectedEmails, item.email];
       return newSelectedEmails;
     });
   };
@@ -562,7 +528,6 @@ export default function Lead() {
         ...new Set([...prevSelected, ...currentPageIds]),
       ]);
     } else {
-      // Remove all current page leads from selectedIds
       const currentPageIds = currentLeads?.map((lead) => lead.id);
       setSelectedEmails([]);
       setSelectedIds((prevSelected) =>
@@ -703,8 +668,7 @@ export default function Lead() {
       // Filter for Lead Action (id === 4)
       filtered = getleads.filter(
         (lead) =>
-          lead.userName &&
-          lead.userName?.toLowerCase()?.includes(searchTerm?.toLowerCase())
+          lead.userName && lead.userName?.toLowerCase()?.includes(searchTerm?.toLowerCase())
       );
     } else {
       // General filtering for other lead types
@@ -1134,10 +1098,8 @@ export default function Lead() {
                       <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
                         <div>
                           {item.segments && (
-                            <span className="">
-                              {item.segments
-                                .filter((segment) => segment.length > 1)
-                                .join(', ')}
+                            <span>
+                              {item.segments.filter((segment) => segment.length > 1).join(', ')}
                             </span>
                           )}
                         </div>
