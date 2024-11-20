@@ -5,13 +5,14 @@ const Pagination = ({
   siblingCount = 1,
 }) => {
   const getPaginationRange = (currentPage, totalPages, siblingCount = 1) => {
-    const totalPageNumbers = siblingCount * 2 + 5;
+    const totalPageNumbers = siblingCount * 2 + 5; // Total visible pagination numbers
 
-    // If total pages are less than the range, show all pages
+    // If total pages fit within the visible range, return all pages
     if (totalPages <= totalPageNumbers) {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
 
+    // Calculate the sibling range
     const leftSiblingIndex = Math.max(currentPage - siblingCount, 2);
     const rightSiblingIndex = Math.min(
       currentPage + siblingCount,
@@ -23,25 +24,20 @@ const Pagination = ({
 
     const range = [];
 
-    // Add the first page
     range.push(1);
 
-    // Add left dots if needed
     if (showLeftDots) {
       range.push('...');
     }
 
-    // Add the range of numbers between siblings
     for (let i = leftSiblingIndex; i <= rightSiblingIndex; i++) {
       range.push(i);
     }
 
-    // Add right dots if needed
     if (showRightDots) {
       range.push('...');
     }
 
-    // Add the last page
     range.push(totalPages);
 
     return range;
