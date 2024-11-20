@@ -184,6 +184,7 @@ export default function SidebaBar({ toggle }) {
             </Link>
           ))}
         </div>
+        </div>
 
     </>
   );
