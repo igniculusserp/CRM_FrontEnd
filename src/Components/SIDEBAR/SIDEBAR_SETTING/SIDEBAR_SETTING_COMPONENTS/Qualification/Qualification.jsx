@@ -60,10 +60,9 @@ export default function Qualification() {
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert('Deleted successfully');
+      showSuccessToast('Deleted successfully');
     } catch (error) {
-      console.error('Error deleting qualification:', error);
-      alert('Failed to delete. Please try again.');
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -126,10 +125,10 @@ export default function Qualification() {
         showErrorToast('Please select work expierence')
         return;
       } if(!formData_POST.skill){
-        showErrorToast('Please select skill')
+        showErrorToast('Please enter skill')
         return;
       }if(!formData_POST.achievements){
-        showErrorToast('Please select achievements')
+        showErrorToast('Please enter achievements')
         return;
       }
 
@@ -137,11 +136,10 @@ export default function Qualification() {
       if (isEditMode) {
         await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/qualification/edit/${formData.id}`,formData_PUT,config);
         showSuccessToast('Updated successfully')
-        alert('Updated successfully');
       } else {
         await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/qualification/add`, formData_POST, config
         );
-        alert('Added successfully');
+        showSuccessToast('Added successfully');
       }
 
       handleLead(); // Refresh the list
@@ -149,7 +147,7 @@ export default function Qualification() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      showErrorToast(error.data.message)
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -255,7 +253,8 @@ export default function Qualification() {
     //   console.log("clicked");
     // };
     return (
-      <div>
+      <>
+      <ToastContainer/>
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-medium">
             {isEditMode ? 'Edit Qualification' : 'Add Qualification'}
@@ -468,7 +467,7 @@ export default function Qualification() {
             </div>
           </div>
         </form>
-      </div>
+      </>
     );
   };
 

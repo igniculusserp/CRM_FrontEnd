@@ -6,12 +6,17 @@ import { RiDeleteBin6Fill } from 'react-icons/ri';
 import axios from 'axios';
 import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 
+import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
+import { ToastContainer } from 'react-toastify';
+import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNotifications';
+
+
+
 export default function AccessDevice() {
   const [data, setData] = useState([]);
   const [activeComponent, setActiveComponent] = useState('Table');
-  const fullURL = window.location.href;
-  const url = new URL(fullURL);
-  const name = url.hostname.split('.')[0];
+
+  const name = getHostnamePart();
   const [idGet, setIdGet] = useState('');
 
   // -------------------Fetch All Access Devices---------------------
@@ -29,7 +34,7 @@ export default function AccessDevice() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      showErrorToast(error.response.data.message)
     }
   }
 
@@ -51,10 +56,9 @@ export default function AccessDevice() {
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert('Access Device deleted successfully');
+      showSuccessToast('Deleted Successfully')
     } catch (error) {
-      console.log(error);
-      alert('Failed to delete pool. Please try again.');
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -76,6 +80,8 @@ export default function AccessDevice() {
 
   const AccessDeviceTable = () => {
     return (
+      <>
+      <ToastContainer/>
       <div className="m-3 min-w-screen">
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">Access Device</h1>
@@ -175,6 +181,7 @@ export default function AccessDevice() {
           </div>
         </div>
       </div>
+      </>
     );
   };
 
@@ -185,8 +192,8 @@ export default function AccessDevice() {
       userId: '',
       userName: '',
       deviceType: '',
-      deviceAddress: '',
       deviceToken: '',
+      deviceAddress: '',
     });
 
     //----------------------------------------------------------------------------------------
@@ -231,7 +238,6 @@ export default function AccessDevice() {
     const handleDropdownStatusSelection = (device) => {
       setIsStatusDropdownOpen(false);
       setDefaultTextStatus(device.userName);
-      console.log('@@@===', isStatusDropdownOpen);
       setAddDevice((prev) => ({
         ...prev,
         userName: device.firstName,
@@ -261,26 +267,36 @@ export default function AccessDevice() {
           },
         };
 
-        // Make sure to pass the `addDevice` data in the request body
-        await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/Setting/addAccessDevice`,
-          addDevice, // Data to send
-          config
-        );
-        alert('Access Device added successfully');
-        window.location.reload();
-        // Redirect or reset form after successful submission
-      } catch (error) {
-        if (error.response) {
-          console.error('Error data:', error.response.data);
-        } else {
-          console.error('Error:', error.message);
+        if(!addDevice.userName){
+          showErrorToast('Please select user')
+          return;
         }
-        alert('An error occurred. Please try again.');
+        if(!addDevice.deviceType){
+          showErrorToast('Please enter device type')
+          return;
+        }
+        if(!addDevice.deviceToken){
+          showErrorToast('Please enter device token')
+          return;
+        }
+        if(!addDevice.deviceAddress){
+          showErrorToast('Please enter device address')
+          return;
+        }
+       
+
+        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Setting/addAccessDevice`, addDevice, config);
+        showSuccessToast('Access Device Added Sucessfully')
+        window.location.reload();
+
+      } catch (error) {
+        showErrorToast(error.response.data.message);
       }
     };
 
     return (
+      <>
+      <ToastContainer/>
       <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
         <div className="flex py-2 px-2 items-center justify-between bg-white rounded-md shadow-md">
           <h1 className="text-xl">Add Access Device</h1>
@@ -437,6 +453,7 @@ export default function AccessDevice() {
           </form>
         </div>
       </div>
+      </>
     );
   };
 
@@ -560,7 +577,7 @@ export default function AccessDevice() {
           formData_PUT,
           config
         );
-        alert('Access Device updated successfully!');
+        showSuccessToast('Access Device updated successfully!');
         window.location.reload();
       } catch (error) {
         console.error('Error updating Access Device:', error);
@@ -569,6 +586,8 @@ export default function AccessDevice() {
     };
 
     return (
+      <>
+      <ToastContainer/>
       <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
         <div className="flex py-2 px-2 items-center justify-between bg-white rounded-md shadow-md">
           <h1 className="text-xl">Update Access Device</h1>
@@ -710,6 +729,7 @@ export default function AccessDevice() {
           </form>
         </div>
       </div>
+      </>
     );
   };
 

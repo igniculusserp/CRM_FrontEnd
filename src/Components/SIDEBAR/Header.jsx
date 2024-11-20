@@ -1,31 +1,44 @@
 import { useState, useEffect } from 'react';
+
+import PropTypes from 'prop-types';
+
+
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+
+import { main_base_url } from './../../Config/config';
+
+//react-Icons
+
 import { RiAddBoxFill } from 'react-icons/ri';
 import { IoMdNotifications } from 'react-icons/io';
 import { TbCalendarMonth } from 'react-icons/tb';
 import { IoMdSettings } from 'react-icons/io';
 import { FaAngleDown } from 'react-icons/fa';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { main_base_url } from './../../Config/config';
-import axios from 'axios';
 import { MdLogout } from 'react-icons/md';
 
+//toast
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { showSuccessToast, showErrorToast } from './../../utils/toastNotifications';
 
-import {
-  showSuccessToast,
-  showErrorToast,
-} from './../../utils/toastNotifications';
+// TOGGLE ICONS
+import { FaBarsStaggered } from 'react-icons/fa6';
+import { FaBars } from 'react-icons/fa6';
 
-export default function Header() {
+
+export default function Header({ toggle, setToggle }) {
   const navigate = useNavigate();
+
   const location = useLocation();
+
   const [welcomedata, setWelcomeData] = useState([]);
   const [tenantId, setData] = useState('');
   const [activeKey, setActiveKey] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+
     const registrationdata = localStorage.getItem('registrationdata');
 
     const userDetail = localStorage.getItem('userDetail');
@@ -52,9 +65,7 @@ export default function Header() {
 
   const handlewelcomedata = async () => {
     try {
-      const response = await axios.get(
-        `${main_base_url}/Tenants/gettenant/${tenantId}`
-      );
+      const response = await axios.get(`${main_base_url}/Tenants/gettenant/${tenantId}`);
     } catch (error) {
       console.error('Error fetching welcome data:', error);
     }
@@ -114,18 +125,24 @@ export default function Header() {
     <>
       <ToastContainer />
       <div className="flex justify-between items-center py-3 mx-3 overflow-visible">
-          <button className="flex items-center justify-center gap-2 border rounded-full py-1 px-2 ml-[70px]">
+        <div className='flex justify-center items-center'>
+          <button className="flex flex-start bg-cyan-500 text-white shadow rounded-full text-lg p-1 " onClick={() => setToggle(!toggle)}>
+            {toggle ? <FaBarsStaggered /> : <FaBars />}
+          </button>
+
+          <button className="flex items-center  gap-2 border rounded-full py-1 px-2 ml-[10px]">
             Igniculuss <FaAngleDown />
           </button>
-        <div className="flex gap-1 justify-center items-center">
+        </div>
+
+        <div className="flex gap-1 justify-end  items-center">
           {menu.map(({ key, logo, link, functionality }) => (
             <div
               key={key}
-              className={`cursor-pointer p-1 ${
-                activeKey === key
+              className={`cursor-pointer p-1 ${activeKey === key
                   ? 'rounded-full p-1 bg-gray-700 text-cyan-500 shadow-md '
                   : 'text-gray-700 '
-              }`}
+                }`}
             >
               <div onClick={() => handleMenuClick(key, functionality)}>
                 {link ? (
@@ -143,3 +160,7 @@ export default function Header() {
     </>
   );
 }
+Header.propTypes = {
+  toggle: PropTypes.bool.isRequired,
+  setToggle: PropTypes.func.isRequired,
+};

@@ -8,7 +8,7 @@ import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
 
 
 import { ToastContainer } from 'react-toastify';
-import { showErrorToast } from '../../../../../utils/toastNotifications';
+import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNotifications';
 
 export default function LeadStatus() {
 
@@ -39,7 +39,7 @@ export default function LeadStatus() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      showErrorToast(error.response.data.message)
     }
   }
 
@@ -60,11 +60,10 @@ export default function LeadStatus() {
         `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/delete/${id}`,
         config
       );
+      showSuccessToast('Deleted successfully');
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert('Deleted successfully');
     } catch (error) {
-      console.log(error);
-      alert('Failed to delete. Please try again.');
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -97,14 +96,14 @@ export default function LeadStatus() {
           return;
         }
         await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/edit/${formData.id}`,formData, config);
-        alert('Updated successfully');
+        showSuccessToast('Updated successfully');
       } else {
         if(!formData.status){
           showErrorToast('Please enter lead ')
           return;
         }
         await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/add`, formData, config);
-        alert('Added successfully');
+        showSuccessToast('Added successfully');
       }
 
       handleLead(); // Refresh the list
@@ -112,8 +111,7 @@ export default function LeadStatus() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      console.error('Error saving name', error);
-      alert('Failed to save . Please try again.');
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -147,7 +145,8 @@ export default function LeadStatus() {
     };
 
     return (
-      <div>
+      <>
+      <ToastContainer/>
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">
             {isEditMode ? 'Edit' : 'Add'}
@@ -195,7 +194,7 @@ export default function LeadStatus() {
             </div>
           </div>
         </form>
-      </div>
+      </>
     );
   };
 

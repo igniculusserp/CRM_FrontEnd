@@ -8,7 +8,7 @@ import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
 
 
 import { ToastContainer } from 'react-toastify';
-import { showErrorToast } from '../../../../../utils/toastNotifications';
+import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNotifications';
 
 export default function Department() {
 
@@ -39,7 +39,7 @@ export default function Department() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      showErrorToast(error.response.data.message)
     }
   }
 
@@ -61,10 +61,9 @@ export default function Department() {
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert('Deleted successfully');
+      showSuccessToast('Deleted successfully');
     } catch (error) {
-      console.log(error);
-      alert('Failed to delete. Please try again.');
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -92,20 +91,19 @@ export default function Department() {
 
     try {
       if (isEditMode) {
-
         if(!formData.departmentName){
           showErrorToast('Please enter department name')
           return;
         }
         await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/department/edit/${formData.id}`,formData, config);
-        alert('Updated successfully');
+        showSuccessToast('Updated successfully');
       } else {
         if(!formData.departmentName){
           showErrorToast('Please enter department name')
           return;
         }
         await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/department/add`, formData, config);
-        alert('Added successfully');
+        showSuccessToast('Created Successfully');
       }
 
       handleLead(); // Refresh the list
@@ -113,8 +111,7 @@ export default function Department() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      console.error('Error saving name', error);
-      alert('Failed to save . Please try again.');
+      showErrorToast('error.response.data.message');
     }
   };
 
@@ -149,7 +146,8 @@ export default function Department() {
     };
 
     return (
-      <div>
+      <>
+      <ToastContainer/>
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">
             {isEditMode ? 'Edit' : 'Add'}
@@ -200,7 +198,7 @@ export default function Department() {
             </div>
           </div>
         </form>
-      </div>
+      </>
     );
   };
 

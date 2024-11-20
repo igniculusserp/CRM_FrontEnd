@@ -1,22 +1,67 @@
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 import { FaAngleDown, FaBars } from 'react-icons/fa';
 import { ImFilter } from 'react-icons/im';
-import { IoSearchOutline } from 'react-icons/io5';
+// import { IoSearchOutline } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from "axios";
 import SendSMS from './SMSComponents/SendSMS.JSX';
 import SendEmail from './SMSComponents/SendEmail';
+//file
+import { tenant_base_url, protocal_url } from "../../../../Config/config";
+import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 export default function SmsBox() {
   const navigate = useNavigate();
+  const name = getHostnamePart();
 
+  const [getSmsBox, setGetSmsBox] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // ITEMS ON A SINGLE PAGE
   const [smsBoxDropdown, setSmsBoxDropdown] = useState(false);
   const [filteredSmsBox, setFilteredSmsBox] = useState([]);
-  const [searchDropdown, setSearchDropdown] = useState(false);
   const [stripeBarDropdown, setStripeBarDropdown] = useState(false);
   const [actionDropdown, setActionDropdown] = useState(false);
   const [filterDropdown, setFilterDropdown] = useState(false);
+  const [selectedButton, setSelectedButton] = useState('Send SMS');
+  
+
+      // ------------------------------ E-Mail Settings Get All  ------------------------
+      async function handleGetAll(selectedOption) {
+        const bearer_token = localStorage.getItem("token");
+    
+        try {
+          const config = {
+            headers: {
+              Authorization: `Bearer ${bearer_token}`,
+            },
+          };
+          let response;
+    
+          if (selectedOption === "Send SMS") {
+            response = await axios.get(
+              `${protocal_url}${name}.${tenant_base_url}/SMSBox/sendsmsdetail/byusertoken`,
+              config
+            );
+          } else if (selectedOption === "Send Email") {
+            response = await axios.get(
+              `${protocal_url}${name}.${tenant_base_url}/SMSBox/sendemaildetail/byusertoken`,
+              config
+            );
+          }
+    
+          setGetSmsBox(response.data.data);
+        } catch (error) {
+          console.error("Error fetching leads:", error);
+        }
+      }
+    
+      useEffect(() => {
+        handleGetAll(selectedButton);
+      }, [selectedButton]);
+
+
+
+
 
   // HANDLE CHECKBOX
   const handleCheckboxClick = (e, id) => {
@@ -33,10 +78,7 @@ export default function SmsBox() {
     navigate(`/sidebar/${sms.id}`);
   };
 
-  //   TOGGLE SMSBOXDROPDOWN
-  const toggleSearchDropdown = () => {
-    setSearchDropdown(!searchDropdown);
-  };
+
 
   //   TOGGLE SMSBOXDROPDOWN
   const toggleStripeBarDropdown = () => {
@@ -53,170 +95,6 @@ export default function SmsBox() {
     setFilterDropdown(!filterDropdown);
   };
 
-  // MAIN SMSBOX DATA
-  const smsBoxData = [
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-    {
-      segment: 'Global Reach',
-      message: 'How are you! dude',
-      sentBy: 'Rahul Jain',
-      sentTime: '12/02/2023 3:00 AM',
-      subject: 'Fresh Pool',
-    },
-  ];
 
   //   STRIPE BAR
   const stripeBar = [
@@ -230,7 +108,6 @@ export default function SmsBox() {
   );
 
   //   PAGINATION
-  const [getSmsBox, setGetSmsBox] = useState(smsBoxData);
 
   const indexOfLastItem = itemsPerPage * currentPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -297,7 +174,6 @@ export default function SmsBox() {
     href: '/sidebar/sendsms',
   });
 
-  const [selectedButton, setSelectedButton] = useState('Send SMS');
 
   // Function to handle option click using bracket notation
   const handleOptionClick = (key) => {
@@ -440,11 +316,9 @@ export default function SmsBox() {
         <div className="flex gap-3 items-center">
           <h1 className="text-3xl font-medium ">SMS Box</h1>
           <h1 className="bg-blue-600 text-white px-2 py-2 min-w-10 text-center rounded-md text-md shadow-md">
-            {smsBoxData.length}
+            {getSmsBox.length}
           </h1>
-          <h1 className="text-xl font-medium text-red-500 text-center">
-            (This feature is coming soon...)
-          </h1>
+         
         </div>
 
         <div>

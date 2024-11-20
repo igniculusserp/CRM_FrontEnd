@@ -8,7 +8,7 @@ import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
 
 
 import { ToastContainer } from 'react-toastify';
-import { showErrorToast } from '../../../../../utils/toastNotifications';
+import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNotifications';
 
 export default function EmailTemplate() {
 
@@ -39,7 +39,7 @@ export default function EmailTemplate() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      showErrorToast(error.response.data.message)
     }
   }
 
@@ -61,7 +61,7 @@ export default function EmailTemplate() {
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert('Deleted successfully');
+      showSuccessToast('Deleted successfully');
     } catch (error) {
       console.log(error);
       alert('Failed to delete. Please try again.');
@@ -105,7 +105,7 @@ export default function EmailTemplate() {
           return;
         }
         await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/emailtemplates/add`, formData, config);
-        alert('Added successfully');
+        showSuccessToast('Added successfully');
       }
 
       handleLead(); // Refresh the list
@@ -113,8 +113,7 @@ export default function EmailTemplate() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      console.error('Error saving name', error);
-      alert('Failed to save . Please try again.');
+     showErrorToast(error.response.data.message)
     }
   };
 
@@ -147,7 +146,8 @@ export default function EmailTemplate() {
     };
 
     return (
-      <div>
+      <>
+      <ToastContainer/>
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">
             {isEditMode ? 'Edit' : 'Add'}
@@ -195,7 +195,7 @@ export default function EmailTemplate() {
             </div>
           </div>
         </form>
-      </div>
+      </>
     );
   };
 

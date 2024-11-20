@@ -9,7 +9,7 @@ import {tenant_base_url, protocal_url,} from "./../../../../../../Config/config"
 import { getHostnamePart } from "../../../ReusableComponents/GlobalHostUrl";
 
 import { ToastContainer } from 'react-toastify';
-import { showErrorToast } from "../../../../../../utils/toastNotifications"; 
+import { showErrorToast, showSuccessToast } from "../../../../../../utils/toastNotifications"; 
 
 //----------------------------Add SMS Setting -----------------------
 
@@ -69,15 +69,16 @@ export default function AddSMSSetting({ setActiveComponent, handleGetAll }) {
         requestBody,
         config
       );
-      alert("Successfully Added");
+      showSuccessToast("Successfully Added");
       handleCancel();
     } catch (error) {
-      console.error("Error saving email setting", error);
-      alert("Failed to save settings. Please try again.");
+      showErrorToast(error.response.data.message)
     }
   };
 
   return (
+    <>
+    <ToastContainer/>
     <div className="m-3 min-w-screen">
       <div className="flex min-w-screen justify-between items-center">
         <h1 className="text-3xl font-medium">Add SMS Setting</h1>
@@ -148,6 +149,7 @@ export default function AddSMSSetting({ setActiveComponent, handleGetAll }) {
         </div>
       </form>
     </div>
+    </>
   );
 }
 

@@ -440,7 +440,7 @@ export default function Registration() {
                    value={formValues.contactNo}
                    onChange={handleChange}
                    className="mt-1 py-2 px-2 rounded-md w-full outline-none text-sm flex justify-between"
-                   placeholder="Phone Number"
+                   placeholder="Alternate Number"
                  />
                </div>
              </label>

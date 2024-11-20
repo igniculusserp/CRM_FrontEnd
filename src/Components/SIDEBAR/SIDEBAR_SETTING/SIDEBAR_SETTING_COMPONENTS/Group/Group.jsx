@@ -177,9 +177,9 @@ export default function Group() {
         config
       );
       getGroupsLists();
-      alert(response.data.message);
+      showSuccessToast('Group deleted Successfully');
     } catch (error) {
-      console.error('Error fetching users:', error);
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -199,13 +199,13 @@ export default function Group() {
       );
       getGroupsLists();
       handleActiveState();
-      alert(response.data.message);
     } catch (error) {
-      console.error('Error fetching users:', error);
+        showErrorToast(error.response.data.message)
     }
   };
   return (
     <>
+    <ToastContainer/>
       <div className="m-3 min-w-screen">
         {active ? (
           <>

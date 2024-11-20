@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaAngleDown } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import axios from "axios";
 import { IoInformationCircle } from "react-icons/io5";
 
@@ -10,6 +10,44 @@ import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/Glo
 
 export default function CreateSendEmail() {
   const name = getHostnamePart();
+  const navigate = useNavigate();
+  
+  const [editEmail, setEditEmail] = useState({
+    Length: "",
+    ContentType: "",
+    ContentDisposition: "",
+    Headers: {
+      additionalProp1: ["value1"],
+      additionalProp2: ["value2"],
+      additionalProp3: ["value3"],
+    },
+    Name: "",
+    FileName: "",
+    emails: [],
+    emailtype: "",
+    product: "",
+    subject: "",
+    message: "",
+  });
+  
+
+  //   HANDLING INPUTS CHANGE
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditEmail({
+      ...editEmail,
+      [name]: value,
+    });
+  };
+  
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setEditEmail((prev) => ({
+      ...prev,
+      FileName: selectedFile,
+     
+    }));
+  };
 
   // --------------------------------------------- Check Box Start -------------------------------------------
 
@@ -18,29 +56,15 @@ export default function CreateSendEmail() {
   const handleCheckboxChange = (name) => {
     setSelectedCheckbox(name === selectedCheckbox ? "" : name); // Toggle selection
   };
+    
+  useEffect(() => {
+    setEditEmail((prev) => ({
+      ...prev,
+      emailtype: selectedCheckbox,
+    }));
+   }, [selectedCheckbox]);
 
   // --------------------------------------------- Check Box End -------------------------------------------
-
-  const [editSms, setEditSms] = useState({
-    subject: "",
-    msg: "",
-    attachment: "",
-  });
-
-  //   HANDLING INPUTS CHANGE
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditSms({
-      ...editSms,
-      [name]: value,
-    });
-  };
-
-  //   HANDLING FORM
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
 
 
   //--------------------------------------- Segments OR Product -------------------------------------------------
@@ -102,20 +126,29 @@ export default function CreateSendEmail() {
     );
   };
 
+  
+  useEffect(() => {
+
+    setEditEmail((prev) => ({
+      ...prev,
+      product: defaultTextSegmentDropDown,
+    }));
+   }, [defaultTextSegmentDropDown]);
+
+
   //--------------------------------------- Segments END-------------------------------------------------
 
 
-   //--------------------------------------- Get Mobile Number by Segment -------------------------------------------------
+   //--------------------------------------- Get E-Mail ID  by Segment -------------------------------------------------
 
-   const [getEmailId, setGetEmailId] = useState([]);
+
 
    useEffect(() => {
-    
-      fetchMobileNumber();
-    
+
+      fetchEmailId();  
   }, [selectedSegments]);
 
-   async function fetchMobileNumber() {
+   async function fetchEmailId() {
     const bearer_token = localStorage.getItem("token");
   
     try {
@@ -125,7 +158,7 @@ export default function CreateSendEmail() {
         },
       };
   
-      setGetEmailId([]);
+      // setGetEmailId([]);
   
       // Construct the query string with selected segments
       const segmentQuery = selectedSegments
@@ -140,10 +173,10 @@ export default function CreateSendEmail() {
       }
   
       const response = await axios.get(url, config);
-      setGetEmailId(response.data.data);
-      console.log("Fetched Mobile Numbers:", response.data.data);
-    
-      console.log("Fetched Mobile Numbers:", getEmailId);
+      setEditEmail((prev) => ({
+        ...prev,
+        emails: response.data.data,
+      }));
   
     } catch (error) {
       console.error("Error fetching mobile numbers:", error);
@@ -151,6 +184,57 @@ export default function CreateSendEmail() {
   }
   
   
+ // ---------------------------------------------  Handle Submit ---------------------------------------------------
+
+// Helper function to convert file to Base64
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // Create FormData for multipart/form-data format
+  const formData = new FormData();
+  formData.append("Length", editEmail.Length);
+  formData.append("ContentType", editEmail.ContentType);
+  formData.append("ContentDisposition", editEmail.ContentDisposition);
+  formData.append("Headers", JSON.stringify(editEmail.Headers));
+  formData.append("Name", editEmail.Name);
+  
+  // Append the file object directly
+  if (editEmail.FileName && editEmail.FileName instanceof Blob) {
+    formData.append("file", editEmail.FileName);
+  } else {
+    console.error("FileName is not a valid file");
+    return;
+  }
+
+  formData.append("emails", JSON.stringify(editEmail.emails));
+  formData.append("emailtype", editEmail.emailtype);
+  formData.append("product", editEmail.product);
+  formData.append("subject", editEmail.subject);
+  formData.append("message", editEmail.message);
+
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  };
+
+  try {
+    const response = await axios.post(
+      `${protocal_url}${name}.${tenant_base_url}/SMSBox/sendserviceemail1`,
+      formData,
+      config
+    );
+    alert("Successfully Added");
+    navigate(`/sidebar/smsbox`);
+    console.log("Response from the server:", response.data);
+  } catch (error) {
+    console.error("Error sending email data:", error);
+    console.log("Server response:", error.response?.data); // Additional log to inspect server error details
+  }
+};
+
+
 
 
 
@@ -283,10 +367,10 @@ export default function CreateSendEmail() {
                   type="text"
                   name="subject"
                   id="subject"
-                  value={editSms.subject}
+                  value={editEmail.subject}
                   className="mt-1 p-2 border border-gray-300 rounded-md"
                   onChange={handleChange}
-                  placeholder="Entere verox peron"
+                  placeholder="Enter Subject"
                 />
               </div>
               
@@ -296,19 +380,19 @@ export default function CreateSendEmail() {
               {/* MESSAGE DROPDOWN */}
               <div className="flex flex-col w-1/2">
                 <label
-                  htmlFor="msg"
+                  htmlFor="message"
                   className="text-sm font-medium text-gray-700"
                 >
                   Message
                 </label>
                 <input
                   type="text"
-                  name="msg"
-                  id="msg"
-                  value={editSms.msg}
+                  name="message"
+                  id="message"
+                  value={editEmail.message}
                   className="p-2 border border-gray-300 rounded-md"
                   onChange={handleChange}
-                  placeholder="Entere verox peron"
+                  placeholder="Enter Message"
                 />
               </div>
               {/* TEXT MESSAGE DROPDOWN */}
@@ -323,10 +407,10 @@ export default function CreateSendEmail() {
                   type="file"
                   name="attachment"
                   id="attachment"
-                  value={editSms.attachment}
+                  value={editEmail.attachment}
                   accept=".pdf"
                   className="p-2 border border-gray-300 rounded-md"
-                  onChange={handleChange}
+                  onChange={handleFileChange}
                   placeholder="Entere verox peron"
                 />
               </div>
