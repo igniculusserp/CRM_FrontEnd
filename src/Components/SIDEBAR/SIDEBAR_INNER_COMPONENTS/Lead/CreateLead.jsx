@@ -472,16 +472,6 @@ export default function Createlead() {
 
       //------------------------------------------------------------------------------------> Validations//--> Validations//--> Validations//--> Validations//--> Validations
       
-      if (formData_POST.email === "" || formData_PUT.email === "") {
-        showErrorToast('Email cannot be blank')
-        return;
-      } else if (!emailRegex.test(formData_POST.email) || !emailRegex.test(formData_PUT.email)) {
-        showErrorToast('Invalid email format');
-        return;
-      } else {
-        console.log("Valid email submitted:",formData_POST.email,formData_PUT.email);
-        // Add further submit logic here
-      }
       
       if (!formData_POST.name || !formData_PUT.name) {
         showErrorToast('Please enter name')
@@ -502,6 +492,14 @@ export default function Createlead() {
         showErrorToast('Invalid mobile number')
         return;
       }
+      
+      if (
+        (formData_POST.email && !emailRegex.test(formData_POST.email)) || 
+        (formData_PUT.email && !emailRegex.test(formData_PUT.email))
+      ) {
+        showErrorToast('Invalid email format');
+        return;
+      }
 
        //Date Logic Validation
        const today = new Date().toISOString().split('T')[0];
@@ -516,6 +514,8 @@ export default function Createlead() {
         showErrorToast('Previous date cannot be selected')
         return;
       }
+
+      
 
       //Date should not be more than 1 or less than 1
       const date = (formData_POST.trialEndDate?.split('-')[2] - formData_POST.trialStartDate?.split('-')[2])
