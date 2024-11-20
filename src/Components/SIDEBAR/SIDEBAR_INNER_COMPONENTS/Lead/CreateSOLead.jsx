@@ -51,10 +51,7 @@ export default function CreateSO() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Lead/lead/${id}`,
-        config
-      );
+      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Lead/lead/${id}`, config);
       const data = response.data.data;
 
       seteditLead({
@@ -101,10 +98,7 @@ export default function CreateSO() {
            Authorization: `Bearer ${bearer_token}`,
          },
        };
-       const response = await axios.get(
-         `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
-         config
-       );
+       const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`, config);
        setSegments(response.data.data);
      } catch (error) {
        console.error('Error fetching segments:', error);
@@ -157,10 +151,7 @@ export default function CreateSO() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
-      );
+      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`, config);
       setassigned_ToDropDown(response.data.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
@@ -363,6 +354,21 @@ export default function CreateSO() {
   };
 
 
+    //------------------------------------------Mobile Regex------------------------------------------
+    const handleContactChange = (event) => {
+      const inputValue = event.target.value.replace(/[^0-9]/g, ""); 
+      const { name } = event.target;
+    
+      seteditLead((prevState) => ({
+        ...prevState,
+        [name]: inputValue,
+      }));
+    };
+    
+  
+    //------------------------------------------Email Regex------------------------------------------
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
   const handleSubmit = async (event) => {
@@ -444,6 +450,12 @@ export default function CreateSO() {
         return;
       }
 
+            
+      if ((formData_POST.email && !emailRegex.test(formData_POST.email))) {
+        showErrorToast('Invalid email format');
+        return;
+      }
+
       if(!formData_POST.assigned_To){
         showErrorToast("Please select Managed by")
         return;
@@ -499,7 +511,8 @@ export default function CreateSO() {
         }
       // Redirect after a short delay
     } catch (error) {
-      showErrorToast(error.response.data.message);
+      console.log(error)
+      showErrorToast(error.data.message);
 
     }
   };
@@ -659,8 +672,9 @@ export default function CreateSO() {
                       type="text"
                       name="mobileNo"
                       value={editLead.mobileNo}
+                      maxLength="15"
                       className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
+                      onChange={handleContactChange}
                       placeholder="Enter your Mobile Number"
                     />
                   </div>
@@ -676,9 +690,10 @@ export default function CreateSO() {
                     <input
                       type="text"
                       name="phoneNo"
+                      maxLength="15"
                       value={editLead.phoneNo}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
+                      onChange={handleContactChange}
                       placeholder="Enter your Alternate Number"
                     />
                   </div>
@@ -697,6 +712,7 @@ export default function CreateSO() {
                     <input
                       type="number"
                       name="uidaI_Id_No"
+                      maxLength="12"
                       value={editLead.uidaI_Id_No}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
@@ -732,8 +748,8 @@ export default function CreateSO() {
                     >
                       Email
                     </label>
-                    <input
-                      type="text"
+                    <input                      
+                      type="email"
                       name="email"
                       value={editLead.email}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
