@@ -505,8 +505,8 @@ export default function Lead() {
 
   //---------------------->---------------------->PAGINATION<----------------------<----------------------
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Define items per page
-  const totalPage = Math.round(filteredLeads.length / itemsPerPage);
+  const itemsPerPage = 2; // Define items per page
+  const totalPage = Math.ceil(filteredLeads.length / itemsPerPage);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
