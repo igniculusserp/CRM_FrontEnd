@@ -109,10 +109,8 @@ export default function CreateSO() {
      handleSegment();
    }, []);
  
-   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
-     useState('Select Segment');
-   const [isDropdownVisibleSegment, setisDropdownVisibleSegment] =
-     useState(false);
+   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] = useState('Select Segment');
+   const [isDropdownVisibleSegment, setisDropdownVisibleSegment] = useState(false);
  
    const toggleDropdownSegment = () => {
      setisDropdownVisibleSegment(true);
