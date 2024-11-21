@@ -871,7 +871,7 @@ export default function Createlead() {
                       htmlFor="leadesStatus"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Assigned to
+                      Managed By
                     </label>
                     <div
                       className="relative"

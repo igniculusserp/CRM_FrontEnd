@@ -1,4 +1,4 @@
-//CreateContact is just a file name, we can only EditContact
+//IMP-> createContact is just a file name, we can only EditContact
 
 //react
 import { useState, useEffect } from "react";
@@ -23,6 +23,7 @@ export default function CreateContact() {
   //to make id unique
   const { id } = useParams();
   const navigate = useNavigate();
+  const name = getHostnamePart();
 
   //form description is kept-out
   const [description, setdescription] = useState("Add Text Here");
@@ -59,8 +60,6 @@ export default function CreateContact() {
 
   //----------------------------------------------------------------------------------------
 
-  const name = getHostnamePart()
-
   //imp to identify mode
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -93,11 +92,11 @@ export default function CreateContact() {
         company: data.company || "",
         title: data.tital || "",
         leadSource: data.leadsSource || "",
-        leadesStatus: data.leadesStatus || "",
+        leadesStatus: data.leadesStatus || 'N/A',
         mobNo: data.mobileNo || "",
         phNo: data.phoneNo || "",
         email: data.email || "",
-        assigned_To: data.assigned_To || "",
+        assigned_To: data.assigned_To || 'N/A',
         callBackDateTime: data.call_bck_DateTime || "",
         street: data.street || "",
         pinCode: data.postalCode || "",
@@ -326,6 +325,25 @@ export default function CreateContact() {
     }));
   };
 
+
+
+  //------------------------------------------Mobile Regex------------------------------------------
+  const handleContactChange = (event) => {
+    const inputValue = event.target.value.replace(/[^0-9]/g, ""); 
+    const { name } = event.target;
+  
+    seteditLead((prevState) => ({
+      ...prevState,
+      [name]: inputValue,
+    }));
+  };
+  
+
+  //------------------------------------------Email Regex------------------------------------------
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+
   //---------->handleSubmit<----------
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -355,17 +373,16 @@ export default function CreateContact() {
         country: editLead.country,
         city: editLead.city,
         state: editLead.state,
-        // description: editLead.description,
         risk_Capacity: editLead.riskCapcity,
         tradingTime: editLead.tradingTime,
         tradingType: editLead.tradingType,
         investment: editLead.investmet,
         advisaryExp: editLead.advisoryExp,
         segments: editLead.segments,
-        trialStartDate: editLead.trialStartDate,
-        trialEndDate: editLead.trialEndDate,
+        trialStartDate: editLead.trialStartDate || null,
+        trialEndDate: editLead.trialEndDate || null,
         trading_yrs: editLead.tradingYears,
-        call_bck_DateTime: editLead.callBackDateTime,
+        call_bck_DateTime: editLead.callBackDateTime || null,
         contactID: editLead.contactId,
         lastModifiedBy: editLead.lastModifiedBy,
         //----------------//
@@ -373,19 +390,47 @@ export default function CreateContact() {
       };
       
 
+      if(!formData_PUT.name){
+        showErrorToast('Please enter name')
+        return;
+      }
+
+      if(!formData_PUT.mobileNo){
+        showErrorToast('Please enter mobile')
+        return;
+      }
+
+
+      if (formData_PUT.mobileNo.length < 9 || formData_PUT.mobileNo.length > 15) {
+        showErrorToast('Invalid mobile number')
+        return;
+      }
+
+      if ((formData_PUT.email && !emailRegex.test(formData_PUT.email))) {
+        showErrorToast('Invalid email format');
+        return;
+      }
+
+       //Date Logic Validation
+      const today = new Date().toISOString().split('T')[0];
+      
+      //Previous date cannot be selected
+      if(formData_PUT.call_bck_DateTime < today ){
+        showErrorToast('Previous date cannot be selected')
+        return;
+      }
+       
+            
+       
+
       if (isEditMode) {
-        await axios.put(
-          `${protocal_url}${name}.${tenant_base_url}/Contact/contact/update`,
-          formData_PUT,
-          config
-        );
+        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Contact/contact/update`,formData_PUT, config);
         showSuccessToast("Contact updated successfully!");
         navigate(`/sidebar/contact`);
         } 
       }
       catch (error) {
-        console.log(error)
-      alert("An error occurred. Please try again.");
+      showErrorToast("An error occurred. Please try again.");
     }
   };
 
@@ -425,7 +470,7 @@ export default function CreateContact() {
         <div className="flex justify-between mx-3 px-3 bg-white border rounded py-3">
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-xl">
-              {isEditMode ? <h1>Edit Contact</h1> : <>Create Contact</>}
+              <h1>Edit Contact</h1>
             </h1>
             <h1 className="bg-blue-500 text-xs text-white px-4 py-1 font-medium rounded-lg">
               Edit Page Layout
@@ -663,8 +708,10 @@ export default function CreateContact() {
                       type="text"
                       name="mobNo"
                       value={editLead.mobNo}
+                      maxLength="15"
+
                       className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
+                      onChange={handleContactChange}
                       placeholder="Enter your Mobile Number"
                     />
                   </div>
@@ -680,8 +727,10 @@ export default function CreateContact() {
                       type="text"
                       name="phNo"
                       value={editLead.phNo}
+                      maxLength="15"
+
                       className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
+                      onChange={handleContactChange}
                       placeholder="Enter your Alternate Number"
                     />
                   </div>
@@ -697,7 +746,7 @@ export default function CreateContact() {
                       Email
                     </label>
                     <input
-                      type="text"
+                      type="email"
                       name="email"
                       value={editLead.email}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
@@ -711,7 +760,7 @@ export default function CreateContact() {
                       htmlFor="leadesStatus"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Assigned to
+                    Managed By
                     </label>
                     <div
                       className="relative"
