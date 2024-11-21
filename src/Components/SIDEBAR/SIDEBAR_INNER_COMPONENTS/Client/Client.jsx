@@ -1,6 +1,5 @@
 //react
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 //external Packages
 import axios from 'axios';
@@ -13,21 +12,24 @@ import { FaAngleDown, FaPhoneAlt } from 'react-icons/fa';
 import { IoIosMail } from 'react-icons/io';
 import { BiEdit } from 'react-icons/bi';
 import { FaBars } from 'react-icons/fa';
-import { VscSettings } from 'react-icons/vsc';
+
 import { ImFilter } from 'react-icons/im';
 import { MdCall } from 'react-icons/md';
 
 //Folder Imported
 import dp from './../../../../assets/images/dp.png';
 import { tenant_base_url, protocal_url } from '../../../../Config/config';
+
 import MassEmail from '../MassEmail/MassEmail';
-import { SearchElement } from '../SearchElement/SearchElement';
+
 import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 
-const name = getHostnamePart();
+import { SearchElement } from '../SearchElement/SearchElement';
+
 
 export default function Client() {
-  const navigate = useNavigate(); // Add this line
+ 
+  const name = getHostnamePart();
 
   //This is to store the upcoming data from API
   const [getleads, setGetleads] = useState([]);
@@ -60,11 +62,8 @@ export default function Client() {
       const data = response.data.data;
       setGetleads(data);
       setFilteredLeads(data); // Initialize filtered leads
-
-      // setfilteredLeads_assigned_To(data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
-      // Optionally, set an error state to display a user-friendly message
+      console.log('Error fetching leads:', error);
     }
   }
 
@@ -86,8 +85,7 @@ export default function Client() {
       const data = response.data?.data;
       setUsers(data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
-      // Optionally, set an error state to display a user-friendly message
+      console.log('Error fetching leads:', error);
     }
   };
 
@@ -161,7 +159,6 @@ export default function Client() {
       setallLeadData(response.data.data);
     } catch (error) {
       console.error('Error fetching leads:', error);
-      // Optionally, set an error state to display a user-friendly message
     }
   }
 
@@ -195,7 +192,6 @@ export default function Client() {
       setallAssigned_To_Data(response.data.data);
     } catch (error) {
       console.error('Error fetching leads:', error);
-      // Optionally, set an error state to display a user-friendly message
     }
   }
 
@@ -250,15 +246,7 @@ export default function Client() {
   };
 
   const handleActionButton = async (value, leadId) => {
-    // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
-    if (value === 'Mass Delete') {
-      const userConfirmed = confirm(
-        'Are you sure you want to Delete the selected Leads?'
-      );
-      if (userConfirmed) {
-        massDelete();
-      }
-    }
+   
 
     // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
     if (value === 'Mass Email') {
@@ -289,46 +277,8 @@ export default function Client() {
         exportToPDF();
       }
     }
-
-    // ---------------------->Convert Lead to Contact FUNCTIONALITY*<----------------------
-    if (value === 'Convert Lead to Contact') {
-      const userConfirmed = confirm(
-        'Are you sure you want to convert this lead to a contact?'
-      );
-      if (userConfirmed) {
-        convertType();
-      }
-    }
-  };
-  // ---------------------->MASS DELETE FUNCTIONALITY---###API###<----------------------
-  const massDelete = async () => {
-    const bearer_token = localStorage.getItem('token');
-
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${bearer_token}`,
-          'Content-Type': 'application/json',
-        },
-        data: { contactsIds: selectedIds },
-      };
-
-      const response = await axios.delete(
-        `${protocal_url}${name}.${tenant_base_url}/Contact/contact/massdelete`,
-        config
-      );
-      alert('Mass Deleted run');
-      handleLead();
-      console.log(response);
-
-      setGetleads((prevLeads) =>
-        prevLeads.filter((lead) => !selectedIds.includes(lead.id))
-      );
-      setSelectedIds([]);
-    } catch (error) {
-      console.error('Error deleting leads:', error);
-    }
-  };
+  }
+   
 
 
 
