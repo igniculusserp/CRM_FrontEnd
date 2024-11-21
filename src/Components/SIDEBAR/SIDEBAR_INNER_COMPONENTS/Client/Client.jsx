@@ -235,17 +235,12 @@ export default function Client() {
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
   const [dropActionsMenu, setdropActionsMenu] = useState([
-    // { key: 0, value: "Actions" },
-    { key: 1, value: 'Mass Delete' },
+    // { key: 0, value: "Actions" },,
     { key: 2, value: 'Mass Update' },
     { key: 3, value: 'Mass Email' },
-    { key: 4, value: 'Approve Leads' },
-    // { key: 5, value: "Add to Campaign" },
-    // { key: 6, value: "Export Leads" },
     { key: 7, value: 'Export To Excel' },
     { key: 8, value: 'Export To PDF' },
-    // { key: 9, value: "Create SO" },
-    // { key: 10, value: "Convert Lead to Contact" },
+
   ]);
 
   const [dropActionsMenudropDown, setdropActionsMenudropDown] = useState(false);
@@ -335,10 +330,7 @@ export default function Client() {
     }
   };
 
-  //Enable us to switch to createlead/editlead page with /:id
-  let handleClick = (item) => {
-    navigate(`/sidebar/editclient/${item.id}`);
-  };
+
 
   // ---------------------->MASS Email FUNCTIONALITY---<----------------------
 
@@ -418,7 +410,6 @@ export default function Client() {
 
   //---------------------->---------------------->MANAGE_BY/ASSIGNED_TO<----------------------<ARVIND----------------------
   const roleColors = [
-    // "#f97316", // Red
     '#2563eb', // blue
     '#65a30d', // LimeGreen
     '#7c3aed', // MediumPurple
@@ -426,41 +417,9 @@ export default function Client() {
     '#e11d48', //Rose
   ];
 
-  // //---------------------->---------------------->CONVERT_LEADS_TO_CONTACTS<----------------------<----------------------
 
-  // const convertType = async () => {
-  //   const bearer_token = localStorage.getItem("token");
 
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         Authorization: `Bearer ${bearer_token}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //     };
-
-  //     const response = await axios.post(
-  //       `${protocal_url}${name}.${tenant_base_url}/Lead/leadtocontact/${selectedIds}`,
-  //       { id: selectedIds },  // Pass data as second parameter
-  //       config
-  //     );
-
-  //     alert('Converted lead to contact');
-  //     setGetleads((prevLeads) =>
-  //       prevLeads.filter((lead) => !selectedIds.includes(lead.id))
-  //     );
-  //     setSelectedIds([]);
-
-  //     if (response.status === 200) {
-  //       alert('Lead has been successfully converted to a contact.');
-  //     } else {
-  //       alert(`Failed to convert lead: ${response.data.message || 'Unknown error'}`);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error converting lead:', error);
-  //     alert('An error occurred while converting the lead. Please try again later.');
-  //   }
-  // };
+  
 
   // Function to get the color for a role based on its index
   const getRoleColorByIndex = (index) => {
@@ -477,7 +436,6 @@ export default function Client() {
   const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  //---------------------->---------------------->̧CHECKBOX<----------------------<----------------------
 
   //---------------------->---------------------->̧CHECKBOX -> SINGLE<----------------------<----------------------
   const [selectedIds, setSelectedIds] = useState([]);
@@ -701,21 +659,8 @@ export default function Client() {
               </div>
             )}
           </div>
-          {/* PART-II */}
-          <div className="flex gap-1">
-            {/*  Create Lead *
-            <Link to="/sidebar/createlead">
-              <button
-                className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
-                id="dropdownDefaultButton"
-                type="button"
-              >
-                Create Contact
-              </button>
-            </Link>/}
-            {/* PART-II */}
-            {/*  Create Lead Part-II -> down button */}
-          </div>
+
+          
 
           {/* PART-II */}
           {/*-------Action DropDown */}
@@ -750,9 +695,6 @@ export default function Client() {
           </div>
         </div>
       </div>
-      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{' '}
-      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{' '}
-      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}
       <div className="mt-3 flex justify-between items-center gap-3">
         <div className="flex gap-3">
           <h1 className="text-3xl font-medium ">Client</h1>
@@ -763,7 +705,6 @@ export default function Client() {
 
         <div>
           {/* ------------------- Filter by date ----------------- */}
-
           <div className="flex bg-white border-2 border-gray-300 py-2 rounded-lg justify-center items-center">
             {/* Filter Icon Button */}
             <button className="border-r border-gray-500 px-3">
@@ -802,7 +743,7 @@ export default function Client() {
               <thead>
                 <tr className="border-gray-300 border-b-2">
                   {/* CHECKBOX */}
-                  <th className=" py-3">
+                  <th className= "py-3">
                     <input
                       type="checkbox"
                       checked={isSelectAllChecked}
@@ -865,7 +806,7 @@ export default function Client() {
                       className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
                     >
                       {/* CHECKBOX */}
-                      <td className=" py-3 text-center">
+                      <td className=" text-center px-1">
                         <input
                           type="checkbox"
                           checked={selectedIds.includes(item.id)}
@@ -875,8 +816,8 @@ export default function Client() {
 
                       {/* CONTACT NAME */}
                       <td
-                        className="px-2 py-4 border-b border-gray-300 text-sm w-[15%]"
-                        onClick={() => handleClick(item)}
+                        className="px-2 py-4 border-b border-gray-300 text-sm "
+
                       >
                         <div className="flex items-center">
                           <img
@@ -888,7 +829,7 @@ export default function Client() {
                         </div>
                       </td>
 
-                      <td className="px-1 py-4 border-b border-gray-300 text-sm w-[12%]">
+                      <td className="px-1 py-4 border-b border-gray-300 text-sm w-[15%]">
                         <div className="flex gap-2 items-center">
                           {item.mobileNo}
                           <MdCall className="text-red-600" />
@@ -917,7 +858,7 @@ export default function Client() {
                       </td>
 
                       {/* Assigned To and User Role */}
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm  w-[15%] ">
+                      <td className="px-2 py-4 border-b border-gray-300 text-sm  w-[19%] ">
                         {matchedUser && (
                           <div
                             className="text-xs font-semibold text-white  py-2  mx-auto rounded-full w-[90%]"
