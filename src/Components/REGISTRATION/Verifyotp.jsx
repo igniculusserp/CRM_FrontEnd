@@ -25,7 +25,7 @@ const VerifyOtp = () => {
   const [countdown, setCountdown] = useState(60);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [companyName, setCompanyName] = useState("");
-  const [base64Image, setBase64Image] = useState("");
+  const [base64Image, setBase64Image] = useState('');
   const [emailreg, setEmailreg] = useState("");
 
 
@@ -329,7 +329,7 @@ const Modal = ({
           />
           <img
             id="profileImage"
-            src={base64Image ? `data:image/png;base64,${base64Image}` : `companyUploadIMG`}
+            src={base64Image ? `data:image/png;base64,${base64Image}` : companyUploadIMG}
             alt="Profile"
             onClick={handleImageClick}
             className="w-24 h-24 rounded-full cursor-pointer border text-center mx-auto"

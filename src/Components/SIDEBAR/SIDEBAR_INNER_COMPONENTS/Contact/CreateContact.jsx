@@ -1,3 +1,5 @@
+//CreateContact is just a file name, we can only EditContact
+
 //react
 import { useState, useEffect } from "react";
 //reactIcon->
@@ -13,6 +15,9 @@ import "react-quill/dist/quill.snow.css";
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
 //Images
 import profilepic from "./../../../../assets/images/profilePicEditLead.png";
+import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import { showErrorToast, showSuccessToast } from "../../../../utils/toastNotifications";
+import { ToastContainer } from "react-toastify";
 //------------------------------------------------------------------------------->CODE STARTS FROM HERE<-------------------------------------------------------------------------------
 export default function CreateContact() {
   //to make id unique
@@ -53,10 +58,8 @@ export default function CreateContact() {
   });
 
   //----------------------------------------------------------------------------------------
-  //to make code for particluar company
-  const fullURL = window.location.href;
-  const url = new URL(fullURL);
-  const name = url.hostname.split(".")[0];
+
+  const name = getHostnamePart()
 
   //imp to identify mode
   const [isEditMode, setIsEditMode] = useState(false);
@@ -70,8 +73,6 @@ export default function CreateContact() {
   }, [id]);
 
   //GET by ID---------------------------//GET---------------------------//GET---------------------------by ID-----------by ID
-
-  //GET by ID
   async function handleLead() {
     const bearer_token = localStorage.getItem("token");
     try {
@@ -80,12 +81,11 @@ export default function CreateContact() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Contact/contact/${id}`,
-        config
-      );
+      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Contact/contact/${id}`,config);
       const data = response.data.data;
+      
       setdescription(data.description);
+      
       seteditLead({
         id: data.id || "",
         name: data.name || "",
@@ -117,16 +117,18 @@ export default function CreateContact() {
         lastModifiedBy: data.lastModifiedBy || "",
       });
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      showErrorToast("Error fetching leads:", error);
     }
   }
 
   //----------------------------------------------------------------------------------------
   //PooL / Lead Source ToDropDown
   const [poolToDropDown, setPoolToDropDown] = useState([]);
+
   const [defaultTextPool, setDefaultTextPool] = useState("Select Lead Source");
+
   const [isPoolDropdownOpen, setIsPoolDropdownOpen] = useState(false);
-  const [error, setError] = useState(null); // New error state
+
   const [poolEdit, setPoolEdit] = useState("");
 
   const handlePool = async () => {
@@ -138,15 +140,10 @@ export default function CreateContact() {
     };
 
     try {
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
-        config
-      );
+      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`, config);
       setPoolToDropDown(response.data.data);
-      console.log("status:", response.data.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
-      setError("Failed to fetch pools."); // Set error message
     }
   };
 
@@ -156,13 +153,11 @@ export default function CreateContact() {
 
   const toggleDropdown = () => {
     setIsPoolDropdownOpen((prev) => !prev);
-    // console.log("@@@===",isPoolDropdownOpen);
   };
 
   const handleDropdownSelection = (poolName) => {
     setIsPoolDropdownOpen(false);
     setDefaultTextPool(poolName);
-    console.log("@@@===", isPoolDropdownOpen);
     seteditLead((prev) => ({
       ...prev,
       leadSource: poolName,
@@ -183,15 +178,10 @@ export default function CreateContact() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
-        config
-      );
+      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`, config);
       setleadStatus(response.data.data);
-      console.log("status:", response.data.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
-      // Optionally, set an error state to display a user-friendly message
     }
   }
 
@@ -229,12 +219,8 @@ export default function CreateContact() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
-        config
-      );
+      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,config);
       setSegments(response.data.data);
-      // console.log("segment:", response.data.data);
     } catch (error) {
       console.error("Error fetching segments:", error);
     }
@@ -282,15 +268,35 @@ export default function CreateContact() {
 
   //----------------------------------------------------------------------------------------
   //assigned_ToDropDown
-  const assigned_ToDropDown = [
-    { key: 1, name: "Staff" },
-    { key: 2, name: "Manager" },
-    { key: 3, name: "Company" },
-    { key: 4, name: "Employee" },
-  ];
+  const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
+
+  async function handleAssigned_To() {
+    const bearer_token = localStorage.getItem('token');
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
+        config
+      );
+      setassigned_ToDropDown(response.data?.data);
+      console.log('status:', response.data);
+    } catch (error) {
+      console.error('Error fetching leads:', error);
+      // Optionally, set an error state to display a user-friendly message
+    }
+  }
+
+  useEffect(() => {
+    handleAssigned_To();
+  }, []);
 
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
-    useState("Select Assigned");
+    useState('Select Assigned');
   const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
     useState(false);
 
@@ -298,12 +304,17 @@ export default function CreateContact() {
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
   };
 
-  const handleDropdownassigned_ToDropDown = (assigned_To) => {
-    setdefaultTextassigned_ToDropDown(assigned_To);
+  const handleDropdownassigned_ToDropDown = (
+    assigned_To_Username,
+    assigned_To_Role
+  ) => {
+    setdefaultTextassigned_ToDropDown(
+      assigned_To_Username + ' ' + assigned_To_Role
+    );
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     seteditLead((prevTask) => ({
       ...prevTask,
-      assigned_To: assigned_To,
+      assigned_To: assigned_To_Username,
     }));
   };
 
@@ -316,28 +327,9 @@ export default function CreateContact() {
   };
 
   //---------->handleSubmit<----------
-  //two different models one for PUT and one for POST
-  const [errors, setErrors] = useState({});
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const bearer_token = localStorage.getItem("token");
-
-    const errors = {};
-
-    // MOBILE NUMBER VALIDATION
-    if (
-      !editLead.mobNo ||
-      isNaN(editLead.mobNo) ||
-      editLead.mobNo.trim() === ""
-    ) {
-      errors.mobileNo = "Enter a valid mobile number";
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
-      return;
-    }
 
     try {
       const config = {
@@ -379,38 +371,7 @@ export default function CreateContact() {
         //----------------//
         description: description,
       };
-      const formData_POST = {
-        name: editLead.name,
-        language: editLead.language,
-        company: editLead.company,
-        email: editLead.email,
-        tital: editLead.title,
-        leadsSource: editLead.leadSource,
-        leadesStatus: editLead.leadesStatus,
-        mobileNo: editLead.mobNo,
-        phoneNo: editLead.phNo,
-        assigned_To: editLead.assigned_To,
-        street: editLead.street,
-        postalCode: editLead.pinCode,
-        country: editLead.country,
-        city: editLead.city,
-        state: editLead.state,
-        // description: editLead.description,
-        risk_Capacity: editLead.riskCapcity,
-        tradingTime: editLead.tradingTime,
-        tradingType: editLead.tradingType,
-        investment: editLead.investmet,
-        advisaryExp: editLead.advisoryExp,
-        segments: editLead.segments,
-        trialStartDate: editLead.trialStartDate,
-        trialEndDate: editLead.trialEndDate,
-        trading_yrs: editLead.tradingYears,
-        call_bck_DateTime: editLead.callBackDateTime,
-        contactID: editLead.contactId,
-        lastModifiedBy: editLead.lastModifiedBy,
-        //----------------//
-        description: description,
-      };
+      
 
       if (isEditMode) {
         await axios.put(
@@ -418,22 +379,12 @@ export default function CreateContact() {
           formData_PUT,
           config
         );
-        alert("Contact updated successfully!");
+        showSuccessToast("Contact updated successfully!");
         navigate(`/sidebar/contact`);
-      } else {
-        // POST request to create
-        await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/Contact/contact/add`,
-          formData_POST,
-          config
-        );
-        alert("Contact created successfully!");
-        navigate(`/sidebar/contact`);
+        } 
       }
-
-      // Redirect after a short delay
-    } catch (error) {
-      console.error("Error:", error);
+      catch (error) {
+        console.log(error)
       alert("An error occurred. Please try again.");
     }
   };
@@ -469,6 +420,7 @@ export default function CreateContact() {
 
   return (
     <>
+      <ToastContainer/>
       <div className="min-h-screen flex flex-col mt-3">
         <div className="flex justify-between mx-3 px-3 bg-white border rounded py-3">
           <div className="flex items-center justify-center gap-3">
@@ -636,9 +588,7 @@ export default function CreateContact() {
                       </button>
                       {isPoolDropdownOpen && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                          {error ? (
-                            <div className="py-2 text-red-600">{error}</div>
-                          ) : (
+                          
                             <ul className="py-2 text-sm text-gray-700">
                               {poolToDropDown.map(({ id, poolName }) => (
                                 <li
@@ -652,7 +602,6 @@ export default function CreateContact() {
                                 </li>
                               ))}
                             </ul>
-                          )}
                         </div>
                       )}
                     </div>
@@ -718,9 +667,6 @@ export default function CreateContact() {
                       onChange={handleChange}
                       placeholder="Enter your Mobile Number"
                     />
-                    {errors.mobileNo && (
-                      <span style={{ color: "red" }}>{errors.mobileNo}</span>
-                    )}
                   </div>
                   {/* -------------Alternate Number------------- */}
                   <div className="flex flex-col w-1/2">
@@ -785,12 +731,12 @@ export default function CreateContact() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownassigned_ToDropDown && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-9.9 z-10">
                           <ul className="py-2 text-sm text-gray-700">
                             {assigned_ToDropDown.map(
-                              ({ key, userName, role }) => (
+                              ({ userName, role }, index) => (
                                 <li
-                                  key={key}
+                                  key={index}
                                   onClick={() =>
                                     handleDropdownassigned_ToDropDown(
                                       userName,
