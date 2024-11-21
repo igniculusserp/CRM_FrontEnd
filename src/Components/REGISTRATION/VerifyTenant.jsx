@@ -46,7 +46,7 @@ export default function VerifyTenant() {
 
         if (isSuccess) {
           {
-          showSuccessToast("Login Successful!");
+          showSuccessToast("Tenant Verified!");
           setTimeout(() => {
             //localhost
               const newUrl = `http://${name}.localhost:5173/tenantlogin`;
@@ -57,7 +57,6 @@ export default function VerifyTenant() {
           }, 100);
         }
         } else {
-          console.log("Tenant verification failed.");
           showErrorToast("Tenant verification failed");
         }
       } catch (error) {
