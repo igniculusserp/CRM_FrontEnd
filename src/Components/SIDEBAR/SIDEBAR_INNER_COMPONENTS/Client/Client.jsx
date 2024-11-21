@@ -54,10 +54,7 @@ export default function Client() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/clientbyusertoken`,
-        config
-      );
+      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/clientbyusertoken`, config);
 
       const data = response.data.data;
       setGetleads(data);
