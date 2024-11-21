@@ -38,9 +38,6 @@ import MultipuleStatusModal from './LeadComponents/MultipleStatusModal';
 import { SearchElement } from '../SearchElement/SearchElement';
 
 
-import Pagination from '../Pagination/Pagination';
-
-
 
 export default function Lead() {
   const navigate = useNavigate();
@@ -480,7 +477,7 @@ export default function Lead() {
 
   //---------------------->---------------------->PAGINATION<----------------------<----------------------
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2; // Define items per page
+  const itemsPerPage = 1; // Define items per page
   const totalPage = Math.ceil(filteredLeads.length / itemsPerPage);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -1240,16 +1237,16 @@ export default function Lead() {
 
         {selectedViewValue === 'Table View' && (
           <>
-            {/* <div
+            <div
               className={`flex justify-end m-4 ${
                 activeButtonId === 2 ? "hidden" : "flex"
               }`}
             >
-              <nav>
-                <ul className="inline-flex items-center">
+              <nav className="w-44 overflow-x-auto">
+                <ul className="flex items-center whitespace-nowrap">
                   {Array.from(
                     {
-                      length: Math?.ceil(filteredLeads?.length / itemsPerPage),
+                      length: Math.ceil(filteredLeads?.length / itemsPerPage),
                     },
                     (_, i) => (
                       <li key={i + 1}>
@@ -1268,20 +1265,17 @@ export default function Lead() {
                   )}
                 </ul>
               </nav>
-            </div> */}
+            </div>
             <div
               className={`flex justify-center items-center m-4 ${
                 activeButtonId === 2 ? 'hidden' : 'flex'
               }`}
             >
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPage}
-                onPageChange={paginate}
-              />
+              {/* Additional Content (if any) */}
             </div>
           </>
         )}
+        
       </div>
     </div>
   );
