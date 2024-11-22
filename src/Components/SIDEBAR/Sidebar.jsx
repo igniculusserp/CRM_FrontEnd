@@ -18,10 +18,7 @@ import { FaRegHandshake } from 'react-icons/fa6';
 import { MdOutlineEmail } from 'react-icons/md';
 import { MdOutlineKeyboardVoice } from 'react-icons/md';
 import PropTypes from 'prop-types';
-
-import { FaBars } from 'react-icons/fa6';
-import { FaBarsStaggered } from 'react-icons/fa6';
-
+import noAvatar from "../../assets/images/noAvatar.png";
 
 import { getHostnamePart } from './SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 
@@ -150,7 +147,7 @@ export default function SidebaBar({ toggle }) {
     setactive(key);
   };
 
-
+console.log(welcomedata)
 
   return (
     <>
@@ -158,9 +155,9 @@ export default function SidebaBar({ toggle }) {
         <div className=' mt-4'>
           <img
             id="logoImg"
-            src={welcomedata.tenentLogo}
-            alt="Company Logo"
-            className={`mt-3 ${toggle ? 'w-14 h-14' : 'w-24 h-24'} rounded-full shadow-md shadow-cyan-600 object-contain mx-auto border`}
+            src={welcomedata?.tenentLogo || noAvatar}
+            alt="Company Image"
+            className={`mt-3 ${toggle ? 'w-14 h-14' : 'w-24 h-24'} rounded-full shadow-md shadow-cyan-600 object-cover mx-auto border`}
           />
         </div>
 
