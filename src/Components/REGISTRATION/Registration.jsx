@@ -15,6 +15,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {showSuccessToast, showErrorToast} from "./../../utils/toastNotifications";
 
+// EXTERNAL CSS
+import "../../ExternalCSS/ExternalCSS_Settings.css";
+
 export default function Registration() {
   const navigate = useNavigate();
   
@@ -31,6 +34,7 @@ export default function Registration() {
   const [searchQueryCode, setSearchQueryCode] = useState("");
   
   const [passwordEye, setPasswordEye] = useState(false);
+  const [confirmPasswordEye, setConfirmPasswordEye] = useState(false);
 
   const [formValues, setFormValues] = useState({
     firstName: "",
@@ -208,11 +212,13 @@ export default function Registration() {
       showErrorToast(error.response.data.message);
     }
   };
-  
-  
 
   function togglePasswordEye() {
     setPasswordEye(!passwordEye);
+  }
+
+  function toggleConfirmPasswordEye() {
+    setConfirmPasswordEye(!confirmPasswordEye);
   }
 
   return (
@@ -243,7 +249,7 @@ export default function Registration() {
         </div>
 
         {/*----------> Part-II <---------- */}
-        <div className="w-full md:w-1/3 bg-cyan-500 md:bg-white flex min-h-screen flex-col justify-center md:my-0 my-6">
+        <div className="w-full md:w-1/3 bg-cyan-500 md:bg-white flex min-h-screen flex-col justify-center md:my-0 my-6 overflow-hidden">
           {/* Image on Top for Small Screens */}
           <div className="flex md:hidden justify-center">
             <img src={IgniculussLogo} alt="sample" width={100} height={50} />
@@ -352,7 +358,7 @@ export default function Registration() {
                 >
                   Confirm Password
                   <input
-                    type={passwordEye ? "text" : "password"}
+                    type={confirmPasswordEye ? "text" : "password"}
                     name="confirmPassword"
                     className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm "
                     value={formValues.confirmPassword}
@@ -361,21 +367,21 @@ export default function Registration() {
                   />
                   <button
                     type="button"
-                    onClick={togglePasswordEye}
+                    onClick={toggleConfirmPasswordEye}
                     className="absolute inset-y-0 top-5 right-2 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
                   >
-                    {passwordEye ? (
+                    {confirmPasswordEye ? (
                       <IoIosEye
                         size={22}
                         className={`transition-opacity duration-300 ease-in-out ${
-                          passwordEye ? "opacity-100" : "opacity-0"
+                          confirmPasswordEye ? "opacity-100" : "opacity-0"
                         }`}
                       />
                     ) : (
                       <IoIosEyeOff
                         size={22}
                         className={`transition-opacity duration-300 ease-in-out ${
-                          passwordEye ? "opacity-0" : "opacity-100"
+                          confirmPasswordEye ? "opacity-0" : "opacity-100"
                         }`}
                       />
                     )}
@@ -408,7 +414,7 @@ export default function Registration() {
                    </button>
 
                    {isOpen && (
-                     <div className="absolute mt-2 w-full border rounded bg-white shadow-lg z-10 h-60 overflow-y-scroll">
+                     <div className="absolute mt-2 w-full border rounded bg-white shadow-lg z-10 h-48 overflow-y-scroll code">
                        <input
                          type="text"
                          placeholder="Search Country"
@@ -471,13 +477,13 @@ export default function Registration() {
                     </button>
 
                     {isOpenCountry && (
-                      <div className="absolute mt-2 w-full border rounded bg-white shadow-lg z-10 h-60 overflow-y-scroll">
+                      <div className="absolute mt-2 w-full border rounded bg-white shadow-lg z-10 h-40 overflow-y-scroll register">
                         <input
                           type="text"
                           placeholder="Search Country"
                           value={searchQueryCountry}
                           onChange={(e) => setSearchQueryCountry(e.target.value)}
-                          className="w-full px-4 py-2 border-b outline-none"
+                          className="w-full px-8 py-2 border-b outline-none"
                         />
                         {filteredCountries.map((code, index) => (
                           <div
