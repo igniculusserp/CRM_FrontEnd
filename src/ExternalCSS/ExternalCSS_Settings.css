@@ -7,12 +7,22 @@
 } */
 
 /* Global CSS file or component-specific styles */
-.scrollbar-hidden {   
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-    scrollbar-width: none; /* Firefox 
-    */} 
-    
-.scrollbar-hidden::-webkit-scrollbar {   
-    display: none; /* WebKit-based browsers */ 
+.scrollbar-hidden {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox 
+    */
 }
- 
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none; /* WebKit-based browsers */
+}
+
+.register {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.code {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
