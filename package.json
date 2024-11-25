@@ -10,6 +10,8 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@auth0/auth0-react": "^2.2.4",
+        "@azure/msal-browser": "^3.27.0",
         "@davzon/react-country-state-city": "^1.0.10",
         "@reduxjs/toolkit": "^2.2.7",
         "axios": "^1.7.3",

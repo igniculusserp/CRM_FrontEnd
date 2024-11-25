@@ -20,7 +20,47 @@ import Microsoft from "./../../assets/images/microsoft-logo.png";
 import { getHostnamePart } from "../SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import {protocal_url, tenant_base_url, urlchange_base } from "./../../Config/config";
 
+// ---------------------------- MSAl Import --------------------------------
+import { PublicClientApplication } from '@azure/msal-browser';
+import { msalConfig } from './msalConfig';
+
+const msalInstance = new PublicClientApplication(msalConfig);
+
 export default function TenantLogin() {
+
+//-------------------------------------- Microsoft Authentication Setup --------------------------------
+
+const [isAuthenticated, setIsAuthenticated] = useState(false);
+const [isError, setIsError] = useState(null);
+
+const handleMicrosoftLogin = async () => {
+  try {
+    const loginResponse = await msalInstance.loginPopup({
+      scopes: ['User.Read'], // Scopes for the login
+    });
+
+    console.log('Login successful:', loginResponse);
+    setIsAuthenticated(true);
+
+  if (isAuthenticated) {
+    // return <div>Welcome, {authResult.account.username}</div>;
+    console.log("Welcome :- ",isAuthenticated.account.username);
+    
+  } else {
+    // return <div>Loading...</div>;
+    console.log("Login Failed");
+    
+  }
+  setIsError(null); // Reset any previous error state
+  } catch (error) {
+    console.error('Login failed:', error);
+    setIsAuthenticated(false);
+    setIsError('Login failed. Please try again.');
+    console.log("Error :- ",isError);
+    
+  }
+};
+
 
   //username
   const [userName, setuserName] = useState("")
@@ -250,7 +290,9 @@ export default function TenantLogin() {
                 </div>
               </div>
               </div>
-              <button className="bg-white py-4 text-xs rounded-md font-bold border-2 border-gray-400 mt-8 flex justify-center items-center gap-2">
+              <button 
+               onClick={handleMicrosoftLogin}
+              className="bg-white py-4 text-xs rounded-md font-bold border-2 border-gray-400 mt-8 flex justify-center items-center gap-2">
               Login with Microsoft <img src =  {Microsoft} className="h-4 w-4 shadow-md"/>
             </button>
         
