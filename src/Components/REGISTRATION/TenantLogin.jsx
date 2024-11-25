@@ -21,45 +21,42 @@ import { getHostnamePart } from "../SIDEBAR/SIDEBAR_SETTING/ReusableComponents/G
 import {protocal_url, tenant_base_url, urlchange_base } from "./../../Config/config";
 
 // ---------------------------- MSAl Import --------------------------------
-import { PublicClientApplication } from '@azure/msal-browser';
-import { msalConfig } from './msalConfig';
 
-const msalInstance = new PublicClientApplication(msalConfig);
+import  msalInstance  from '../../msalConfig';
+
+
 
 export default function TenantLogin() {
 
-//-------------------------------------- Microsoft Authentication Setup --------------------------------
-
-const [isAuthenticated, setIsAuthenticated] = useState(false);
-const [isError, setIsError] = useState(null);
-
-const handleMicrosoftLogin = async () => {
-  try {
-    const loginResponse = await msalInstance.loginPopup({
-      scopes: ['User.Read'], // Scopes for the login
-    });
-
-    console.log('Login successful:', loginResponse);
-    setIsAuthenticated(true);
-
-  if (isAuthenticated) {
-    // return <div>Welcome, {authResult.account.username}</div>;
-    console.log("Welcome :- ",isAuthenticated.account.username);
-    
-  } else {
-    // return <div>Loading...</div>;
-    console.log("Login Failed");
-    
-  }
-  setIsError(null); // Reset any previous error state
-  } catch (error) {
-    console.error('Login failed:', error);
-    setIsAuthenticated(false);
-    setIsError('Login failed. Please try again.');
-    console.log("Error :- ",isError);
-    
-  }
-};
+ 
+    //-------------------------------------- Microsoft Authentication Setup --------------------------------
+  
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isError, setIsError] = useState(null);
+  
+    const handleMicrosoftLogin = async () => {
+      try {
+        // Ensure the MSAL instance is initialized before using it
+        const loginResponse = await msalInstance.loginPopup({
+          scopes: ['User.Read'], // Scopes for the login
+        });
+  
+        console.log('Login successful:', loginResponse);
+        setIsAuthenticated(true);
+  
+        if (isAuthenticated) {
+          console.log("Welcome :- ", loginResponse.account.username);
+        } else {
+          console.log("Login Failed");
+        }
+  
+        setIsError(null); // Reset any previous error state
+      } catch (error) {
+        console.error('Login failed:', error);
+        setIsAuthenticated(false);
+        setIsError('Login failed. Please try again.');
+      }
+    };
 
 
   //username
