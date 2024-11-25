@@ -4,6 +4,12 @@ import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 
+//-------------------------------------Microsoft Authentication----------------------------------------------------
+import { MsalProvider } from "@azure/msal-react";
+import msalInstance from "./Config/msalConfig.js";
+
+
+
 //Registration
 import Registration from "./Components/REGISTRATION/Registration.jsx";
 import Verifyotp from "./Components/REGISTRATION/Verifyotp.jsx";
@@ -190,7 +196,9 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
+  <MsalProvider instance={msalInstance}>
     <FollowUpNotificationProvider>
       <RouterProvider router={router} />
     </FollowUpNotificationProvider>
+    </MsalProvider>
 );
