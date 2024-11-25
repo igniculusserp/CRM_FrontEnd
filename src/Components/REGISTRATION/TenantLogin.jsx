@@ -21,43 +21,80 @@ import { getHostnamePart } from "../SIDEBAR/SIDEBAR_SETTING/ReusableComponents/G
 import {protocal_url, tenant_base_url, urlchange_base } from "./../../Config/config";
 
 // ---------------------------- MSAl Import --------------------------------
-
-import  msalInstance  from '../../msalConfig';
-
-
+import { useMsal } from "@azure/msal-react";
+import msalInstance, { loginRequest, graphConfig } from "../../Config/msalConfig";
 
 export default function TenantLogin() {
 
- 
-    //-------------------------------------- Microsoft Authentication Setup --------------------------------
-  
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [isError, setIsError] = useState(null);
-  
-    const handleMicrosoftLogin = async () => {
-      try {
-        // Ensure the MSAL instance is initialized before using it
-        const loginResponse = await msalInstance.loginPopup({
-          scopes: ['User.Read'], // Scopes for the login
-        });
-  
-        console.log('Login successful:', loginResponse);
-        setIsAuthenticated(true);
-  
-        if (isAuthenticated) {
-          console.log("Welcome :- ", loginResponse.account.username);
-        } else {
-          console.log("Login Failed");
-        }
-  
-        setIsError(null); // Reset any previous error state
-      } catch (error) {
-        console.error('Login failed:', error);
-        setIsAuthenticated(false);
-        setIsError('Login failed. Please try again.');
-      }
-    };
+//-------------------------------------- Microsoft Authentication Setup --------------------------------
 
+const [isAuthenticated, setIsAuthenticated] = useState(false);
+const [userData, setUserData] = useState(null);
+const { instance } = useMsal();
+
+const handleMicrosoftLogin = async () => {
+  try {
+    // Trigger login popup
+    const loginResponse = await msalInstance.loginPopup({
+      scopes: ['User.Read'], // Scopes for login
+    });
+    console.log('Login successful:', loginResponse);
+    setIsAuthenticated(true);
+
+    // Fetch token silently
+    const tokenResponse = await msalInstance.acquireTokenSilent({
+      scopes: ['User.Read'], // Scopes for token request
+    });
+
+    // Fetch user profile using the access token
+    const userProfile = await fetch('https://graph.microsoft.com/v1.0/me', {
+      headers: {
+        Authorization: `Bearer ${tokenResponse.accessToken}`,
+      },
+    }).then((res) => res.json());
+
+    console.log('User Profile:', userProfile);
+    setUserData(userProfile); // Store the user profile in state
+
+  } catch (error) {
+    console.error('Login failed:', error);
+    setIsAuthenticated(false);
+  }
+};
+
+// Check authentication status on load
+useEffect(() => {
+  const checkAuthentication = async () => {
+    try {
+      const accounts = msalInstance.getAllAccounts();
+      if (accounts.length > 0) {
+        setIsAuthenticated(true);
+
+        const tokenResponse = await msalInstance.acquireTokenSilent({
+          scopes: ['User.Read'],
+        });
+
+        const userProfile = await fetch('https://graph.microsoft.com/v1.0/me', {
+          headers: {
+            Authorization: `Bearer ${tokenResponse.accessToken}`,
+          },
+        }).then((res) => res.json());
+
+        setUserData(userProfile);
+      }
+    } catch (error) {
+      console.error("Authentication check failed:", error);
+      setIsAuthenticated(false);
+    }
+  };
+  checkAuthentication();
+}, []);
+
+useEffect(()=>{
+  console.log(`https://${window.location.hostname}/sidebar`);
+  
+  
+})
 
   //username
   const [userName, setuserName] = useState("")
