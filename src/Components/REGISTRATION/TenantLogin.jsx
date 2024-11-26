@@ -31,19 +31,15 @@ export default function TenantLogin() {
 
 const [isAuthenticated, setIsAuthenticated] = useState(false);
 const [userData, setUserData] = useState(null);
-const { instance } = useMsal();
 
 const handleMicrosoftLogin = async () => {
   try {
-    // Trigger login popup
     const loginResponse = await msalInstance.loginPopup(loginRequest);
     console.log("Login successful:", loginResponse);
 
-    // Set active account after login
     msalInstance.setActiveAccount(loginResponse.account);
     setIsAuthenticated(true);
 
-    // Fetch user profile
     fetchUserProfile();
   } catch (error) {
     console.error("Login failed:", error);
@@ -58,35 +54,66 @@ const fetchUserProfile = async () => {
       throw new Error("No active account! Please log in.");
     }
 
-    // Acquire token silently for the active account
-    const tokenResponse = await msalInstance.acquireTokenSilent({
-      ...loginRequest,
-      account: activeAccount,
-    });
+    let tokenResponse;
+    try {
+      tokenResponse = await msalInstance.acquireTokenSilent({
+        ...loginRequest,
+        account: activeAccount,
+      });
+    } catch (error) {
+      console.error("Silent token acquisition failed, trying popup:", error);
+      tokenResponse = await msalInstance.acquireTokenPopup(loginRequest);
+    }
 
     const userProfile = await fetch(graphConfig.graphMeEndpoint, {
-      headers: {
-        Authorization: `Bearer ${tokenResponse.accessToken}`,
-      },
+      headers: { Authorization: `Bearer ${tokenResponse.accessToken}` },
     }).then((res) => res.json());
 
-    console.log("User Profile:", userProfile);
-    if(userProfile.mail!=""){
-      navigate("/sidebar");
-    }
     setUserData(userProfile);
+    console.log("User Profile:", userProfile);
   } catch (error) {
     console.error("Failed to fetch user profile:", error);
   }
 };
 
-// useEffect(() => {
-//   const accounts = msalInstance.getAllAccounts();
-//   if (accounts.length > 0) {
-//     msalInstance.setActiveAccount(accounts[0]); 
-//     setIsAuthenticated(true);
-//   }
-// }, []);
+useEffect(() => {
+  const accounts = msalInstance.getAllAccounts();
+  if (accounts.length > 0) {
+    msalInstance.setActiveAccount(accounts[0]);
+    setIsAuthenticated(true);
+  }
+
+  if (userData && userData.mail) {
+    handleMicrosoftAuth();
+  }
+}, [userData]);
+
+const handleMicrosoftAuth = async () => {
+  try {
+    const response = await axios.post(`${protocal_url}${name}.${tenant_base_url}/Users/microsoftlogin`, {
+      email: userData.mail,
+    });
+
+    const loginDetail = response.data.data;
+    localStorage.setItem("token", loginDetail.token);
+    localStorage.setItem("userDetail", JSON.stringify(loginDetail));
+    localStorage.setItem("myData_forget", userData.displayName);
+
+    navigate("/sidebar");
+  } catch (error) {
+    if (error.response?.data) {
+      console.error("Server Error:", error.response.data);
+      showErrorToast(error.response.data.message);
+    } else {
+      console.error("Unhandled Error:", error);
+    }
+  }
+};
+
+
+
+
+//---------------------------------------------------- Microsoft Authentication End ----------------------------------------
 
   //username
   const [userName, setuserName] = useState("")
@@ -207,6 +234,7 @@ const fetchUserProfile = async () => {
 
         }
     }
+
   return (
     <>
       <ToastContainer />
