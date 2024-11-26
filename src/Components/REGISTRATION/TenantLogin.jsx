@@ -86,7 +86,6 @@ useEffect(() => {
   if (accounts.length > 0) {
     msalInstance.setActiveAccount(accounts[0]); // Set the first account as active
     setIsAuthenticated(true);
-    fetchUserProfile();
   }
  
 }, []);
