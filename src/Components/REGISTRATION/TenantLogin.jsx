@@ -85,6 +85,9 @@ useEffect(() => {
     setIsAuthenticated(true);
     fetchUserProfile();
   }
+  if(isAuthenticated===true){
+    navigate("/sidebar");
+  }
 }, []);
 
   //username
