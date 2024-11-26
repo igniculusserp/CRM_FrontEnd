@@ -80,15 +80,13 @@ const fetchUserProfile = async () => {
   }
 };
 
-useEffect(() => {
-  // Check for existing accounts in the cache on component mount
-  const accounts = msalInstance.getAllAccounts();
-  if (accounts.length > 0) {
-    msalInstance.setActiveAccount(accounts[0]); // Set the first account as active
-    setIsAuthenticated(true);
-  }
- 
-}, []);
+// useEffect(() => {
+//   const accounts = msalInstance.getAllAccounts();
+//   if (accounts.length > 0) {
+//     msalInstance.setActiveAccount(accounts[0]); 
+//     setIsAuthenticated(true);
+//   }
+// }, []);
 
   //username
   const [userName, setuserName] = useState("")
