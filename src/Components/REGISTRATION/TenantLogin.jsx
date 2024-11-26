@@ -71,6 +71,9 @@ const fetchUserProfile = async () => {
     }).then((res) => res.json());
 
     console.log("User Profile:", userProfile);
+    if(userProfile.mail!=""){
+      navigate("/sidebar");
+    }
     setUserData(userProfile);
   } catch (error) {
     console.error("Failed to fetch user profile:", error);
@@ -85,9 +88,7 @@ useEffect(() => {
     setIsAuthenticated(true);
     fetchUserProfile();
   }
-  if(isAuthenticated===true){
-    navigate("/sidebar");
-  }
+ 
 }, []);
 
   //username
