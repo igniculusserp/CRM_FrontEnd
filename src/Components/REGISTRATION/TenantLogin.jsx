@@ -21,6 +21,7 @@ import { getHostnamePart } from "../SIDEBAR/SIDEBAR_SETTING/ReusableComponents/G
 import {protocal_url, tenant_base_url, urlchange_base } from "./../../Config/config";
 
 // ---------------------------- MSAl Import --------------------------------
+
 import { useMsal } from "@azure/msal-react";
 import msalInstance, { loginRequest, graphConfig } from "../../Config/msalConfig";
 
@@ -35,66 +36,56 @@ const { instance } = useMsal();
 const handleMicrosoftLogin = async () => {
   try {
     // Trigger login popup
-    const loginResponse = await msalInstance.loginPopup({
-      scopes: ['User.Read'], // Scopes for login
-    });
-    console.log('Login successful:', loginResponse);
+    const loginResponse = await msalInstance.loginPopup(loginRequest);
+    console.log("Login successful:", loginResponse);
+
+    // Set active account after login
+    msalInstance.setActiveAccount(loginResponse.account);
     setIsAuthenticated(true);
 
-    // Fetch token silently
+    // Fetch user profile
+    fetchUserProfile();
+  } catch (error) {
+    console.error("Login failed:", error);
+    setIsAuthenticated(false);
+  }
+};
+
+const fetchUserProfile = async () => {
+  try {
+    const activeAccount = msalInstance.getActiveAccount();
+    if (!activeAccount) {
+      throw new Error("No active account! Please log in.");
+    }
+
+    // Acquire token silently for the active account
     const tokenResponse = await msalInstance.acquireTokenSilent({
-      scopes: ['User.Read'], // Scopes for token request
+      ...loginRequest,
+      account: activeAccount,
     });
 
-    // Fetch user profile using the access token
-    const userProfile = await fetch('https://graph.microsoft.com/v1.0/me', {
+    const userProfile = await fetch(graphConfig.graphMeEndpoint, {
       headers: {
         Authorization: `Bearer ${tokenResponse.accessToken}`,
       },
     }).then((res) => res.json());
 
-    console.log('User Profile:', userProfile);
-    setUserData(userProfile); // Store the user profile in state
-
+    console.log("User Profile:", userProfile);
+    setUserData(userProfile);
   } catch (error) {
-    console.error('Login failed:', error);
-    setIsAuthenticated(false);
+    console.error("Failed to fetch user profile:", error);
   }
 };
 
-// Check authentication status on load
 useEffect(() => {
-  const checkAuthentication = async () => {
-    try {
-      const accounts = msalInstance.getAllAccounts();
-      if (accounts.length > 0) {
-        setIsAuthenticated(true);
-
-        const tokenResponse = await msalInstance.acquireTokenSilent({
-          scopes: ['User.Read'],
-        });
-
-        const userProfile = await fetch('https://graph.microsoft.com/v1.0/me', {
-          headers: {
-            Authorization: `Bearer ${tokenResponse.accessToken}`,
-          },
-        }).then((res) => res.json());
-
-        setUserData(userProfile);
-      }
-    } catch (error) {
-      console.error("Authentication check failed:", error);
-      setIsAuthenticated(false);
-    }
-  };
-  checkAuthentication();
+  // Check for existing accounts in the cache on component mount
+  const accounts = msalInstance.getAllAccounts();
+  if (accounts.length > 0) {
+    msalInstance.setActiveAccount(accounts[0]); // Set the first account as active
+    setIsAuthenticated(true);
+    fetchUserProfile();
+  }
 }, []);
-
-useEffect(()=>{
-  console.log(`https://${window.location.hostname}/sidebar`);
-  
-  
-})
 
   //username
   const [userName, setuserName] = useState("")

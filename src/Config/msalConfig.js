@@ -14,7 +14,11 @@ export const msalConfig = {
 };
 
 export const loginRequest = {
-  scopes: ["User.Read"], // Permission to read user's profile
+  scopes: ["User.Read"], // Replace with the scopes your app requires
+};
+
+export const tokenRequest = {
+  scopes: ["User.Read"],
 };
 
 export const graphConfig = {
