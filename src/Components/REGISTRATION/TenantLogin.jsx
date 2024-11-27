@@ -80,11 +80,8 @@ export default function TenantLogin() {
       const headers = { Authorization: `Bearer ${tokenResponse.accessToken}` };
 
       // Fetch user profile
-      const userProfile = await fetch(
-        `https://graph.microsoft.com/v1.0/users/${activeAccount.username}`,
-        { headers }
-      ).then((res) => res.json());
-      console.log("User Profile:", userProfile);
+      const userProfile = await fetch(graphConfig.graphMeEndpoint, { headers }).then((res) => res.json());
+    console.log("User Profile:", userProfile);
 
       // Fetch manager profile
       const managerProfile = await fetch(graphConfig.graphManagerEndpoint, {
@@ -128,7 +125,7 @@ export default function TenantLogin() {
           password: "",
           confirmPassword: "",
           role: userData.jobTitle,
-          groupId: "",
+          groupId: null,
           reportedTo: managerData.displayName,
           isActive: true,
           createdDate: null,
