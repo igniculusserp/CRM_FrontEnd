@@ -14,7 +14,13 @@ export const msalConfig = {
 };
 
 export const loginRequest = {
-  scopes: ["User.Read"], // Replace with the scopes your app requires
+  scopes: [
+    "User.Read",
+    "Mail.Read",
+    "Calendars.Read",
+    "Files.Read",
+    "Team.ReadBasic.All",
+  ],
 };
 
 export const tokenRequest = {
@@ -22,7 +28,11 @@ export const tokenRequest = {
 };
 
 export const graphConfig = {
-  graphMeEndpoint: "https://graph.microsoft.com/v1.0/me", // Microsoft Graph API endpoint
+  graphMeEndpoint: "https://graph.microsoft.com/v1.0/me", // Profile
+  graphMessagesEndpoint: "https://graph.microsoft.com/v1.0/me/messages", // Emails
+  graphEventsEndpoint: "https://graph.microsoft.com/v1.0/me/events", // Calendar
+  graphFilesEndpoint: "https://graph.microsoft.com/v1.0/me/drive/root/children", // Files
+  graphTeamsEndpoint: "https://graph.microsoft.com/v1.0/me/joinedTeams", // Teams
 };
 
 let msalInstance = new PublicClientApplication(msalConfig);
