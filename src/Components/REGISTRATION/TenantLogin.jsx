@@ -21,7 +21,6 @@ import { getHostnamePart } from "../SIDEBAR/SIDEBAR_SETTING/ReusableComponents/G
 import {protocal_url, tenant_base_url, urlchange_base } from "./../../Config/config";
 
 // ---------------------------- MSAl Import --------------------------------
-import { useMsal } from "@azure/msal-react";
 import msalInstance, { loginRequest, graphConfig } from "../../Config/msalConfig";
 
 export default function TenantLogin() {
@@ -30,71 +29,125 @@ export default function TenantLogin() {
 
 const [isAuthenticated, setIsAuthenticated] = useState(false);
 const [userData, setUserData] = useState(null);
-const { instance } = useMsal();
 
-const handleMicrosoftLogin = async () => {
+ // Handle Microsoft Login
+ const handleMicrosoftLogin = async () => {
   try {
-    // Trigger login popup
-    const loginResponse = await msalInstance.loginPopup({
-      scopes: ['User.Read'], // Scopes for login
-    });
-    console.log('Login successful:', loginResponse);
+    const loginResponse = await msalInstance.loginPopup(loginRequest);
+    console.log("Login successful:", loginResponse);
+
+    msalInstance.setActiveAccount(loginResponse.account);
     setIsAuthenticated(true);
 
-    // Fetch token silently
-    const tokenResponse = await msalInstance.acquireTokenSilent({
-      scopes: ['User.Read'], // Scopes for token request
-    });
-
-    // Fetch user profile using the access token
-    const userProfile = await fetch('https://graph.microsoft.com/v1.0/me', {
-      headers: {
-        Authorization: `Bearer ${tokenResponse.accessToken}`,
-      },
-    }).then((res) => res.json());
-
-    console.log('User Profile:', userProfile);
-    setUserData(userProfile); // Store the user profile in state
-
+    fetchUserProfile();
   } catch (error) {
-    console.error('Login failed:', error);
+    console.error("Login failed:", error);
     setIsAuthenticated(false);
   }
 };
 
-// Check authentication status on load
-useEffect(() => {
-  const checkAuthentication = async () => {
-    try {
-      const accounts = msalInstance.getAllAccounts();
-      if (accounts.length > 0) {
-        setIsAuthenticated(true);
-
-        const tokenResponse = await msalInstance.acquireTokenSilent({
-          scopes: ['User.Read'],
-        });
-
-        const userProfile = await fetch('https://graph.microsoft.com/v1.0/me', {
-          headers: {
-            Authorization: `Bearer ${tokenResponse.accessToken}`,
-          },
-        }).then((res) => res.json());
-
-        setUserData(userProfile);
-      }
-    } catch (error) {
-      console.error("Authentication check failed:", error);
-      setIsAuthenticated(false);
+// Fetch User Profile and Additional Data
+const fetchUserProfile = async () => {
+  try {
+    const activeAccount = msalInstance.getActiveAccount();
+    if (!activeAccount) {
+      throw new Error("No active account! Please log in.");
     }
-  };
-  checkAuthentication();
-}, []);
 
-useEffect(()=>{
-  console.log(`https://${window.location.hostname}/sidebar`);
-  
-  
-})
+    let tokenResponse;
+    try {
+      tokenResponse = await msalInstance.acquireTokenSilent({
+        ...loginRequest,
+        account: activeAccount,
+      });
+    } catch (error) {
+      console.error("Silent token acquisition failed, trying popup:", error);
+      tokenResponse = await msalInstance.acquireTokenPopup(loginRequest);
+    }
+
+    const headers = { Authorization: `Bearer ${tokenResponse.accessToken}` };
+
+    // Fetch profile
+    const profile = await fetch(graphConfig.graphMeEndpoint, { headers }).then((res) =>
+      res.json()
+    );
+
+    // Fetch emails
+    const emails = await fetch(graphConfig.graphMessagesEndpoint, { headers }).then((res) =>
+      res.json()
+    );
+
+    // Fetch calendar events
+    const events = await fetch(graphConfig.graphEventsEndpoint, { headers }).then((res) =>
+      res.json()
+    );
+
+    // Fetch files
+    const files = await fetch(graphConfig.graphFilesEndpoint, { headers }).then((res) =>
+      res.json()
+    );
+
+    // Fetch joined Teams
+    const teams = await fetch(graphConfig.graphTeamsEndpoint, { headers }).then((res) =>
+      res.json()
+    );
+
+    // Combine all user data
+    const allUserData = {
+      profile,
+      emails: emails.value || [],
+      events: events.value || [],
+      files: files.value || [],
+      teams: teams.value || [],
+    };
+
+    setUserData(allUserData);
+    console.log("All User Data:", allUserData);
+  } catch (error) {
+    console.error("Failed to fetch user profile:", error);
+  }
+};
+
+// Check existing sessions
+useEffect(() => {
+  const accounts = msalInstance.getAllAccounts();
+  if (accounts.length > 0) {
+    msalInstance.setActiveAccount(accounts[0]);
+    setIsAuthenticated(true);
+  }
+
+  if (userData) {
+    console.log("User Data Ready:", userData);
+  }
+}, [userData]);
+
+
+const handleMicrosoftAuth = async () => {
+  try {
+    const response = await axios.post(`${protocal_url}${name}.${tenant_base_url}/Users/microsoftlogin`, {
+      email: userData.mail,
+    });
+
+    const loginDetail = response.data.data;
+    localStorage.setItem("token", loginDetail.token);
+    localStorage.setItem("userDetail", JSON.stringify(loginDetail));
+    localStorage.setItem("myData_forget", userData.displayName);
+
+    navigate("/sidebar");
+  } catch (error) {
+    if (error.response?.data) {
+      console.error("Server Error:", error.response.data);
+      showErrorToast(error.response.data.message);
+    } else {
+      console.error("Unhandled Error:", error);
+    }
+  }
+};
+
+
+
+
+//---------------------------------------------------- Microsoft Authentication End ----------------------------------------
 
   //username
   const [userName, setuserName] = useState("")
@@ -215,6 +268,7 @@ useEffect(()=>{
 
         }
     }
+
   return (
     <>
       <ToastContainer />
