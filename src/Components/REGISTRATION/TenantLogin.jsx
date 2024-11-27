@@ -28,10 +28,11 @@ export default function TenantLogin() {
 //-------------------------------------- Microsoft Authentication Setup --------------------------------
 
 const [isAuthenticated, setIsAuthenticated] = useState(false);
-const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const [managerData, setManagerData] = useState(null);
 
- // Handle Microsoft Login
- const handleMicrosoftLogin = async () => {
+// Function to handle Microsoft login
+const handleMicrosoftLogin = async () => {
   try {
     const loginResponse = await msalInstance.loginPopup(loginRequest);
     console.log("Login successful:", loginResponse);
@@ -39,21 +40,23 @@ const [userData, setUserData] = useState(null);
     msalInstance.setActiveAccount(loginResponse.account);
     setIsAuthenticated(true);
 
-    fetchUserProfile();
+    // Fetch user and manager details
+    fetchUserDetails();
   } catch (error) {
     console.error("Login failed:", error);
     setIsAuthenticated(false);
   }
 };
 
-// Fetch User Profile and Additional Data
-const fetchUserProfile = async () => {
+// Function to fetch user and manager details
+const fetchUserDetails = async () => {
   try {
     const activeAccount = msalInstance.getActiveAccount();
     if (!activeAccount) {
       throw new Error("No active account! Please log in.");
     }
 
+    // Get token silently or via popup
     let tokenResponse;
     try {
       tokenResponse = await msalInstance.acquireTokenSilent({
@@ -67,57 +70,32 @@ const fetchUserProfile = async () => {
 
     const headers = { Authorization: `Bearer ${tokenResponse.accessToken}` };
 
-    // Fetch profile
-    const profile = await fetch(graphConfig.graphMeEndpoint, { headers }).then((res) =>
-      res.json()
-    );
+    // Fetch user profile
+    const userProfile = await fetch(graphConfig.graphMeEndpoint, { headers }).then((res) => res.json());
+    console.log("User Profile:", userProfile);
 
-    // Fetch emails
-    const emails = await fetch(graphConfig.graphMessagesEndpoint, { headers }).then((res) =>
-      res.json()
-    );
+    // Fetch manager profile
+    const managerProfile = await fetch(graphConfig.graphManagerEndpoint, { headers }).then((res) => res.json());
+    console.log("Manager Profile:", managerProfile);
 
-    // Fetch calendar events
-    const events = await fetch(graphConfig.graphEventsEndpoint, { headers }).then((res) =>
-      res.json()
-    );
-
-    // Fetch files
-    const files = await fetch(graphConfig.graphFilesEndpoint, { headers }).then((res) =>
-      res.json()
-    );
-
-    // Fetch joined Teams
-    const teams = await fetch(graphConfig.graphTeamsEndpoint, { headers }).then((res) =>
-      res.json()
-    );
-
-    // Combine all user data
-    const allUserData = {
-      profile,
-      emails: emails.value || [],
-      events: events.value || [],
-      files: files.value || [],
-      teams: teams.value || [],
-    };
-
-    setUserData(allUserData);
-    console.log("All User Data:", allUserData);
+    setUserData(userProfile);
+    setManagerData(managerProfile);
   } catch (error) {
-    console.error("Failed to fetch user profile:", error);
+    console.error("Failed to fetch user or manager details:", error);
   }
 };
 
 // Check existing sessions
 useEffect(() => {
   const accounts = msalInstance.getAllAccounts();
-  if (accounts.length > 0) {
-    msalInstance.setActiveAccount(accounts[0]);
-    setIsAuthenticated(true);
-  }
+    if (accounts.length > 0) {
+      msalInstance.setActiveAccount(accounts[0]);
+      setIsAuthenticated(true);
+    }
 
   if (userData) {
     console.log("User Data Ready:", userData);
+    handleMicrosoftAuth()
   }
 }, [userData]);
 
