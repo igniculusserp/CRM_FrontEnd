@@ -1124,9 +1124,9 @@ export default function Lead() {
                       <td className="px-2 py-4 border-b border-gray-300 text-sm text-center">
                         {matchedUser && (
                           <div
-                            className="text-xs font-semibold text-white px-2 py-2 rounded-full w-[100%]"
+                            className="text-xs font-semibold text-white px-2 py-2 rounded-full w-[100%] bg-cyan-500"
                             style={{
-                              backgroundColor: roleColor ? roleColor : '#06b6d4',
+                              backgroundColor: roleColor ? roleColor : '',
                               borderRadius: '8px',
                               padding: 8,
                               textAlign: 'center',

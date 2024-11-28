@@ -9,6 +9,8 @@ import { MsalProvider } from "@azure/msal-react";
 import msalInstance from "./Config/msalConfig.js";
 
 
+import ProtectedRoute from "./ProtectedRoute.jsx";
+
 
 //Registration
 import Registration from "./Components/REGISTRATION/Registration.jsx";
@@ -118,7 +120,11 @@ const router = createBrowserRouter([
   { path: "/test", element: <Test /> },
   {
     path: "/sidebar",
-    element: <SidebarBase />,
+    element: ( 
+        <ProtectedRoute>
+          <SidebarBase /> 
+      </ProtectedRoute>
+    ),
     children: [
       { path: "/sidebar", element: <Home /> },
 
