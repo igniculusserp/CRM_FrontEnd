@@ -437,8 +437,8 @@ export default function Lead() {
   //---------------------->---------------------->MANAGE_BY/ASSIGNED_TO<----------------------<ARVIND----------------------
   const roleColors = [
     '#2563eb', // blue
-    '#65a30d', // LimeGreen
-    '#7c3aed', // MediumPurple
+    // '#65a30d', // LimeGreen
+    // '#7c3aed', // MediumPurple
     '#0369a1', //Sky
     '#e11d48', //Rose
   ];
