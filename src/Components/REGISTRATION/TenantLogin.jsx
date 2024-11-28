@@ -64,7 +64,7 @@ export default function TenantLogin() {
       if (!activeAccount) {
         throw new Error("No active account! Please log in.");
       }
-
+  
       // Get token silently or via popup
       let tokenResponse;
       try {
@@ -76,25 +76,29 @@ export default function TenantLogin() {
         console.error("Silent token acquisition failed, trying popup:", error);
         tokenResponse = await msalInstance.acquireTokenPopup(loginRequest);
       }
-
+  
       const headers = { Authorization: `Bearer ${tokenResponse.accessToken}` };
-
+  
       // Fetch user profile
       const userProfile = await fetch(graphConfig.graphMeEndpoint, { headers }).then((res) => res.json());
-    console.log("User Profile:", userProfile);
-
-      // Fetch manager profile
-      const managerProfile = await fetch(graphConfig.graphManagerEndpoint, {
-        headers,
-      }).then((res) => res.json());
-      console.log("Manager Profile:", managerProfile);
-
+      console.log("User Profile:", userProfile);
+  
+      // Attempt to fetch manager profile without throwing an error
+      let managerProfile = null;
+      try {
+        managerProfile = await fetch(graphConfig.graphManagerEndpoint, { headers }).then((res) => res.json());
+        console.log("Manager Profile:", managerProfile);
+      } catch (error) {
+        console.warn("Failed to fetch manager profile. Defaulting to null.", error);
+      }
+  
       setUserData(userProfile);
-      setManagerData(managerProfile);
+      setManagerData(managerProfile); // Will be null if fetching fails
     } catch (error) {
       console.error("Failed to fetch user or manager details:", error);
     }
   };
+  
 
   // Check existing sessions
   useEffect(() => {
@@ -115,18 +119,18 @@ export default function TenantLogin() {
       const response = await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/Users/microsoftlogin`,
         {
-          firstName: userData.givenName,
-          lastName: userData.surname,
+          firstName: userData.givenName ||"",
+          lastName: userData.surname || "",
           email: userData.mail,
-          contactNo: userData.mobilePhone,
+          contactNo: userData.mobilePhone || "",
           country: "",
           businessType: "",
           userName: "",
           password: "",
           confirmPassword: "",
-          role: userData.jobTitle,
+          role: userData.jobTitle || "",
           groupId: null,
-          reportedTo: managerData.displayName,
+          reportedTo: managerData.displayName || "",
           isActive: true,
           createdDate: null,
           deletedDate: null,
