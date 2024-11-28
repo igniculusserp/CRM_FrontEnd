@@ -1,8 +1,4 @@
-import {
-  FaArrowAltCircleDown,
-  FaArrowAltCircleUp,
-  FaUsers,
-} from 'react-icons/fa';
+import { FaArrowAltCircleDown, FaArrowAltCircleUp, FaUsers} from 'react-icons/fa';
 import { CiBadgeDollar } from 'react-icons/ci';
 import { FcSalesPerformance } from 'react-icons/fc';
 import SalesPipelineChart from './homeComponents/SalesPipelineChart';
@@ -17,16 +13,29 @@ import axios from 'axios';
 import { FaUsersRectangle } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+
+
+
 export default function Home() {
+  
   //DND
   const name = getHostnamePart();
+  const navigate = useNavigate();
   const [salesData, setSalesData] = useState([]);
   const [leadsData, setLeadsData] = useState([]);
 
+  const checkStoredOtp = () => {
+    const storedOtp = localStorage.getItem("otp"); // Retrieve OTP from localStorage
+    if (!storedOtp || storedOtp.length !== 6) {
+      navigate("/tenantloginOTP"); // Redirect if OTP is not valid or doesn't have 6 characters
+    }
+  };
   //----------calling data in effect-----------
   useEffect(() => {
+    checkStoredOtp()
     handleGetApis();
-  }, []);
+  }, [navigate]);
 
   //------------------------------------------------------------------------------------------------
   //----------------GET----------------

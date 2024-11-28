@@ -1,5 +1,5 @@
 //react
-import { Link,  useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -10,7 +10,10 @@ import { GiDiamonds } from "react-icons/gi";
 //react-toast
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {showSuccessToast,showErrorToast} from "./../../utils/toastNotifications";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "./../../utils/toastNotifications";
 
 //imgUsed
 import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
@@ -18,129 +21,262 @@ import CRMLoginPage from "./../../assets/images/CRMLoginPage.png";
 import Microsoft from "./../../assets/images/microsoft-logo.png";
 
 import { getHostnamePart } from "../SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
-import {protocal_url, tenant_base_url, urlchange_base } from "./../../Config/config";
+import {
+  protocal_url,
+  tenant_base_url,
+  urlchange_base,
+} from "./../../Config/config";
+
+// ---------------------------- MSAl Import --------------------------------
+import msalInstance, {
+  loginRequest,
+  graphConfig,
+} from "../../Config/msalConfig";
 
 export default function TenantLogin() {
+  //-------------------------------------- Microsoft Authentication Setup --------------------------------
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [managerData, setManagerData] = useState(null);
+
+  // Function to handle Microsoft login
+  const handleMicrosoftLogin = async () => {
+    try {
+      const loginResponse = await msalInstance.loginPopup(loginRequest);
+      console.log("Login successful:", loginResponse);
+
+      msalInstance.setActiveAccount(loginResponse.account);
+      setIsAuthenticated(true);
+
+      // Fetch user and manager details
+      fetchUserDetails();
+    } catch (error) {
+      console.error("Login failed:", error);
+      setIsAuthenticated(false);
+    }
+  };
+
+  // Function to fetch user and manager details
+  const fetchUserDetails = async () => {
+    try {
+      const activeAccount = msalInstance.getActiveAccount();
+      if (!activeAccount) {
+        throw new Error("No active account! Please log in.");
+      }
+  
+      // Get token silently or via popup
+      let tokenResponse;
+      try {
+        tokenResponse = await msalInstance.acquireTokenSilent({
+          ...loginRequest,
+          account: activeAccount,
+        });
+      } catch (error) {
+        console.error("Silent token acquisition failed, trying popup:", error);
+        tokenResponse = await msalInstance.acquireTokenPopup(loginRequest);
+      }
+  
+      const headers = { Authorization: `Bearer ${tokenResponse.accessToken}` };
+  
+      // Fetch user profile
+      const userProfile = await fetch(graphConfig.graphMeEndpoint, { headers }).then((res) => res.json());
+      console.log("User Profile:", userProfile);
+  
+      // Attempt to fetch manager profile without throwing an error
+      let managerProfile = null;
+      try {
+        managerProfile = await fetch(graphConfig.graphManagerEndpoint, { headers }).then((res) => res.json());
+        console.log("Manager Profile:", managerProfile);
+      } catch (error) {
+        console.warn("Failed to fetch manager profile. Defaulting to null.", error);
+      }
+  
+      setUserData(userProfile);
+      setManagerData(managerProfile); // Will be null if fetching fails
+    } catch (error) {
+      console.error("Failed to fetch user or manager details:", error);
+    }
+  };
+  
+
+  // Check existing sessions
+  useEffect(() => {
+    const accounts = msalInstance.getAllAccounts();
+    if (accounts.length > 0) {
+      msalInstance.setActiveAccount(accounts[0]);
+      setIsAuthenticated(true);
+    }
+
+    if (userData) {
+      console.log("User Data Ready:", userData);
+      handleMicrosoftAuth();
+    }
+  }, [userData]);
+
+  const handleMicrosoftAuth = async () => {
+    try {
+      const response = await axios.post(
+        `${protocal_url}${name}.${tenant_base_url}/Users/microsoftlogin`,
+        {
+          firstName: userData.givenName ||"",
+          lastName: userData.surname || "",
+          email: userData.mail,
+          contactNo: userData.mobilePhone || "",
+          country: "",
+          businessType: "",
+          userName: "",
+          password: "",
+          confirmPassword: "",
+          role: userData.jobTitle || "",
+          groupId: null,
+          reportedTo: managerData.displayName || "",
+          isActive: true,
+          createdDate: null,
+          deletedDate: null,
+        }
+      );
+
+      const loginDetail = response.data.data;
+      localStorage.setItem("token", loginDetail.token);
+      localStorage.setItem("userDetail", JSON.stringify(loginDetail));
+      localStorage.setItem("myData_forget", userData.displayName);
+
+      navigate("/sidebar");
+    } catch (error) {
+      if (error.response?.data) {
+        console.error("Server Error:", error.response.data);
+        showErrorToast(error.response.data.message);
+      } else {
+        console.error("Unhandled Error:", error);
+      }
+    }
+  };
+
+  //---------------------------------------------------- Microsoft Authentication End ----------------------------------------
 
   //username
-  const [userName, setuserName] = useState("")
+  const [userName, setuserName] = useState("");
   //password
-  const [password, setPassword] = useState("")
+  const [password, setPassword] = useState("");
 
   //not resolved yet 23/10/2024
   const deviceType = "";
-  const deviceAddress ="";
+  const deviceAddress = "";
 
   //
-  const [emailError, setEmailError] = useState(false)
-  const [passwordError, setPasswordError] = useState(false)
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   //naviagate fuction
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   //to read url
   const name = getHostnamePart();
 
-
-  //it is just to verify companyName in URL 
+  //it is just to verify companyName in URL
   useEffect(() => {
     const apiUrl = `${protocal_url}${name}.${tenant_base_url}/Tenants/check`;
-    console.log("Constructed API URL:", apiUrl); 
+    console.log("Constructed API URL:", apiUrl);
 
     const verifyTenant = async () => {
       try {
-        const response = await axios.post(apiUrl, {
-          tenantName: name, 
-          tenanturl: apiUrl 
-        }, 
-        {
-          headers: {
-            'Content-Type': 'application/json',
+        const response = await axios.post(
+          apiUrl,
+          {
+            tenantName: name,
+            tenanturl: apiUrl,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
-        });
+        );
 
-        // console.log("API Response:", response); 
+        // console.log("API Response:", response);
         const { isSuccess } = response.data;
       } catch (error) {
         console.error("Error checking tenant:", error); // Log the error
         setTimeout(() => {
           //localhost
-            const newUrl = `http://${name}.localhost:5173`;
-          
+          const newUrl = `http://${name}.localhost:5173`;
+
           //forServer
           //  const newUrl = `http://${name}.${urlchange_base}/VerifyTenant `
           window.location.href = newUrl;
         }, 100);
-
       }
     };
     verifyTenant();
   }, []);
-    
-    const emailRegex = /^[A-Za-z0-9](([a-zA-Z0-9,=\.!\-#|\$%\^&\*\+/\?_`\{\}~]+)*)@(?:[0-9a-zA-Z-]+\.)+[a-zA-Z]{2,9}$/
-    function handleusername(e) {
-        let userName = e.target.value;
-        if (!userName.match(emailRegex)) {
-            setEmailError(true)
-        }
-        else {
-            setEmailError(false)
-        }
-        setuserName(e.target.value)
+
+  const emailRegex =
+    /^[A-Za-z0-9](([a-zA-Z0-9,=\.!\-#|\$%\^&\*\+/\?_`\{\}~]+)*)@(?:[0-9a-zA-Z-]+\.)+[a-zA-Z]{2,9}$/;
+  function handleusername(e) {
+    let userName = e.target.value;
+    if (!userName.match(emailRegex)) {
+      setEmailError(true);
+    } else {
+      setEmailError(false);
     }
+    setuserName(e.target.value);
+  }
 
-    const passwordRegex = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
-    function handlepassword(e) {
-        let password = e.target.value;
-        if (!password.match(passwordRegex)) {
-            setPasswordError(true)
-        }
-        else {
-            setPasswordError(false)
-        }
-        setPassword(e.target.value)
+  const passwordRegex =
+    /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+  function handlepassword(e) {
+    let password = e.target.value;
+    if (!password.match(passwordRegex)) {
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
     }
-    const [passwordEye, setPasswordEye] = useState(false);
-  
-    function togglePasswordEye() {
-      setPasswordEye(!passwordEye);
-    }
+    setPassword(e.target.value);
+  }
+  const [passwordEye, setPasswordEye] = useState(false);
 
+  function togglePasswordEye() {
+    setPasswordEye(!passwordEye);
+  }
 
-    async function handleSubmit(e) {
-        e.preventDefault()
-        
-        //Email Regex match
-        const emailRegex = /^[A-Za-z0-9](([a-zA-Z0-9,=\.!\-#|\$%\^&\*\+/\?_`\{\}~]+)*)@(?:[0-9a-zA-Z-]+\.)+[a-zA-Z]{2,9}$/
+  async function handleSubmit(e) {
+    e.preventDefault();
 
-          //Password Regex match
-        const passwordRegex = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
+    //Email Regex match
+    const emailRegex =
+      /^[A-Za-z0-9](([a-zA-Z0-9,=\.!\-#|\$%\^&\*\+/\?_`\{\}~]+)*)@(?:[0-9a-zA-Z-]+\.)+[a-zA-Z]{2,9}$/;
 
-        
-        try {
-            const response = await axios.post(`${protocal_url}${name}.${tenant_base_url}/Users/login`, {
-                userName: userName,
-                password: password,
-                deviceType: deviceType,
-                deviceAddress: deviceAddress
-            })
-            const logindetail = response.data.data
-            localStorage.setItem("token", response.data.data.token);
-            localStorage.setItem("userDetail", JSON.stringify(logindetail))
-            localStorage.setItem("myData_forget", userName);
-            
-            navigate('/tenantloginOTP')
+    //Password Regex match
+    const passwordRegex =
+      /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+
+    try {
+      const response = await axios.post(
+        `${protocal_url}${name}.${tenant_base_url}/Users/login`,
+        {
+          userName: userName,
+          password: password,
+          deviceType: deviceType,
+          deviceAddress: deviceAddress,
         }
-        catch (error) {
-            if (error.response.data) {
-              console.log(error)
-              showErrorToast(error.response.data.message)
-            } else {
-              console.log(error)
-            }
+      );
+      const logindetail = response.data.data;
+      localStorage.setItem("token", response.data.data.token);
+      localStorage.setItem("userDetail", JSON.stringify(logindetail));
+      localStorage.setItem("myData_forget", userName);
 
-        }
+      navigate("/tenantloginOTP");
+    } catch (error) {
+      if (error.response.data) {
+        console.log(error);
+        showErrorToast(error.response.data.message);
+      } else {
+        console.log(error);
+      }
     }
+  }
+
   return (
     <>
       <ToastContainer />
@@ -199,7 +335,10 @@ export default function TenantLogin() {
                   />
                 </label>
                 {/*----------> Password <---------- */}
-                <label htmlFor="password" className="text-xs font-medium text-gray-700 relative block">
+                <label
+                  htmlFor="password"
+                  className="text-xs font-medium text-gray-700 relative block"
+                >
                   Password
                   <input
                     type={passwordEye ? "text" : "password"}
@@ -232,10 +371,13 @@ export default function TenantLogin() {
                   </button>
                 </label>
 
+                <Link
+                  to="/forgetpassword"
+                  className="text-xs font-medium text-cyan-500 underline"
+                >
+                  Reset Password
+                </Link>
 
-                <Link to  = "/forgetpassword" className="text-xs font-medium text-cyan-500 underline">Reset Password</Link>
-
-                
                 <button className="bg-cyan-500 outline-none text-white py-4 text-xs rounded-md font-bold mt-4">
                   Submit
                 </button>
@@ -249,15 +391,17 @@ export default function TenantLogin() {
                   <span className="font-light">Or Login With</span>
                 </div>
               </div>
-              </div>
-              <button className="bg-white py-4 text-xs rounded-md font-bold border-2 border-gray-400 mt-8 flex justify-center items-center gap-2">
-              Login with Microsoft <img src =  {Microsoft} className="h-4 w-4 shadow-md"/>
-            </button>
-        
             </div>
+            <button
+              onClick={handleMicrosoftLogin}
+              className="bg-white py-4 text-xs rounded-md font-bold border-2 border-gray-400 mt-8 flex justify-center items-center gap-2"
+            >
+              Login with Microsoft{" "}
+              <img src={Microsoft} className="h-4 w-4 shadow-md" />
+            </button>
           </div>
         </div>
-
+      </div>
     </>
   );
 }

@@ -180,7 +180,8 @@ export default function UserSettingTable({ users, handleActiveState, handleClick
                         {user.role}
                       </td>
                       <td className="px-1  text-sm min-w-20 max-w-20 break-words text-center">
-                        {user.createdDate.split('T')[0]}
+                      { user.createdDate ? user.createdDate.split('T')[0] : '' }
+
                       </td>
                       <td className="text-center">
                         <Link onClick={() => handleLoginUser(user)}  className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded ">

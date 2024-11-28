@@ -4,6 +4,14 @@ import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
 
+//-------------------------------------Microsoft Authentication----------------------------------------------------
+import { MsalProvider } from "@azure/msal-react";
+import msalInstance from "./Config/msalConfig.js";
+
+
+import ProtectedRoute from "./ProtectedRoute.jsx";
+
+
 //Registration
 import Registration from './Components/REGISTRATION/Registration.jsx';
 import Verifyotp from './Components/REGISTRATION/Verifyotp.jsx';
@@ -112,8 +120,12 @@ const router = createBrowserRouter([
   { path: '/forgetpasssucess', element: <ForgetPassSuccess /> },
   { path: '/test', element: <Test /> },
   {
-    path: '/sidebar',
-    element: <SidebarBase />,
+    path: "/sidebar",
+    element: ( 
+        <ProtectedRoute>
+          <SidebarBase /> 
+      </ProtectedRoute>
+    ),
     children: [
       { path: '/sidebar', element: <Home /> },
 
@@ -190,8 +202,11 @@ const router = createBrowserRouter([
   },
 ]);
 
-createRoot(document.getElementById('root')).render(
-  <FollowUpNotificationProvider>
-    <RouterProvider router={router} />
-  </FollowUpNotificationProvider>
+createRoot(document.getElementById("root")).render(
+  <MsalProvider instance={msalInstance}>
+    <FollowUpNotificationProvider>
+      <RouterProvider router={router} />
+    </FollowUpNotificationProvider>
+    </MsalProvider>
+
 );
