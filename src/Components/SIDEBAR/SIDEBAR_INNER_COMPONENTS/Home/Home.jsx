@@ -169,7 +169,11 @@ export default function Home() {
         {showSubscription && (
           <div className="flex items-center justify-between bg-white shadow-md px-3 py-1.5 border-[0.5px] border-top transition transform duration-500 ease-in-out animate-fade-in animate-slide-down text-white p-4">
             <div className="flex flex-col justify-start">
-              <h1 className="text-xl font-semibold text-gray-700">
+              <h1
+                className={`${
+                  remainingDays < 5 ? 'text-red-500' : 'text-gray-700'
+                } text-xl font-semibold`}
+              >
                 Clock is ticking! {remainingDays} day's are left in your trail.
               </h1>
               <p className="text-xs font-semibold text-gray-500">
