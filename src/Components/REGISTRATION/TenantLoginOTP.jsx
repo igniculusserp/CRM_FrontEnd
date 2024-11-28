@@ -46,9 +46,11 @@ export default function TenantLoginOTP() {
     }
   }, []);
 
-  // Handle OTP input change
   const handleChange = (event) => {
-    setOtp(event.target.value);
+    const newOtp = event.target.value; // Get the updated value from the input
+    setOtp(newOtp); // Update state
+    localStorage.setItem("otp", newOtp); // Store OTP in localStorage
+    console.log(newOtp, "dd");
   };
 
   // Handle OTP submission
@@ -163,7 +165,7 @@ export default function TenantLoginOTP() {
                   value={otp} // Added OTP state binding
                   className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm"
                   onChange={handleChange} // Added onChange handler
-                  placeholder="000-000"
+                  placeholder="XXX-XXX"
                 />
                 <div className="flex flex-col justify-center items-center gap-2 mt-6">
                   <div className="text-sm">

@@ -122,19 +122,36 @@ export default function Lead() {
   const [leadStatus, setLeadStatus] = useState('All Lead'); // Track the selected lead status
   const [assignedTo, setAssignedTo] = useState('Assigned to'); // Track the selected assigned user
 
-  // Function to handle both filters
-  function handle_LeadStatus(statusValue) {
-    let filteredLeads = getleads;
-
-    // Filter by leadStatus if it's not 'ALL' or null
-    if (statusValue !== null && statusValue !== 'All Leads') {
-      filteredLeads = filteredLeads.filter(
-        (lead) => lead.leadesStatus === statusValue
-      );
-      console.log(filteredLeads);
-    }
-    setFilteredLeads(filteredLeads); // Set the filtered results
+  function handleLeadStatusSelection(status) {
+    setLeadStatus(status); // Update leadStatus state
+    handle_LeadStatus(status); // Apply filter based on selected status
   }
+  
+  // Function to reset the filters and show all leads
+  function resetLeadFilters() {
+    setLeadStatus('All Lead'); // Reset the state to default
+    setFilteredLeads(getleads); // Show all leads
+    console.log('Filters reset, showing all leads:', getleads);
+  }
+  
+  // Function to filter leads
+  function handle_LeadStatus(statusValue) {
+    let filteredLeads;
+  
+    if (statusValue === 'All Lead' || statusValue === null) {
+      // Show all leads when "All Lead" is selected or reset
+      filteredLeads = getleads;
+    } else {
+      // Apply filtering for other statuses
+      filteredLeads = getleads.filter((lead) => lead.leadesStatus === statusValue);
+    }
+  
+    setFilteredLeads(filteredLeads); // Update the filtered leads
+    console.log(filteredLeads); // Log for debugging
+  }
+  
+
+  //------------------------------------------------------------------------------------------------
 
   function handle_AssignedTo(assignedToValue) {
     let filteredLeads = getleads;
@@ -146,11 +163,6 @@ export default function Lead() {
     setFilteredLeads(filteredLeads); // Set the filtered result
   }
 
-  // Handle selecting a lead status
-  function handleLeadStatusSelection(status) {
-    setLeadStatus(status); // Update leadStatus state
-    handle_LeadStatus(status); // Apply both filters
-  }
 
   // Handle selecting an assigned user
   function handleAssignedToSelection(user) {
@@ -706,34 +718,41 @@ export default function Lead() {
           {/* PART-I */}
           {/* All Lead  DropDown*/}
           <div
-            className="relative"
-            onClick={toggleMenuAllLead}
-            onMouseLeave={() => setAllLeaddropDown(false)}
+          className="relative"
+          onClick={toggleMenuAllLead}
+          onMouseLeave={() => setAllLeaddropDown(false)}
+        >
+          <button
+            className="py-2 px-4 border rounded-md flex justify-between items-center min-w-40 max-w-44 truncate"
+            id="dropdownDefaultButton"
+            type="button"
           >
-            <button
-              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 max-w-44 truncate"
-              id="dropdownDefaultButton"
-              type="button"
-            >
-              {leadStatus}
-              <FaAngleDown className="ml-2 text-gray-900" />
-            </button>
-            {allLeaddropDown && (
-              <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
-                <ul className="py-2 text-sm text-gray-700">
-                  {allLeadData.map((item) => (
-                    <li
-                      key={item.id}
-                      className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                      onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
-                    >
-                      {item.status}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+            {leadStatus}
+            <FaAngleDown className="ml-2 text-gray-900" />
+          </button>
+          {allLeaddropDown && (
+            <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+              <ul className="py-2 text-sm text-gray-700">
+                {allLeadData.map((item) => (
+                  <li
+                    key={item.id}
+                    className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                    onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
+                  >
+                    {item.status}
+                  </li>
+                ))}
+                <li
+                  className="block w-56 px-4 py-2 hover:bg-red-500 hover:text-white cursor-pointer"
+                  onClick={resetLeadFilters} // Handle reset
+                >
+                  Reset
+                </li>
+              </ul>
+            </div>
+          )}
+        </div>
+        
           {/* PART-I-ii */}
           {/* All ASSIGNED_TO  DropDown*/}
           <div
@@ -1107,7 +1126,7 @@ export default function Lead() {
                           <div
                             className="text-xs font-semibold text-white px-2 py-2 rounded-full w-[100%]"
                             style={{
-                              backgroundColor: roleColor ? roleColor : '#000',
+                              backgroundColor: roleColor ? roleColor : '#06b6d4',
                               borderRadius: '8px',
                               padding: 8,
                               textAlign: 'center',
@@ -1199,7 +1218,7 @@ export default function Lead() {
                         <div className="w-2/4 text-gray-500 text-sm">
                           Lead Source
                         </div>
-                        <div className="2-2/4 font-medium  text-sm">
+                        <div className="2-2/4 font-medium text-sm">
                           {item.leadsSource}
                         </div>
                       </div>
