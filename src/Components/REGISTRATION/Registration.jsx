@@ -12,6 +12,8 @@ import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { GiDiamonds } from "react-icons/gi";
 
 import { ToastContainer } from "react-toastify";
+import { FaChevronDown } from "react-icons/fa";
+
 import "react-toastify/dist/ReactToastify.css";
 import {showSuccessToast, showErrorToast} from "./../../utils/toastNotifications";
 
@@ -392,7 +394,7 @@ export default function Registration() {
                <label htmlFor="Contact" className="text-xs font-medium text-gray-700">
                Contact
                <div className="flex items-center border rounded-md">
-                 <div className="relative justify-center items-center w-2/3">
+                 <div className=" w-28 text-xs">
                    <button
                      type="button"
                      onClick={toggleDropdown}
@@ -403,18 +405,18 @@ export default function Registration() {
                          <img
                            src={selectedCode.img}
                            alt="flag"
-                           className="w-6 h-4 mr-2"
+                           className="w-6 h-4 mr-2 "
                            onError={(e) => e.target.style.display = 'none'} // Hides image if not found
                          />
                          {selectedCode.label}
                        </div>
                      ) : (
-                       "Country Code"
+                  <div className="w-10">Country Code</div>
                      )}
                    </button>
 
                    {isOpen && (
-                     <div className="absolute mt-2 w-full border rounded bg-white shadow-lg z-10 h-48 overflow-y-scroll code">
+                     <div className="absolute  w-96 border rounded bg-white shadow-lg z-10 h-48 overflow-y-scroll code">
                        <input
                          type="text"
                          placeholder="Search Country"
@@ -462,7 +464,7 @@ export default function Registration() {
                       className="rounded px-4 py-2 bg-white w-full"
                     >
                       {selectedCountry ? (
-                        <div className="flex items-center">
+                        <div className="flex">
                           <img
                             src={selectedCountry.img}
                             alt="flag"
@@ -472,24 +474,24 @@ export default function Registration() {
                           {selectedCountry.countryName}
                         </div>
                       ) : (
-                        "Select Country"
+                        <div className="flex justify-between text-gray-400 font-medium text-ms">Select Country <FaChevronDown/> </div>
                       )}
                     </button>
 
                     {isOpenCountry && (
-                      <div className="absolute mt-2 w-full border rounded bg-white shadow-lg z-10 h-40 overflow-y-scroll register">
+                      <div className="absolute w-full border rounded bg-white shadow-lg z-10 h-36 overflow-y-scroll ">
                         <input
                           type="text"
                           placeholder="Search Country"
                           value={searchQueryCountry}
                           onChange={(e) => setSearchQueryCountry(e.target.value)}
-                          className="w-full px-8 py-2 border-b outline-none"
+                          className="w-full px-8 py-2 border-b outline-none "
                         />
                         {filteredCountries.map((code, index) => (
                           <div
                             key={index}
                             onClick={() => handleCountrySelect(code)}
-                            className="w-full flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                            className="w-full flex px-4 py-2 hover:bg-gray-100 cursor-pointer "
                           >
                             <img
                               src={code.img}
