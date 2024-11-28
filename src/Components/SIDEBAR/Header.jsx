@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 
-
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
@@ -20,12 +19,16 @@ import { MdLogout } from 'react-icons/md';
 //toast
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { showSuccessToast, showErrorToast } from './../../utils/toastNotifications';
+import {
+  showSuccessToast,
+  showErrorToast,
+} from './../../utils/toastNotifications';
 
 // TOGGLE ICONS
 import { FaBarsStaggered } from 'react-icons/fa6';
 import { FaBars } from 'react-icons/fa6';
-
+import { FiMessageSquare } from 'react-icons/fi';
+import ChatPopup from './SIDEBAR_SETTING/ChatPopup';
 
 export default function Header({ toggle, setToggle }) {
   const navigate = useNavigate();
@@ -65,7 +68,9 @@ export default function Header({ toggle, setToggle }) {
 
   const handlewelcomedata = async () => {
     try {
-      const response = await axios.get(`${main_base_url}/Tenants/gettenant/${tenantId}`);
+      const response = await axios.get(
+        `${main_base_url}/Tenants/gettenant/${tenantId}`
+      );
     } catch (error) {
       console.error('Error fetching welcome data:', error);
     }
@@ -78,6 +83,12 @@ export default function Header({ toggle, setToggle }) {
     navigate(`/tenantlogin`);
   };
 
+  const [popup, setPopup] = useState(true);
+
+  const handlePopup = () => {
+    setPopup(!popup);
+  };
+
   const menu = [
     {
       key: 1,
@@ -85,19 +96,24 @@ export default function Header({ toggle, setToggle }) {
     },
     {
       key: 2,
-      logo: <IoMdNotifications />,
+      logo: <FiMessageSquare />,
+      functionality: handlePopup,
     },
     {
       key: 3,
-      logo: <TbCalendarMonth />,
+      logo: <IoMdNotifications />,
     },
     {
       key: 4,
+      logo: <TbCalendarMonth />,
+    },
+    {
+      key: 5,
       logo: <IoMdSettings />,
       link: '/sidebar/setting',
     },
     {
-      key: 5,
+      key: 6,
       logo: <MdLogout />,
       functionality: signout,
     },
@@ -125,8 +141,11 @@ export default function Header({ toggle, setToggle }) {
     <>
       <ToastContainer />
       <div className="flex justify-between items-center py-3 mx-3 overflow-visible">
-        <div className='flex justify-center items-center'>
-          <button className="flex flex-start bg-cyan-500 text-white shadow rounded-full text-lg p-1 " onClick={() => setToggle(!toggle)}>
+        <div className="flex justify-center items-center">
+          <button
+            className="flex flex-start bg-cyan-500 text-white shadow rounded-full text-lg p-1 "
+            onClick={() => setToggle(!toggle)}
+          >
             {toggle ? <FaBarsStaggered /> : <FaBars />}
           </button>
 
@@ -139,14 +158,15 @@ export default function Header({ toggle, setToggle }) {
           {menu.map(({ key, logo, link, functionality }) => (
             <div
               key={key}
-              className={`cursor-pointer p-1 ${activeKey === key
+              className={`cursor-pointer p-1 ${
+                activeKey === key
                   ? 'rounded-full p-1 bg-gray-700 text-cyan-500 shadow-md '
                   : 'text-gray-700 '
-                }`}
+              }`}
             >
               <div onClick={() => handleMenuClick(key, functionality)}>
                 {link ? (
-                  <Link to={link}>
+                  <Link to={link} onClick={() => setPopup(!popup)}>
                     <span className="text-2xl">{logo}</span>
                   </Link>
                 ) : (
@@ -156,6 +176,8 @@ export default function Header({ toggle, setToggle }) {
             </div>
           ))}
         </div>
+        {/* POPUP */}
+        {popup && <ChatPopup />}
       </div>
     </>
   );
