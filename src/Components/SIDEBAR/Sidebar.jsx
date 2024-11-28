@@ -151,7 +151,7 @@ console.log(welcomedata)
 
   return (
     <>
-      <div className={`flex flex-col bg-cyan-500 ${toggle ? 'w-[80px]' : 'w-[250px]'} gap-3`}>
+      <div className={`flex flex-col  bg-cyan-500 gap-3`}>
         <div className=' mt-4'>
           <img
             id="logoImg"
@@ -171,11 +171,13 @@ console.log(welcomedata)
                   hover:bg-gradient-to-b from-cyan-300 to-cyan-600`}
                 key={key}
               >
-                <h1 className="flex items-center gap-2 px-3">
+                <h1 className={`${toggle ? 'flex items-center gap-2 px-3 flex-col' : 'flex items-center gap-2 px-3'}`}>
                   <span className={`${toggle ? 'text-2xl' : 'text-xl'}`}>
                     {icon}
                   </span>
-                  {toggle ? '' : data}
+                  <span className={`${toggle ? 'text-xs whitespace-nowrap' : ''}`}>
+                  {toggle ? data : data}
+                  </span>
                 </h1>
               </li>
             </Link>
