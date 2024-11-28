@@ -13,26 +13,20 @@ export const msalConfig = {
   },
 };
 
-export const loginRequest = {
-  scopes: [
-    "User.Read",
-    "Mail.Read",
-    "Calendars.Read",
-    "Files.Read",
-    "Team.ReadBasic.All",
-  ],
-};
+
 
 export const tokenRequest = {
   scopes: ["User.Read"],
 };
 
+// Permissions required
+export const loginRequest = {
+  scopes: ["User.Read", "User.ReadBasic.All", "User.Read.All", "Directory.Read.All"],
+};
+
 export const graphConfig = {
-  graphMeEndpoint: "https://graph.microsoft.com/v1.0/me", // Profile
-  graphMessagesEndpoint: "https://graph.microsoft.com/v1.0/me/messages", // Emails
-  graphEventsEndpoint: "https://graph.microsoft.com/v1.0/me/events", // Calendar
-  graphFilesEndpoint: "https://graph.microsoft.com/v1.0/me/drive/root/children", // Files
-  graphTeamsEndpoint: "https://graph.microsoft.com/v1.0/me/joinedTeams", // Teams
+  graphMeEndpoint: "https://graph.microsoft.com/v1.0/me", // Endpoint to get user profile
+  graphManagerEndpoint: "https://graph.microsoft.com/v1.0/me/manager", // Endpoint to get manager profile
 };
 
 let msalInstance = new PublicClientApplication(msalConfig);
