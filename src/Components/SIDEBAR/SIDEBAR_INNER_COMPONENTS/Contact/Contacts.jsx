@@ -940,7 +940,7 @@ export default function Contact() {
                       {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
                       <td className="text-center">
                         <button
-                          className="bg-blue-600 p-1 text-white text-xm rounded mx-auto"
+                          className="bg-gray-900 p-1 text-white text-xm rounded mx-auto"
                           onClick={() => navigate(`/sidebar/contact/create/so/${item.id}`)}>
                           SO
                         </button>

@@ -798,17 +798,7 @@ export default function SalesOrder() {
                           />
                           <span className="">{item.clientName}</span>
                         </div>
-                        <div className="flex justify-start text-center w-[100%]">
-                          {item.status === true ? (
-                            <div className="border bg-green-200 text-center text-xs font-medium text-green-600 rounded-full w-full mx-4 py-1 px-4">
-                              Approved
-                            </div>
-                          ) : (
-                            <div className="border bg-red-200 text-center text-xs font-medium text-red-600 rounded-full w-full mx-4 py-1 px-4">
-                              Pending
-                            </div>
-                          )}
-                        </div>
+                      
                       </td>
 
                       {/* <------------------------------------Email------------------------------------> */}
@@ -871,11 +861,11 @@ export default function SalesOrder() {
                           className=" w-[90%]"
                         >
                           {item.status === true ? (
-                            <div className="border text-xs pl-2 pr-4 font-medium bg-green-200 text-green-600 rounded-full text-center py-1">
+                            <div className="border text-xs pl-2 pr-4 font-medium bg-green-400 text-white rounded-full text-center py-1 hover:bg-green-600 ">
                               Approved
                             </div>
                           ) : (
-                            <div className="border bg-red-200 text-center text-xs font-medium text-red-600  rounded-full w-full px-2 py-1">
+                            <div className="border bg-red-400 text-center text-xs font-medium text-white  rounded-full w-full px-2 py-1 hover:bg-red-600">
                               Pending
                             </div>
                           )}
