@@ -1,16 +1,9 @@
-/* .side_Bar_Container{
-    width: 20%;
-}
-
-.Main_Data_Container{
-    width: 80%;
-} */
 
 /* Global CSS file or component-specific styles */
 .scrollbar-hidden {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox 
-    */
+  scrollbar-width: none; /* Firefox */
+  overflow-y: scroll;
 }
 
 .scrollbar-hidden::-webkit-scrollbar {
@@ -30,4 +23,18 @@
 .chatBar {
   scroll-behavior: smooth;
   scrollbar-width: none;
+}
+.Side_Bar_Large{
+  width: 18vw;
+}
+.Side_Bar_Small{
+  width: 7vw;
+}
+.Main_Screen_Small{
+  width: 82vw;
+  /* overflow-x: scroll;  */
+}
+.Main_Screen_Large{
+  width: 93vw;
+  overflow-x: scroll;
 }
