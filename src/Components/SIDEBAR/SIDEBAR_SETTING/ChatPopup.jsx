@@ -40,36 +40,41 @@ export default function ChatPopup() {
 
   return (
     <>
-      {message && (
-        <section
-          className={`absolute right-0 h-12 bottom-0 p-3 w-[300px] ${
-            popupChat
-              ? 'border-none rounded-none h-[400px] hidden'
-              : 'rounded-t-lg flex'
-          } bg-cyan-400 py-1 z-10 shadow-lg items-center px-4 justify-between`}
-        >
-          <h1 className="text-2xl text-white font-semibold text-center tracking-wider cursor-pointer">
-            Chat
-          </h1>
-          {/* BUTTONS */}
-          <div className="flex items-center gap-2">
-            <button
-              className="text-white cursor-pointer text-xl font-medium"
-              onClick={() => setPopupChat(!popupChat)}
-            >
-              +
-            </button>
-            <button
-              className="text-white cursor-pointer text-xl font-medium"
-              onClick={handleChatClick}
-            >
-              -
-            </button>
-          </div>
-        </section>
-      )}
+      <div className="absolute bottom-[17px] -right-2 h-12 p-3">
+        {message && (
+          <section
+            className={`fixed right-0 bottom-0 w-[300px] ${
+              popupChat
+                ? 'border-none rounded-none h-[400px] hidden'
+                : 'rounded-t-lg block'
+            } bg-cyan-400 py-1 z-10 shadow-lg text-center`}
+          >
+            <div className="flex items-center px-4 justify-between sticky bottom-0 h-12">
+              <h1 className="text-2xl text-white font-semibold text-center tracking-wider cursor-pointer">
+                Chat
+              </h1>
+              {/* BUTTONS */}
+              <div className="flex items-center gap-2">
+                <button
+                  className="text-white cursor-pointer text-xl font-medium"
+                  onClick={() => setPopupChat(!popupChat)}
+                >
+                  +
+                </button>
+                <button
+                  className="text-white cursor-pointer text-xl font-medium"
+                  onClick={handleChatClick}
+                >
+                  -
+                </button>
+              </div>
+            </div>
+          </section>
+        )}
+      </div>
+      <div className="absolute bottom-0 right-0">
       {popupChat && (
-        <section className="w-[300px] h-[200px] bg-slate-50 rounded-t-md absolute bottom-0 right-0 border-none overflow-y-scroll chatBar text-justify z-20">
+        <section className="fixed right-0 bottom-0 w-[300px] h-[200px] bg-slate-50 rounded-t-md border-none overflow-y-scroll chatBar text-justify z-20">
           <div className="flex items-center justify-between text-justify bg-cyan-400 w-full py-3 px-4">
             {/* USERNAME */}
             <h1 className="text-2xl text-white font-semibold text-center tracking-wider cursor-pointer">
@@ -109,32 +114,35 @@ export default function ChatPopup() {
           ))}
         </section>
       )}
-      {openChat && (
-        <section className="absolute bottom-0 rounded-t-lg border right-[18.7rem] bg-slate-50 z-50">
-          <div className="flex h-full justify-between items-center gap-2 p-3 bg-cyan-400 w-full rounded-t-lg">
-            <div className="">
-              <h1 className="text-2xl text-white font-semibold text-center tracking-wider cursor-pointer">
-                Shubh Mishra
-              </h1>
+      </div>
+      <div className="absolute bottom-0 right-[18.7rem]">
+        {openChat && (
+          <section className="fixed bottom-0 right-[18.7rem] rounded-t-lg border bg-slate-50">
+            <div className="flex h-full justify-between items-center gap-2 p-3 bg-cyan-400 w-full rounded-t-lg">
+              <div className="sticky bottom-0 right-0">
+                <h1 className="text-2xl text-white font-semibold text-center tracking-wider cursor-pointer">
+                  Shubh Mishra
+                </h1>
+              </div>
+              {/* ICONS */}
+              <div className="flex items-center justify-center gap-2">
+                <VscChromeMinimize
+                  className="text-white cursor-pointer text-xl font-medium"
+                  onClick={() => setOpenChat(false)}
+                />
+                <button
+                  type="button"
+                  className="text-white cursor-pointer text-xl font-medium"
+                >
+                  +
+                </button>
+              </div>
             </div>
-            {/* ICONS */}
-            <div className="flex items-center justify-center gap-2">
-              <VscChromeMinimize
-                className="text-white cursor-pointer text-xl font-medium"
-                onClick={() => setOpenChat(false)}
-              />
-              <button
-                type="button"
-                className="text-white cursor-pointer text-xl font-medium"
-              >
-                +
-              </button>
-            </div>
-          </div>
-          <ChatWindow messages={messages} />
-          <MessageInput onSendMessage={handleSendMessage} />
-        </section>
-      )}
+            <ChatWindow messages={messages} />
+            <MessageInput onSendMessage={handleSendMessage} />
+          </section>
+        )}
+      </div>
     </>
   );
 }

@@ -83,7 +83,7 @@ export default function Header({ toggle, setToggle }) {
     navigate(`/tenantlogin`);
   };
 
-  const [popup, setPopup] = useState(true);
+  const [popup, setPopup] = useState(false);
 
   const handlePopup = () => {
     setPopup(!popup);
