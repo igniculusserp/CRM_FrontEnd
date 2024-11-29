@@ -24,7 +24,7 @@ export default function SidebarBase() {
         }`}>
         <Header toggle={toggle} setToggle={setToggle} />
         {/* Main content scrolls independently */}
-        <div className="flex-grow overflow-auto bg-gray-300 ">
+        <div className="flex-grow overflow-auto bg-gray-300">
           <Outlet />
           {/* CHAT POPUP */}
           <ChatPopup />
