@@ -34,20 +34,16 @@ import LeadStatusModal from './LeadComponents/LeadStatusModal';
 import MultipleAssignModal from './LeadComponents/MultipleAssignModal';
 import MultipuleStatusModal from './LeadComponents/MultipleStatusModal';
 
-
 import { SearchElement } from '../SearchElement/SearchElement';
-
-
 
 export default function Lead() {
   const navigate = useNavigate();
   const location = useLocation();
   const name = getHostnamePart();
-  
+
   // Mass Email
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEmails, setSelectedEmails] = useState([]);
-
 
   //This is to store the upcoming data from API
   const [getleads, setGetleads] = useState([]);
@@ -80,7 +76,10 @@ export default function Lead() {
         setGetleads(data);
         setFilteredLeads(data);
       } else {
-        const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Lead/leads/byusertoken`, config);
+        const response = await axios.get(
+          `${protocal_url}${name}.${tenant_base_url}/Lead/leads/byusertoken`,
+          config
+        );
 
         const data = response.data.data;
 
@@ -89,7 +88,7 @@ export default function Lead() {
         setFilteredLeads(data);
         setSelectedIds([]);
       }
-    } catch(error){
+    } catch (error) {
       console.error('Error fetching leads:', error);
     }
   }
@@ -104,7 +103,10 @@ export default function Lead() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`, config);
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
+        config
+      );
 
       const data = response.data?.data;
       setUsers(data);
@@ -126,30 +128,31 @@ export default function Lead() {
     setLeadStatus(status); // Update leadStatus state
     handle_LeadStatus(status); // Apply filter based on selected status
   }
-  
+
   // Function to reset the filters and show all leads
   function resetLeadFilters() {
     setLeadStatus('All Lead'); // Reset the state to default
     setFilteredLeads(getleads); // Show all leads
     console.log('Filters reset, showing all leads:', getleads);
   }
-  
+
   // Function to filter leads
   function handle_LeadStatus(statusValue) {
     let filteredLeads;
-  
+
     if (statusValue === 'All Lead' || statusValue === null) {
       // Show all leads when "All Lead" is selected or reset
       filteredLeads = getleads;
     } else {
       // Apply filtering for other statuses
-      filteredLeads = getleads.filter((lead) => lead.leadesStatus === statusValue);
+      filteredLeads = getleads.filter(
+        (lead) => lead.leadesStatus === statusValue
+      );
     }
-  
+
     setFilteredLeads(filteredLeads); // Update the filtered leads
     console.log(filteredLeads); // Log for debugging
   }
-  
 
   //------------------------------------------------------------------------------------------------
 
@@ -162,7 +165,6 @@ export default function Lead() {
     }
     setFilteredLeads(filteredLeads); // Set the filtered result
   }
-
 
   // Handle selecting an assigned user
   function handleAssignedToSelection(user) {
@@ -189,7 +191,10 @@ export default function Lead() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`, config);
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
+        config
+      );
       setallLeadData(response.data.data);
     } catch (error) {
       console.error('Error fetching leads:', error);
@@ -219,7 +224,10 @@ export default function Lead() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,config);
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
+        config
+      );
       setallAssigned_To_Data(response.data.data);
     } catch (error) {
       console.error('Error fetching leads:', error);
@@ -282,7 +290,9 @@ export default function Lead() {
   const handleActionButton = async (value, leadId) => {
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
     if (value === 'Mass Delete') {
-      const userConfirmed = confirm('Are you sure you want to Delete the selected Leads?');
+      const userConfirmed = confirm(
+        'Are you sure you want to Delete the selected Leads?'
+      );
       if (userConfirmed) {
         massDelete();
       }
@@ -290,7 +300,9 @@ export default function Lead() {
 
     // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
     if (value === 'Mass Email') {
-      const userConfirmed = confirm('Are you sure you want to Send E-Mail to the selected Data?');
+      const userConfirmed = confirm(
+        'Are you sure you want to Send E-Mail to the selected Data?'
+      );
       if (userConfirmed) {
         openMassEmailModal(selectedEmails);
       }
@@ -298,7 +310,9 @@ export default function Lead() {
 
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
     if (value === 'Sheet View') {
-      const userConfirmed = confirm('Are you sure you want to export the selected Leads?');
+      const userConfirmed = confirm(
+        'Are you sure you want to export the selected Leads?'
+      );
       if (userConfirmed) {
         exportToExcel();
       }
@@ -306,7 +320,9 @@ export default function Lead() {
 
     // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
     if (value === 'Print View') {
-      const userConfirmed = confirm('Are you sure you want to export the selected Leads?');
+      const userConfirmed = confirm(
+        'Are you sure you want to export the selected Leads?'
+      );
       if (userConfirmed) {
         exportToPDF();
       }
@@ -314,7 +330,9 @@ export default function Lead() {
 
     // ---------------------->Convert Lead to Contact FUNCTIONALITY*<----------------------
     if (value === 'Convert Lead to Contact') {
-      const userConfirmed = confirm('Are you sure you want to convert this lead to a contact?');
+      const userConfirmed = confirm(
+        'Are you sure you want to convert this lead to a contact?'
+      );
       if (userConfirmed) {
         convertType();
       }
@@ -456,7 +474,8 @@ export default function Lead() {
         },
       };
 
-      const response = await axios.post(`${protocal_url}${name}.${tenant_base_url}/Lead/leadtocontact/${selectedIds}`,
+      const response = await axios.post(
+        `${protocal_url}${name}.${tenant_base_url}/Lead/leadtocontact/${selectedIds}`,
         { id: selectedIds }, // Pass data as second parameter
         config
       );
@@ -494,7 +513,7 @@ export default function Lead() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  
+
   //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
   const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -517,7 +536,9 @@ export default function Lead() {
 
     // Update selected emails
     setSelectedEmails((prevSelectedEmails) => {
-      const newSelectedEmails = prevSelectedEmails.includes(item.email) ? prevSelectedEmails.filter((email) => email !== item.email) : [...prevSelectedEmails, item.email];
+      const newSelectedEmails = prevSelectedEmails.includes(item.email)
+        ? prevSelectedEmails.filter((email) => email !== item.email)
+        : [...prevSelectedEmails, item.email];
       return newSelectedEmails;
     });
   };
@@ -677,7 +698,8 @@ export default function Lead() {
       // Filter for Lead Action (id === 4)
       filtered = getleads.filter(
         (lead) =>
-          lead.userName && lead.userName?.toLowerCase()?.includes(searchTerm?.toLowerCase())
+          lead.userName &&
+          lead.userName?.toLowerCase()?.includes(searchTerm?.toLowerCase())
       );
     } else {
       // General filtering for other lead types
@@ -718,41 +740,41 @@ export default function Lead() {
           {/* PART-I */}
           {/* All Lead  DropDown*/}
           <div
-          className="relative"
-          onClick={toggleMenuAllLead}
-          onMouseLeave={() => setAllLeaddropDown(false)}
-        >
-          <button
-            className="py-2 px-4 border rounded-md flex justify-between items-center min-w-40 max-w-44 truncate"
-            id="dropdownDefaultButton"
-            type="button"
+            className="relative"
+            onClick={toggleMenuAllLead}
+            onMouseLeave={() => setAllLeaddropDown(false)}
           >
-            {leadStatus}
-            <FaAngleDown className="ml-2 text-gray-900" />
-          </button>
-          {allLeaddropDown && (
-            <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
-              <ul className="py-2 text-sm text-gray-700">
-                {allLeadData.map((item) => (
+            <button
+              className="py-2 px-4 border rounded-md flex justify-between items-center min-w-40 max-w-44 truncate"
+              id="dropdownDefaultButton"
+              type="button"
+            >
+              {leadStatus}
+              <FaAngleDown className="ml-2 text-gray-900" />
+            </button>
+            {allLeaddropDown && (
+              <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+                <ul className="py-2 text-sm text-gray-700">
+                  {allLeadData.map((item) => (
+                    <li
+                      key={item.id}
+                      className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                      onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
+                    >
+                      {item.status}
+                    </li>
+                  ))}
                   <li
-                    key={item.id}
-                    className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                    onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
+                    className="block w-56 px-4 py-2 hover:bg-red-500 hover:text-white cursor-pointer"
+                    onClick={resetLeadFilters} // Handle reset
                   >
-                    {item.status}
+                    Reset
                   </li>
-                ))}
-                <li
-                  className="block w-56 px-4 py-2 hover:bg-red-500 hover:text-white cursor-pointer"
-                  onClick={resetLeadFilters} // Handle reset
-                >
-                  Reset
-                </li>
-              </ul>
-            </div>
-          )}
-        </div>
-        
+                </ul>
+              </div>
+            )}
+          </div>
+
           {/* PART-I-ii */}
           {/* All ASSIGNED_TO  DropDown*/}
           <div
@@ -797,35 +819,39 @@ export default function Lead() {
         <div className="flex gap-3 items-center justify-center">
           {/* PART-II */}
           {/* Stripe-BarDropDown */}
-          <div
-            className="relative"
-            onClick={togglestripeBar}
-            onMouseLeave={() => setstripeBardropDown(false)}
-          >
-            <button
-              className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center"
-              id="dropdownDefaultButton"
-              type="button"
+          {activeButtonId === 2 ? (
+            ''
+          ) : (
+            <div
+              className="relative"
+              onClick={togglestripeBar}
+              onMouseLeave={() => setstripeBardropDown(false)}
             >
-              <FaBars />
-              <FaAngleDown className="text-gray-900" />
-            </button>
-            {stripeBardropDown && (
-              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
-                <ul className="text-sm text-gray-700">
-                  {stripeBar.map(({ key, value }) => (
-                    <li
-                      key={key}
-                      className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                      onClick={() => handleStripeButton(value)}
-                    >
-                      {value}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+              <button
+                className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center"
+                id="dropdownDefaultButton"
+                type="button"
+              >
+                <FaBars />
+                <FaAngleDown className="text-gray-900" />
+              </button>
+              {stripeBardropDown && (
+                <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
+                  <ul className="text-sm text-gray-700">
+                    {stripeBar.map(({ key, value }) => (
+                      <li
+                        key={key}
+                        className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                        onClick={() => handleStripeButton(value)}
+                      >
+                        {value}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
           {/* PART-II */}
           {/*  Create Lead */}
           <div className="flex gap-1">
@@ -1115,7 +1141,9 @@ export default function Lead() {
                         <div>
                           {item.segments && (
                             <span>
-                              {item.segments.filter((segment) => segment.length > 1).join(', ')}
+                              {item.segments
+                                .filter((segment) => segment.length > 1)
+                                .join(', ')}
                             </span>
                           )}
                         </div>
@@ -1155,7 +1183,11 @@ export default function Lead() {
             </table>
           )}
 
-          {/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
           {selectedViewValue === 'Grid View' && (
             <>
               <div className="min-w-full">
@@ -1258,7 +1290,7 @@ export default function Lead() {
           <>
             <div
               className={`flex justify-end m-4 ${
-                activeButtonId === 2 ? "hidden" : "flex"
+                activeButtonId === 2 ? 'hidden' : 'flex'
               }`}
             >
               <nav className="w-44 overflow-x-auto">
@@ -1273,8 +1305,8 @@ export default function Lead() {
                           onClick={() => paginate(i + 1)}
                           className={`px-4 py-2 mx-1 ${
                             currentPage === i + 1
-                              ? "bg-blue-500 text-white"
-                              : "bg-white text-gray-700 border"
+                              ? 'bg-blue-500 text-white'
+                              : 'bg-white text-gray-700 border'
                           }`}
                         >
                           {i + 1}
@@ -1294,7 +1326,6 @@ export default function Lead() {
             </div>
           </>
         )}
-        
       </div>
     </div>
   );
