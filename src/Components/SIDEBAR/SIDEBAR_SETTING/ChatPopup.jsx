@@ -57,13 +57,13 @@ export default function ChatPopup() {
               <div className="flex items-center gap-2">
                 <button
                   className="text-white cursor-pointer text-xl font-medium"
-                  onClick={() => setPopupChat(!popupChat)}
+                  onClick={() => setPopupChat(true)}
                 >
                   +
                 </button>
                 <button
                   className="text-white cursor-pointer text-xl font-medium"
-                  onClick={handleChatClick}
+                  onClick={() => setPopupChat(false)}
                 >
                   -
                 </button>
@@ -73,47 +73,47 @@ export default function ChatPopup() {
         )}
       </div>
       <div className="absolute bottom-0 right-0">
-      {popupChat && (
-        <section className="fixed right-0 bottom-0 w-[300px] h-[200px] bg-slate-50 rounded-t-md border-none overflow-y-scroll chatBar text-justify z-20">
-          <div className="flex items-center justify-between text-justify bg-cyan-400 w-full py-3 px-4">
-            {/* USERNAME */}
-            <h1 className="text-2xl text-white font-semibold text-center tracking-wider cursor-pointer">
-              Chat
-            </h1>
-            {/* ICONS */}
-            <div className="flex items-center justify-center gap-2">
-              <VscChromeMinimize
-                className="text-white cursor-pointer text-xl font-medium"
-                onClick={handleMaximize}
-              />
-              <button
-                type="button"
-                onClick={handleMaximize}
-                className="text-white cursor-pointer text-xl font-medium"
-              >
-                +
-              </button>
-            </div>
-          </div>
-          {/* USERS */}
-          {users?.map((user) => (
-            <div className={`flex items-center gap-2`} key={user.id}>
-              <div
-                className={`flex items-center gap-2 p-3 border-b border-gray-300 w-full text-gray-600 font-medium cursor-pointer`}
-                onClick={() => setOpenChat(true)}
-              >
-                <div
-                  className={`w-2 h-2 rounded-full ${
-                    user.status ? 'bg-green-600' : 'bg-red-500'
-                  }`}
-                ></div>
-                <p className="text-sm">{user.firstName}</p>
-                <p className="text-sm">{user.lastName}</p>
+        {popupChat && (
+          <section className="fixed right-0 bottom-0 w-[300px] h-[200px] bg-slate-50 rounded-t-md border-none overflow-y-scroll chatBar text-justify z-20">
+            <div className="flex items-center justify-between text-justify bg-cyan-400 w-full py-3 px-4">
+              {/* USERNAME */}
+              <h1 className="text-2xl text-white font-semibold text-center tracking-wider cursor-pointer">
+                Chat
+              </h1>
+              {/* ICONS */}
+              <div className="flex items-center justify-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setOpenChat(true)}
+                  className="text-white cursor-pointer text-xl font-medium"
+                >
+                  +
+                </button>
+                <VscChromeMinimize
+                  className="text-white cursor-pointer text-xl font-medium"
+                  onClick={() => setPopupChat(false)}
+                />
               </div>
             </div>
-          ))}
-        </section>
-      )}
+            {/* USERS */}
+            {users?.map((user) => (
+              <div className={`flex items-center gap-2`} key={user.id}>
+                <div
+                  className={`flex items-center gap-2 p-3 border-b border-gray-300 w-full text-gray-600 font-medium cursor-pointer`}
+                  onClick={() => setOpenChat(true)}
+                >
+                  <div
+                    className={`w-2 h-2 rounded-full ${
+                      user.status ? 'bg-green-600' : 'bg-red-500'
+                    }`}
+                  ></div>
+                  <p className="text-sm">{user.firstName}</p>
+                  <p className="text-sm">{user.lastName}</p>
+                </div>
+              </div>
+            ))}
+          </section>
+        )}
       </div>
       <div className="absolute bottom-0 right-[18.7rem]">
         {openChat && (
@@ -126,16 +126,16 @@ export default function ChatPopup() {
               </div>
               {/* ICONS */}
               <div className="flex items-center justify-center gap-2">
-                <VscChromeMinimize
-                  className="text-white cursor-pointer text-xl font-medium"
-                  onClick={() => setOpenChat(false)}
-                />
                 <button
                   type="button"
                   className="text-white cursor-pointer text-xl font-medium"
                 >
                   +
                 </button>
+                <VscChromeMinimize
+                  className="text-white cursor-pointer text-xl font-medium"
+                  onClick={() => setOpenChat(false)}
+                />
               </div>
             </div>
             <ChatWindow messages={messages} />
