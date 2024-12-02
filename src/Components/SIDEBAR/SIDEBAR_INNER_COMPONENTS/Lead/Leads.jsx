@@ -819,7 +819,7 @@ export default function Lead() {
         <div className="flex gap-3 items-center justify-center">
           {/* PART-II */}
           {/* Stripe-BarDropDown */}
-          {activeButtonId === 2 ? (
+          {activeButtonId === 2 || activeButtonId === 4 ? (
             ''
           ) : (
             <div

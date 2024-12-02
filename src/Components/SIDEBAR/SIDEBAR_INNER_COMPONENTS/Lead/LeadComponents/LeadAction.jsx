@@ -14,7 +14,7 @@ export default function LeadAction({ currentLeads }) {
           {/* CLIENT NAME */}
           <th className="px-3 py-3 text-left border-r font-medium">
             <div className="flex items-center justify-between">
-              <span>Client Name</span>
+              <span>Employee Name</span>
               <FaBars />
             </div>
           </th>
