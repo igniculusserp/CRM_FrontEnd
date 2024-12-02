@@ -8,6 +8,11 @@ import './index.css';
 import { MsalProvider } from "@azure/msal-react";
 import msalInstance from "./Config/msalConfig.js";
 
+//-------------------------------------Google Authentication----------------------------------------------------
+
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import googleConfig from "./Config/googleConfig.js"; // Contains your client ID
+
 
 import ProtectedRoute from "./ProtectedRoute.jsx";
 
@@ -204,9 +209,11 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <MsalProvider instance={msalInstance}>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
     <FollowUpNotificationProvider>
       <RouterProvider router={router} />
     </FollowUpNotificationProvider>
+    </GoogleOAuthProvider>
     </MsalProvider>
 
 );
