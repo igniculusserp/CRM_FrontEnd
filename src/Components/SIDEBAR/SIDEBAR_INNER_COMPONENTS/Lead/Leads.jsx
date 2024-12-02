@@ -13,7 +13,6 @@ import autoTable from 'jspdf-autotable';
 import { FaAngleDown, FaPhoneAlt } from 'react-icons/fa';
 import { IoIosMail } from 'react-icons/io';
 import { BiEdit } from 'react-icons/bi';
-
 import { FaBars } from 'react-icons/fa';
 import { VscSettings } from 'react-icons/vsc';
 import { ImFilter } from 'react-icons/im';
@@ -53,6 +52,19 @@ export default function Lead() {
 
   //created such that to filter leads according to leadStatus
   const [filteredLeads, setFilteredLeads] = useState([]); // Filtered leads
+
+  //---------------------->---------------------->PAGINATION<----------------------<----------------------
+  //controlled from the bottom of the page 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Define items per page
+  const totalPage = Math.ceil(filteredLeads.length / itemsPerPage);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
+  const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   //------------------------------------------------------------------------------------------------
   //----------------GET----------------
@@ -154,7 +166,6 @@ export default function Lead() {
     console.log(filteredLeads); // Log for debugging
   }
 
-  //------------------------------------------------------------------------------------------------
 
   function handle_AssignedTo(assignedToValue) {
     let filteredLeads = getleads;
@@ -506,17 +517,7 @@ export default function Lead() {
     return roleColors[index % roleColors?.length]; // Use modulo for wrapping
   };
 
-  //---------------------->---------------------->PAGINATION<----------------------<----------------------
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Define items per page
-  const totalPage = Math.ceil(filteredLeads.length / itemsPerPage);
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-  //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
-  const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   //---------------------->---------------------->̧CHECKBOX<----------------------<----------------------
   //---------------------->---------------------->̧CHECKBOX -> SINGLE<----------------------<----------------------
@@ -922,11 +923,10 @@ export default function Lead() {
                 key={id}
                 onClick={() => handleDynamicButtonsClick(id)}
                 className={`px-2 py-1.5 rounded font-light text-md
-          ${
-            activeButtonId === id
-              ? 'bg-cyan-500 text-white'
-              : 'bg-gray-100 text-gray-700'
-          }`}
+          ${activeButtonId === id
+                    ? 'bg-cyan-500 text-white'
+                    : 'bg-gray-100 text-gray-700'
+                  }`}
               >
                 {name}
               </button>
@@ -1080,8 +1080,8 @@ export default function Lead() {
                   const matchedUser =
                     users?.length > 0
                       ? users?.find(
-                          (user) => user?.userName === item?.assigned_To
-                        )
+                        (user) => user?.userName === item?.assigned_To
+                      )
                       : [];
                   const role = matchedUser?.role;
                   const roleColor = getRoleColorByIndex(role?.length); // Get color for the role
@@ -1289,38 +1289,69 @@ export default function Lead() {
         {selectedViewValue === 'Table View' && (
           <>
             <div
-              className={`flex justify-end m-4 ${
-                activeButtonId === 2 ? 'hidden' : 'flex'
-              }`}
+              className={`flex justify-end m-4 ${activeButtonId === 2 ? 'hidden' : 'flex'
+                }`}
             >
-              <nav className="w-44 overflow-x-auto">
-                <ul className="flex items-center whitespace-nowrap">
-                  {Array.from(
-                    {
-                      length: Math.ceil(filteredLeads?.length / itemsPerPage),
-                    },
-                    (_, i) => (
-                      <li key={i + 1}>
-                        <button
-                          onClick={() => paginate(i + 1)}
-                          className={`px-4 py-2 mx-1 ${
-                            currentPage === i + 1
-                              ? 'bg-blue-500 text-white'
-                              : 'bg-white text-gray-700 border'
+
+              {/* //---------------------->---------------------->PAGINATION-RENDER<----------------------<---------------------- */}
+              <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
+                {/* Previous Button */}
+                <button
+                  onClick={() => paginate(currentPage - 1)}
+                  className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-white text-gray-700 border' : 'bg-white text-gray-700 border'}`}
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </button>
+
+                {/* Dynamic Page Numbers */}
+                {Array.from({ length: totalPage }, (_, i) => i + 1).map((page) => {
+                  // Logic for ellipsis and showing only a subset of pages
+                  if (
+                    page === 1 || // Always show first page
+                    page === totalPage || // Always show last page
+                    (page >= currentPage - 1 && page <= currentPage + 1) // Show current, one before, and one after
+                  ) {
+                    return (
+                      <button
+                        key={page}
+                        onClick={() => paginate(page)}
+                        className={`px-4 py-2 rounded mx-1 ${currentPage === page
+                          ? 'bg-blue-500 text-white'
+                          : 'bg-white text-gray-700 border'
                           }`}
-                        >
-                          {i + 1}
-                        </button>
-                      </li>
-                    )
-                  )}
-                </ul>
+                      >
+                        {page}
+                      </button>
+                    );
+                  } else if (
+                    (page === currentPage - 2 && page > 1) || // Add ellipsis before current
+                    (page === currentPage + 2 && page < totalPage) // Add ellipsis after current
+                  ) {
+                    return (
+                      <span key={page} className="px-2 text-gray-500">
+                        ...
+                      </span>
+                    );
+                  }
+                  return null;
+                })}
+
+                {/* Next Button */}
+                <button
+                  onClick={() => paginate(currentPage + 1)}
+                  className={`px-4 py-2 rounded ${currentPage === totalPage ? 'bg-gray-300 text-gray-500' : 'bg-white text-gray-700 border'}`}
+                  disabled={currentPage === totalPage}
+                >
+                  Next
+                </button>
               </nav>
+
+
             </div>
             <div
-              className={`flex justify-center items-center m-4 ${
-                activeButtonId === 2 ? 'hidden' : 'flex'
-              }`}
+              className={`flex justify-center items-center m-4 ${activeButtonId === 2 ? 'hidden' : 'flex'
+                }`}
             >
               {/* Additional Content (if any) */}
             </div>
