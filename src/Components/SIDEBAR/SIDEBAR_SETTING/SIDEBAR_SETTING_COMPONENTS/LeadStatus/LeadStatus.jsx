@@ -12,7 +12,7 @@ import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNoti
 
 export default function LeadStatus() {
 
-  const name = getHostnamePart(); 
+  const name = getHostnamePart();
   const bearer_token = localStorage.getItem('token');
 
   const [data, setData] = useState([]);
@@ -88,13 +88,13 @@ export default function LeadStatus() {
       },
       validateStatus: (status) => status >= 200 && status < 300, // Treat only 2xx as success
     };
-  
+
     try {
       if (!formData.status) {
         showErrorToast("Please enter lead");
         return;
       }
-  
+
       if (isEditMode) {
         await axios.put(
           `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/edit/${formData.id}`,
@@ -110,7 +110,7 @@ export default function LeadStatus() {
         );
         showSuccessToast("Added successfully");
       }
-  
+
       // After successful operation
       handleLead();
       setActive(true);
@@ -121,7 +121,7 @@ export default function LeadStatus() {
       showErrorToast(error.response?.data?.message || "An error occurred.");
     }
   };
-  
+
 
   // Handle cancel form action
   const handleCancel = () => {
@@ -154,7 +154,7 @@ export default function LeadStatus() {
 
     return (
       <>
-      <ToastContainer/>
+        <ToastContainer />
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">
             {isEditMode ? 'Edit' : 'Add'}
@@ -171,7 +171,7 @@ export default function LeadStatus() {
           <div className="w-full">
             <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-              Lead Status
+                Lead Status
               </h2>
               <div className="py-2 px-4 min-h-screen relative">
                 <div className="flex space-x-4">
@@ -180,7 +180,7 @@ export default function LeadStatus() {
                       htmlFor="status"
                       className="text-sm font-medium text-gray-700"
                     >
-                    Lead Status
+                      Lead Status
                     </label>
                     <input
                       type="text"
@@ -212,7 +212,7 @@ export default function LeadStatus() {
         <>
           <div className="flex min-w-screen justify-between items-center">
             <h1 className="text-3xl font-medium">
-            Lead 
+              Lead
             </h1>
             <button
               onClick={handleAdd}
