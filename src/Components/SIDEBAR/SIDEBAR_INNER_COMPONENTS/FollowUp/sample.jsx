@@ -176,3 +176,16 @@ export default function FollowUp() {
     </>
   );
 }
+
+
+
+  //------------------------------------------------------Filter Reset Settings ---------------------------------------------
+
+  const handleResetFilter = () => {
+    setFilteredLeads(getleads);
+    setLeadStatus('All Lead');
+    setAssignedTo("Managed By");
+  };
+
+
+  onClick={handleResetFilter}

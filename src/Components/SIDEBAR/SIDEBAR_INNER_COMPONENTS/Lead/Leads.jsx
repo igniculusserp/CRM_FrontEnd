@@ -144,12 +144,7 @@ export default function Lead() {
     handle_LeadStatus(status); // Apply filter based on selected status
   }
 
-  // Function to reset the filters and show all leads
-  function resetLeadFilters() {
-    setLeadStatus('All Lead'); // Reset the state to default
-    setFilteredLeads(getleads); // Show all leads
-    console.log('Filters reset, showing all leads:', getleads);
-  }
+ 
 
   // Function to filter leads
   function handle_LeadStatus(statusValue) {
@@ -717,6 +712,15 @@ export default function Lead() {
     setFilteredLeads(filtered);
   }, [searchTerm, getleads, activeButtonId]);
 
+
+  //------------------------------------------------------Filter Reset Settings ---------------------------------------------
+
+  const handleResetFilter = () => {
+    setFilteredLeads(getleads);
+    setLeadStatus('All Lead');
+    setAssignedTo("Assigned to");
+  };
+
   return (
     //parent
     <div className="min-h-screen flex flex-col m-3 ">
@@ -768,12 +772,7 @@ export default function Lead() {
                       {item.status}
                     </li>
                   ))}
-                  <li
-                    className="block w-56 px-4 py-2 hover:bg-red-500 hover:text-white cursor-pointer"
-                    onClick={resetLeadFilters} // Handle reset
-                  >
-                    Reset
-                  </li>
+                 
                 </ul>
               </div>
             )}
@@ -966,7 +965,7 @@ export default function Lead() {
               />
             </div>
 
-            <div className="p-1 border rounded cursor-pointer" onClick={() => setFilteredLeads(getleads)}>
+            <div className="p-1 border rounded cursor-pointer" onClick={handleResetFilter}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   x="0px"

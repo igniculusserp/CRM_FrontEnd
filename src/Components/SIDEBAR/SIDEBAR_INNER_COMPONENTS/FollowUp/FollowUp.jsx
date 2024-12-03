@@ -418,6 +418,17 @@ export default function FollowUp() {
     setFilteredLeads(filtered);
   }, [searchTerm, followupList]);
 
+
+    //------------------------------------------------------Filter Reset Settings ---------------------------------------------
+
+    const handleResetFilter = () => {
+      setFilteredLeads(followupList);
+      // setLeadStatus('All Lead');
+      setAssignedTo("Managed By");
+    };
+
+    
+
   return (
     <>
       {/* -------- PARENT -------- */}
@@ -605,7 +616,7 @@ export default function FollowUp() {
               />
             </div>
 
-            <div className="p-1 border rounded cursor-pointer" onClick={() => setFilteredLeads(followupList)}>
+            <div className="p-1 border rounded cursor-pointer"  onClick={handleResetFilter}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   x="0px"

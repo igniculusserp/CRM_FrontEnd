@@ -521,7 +521,13 @@ export default function SalesOrder() {
     setFilteredLeads(filtered);
   }, [searchTerm, getleads]);
 
+  //------------------------------------------------------Filter Reset Settings ---------------------------------------------
 
+  const handleResetFilter = () => {
+    setFilteredLeads(getleads);
+    setsalesOrderStatus('All Sales Order');
+    // setAssignedTo("Managed By");
+  };
 
 
   return (
@@ -690,7 +696,7 @@ export default function SalesOrder() {
               />
             </div>
 
-            <div className="p-1 border rounded cursor-pointer" onClick={() => setFilteredLeads(getleads)}>
+            <div className="p-1 border rounded cursor-pointer"  onClick={handleResetFilter}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   x="0px"

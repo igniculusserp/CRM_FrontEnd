@@ -487,6 +487,18 @@ export default function Client() {
     setFilteredLeads(filtered);
   }, [searchTerm, getleads]);
 
+
+  
+  //------------------------------------------------------Filter Reset Settings ---------------------------------------------
+
+  const handleResetFilter = () => {
+    setFilteredLeads(getleads);
+    setLeadStatus('All Lead');
+    setAssignedTo("Managed By");
+  };
+
+  
+
   return (
     //parent
     <div className="min-h-screen flex flex-col m-3 ">
@@ -680,7 +692,7 @@ export default function Client() {
               />
             </div>
 
-            <div className="p-1 border rounded cursor-pointer" onClick={() => setFilteredLeads(getleads)}>
+            <div className="p-1 border rounded cursor-pointer" onClick={handleResetFilter}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   x="0px"
