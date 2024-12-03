@@ -449,7 +449,7 @@ export default function Client() {
 
   // Function to filter based on date range
   function handle_DateRange(startDate, endDate) {
-    let filteredFollows = currentLeads;
+    let filteredFollows = getleads;
 
     // Convert startDate to the beginning of the day and endDate to the end of the day
     const start = new Date(startDate);

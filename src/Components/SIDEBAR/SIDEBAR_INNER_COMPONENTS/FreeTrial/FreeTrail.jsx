@@ -393,41 +393,39 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
   }
 
   // ----------------------------- Date Filter -----------------------------
-
-  const today = new Date().toISOString().split("T")[0]; // Format today's date as 'YYYY-MM-DD'
-
+  
+  const today = new Date().toISOString().split("T")[0];
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(today);
 
-  // ----------------------------- Date Filter -----------------------------
-
   // Function to filter based on date range
   function handle_DateRange(startDate, endDate) {
-    let filteredFollows = currentTrials;
 
-    // Convert startDate to the beginning of the day and endDate to the end of the day
     const start = new Date(startDate);
-    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
+    start.setHours(0, 0, 0, 0); // Set to the start of the day
 
     const end = new Date(endDate);
-    end.setHours(23, 59, 59, 999); // Set time to 23:59:59
+    end.setHours(23, 59, 59, 999); // Set to the end of the day
 
-    if (startDate && endDate) {
-      filteredFollows = filteredFollows.filter((follow) => {
-        const callbackDate = new Date(follow.trialStartDate);
-        return callbackDate >= start && callbackDate <= end;
-      });
-    }
+    const filteredFollows = freeTrial.filter((follow) => {
+      const callbackDate = new Date(follow.call_bck_DateTime);
+      // Log values for debugging
+      console.log("Callback Date:", callbackDate, "Start:", start, "End:", end);
+      return callbackDate >= start && callbackDate <= end;
+    });
 
-    setFilteredTrails(filteredFollows); // Update the filtered result
+    setFilteredTrails(filteredFollows); 
   }
 
-  // UseEffect to trigger handle_DateRange on date change
+  // Trigger handle_DateRange when startDate or endDate changes
   useEffect(() => {
-    if (startDate <= endDate) {
+    if (new Date(startDate) <= new Date(endDate)) {
       handle_DateRange(startDate, endDate);
+    } else {
+      console.error("Start date cannot be after end date");
     }
   }, [startDate, endDate]);
+
 
 
   

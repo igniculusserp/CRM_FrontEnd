@@ -15,7 +15,7 @@ import { MdCall } from "react-icons/md";
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import MassEmail from "../MassEmail/MassEmail";
-import {SearchElement} from "../SearchElement/SearchElement";
+import { SearchElement } from "../SearchElement/SearchElement";
 
 export default function FollowUp() {
   const navigate = useNavigate();
@@ -48,8 +48,8 @@ export default function FollowUp() {
         config
       );
       if (response.status === 200) {
-        const followup = response.data; 
-        setFollowupList(followup?.data); 
+        const followup = response.data;
+        setFollowupList(followup?.data);
         setFilteredLeads(followup?.data);
       }
     } catch (error) {
@@ -86,7 +86,6 @@ export default function FollowUp() {
     setFollowupDropdown(!followupDropdown);
   };
 
-
   //   TOGGLE STRIPEBAR DROPDOWN
   const toggleActionDropdown = () => {
     setActionDropdown(!actionDropdown);
@@ -103,7 +102,6 @@ export default function FollowUp() {
     { key: 4, value: "Man Insited" },
     { key: 4, value: "Man Insited" },
   ];
-
 
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
@@ -199,7 +197,6 @@ export default function FollowUp() {
   const closeModal = () => {
     setIsModalOpen(false); // Close the modal
   };
-
 
   //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
   //-------> XLSX used here
@@ -359,7 +356,6 @@ export default function FollowUp() {
 
   // ------------------------------------------Fillters---------------------------------
 
-
   function handle_AssignedTo(assignedToValue) {
     let filteredLeads = followupList;
     if (assignedToValue !== null && assignedToValue !== "Assigned to") {
@@ -384,61 +380,54 @@ export default function FollowUp() {
 
   // Function to filter based on date range
   function handle_DateRange(startDate, endDate) {
-    let filteredFollows = currentFollows;
-
-    // Convert startDate to the beginning of the day and endDate to the end of the day
+   
     const start = new Date(startDate);
-    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
+    start.setHours(0, 0, 0, 0); // Set to the start of the day
 
     const end = new Date(endDate);
-    end.setHours(23, 59, 59, 999); // Set time to 23:59:59
+    end.setHours(23, 59, 59, 999); // Set to the end of the day
 
-    if (startDate && endDate) {
-      filteredFollows = filteredFollows.filter((follow) => {
-        const callbackDate = new Date(follow.call_bck_DateTime);
-        return callbackDate >= start && callbackDate <= end;
-      });
-    }
+    const filteredFollows = followupList.filter((follow) => {
+      const callbackDate = new Date(follow.call_bck_DateTime);
+      // Log values for debugging
+      console.log("Callback Date:", callbackDate, "Start:", start, "End:", end);
+      return callbackDate >= start && callbackDate <= end;
+    });
 
-    setFilteredLeads(filteredFollows); // Update the filtered result
+    setFilteredLeads(filteredFollows); // Update filtered results
   }
 
-  // UseEffect to trigger handle_DateRange on date change
+  // Trigger handle_DateRange when startDate or endDate changes
   useEffect(() => {
-    if (startDate <= endDate) {
+    if (new Date(startDate) <= new Date(endDate)) {
       handle_DateRange(startDate, endDate);
+    } else {
+      console.error("Start date cannot be after end date");
     }
   }, [startDate, endDate]);
 
-
-
   // ------------------------------ Search Function ----------------------------------
 
-  
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
-
   useEffect(() => {
-    const filtered = followupList.filter((lead) =>
-      lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
-      lead.mobileNo?.includes(searchTerm)
+    const filtered = followupList.filter(
+      (lead) =>
+        lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+        lead.mobileNo?.includes(searchTerm)
     );
     setFilteredLeads(filtered);
   }, [searchTerm, followupList]);
-
-
-
 
   return (
     <>
       {/* -------- PARENT -------- */}
       <div className="min-h-screen flex flex-col m-3 ">
-      
         {/* Render the modal only when `isModalOpen` is true */}
         {isModalOpen && (
           <MassEmail
-          emails={selectedEmails}
-          onClose={closeModal} // Pass function to close modal
+            emails={selectedEmails}
+            onClose={closeModal} // Pass function to close modal
           />
         )}
         {/* containerbar*/}
@@ -508,7 +497,10 @@ export default function FollowUp() {
               )}
             </div>
             {/* SEARCH DROPDOWN */}
-            <SearchElement value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+            <SearchElement
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
           {/* PART-II */}
           <div className="flex gap-3 items-center justify-center">
@@ -544,31 +536,35 @@ export default function FollowUp() {
               )}
             </div>
             {/* ACTIONS DROPDWON */}
-            <div className="relative" onClick={toggleActionDropdown} onMouseLeave={() => setActionDropdown(false)}>
-            <button
-              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
-              id="dropdownDefaultButton"
-              type="button"
+            <div
+              className="relative"
+              onClick={toggleActionDropdown}
+              onMouseLeave={() => setActionDropdown(false)}
             >
-              Actions
-              <FaAngleDown className="text-gray-900" />
-            </button>
-            {actionDropdown && (
-              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
-                <ul className="text-sm text-gray-700 " >
-                  {actions.map(({ key, value }) => (
-                    <li
-                      key={key}
-                      className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                      onClick={() => handleActionButton(value)}
-                    >
-                      {value}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+              <button
+                className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
+                id="dropdownDefaultButton"
+                type="button"
+              >
+                Actions
+                <FaAngleDown className="text-gray-900" />
+              </button>
+              {actionDropdown && (
+                <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
+                  <ul className="text-sm text-gray-700 ">
+                    {actions.map(({ key, value }) => (
+                      <li
+                        key={key}
+                        className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                        onClick={() => handleActionButton(value)}
+                      >
+                        {value}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
             {/* END ACTIONS DROPDWON */}
           </div>
         </div>
@@ -735,8 +731,9 @@ export default function FollowUp() {
                         </td>
                         {/* FOLLOW UP */}
                         <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 ">
-                          <div className="flex items-center text-nowrap"
-                          // onClick={() => }
+                          <div
+                            className="flex items-center text-nowrap"
+                            // onClick={() => }
                           >
                             {order.call_bck_DateTime.replace("T", " ")}
                           </div>
