@@ -82,38 +82,46 @@ export default function LeadStatus() {
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
-    
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
       },
+      validateStatus: (status) => status >= 200 && status < 300, // Treat only 2xx as success
     };
-
+  
     try {
-      if (isEditMode) {
-        if(!formData.status){
-          showErrorToast('Please enter lead')
-          return;
-        }
-        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/edit/${formData.id}`,formData, config);
-        showSuccessToast('Updated successfully');
-      } else {
-        if(!formData.status){
-          showErrorToast('Please enter lead ')
-          return;
-        }
-        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/add`, formData, config);
-        showSuccessToast('Added successfully');
+      if (!formData.status) {
+        showErrorToast("Please enter lead");
+        return;
       }
-
-      handleLead(); // Refresh the list
-      setActive(true); // Switch back to the list view
-      setSelectedData(null); // Reset the selected
-      setIsEditMode(false); // Reset edit mode
+  
+      if (isEditMode) {
+        await axios.put(
+          `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/edit/${formData.id}`,
+          formData,
+          config
+        );
+        showSuccessToast("Updated successfully");
+      } else {
+        await axios.post(
+          `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/add`,
+          formData,
+          config
+        );
+        showSuccessToast("Added successfully");
+      }
+  
+      // After successful operation
+      handleLead();
+      setActive(true);
+      setSelectedData(null);
+      setIsEditMode(false);
     } catch (error) {
-      showErrorToast(error.response.data.message);
+      console.error("Error caught in catch:", error);
+      showErrorToast(error.response?.data?.message || "An error occurred.");
     }
   };
+  
 
   // Handle cancel form action
   const handleCancel = () => {
