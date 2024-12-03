@@ -447,6 +447,13 @@ useEffect(() => {
 const totalPages = Math.ceil(filteredTrails.length / itemsPerPage);
 
 
+  //------------------------------------------------------Filter Reset Settings ---------------------------------------------
+
+  const handleResetFilter = () => {
+    setFilteredTrails(freeTrial);
+    // setLeadStatus('All Lead');
+    setAssignedTo("Managed By");
+  };
 
   return (
     <div className="min-h-screen flex flex-col m-3">
@@ -640,7 +647,7 @@ const totalPages = Math.ceil(filteredTrails.length / itemsPerPage);
               onChange={(e) => setEndDate(e.target.value)}
             />
           </div>
-          <div className="p-1 border rounded cursor-pointer" onClick={() => setFilteredTrails(freeTrial)}>
+          <div className="p-1 border rounded cursor-pointer" onClick={handleResetFilter}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   x="0px"
