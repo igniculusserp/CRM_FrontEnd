@@ -17,6 +17,9 @@ import { FaBars } from 'react-icons/fa';
 import { VscSettings } from 'react-icons/vsc';
 import { ImFilter } from 'react-icons/im';
 import { MdCall } from 'react-icons/md';
+import { GrFormPrevious } from "react-icons/gr";
+import { GrFormNext } from "react-icons/gr";
+
 
 //Folder Imported
 import dp from './../../../../assets/images/dp.png';
@@ -1144,7 +1147,7 @@ export default function Lead() {
                           <span className="">{item.name}</span>
                         </div>
                         <div className="flex justify-start text-center w-[80%]">
-                          <div className="border bg-orange-500 text-center text-xs font-medium text-white rounded-full w-full mx-4 py-1 px-4 shadow">
+                          <div className="bg-cyan-500 text-center text-xs  text-white  rounded-full w-full mx-4 py-1 px-1 ">
                             {item.leadesStatus}
                           </div>
                         </div>
@@ -1325,33 +1328,26 @@ export default function Lead() {
                 }`}
             >
 
-              {/* //---------------------->---------------------->PAGINATION-RENDER<----------------------<---------------------- */}
+              {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
               <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
-                {/* Previous Button */}
+                {/* /---------------------->Previous Button <----------------------< */}
                 <button
                   onClick={() => paginate(currentPage - 1)}
-                  className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-white text-gray-700 border' : 'bg-white text-gray-700 border'}`}
+                  className={`p-1 shadow-md rounded-full text-white ${currentPage === 1 ? 'border-gray-200 border-2' : 'bg-cyan-500 border-2 border-gray-100'}`}
                   disabled={currentPage === 1}
                 >
-                  Previous
+                <GrFormPrevious size={25}/>
                 </button>
 
-                {/* Dynamic Page Numbers */}
+                {/* /---------------------->Dynamic Page Numbers <----------------------< */}
                 {Array.from({ length: totalPage }, (_, i) => i + 1).map((page) => {
                   // Logic for ellipsis and showing only a subset of pages
-                  if (
-                    page === 1 || // Always show first page
-                    page === totalPage || // Always show last page
-                    (page >= currentPage - 1 && page <= currentPage + 1) // Show current, one before, and one after
-                  ) {
+                  if (page === 1 || page === totalPage ||  (page >= currentPage - 1 && page <= currentPage + 1)){
                     return (
                       <button
                         key={page}
                         onClick={() => paginate(page)}
-                        className={`px-4 py-2 rounded mx-1 ${currentPage === page
-                          ? 'bg-blue-500 text-white'
-                          : 'bg-white text-gray-700 border'
-                          }`}
+                        className={`px-4 py-2 rounded mx-1 ${currentPage === page ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border'}`}
                       >
                         {page}
                       </button>
@@ -1372,10 +1368,13 @@ export default function Lead() {
                 {/* Next Button */}
                 <button
                   onClick={() => paginate(currentPage + 1)}
-                  className={`px-4 py-2 rounded ${currentPage === totalPage ? 'bg-gray-300 text-gray-500' : 'bg-white text-gray-700 border'}`}
+
+                  className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage  ? ' border-gray-200 border-2' : ' bg-cyan-500 border-2 border-gray-100'}`}
+
                   disabled={currentPage === totalPage}
                 >
-                  Next
+                <GrFormNext size={25} />
+                
                 </button>
               </nav>
 
