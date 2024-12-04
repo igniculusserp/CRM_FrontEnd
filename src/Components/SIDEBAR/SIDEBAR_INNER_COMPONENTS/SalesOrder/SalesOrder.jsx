@@ -16,6 +16,8 @@ import { FaBars } from 'react-icons/fa';
 import { VscSettings } from 'react-icons/vsc';
 import { ImFilter } from 'react-icons/im';
 import { MdCall } from 'react-icons/md';
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+
 
 //Folder Imported
 import dp from './../../../../assets/images/dp.png';
@@ -23,6 +25,12 @@ import { tenant_base_url, protocal_url } from '../../../../Config/config';
 import MassEmail from '../MassEmail/MassEmail';
 import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 import {SearchElement} from "../SearchElement/SearchElement";
+
+
+//-----------------------------ToastContainer-----------------------------
+import { ToastContainer } from 'react-toastify';
+import { showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
+
 
 const name = getHostnamePart();
 
@@ -81,7 +89,7 @@ export default function SalesOrder() {
         },
       };
       const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`, //Changed from `${protocal_url}${name}.${tenant_base_url}/Lead/leads`, 24-Aug-- to =>:  `${protocal_url}${name}.${tenant_base_url}/Lead/leads/byusertoken`,
+        `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
         config
       );
 
@@ -141,8 +149,6 @@ export default function SalesOrder() {
     console.log(filteredLeads); // For debugging
   };
 
-  //------------------------------------------------------------------------------------------------
-  //----------------SEARCH BAR DROPDOWN----------------
 
   //------------------------------------------------------------------------------------------------
   //----------------STRIPE BAR DROPDOWN----------------
@@ -176,14 +182,12 @@ export default function SalesOrder() {
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
   const [dropActionsMenu, setdropActionsMenu] = useState([
-    // { key: 0, value: "Actions" },
     { key: 1, value: 'Mass Delete' },
     { key: 2, value: 'Mass Update' },
     { key: 3, value: 'Mass Email' },
-    // { key: 5, value: "Add to Campaign" },
-    { key: 7, value: 'Export To Excel' },
-    { key: 8, value: 'Export To PDF' },
-    { key: 10, value: 'Send SMS' },
+    { key: 4, value: 'Export To Excel' },
+    { key: 5, value: 'Export To PDF' },
+    { key: 6, value: 'Send SMS' },
   ]);
 
   const [dropActionsMenudropDown, setdropActionsMenudropDown] = useState(false);
@@ -260,7 +264,7 @@ export default function SalesOrder() {
         `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/massdelete`,
         config
       );
-      alert('Mass Deleted run');
+      showSuccessToast('Mass Deleted run');
       handleLead();
       console.log(response);
 
@@ -363,13 +367,15 @@ export default function SalesOrder() {
   const getRoleColorByIndex = (index) => {
     return roleColors[index % roleColors?.length]; // Use modulo for wrapping
   };
-
-  //---------------------->---------------------->PAGINATION<----------------------<----------------------
+//---------------------->---------------------->PAGINATION<----------------------<----------------------
+  //controlled from the bottom of the page 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Define items per page
+  const totalPage = Math.ceil(filteredLeads.length / itemsPerPage);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
   //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
   const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -442,7 +448,6 @@ export default function SalesOrder() {
   // Function to filter based on date range
   function handle_DateRange(startDate, endDate) {
     let filteredFollows = currentLeads;
-    console.log('@@@@@======', currentLeads);
 
     // Convert startDate to the beginning of the day and endDate to the end of the day
     const start = new Date(startDate);
@@ -960,28 +965,54 @@ export default function SalesOrder() {
         {selectedViewValue === 'Table View' && (
           <>
             <div className="flex justify-end m-4">
-              <nav>
-                <ul className="inline-flex items-center">
-                  {Array.from(
-                    {
-                      length: Math?.ceil(filteredLeads?.length / itemsPerPage),
-                    },
-                    (_, i) => (
-                      <li key={i + 1}>
-                        <button
-                          onClick={() => paginate(i + 1)}
-                          className={`px-4 py-2 mx-1 ${
-                            currentPage === i + 1
-                              ? 'bg-blue-500 text-white'
-                              : 'bg-white text-gray-700 border'
-                          }`}
-                        >
-                          {i + 1}
-                        </button>
-                      </li>
-                    )
-                  )}
-                </ul>
+              {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
+              <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
+                {/* /---------------------->Previous Button <----------------------< */}
+                <button
+                  onClick={() => paginate(currentPage - 1)}
+                  className={`p-1 shadow-md rounded-full text-white ${currentPage === 1 ? 'border-gray-200 border-2' : 'bg-cyan-500 border-2 border-gray-100'}`}
+                  disabled={currentPage === 1}
+                >
+                <GrFormPrevious size={25}/>
+                </button>
+
+                {/* /---------------------->Dynamic Page Numbers <----------------------< */}
+                {Array.from({ length: totalPage }, (_, i) => i + 1).map((page) => {
+                  // Logic for ellipsis and showing only a subset of pages
+                  if (page === 1 || page === totalPage ||  (page >= currentPage - 1 && page <= currentPage + 1)){
+                    return (
+                      <button
+                        key={page}
+                        onClick={() => paginate(page)}
+                        className={`px-4 py-2 rounded mx-1 ${currentPage === page ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border'}`}
+                      >
+                        {page}
+                      </button>
+                    );
+                  } else if (
+                    (page === currentPage - 2 && page > 1) || // Add ellipsis before current
+                    (page === currentPage + 2 && page < totalPage) // Add ellipsis after current
+                  ) {
+                    return (
+                      <span key={page} className="px-2 text-gray-500">
+                        ...
+                      </span>
+                    );
+                  }
+                  return null;
+                })}
+
+                {/* Next Button */}
+                <button
+                  onClick={() => paginate(currentPage + 1)}
+
+                  className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage  ? ' border-gray-200 border-2' : ' bg-cyan-500 border-2 border-gray-100'}`}
+
+                  disabled={currentPage === totalPage}
+                >
+                <GrFormNext size={25} />
+                
+                </button>
               </nav>
             </div>
           </>

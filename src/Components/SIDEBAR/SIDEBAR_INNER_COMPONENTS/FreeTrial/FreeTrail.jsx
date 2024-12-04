@@ -15,6 +15,8 @@ import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
 import { ImFilter } from "react-icons/im";
 import { MdCall } from "react-icons/md";
+import { GrFormPrevious } from "react-icons/gr";
+import { GrFormNext } from "react-icons/gr";
 
 //Folder Imported
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
@@ -55,8 +57,6 @@ export default function FreeTrail() {
       );
       if (response.status === 200) {
         const followup = response?.data?.data; // Get the user data
-        //  console.log("@@@@====", response.data);
-        console.log("@@@@====", followup[0]);
         setFreeTrial(followup); // Set the user data for editing
         setFilteredTrails(followup);
       }
@@ -146,8 +146,8 @@ export default function FreeTrail() {
       setSelectAll(false);
     } else {
       // Select all rows in the current page
-      const allIds = currentTrials.map((order) => order.id);
-      const allEmails = currentTrials.map((order) => order.email); // Extract emails
+      const allIds = currentLeads.map((order) => order.id);
+      const allEmails = currentLeads.map((order) => order.email); // Extract emails
       setSelectedRows(allIds);
       setSelectedEmails(allEmails); // Store all emails
       setSelectAll(true);
@@ -174,9 +174,6 @@ export default function FreeTrail() {
       const newSelectedEmails = prevSelectedEmails.includes(email)
         ? prevSelectedEmails.filter((e) => e !== email)
         : [...prevSelectedEmails, email];
-
-      // Log the updated selectedEmails
-      console.log("@@@===", newSelectedEmails);
       return newSelectedEmails;
     });
 
@@ -259,7 +256,7 @@ export default function FreeTrail() {
   //-------> XLSX used here
   const exportToExcel = () => {
     // Filter currentLeads based on selectedIds
-    const leadsToExport = currentTrials.filter((lead) =>
+    const leadsToExport = currentLeads.filter((lead) =>
       selectedRows.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
@@ -294,7 +291,7 @@ export default function FreeTrail() {
 
   //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
   const exportToPDF = () => {
-    const leadsToExport = currentTrials.filter((lead) =>
+    const leadsToExport = currentLeads.filter((lead) =>
       selectedRows.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
@@ -323,16 +320,20 @@ export default function FreeTrail() {
     doc.save("FreeTrail.pdf");
   };
 
-  //---------------------->---------------------->PAGINATION<----------------------<----------------------
-const [currentPage, setCurrentPage] = useState(1);
-const itemsPerPage = 10; // Define items per page
+  const [filteredLeads, setFilteredLeads] = useState([]); // Filtered leads
 
-const indexOfLastItem = currentPage * itemsPerPage;
-const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-const currentTrials = filteredTrails.slice(indexOfFirstItem, indexOfLastItem);
+//---------------------->---------------------->PAGINATION<----------------------<----------------------
+  //controlled from the bottom of the page 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Define items per page
+  const totalPage = Math.ceil(filteredLeads.length / itemsPerPage);
 
-// Update the paginate function
-const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
+  const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   //-----------------------------------------------> ALL-> ASSIGNED_TO <-functionality <-----------------------------------------------
 
@@ -403,7 +404,7 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   // Function to filter based on date range
   function handle_DateRange(startDate, endDate) {
-    let filteredFollows = currentTrials;
+    let filteredFollows = currentLeads;
 
     // Convert startDate to the beginning of the day and endDate to the end of the day
     const start = new Date(startDate);
@@ -730,7 +731,7 @@ const totalPages = Math.ceil(filteredTrails.length / itemsPerPage);
               {/*--------------TABLE DATA END------------- */}
               {/*--------------TABLE DATA------------- */}
               <tbody>
-                {currentTrials.map((order, index) => (
+                {freeTrial.map((order, index) => (
                   <tr
                     key={index}
                     className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
@@ -825,7 +826,7 @@ const totalPages = Math.ceil(filteredTrails.length / itemsPerPage);
           <div className="min-w-full">
             <div className="grid grid-cols-3 gap-3">
               {/*---------Card starts Here */}
-              {currentTrials.map((item) => (
+              {currentLeads.map((item) => (
                 <div
                   className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2"
                   key={item.id}
@@ -892,49 +893,63 @@ const totalPages = Math.ceil(filteredTrails.length / itemsPerPage);
           </div>
         </>
       )}
-      {/* <div className="flex justify-end m-4">
-        <nav>
-          <ul className="inline-flex items-center">
-            {Array.from(
-              { length: Math.ceil(freeTrial.length / itemsPerPage) },
-              (_, i) => (
-                <li key={i + 1}>
-                  <button
-                    onClick={() => paginate(i + 1)}
-                    className={`px-4 py-2 mx-1 ${
-                      currentPage === i + 1
-                        ? "bg-blue-500 text-white"
-                        : "bg-white text-gray-700 border"
-                    }`}
-                  >
-                    {i + 1}
-                  </button>
-                </li>
-              )
-            )}
-          </ul>
-        </nav>
-      </div> */}
-      <div className="flex justify-end m-4">
-      <nav>
-        <ul className="inline-flex items-center">
-          {[...Array(totalPages).keys()].map((_, i) => (
-            <li key={i + 1}>
-              <button
-                onClick={() => paginate(i + 1)}
-                className={`px-4 py-2 mx-1 ${
-                  currentPage === i + 1
-                    ? "bg-blue-500 text-white"
-                    : "bg-white text-gray-700 border"
-                }`}
-              >
-                {i + 1}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </div>
+
+       
+{selectedViewValue === 'Table View' && (
+          <>
+            <div className="flex justify-end m-4">
+              {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
+              <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
+                {/* /---------------------->Previous Button <----------------------< */}
+                <button
+                  onClick={() => paginate(currentPage - 1)}
+                  className={`p-1 shadow-md rounded-full text-white ${currentPage === 1 ? 'border-gray-200 border-2' : 'bg-cyan-500 border-2 border-gray-100'}`}
+                  disabled={currentPage === 1}
+                >
+                <GrFormPrevious size={25}/>
+                </button>
+
+                {/* /---------------------->Dynamic Page Numbers <----------------------< */}
+                {Array.from({ length: totalPage }, (_, i) => i + 1).map((page) => {
+                  // Logic for ellipsis and showing only a subset of pages
+                  if (page === 1 || page === totalPage ||  (page >= currentPage - 1 && page <= currentPage + 1)){
+                    return (
+                      <button
+                        key={page}
+                        onClick={() => paginate(page)}
+                        className={`px-4 py-2 rounded mx-1 ${currentPage === page ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border'}`}
+                      >
+                        {page}
+                      </button>
+                    );
+                  } else if (
+                    (page === currentPage - 2 && page > 1) || // Add ellipsis before current
+                    (page === currentPage + 2 && page < totalPage) // Add ellipsis after current
+                  ) {
+                    return (
+                      <span key={page} className="px-2 text-gray-500">
+                        ...
+                      </span>
+                    );
+                  }
+                  return null;
+                })}
+
+                {/* Next Button */}
+                <button
+                  onClick={() => paginate(currentPage + 1)}
+
+                  className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage  ? ' border-gray-200 border-2' : ' bg-cyan-500 border-2 border-gray-100'}`}
+
+                  disabled={currentPage === totalPage}
+                >
+                <GrFormNext size={25} />
+                
+                </button>
+              </nav>
+            </div>
+          </>
+        )}
     </div>
   );
 }

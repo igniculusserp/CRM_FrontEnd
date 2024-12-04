@@ -12,24 +12,29 @@ import autoTable from 'jspdf-autotable'
 import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
-import { IoSearchOutline } from "react-icons/io5";
 import { FaBars } from "react-icons/fa";
 import { VscSettings } from "react-icons/vsc";
 import { ImFilter } from "react-icons/im";
 import { MdCall } from "react-icons/md";
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
 //Folder Imported
 import dp from "./../../../../assets/images/dp.png"
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import MassEmail from '../MassEmail/MassEmail';
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
-import {SearchElement} from "../SearchElement/SearchElement";
+import { SearchElement } from "../SearchElement/SearchElement";
+
+
+
+//-----------------------------ToastContainer-----------------------------
+import { ToastContainer } from 'react-toastify';
+import { showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
 
 const name = getHostnamePart()
 
 export default function Contact() {
   const navigate = useNavigate(); // Add this line
-
 
   // Mass Email
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -135,10 +140,6 @@ export default function Contact() {
     handle_AssignedTo(user);  // Apply both filters
   }
 
-
-
-
-
   //-----------------------------------------------> ALL-> LEADS <-functionality <-----------------------------------------------
 
   const [allLeaddropDown, setAllLeaddropDown] = useState(false);
@@ -182,6 +183,7 @@ export default function Contact() {
   //-----------------------------------------------> ALL ASSIGNED_TO DATA <-----------------------------------------------
   //----------------ASSIGNED_TO DROPDOWN----------------
   const [allAssigned_To_Data, setallAssigned_To_Data] = useState([]);
+
   async function handleallAssigned_To() {
     const bearer_token = localStorage.getItem("token");
 
@@ -425,41 +427,6 @@ export default function Contact() {
     "#e11d48",  //Rose
   ];
 
-  // //---------------------->---------------------->CONVERT_LEADS_TO_CONTACTS<----------------------<----------------------
-
-  // const convertType = async () => {
-  //   const bearer_token = localStorage.getItem("token");
-
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         Authorization: `Bearer ${bearer_token}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //     };
-
-  //     const response = await axios.post(
-  //       `${protocal_url}${name}.${tenant_base_url}/Lead/leadtocontact/${selectedIds}`,
-  //       { id: selectedIds },  // Pass data as second parameter
-  //       config
-  //     );
-
-  //     alert('Converted lead to contact');
-  //     setGetleads((prevLeads) =>
-  //       prevLeads.filter((lead) => !selectedIds.includes(lead.id))
-  //     );
-  //     setSelectedIds([]);
-
-  //     if (response.status === 200) {
-  //       alert('Lead has been successfully converted to a contact.');
-  //     } else {
-  //       alert(`Failed to convert lead: ${response.data.message || 'Unknown error'}`);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error converting lead:', error);
-  //     alert('An error occurred while converting the lead. Please try again later.');
-  //   }
-  // };
 
 
   // Function to get the color for a role based on its index
@@ -470,11 +437,14 @@ export default function Contact() {
 
 
   //---------------------->---------------------->PAGINATION<----------------------<----------------------
+  //controlled from the bottom of the page 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Define items per page
+  const totalPage = Math.ceil(filteredLeads.length / itemsPerPage);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
   //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
   const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -584,7 +554,7 @@ export default function Contact() {
 
   // ------------------------------ Search Function ----------------------------------
 
-  
+
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
 
@@ -612,7 +582,7 @@ export default function Contact() {
         {/* PART-I */}
         {/* container- Alleads, search */}
         <div className="flex gap-3 items-center justify-center ">
-          {/* PART-I */}{/* All Lead  DropDown*/}
+          {/* PART-I */}{/* All Lead DropDown*/}
           <div className="relative" onClick={toggleMenuAllLead} onMouseLeave={() => setAllLeaddropDown(false)}>
             <button
               className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 max-w-44 truncate"
@@ -698,20 +668,7 @@ export default function Contact() {
           </div>
           {/* PART-II */}
           <div className="flex gap-1">
-            {/*  Create Lead *
-            <Link to="/sidebar/createlead">
-              <button
-                className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
-                id="dropdownDefaultButton"
-                type="button"
-              >
-                Create Contact
-              </button>
-            </Link>/}
-            {/* PART-II */}{/*  Create Lead Part-II -> down button */}
-            
           </div>
-
           {/* PART-II */}{/*-------Action DropDown */}
           <div className="relative" onClick={toggleActionsMenuLogo} onMouseLeave={() => setdropActionsMenudropDown(false)}>
             <button
@@ -747,13 +704,14 @@ export default function Contact() {
             Contacts
           </h1>
           <h1 className="bg-blue-600 text-white p-2 min-w-10 text-center rounded text-sm shadow-md">
+
+            {/*  ------------------------------------------------------------------------------------------------*/}
+            {/* ------------------- Length ----------------- */}
             {getleads?.length}
           </h1>
         </div>
-
         <div>
           {/* ------------------- Filter by date ----------------- */}
-
           <div className="flex bg-white border-2 border-gray-300 py-2 rounded-lg justify-center items-center">
             {/* Filter Icon Button */}
             <button className="border-r border-gray-500 px-3">
@@ -805,56 +763,50 @@ export default function Contact() {
                   </th>
 
                   <th className="px-1 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center">
+                    <div className="text-center">
                       <span>
                         Client Name
                       </span>
-                      <FaBars />
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium min-w-16 max-w-20">
-                    <div className="flex justify-between items-center">
+                    <div className="text-center">
                       <span>
                         Mobile
                       </span>
-                      <FaBars />
                     </div>
                   </th>
 
 
                   <th className="px-1 py-3 text-left border-r font-medium min-w-16 max-w-20">
-                    <div className="flex justify-between items-center">
+                    <div className="text-center">
                       <span>
                         Segment
                       </span>
-                      <FaBars />
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium  min-w-20 max-w-24 relative">
-                    <div className="flex justify-between items-center">
+                    <div className="text-center">
                       <span>
                         Free Trail
                       </span>
-                      <FaBars />
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium max-w-16">
-                    <div className="flex justify-between items-center">
+                    <div className="text-center">
                       <span>
                         Follow Up
                       </span>
-                      <FaBars />
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center">
+                    <div className="text-center">
                       <span>
                         Managed By
                       </span>
-                      <FaBars />
                     </div>
                   </th>
-                  <th className="px-1 py-3">
+                  <th className="px-1 py-3 ">
                     <VscSettings />
                   </th>
                 </tr>
@@ -1027,26 +979,57 @@ export default function Contact() {
         {selectedViewValue === "Table View" && (
           <>
             <div className="flex justify-end m-4">
-              <nav>
-                <ul className="inline-flex items-center">
-                  {Array.from(
-                    { length: Math?.ceil(filteredLeads?.length / itemsPerPage) },
-                    (_, i) => (
-                      <li key={i + 1}>
-                        <button
-                          onClick={() => paginate(i + 1)}
-                          className={`px-4 py-2 mx-1 ${currentPage === i + 1
-                            ? "bg-blue-500 text-white"
-                            : "bg-white text-gray-700 border"
-                            }`}
-                        >
-                          {i + 1}
-                        </button>
-                      </li>
-                    )
-                  )}
-                </ul>
+          
+              {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
+              <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
+                {/* /---------------------->Previous Button <----------------------< */}
+                <button
+                  onClick={() => paginate(currentPage - 1)}
+                  className={`p-1 shadow-md rounded-full text-white ${currentPage === 1 ? 'border-gray-200 border-2' : 'bg-cyan-500 border-2 border-gray-100'}`}
+                  disabled={currentPage === 1}
+                >
+                <GrFormPrevious size={25}/>
+                </button>
+
+                {/* /---------------------->Dynamic Page Numbers <----------------------< */}
+                {Array.from({ length: totalPage }, (_, i) => i + 1).map((page) => {
+                  // Logic for ellipsis and showing only a subset of pages
+                  if (page === 1 || page === totalPage ||  (page >= currentPage - 1 && page <= currentPage + 1)){
+                    return (
+                      <button
+                        key={page}
+                        onClick={() => paginate(page)}
+                        className={`px-4 py-2 rounded mx-1 ${currentPage === page ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border'}`}
+                      >
+                        {page}
+                      </button>
+                    );
+                  } else if (
+                    (page === currentPage - 2 && page > 1) || // Add ellipsis before current
+                    (page === currentPage + 2 && page < totalPage) // Add ellipsis after current
+                  ) {
+                    return (
+                      <span key={page} className="px-2 text-gray-500">
+                        ...
+                      </span>
+                    );
+                  }
+                  return null;
+                })}
+
+                {/* Next Button */}
+                <button
+                  onClick={() => paginate(currentPage + 1)}
+
+                  className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage  ? ' border-gray-200 border-2' : ' bg-cyan-500 border-2 border-gray-100'}`}
+
+                  disabled={currentPage === totalPage}
+                >
+                <GrFormNext size={25} />
+                
+                </button>
               </nav>
+
             </div>
           </>
         )}
