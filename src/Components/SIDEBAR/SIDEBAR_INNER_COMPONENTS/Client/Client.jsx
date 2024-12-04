@@ -12,9 +12,9 @@ import { FaAngleDown, FaPhoneAlt } from 'react-icons/fa';
 import { IoIosMail } from 'react-icons/io';
 import { BiEdit } from 'react-icons/bi';
 import { FaBars } from 'react-icons/fa';
-
 import { ImFilter } from 'react-icons/im';
 import { MdCall } from 'react-icons/md';
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
 //Folder Imported
 import dp from './../../../../assets/images/dp.png';
@@ -25,6 +25,11 @@ import MassEmail from '../MassEmail/MassEmail';
 import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 
 import { SearchElement } from '../SearchElement/SearchElement';
+
+
+//-----------------------------ToastContainer-----------------------------
+import { ToastContainer } from 'react-toastify';
+import { showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
 
 
 export default function Client() {
@@ -173,6 +178,7 @@ export default function Client() {
   //-----------------------------------------------> ALL ASSIGNED_TO DATA <-----------------------------------------------
   //----------------ASSIGNED_TO DROPDOWN----------------
   const [allAssigned_To_Data, setallAssigned_To_Data] = useState([]);
+ 
   async function handleallAssigned_To() {
     const bearer_token = localStorage.getItem('token');
 
@@ -228,7 +234,6 @@ export default function Client() {
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
   const [dropActionsMenu, setdropActionsMenu] = useState([
-    // { key: 0, value: "Actions" },,
     { key: 2, value: 'Mass Update' },
     { key: 3, value: 'Mass Email' },
     { key: 7, value: 'Export To Excel' },
@@ -276,9 +281,6 @@ export default function Client() {
     }
   }
    
-
-
-
   // ---------------------->MASS Email FUNCTIONALITY---<----------------------
 
   const openMassEmailModal = () => {
@@ -301,7 +303,7 @@ export default function Client() {
       selectedIds.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
-      alert('No leads selected to export');
+      showErrorToast('No leads selected to export');
       return;
     }
 
@@ -322,11 +324,11 @@ export default function Client() {
       selectedIds.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
-      alert('No leads selected to export');
+      showErrorToast('No leads selected to export');
       return;
     }
     const doc = new jsPDF();
-    // const role = matchedUser?.role;
+
     const tableColumn = [
       'ID',
       'Name',
@@ -373,12 +375,15 @@ export default function Client() {
     return roleColors[index % roleColors?.length]; // Use modulo for wrapping
   };
 
-  //---------------------->---------------------->PAGINATION<----------------------<----------------------
+//---------------------->---------------------->PAGINATION<----------------------<----------------------
+  //controlled from the bottom of the page 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Define items per page
+  const totalPage = Math.ceil(filteredLeads.length / itemsPerPage);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
   //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
   const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -501,8 +506,9 @@ export default function Client() {
 
   return (
     //parent
+    <>
+    <ToastContainer/>
     <div className="min-h-screen flex flex-col m-3 ">
-      {/* Render the modal only when `isModalOpen` is true */}
       {isModalOpen && (
         <MassEmail
           emails={selectedEmails}
@@ -599,7 +605,7 @@ export default function Client() {
               id="dropdownDefaultButton"
               type="button"
             >
-              <FaBars />
+              
               <FaAngleDown className="text-gray-900" />
             </button>
             {stripeBardropDown && (
@@ -746,38 +752,38 @@ export default function Client() {
                   <th className="px-1 py-3 text-left border-r font-medium">
                     <div className="flex justify-between items-center">
                       <span>Client Name</span>
-                      <FaBars />
+                      
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium">
                     <div className="flex justify-between items-center">
                       <span>Mobile</span>
-                      <FaBars />
+                      
                     </div>
                   </th>
 
                   <th className="px-1 py-3 text-left border-r font-medium w-48">
                     <div className="flex justify-between items-center">
                       <span>Segment</span>
-                      <FaBars />
+                      
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium w-48">
                     <div className="flex justify-between items-center">
                       <span>Service Start Date</span>
-                      <FaBars />
+                      
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium w-48">
                     <div className="flex justify-between items-center">
                       <span>Service End Date</span>
-                      <FaBars />
+                      
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium">
                     <div className="flex justify-between items-center">
                       <span>Managed By</span>
-                      <FaBars />
+                      
                     </div>
                   </th>
                 </tr>
@@ -875,11 +881,7 @@ export default function Client() {
             </table>
           )}
 
-          {/* ------------GRID------------ */}
-          {/* ------------GRID------------ */}
-          {/* ------------GRID------------ */}
-          {/* ------------GRID------------ */}
-          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}
           {selectedViewValue === 'Grid View' && (
             <>
               <div className="min-w-full">
@@ -957,33 +959,60 @@ export default function Client() {
         {selectedViewValue === 'Table View' && (
           <>
             <div className="flex justify-end m-4">
-              <nav>
-                <ul className="inline-flex items-center">
-                  {Array.from(
-                    {
-                      length: Math?.ceil(filteredLeads?.length / itemsPerPage),
-                    },
-                    (_, i) => (
-                      <li key={i + 1}>
-                        <button
-                          onClick={() => paginate(i + 1)}
-                          className={`px-4 py-2 mx-1 ${
-                            currentPage === i + 1
-                              ? 'bg-blue-500 text-white'
-                              : 'bg-white text-gray-700 border'
-                          }`}
-                        >
-                          {i + 1}
-                        </button>
-                      </li>
-                    )
-                  )}
-                </ul>
+              {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
+              <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
+                {/* /---------------------->Previous Button <----------------------< */}
+                <button
+                  onClick={() => paginate(currentPage - 1)}
+                  className={`p-1 shadow-md rounded-full text-white ${currentPage === 1 ? 'border-gray-200 border-2' : 'bg-cyan-500 border-2 border-gray-100'}`}
+                  disabled={currentPage === 1}
+                >
+                <GrFormPrevious size={25}/>
+                </button>
+
+                {/* /---------------------->Dynamic Page Numbers <----------------------< */}
+                {Array.from({ length: totalPage }, (_, i) => i + 1).map((page) => {
+                  // Logic for ellipsis and showing only a subset of pages
+                  if (page === 1 || page === totalPage ||  (page >= currentPage - 1 && page <= currentPage + 1)){
+                    return (
+                      <button
+                        key={page}
+                        onClick={() => paginate(page)}
+                        className={`px-4 py-2 rounded mx-1 ${currentPage === page ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border'}`}
+                      >
+                        {page}
+                      </button>
+                    );
+                  } else if (
+                    (page === currentPage - 2 && page > 1) || // Add ellipsis before current
+                    (page === currentPage + 2 && page < totalPage) // Add ellipsis after current
+                  ) {
+                    return (
+                      <span key={page} className="px-2 text-gray-500">
+                        ...
+                      </span>
+                    );
+                  }
+                  return null;
+                })}
+
+                {/* Next Button */}
+                <button
+                  onClick={() => paginate(currentPage + 1)}
+
+                  className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage  ? ' border-gray-200 border-2' : ' bg-cyan-500 border-2 border-gray-100'}`}
+
+                  disabled={currentPage === totalPage}
+                >
+                <GrFormNext size={25} />
+                
+                </button>
               </nav>
             </div>
           </>
         )}
       </div>
     </div>
+    </>
   );
 }
