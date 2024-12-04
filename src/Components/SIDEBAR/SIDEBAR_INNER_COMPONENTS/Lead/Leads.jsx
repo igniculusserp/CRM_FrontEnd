@@ -35,6 +35,7 @@ import LeadAssignModal from './LeadComponents/LeadAssignModal';
 import LeadStatusModal from './LeadComponents/LeadStatusModal';
 import MultipleAssignModal from './LeadComponents/MultipleAssignModal';
 import MultipuleStatusModal from './LeadComponents/MultipleStatusModal';
+import LeadFeatchModal from "./LeadFeatchModal";
 
 import { SearchElement } from '../SearchElement/SearchElement';
 
@@ -42,6 +43,9 @@ export default function Lead() {
   const navigate = useNavigate();
   const location = useLocation();
   const name = getHostnamePart();
+
+  // Featch Lead Modal
+  const [isFeatchModalOpen, setIsFetchModalOpen] = useState(false);
 
   // Mass Email
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -397,6 +401,7 @@ export default function Lead() {
     setStatusModalOpen(false);
     setMultiAssignModal(false);
     setMultiStatusModal(false);
+    setIsFetchModalOpen(false);
     handleLead();
   };
 
@@ -740,6 +745,8 @@ export default function Lead() {
       {multiStatusModal && (
         <MultipuleStatusModal multiIds={selectedIds} onClose={closeModal} />
       )}
+      {/* -------------------------------- Fetch modal -------------------------------------------- */}
+      {isFeatchModalOpen && <LeadFeatchModal onClose={closeModal} />}
       {/* containerbar*/}
       <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg">
         {/* PART-I */}
@@ -816,6 +823,14 @@ export default function Lead() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
+           <div className="flex gap-1">
+              <button
+                className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
+                onClick={()=>setIsFetchModalOpen(true)}
+              >
+                Featch Leads
+              </button>
+          </div>
         </div>
 
         {/* PART-II */}
