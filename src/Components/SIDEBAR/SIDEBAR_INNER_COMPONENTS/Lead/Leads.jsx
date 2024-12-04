@@ -50,6 +50,10 @@ export default function Lead() {
   const location = useLocation();
   const name = getHostnamePart();
 
+  //------- Business Type --------
+  const businessType = localStorage.getItem("businessType");
+  const [business, setBusiness] = useState("");
+
   // Featch Lead Modal
   const [isFeatchModalOpen, setIsFetchModalOpen] = useState(false);
 
@@ -144,6 +148,9 @@ export default function Lead() {
   useEffect(() => {
     handleLead();
     getAllUsers();
+     //------- Business Type --------
+     console.log("Bussiness Type Dash Board : " ,businessType);
+     setBusiness(businessType);
   }, []);
 
   const [leadStatus, setLeadStatus] = useState('All Lead'); // Track the selected lead status
@@ -1222,12 +1229,13 @@ export default function Lead() {
                       {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
                       <td>
                         <button
-                          className="bg-black p-1 text-white text-xm rounded mx-auto"
+                          className={business==="IT" ?"bg-black p-1 text-white text-xm rounded mx-auto":"bg-black p-1 text-white text-xs rounded mx-auto"}
                           onClick={() =>
                             navigate(`/sidebar/lead/create/so/${item.id}`)
                           }
                         >
-                          SO
+                          {/* SO */}
+                          {business==="IT" ?"SO":"Create Client"}
                         </button>
                       </td>
                     </tr>

@@ -124,6 +124,7 @@ const VerifyOtp = () => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
+    const businessType = localStorage.getItem("registrationBusinessType");
     const formData = {
       userId: userId,
       name: companyName,
@@ -132,6 +133,7 @@ const VerifyOtp = () => {
       connectionString: "string",
       tenantEmail: emailreg,
       domain: "",
+      bussinessType: businessType,
     };
     try {
       const response = await axios.post(`${main_base_url}/Tenants`, formData, {

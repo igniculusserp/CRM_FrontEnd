@@ -18,7 +18,9 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate for naviga
 
 
 export default function Home() {
-  
+  //------- Business Type --------
+  const businessType = localStorage.getItem("businessType");
+  const [business, setBusiness] = useState("");
   //DND
   const name = getHostnamePart();
   const navigate = useNavigate();
@@ -35,6 +37,9 @@ export default function Home() {
   useEffect(() => {
     checkStoredOtp()
     handleGetApis();
+    //------- Business Type --------
+    console.log("Bussiness Type Dash Board : " ,businessType);
+    setBusiness(businessType);
   }, [navigate]);
 
   //------------------------------------------------------------------------------------------------
@@ -214,7 +219,10 @@ export default function Home() {
           {/* ------- CARDS ------- */}
           <div className="flex flex-col justify-between bg-white py-4 px-4 rounded-md shadow-lg h-[210px] w-1/4">
             <div className="flex flex-col gap-2">
-              <h1 className="font-light uppercase text-sm">Lead this month</h1>
+              {}
+              <h1 className="font-light uppercase text-sm">
+                {business==="IT" ?"Lead this month":"Total Leads this month"}
+                </h1>
               {/* ------- MIDDLE SECTION ----------- */}
               <div className="flex items-center gap-4 mt-2">
                 <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-blue-500 text-white flex items-center justify-center">
@@ -259,7 +267,8 @@ export default function Home() {
           <div className="flex flex-col justify-between py-4 px-4 bg-white rounded-md shadow-lg h-[210px] w-1/4">
             <div className="flex flex-col gap-2">
               <h1 className="font-light uppercase text-sm">
-                REVENUE THIS MONTH
+                {/* REVENUE THIS MONTH */}
+                {business==="IT" ?"REVENUE THIS MONTH":"Client Fund this month"}
               </h1>
               <div className="flex gap-4 items-center mt-2">
                 <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-orange-300 text-white flex items-center justify-center">
@@ -306,7 +315,8 @@ export default function Home() {
           <div className="flex flex-col justify-between bg-white py-4 px-4 rounded-md shadow-lg h-[210px] w-1/4">
             <div className="flex flex-col gap-2">
               <h1 className="font-light uppercase text-sm">
-                SALES IN PIPELINE
+                {/* SALES IN PIPELINE */}
+                {business==="IT" ?"SALES IN PIPELINE":"Interested Clients"}
               </h1>
               <div className="flex gap-4 items-center mt-2">
                 <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-red-500 text-white flex items-center justify-center">
@@ -357,7 +367,8 @@ export default function Home() {
           <div className="flex flex-col justify-between bg-white py-4 px-4 rounded-md shadow-lg h-[210px] w-1/4">
             <div className="flex flex-col gap-2">
               <h1 className="font-light uppercase text-sm">
-                CLIENT THIS MONTH
+                {/* CLIENT THIS MONTH */}
+                {business==="IT" ?"CLIENT THIS MONTH":"Active Clients"}
               </h1>
               <div className="flex gap-4 items-center mt-2">
                 <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-cyan-500 text-white flex items-center justify-center">
