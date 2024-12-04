@@ -38,6 +38,12 @@ import MultipuleStatusModal from './LeadComponents/MultipleStatusModal';
 
 import { SearchElement } from '../SearchElement/SearchElement';
 
+
+//-----------------------------ToastContainer-----------------------------
+import { ToastContainer } from 'react-toastify';
+import { showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
+
+
 export default function Lead() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -489,22 +495,20 @@ export default function Lead() {
         config
       );
 
-      alert('Converted lead to contact');
       setGetleads((prevLeads) =>
         prevLeads.filter((lead) => !selectedIds.includes(lead.id))
       );
       setSelectedIds([]);
 
       if (response.status === 200) {
-        alert('Lead has been successfully converted to a contact.');
+        showSuccessToast('Lead has been successfully converted to a contact.');
       } else {
-        alert(
-          `Failed to convert lead: ${response.data.message || 'Unknown error'}`
+        (
+          showErrorToast(`Failed to convert lead: ${response.data.message || 'Unknown error'}`)
         );
       }
     } catch (error) {
-      console.error('Error converting lead:', error);
-      alert(
+      showErrorToast(
         'An error occurred while converting the lead. Please try again later.'
       );
     }
@@ -514,8 +518,6 @@ export default function Lead() {
   const getRoleColorByIndex = (index) => {
     return roleColors[index % roleColors?.length]; // Use modulo for wrapping
   };
-
-
 
   //---------------------->---------------------->̧CHECKBOX<----------------------<----------------------
   //---------------------->---------------------->̧CHECKBOX -> SINGLE<----------------------<----------------------
@@ -723,6 +725,8 @@ export default function Lead() {
 
   return (
     //parent
+    <>
+    <ToastContainer/>
     <div className="min-h-screen flex flex-col m-3 ">
       {/* -----------------------------------Mass Email Modal------------------------------ */}
       {isModalOpen && (
@@ -1390,5 +1394,6 @@ export default function Lead() {
         )}
       </div>
     </div>
+    </>
   );
 }
