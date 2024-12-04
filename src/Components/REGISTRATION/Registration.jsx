@@ -526,6 +526,7 @@ export default function Registration() {
                       Select Business Type
                     </option>
                     <option value="Advisory">Advisory</option>
+                    <option value="Advisory">Brokerage</option>
                     <option value="IT">IT</option>
                     <option value="Retail">Retail</option>
                     <option value="Ecommerce">Ecommerce</option>

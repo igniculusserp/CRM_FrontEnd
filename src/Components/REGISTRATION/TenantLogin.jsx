@@ -48,7 +48,6 @@ export default function TenantLogin() {
   const handleMicrosoftLogin = async () => {
     try {
       const loginResponse = await msalInstance.loginPopup(loginRequest);
-      console.log("Login successful:", loginResponse);
 
       msalInstance.setActiveAccount(loginResponse.account);
       setIsAuthenticated(true);
@@ -294,6 +293,8 @@ export default function TenantLogin() {
         }
       );
       const logindetail = response.data.data;
+      console.log("Login Response: ", response.data.data.userDetail.businessType);
+      localStorage.setItem("businessType",response.data.data.userDetail.businessType);
       localStorage.setItem("token", response.data.data.token);
       localStorage.setItem("userDetail", JSON.stringify(logindetail));
       localStorage.setItem("myData_forget", userName);

@@ -83,8 +83,9 @@ export default function VerifyTenant() {
 
       if(!isSuccess){
           showErrorToast(message)
-      }
-      else{
+          
+        }
+        else{
           showSuccessToast("Login Successful!");
           setTimeout(() => {
             //localhost
