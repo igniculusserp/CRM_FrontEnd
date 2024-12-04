@@ -22,7 +22,7 @@ import { GrFormNext } from "react-icons/gr";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
 import MassEmail from "../MassEmail/MassEmail";
-import {SearchElement} from "../SearchElement/SearchElement";
+import { SearchElement } from "../SearchElement/SearchElement";
 
 //------------------------------------------------------------------------------->CODE STARTS FROM HERE<-------------------------------------------------------------------------------
 export default function FreeTrail() {
@@ -322,18 +322,27 @@ export default function FreeTrail() {
 
   const [filteredLeads, setFilteredLeads] = useState([]); // Filtered leads
 
-//---------------------->---------------------->PAGINATION<----------------------<----------------------
-  //controlled from the bottom of the page 
+  // States for pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Define items per page
-  const totalPage = Math.ceil(filteredLeads.length / itemsPerPage);
+  const itemsPerPage = 10; // Number of items per page
 
+  // Calculate total pages
+  const totalPage = Math.ceil(freeTrial.length / itemsPerPage);
+
+  // Get current items for the page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentLeads = freeTrial.slice(indexOfFirstItem, indexOfLastItem);
 
-  //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
-  const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  // Function to handle page changes
+  const paginate = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPage) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
+
+
 
   //-----------------------------------------------> ALL-> ASSIGNED_TO <-functionality <-----------------------------------------------
 
@@ -394,7 +403,7 @@ export default function FreeTrail() {
   }
 
   // ----------------------------- Date Filter -----------------------------
-  
+
   const today = new Date().toISOString().split("T")[0];
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(today);
@@ -416,7 +425,7 @@ export default function FreeTrail() {
       return callbackDate >= start && callbackDate <= end;
     });
 
-    setFilteredTrails(filteredFollows); 
+    setFilteredTrails(filteredFollows);
   }
 
   // Trigger handle_DateRange when startDate or endDate changes
@@ -430,23 +439,23 @@ export default function FreeTrail() {
 
 
 
-  
-// ------------------------------ Search Function ----------------------------------
-const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
-useEffect(() => {
-  // Reset to the first page when search results change
-  setCurrentPage(1);
+  // ------------------------------ Search Function ----------------------------------
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
-  const filtered = freeTrial.filter((lead) =>
-    lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
-    lead.mobileNo?.includes(searchTerm)
-  );
-  setFilteredTrails(filtered);
-}, [searchTerm, freeTrial]);
+  useEffect(() => {
+    // Reset to the first page when search results change
+    setCurrentPage(1);
 
-// Calculate total pages based on filtered data length
-const totalPages = Math.ceil(filteredTrails.length / itemsPerPage);
+    const filtered = freeTrial.filter((lead) =>
+      lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+      lead.mobileNo?.includes(searchTerm)
+    );
+    setFilteredTrails(filtered);
+  }, [searchTerm, freeTrial]);
+
+  // Calculate total pages based on filtered data length
+  const totalPages = Math.ceil(filteredTrails.length / itemsPerPage);
 
 
   //------------------------------------------------------Filter Reset Settings ---------------------------------------------
@@ -490,7 +499,7 @@ const totalPages = Math.ceil(filteredTrails.length / itemsPerPage);
                     <li
                       key={item.id}
                       className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                      // onClick={() => handleTrialStatusButton(item.status)}
+                    // onClick={() => handleTrialStatusButton(item.status)}
                     >
                       {item.value}
                     </li>
@@ -650,36 +659,36 @@ const totalPages = Math.ceil(filteredTrails.length / itemsPerPage);
             />
           </div>
           <div className="p-1 border rounded cursor-pointer" onClick={handleResetFilter}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  x="0px"
-                  y="0px"
-                  width="26"
-                  height="26"
-                  viewBox="0,0,256,256"
-                >
-                  <g
-                    fill="#06b6d4"
-                    fillRule="nonzero"
-                    stroke="none"
-                    strokeWidth="1"
-                    strokeLinecap="butt"
-                    strokeLinejoin="miter"
-                    strokeMiterlimit="10"
-                    strokeDasharray=""
-                    strokeDashoffset="0"
-                    fontFamily="none"
-                    fontWeight="none"
-                    fontSize="none"
-                    textAnchor="none"
-                    style={{ mixBlendMode: "normal" }} // Fixed style prop
-                  >
-                    <g transform="scale(8.53333,8.53333)">
-                      <path d="M15,3c-2.9686,0 -5.69718,1.08344 -7.79297,2.875c-0.28605,0.22772 -0.42503,0.59339 -0.36245,0.95363c0.06258,0.36023 0.31676,0.6576 0.66286,0.77549c0.3461,0.1179 0.72895,0.03753 0.99842,-0.20959c1.74821,-1.49444 4.01074,-2.39453 6.49414,-2.39453c5.19656,0 9.45099,3.93793 9.95117,9h-2.95117l4,6l4,-6h-3.05078c-0.51129,-6.14834 -5.67138,-11 -11.94922,-11zM4,10l-4,6h3.05078c0.51129,6.14834 5.67138,11 11.94922,11c2.9686,0 5.69718,-1.08344 7.79297,-2.875c0.28605,-0.22772 0.42504,-0.59339 0.36245,-0.95363c-0.06258,-0.36023 -0.31676,-0.6576 -0.66286,-0.7755c-0.3461,-0.1179 -0.72895,-0.03753 -0.99842,0.20959c-1.74821,1.49444 -4.01074,2.39453 -6.49414,2.39453c-5.19656,0 -9.45099,-3.93793 -9.95117,-9h2.95117z"></path>
-                    </g>
-                  </g>
-                </svg>
-            </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              x="0px"
+              y="0px"
+              width="26"
+              height="26"
+              viewBox="0,0,256,256"
+            >
+              <g
+                fill="#06b6d4"
+                fillRule="nonzero"
+                stroke="none"
+                strokeWidth="1"
+                strokeLinecap="butt"
+                strokeLinejoin="miter"
+                strokeMiterlimit="10"
+                strokeDasharray=""
+                strokeDashoffset="0"
+                fontFamily="none"
+                fontWeight="none"
+                fontSize="none"
+                textAnchor="none"
+                style={{ mixBlendMode: "normal" }} // Fixed style prop
+              >
+                <g transform="scale(8.53333,8.53333)">
+                  <path d="M15,3c-2.9686,0 -5.69718,1.08344 -7.79297,2.875c-0.28605,0.22772 -0.42503,0.59339 -0.36245,0.95363c0.06258,0.36023 0.31676,0.6576 0.66286,0.77549c0.3461,0.1179 0.72895,0.03753 0.99842,-0.20959c1.74821,-1.49444 4.01074,-2.39453 6.49414,-2.39453c5.19656,0 9.45099,3.93793 9.95117,9h-2.95117l4,6l4,-6h-3.05078c-0.51129,-6.14834 -5.67138,-11 -11.94922,-11zM4,10l-4,6h3.05078c0.51129,6.14834 5.67138,11 11.94922,11c2.9686,0 5.69718,-1.08344 7.79297,-2.875c0.28605,-0.22772 0.42504,-0.59339 0.36245,-0.95363c-0.06258,-0.36023 -0.31676,-0.6576 -0.66286,-0.7755c-0.3461,-0.1179 -0.72895,-0.03753 -0.99842,0.20959c-1.74821,1.49444 -4.01074,2.39453 -6.49414,2.39453c-5.19656,0 -9.45099,-3.93793 -9.95117,-9h2.95117z"></path>
+                </g>
+              </g>
+            </svg>
+          </div>
         </div>
       </div>
       {/* TABLE VIEW */}
@@ -768,7 +777,8 @@ const totalPages = Math.ceil(filteredTrails.length / itemsPerPage);
               {/*--------------TABLE DATA END------------- */}
               {/*--------------TABLE DATA------------- */}
               <tbody>
-                {freeTrial.map((order, index) => (
+                {currentLeads.map((order, index) => (
+
                   <tr
                     key={index}
                     className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
@@ -830,10 +840,10 @@ const totalPages = Math.ceil(filteredTrails.length / itemsPerPage);
                       <div className="flex items-center break-words">
                         {order.trialStartDate
                           ? order.trialStartDate
-                              .replace("T", " ")
-                              .split(":")
-                              .slice(0, 2)
-                              .join(":")
+                            .replace("T", " ")
+                            .split(":")
+                            .slice(0, 2)
+                            .join(":")
                           : "N/A"}
                       </div>
                     </td>
@@ -842,10 +852,10 @@ const totalPages = Math.ceil(filteredTrails.length / itemsPerPage);
                       <div className="flex items-center break-words">
                         {order.trialEndDate
                           ? order.trialEndDate
-                              .replace("T", " ")
-                              .split(":")
-                              .slice(0, 2)
-                              .join(":")
+                            .replace("T", " ")
+                            .split(":")
+                            .slice(0, 2)
+                            .join(":")
                           : "N/A"}
                       </div>
                     </td>
@@ -931,62 +941,72 @@ const totalPages = Math.ceil(filteredTrails.length / itemsPerPage);
         </>
       )}
 
-       
-{selectedViewValue === 'Table View' && (
-          <>
-            <div className="flex justify-end m-4">
-              {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
-              <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
-                {/* /---------------------->Previous Button <----------------------< */}
-                <button
-                  onClick={() => paginate(currentPage - 1)}
-                  className={`p-1 shadow-md rounded-full text-white ${currentPage === 1 ? 'border-gray-200 border-2' : 'bg-cyan-500 border-2 border-gray-100'}`}
-                  disabled={currentPage === 1}
-                >
-                <GrFormPrevious size={25}/>
-                </button>
 
-                {/* /---------------------->Dynamic Page Numbers <----------------------< */}
-                {Array.from({ length: totalPage }, (_, i) => i + 1).map((page) => {
-                  // Logic for ellipsis and showing only a subset of pages
-                  if (page === 1 || page === totalPage ||  (page >= currentPage - 1 && page <= currentPage + 1)){
-                    return (
-                      <button
-                        key={page}
-                        onClick={() => paginate(page)}
-                        className={`px-4 py-2 rounded mx-1 ${currentPage === page ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border'}`}
-                      >
-                        {page}
-                      </button>
-                    );
-                  } else if (
-                    (page === currentPage - 2 && page > 1) || // Add ellipsis before current
-                    (page === currentPage + 2 && page < totalPage) // Add ellipsis after current
-                  ) {
-                    return (
-                      <span key={page} className="px-2 text-gray-500">
-                        ...
-                      </span>
-                    );
-                  }
-                  return null;
-                })}
+      {selectedViewValue === 'Table View' && (
+        <>
+          <div className="flex justify-end m-4">
+            {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
+            <nav className="flex items-center justify-center text-center mx-auto gap-2 mt-4">
+              {/* Previous Button */}
+              <button
+                onClick={() => paginate(currentPage - 1)}
+                className={`p-1 shadow-md rounded-full text-white ${currentPage === 1
+                    ? 'border-gray-200 border-2 cursor-not-allowed'
+                    : 'bg-cyan-500 border-2 border-gray-100'
+                  }`}
+                disabled={currentPage === 1}
+              >
+                <GrFormPrevious size={25} />
+              </button>
 
-                {/* Next Button */}
-                <button
-                  onClick={() => paginate(currentPage + 1)}
+              {/* Dynamic Page Numbers */}
+              {Array.from({ length: totalPage }, (_, i) => i + 1).map((page) => {
+                if (
+                  page === 1 ||
+                  page === totalPage ||
+                  (page >= currentPage - 1 && page <= currentPage + 1)
+                ) {
+                  return (
+                    <button
+                      key={page}
+                      onClick={() => paginate(page)}
+                      className={`px-4 py-2 rounded mx-1 ${currentPage === page
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-white text-gray-700 border'
+                        }`}
+                    >
+                      {page}
+                    </button>
+                  );
+                } else if (
+                  (page === currentPage - 2 && page > 1) || // Ellipsis before current
+                  (page === currentPage + 2 && page < totalPage) // Ellipsis after current
+                ) {
+                  return (
+                    <span key={page} className="px-2 text-gray-500">
+                      ...
+                    </span>
+                  );
+                }
+                return null;
+              })}
 
-                  className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage  ? ' border-gray-200 border-2' : ' bg-cyan-500 border-2 border-gray-100'}`}
-
-                  disabled={currentPage === totalPage}
-                >
+              {/* Next Button */}
+              <button
+                onClick={() => paginate(currentPage + 1)}
+                className={`p-1 shadow-md rounded-full text-white ${currentPage === totalPage
+                    ? 'border-gray-200 border-2 cursor-not-allowed'
+                    : 'bg-cyan-500 border-2 border-gray-100'
+                  }`}
+                disabled={currentPage === totalPage}
+              >
                 <GrFormNext size={25} />
-                
-                </button>
-              </nav>
-            </div>
-          </>
-        )}
+              </button>
+            </nav>
+
+          </div>
+        </>
+      )}
     </div>
   );
 }
