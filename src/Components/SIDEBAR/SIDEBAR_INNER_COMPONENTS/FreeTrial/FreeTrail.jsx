@@ -402,7 +402,6 @@ export default function FreeTrail() {
   // Function to filter based on date range
   function handle_DateRange(startDate, endDate) {
 
-z
 
     const start = new Date(startDate);
     start.setHours(0, 0, 0, 0); // Set to the start of the day
