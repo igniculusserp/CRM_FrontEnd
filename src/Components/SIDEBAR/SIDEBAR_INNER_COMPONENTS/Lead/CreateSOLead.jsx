@@ -264,6 +264,7 @@ export default function CreateSO() {
     { key: 2, name: "eCommerce" },
     { key: 3, name: "Marketing" },
     { key: 4, name: "Hospitality" },
+    { key: 5, name: "Brokerage" },
   ];
 
   const [defaultTextbusinessTypeDropDown, setDefaultTextbusinessTypeDropDown] =
@@ -1135,23 +1136,25 @@ export default function CreateSO() {
                 {/* -------------XI--1------------- */}
                 {/* -------------Total Amount------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="totalAmount"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      {/* Total Amount */}
-                      {business==="IT" ?"Total Amount":"Fund"}
-                    </label>
-                    <input
-                      type="number"
-                      name="totalAmount"
-                      value={editLead.totalAmount}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                      placeholder="Total Amount"
-                    />
-                  </div>
+                {business==="Brokerage" ?
+                  ""
+                :<div className="flex flex-col w-1/2">
+                <label
+                  htmlFor="totalAmount"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Total Amount
+                  
+                </label>
+                <input
+                  type="number"
+                  name="totalAmount"
+                  value={editLead.totalAmount}
+                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  onChange={handleChange}
+                  placeholder="Total Amount"
+                />
+              </div>}
                   {/* -------------XI--2------------- */}
                   {/* -------------  Due Amount------------- */}
                   <div className="flex flex-col w-1/2">
@@ -1160,7 +1163,7 @@ export default function CreateSO() {
                       className="text-sm font-medium text-gray-700"
                     >
                       {/* Due Amount */}
-                      {business==="IT" ?"Due Amount":"Brokerage"}
+                      {business==="Brokerage" ?"Brokerage":"Due Amount"}
                     </label>
                     <input
                       type="text"
@@ -1175,15 +1178,15 @@ export default function CreateSO() {
                 {/* -------------XII--1------------- */}
                 {/* -------------Amount Paid------------- */}
 
-                {business==="IT" ?<div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="amount_paid"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                    {business==="IT" ? "Fund": "Paid Amount"}
 
-                    </label>
+                <div className="flex space-x-4">
+                <div className="flex flex-col w-1/2">
+                  <label>
+                    htmlFor="amount_paid"
+                    className="text-sm font-medium text-gray-700"
+                {business==="IT" ?<div className="flex space-x-4">
+                 </label>
+                  <div className="flex flex-col w-1/2">
                     <input
                       type="text"
                       name="amount_paid"
@@ -1200,18 +1203,40 @@ export default function CreateSO() {
                       htmlFor="discount"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Discount
-                    </label>
-                    <input
-                      type="text"
-                      name="discount"
-                      value={editLead.discount}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                      placeholder="Discount"
+                    {/* Amount Paid */}
+                    {business==="Brokerage" ?"Fund":"Amount Paid"}
+                  </label>
+                  <input
+                    type="text"
+                    name="amount_paid"
+                    value={editLead.amount_paid}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                    placeholder="Amount Paid"
                     />
-                  </div>
-                </div>:""}
+                </div>
+                {/* -------------XII--2------------- */}
+                {/* -------------Discount------------- */}
+                    {business==="Brokerage" ?
+                    "":
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="discount"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Discount
+                  </label>
+                  <input
+                    type="text"
+                    name="discount"
+                    value={editLead.discount}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                    placeholder="Discount"
+                  />
+                </div>
+}
+              </div>
                 
 
                 {/* -------------XIII--1------------- */}
@@ -1344,7 +1369,9 @@ export default function CreateSO() {
                 {/* -------------SALES ORDER INFORMATION FORM STARTS FROM HERE------------- */}
                 {/* -------------XV--1------------- */}
                 {/* -------------period_of_Subscription------------- */}
-                {business==="IT" ?<div className="flex space-x-4">
+                {business==="Brokerage" ?
+                "":
+                <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="period_of_Subscription"
@@ -1402,12 +1429,15 @@ export default function CreateSO() {
                       )}
                     </div>
                   </div>
-                </div>:""}
+                </div>
+                }
                 
 
                 {/* -------------XVI--1------------- */}
                 {/* -------------Subscription Start Date------------- */}
-                {business==="IT" ? <div className="flex space-x-4">
+                {business==="Brokerage" ?
+                 "":
+                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="subscription_start_date"
@@ -1440,7 +1470,8 @@ export default function CreateSO() {
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
                   </div>
-                </div>:""}
+                </div>
+                 }
                
                 {/* -------------XVII--1------------- */}
                 <div className="flex space-x-4">
