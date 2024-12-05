@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 //reactIcon
 import { FaAngleDown } from "react-icons/fa";
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+
 //reactPackages
 import { Link, useNavigate, useParams } from "react-router-dom";
 
@@ -1179,7 +1181,8 @@ export default function CreateSO() {
                       htmlFor="amount_paid"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Amount Paid
+                    {business==="IT" ? "Fund": "Paid Amount"}
+
                     </label>
                     <input
                       type="text"
