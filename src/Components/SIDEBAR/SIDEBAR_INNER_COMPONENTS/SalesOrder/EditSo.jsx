@@ -19,6 +19,11 @@ import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 export default function CreateSO() {
+  
+    //------- Business Type --------
+    const businessType = localStorage.getItem("businessType");
+    const [business, setBusiness] = useState("");
+
   //to make id unique
   const { id, leadId } = useParams();
   const navigate = useNavigate();
@@ -41,6 +46,11 @@ export default function CreateSO() {
     } else {
       setIsEditMode(true);
     }
+
+      //------- Business Type --------
+      console.log("Bussiness Type Dash Board : " ,businessType);
+      setBusiness(businessType);
+
   }, [id]);
 
   //GET by ID---------------------------//GET---------------------------//GET---------------------------by ID-----------by ID
@@ -1044,7 +1054,9 @@ export default function CreateSO() {
                       htmlFor="totalAmount"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Total Amount
+                     {/* Total Amount */}
+                     {business==="IT" ?"Total Amount":"Fund"}
+
                     </label>
                     <input
                       type="number"
@@ -1062,7 +1074,8 @@ export default function CreateSO() {
                       htmlFor="due_Amount"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Due Amount
+                       {/* Due Amount */}
+                      {business==="IT" ?"Due Amount":"Brokerage"}
                     </label>
                     <input
                       type="text"
@@ -1076,7 +1089,7 @@ export default function CreateSO() {
                 </div>
                 {/* -------------XII--1------------- */}
                 {/* -------------Amount Paid------------- */}
-                <div className="flex space-x-4">
+                {business==="IT" ?<div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="amount_paid"
@@ -1114,7 +1127,8 @@ export default function CreateSO() {
                       placeholder="Discount"
                     />
                   </div>
-                </div>
+                </div>:""}
+                
 
                 {/* -------------XIII--1------------- */}
                 {/* -------------Payment Date------------- */}
@@ -1232,7 +1246,7 @@ export default function CreateSO() {
                 {/* -------------SALES ORDER INFORMATION FORM STARTS FROM HERE------------- */}
                 {/* -------------XV--1------------- */}
                 {/* -------------period_of_subscription------------- */}
-                <div className="flex space-x-4">
+                {business==="IT" ?<div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="period_of_subscription"
@@ -1290,11 +1304,12 @@ export default function CreateSO() {
                       )}
                     </div>
                   </div>
-                </div>
+                </div>:""}
+                
 
                 {/* -------------XVI--1------------- */}
                 {/* -------------Subscription Start Date------------- */}
-                <div className="flex space-x-4">
+                {business==="IT" ?<div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="subscription_start_date"
@@ -1337,7 +1352,8 @@ export default function CreateSO() {
                       </span>
                     )}
                   </div>
-                </div>
+                </div>:""}
+                
                 {/* -------------XVII--1------------- */}
                 <div className="flex space-x-4">
                   {/* -------------Service------------- */} {/* sms , wp,  */}
