@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 //reactIcon
 import { FaAngleDown } from "react-icons/fa";
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+
 //reactPackages
 import { Link, useNavigate, useParams } from "react-router-dom";
 
@@ -1176,11 +1178,30 @@ export default function CreateSO() {
                 {/* -------------XII--1------------- */}
                 {/* -------------Amount Paid------------- */}
 
+
                 <div className="flex space-x-4">
                 <div className="flex flex-col w-1/2">
-                  <label
+                  <label>
                     htmlFor="amount_paid"
                     className="text-sm font-medium text-gray-700"
+                {business==="IT" ?<div className="flex space-x-4">
+                 </label>
+                  <div className="flex flex-col w-1/2">
+                    <input
+                      type="text"
+                      name="amount_paid"
+                      value={editLead.amount_paid}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Amount Paid"
+                    />
+                  </div>
+                  {/* -------------XII--2------------- */}
+                  {/* -------------Discount------------- */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="discount"
+                      className="text-sm font-medium text-gray-700"
                     >
                     {/* Amount Paid */}
                     {business==="Brokerage" ?"Fund":"Amount Paid"}

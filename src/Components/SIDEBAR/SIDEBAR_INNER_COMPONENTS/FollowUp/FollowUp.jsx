@@ -11,6 +11,8 @@ import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
 import { ImFilter } from "react-icons/im";
 import { MdCall } from "react-icons/md";
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+
 //Folder Imported
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
@@ -57,6 +59,19 @@ export default function FollowUp() {
     }
   };
 
+    //---------------------->---------------------->PAGINATION<----------------------<----------------------
+  //controlled from the bottom of the page 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Define items per page
+  const totalPage = Math.ceil(filteredLeads.length / itemsPerPage);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
+  const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   useEffect(() => {
     getFollowupLists();
   }, []);
@@ -97,10 +112,6 @@ export default function FollowUp() {
   const followup = [
     { key: 1, value: "Man Insited" },
     { key: 2, value: "Man Insited" },
-    { key: 3, value: "Man Insited" },
-    { key: 4, value: "Man Insited" },
-    { key: 4, value: "Man Insited" },
-    { key: 4, value: "Man Insited" },
   ];
 
   //------------------------------------------------------------------------------------------------
@@ -252,18 +263,7 @@ export default function FollowUp() {
     doc.save("Followup.pdf");
   };
 
-  //---------------------->---------------------->PAGINATION<----------------------<----------------------
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Define items per page
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
-  const currentFollows = filteredLeads?.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   // Function to toggle all checkboxes
   const selectAllCheckbox = () => {
@@ -717,7 +717,7 @@ export default function FollowUp() {
                 {/*--------------TABLE HEAD END------------- */}
                 {/*--------------TABLE DATA START------------- */}
                 <tbody>
-                  {currentFollows.map((order) => {
+                  {currentLeads.map((order) => {
                     return (
                       <tr
                         key={order.id}
@@ -871,29 +871,55 @@ export default function FollowUp() {
             </>
           )}
           <div className="flex justify-end m-4">
-            <nav>
-              <ul className="inline-flex items-center">
-                {Array.from(
-                  {
-                    length: Math.ceil(filteredLeads.length / itemsPerPage),
-                  },
-                  (_, i) => (
-                    <li key={i + 1}>
+             {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
+              <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
+                {/* /---------------------->Previous Button <----------------------< */}
+                <button
+                  onClick={() => paginate(currentPage - 1)}
+                  className={`p-1 shadow-md rounded-full text-white ${currentPage === 1 ? 'border-gray-200 border-2' : 'bg-cyan-500 border-2 border-gray-100'}`}
+                  disabled={currentPage === 1}
+                >
+                <GrFormPrevious size={25}/>
+                </button>
+
+                {/* /---------------------->Dynamic Page Numbers <----------------------< */}
+                {Array.from({ length: totalPage }, (_, i) => i + 1).map((page) => {
+                  // Logic for ellipsis and showing only a subset of pages
+                  if (page === 1 || page === totalPage ||  (page >= currentPage - 1 && page <= currentPage + 1)){
+                    return (
                       <button
-                        onClick={() => paginate(i + 1)}
-                        className={`px-4 py-2 mx-1 ${
-                          currentPage === i + 1
-                            ? "bg-blue-500 text-white"
-                            : "bg-white text-gray-700 border"
-                        }`}
+                        key={page}
+                        onClick={() => paginate(page)}
+                        className={`px-4 py-2 rounded mx-1 ${currentPage === page ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border'}`}
                       >
-                        {i + 1}
+                        {page}
                       </button>
-                    </li>
-                  )
-                )}
-              </ul>
-            </nav>
+                    );
+                  } else if (
+                    (page === currentPage - 2 && page > 1) || // Add ellipsis before current
+                    (page === currentPage + 2 && page < totalPage) // Add ellipsis after current
+                  ) {
+                    return (
+                      <span key={page} className="px-2 text-gray-500">
+                        ...
+                      </span>
+                    );
+                  }
+                  return null;
+                })}
+
+                {/* Next Button */}
+                <button
+                  onClick={() => paginate(currentPage + 1)}
+
+                  className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage  ? ' border-gray-200 border-2' : ' bg-cyan-500 border-2 border-gray-100'}`}
+
+                  disabled={currentPage === totalPage}
+                >
+                <GrFormNext size={25} />
+                
+                </button>
+              </nav>
           </div>
         </div>
       </div>
