@@ -15,7 +15,7 @@ const WelcomePage = () => {
   const handleClick = () => {
     if (!condition) {
       setCondition(true);
-      navigate('/sidebar') // Set condition to true on first click
+      navigate('/tenantlogin') // Set condition to true on first click
     } else {
       navigate('/desired-path'); // Replace '/desired-path' with the path you want to navigate to
     }
