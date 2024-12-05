@@ -1229,13 +1229,13 @@ export default function Lead() {
                       {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
                       <td>
                         <button
-                          className={business==="IT" ?"bg-black p-1 text-white text-xm rounded mx-auto":"bg-black p-1 text-white text-xs rounded mx-auto"}
+                          className={business==="Brokerage" ?"bg-black p-1 text-white text-xs rounded mx-auto":"bg-black p-1 text-white text-xm rounded mx-auto"}
                           onClick={() =>
                             navigate(`/sidebar/lead/create/so/${item.id}`)
                           }
                         >
                           {/* SO */}
-                          {business==="IT" ?"SO":"Create Client"}
+                          {business==="Brokerage" ?"Create Client":"SO"}
                         </button>
                       </td>
                     </tr>

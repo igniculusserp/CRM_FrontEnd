@@ -314,6 +314,7 @@ export default function CreateSO() {
     { key: 2, name: "eCommerce" },
     { key: 3, name: "Marketing" },
     { key: 4, name: "Hospitality" },
+    { key: 5, name: "Brokerage" },
   ];
 
   const [defaultTextbusinessTypeDropDown, setDefaultTextbusinessTypeDropDown] =
@@ -1049,13 +1050,12 @@ export default function CreateSO() {
                 {/* -------------XI--1------------- */}
                 {/* -------------Total Amount------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  {business==="Brokerage" ?"":<div className="flex flex-col w-1/2">
                     <label
                       htmlFor="totalAmount"
                       className="text-sm font-medium text-gray-700"
                     >
-                     {/* Total Amount */}
-                     {business==="IT" ?"Total Amount":"Fund"}
+                     Total Amount
 
                     </label>
                     <input
@@ -1066,7 +1066,8 @@ export default function CreateSO() {
                       onChange={handleChange}
                       placeholder="Total Amount"
                     />
-                  </div>
+                  </div>}
+                  
                   {/* -------------XI--2------------- */}
                   {/* -------------  Due Amount------------- */}
                   <div className="flex flex-col w-1/2">
@@ -1075,7 +1076,7 @@ export default function CreateSO() {
                       className="text-sm font-medium text-gray-700"
                     >
                        {/* Due Amount */}
-                      {business==="IT" ?"Due Amount":"Brokerage"}
+                      {business==="Brokerage" ?"Brokerage":"Due Amount"}
                     </label>
                     <input
                       type="text"
@@ -1089,45 +1090,48 @@ export default function CreateSO() {
                 </div>
                 {/* -------------XII--1------------- */}
                 {/* -------------Amount Paid------------- */}
-                {business==="IT" ?<div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="amount_paid"
-                      className="text-sm font-medium text-gray-700"
+                <div className="flex space-x-4">
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="amount_paid"
+                    className="text-sm font-medium text-gray-700"
                     >
-                      Amount Paid
-                    </label>
-                    <input
-                      type="text"
-                      name="amount_paid"
-                      value={editLead.amount_paid}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                      placeholder="Amount Paid"
+                    {/* Amount Paid */}
+                    {business==="Brokerage" ?"Fund":"Amount Paid"}
+                  </label>
+                  <input
+                    type="text"
+                    name="amount_paid"
+                    value={editLead.amount_paid}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                    placeholder="Amount Paid"
                     />
-                    {errors.mobileNo && (
-                      <span className="text-red-500">{errors.amount_paid}</span>
-                    )}
-                  </div>
-                  {/* -------------XII--2------------- */}
-                  {/* -------------Discount------------- */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="discount"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Discount
-                    </label>
-                    <input
-                      type="text"
-                      name="discount"
-                      value={editLead.discount}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                      placeholder="Discount"
-                    />
-                  </div>
-                </div>:""}
+                  {errors.mobileNo && (
+                    <span className="text-red-500">{errors.amount_paid}</span>
+                  )}
+                </div>
+                {/* -------------XII--2------------- */}
+                {/* -------------Discount------------- */}
+                  {business==="Brokerage" ?
+                  "":
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="discount"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Discount
+                  </label>
+                  <input
+                    type="text"
+                    name="discount"
+                    value={editLead.discount}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                    placeholder="Discount"
+                  />
+              </div>}
+                </div>
                 
 
                 {/* -------------XIII--1------------- */}
@@ -1246,113 +1250,116 @@ export default function CreateSO() {
                 {/* -------------SALES ORDER INFORMATION FORM STARTS FROM HERE------------- */}
                 {/* -------------XV--1------------- */}
                 {/* -------------period_of_subscription------------- */}
-                {business==="IT" ?<div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="period_of_subscription"
-                      className="text-sm font-medium text-gray-700"
+                {business==="Brokerage" ?
+                "":<div className="flex space-x-4">
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="period_of_subscription"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Period of Subscription
+                  </label>
+                  <input
+                    type="text"
+                    name="period_of_Subscription"
+                    value={editLead.period_of_subscription}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                    placeholder="Period of Subscription"
+                  />
+                </div>
+                {/* -------------Select Term------------- */}
+                {/* -------------XV--2------------- */}
+                <div className="flex flex-col w-1/2 relative">
+                  <label
+                    htmlFor="term"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Term
+                  </label>
+                  <div
+                    className="relative"
+                    onClick={toggleDropdown_Term_}
+                    onMouseLeave={() => setisDropdownVisible_Term_(false)}
+                  >
+                    <button
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                      id="termDropDown"
+                      type="button"
                     >
-                      Period of Subscription
-                    </label>
-                    <input
-                      type="text"
-                      name="period_of_Subscription"
-                      value={editLead.period_of_subscription}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                      placeholder="Period of Subscription"
-                    />
+                      {isEditMode ? editLead.term : defaultText_Term_DropDown}
+                      <FaAngleDown className="ml-2 text-gray-400" />
+                    </button>
+                    {isDropdownVisible_Term_ && (
+                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                        <ul className="py-2 text-sm text-gray-700">
+                          {Term_DropDown.map(({ key, name }) => (
+                            <li
+                              key={key}
+                              onClick={() =>
+                                handleDropdownisDropdown_Term_(name)
+                              }
+                              className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            >
+                              {name}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
-                  {/* -------------Select Term------------- */}
-                  {/* -------------XV--2------------- */}
-                  <div className="flex flex-col w-1/2 relative">
-                    <label
-                      htmlFor="term"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Term
-                    </label>
-                    <div
-                      className="relative"
-                      onClick={toggleDropdown_Term_}
-                      onMouseLeave={() => setisDropdownVisible_Term_(false)}
-                    >
-                      <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                        id="termDropDown"
-                        type="button"
-                      >
-                        {isEditMode ? editLead.term : defaultText_Term_DropDown}
-                        <FaAngleDown className="ml-2 text-gray-400" />
-                      </button>
-                      {isDropdownVisible_Term_ && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                          <ul className="py-2 text-sm text-gray-700">
-                            {Term_DropDown.map(({ key, name }) => (
-                              <li
-                                key={key}
-                                onClick={() =>
-                                  handleDropdownisDropdown_Term_(name)
-                                }
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                              >
-                                {name}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>:""}
+                </div>
+              </div>}
                 
 
                 {/* -------------XVI--1------------- */}
                 {/* -------------Subscription Start Date------------- */}
-                {business==="IT" ?<div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="subscription_start_date"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Subscription Start Date
-                    </label>
-                    <input
-                      type="date"
-                      name="subscription_start_date"
-                      value={editLead.subscription_start_date}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                    />
-                    {errors.mobileNo && (
-                      <span className="text-red-500">
-                        {errors.subscription_start_date}
-                      </span>
-                    )}
-                  </div>
-                  {/* -------------XVI--2------------- */}
-                  {/* -------------subscription_end_date------------- */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="subscription_end_date"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Subscription End Date
-                    </label>
-                    <input
-                      type="date"
-                      name="subscription_end_date"
-                      value={editLead.subscription_end_date}
-                      onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                    />
-                    {errors.mobileNo && (
-                      <span className="text-red-500">
-                        {errors.subscription_end_date}
-                      </span>
-                    )}
-                  </div>
-                </div>:""}
+                {business==="Brokerage" ?
+                "":
+                <div className="flex space-x-4">
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="subscription_start_date"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Subscription Start Date
+                  </label>
+                  <input
+                    type="date"
+                    name="subscription_start_date"
+                    value={editLead.subscription_start_date}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                  />
+                  {errors.mobileNo && (
+                    <span className="text-red-500">
+                      {errors.subscription_start_date}
+                    </span>
+                  )}
+                </div>
+                {/* -------------XVI--2------------- */}
+                {/* -------------subscription_end_date------------- */}
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="subscription_end_date"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Subscription End Date
+                  </label>
+                  <input
+                    type="date"
+                    name="subscription_end_date"
+                    value={editLead.subscription_end_date}
+                    onChange={handleChange}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                  />
+                  {errors.mobileNo && (
+                    <span className="text-red-500">
+                      {errors.subscription_end_date}
+                    </span>
+                  )}
+                </div>
+              </div>}
                 
                 {/* -------------XVII--1------------- */}
                 <div className="flex space-x-4">

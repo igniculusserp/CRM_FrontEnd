@@ -222,7 +222,7 @@ export default function Analytics() {
             <div className="flex flex-col gap-[5px]">
               <h1>
                 {/* Total Sales */}
-                {business === "IT" ? "Total Sales" : "Total Fund"}
+                {business === "Brokerage" ? "Total Fund" : "Total Sales"}
               </h1>
               <strong>$ {totalSales.currentMonthSalesAmount}</strong>
               <button
@@ -257,7 +257,7 @@ export default function Analytics() {
             <div className="flex flex-col gap-[5px]">
               <h1>
                 {/* Today&apos;s Sales */}
-                {business === "IT" ? "Today's Sales" : "Today's Fund"}
+                {business === "Brokerage" ? "Today's Fund" : "Today's Sales"}
               </h1>
               <strong>$ {todaySales.todaySalesAmount}</strong>
               <button
@@ -336,10 +336,16 @@ export default function Analytics() {
       </div>
       {/* ------------ BOTTOM SECTION ------------ */}
       <div className="m-3 grid grid-cols-2 grid-rows-2 gap-3">
-        <FirstChart text={business === "IT" ? `Top 5 BA` : `Top 5 SRM`} />
-        <FirstChart text={business === "IT" ? `Top 5 SBA` : `Top 5 RM`} />
+        <FirstChart
+          text={business === "Brokerage" ? `Top 5 SRM` : `Top 5 BA`}
+        />
+        <FirstChart
+          text={business === "Brokerage" ? `Top 5 RM` : `Top 5 SBA`}
+        />
         <FirstChart text={`Top 5 TL`} />
-        <FirstChart text={business === "IT" ? `Top SR-TL` : `Top 5 Executive`} />
+        <FirstChart
+          text={business === "Brokerage" ? `Top 5 Executive` : `Top SR-TL`}
+        />
       </div>
       <div className="mx-3 grid grid-cols-2 gap-3">
         <BottomChart text={`Leads By Stage`} color={`#2B6CB0`} />
