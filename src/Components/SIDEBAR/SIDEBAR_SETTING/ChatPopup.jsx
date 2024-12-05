@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ChatWindow from './ChatWindow';
 import MessageInput from './SIDEBAR_SETTING_COMPONENTS/MessageInput';
 import { VscChromeMinimize } from 'react-icons/vsc';
+import { FaPlus, FaWindowMinimize } from 'react-icons/fa';
 
 export default function ChatPopup() {
   const [message, setMessage] = useState(true);
@@ -47,26 +48,23 @@ export default function ChatPopup() {
               popupChat
                 ? 'border-none rounded-none h-[400px] hidden'
                 : 'rounded-t-lg block'
-            } bg-cyan-400 py-1 z-10 shadow-lg text-center`}
+            } bg-cyan-400 py-1 z-10 shadow-lg text-center opacity-70 `}
           >
-            <div className="flex items-center px-4 justify-between sticky bottom-0 h-12">
-              <h1 className="text-2xl text-white font-semibold text-center tracking-wider cursor-pointer">
+            <div className="flex items-center px-4 justify-between sticky bottom-0 h-8 ">
+              <h1 className="text-xl text-cyan-900 font-semibold text-center tracking-wider cursor-pointer">
                 Chat
               </h1>
               {/* BUTTONS */}
               <div className="flex items-center gap-2">
-                <button
-                  className="text-white cursor-pointer text-xl font-medium"
+                <FaPlus
+                  className="text-white cursor-pointer  "
                   onClick={() => setPopupChat(true)}
                 >
-                  +
-                </button>
-                <button
-                  className="text-white cursor-pointer text-xl font-medium"
+                </FaPlus>
+                <FaWindowMinimize
+                  className="text-white cursor-pointer mb-2 "
                   onClick={() => setPopupChat(false)}
-                >
-                  -
-                </button>
+                />
               </div>
             </div>
           </section>
@@ -75,22 +73,21 @@ export default function ChatPopup() {
       <div className="absolute bottom-0 right-0">
         {popupChat && (
           <section className="fixed right-0 bottom-0 w-[300px] h-[200px] bg-slate-50 rounded-t-md border-none overflow-y-scroll chatBar text-justify z-20">
-            <div className="flex items-center justify-between text-justify bg-cyan-400 w-full py-3 px-4">
+            <div className="flex items-center justify-between text-justify bg-cyan-400 w-full py-2 px-4">
               {/* USERNAME */}
-              <h1 className="text-2xl text-white font-semibold text-center tracking-wider cursor-pointer">
+              <h1 className="text-xl text-white font-semibold text-center tracking-wider cursor-pointer ">
                 Chat
               </h1>
               {/* ICONS */}
               <div className="flex items-center justify-center gap-2">
-                <button
+                <FaPlus
                   type="button"
                   onClick={() => setOpenChat(true)}
-                  className="text-white cursor-pointer text-xl font-medium"
+                  className="text-white cursor-pointer"
                 >
-                  +
-                </button>
-                <VscChromeMinimize
-                  className="text-white cursor-pointer text-xl font-medium"
+                </FaPlus>
+                <FaWindowMinimize
+                  className="text-white cursor-pointer mb-2 "
                   onClick={() => setPopupChat(false)}
                 />
               </div>
