@@ -17,16 +17,16 @@ import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 import { ToastContainer } from 'react-toastify';
-import {showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
+import { showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
 
 export default function CreateSO() {
   //to make id unique
   const { id, leadId } = useParams();
   const navigate = useNavigate();
 
-    //------- Business Type --------
-    const businessType = localStorage.getItem("businessType");
-    const [business, setBusiness] = useState("");
+  //------- Business Type --------
+  const businessType = localStorage.getItem("businessType");
+  const [business, setBusiness] = useState("");
 
   //form description is kept-out
   const [description, setdescription] = useState("Add Text Here");
@@ -47,10 +47,10 @@ export default function CreateSO() {
       setIsEditMode(true);
     }
 
-      //------- Business Type --------
-      console.log("Bussiness Type Dash Board : " ,businessType);
-      setBusiness(businessType);
-      
+    //------- Business Type --------
+    console.log("Bussiness Type Dash Board : ", businessType);
+    setBusiness(businessType);
+
   }, [id]);
 
   //GET by ID---------------------------//GET---------------------------//GET---------------------------by ID-----------by ID
@@ -97,55 +97,55 @@ export default function CreateSO() {
   }
 
   //----------------------------------------------------------------------------------------
-  
-   // Segment GET API Is being used here
-   const [segments, setSegments] = useState([]);
-   async function handleSegment() {
-     const bearer_token = localStorage.getItem('token');
- 
-     try {
-       const config = {
-         headers: {
-           Authorization: `Bearer ${bearer_token}`,
-         },
-       };
-       const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`, config);
-       setSegments(response.data.data);
-     } catch (error) {
-       console.error('Error fetching segments:', error);
-     }
-   }
- 
-   useEffect(() => {
-     handleSegment();
-   }, []);
- 
-   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] = useState('Select Segment');
-   const [isDropdownVisibleSegment, setisDropdownVisibleSegment] = useState(false);
- 
-   const toggleDropdownSegment = () => {
-     setisDropdownVisibleSegment(true);
-   };
- 
-   const handleCheckboxChange = (segment) => {
-     const isChecked = editLead.segments.includes(segment.segment);
- 
-     let updatedSegments;
-     if (isChecked) {
-       // Remove segment if already selected
-       updatedSegments = editLead.segments.filter(
-         (selectedSegment) => selectedSegment !== segment.segment
-       );
-     } else {
-       // Add segment if not already selected
-       updatedSegments = [...editLead.segments, segment.segment];
-     }
-     seteditLead((prev) => ({
-       ...prev,
-       segments: updatedSegments,
-     }));
-   };
-   // Segment GET API Is being used here
+
+  // Segment GET API Is being used here
+  const [segments, setSegments] = useState([]);
+  async function handleSegment() {
+    const bearer_token = localStorage.getItem('token');
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`, config);
+      setSegments(response.data.data);
+    } catch (error) {
+      console.error('Error fetching segments:', error);
+    }
+  }
+
+  useEffect(() => {
+    handleSegment();
+  }, []);
+
+  const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] = useState('Select Segment');
+  const [isDropdownVisibleSegment, setisDropdownVisibleSegment] = useState(false);
+
+  const toggleDropdownSegment = () => {
+    setisDropdownVisibleSegment(true);
+  };
+
+  const handleCheckboxChange = (segment) => {
+    const isChecked = editLead.segments.includes(segment.segment);
+
+    let updatedSegments;
+    if (isChecked) {
+      // Remove segment if already selected
+      updatedSegments = editLead.segments.filter(
+        (selectedSegment) => selectedSegment !== segment.segment
+      );
+    } else {
+      // Add segment if not already selected
+      updatedSegments = [...editLead.segments, segment.segment];
+    }
+    seteditLead((prev) => ({
+      ...prev,
+      segments: updatedSegments,
+    }));
+  };
+  // Segment GET API Is being used here
 
   //----------------------------------------------------------------------------------------
   //assigned_ToDropDown  Is being used here
@@ -334,7 +334,7 @@ export default function CreateSO() {
     setPoolEdit(poolName);
   };
 
-    //----------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------
   //LanguageDropDown
 
   const LanguageDropDown = [
@@ -364,20 +364,20 @@ export default function CreateSO() {
   };
 
 
-    //------------------------------------------Mobile Regex------------------------------------------
-    const handleContactChange = (event) => {
-      const inputValue = event.target.value.replace(/[^0-9]/g, ""); 
-      const { name } = event.target;
-    
-      seteditLead((prevState) => ({
-        ...prevState,
-        [name]: inputValue,
-      }));
-    };
-    
-  
-    //------------------------------------------Email Regex------------------------------------------
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //------------------------------------------Mobile Regex------------------------------------------
+  const handleContactChange = (event) => {
+    const inputValue = event.target.value.replace(/[^0-9]/g, "");
+    const { name } = event.target;
+
+    seteditLead((prevState) => ({
+      ...prevState,
+      [name]: inputValue,
+    }));
+  };
+
+
+  //------------------------------------------Email Regex------------------------------------------
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
@@ -440,85 +440,85 @@ export default function CreateSO() {
 
 
       //------------------------------------------------------------------------------------> Validations//--> Validations//--> Validations//--> Validations//--> Validations
-      if(!formData_POST.clientName  ){
+      if (!formData_POST.clientName) {
         showErrorToast("Please enter name")
         return;
       }
 
-      if(!formData_POST.mobileNo){
+      if (!formData_POST.mobileNo) {
         showErrorToast('Please enter mobile number')
         return;
       }
 
-      if(!formData_POST.uidaI_Id_No){
+      if (!formData_POST.uidaI_Id_No) {
         showErrorToast("Please enter UIDAI Id")
         return;
       }
 
-      if(!formData_POST.panCard_No){
+      if (!formData_POST.panCard_No) {
         showErrorToast("Please enter pan card number")
         return;
       }
 
-            
+
       if ((formData_POST.email && !emailRegex.test(formData_POST.email))) {
         showErrorToast('Invalid email format');
         return;
       }
 
-      if(!formData_POST.assigned_To){
+      if (!formData_POST.assigned_To) {
         showErrorToast("Please select Managed by")
         return;
       }
 
 
-      if(!formData_POST.reference_Number){
+      if (!formData_POST.reference_Number) {
         showErrorToast("Please enter reference number")
         return;
       }
 
-      if(!formData_POST.amount_paid){
+      if (!formData_POST.amount_paid) {
         showErrorToast("Please enter paid amount")
         return;
       }
 
-      if(!formData_POST.paymentDate){
+      if (!formData_POST.paymentDate) {
         showErrorToast("Please enter payment date")
         return;
       }
-  
 
-        //Date Logic Validation
-        const today = new Date().toISOString().split('T')[0];
-      
-        //Previous date cannot be selected
-        if(formData_POST.subscription_start_date < today ){
-          showErrorToast('Previous date cannot be selected')
-          return;
-        }
-  
-        if(formData_POST.subscription_start_date < today ){
-          showErrorToast('Previous date cannot be selected')
-          return;
-        }
-  
 
-      if(!formData_POST.subscription_start_date){
+      //Date Logic Validation
+      const today = new Date().toISOString().split('T')[0];
+
+      //Previous date cannot be selected
+      if (formData_POST.subscription_start_date < today) {
+        showErrorToast('Previous date cannot be selected')
+        return;
+      }
+
+      if (formData_POST.subscription_start_date < today) {
+        showErrorToast('Previous date cannot be selected')
+        return;
+      }
+
+
+      if (!formData_POST.subscription_start_date) {
         showErrorToast("Please select subscription start date")
         return
       }
-   
-      if(!formData_POST.subscription_end_date){
+
+      if (!formData_POST.subscription_end_date) {
         showErrorToast("Please select subscription end date")
         return
       }
-   
 
-        const response =  await axios.post(`${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/add`,formData_POST, config);
-        if(response.data.isSuccess){
+
+      const response = await axios.post(`${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/add`, formData_POST, config);
+      if (response.data.isSuccess) {
         alert("Sales Order created successfully!")
         navigate(`/sidebar/lead`);
-        }
+      }
       // Redirect after a short delay
     } catch (error) {
       console.log(error)
@@ -531,7 +531,7 @@ export default function CreateSO() {
 
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       <div className="min-h-screen flex flex-col mt-3">
         <div className="flex justify-between mx-3 px-3 bg-white border rounded py-3">
           <div className="flex items-center justify-center gap-3">
@@ -609,8 +609,8 @@ export default function CreateSO() {
                         {!isEditMode
                           ? defaultTextLanguageDropDown
                           : editLead.language === ""
-                          ? defaultTextLanguageDropDown
-                          : editLead.language}
+                            ? defaultTextLanguageDropDown
+                            : editLead.language}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLanguage && (
@@ -758,7 +758,7 @@ export default function CreateSO() {
                     >
                       Email
                     </label>
-                    <input                      
+                    <input
                       type="email"
                       name="email"
                       value={editLead.email}
@@ -1136,25 +1136,25 @@ export default function CreateSO() {
                 {/* -------------XI--1------------- */}
                 {/* -------------Total Amount------------- */}
                 <div className="flex space-x-4">
-                {business==="Brokerage" ?
-                  ""
-                :<div className="flex flex-col w-1/2">
-                <label
-                  htmlFor="totalAmount"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Total Amount
-                  
-                </label>
-                <input
-                  type="number"
-                  name="totalAmount"
-                  value={editLead.totalAmount}
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
-                  onChange={handleChange}
-                  placeholder="Total Amount"
-                />
-              </div>}
+                  {business === "Brokerage" ?
+                    ""
+                    : <div className="flex flex-col w-1/2">
+                      <label
+                        htmlFor="totalAmount"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Total Amount
+
+                      </label>
+                      <input
+                        type="number"
+                        name="totalAmount"
+                        value={editLead.totalAmount}
+                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        onChange={handleChange}
+                        placeholder="Total Amount"
+                      />
+                    </div>}
                   {/* -------------XI--2------------- */}
                   {/* -------------  Due Amount------------- */}
                   <div className="flex flex-col w-1/2">
@@ -1163,7 +1163,7 @@ export default function CreateSO() {
                       className="text-sm font-medium text-gray-700"
                     >
                       {/* Due Amount */}
-                      {business==="Brokerage" ?"Brokerage":"Due Amount"}
+                      {business === "Brokerage" ? "Brokerage" : "Due Amount"}
                     </label>
                     <input
                       type="text"
@@ -1176,111 +1176,104 @@ export default function CreateSO() {
                   </div>
                 </div>
                 {/* -------------XII--1------------- */}
-                {/* -------------Amount Paid------------- */}
-
-
                 <div className="flex space-x-4">
-                <div className="flex flex-col w-1/2">
-                  <label>
-                    htmlFor="amount_paid"
-                    className="text-sm font-medium text-gray-700"
-                {business==="IT" ?<div className="flex space-x-4">
-                 </label>
+                {business === "Brokerage" ? (
                   <div className="flex flex-col w-1/2">
+                    <label htmlFor="funds" className="text-sm font-medium text-gray-700">
+                      Funds
+                    </label>
+                    <input
+                      type="text"
+                      name="funds"
+                      id="funds"
+                      value={editLead.funds}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Funds"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex flex-col w-1/2">
+                    <label htmlFor="amount_paid" className="text-sm font-medium text-gray-700">
+                      Amount Paid
+                    </label>
                     <input
                       type="text"
                       name="amount_paid"
+                      id="amount_paid"
                       value={editLead.amount_paid}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Amount Paid"
                     />
                   </div>
-                  {/* -------------XII--2------------- */}
-                  {/* -------------Discount------------- */}
+                )}
+                
+                {business === "IT" && (
                   <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="discount"
                       className="text-sm font-medium text-gray-700"
                     >
-                    {/* Amount Paid */}
-                    {business==="Brokerage" ?"Fund":"Amount Paid"}
-                  </label>
-                  <input
-                    type="text"
-                    name="amount_paid"
-                    value={editLead.amount_paid}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                    onChange={handleChange}
-                    placeholder="Amount Paid"
-                    />
-                </div>
-                {/* -------------XII--2------------- */}
-                {/* -------------Discount------------- */}
-                    {business==="Brokerage" ?
-                    "":
-                <div className="flex flex-col w-1/2">
-                  <label
-                    htmlFor="discount"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Discount
-                  </label>
-                  <input
-                    type="text"
-                    name="discount"
-                    value={editLead.discount}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                    onChange={handleChange}
-                    placeholder="Discount"
-                  />
-                </div>
-}
-              </div>
-                
-
-                {/* -------------XIII--1------------- */}
-                {/* -------------Payment Date------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="paymentDate"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Payment Date
-                    </label>
-                    <input
-                      type="date"
-                      name="paymentDate"
-                      value={editLead.paymentDate}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  {/* -------------XIII--2------------- */}
-                  {/* -------------Cheque No Or DD No.------------- */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="chequeOrDD_no"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Cheque No Or DD No.
+                      Discount
                     </label>
                     <input
                       type="text"
-                      name="chequeOrDD_no"
-                      value={editLead.chequeOrDD_no}
+                      name="discount"
+                      id="discount"
+                      value={editLead.discount}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
-                      placeholder="Cheque No Or DD No"
+                      placeholder="Discount"
                     />
                   </div>
-                </div>
+                )}
+              </div>
+              
 
-                {/* -------------XIV--1------------- */}
-                <div className="flex space-x-4">
-                  {/* -------------Product-------------> Means Segments */}
-                  <div className="flex flex-col w-1/2 relative">
+
+              {/* -------------XIII--1------------- */}
+              {/* -------------Payment Date------------- */}
+              <div className="flex space-x-4">
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="paymentDate"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Payment Date
+                  </label>
+                  <input
+                    type="date"
+                    name="paymentDate"
+                    value={editLead.paymentDate}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                  />
+                </div>
+                {/* -------------XIII--2------------- */}
+                {/* -------------Cheque No Or DD No.------------- */}
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="chequeOrDD_no"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Cheque No Or DD No.
+                  </label>
+                  <input
+                    type="text"
+                    name="chequeOrDD_no"
+                    value={editLead.chequeOrDD_no}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                    placeholder="Cheque No Or DD No"
+                  />
+                </div>
+              </div>
+
+              {/* -------------XIV--1------------- */}
+              <div className="flex space-x-4">
+                {/* -------------Product-------------> Means Segments */}
+                <div className="flex flex-col w-1/2 relative">
                   <label
                     htmlFor="segment"
                     className="text-sm font-medium text-gray-700"
@@ -1314,7 +1307,7 @@ export default function CreateSO() {
                                   checked={editLead.segments?.includes(
                                     segment.segment
                                   )}
-                                  onChange={() =>handleCheckboxChange(segment)}
+                                  onChange={() => handleCheckboxChange(segment)}
                                   className="mr-2"
                                 />
                                 {segment.segment}{' '}
@@ -1339,38 +1332,38 @@ export default function CreateSO() {
                     )}
                   </div>
                 </div>
-                  {/* -------------XIV--2------------- */}
-                  {/* -------------Sales Order No------------- */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="saleS_ODR_NO"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Sales Order No
-                    </label>
-                    <input
-                      type="number"
-                      name="saleS_ODR_NO"
-                      value={editLead.saleS_ODR_NO}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                    />
-                  </div>
+                {/* -------------XIV--2------------- */}
+                {/* -------------Sales Order No------------- */}
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="saleS_ODR_NO"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Sales Order No
+                  </label>
+                  <input
+                    type="number"
+                    name="saleS_ODR_NO"
+                    value={editLead.saleS_ODR_NO}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* -------------SALES ORDER INFORMATION STARTS FROM HERE------------- */}
-            <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
-              <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-                Service Details
-              </h2>
-              <div className="py-2 px-4 grid gap-2">
-                {/* -------------SALES ORDER INFORMATION FORM STARTS FROM HERE------------- */}
-                {/* -------------XV--1------------- */}
-                {/* -------------period_of_Subscription------------- */}
-                {business==="Brokerage" ?
-                "":
+          {/* -------------SALES ORDER INFORMATION STARTS FROM HERE------------- */}
+          <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
+            <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+              Service Details
+            </h2>
+            <div className="py-2 px-4 grid gap-2">
+              {/* -------------SALES ORDER INFORMATION FORM STARTS FROM HERE------------- */}
+              {/* -------------XV--1------------- */}
+              {/* -------------period_of_Subscription------------- */}
+              {business === "Brokerage" ?
+                "" :
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
@@ -1430,14 +1423,14 @@ export default function CreateSO() {
                     </div>
                   </div>
                 </div>
-                }
-                
+              }
 
-                {/* -------------XVI--1------------- */}
-                {/* -------------Subscription Start Date------------- */}
-                {business==="Brokerage" ?
-                 "":
-                 <div className="flex space-x-4">
+
+              {/* -------------XVI--1------------- */}
+              {/* -------------Subscription Start Date------------- */}
+              {business === "Brokerage" ?
+                "" :
+                <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="subscription_start_date"
@@ -1471,129 +1464,129 @@ export default function CreateSO() {
                     />
                   </div>
                 </div>
-                 }
-               
-                {/* -------------XVII--1------------- */}
-                <div className="flex space-x-4">
-                  {/* -------------Service------------- */} {/* sms , wp,  */}
-                  <div className="flex flex-col w-1/2 relative">
-                    <label
-                      htmlFor="service"
-                      className="text-sm font-medium text-gray-700"
+              }
+
+              {/* -------------XVII--1------------- */}
+              <div className="flex space-x-4">
+                {/* -------------Service------------- */} {/* sms , wp,  */}
+                <div className="flex flex-col w-1/2 relative">
+                  <label
+                    htmlFor="service"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Service
+                  </label>
+                  <div
+                    className="relative"
+                    onClick={toggleDropdown_Service_}
+                    onMouseLeave={() => setisDropdownVisible_Service_(false)}
+                  >
+                    <button
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                      id="serviceDropDown"
+                      type="button"
                     >
-                      Service
-                    </label>
-                    <div
-                      className="relative"
-                      onClick={toggleDropdown_Service_}
-                      onMouseLeave={() => setisDropdownVisible_Service_(false)}
-                    >
-                      <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                        id="serviceDropDown"
-                        type="button"
-                      >
-                        {isEditMode
-                          ? editLead.service
-                          : defaultText_Service_DropDown}
-                        <FaAngleDown className="ml-2 text-gray-400" />
-                      </button>
-                      {isDropdownVisible_Service_ && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                          <ul className="py-2 text-sm text-gray-700">
-                            {Service_DropDown.map(({ key, name }) => (
-                              <li
-                                key={key}
-                                onClick={() =>
-                                  handleDropdownisDropdown_Service_(name)
-                                }
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                              >
-                                {name}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  {/* -------------XVII--2------------- */}
-                  {/* -------------Status------------- */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="status"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Status
-                    </label>
-                    <input
-                      readOnly
-                      type="test"
-                      name="status"
-                      value="Pending"
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                    />
+                      {isEditMode
+                        ? editLead.service
+                        : defaultText_Service_DropDown}
+                      <FaAngleDown className="ml-2 text-gray-400" />
+                    </button>
+                    {isDropdownVisible_Service_ && (
+                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                        <ul className="py-2 text-sm text-gray-700">
+                          {Service_DropDown.map(({ key, name }) => (
+                            <li
+                              key={key}
+                              onClick={() =>
+                                handleDropdownisDropdown_Service_(name)
+                              }
+                              className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            >
+                              {name}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 </div>
-                <div className="flex space-x-4">
-                  {/* -------------Service------------- */} {/* sms , wp,  */}
-                  {/* -------------Remark------------- */}
-                  <div className="flex flex-col w-full">
-                    <label
-                      htmlFor="remarks"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Remarks
-                    </label>
-                    <input
-                      type="text"
-                      name="remarks"
-                      value={editLead.remarks}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                    />
-                  </div>
+                {/* -------------XVII--2------------- */}
+                {/* -------------Status------------- */}
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="status"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Status
+                  </label>
+                  <input
+                    readOnly
+                    type="test"
+                    name="status"
+                    value="Pending"
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                  />
                 </div>
               </div>
-            </div>
-
-            {/*--------------------------Description Box-------------------------- */}
-            <div className="mx-3 bg-white rounded-xl shadow-md ">
-              <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-                Description Information
-              </h2>
-              <div className="px-2 py-4 grid gap-2">
-                <div className="flex flex-col ">
+              <div className="flex space-x-4">
+                {/* -------------Service------------- */} {/* sms , wp,  */}
+                {/* -------------Remark------------- */}
+                <div className="flex flex-col w-full">
                   <label
                     htmlFor="remarks"
                     className="text-sm font-medium text-gray-700"
                   >
-                    Description
+                    Remarks
                   </label>
-                  <ReactQuill
+                  <input
+                    type="text"
                     name="remarks"
-                    value={description}
-                    className=" text-balance hyphens-auto  max-h-60 h-60"
-                    theme="snow"
-                    onChange={setdescription}
-                    placeholder="Add Description"
+                    value={editLead.remarks}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
                   />
-                </div>
-              </div>
-              <div className="flex justify-end gap-5 mb-6">
-                <div className="flex justify-end mr-5">
-                  <button
-                    type="submit"
-                    className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
-                  >
-                    Save
-                  </button>
                 </div>
               </div>
             </div>
           </div>
-        </form>
+
+          {/*--------------------------Description Box-------------------------- */}
+          <div className="mx-3 bg-white rounded-xl shadow-md ">
+            <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+              Description Information
+            </h2>
+            <div className="px-2 py-4 grid gap-2">
+              <div className="flex flex-col ">
+                <label
+                  htmlFor="remarks"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Description
+                </label>
+                <ReactQuill
+                  name="remarks"
+                  value={description}
+                  className=" text-balance hyphens-auto  max-h-60 h-60"
+                  theme="snow"
+                  onChange={setdescription}
+                  placeholder="Add Description"
+                />
+              </div>
+            </div>
+            <div className="flex justify-end gap-5 mb-6">
+              <div className="flex justify-end mr-5">
+                <button
+                  type="submit"
+                  className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
       </div>
+    </form >
+      </div >
     </>
   );
 }
