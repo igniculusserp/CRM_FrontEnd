@@ -1179,14 +1179,14 @@ export default function CreateSO() {
                 <div className="flex space-x-4">
                 {business === "Brokerage" ? (
                   <div className="flex flex-col w-1/2">
-                    <label htmlFor="funds" className="text-sm font-medium text-gray-700">
+                    <label htmlFor="amount_paid" className="text-sm font-medium text-gray-700">
                       Funds
                     </label>
                     <input
                       type="text"
-                      name="funds"
-                      id="funds"
-                      value={editLead.funds}
+                      name="amount_paid"
+                      id="amount_paid"
+                      value={editLead.amount_paid}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Funds"

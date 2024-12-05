@@ -1,4 +1,4 @@
-import { useState ,useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { FaAngleDown, FaBars } from 'react-icons/fa';
 import { ImFilter } from 'react-icons/im';
 // import { IoSearchOutline } from 'react-icons/io5';
@@ -9,58 +9,54 @@ import SendEmail from './SMSComponents/SendEmail';
 //file
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 
 export default function SmsBox() {
   const navigate = useNavigate();
   const name = getHostnamePart();
 
   const [getSmsBox, setGetSmsBox] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // ITEMS ON A SINGLE PAGE
   const [smsBoxDropdown, setSmsBoxDropdown] = useState(false);
   const [filteredSmsBox, setFilteredSmsBox] = useState([]);
   const [stripeBarDropdown, setStripeBarDropdown] = useState(false);
   const [actionDropdown, setActionDropdown] = useState(false);
   const [filterDropdown, setFilterDropdown] = useState(false);
   const [selectedButton, setSelectedButton] = useState('Send SMS');
-  
 
-      // ------------------------------ E-Mail Settings Get All  ------------------------
-      async function handleGetAll(selectedOption) {
-        const bearer_token = localStorage.getItem("token");
-    
-        try {
-          const config = {
-            headers: {
-              Authorization: `Bearer ${bearer_token}`,
-            },
-          };
-          let response;
-    
-          if (selectedOption === "Send SMS") {
-            response = await axios.get(
-              `${protocal_url}${name}.${tenant_base_url}/SMSBox/sendsmsdetail/byusertoken`,
-              config
-            );
-          } else if (selectedOption === "Send Email") {
-            response = await axios.get(
-              `${protocal_url}${name}.${tenant_base_url}/SMSBox/sendemaildetail/byusertoken`,
-              config
-            );
-          }
-    
-          setGetSmsBox(response.data.data);
-        } catch (error) {
-          console.error("Error fetching leads:", error);
-        }
+
+  // ------------------------------ E-Mail Settings Get All  ------------------------
+  async function handleGetAll(selectedOption) {
+    const bearer_token = localStorage.getItem("token");
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      let response;
+
+      if (selectedOption === "Send SMS") {
+        response = await axios.get(
+          `${protocal_url}${name}.${tenant_base_url}/SMSBox/sendsmsdetail/byusertoken`,
+          config
+        );
+      } else if (selectedOption === "Send Email") {
+        response = await axios.get(
+          `${protocal_url}${name}.${tenant_base_url}/SMSBox/sendemaildetail/byusertoken`,
+          config
+        );
       }
-    
-      useEffect(() => {
-        handleGetAll(selectedButton);
-      }, [selectedButton]);
 
+      setGetSmsBox(response.data.data);
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+    }
+  }
 
-
+  useEffect(() => {
+    handleGetAll(selectedButton);
+  }, [selectedButton]);
 
 
   // HANDLE CHECKBOX
@@ -107,13 +103,41 @@ export default function SmsBox() {
     stripeBar[0].value
   );
 
-  //   PAGINATION
 
-  const indexOfLastItem = itemsPerPage * currentPage;
+
+  const [filteredLeads, setFilteredLeads] = useState([]); // Add this line
+
+useEffect(() => {
+  // Initially set filteredLeads to all data from getSmsBox
+  setFilteredLeads(getSmsBox);
+}, [getSmsBox]);
+
+function handleSmsBoxStatusButton(value) {
+  if (value === null || value === 'ALL') {
+    setFilteredLeads(getSmsBox); // Show all data when 'ALL' is selected
+  } else {
+    const filtered = getSmsBox.filter(
+      (getleads) => getleads.leadStatus === value // Adjust 'leadStatus' if needed
+    );
+    setFilteredLeads(filtered);
+  }
+}
+
+
+  //---------------------->---------------------->PAGINATION<----------------------<----------------------
+  //controlled from the bottom of the page 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Define items per page
+  const totalPage = Math.ceil(filteredLeads.length / itemsPerPage);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentSms = getSmsBox.slice(indexOfFirstItem, indexOfLastItem);
 
-  const paginate = (page) => setCurrentPage(page);
+  //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
+  const currentSms = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  
 
   //   Sales Orders Data
   const smsDropdown = [
@@ -231,11 +255,10 @@ export default function SmsBox() {
                 key={key}
                 onClick={() => handleOptionClick(key)}
                 className={`px-4 py-1.5 rounded font-light text-md
-                ${
-                  selectedButton === key
+                ${selectedButton === key
                     ? 'bg-cyan-500 text-white'
                     : 'bg-gray-100 text-gray-700'
-                }
+                  }
               `}
               >
                 {key}
@@ -318,7 +341,7 @@ export default function SmsBox() {
           <h1 className="bg-blue-600 text-white px-2 py-2 min-w-10 text-center rounded-md text-md shadow-md">
             {getSmsBox.length}
           </h1>
-         
+
         </div>
 
         <div>
@@ -340,7 +363,7 @@ export default function SmsBox() {
               {filterDropdown && (
                 <div className="absolute w-56 bg-white border border-gray-300 right-0 top-6 z-10">
                   <ul className="py-2 text-sm text-gray-700">
-                    {filterData.map((filter) => (
+                    {currentLeads.map((filter) => (
                       <li
                         className="block px-4 py-2 w-full border-b hover:bg-cyan-500 hover:text-white cursor-pointer"
                         key={filter.key}
@@ -383,27 +406,52 @@ export default function SmsBox() {
       {selectedViewValue === 'Table View' && (
         <>
           <div className="flex justify-end m-4">
-            <nav>
-              <ul className="inline-flex items-center">
-                {Array.from(
-                  { length: Math.ceil(getSmsBox.length / itemsPerPage) },
-                  (_, i) => (
-                    <li key={i + 1}>
-                      <button
-                        onClick={() => paginate(i + 1)}
-                        className={`px-4 py-2 mx-1 ${
-                          currentPage === i + 1
-                            ? 'bg-blue-500 text-white'
-                            : 'bg-white text-gray-700 border'
-                        }`}
-                      >
-                        {i + 1}
-                      </button>
-                    </li>
-                  )
-                )}
-              </ul>
+              {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
+              <nav className="flex items-center justify-center text-center mx-auto gap-2 mt-4">
+              {/* Previous Button */}
+              <button
+                onClick={() => paginate(currentPage - 1)}
+                className={`p-1 shadow-md rounded-full text-white ${currentPage === 1 ? 'border-gray-200 border-2' : 'bg-cyan-500 border-2 border-gray-100'}`}
+                disabled={currentPage === 1}
+              >
+                <GrFormPrevious size={25} />
+              </button>
+            
+              {/* Dynamic Page Numbers */}
+              {Array.from({ length: totalPage }, (_, i) => i + 1).map((page) => {
+                if (page === 1 || page === totalPage || (page >= currentPage - 1 && page <= currentPage + 1)) {
+                  return (
+                    <button
+                      key={page}
+                      onClick={() => paginate(page)}
+                      className={`px-4 py-2 rounded mx-1 ${currentPage === page ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border'}`}
+                    >
+                      {page}
+                    </button>
+                  );
+                } else if (
+                  (page === currentPage - 2 && page > 1) ||
+                  (page === currentPage + 2 && page < totalPage)
+                ) {
+                  return (
+                    <span key={page} className="px-2 text-gray-500">
+                      ...
+                    </span>
+                  );
+                }
+                return null;
+              })}
+            
+              {/* Next Button */}
+              <button
+                onClick={() => paginate(currentPage + 1)}
+                className={`p-1 shadow-md rounded-full text-white ${currentPage === totalPage ? 'border-gray-200 border-2' : 'bg-cyan-500 border-2 border-gray-100'}`}
+                disabled={currentPage === totalPage}
+              >
+                <GrFormNext size={25} />
+              </button>
             </nav>
+            
           </div>
         </>
       )}
