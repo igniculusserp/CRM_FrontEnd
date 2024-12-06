@@ -12,6 +12,8 @@ import { BiEdit } from "react-icons/bi";
 import { ImFilter } from "react-icons/im";
 import { MdCall } from "react-icons/md";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { TbRefresh } from "react-icons/tb";
+
 
 //Folder Imported
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
@@ -617,35 +619,7 @@ export default function FollowUp() {
             </div>
 
             <div className="p-1 border rounded cursor-pointer"  onClick={handleResetFilter}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  x="0px"
-                  y="0px"
-                  width="26"
-                  height="26"
-                  viewBox="0,0,256,256"
-                >
-                  <g
-                    fill="#06b6d4"
-                    fillRule="nonzero"
-                    stroke="none"
-                    strokeWidth="1"
-                    strokeLinecap="butt"
-                    strokeLinejoin="miter"
-                    strokeMiterlimit="10"
-                    strokeDasharray=""
-                    strokeDashoffset="0"
-                    fontFamily="none"
-                    fontWeight="none"
-                    fontSize="none"
-                    textAnchor="none"
-                    style={{ mixBlendMode: "normal" }} // Fixed style prop
-                  >
-                    <g transform="scale(8.53333,8.53333)">
-                      <path d="M15,3c-2.9686,0 -5.69718,1.08344 -7.79297,2.875c-0.28605,0.22772 -0.42503,0.59339 -0.36245,0.95363c0.06258,0.36023 0.31676,0.6576 0.66286,0.77549c0.3461,0.1179 0.72895,0.03753 0.99842,-0.20959c1.74821,-1.49444 4.01074,-2.39453 6.49414,-2.39453c5.19656,0 9.45099,3.93793 9.95117,9h-2.95117l4,6l4,-6h-3.05078c-0.51129,-6.14834 -5.67138,-11 -11.94922,-11zM4,10l-4,6h3.05078c0.51129,6.14834 5.67138,11 11.94922,11c2.9686,0 5.69718,-1.08344 7.79297,-2.875c0.28605,-0.22772 0.42504,-0.59339 0.36245,-0.95363c-0.06258,-0.36023 -0.31676,-0.6576 -0.66286,-0.7755c-0.3461,-0.1179 -0.72895,-0.03753 -0.99842,0.20959c-1.74821,1.49444 -4.01074,2.39453 -6.49414,2.39453c-5.19656,0 -9.45099,-3.93793 -9.95117,-9h2.95117z"></path>
-                    </g>
-                  </g>
-                </svg>
+                <TbRefresh size={25}/>
             </div>
           </div>
         </div>
