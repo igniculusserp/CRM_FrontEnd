@@ -26,6 +26,7 @@ import Dlp from './SIDEBAR_SETTING_COMPONENTS/DLP/Dlp';
 import Alert from './SIDEBAR_SETTING_COMPONENTS/Alert/Alert';
 import AccessControl from './SIDEBAR_SETTING_COMPONENTS/AccessControl/AccessControl';
 import PasswordPolicy from './SIDEBAR_SETTING_COMPONENTS/PasswordPolicy/PasswordPolicy';
+import ExpenseHead from './SIDEBAR_SETTING_COMPONENTS/ExpenseHead/ExpenseHead';
 
 export default function Setting() {
   const location = useLocation();
@@ -44,6 +45,7 @@ export default function Setting() {
     { key: 7, value: "Lead Status" },
     { key: 8, value: "Pools" },
     { key: 9, value: "Segments" },
+    { key: 26, value: "Expense Head" },
     { key: 10, value: "SMS Template" },
     { key: 11, value: "Email Template" },
     { key: 20, value: "Call Template" },
@@ -88,6 +90,7 @@ export default function Setting() {
     23: Alert,
     24: AccessControl,
     25: PasswordPolicy,
+    26: ExpenseHead,
   };
 
   const handleButtonClick = (key) => {

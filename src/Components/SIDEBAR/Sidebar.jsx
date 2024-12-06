@@ -110,7 +110,7 @@ export default function SidebaBar({ toggle }) {
     },
     {
       key: 14, //newLy Added 1st Sept
-      data: 'Group Chat',
+      data: 'Financial Activity',
       link: '/sidebar/groupChat',
       icon: <VscGraph />,
     },
