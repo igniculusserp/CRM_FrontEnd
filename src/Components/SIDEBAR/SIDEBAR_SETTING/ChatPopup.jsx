@@ -41,16 +41,16 @@ export default function ChatPopup() {
 
   return (
     <>
-      <div className="absolute bottom-[17px] -right-2 h-12 p-3">
+      <div className="absolute bottom-[17px] right-2 h-12 p-3">
         {message && (
           <section
             className={`fixed right-0 bottom-0 w-[300px] ${
               popupChat
                 ? 'border-none rounded-none h-[400px] hidden'
                 : 'rounded-t-lg block'
-            } bg-cyan-400 py-1 z-10 shadow-lg text-center opacity-70 `}
+            } bg-cyan-400 py-1 z-10 shadow-lg text-center opacity-70`}
           >
-            <div className="flex items-center px-4 justify-between sticky bottom-0 h-8 ">
+            <div className="flex items-center px-4 justify-between sticky bottom-0 h-8">
               <h1 className="text-xl text-cyan-900 font-semibold text-center tracking-wider cursor-pointer">
                 Chat
               </h1>
