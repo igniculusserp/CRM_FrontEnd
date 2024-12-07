@@ -54,6 +54,10 @@ import SmsBox from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SMSBox/SmsBox.
 import CreateSendSms from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SMSBox/CreateSendSms.jsx';
 import CreateSendEmail from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SMSBox/SMSComponents/CreateSendEmail.jsx';
 
+
+// Financial Activity => INNER COMPONENT
+import FinancialActivity from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FinancialActivity/FinancialActivity.jsx';
+
 // Inner Contact --> FollowUp
 import FollowUp from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FollowUp/FollowUp.jsx';
 import CreateFollowUp from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FollowUp/CreateFollowUp.jsx';
@@ -181,6 +185,9 @@ const router = createBrowserRouter([
       { path: '/sidebar/sendsms', element: <CreateSendSms /> },
       { path: '/sidebar/sendemail', element: <CreateSendEmail /> },
 
+      // SMS BOX => INNER COMPONENT
+{ path: '/sidebar/FinancialActivity', element: <FinancialActivity /> },
+// Report => INNER COMPONENT
       { path: '/sidebar/reports', element: <Reports /> },
       { path: '/sidebar/Client_SO/:id', element: <EditClientSO /> },
       { path: '/sidebar/analytics', element: <Analytics /> },

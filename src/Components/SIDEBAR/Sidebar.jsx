@@ -111,7 +111,7 @@ export default function SidebaBar({ toggle }) {
     {
       key: 14, //newLy Added 1st Sept
       data: 'Financial Activity',
-      link: '/sidebar/groupChat',
+      link: '/sidebar/FinancialActivity',
       icon: <VscGraph />,
     },
     {
