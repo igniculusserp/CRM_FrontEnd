@@ -7,13 +7,14 @@ import PropTypes from 'prop-types';
 import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
 
-
 import { ToastContainer } from 'react-toastify';
-import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNotifications';
+import {
+  showErrorToast,
+  showSuccessToast,
+} from '../../../../../utils/toastNotifications';
 
 export default function ExpenseHead() {
-
-  const name = getHostnamePart(); 
+  const name = getHostnamePart();
   const bearer_token = localStorage.getItem('token');
 
   const [data, setData] = useState([]);
@@ -21,10 +22,9 @@ export default function ExpenseHead() {
   const [selectedData, setSelectedData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-
-
-
   // Fetch all  data
+  // GET BY ID
+
   //-------------------get-------------------get-------------------get-------------------get-------------------
   async function handleLead() {
     const bearer_token = localStorage.getItem('token');
@@ -35,12 +35,13 @@ export default function ExpenseHead() {
         },
       };
       const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/department/getall`,
+        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/getall`,
         config
       );
       setData(response.data.data);
+      console.log(response.data.data);
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message);
     }
   }
 
@@ -58,13 +59,13 @@ export default function ExpenseHead() {
         },
       };
       await axios.delete(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/department/delete/${id}`,
+        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/delete/${id}`,
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
       showSuccessToast('Deleted successfully');
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -83,7 +84,6 @@ export default function ExpenseHead() {
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
-    
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
@@ -92,18 +92,26 @@ export default function ExpenseHead() {
 
     try {
       if (isEditMode) {
-        if(!formData.departmentName){
-          showErrorToast('Please enter department name')
-          return;
-        }
-        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/department/edit/${formData.id}`,formData, config);
+        // if (!formData.departmentName) {
+        //   showErrorToast('Please enter department name');
+        //   return;
+        // }
+        await axios.put(
+          `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/edit/${formData.id}`,
+          formData,
+          config
+        );
         showSuccessToast('Updated successfully');
       } else {
-        if(!formData.departmentName){
-          showErrorToast('Please enter department name')
-          return;
-        }
-        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/department/add`, formData, config);
+        // if (!formData.departmentName) {
+        //   showErrorToast('Please enter department name');
+        //   return;
+        // }
+        await axios.post(
+          `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/add`,
+          formData,
+          config
+        );
         showSuccessToast('Created Successfully');
       }
 
@@ -125,7 +133,15 @@ export default function ExpenseHead() {
 
   // Form Component for Adding/Updating
   const EditForm = ({ data, isEditMode }) => {
-    const [formData, setFormData] = useState({ id: '', departmentName: '' });
+    const [formData, setFormData] = useState({
+      id: '',
+      headName: '',
+      date: '',
+      amount: '',
+      refaranceNo: '',
+      remarks: '',
+      lastmodifiedby: '',
+    });
 
     useEffect(() => {
       setFormData(data || { id: '', departmentName: '' });
@@ -133,12 +149,12 @@ export default function ExpenseHead() {
 
     // Handle form input changes
     const handleChange = (e) => {
+      const { name, value } = e.target;
       setFormData({
         ...formData,
-        departmentName: e.target.value,
+        [name]: value,
       });
     };
-
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -147,7 +163,7 @@ export default function ExpenseHead() {
 
     return (
       <>
-      <ToastContainer/>
+        <ToastContainer />
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">
             {isEditMode ? 'Edit' : 'Add'}
@@ -164,21 +180,107 @@ export default function ExpenseHead() {
           <div className="w-full">
             <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-              Expense Head Information
+                Expense Head Information
               </h2>
               <div className="py-2 px-4 min-h-screen relative">
                 <div className="flex space-x-4">
+                  {/* HEAD NAME */}
                   <div className="flex flex-col w-1/2">
                     <label
-                      htmlFor="departmentName"
+                      htmlFor="headName"
                       className="text-sm font-medium text-gray-700"
                     >
                       Expense Head
                     </label>
                     <input
                       type="text"
-                      name="departmentName"
-                      value={formData.departmentName || ''}
+                      name="headName"
+                      value={formData.headName || ''}
+                      onChange={handleChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
+                  {/* Date */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="date"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Date
+                    </label>
+                    <input
+                      type="date"
+                      name="date"
+                      value={formData.headName || ''}
+                      onChange={handleChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
+                </div>
+                {/* SECOND */}
+                <div className="flex space-x-4">
+                  {/* AMOUNT */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="amount"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Amount
+                    </label>
+                    <input
+                      type="text"
+                      name="amount"
+                      value={formData.amount || ''}
+                      onChange={handleChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
+                  {/* Date */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="refaranceNo"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Reference Number
+                    </label>
+                    <input
+                      type="text"
+                      name="refaranceNo"
+                      value={formData.refaranceNo || ''}
+                      onChange={handleChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
+                </div>
+                {/* THIRD */}
+                <div className="flex space-x-4">
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="remarks"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Remarks
+                    </label>
+                    <input
+                      type="text"
+                      name="remarks"
+                      value={formData.remarks || ''}
+                      onChange={handleChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
+                  {/* Date */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="lastmodifiedby"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Last Modified By
+                    </label>
+                    <input
+                      type="text"
+                      name="lastmodifiedby"
+                      value={formData.lastmodifiedby || ''}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
@@ -212,7 +314,7 @@ export default function ExpenseHead() {
       {active ? (
         <>
           <div className="flex min-w-screen justify-between items-center">
-            <h1 className="text-3xl font-medium">Department</h1>
+            <h1 className="text-3xl font-medium">Expense Detail</h1>
             <button
               onClick={handleAdd}
               className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
@@ -228,12 +330,43 @@ export default function ExpenseHead() {
                     <th className="px-1 py-3">
                       <input type="checkbox" />
                     </th>
+                    {/* HEAD NAME */}
                     <th className="px-2 py-3 text-left border-r font-medium">
                       <div className="flex justify-between items-center text-sm">
-                        <span>Expense Head</span>
-                        <FaBars />
+                        <span>Head Name</span>
                       </div>
                     </th>
+                    {/* DATE */}
+                    <th className="px-2 py-3 text-left border-r font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Date</span>
+                      </div>
+                    </th>
+                    {/* AMOUNT */}
+                    <th className="px-2 py-3 text-left border-r font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Amount</span>
+                      </div>
+                    </th>
+                    {/* REFERENCE NUMBER */}
+                    <th className="px-2 py-3 text-left border-r font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Reference Number</span>
+                      </div>
+                    </th>
+                    {/* REMARKS */}
+                    <th className="px-2 py-3 text-left border-r font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Remarks</span>
+                      </div>
+                    </th>
+                    {/* LAST MODIFIED BY */}
+                    <th className="px-2 py-3 text-left border-r font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Last Modified By</span>
+                      </div>
+                    </th>
+                    {/* ACTION */}
                     <th className="px-2 py-3 text-left border-r font-medium">
                       <div className="flex justify-between items-center text-sm">
                         <span>Action</span>
@@ -250,8 +383,29 @@ export default function ExpenseHead() {
                       <td className="px-1 py-3 text-center">
                         <input type="checkbox" />
                       </td>
+                      {/* HEAD NAME */}
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data.departmentName}
+                        {data.headName}
+                      </td>
+                      {/* DATE */}
+                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        {data.date.split('T')[0]}
+                      </td>
+                      {/* AMOUNT */}
+                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        {data.amount}
+                      </td>
+                      {/* REFERENCE NUMBER */}
+                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        {data.refaranceNo}
+                      </td>
+                      {/* REMARKS */}
+                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        {data.remarks}
+                      </td>
+                      {/* LAST MODIFIED BY */}
+                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        {data.lastmodifiedby}
                       </td>
                       <td className="px-2 py-4 flex gap-3 justify-left">
                         <MdEdit
