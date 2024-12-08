@@ -17,8 +17,10 @@ import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 
 import { ToastContainer } from "react-toastify";
-import { showErrorToast } from "../../../../../utils/toastNotifications";
+import { showErrorToast,showSuccessToast } from "../../../../../utils/toastNotifications";
 import AddExpense from "./AddExpense";
+import EditExpense from "./EditExpense";
+
 
 export default function ExpenseView({ setShowTopSection }) {
   //   const bearer_token = localStorage.getItem("token");
@@ -29,6 +31,7 @@ export default function ExpenseView({ setShowTopSection }) {
   const [filteredLeads, setFilteredLeads] = useState([]);
   const [active, setActive] = useState(true);
   const [view, setView] = useState(false);
+  const [editId, setEditId] = useState();
   //----------------GET----------------
   //-------------------get-------------------get-------------------get-------------------get-------------------
   async function handleLead() {
@@ -113,6 +116,40 @@ export default function ExpenseView({ setShowTopSection }) {
     setActive(false);
     setView(true);
     setShowTopSection(false);
+  };
+
+
+  //---------------------------------------------------- Handle Edit -----------------------------------------------------
+
+  const handleEdit = (data) => {
+    setActive(false);
+    setView(false);
+    setShowTopSection(false);
+    setEditId(data);
+  };
+
+
+  
+  //--------------------------------------------------------Handle Delete--------------------------------------------
+
+  const handleDelete = async (id) => {
+    const bearer_token = localStorage.getItem('token');
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      await axios.delete(
+        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/delete/${id}`,
+        config
+      );
+      showSuccessToast('Deleted successfully');
+      setFilteredLeads((prevData) => prevData.filter((item) => item.id !== id));
+      // handleLead();
+    } catch (error) {
+      showErrorToast(error.response.data.message)
+    }
   };
 
   const ViewTable = () => {
@@ -251,12 +288,12 @@ export default function ExpenseView({ setShowTopSection }) {
                           size={25}
                           color="white"
                           className="bg-blue-500 rounded"
-                          //   onClick={() => handleEdit(data.id)}
+                            onClick={() => handleEdit(data.id)}
                         />
                         <RiDeleteBin6Fill
                           size={25}
                           color="red"
-                          //   onClick={() => handleDelete(data.id)}
+                            onClick={() => handleDelete(data.id)}
                         />
                       </td>
                     </tr>
@@ -337,10 +374,14 @@ export default function ExpenseView({ setShowTopSection }) {
     );
   };
 
+
   return (
     <>
       <ToastContainer />
-      {active === true ? <ViewTable /> : view===true? <AddExpense setActive={setActive} />:"Edit"}
+      {active === true ? <ViewTable /> : view===true? 
+      <AddExpense setActive={setActive} setShowTopSection={setShowTopSection} />
+      :
+      <EditExpense setActive={setActive} setShowTopSection={setShowTopSection} editExpenseId={editId} />}
     </>
   );
 }
