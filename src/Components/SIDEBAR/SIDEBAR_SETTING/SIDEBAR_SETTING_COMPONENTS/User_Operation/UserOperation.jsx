@@ -16,10 +16,12 @@ import GlobalUserNameComponent from "../../ReusableComponents/GlobalUserNameComp
 
 //toastify~
 import { ToastContainer } from "react-toastify";
-import { showSuccessToast, showErrorToast } from "../../../../../utils/toastNotifications";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "../../../../../utils/toastNotifications";
 
 export default function UserOperation() {
-
   //to make id unique
   const { id } = useParams();
 
@@ -74,7 +76,7 @@ export default function UserOperation() {
       teamMember: "",
       reportedTo: "",
       groupName: "",
-      target : "",
+      target: "",
       currencyCode: "",
       extensions: "",
       did: "",
@@ -90,7 +92,7 @@ export default function UserOperation() {
       teamMember: user?.teamMember,
       reportedTo: user?.reportedTo,
       groupName: user?.groupName,
-      target : user?.target,
+      target: user?.target,
       currencyCode: user?.currencyCode,
       extensions: user?.extensions,
       did: user?.did,
@@ -179,29 +181,28 @@ export default function UserOperation() {
       handleUpdateOpration();
     } else {
       if (!formData.currencyCode) {
-        showErrorToast('Please enter currency')
+        showErrorToast("Please enter currency");
         return;
       }
       if (!formData.reportedTo) {
-        showErrorToast('Please select reported to')
+        showErrorToast("Please select reported to");
         return;
       }
       if (!formData.groupName) {
-        showErrorToast('Please select group name')
+        showErrorToast("Please select group name");
         return;
       }
       if (!formData.target) {
-        showErrorToast('Please select group name')
+        showErrorToast("Please select group name");
         return;
       }
       if (!formData.did) {
-        showErrorToast('Please select group name')
+        showErrorToast("Please select group name");
         return;
       }
       handleCreateOperation();
     }
-
-  }
+  };
 
   const handleCreateOperation = async (e) => {
     try {
@@ -216,10 +217,10 @@ export default function UserOperation() {
         config
       );
       getOprationLists();
-      setActive(!active);      
-      showSuccessToast('User operation created successfull')
+      setActive(!active);
+      showSuccessToast("User operation created successfull");
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -236,7 +237,7 @@ export default function UserOperation() {
         config
       );
       getOprationLists();
-      showSuccessToast('User deleted successfully')
+      showSuccessToast("User deleted successfully");
     } catch (error) {
       console.error(error.response.data.message);
     }

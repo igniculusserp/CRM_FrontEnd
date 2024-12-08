@@ -18,6 +18,7 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 
 import { ToastContainer } from "react-toastify";
 import { showErrorToast } from "../../../../../utils/toastNotifications";
+import AddExpense from "./AddExpense";
 
 export default function ExpenseView({ setShowTopSection }) {
   //   const bearer_token = localStorage.getItem("token");
@@ -339,7 +340,7 @@ export default function ExpenseView({ setShowTopSection }) {
   return (
     <>
       <ToastContainer />
-      {active === true ? <ViewTable /> : view===true? "Add":"Edit"}
+      {active === true ? <ViewTable /> : view===true? <AddExpense setActive={setActive} />:"Edit"}
     </>
   );
 }
