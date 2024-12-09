@@ -1,19 +1,29 @@
+//react
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { Link } from 'react-router-dom';
+
+
+//reactIcons
 import { FaArrowAltCircleDown, FaArrowAltCircleUp, FaUsers} from 'react-icons/fa';
 import { CiBadgeDollar } from 'react-icons/ci';
 import { FcSalesPerformance } from 'react-icons/fc';
+import { FaUsersRectangle } from 'react-icons/fa6';
+
+
+//Chart
 import SalesPipelineChart from './homeComponents/SalesPipelineChart';
 import LeadSourceChart from './homeComponents/LeadSourceChart';
 import SalesReportChart from './homeComponents/SalesReportChart';
 import CustomerSegmentationChart from './homeComponents/CustomerSegmentationChart';
-import { useEffect, useState } from 'react';
 
+//imports
 import { tenant_base_url, protocal_url } from '../../../../Config/config';
 import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
-import axios from 'axios';
-import { FaUsersRectangle } from 'react-icons/fa6';
-import { Link } from 'react-router-dom';
 
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+//external
+import axios from 'axios';
+
 
 
 

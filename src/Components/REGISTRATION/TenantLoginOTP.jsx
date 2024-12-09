@@ -1,12 +1,16 @@
+//react
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+
 import axios from "axios";
+import { ToastContainer } from "react-toastify";
+
 import forgetPassword from "./../../assets/images/forgetPassword.png";
 import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
+
 import { main_base_url } from "./../../Config/config";
 import { GiDiamonds } from "react-icons/gi";
 import { showSuccessToast, showErrorToast } from "./../../utils/toastNotifications";
-import { useState, useEffect } from "react";
 
 
 export default function TenantLoginOTP() {
