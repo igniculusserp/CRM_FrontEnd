@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
+
+import axios from 'axios';
+import PropTypes from 'prop-types';
+
 import { FaBars } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
-import axios from 'axios';
-import PropTypes from 'prop-types';
+
 import { tenant_base_url, protocal_url } from './../../../../../Config/config';
 import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
 
 import { ToastContainer } from 'react-toastify';
-import {
-  showErrorToast,
-  showSuccessToast,
-} from '../../../../../utils/toastNotifications';
+import {showErrorToast, showSuccessToast} from '../../../../../utils/toastNotifications';
 
 export default function ExpenseHead() {
   const name = getHostnamePart();
@@ -22,9 +22,7 @@ export default function ExpenseHead() {
   const [selectedData, setSelectedData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-  // Fetch all  data
   // GET BY ID
-
   //-------------------get-------------------get-------------------get-------------------get-------------------
   async function handleLead() {
     const bearer_token = localStorage.getItem('token');
@@ -35,7 +33,7 @@ export default function ExpenseHead() {
         },
       };
       const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/getall`,
+        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/headsdescriptions/getall`,
         config
       );
       setData(response.data.data);
@@ -59,7 +57,7 @@ export default function ExpenseHead() {
         },
       };
       await axios.delete(
-        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/delete/${id}`,
+        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/headsdescriptions/delete/${id}`,
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
@@ -77,7 +75,7 @@ export default function ExpenseHead() {
   };
 
   const handleAdd = () => {
-    setSelectedData({ departmentName: '' });
+    setSelectedData({ headDescription: '' });
     setActive(false);
     setIsEditMode(false);
   };
@@ -92,23 +90,15 @@ export default function ExpenseHead() {
 
     try {
       if (isEditMode) {
-        // if (!formData.departmentName) {
-        //   showErrorToast('Please enter department name');
-        //   return;
-        // }
         await axios.put(
-          `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/edit/${formData.id}`,
+          `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/headsDescriptions/edit/${formData.id}`,
           formData,
           config
         );
         showSuccessToast('Updated successfully');
       } else {
-        // if (!formData.departmentName) {
-        //   showErrorToast('Please enter department name');
-        //   return;
-        // }
         await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/add`,
+          `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/headdescription/add`,
           formData,
           config
         );
@@ -135,16 +125,11 @@ export default function ExpenseHead() {
   const EditForm = ({ data, isEditMode }) => {
     const [formData, setFormData] = useState({
       id: '',
-      headName: '',
-      date: '',
-      amount: '',
-      refaranceNo: '',
-      remarks: '',
-      lastmodifiedby: '',
+      headDescription: '',
     });
 
     useEffect(() => {
-      setFormData(data || { id: '', departmentName: '' });
+      setFormData(data || { id: '', headDescription: '' });
     }, [data]);
 
     // Handle form input changes
@@ -187,100 +172,15 @@ export default function ExpenseHead() {
                   {/* HEAD NAME */}
                   <div className="flex flex-col w-1/2">
                     <label
-                      htmlFor="headName"
+                      htmlFor="headDescription"
                       className="text-sm font-medium text-gray-700"
                     >
                       Expense Head
                     </label>
                     <input
                       type="text"
-                      name="headName"
-                      value={formData.headName || ''}
-                      onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  {/* Date */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="date"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Date
-                    </label>
-                    <input
-                      type="date"
-                      name="date"
-                      value={formData.headName || ''}
-                      onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                </div>
-                {/* SECOND */}
-                <div className="flex space-x-4">
-                  {/* AMOUNT */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="amount"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Amount
-                    </label>
-                    <input
-                      type="text"
-                      name="amount"
-                      value={formData.amount || ''}
-                      onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  {/* Date */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="refaranceNo"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Reference Number
-                    </label>
-                    <input
-                      type="text"
-                      name="refaranceNo"
-                      value={formData.refaranceNo || ''}
-                      onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                </div>
-                {/* THIRD */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="remarks"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Remarks
-                    </label>
-                    <input
-                      type="text"
-                      name="remarks"
-                      value={formData.remarks || ''}
-                      onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  {/* Date */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="lastmodifiedby"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Last Modified By
-                    </label>
-                    <input
-                      type="text"
-                      name="lastmodifiedby"
-                      value={formData.lastmodifiedby || ''}
+                      name="headDescription"
+                      value={formData.headDescription || ''}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
@@ -327,6 +227,7 @@ export default function ExpenseHead() {
               <table className="min-w-full bg-white">
                 <thead>
                   <tr className="border-gray-300 border-b-2">
+                    
                     <th className="px-1 py-3">
                       <input type="checkbox" />
                     </th>
@@ -336,38 +237,9 @@ export default function ExpenseHead() {
                         <span>Head Name</span>
                       </div>
                     </th>
-                    {/* DATE */}
-                    <th className="px-2 py-3 text-left border-r font-medium">
-                      <div className="flex justify-between items-center text-sm">
-                        <span>Date</span>
-                      </div>
-                    </th>
-                    {/* AMOUNT */}
-                    <th className="px-2 py-3 text-left border-r font-medium">
-                      <div className="flex justify-between items-center text-sm">
-                        <span>Amount</span>
-                      </div>
-                    </th>
-                    {/* REFERENCE NUMBER */}
-                    <th className="px-2 py-3 text-left border-r font-medium">
-                      <div className="flex justify-between items-center text-sm">
-                        <span>Reference Number</span>
-                      </div>
-                    </th>
-                    {/* REMARKS */}
-                    <th className="px-2 py-3 text-left border-r font-medium">
-                      <div className="flex justify-between items-center text-sm">
-                        <span>Remarks</span>
-                      </div>
-                    </th>
-                    {/* LAST MODIFIED BY */}
-                    <th className="px-2 py-3 text-left border-r font-medium">
-                      <div className="flex justify-between items-center text-sm">
-                        <span>Last Modified By</span>
-                      </div>
-                    </th>
+                  
                     {/* ACTION */}
-                    <th className="px-2 py-3 text-left border-r font-medium">
+                    <th className="px-2 py-3  font-medium">
                       <div className="flex justify-between items-center text-sm">
                         <span>Action</span>
                       </div>
@@ -385,28 +257,9 @@ export default function ExpenseHead() {
                       </td>
                       {/* HEAD NAME */}
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data.headName}
+                        {data.headDescription}
                       </td>
-                      {/* DATE */}
-                      <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data.date.split('T')[0]}
-                      </td>
-                      {/* AMOUNT */}
-                      <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data.amount}
-                      </td>
-                      {/* REFERENCE NUMBER */}
-                      <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data.refaranceNo}
-                      </td>
-                      {/* REMARKS */}
-                      <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data.remarks}
-                      </td>
-                      {/* LAST MODIFIED BY */}
-                      <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data.lastmodifiedby}
-                      </td>
+                     
                       <td className="px-2 py-4 flex gap-3 justify-left">
                         <MdEdit
                           size={25}
