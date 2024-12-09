@@ -1,11 +1,11 @@
 //react
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 //reactIcon
 import { FaAngleDown } from "react-icons/fa";
 
 //external Packages
 import axios from "axios";
-import PropTypes from 'prop-types'; 
+import PropTypes from "prop-types";
 import "react-quill/dist/quill.snow.css";
 
 import { IoInformationCircle } from "react-icons/io5";
@@ -19,11 +19,15 @@ import {
   showErrorToast,
 } from "./../../../../../utils/toastNotifications";
 
-export default function AddExpense({setActive , setShowTopSection}) {
+export default function EditExpense({
+  setActive,
+  setShowTopSection,
+  editExpenseId,
+}) {
   //IMP used as ${name} in an API
   const name = getHostnamePart();
-  const [isShowFields, setIsShowFields] = useState(false);
   const [finance, setFinance] = useState({
+    id: "",
     headName: "",
     date: "",
     amount: 0,
@@ -31,14 +35,53 @@ export default function AddExpense({setActive , setShowTopSection}) {
     remarks: "",
     lastmodifiedby: "",
   });
-  
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFinance((prevTask) => ({
-        ...prevTask,
-        [name]: value,
-      }));
-    };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFinance((prevTask) => ({
+      ...prevTask,
+      [name]: value,
+    }));
+  };
+
+  //--------------------------------------------------------- Get Data By ID -----------------------------------------------
+
+  useEffect(() => {
+    if (editExpenseId) {
+      fetchDataById();
+      console.log("Fetching data for ID:", editExpenseId);
+    }
+  }, [editExpenseId]);
+
+  const fetchDataById = async () => {
+    // setLoading(true);
+    try {
+      const bearer_token = localStorage.getItem("token");
+      const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/edit/${editExpenseId}`,
+        config
+      );
+
+      if (response.status === 200 && response.data.isSuccess) {
+        const finance = response.data.data;
+        setFinance({
+          id: finance.id,
+          headName: finance.headName,
+          date: finance.date,
+          amount: finance.amount,
+          refaranceNo: finance.refaranceNo,
+          remarks: finance.remarks,
+          lastmodifiedby: finance.lastmodifiedby,
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+      showErrorToast("Failed to fetch expense details.");
+    } finally {
+      //   setLoading(false);
+    }
+  };
 
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
@@ -55,13 +98,13 @@ export default function AddExpense({setActive , setShowTopSection}) {
       };
 
       const formData_POST = {
+        id: finance.id,
         headName: finance.headName,
         date: finance.date,
         amount: finance.amount,
         refaranceNo: finance.refaranceNo,
         remarks: finance.remarks,
         lastmodifiedby: finance.lastmodifiedby,
-       
       };
 
       //------------------------------------------------------------------------------------> Validations//--> Validations//--> Validations//--> Validations//--> Validations
@@ -73,8 +116,8 @@ export default function AddExpense({setActive , setShowTopSection}) {
       //Date Logic Validation
       //   const today = new Date().toISOString().split('T')[0];
 
-      const response = await axios.post(
-        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/add`,
+      const response = await axios.put(
+        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/edit/${editExpenseId}`,
         formData_POST,
         config
       );
@@ -118,7 +161,6 @@ export default function AddExpense({setActive , setShowTopSection}) {
 
   useEffect(() => {
     handleLeadStatus();
-
   }, []);
 
   const [defaultTextLeadStatusDropDown, setdefaultTextLeadStatusDropDown] =
@@ -137,17 +179,13 @@ export default function AddExpense({setActive , setShowTopSection}) {
       ...prevTask,
       headName: leadStatus,
     }));
-    setIsShowFields(true);
   };
-
 
   //----------------------------------------------------------handleCancel---------------------------------------------
   const handleCancel = () => {
     setActive(true);
     setShowTopSection(true);
   };
-
-
 
   return (
     <>
@@ -179,8 +217,7 @@ export default function AddExpense({setActive , setShowTopSection}) {
               </h2>
               {/* -------------1------------- */}
               <div className="px-4 grid gap-2 py-2">
-
-              <div className="flex flex-col w-1/2 relative">
+                <div className="flex flex-col w-1/2 relative">
                   <label
                     htmlFor="leadesStatus"
                     className="text-sm font-medium text-gray-700"
@@ -209,7 +246,9 @@ export default function AddExpense({setActive , setShowTopSection}) {
                             leadStatus.map(({ key, headDescription }) => (
                               <li
                                 key={key}
-                                onClick={() => handleDropdownLeadStatus(headDescription)}
+                                onClick={() =>
+                                  handleDropdownLeadStatus(headDescription)
+                                }
                                 className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                               >
                                 {headDescription}
@@ -233,114 +272,111 @@ export default function AddExpense({setActive , setShowTopSection}) {
                   </div>
                 </div>
 
-                {isShowFields && (
-                  <div className="grid gap-2">
-                    <div className="flex space-x-4">
-                      {/* Date */}
-                      <div className="flex flex-col w-1/2">
-                  <label
-                    htmlFor="date"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Date
-                  </label>
-                  <input
-                    type="datetime-local"
-                    name="date"
-                    id="date"
-                    value={finance.call_bck_DateTime}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                    onChange={handleChange}
-                    min={new Date().toISOString().slice(0, 16)}
-                  />
-                </div>
-
-                      {/* reportedTo Dropdown */}
-                      <div className="flex flex-col w-1/2">
-                        <label
-                          htmlFor="amount"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                         Expense Amount
-                        </label>
-                        <input
-                          type="text"
-                          name="amount"
-                          value={finance?.amount}
-                          onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
-                        />
-                      </div>
+                <div className="grid gap-2">
+                  <div className="flex space-x-4">
+                    {/* Date */}
+                    <div className="flex flex-col w-1/2">
+                      <label
+                        htmlFor="date"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Date
+                      </label>
+                      <input
+                        type="datetime-local"
+                        name="date"
+                        id="date"
+                        value={finance.call_bck_DateTime}
+                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        onChange={handleChange}
+                        min={new Date().toISOString().slice(0, 16)}
+                      />
                     </div>
 
-                    <div className="flex space-x-4">
-                      {/* Group Dropdown */}
-                      <div className="flex flex-col w-1/2">
-                        <label
-                          htmlFor="refaranceNo"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Reference No. / Voucher No.
-                        </label>
-                        <input
-                          type="text"
-                          name="refaranceNo"
-                          value={finance?.refaranceNo }
-                          onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
-                        />
-                      </div>
-
-                      {/* target */}
-                      <div className="flex flex-col w-1/2">
-                        <label
-                          htmlFor="lastmodifiedby"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                         Last Modified By
-                        </label>
-                        <input
-                          type="text"
-                          name="lastmodifiedby"
-                          value={finance?.lastmodifiedby}
-                          onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex space-x-4">
-                      {/* target */}
-                      <div className="flex flex-col w-full">
-                        <label
-                          htmlFor="teamMember"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                         Remark
-                        </label>
-                        <input
-                          type="text"
-                          name="remarks"
-                          value={finance?.remarks}
-                          onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
-                        />
-                      </div>
-                    </div>
-                    
-
-                    {/* -------------Button------------- */}
-                    <div className="flex justify-end gap-5 mb-6">
-                      <div className="flex justify-end mr-5">
-                        <button
-                          type="submit"
-                          className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
-                        >
-                          Save
-                        </button>
-                      </div>
+                    {/* reportedTo Dropdown */}
+                    <div className="flex flex-col w-1/2">
+                      <label
+                        htmlFor="amount"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Expense Amount
+                      </label>
+                      <input
+                        type="text"
+                        name="amount"
+                        value={finance?.amount}
+                        onChange={handleChange}
+                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                      />
                     </div>
                   </div>
-                )}
+
+                  <div className="flex space-x-4">
+                    {/* Group Dropdown */}
+                    <div className="flex flex-col w-1/2">
+                      <label
+                        htmlFor="refaranceNo"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Reference No. / Voucher No.
+                      </label>
+                      <input
+                        type="text"
+                        name="refaranceNo"
+                        value={finance?.refaranceNo}
+                        onChange={handleChange}
+                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                      />
+                    </div>
+
+                    {/* target */}
+                    <div className="flex flex-col w-1/2">
+                      <label
+                        htmlFor="lastmodifiedby"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Last Modified By
+                      </label>
+                      <input
+                        type="text"
+                        name="lastmodifiedby"
+                        value={finance?.lastmodifiedby}
+                        onChange={handleChange}
+                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex space-x-4">
+                    {/* target */}
+                    <div className="flex flex-col w-full">
+                      <label
+                        htmlFor="teamMember"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Remark
+                      </label>
+                      <input
+                        type="text"
+                        name="remarks"
+                        value={finance?.remarks}
+                        onChange={handleChange}
+                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                  </div>
+
+                  {/* -------------Button------------- */}
+                  <div className="flex justify-end gap-5 mb-6">
+                    <div className="flex justify-end mr-5">
+                      <button
+                        type="submit"
+                        className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -349,7 +385,8 @@ export default function AddExpense({setActive , setShowTopSection}) {
     </>
   );
 }
-AddExpense.propTypes = {
-    setActive: PropTypes.func.isRequired, 
-    setShowTopSection: PropTypes.bool.isRequired,
-  };
+EditExpense.propTypes = {
+  setActive: PropTypes.func.isRequired,
+  setShowTopSection: PropTypes.bool.isRequired,
+  editExpenseId: PropTypes.string,
+};
