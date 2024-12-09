@@ -19,8 +19,12 @@ import {
 export default function ForgetPassOTP() {
   const navigate = useNavigate();
   const [otp, setotp] = useState("");
+  
+  //otp resend state
   const [resendDisabled, setResendDisabled] = useState(true); 
+
   const [countdown, setCountdown] = useState(120);
+  
   const [email, setemail] = useState("");
 
   //-----------------Email Read-----------------

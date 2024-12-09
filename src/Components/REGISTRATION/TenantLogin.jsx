@@ -44,6 +44,8 @@ export default function TenantLogin() {
   const [userData, setUserData] = useState(null);
   const [managerData, setManagerData] = useState(null);
 
+  const newOtp = 121212;
+
   // Function to handle Microsoft login
   const handleMicrosoftLogin = async () => {
     try {
@@ -51,6 +53,8 @@ export default function TenantLogin() {
 
       msalInstance.setActiveAccount(loginResponse.account);
       setIsAuthenticated(true);
+      console.log('runned')
+      localStorage.setItem("otp", newOtp); // Store OTP in localStorage
 
       // Fetch user and manager details
       fetchUserDetails();
