@@ -35,7 +35,7 @@ export default function Reports() {
       2 : "/Lead/leads/byusertoken",
       3 : "/SalesOrder/salesOrder/clientbyusertoken",
       4 : "/Report/performance/report/byusertoken",
-      5 : "/Report/callingreports/byusertoken"
+      6 : `/Report/callingreports/byusertoken`
     };
   
     try {
