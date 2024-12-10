@@ -8,6 +8,8 @@ import EmployeeReport from "./RepoComponents/EmployeeReport";
 import LeadsReport from "./RepoComponents/LeadsReport";
 import ClientReports from "./RepoComponents/ClientReports";
 import SalesReports from "./RepoComponents/SalesReports";
+import Monitoring from "./RepoComponents/Monitoring";
+
 //Folder Imported
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
@@ -29,10 +31,11 @@ export default function Reports() {
     const bearer_token = localStorage.getItem("token");
   
     const urls = {
-      1: "/Report/performance/report/byusertoken",
-      2: "/Lead/leads/byusertoken",
-      3: "/SalesOrder/salesOrder/clientbyusertoken",
-      4: "/Report/performance/report/byusertoken",
+      1 : "/Report/performance/report/byusertoken",
+      2 : "/Lead/leads/byusertoken",
+      3 : "/SalesOrder/salesOrder/clientbyusertoken",
+      4 : "/Report/performance/report/byusertoken",
+      5 : "/Report/callingreports/byusertoken"
     };
   
     try {
@@ -54,8 +57,8 @@ export default function Reports() {
       );
   
       const data = response.data.data;
-      console.log("@@@@==== Data:", data);
       setGetReports(data);
+      console.log(getReports)
       setOriginalReports(data); // Store original unfiltered data
     } catch (error) {
       console.error("Error fetching reports:", error);
@@ -95,6 +98,7 @@ export default function Reports() {
     { id: 3, name: "Client Reports" },
     { id: 4, name: "Sales Reports" },
     { id: 5, name: "Dispose Leads" },
+    { id: 6, name: "Monitoring" },
   ];
 
   const [selectedId, setSelectedId] = useState(
@@ -104,7 +108,6 @@ export default function Reports() {
   // Function to handle option click using bracket notation
   const handleOptionClick = (id) => {
     setSelectedId(id);
-    console.log("@@@@==== Selected ID (immediate):", id);
 
     // Immediately use the `id` instead of `selectedId` which will be stale
     handleGetReport(id);
@@ -333,6 +336,8 @@ const handleClearFilter = () => {
                   return "Sales Report";
                 case 5:
                   return "Dispose Lead";
+                case 6:
+                    return "Monitoring";
               }
             })()}
           </h1>
@@ -450,6 +455,12 @@ const handleClearFilter = () => {
             <DisposeLeads currentReports={currentReports} />
           )}
         </div>
+        {/* Monitoring TABLE */}
+        <div className="min-w-full overflow-hidden rounded-md">
+        {selectedViewValue === "Table View" && selectedId === 6 && (
+          <Monitoring currentReports={currentReports} />
+        )}
+      </div>
       </div>
 
       {/* PAGINATION */}

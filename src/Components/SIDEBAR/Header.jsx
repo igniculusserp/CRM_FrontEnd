@@ -1,14 +1,10 @@
 import { useState, useEffect } from 'react';
-
 import PropTypes from 'prop-types';
-
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { protocal_url, tenant_base_url, main_base_url } from './../../Config/config';
 
-import { main_base_url } from './../../Config/config';
-
-//react-Icons
-
+// React-Icons
 import { RiAddBoxFill } from 'react-icons/ri';
 import { IoMdNotifications } from 'react-icons/io';
 import { TbCalendarMonth } from 'react-icons/tb';
@@ -16,7 +12,7 @@ import { IoMdSettings } from 'react-icons/io';
 import { FaAngleDown } from 'react-icons/fa';
 import { MdLogout } from 'react-icons/md';
 
-//toast
+// Toast
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -29,10 +25,12 @@ import { FaBarsStaggered } from 'react-icons/fa6';
 import { FaBars } from 'react-icons/fa6';
 import { FiMessageSquare } from 'react-icons/fi';
 import ChatPopup from './SIDEBAR_SETTING/ChatPopup';
+import { getHostnamePart } from './SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 
 export default function Header({ toggle, setToggle }) {
   const navigate = useNavigate();
-
+  const name = getHostnamePart();
+  const bearer_token = localStorage.getItem("token");
   const location = useLocation();
 
   const [welcomedata, setWelcomeData] = useState([]);
@@ -41,9 +39,7 @@ export default function Header({ toggle, setToggle }) {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-
     const registrationdata = localStorage.getItem('registrationdata');
-
     const userDetail = localStorage.getItem('userDetail');
 
     if (token && (userDetail || registrationdata)) {
@@ -76,11 +72,41 @@ export default function Header({ toggle, setToggle }) {
     }
   };
 
-  const signout = () => {
-    localStorage.clear();
-    sessionStorage.clear();
-    showSuccessToast('Logout Successful');
-    navigate(`/tenantlogin`);
+  const signout = async () => {
+    const bearer_token = localStorage.getItem('token');
+    if (!bearer_token) {
+      console.log("No token found in localStorage");
+      return;
+    }
+  
+    const config = {
+      headers: {
+        Authorization: `Bearer ${bearer_token}`,
+      },
+    };
+  
+    try {
+      console.log("Logout API URL: ", `${protocal_url}${name}.${tenant_base_url}/Users/logout`);
+      console.log("Request Headers: ", config);
+  
+      const response = await axios.post(
+        `${protocal_url}${name}.${tenant_base_url}/Users/logout`,{}, config
+      );
+  
+      if (response.data.isSuccess) {
+        console.log("Logout Success: ", response.data);
+        localStorage.clear();
+        sessionStorage.clear();
+        showSuccessToast('Logout Successful');
+        navigate(`/tenantlogin`);
+      } else {
+        console.error("Logout failed: ", response.data);
+        showErrorToast('Logout Failed. Try again.');
+      }
+    } catch (error) {
+      console.error("Error during logout: ", error.response || error.message);
+      showErrorToast('An error occurred while logging out.');
+    }
   };
 
   const [popup, setPopup] = useState(false);
@@ -90,32 +116,15 @@ export default function Header({ toggle, setToggle }) {
   };
 
   const menu = [
-    {
-      key: 1,
-      logo: <RiAddBoxFill />,
-    },
-    {
-      key: 2,
-      logo: <FiMessageSquare />,
-      functionality: handlePopup,
-    },
-    {
-      key: 3,
-      logo: <IoMdNotifications />,
-    },
-    {
-      key: 4,
-      logo: <TbCalendarMonth />,
-    },
-    {
-      key: 5,
-      logo: <IoMdSettings />,
-      link: '/sidebar/setting',
-    },
+    { key: 1, logo: <RiAddBoxFill /> },
+    { key: 2, logo: <FiMessageSquare />, functionality: handlePopup },
+    { key: 3, logo: <IoMdNotifications /> },
+    { key: 4, logo: <TbCalendarMonth /> },
+    { key: 5, logo: <IoMdSettings />, link: '/sidebar/setting' },
     {
       key: 6,
       logo: <MdLogout />,
-      functionality: signout,
+      functionality: signout, // Corrected: pass the function reference, not invoke it
     },
   ];
 
@@ -149,20 +158,19 @@ export default function Header({ toggle, setToggle }) {
             {toggle ? <FaBarsStaggered /> : <FaBars />}
           </button>
 
-          <button className="flex items-center  gap-2 border rounded-full py-1 px-2 ml-[10px]">
+          <button className="flex items-center gap-2 border rounded-full py-1 px-2 ml-[10px]">
             Igniculuss <FaAngleDown />
           </button>
         </div>
 
-        <div className="flex gap-1 justify-end  items-center">
+        <div className="flex gap-1 justify-end items-center">
           {menu.map(({ key, logo, link, functionality }) => (
             <div
               key={key}
-              className={`cursor-pointer p-1 ${
-                activeKey === key
-                  ? 'rounded-full p-1 bg-gray-700 text-cyan-500 shadow-md '
-                  : 'text-gray-700 '
-              }`}
+              className={`cursor-pointer p-1 ${activeKey === key
+                ? 'rounded-full p-1 bg-gray-700 text-cyan-500 shadow-md '
+                : 'text-gray-700 '
+                }`}
             >
               <div onClick={() => handleMenuClick(key, functionality)}>
                 {link ? (
@@ -182,6 +190,7 @@ export default function Header({ toggle, setToggle }) {
     </>
   );
 }
+
 Header.propTypes = {
   toggle: PropTypes.bool.isRequired,
   setToggle: PropTypes.func.isRequired,
