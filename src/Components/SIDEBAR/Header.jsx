@@ -86,8 +86,6 @@ export default function Header({ toggle, setToggle }) {
     };
   
     try {
-      console.log("Logout API URL: ", `${protocal_url}${name}.${tenant_base_url}/Users/logout`);
-      console.log("Request Headers: ", config);
   
       const response = await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/Users/logout`,{}, config
@@ -96,7 +94,6 @@ export default function Header({ toggle, setToggle }) {
       if (response.data.isSuccess) {
         console.log("Logout Success: ", response.data);
         localStorage.clear();
-        sessionStorage.clear();
         showSuccessToast('Logout Successful');
         navigate(`/tenantlogin`);
       } else {
