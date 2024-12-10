@@ -51,7 +51,8 @@ export default function TenantLoginOTP() {
   }, []);
 
   const handleChange = (event) => {
-    const newOtp = event.target.value; // Get the updated value from the input
+    const newOtp = event.target.value;
+    
     setOtp(newOtp); // Update state
     localStorage.setItem("otp", newOtp); // Store OTP in localStorage
     console.log(newOtp, "dd");
@@ -61,6 +62,12 @@ export default function TenantLoginOTP() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+
+    // if (otp === '689741') {
+    //   localStorage.setItem("otp", newOtp);  // Save the correct OTP
+    //   navigate('/sidebar');  // Redirect to sidebar if OTP is correct
+    //   return;  // Exit the function if OTP is valid, no need to proceed further
+    // }
 
     //validation Added for OTP
     if(otp.length < 1 ){

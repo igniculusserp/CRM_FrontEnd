@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-import { main_base_url } from './../../Config/config';
+import { protocal_url, tenant_base_url, main_base_url } from './../../Config/config';
 
 //react-Icons
 
@@ -29,9 +29,15 @@ import { FaBarsStaggered } from 'react-icons/fa6';
 import { FaBars } from 'react-icons/fa6';
 import { FiMessageSquare } from 'react-icons/fi';
 import ChatPopup from './SIDEBAR_SETTING/ChatPopup';
+import { getHostnamePart } from './SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 
 export default function Header({ toggle, setToggle }) {
   const navigate = useNavigate();
+
+  const name = getHostnamePart();
+
+  const bearer_token = localStorage.getItem("token");
+
 
   const location = useLocation();
 
@@ -76,7 +82,25 @@ export default function Header({ toggle, setToggle }) {
     }
   };
 
-  const signout = () => {
+  const signout = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${bearer_token}`
+      }
+    };
+
+    try {
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Users/logout`,
+        config
+      );
+
+      if (response.status === 200 && response.data.isSuccess) {
+        setFollowupsData(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
     localStorage.clear();
     sessionStorage.clear();
     showSuccessToast('Logout Successful');
@@ -158,11 +182,10 @@ export default function Header({ toggle, setToggle }) {
           {menu.map(({ key, logo, link, functionality }) => (
             <div
               key={key}
-              className={`cursor-pointer p-1 ${
-                activeKey === key
+              className={`cursor-pointer p-1 ${activeKey === key
                   ? 'rounded-full p-1 bg-gray-700 text-cyan-500 shadow-md '
                   : 'text-gray-700 '
-              }`}
+                }`}
             >
               <div onClick={() => handleMenuClick(key, functionality)}>
                 {link ? (

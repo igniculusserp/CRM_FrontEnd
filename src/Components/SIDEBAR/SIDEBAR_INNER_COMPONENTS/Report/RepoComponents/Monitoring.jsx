@@ -103,7 +103,7 @@ export default function Monitoring({ currentReports }) {
                 {report.status === true && (
                 <>
                <div className='flex justify-items items-center gap-1'>
-                <GoDot className=' border rounded-full bg-green-300 text-green-700 shadow-sm    shadow-green-300' />
+                <GoDot className=' border rounded-full bg-green-500 text-green-300 shadow-md   shadow-green-300' />
                 Online
                 </div>
                 </>
