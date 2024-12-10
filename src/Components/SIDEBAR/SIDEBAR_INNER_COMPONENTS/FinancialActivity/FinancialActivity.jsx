@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import ExpenseView from "./ExpenseView/ExpenseView";
+import BrokerageView from "./ExpenseView/BrokerageView";
+
 // import { useNavigate } from "react-router-dom";
 // import axios from "axios";
  //file
@@ -93,7 +95,7 @@ export default function FinancialActivity() {
       )}
       {selectedButton==="View Expenses"?
          <ExpenseView setShowTopSection={setShowTopSection}  />
-        :"Brokerage"}
+        : <BrokerageView/>}
       
     </div>
   );

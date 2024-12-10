@@ -19,11 +19,11 @@ import { ToastContainer } from "react-toastify";
 import { showErrorToast,showSuccessToast } from "../../../../../utils/toastNotifications";
 
 //Components
-import AddExpense from "./AddExpense";
-import EditExpense from "./EditExpense";
+import AddBrokerage from "./AddBrokerage";
+import EditBrokerage from "./EditBrokerage";
 
 
-export default function ExpenseView({ setShowTopSection }) {
+export default function BrokerageView({ setShowTopSection }) {
   //   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
   // All States
@@ -44,7 +44,7 @@ export default function ExpenseView({ setShowTopSection }) {
         },
       };
       const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/getall`,
+        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/brokeragedetail/getall`,
         config
       );
       setRawData(response.data.data);
@@ -203,12 +203,12 @@ export default function ExpenseView({ setShowTopSection }) {
 
           {/* Add SECTION */}
           <div className="flex min-w-screen justify-between items-center my-4">
-            <h1 className="text-3xl font-medium">Expense View</h1>
+            <h1 className="text-3xl font-medium">Brokerage View</h1>
             <button
                 onClick={handleAdd}
               className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
             >
-              Add Expense
+              Add Brokerage View
             </button>
           </div>
 
@@ -225,7 +225,7 @@ export default function ExpenseView({ setShowTopSection }) {
                     </th>
                     <th className="px-2 py-3 text-left border-r font-medium">
                       <div className="flex justify-between items-center text-sm">
-                        <span>Voucher No.</span>
+                        <span>Brokerage Amount</span>
                         <FaBars />
                       </div>
                     </th>
@@ -237,19 +237,19 @@ export default function ExpenseView({ setShowTopSection }) {
                     </th>
                     <th className="px-2 py-3 text-left border-r font-medium">
                       <div className="flex justify-between items-center text-sm">
-                        <span>Head</span>
-                        <FaBars />
-                      </div>
-                    </th>
-                    <th className="px-2 py-3 text-left border-r font-medium">
-                      <div className="flex justify-between items-center text-sm">
-                        <span>Amount</span>
+                        <span>Reference No</span>
                         <FaBars />
                       </div>
                     </th>
                     <th className="px-2 py-3 text-left border-r font-medium">
                       <div className="flex justify-between items-center text-sm">
                         <span>Remark</span>
+                        <FaBars />
+                      </div>
+                    </th>
+                    <th className="px-2 py-3 text-left border-r font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Last Modified By</span>
                         <FaBars />
                       </div>
                     </th>
@@ -270,19 +270,22 @@ export default function ExpenseView({ setShowTopSection }) {
                         <input type="checkbox" />
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data.refaranceNo}
+                        {data.brokerageAmount}
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
                         {data?.date?.split("T", " ") }
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data.headName}
+                        {data.referenceno}
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
                         {data.amount}
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data.remarks}
+                        {data.remarks }
+                      </td>
+                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        {data.lastmodifiedby}
                       </td>
                       <td className="px-2 py-4 flex gap-3">
                         <MdEdit
@@ -381,14 +384,14 @@ export default function ExpenseView({ setShowTopSection }) {
       <ToastContainer />
       {active === true ? <ViewTable /> : view === true 
       ? 
-      <AddExpense setActive={setActive} setShowTopSection={setShowTopSection} />
+      <AddBrokerage setActive={setActive} setShowTopSection={setShowTopSection} />
       :
-      <EditExpense setActive={setActive} setShowTopSection={setShowTopSection} editExpenseId={editId} />}
+      <EditBrokerage setActive={setActive} setShowTopSection={setShowTopSection} editExpenseId={editId} />}
     </>
   );
 }
 
 
-ExpenseView.propTypes = {
+BrokerageView.propTypes = {
     setShowTopSection: PropTypes.func.isRequired, 
   };
