@@ -24,12 +24,11 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
     const name = getHostnamePart();
 
     const [finance, setFinance] = useState({
-        headName: "",
         date: "",
-        amount: 0,
-        refaranceNo: "",
+        brokerageAmount: "",
+        referenceno: "",
         remarks: "",
-        lastmodifiedby: "",
+        lastmodifiedby: ""
     });
 
     const handleChange = (e) => {
@@ -55,21 +54,20 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
             };
 
             const formData_POST = {
-                headName: finance.headName,
                 date: finance.date,
-                amount: finance.amount,
-                refaranceNo: finance.refaranceNo,
+                brokerageAmount: finance.brokerageAmount,
+                referenceno: finance.referenceno,
                 remarks: finance.remarks,
-                lastmodifiedby: finance.lastmodifiedby,
+                lastmodifiedby: "",
             };
 
             const response = await axios.post(
-                `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/add`,
+                `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/brokeragedetail/add`,
                 formData_POST,
                 config
             );
             if (response.data.isSuccess) {
-                showSuccessToast("Expense added successfully!");
+                showSuccessToast("Brokage details added successfully!");
                 setActive(true);
             }
             // Redirect after a short delay
@@ -111,24 +109,6 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
 
     }, []);
 
-    const [defaultTextLeadStatusDropDown, setdefaultTextLeadStatusDropDown] =
-        useState("Select Status");
-    const [isDropdownVisibleLeadStatus, setisDropdownVisibleLeadStatus] =
-        useState(false);
-
-    const toggleDropdownLeadStatus = () => {
-        setisDropdownVisibleLeadStatus(!isDropdownVisibleLeadStatus);
-    };
-
-    const handleDropdownLeadStatus = (leadStatus) => {
-        setdefaultTextLeadStatusDropDown(leadStatus);
-        setisDropdownVisibleLeadStatus(!isDropdownVisibleLeadStatus);
-        setFinance((prevTask) => ({
-            ...prevTask,
-            headName: leadStatus,
-        }));
-        setIsShowFields(true);
-    };
 
 
     //----------------------------------------------------------handleCancel---------------------------------------------
@@ -170,7 +150,7 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
                             {/* -------------1------------- */}
                             <div className="px-4 grid gap-2 py-2">
 
-                                
+
 
                                 <div className="grid gap-2">
                                     <div className="flex space-x-4">
@@ -186,25 +166,24 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
                                                 type="datetime-local"
                                                 name="date"
                                                 id="date"
-                                                value={finance.call_bck_DateTime}
+                                                value={finance.date}
                                                 className="mt-1 p-2 border border-gray-300 rounded-md"
                                                 onChange={handleChange}
-                                                min={new Date().toISOString().slice(0, 16)}
                                             />
                                         </div>
 
                                         {/* reportedTo Dropdown */}
                                         <div className="flex flex-col w-1/2">
                                             <label
-                                                htmlFor="amount"
+                                                htmlFor="brokerageAmount"
                                                 className="text-sm font-medium text-gray-700"
                                             >
-                                                Expense Amount
+                                                Brokerage Amount
                                             </label>
                                             <input
                                                 type="text"
-                                                name="amount"
-                                                value={finance?.amount}
+                                                name="brokerageAmount"
+                                                value={finance?.brokerageAmount}
                                                 onChange={handleChange}
                                                 className="mt-1 p-2 border border-gray-300 rounded-md"
                                             />
@@ -215,37 +194,22 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
                                         {/* Group Dropdown */}
                                         <div className="flex flex-col w-1/2">
                                             <label
-                                                htmlFor="refaranceNo"
+                                                htmlFor="referenceno"
                                                 className="text-sm font-medium text-gray-700"
                                             >
                                                 Reference No. / Voucher No.
                                             </label>
                                             <input
                                                 type="text"
-                                                name="refaranceNo"
-                                                value={finance?.refaranceNo}
+                                                name="referenceno"
+                                                value={finance?.referenceno}
                                                 onChange={handleChange}
                                                 className="mt-1 p-2 border border-gray-300 rounded-md"
                                             />
                                         </div>
 
-                                        {/* target */}
-                                        <div className="flex flex-col w-1/2">
-                                            <label
-                                                htmlFor="lastmodifiedby"
-                                                className="text-sm font-medium text-gray-700"
-                                            >
-                                                Last Modified By
-                                            </label>
-                                            <input
-                                                type="text"
-                                                name="lastmodifiedby"
-                                                value={finance?.lastmodifiedby}
-                                                onChange={handleChange}
-                                                className="mt-1 p-2 border border-gray-300 rounded-md"
-                                            />
-                                        </div>
                                     </div>
+
                                     <div className="flex space-x-4">
                                         {/* target */}
                                         <div className="flex flex-col w-full">

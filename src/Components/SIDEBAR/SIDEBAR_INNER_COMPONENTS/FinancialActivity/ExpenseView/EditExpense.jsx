@@ -59,7 +59,7 @@ export default function EditExpense({
       const bearer_token = localStorage.getItem("token");
       const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
       const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/edit/${editExpenseId}`,
+        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/get/${editExpenseId}`,
         config
       );
 
@@ -107,14 +107,7 @@ export default function EditExpense({
         lastmodifiedby: finance.lastmodifiedby,
       };
 
-      //------------------------------------------------------------------------------------> Validations//--> Validations//--> Validations//--> Validations//--> Validations
-      //   if (!formData_POST.clientName) {
-      //     showErrorToast("Please enter name")
-      //     return;
-      //   }
-
-      //Date Logic Validation
-      //   const today = new Date().toISOString().split('T')[0];
+     
 
       const response = await axios.put(
         `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/edit/${editExpenseId}`,
