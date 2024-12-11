@@ -48,6 +48,7 @@ export default function ExpenseView({ setShowTopSection }) {
         config
       );
       setRawData(response.data.data);
+      console.log(rawData)
       setFilteredLeads(response.data.data);
     } catch (error) {
       showErrorToast(error.response.data.message);
@@ -142,7 +143,7 @@ export default function ExpenseView({ setShowTopSection }) {
         },
       };
       await axios.delete(
-        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/brokeragedetail/delete/${id}`,
+        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/delete/${id}`,
         config
       );
       showSuccessToast('Deleted successfully');
@@ -388,7 +389,3 @@ export default function ExpenseView({ setShowTopSection }) {
   );
 }
 
-
-ExpenseView.propTypes = {
-    setShowTopSection: PropTypes.func.isRequired, 
-  };

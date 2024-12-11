@@ -392,6 +392,4 @@ export default function BrokerageView({ setShowTopSection }) {
 }
 
 
-BrokerageView.propTypes = {
-    setShowTopSection: PropTypes.func.isRequired, 
-  };
+

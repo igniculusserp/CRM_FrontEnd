@@ -1,11 +1,11 @@
 //react
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 //reactIcon
 import { FaAngleDown } from "react-icons/fa";
 
 //external Packages
 import axios from "axios";
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import "react-quill/dist/quill.snow.css";
 
 import { IoInformationCircle } from "react-icons/io5";
@@ -19,26 +19,28 @@ import {
   showErrorToast,
 } from "./../../../../../utils/toastNotifications";
 
-export default function AddExpense({setActive , setShowTopSection}) {
+export default function AddExpense({ setActive, setShowTopSection }) {
   //IMP used as ${name} in an API
   const name = getHostnamePart();
+  const today = new Date().toISOString().split('T')[0];
+
   const [isShowFields, setIsShowFields] = useState(false);
   const [finance, setFinance] = useState({
     headName: "",
     date: "",
-    amount: 0,
+    amount: "",
     refaranceNo: "",
     remarks: "",
     lastmodifiedby: "",
   });
-  
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFinance((prevTask) => ({
-        ...prevTask,
-        [name]: value,
-      }));
-    };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFinance((prevTask) => ({
+      ...prevTask,
+      [name]: value,
+    }));
+  };
 
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
@@ -56,22 +58,14 @@ export default function AddExpense({setActive , setShowTopSection}) {
 
       const formData_POST = {
         headName: finance.headName,
-        date: finance.date,
         amount: finance.amount,
+        date: finance?.date || today,
         refaranceNo: finance.refaranceNo,
         remarks: finance.remarks,
-        lastmodifiedby: finance.lastmodifiedby,
-       
+        lastmodifiedby: null,
       };
 
-      //------------------------------------------------------------------------------------> Validations//--> Validations//--> Validations//--> Validations//--> Validations
-      //   if (!formData_POST.clientName) {
-      //     showErrorToast("Please enter name")
-      //     return;
-      //   }
-
-      //Date Logic Validation
-      //   const today = new Date().toISOString().split('T')[0];
+     
 
       const response = await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/add`,
@@ -85,7 +79,7 @@ export default function AddExpense({setActive , setShowTopSection}) {
       // Redirect after a short delay
     } catch (error) {
       console.log(error);
-      showErrorToast(error.data.message);
+      showErrorToast('failed');
     }
   };
 
@@ -178,14 +172,17 @@ export default function AddExpense({setActive , setShowTopSection}) {
                 Lead Information
               </h2>
               {/* -------------1------------- */}
-              <div className="px-4 grid gap-2 py-2">
+              {/* -------------HeadName------------- */}
+              <div className="grid gap-2 p-2">
 
-              <div className="flex flex-col w-1/2 relative">
+              <div className="flex space-x-4">
+
+                <div className="flex flex-col w-1/2 relative">
                   <label
                     htmlFor="leadesStatus"
                     className="text-sm font-medium text-gray-700"
                   >
-                    Select Head
+                    Head Name
                   </label>
                   <div
                     className="relative"
@@ -205,15 +202,15 @@ export default function AddExpense({setActive , setShowTopSection}) {
                     {isDropdownVisibleLeadStatus && (
                       <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
                         <ul className="py-2 text-sm text-gray-700">
-                          {leadStatus.length > 0 ? (
-                            leadStatus.map(({ key, headDescription }) => (
-                              <li
-                                key={key}
-                                onClick={() => handleDropdownLeadStatus(headDescription)}
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                              >
-                                {headDescription}
-                              </li>
+                        {leadStatus.length > 0 ? (
+                          leadStatus.map(({ i, headDescription }) => (
+                            <li
+                              key={i}
+                              onClick={() => handleDropdownLeadStatus(headDescription)}
+                              className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            >
+                              {headDescription}
+                            </li>
                             ))
                           ) : (
                             <li className="flex items-center px-4 py-2 text-center gap-1">
@@ -233,123 +230,110 @@ export default function AddExpense({setActive , setShowTopSection}) {
                   </div>
                 </div>
 
-                {isShowFields && (
-                  <div className="grid gap-2">
-                    <div className="flex space-x-4">
-                      {/* Date */}
-                      <div className="flex flex-col w-1/2">
-                  <label
-                    htmlFor="date"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Date
-                  </label>
-                  <input
-                    type="datetime-local"
-                    name="date"
-                    id="date"
-                    value={finance.call_bck_DateTime}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                    onChange={handleChange}
-                    min={new Date().toISOString().slice(0, 16)}
-                  />
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="date"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Date
+                    </label>
+                    <input
+                      type="date"
+                      name="date"
+                      value={finance.date || today}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                    />
+
+                </div>
+              </div>
+
+
+
+              {/* -------------2------------- */}
+                {/* -------------Amount------------- */}
+                <div className="flex space-x-4">
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="amount"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                    Amount
+                    </label>
+                    <input
+                      type="number"
+                      name="amount"
+                      value={finance.amount}
+                      maxLength="15"
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Enter your Amount"
+                    />
+                  </div>
+                  {/* -------------Reference Number------------- */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="refaranceNo"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                    Reference Number
+                    </label>
+                    <input
+                      type="text"
+                      name="refaranceNo"
+                      value={finance.refaranceNo}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Enter your Reference Number"
+                    />
+                  </div>
                 </div>
 
-                      {/* reportedTo Dropdown */}
-                      <div className="flex flex-col w-1/2">
-                        <label
-                          htmlFor="amount"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                         Expense Amount
-                        </label>
-                        <input
-                          type="text"
-                          name="amount"
-                          value={finance?.amount}
-                          onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
-                        />
-                      </div>
-                    </div>
+              {/* -------------3------------- */}
 
-                    <div className="flex space-x-4">
-                      {/* Group Dropdown */}
-                      <div className="flex flex-col w-1/2">
-                        <label
-                          htmlFor="refaranceNo"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Reference No. / Voucher No.
-                        </label>
-                        <input
-                          type="text"
-                          name="refaranceNo"
-                          value={finance?.refaranceNo }
-                          onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
-                        />
-                      </div>
+                <div className="flex space-x-4">
+                <div className="flex flex-col w-full">
+                  <label
+                    htmlFor="remarks"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Remark
+                  </label>
+                  <input
+                    type="text"
+                    name="remarks"
+                    value={finance.remarks}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                    placeholder="Enter Remark"
+                  />
+                </div>
+                
+              </div>
 
-                      {/* target */}
-                      <div className="flex flex-col w-1/2">
-                        <label
-                          htmlFor="lastmodifiedby"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                         Last Modified By
-                        </label>
-                        <input
-                          type="text"
-                          name="lastmodifiedby"
-                          value={finance?.lastmodifiedby}
-                          onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex space-x-4">
-                      {/* target */}
-                      <div className="flex flex-col w-full">
-                        <label
-                          htmlFor="teamMember"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                         Remark
-                        </label>
-                        <input
-                          type="text"
-                          name="remarks"
-                          value={finance?.remarks}
-                          onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
-                        />
-                      </div>
-                    </div>
-                    
 
-                    {/* -------------Button------------- */}
-                    <div className="flex justify-end gap-5 mb-6">
-                      <div className="flex justify-end mr-5">
-                        <button
-                          type="submit"
-                          className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
+            </div>
+
+            {/* -------------Button------------- */}
+            <div className="flex justify-end gap-5 mb-6">
+              <div className="flex justify-end mr-5">
+                <button
+                  type="submit"
+                  className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                >
+                  Save
+                </button>
               </div>
             </div>
-          </div>
-        </form>
-      </div>
+            </div>
+
+          </div >
+        </form >
+      </div >
     </>
   );
 }
 AddExpense.propTypes = {
-    setActive: PropTypes.func.isRequired, 
-    setShowTopSection: PropTypes.bool.isRequired,
-  };
+  setActive: PropTypes.func.isRequired,
+  setShowTopSection: PropTypes.bool.isRequired,
+};

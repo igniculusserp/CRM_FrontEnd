@@ -3,12 +3,6 @@ import { FaAngleDown } from "react-icons/fa";
 import ExpenseView from "./ExpenseView/ExpenseView";
 import BrokerageView from "./ExpenseView/BrokerageView";
 
-// import { useNavigate } from "react-router-dom";
-// import axios from "axios";
- //file
-// import { tenant_base_url, protocal_url } from "../../../../Config/config";
-// import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
-
 export default function FinancialActivity() {
   const [smsBoxDropdown, setSmsBoxDropdown] = useState(false);
   const [showTopSection, setShowTopSection] = useState(true);
