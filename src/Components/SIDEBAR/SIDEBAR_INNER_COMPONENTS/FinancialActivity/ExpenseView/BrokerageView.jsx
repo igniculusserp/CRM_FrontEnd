@@ -224,6 +224,12 @@ export default function BrokerageView({ setShowTopSection }) {
                       <input type="checkbox" />
                     </th>
                     <th className="px-2 py-3 text-left border-r font-medium">
+                    <div className="flex justify-between items-center text-sm">
+                      <span>Username</span>
+                      <FaBars />
+                    </div>
+                  </th>
+                    <th className="px-2 py-3 text-left border-r font-medium">
                       <div className="flex justify-between items-center text-sm">
                         <span>Brokerage Amount</span>
                         <FaBars />
@@ -270,19 +276,20 @@ export default function BrokerageView({ setShowTopSection }) {
                         <input type="checkbox" />
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        {data.userName}
+                      </td>
+                      <td className="px-2 py-4 text-sm max-w-24 break-words">
                         {data.brokerageAmount}
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data?.date?.split("T", " ") }
+                        {data?.date?.split("T")[0] }
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
                         {data.referenceno}
                       </td>
+                    
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data.amount}
-                      </td>
-                      <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data.remarks }
+                        {data?.remarks}
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
                         {data.lastmodifiedby}

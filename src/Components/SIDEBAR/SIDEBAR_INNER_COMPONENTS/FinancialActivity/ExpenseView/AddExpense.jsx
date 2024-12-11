@@ -14,17 +14,16 @@ import { tenant_base_url, protocal_url } from "../../../../../Config/config";
 import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 import { ToastContainer } from "react-toastify";
-import {
-  showSuccessToast,
-  showErrorToast,
-} from "./../../../../../utils/toastNotifications";
+import { showSuccessToast, showErrorToast } from "./../../../../../utils/toastNotifications";
 
 export default function AddExpense({ setActive, setShowTopSection }) {
-  //IMP used as ${name} in an API
+
+  //name for url
   const name = getHostnamePart();
+  
+  //date for passing by default date in an option
   const today = new Date().toISOString().split('T')[0];
 
-  const [isShowFields, setIsShowFields] = useState(false);
   const [finance, setFinance] = useState({
     headName: "",
     date: "",
@@ -131,7 +130,6 @@ export default function AddExpense({ setActive, setShowTopSection }) {
       ...prevTask,
       headName: leadStatus,
     }));
-    setIsShowFields(true);
   };
 
 
