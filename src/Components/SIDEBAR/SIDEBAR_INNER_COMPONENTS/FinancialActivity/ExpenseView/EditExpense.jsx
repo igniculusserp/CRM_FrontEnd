@@ -14,10 +14,7 @@ import { tenant_base_url, protocal_url } from "../../../../../Config/config";
 import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 import { ToastContainer } from "react-toastify";
-import {
-  showSuccessToast,
-  showErrorToast,
-} from "./../../../../../utils/toastNotifications";
+import {showSuccessToast, showErrorToast} from "./../../../../../utils/toastNotifications";
 
 export default function EditExpense({
   setActive,
@@ -26,6 +23,8 @@ export default function EditExpense({
 }) {
   //IMP used as ${name} in an API
   const name = getHostnamePart();
+  const today = new Date().toISOString().split('T')[0];
+
   const [finance, setFinance] = useState({
     id: "",
     headName: "",
@@ -97,7 +96,7 @@ export default function EditExpense({
         },
       };
 
-      const formData_POST = {
+      const formData_PUT = {
         id: finance.id,
         headName: finance.headName,
         date: finance.date,
@@ -111,7 +110,7 @@ export default function EditExpense({
 
       const response = await axios.put(
         `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/edit/${editExpenseId}`,
-        formData_POST,
+        formData_PUT,
         config
       );
       if (response.data.isSuccess) {
@@ -203,177 +202,169 @@ export default function EditExpense({
 
         {/* -------------FORM Starts FROM HERE------------- */}
         <form onSubmit={handleSubmit} className="flex">
-          <div className="w-full">
-            <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
-              <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-                Lead Information
-              </h2>
-              {/* -------------1------------- */}
-              <div className="px-4 grid gap-2 py-2">
-                <div className="flex flex-col w-1/2 relative">
-                  <label
-                    htmlFor="leadesStatus"
-                    className="text-sm font-medium text-gray-700"
+        <div className="w-full">
+          <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
+            <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+              Lead Information
+            </h2>
+            {/* -------------1------------- */}
+            {/* -------------HeadName------------- */}
+            <div className="grid gap-2 p-2">
+
+            <div className="flex space-x-4">
+
+              <div className="flex flex-col w-1/2 relative">
+                <label
+                  htmlFor="leadesStatus"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Head Name
+                </label>
+                <div
+                  className="relative"
+                  onClick={toggleDropdownLeadStatus}
+                  onMouseLeave={() => setisDropdownVisibleLeadStatus(false)}
+                >
+                  <button
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    id="LeadStatusDropDown"
+                    type="button"
                   >
-                    Select Head
-                  </label>
-                  <div
-                    className="relative"
-                    onClick={toggleDropdownLeadStatus}
-                    onMouseLeave={() => setisDropdownVisibleLeadStatus(false)}
-                  >
-                    <button
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                      id="LeadStatusDropDown"
-                      type="button"
-                    >
-                      {finance.headName != ""
-                        ? finance.headName
-                        : defaultTextLeadStatusDropDown}
-                      <FaAngleDown className="ml-2 text-gray-400" />
-                    </button>
-                    {isDropdownVisibleLeadStatus && (
-                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
-                        <ul className="py-2 text-sm text-gray-700">
-                          {leadStatus.length > 0 ? (
-                            leadStatus.map(({ key, headDescription }) => (
-                              <li
-                                key={key}
-                                onClick={() =>
-                                  handleDropdownLeadStatus(headDescription)
-                                }
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                              >
-                                {headDescription}
-                              </li>
-                            ))
-                          ) : (
-                            <li className="flex items-center px-4 py-2 text-center gap-1">
-                              <IoInformationCircle
-                                size={25}
-                                className="text-cyan-600"
-                              />{" "}
-                              Expense Head is not available. Go to{" "}
-                              <span className="font-bold">
-                                Settings - Expense Head{" "}
-                              </span>
-                            </li>
-                          )}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="grid gap-2">
-                  <div className="flex space-x-4">
-                    {/* Date */}
-                    <div className="flex flex-col w-1/2">
-                      <label
-                        htmlFor="date"
-                        className="text-sm font-medium text-gray-700"
-                      >
-                        Date
-                      </label>
-                      <input
-                        type="datetime-local"
-                        name="date"
-                        id="date"
-                        value={finance.call_bck_DateTime}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
-                        onChange={handleChange}
-                        min={new Date().toISOString().slice(0, 16)}
-                      />
+                    {finance.headName != ""
+                      ? finance.headName
+                      : defaultTextLeadStatusDropDown}
+                    <FaAngleDown className="ml-2 text-gray-400" />
+                  </button>
+                  {isDropdownVisibleLeadStatus && (
+                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                      <ul className="py-2 text-sm text-gray-700">
+                      {leadStatus.length > 0 ? (
+                        leadStatus.map(({ i, headDescription }) => (
+                          <li
+                            key={i}
+                            onClick={() => handleDropdownLeadStatus(headDescription)}
+                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          >
+                            {headDescription}
+                          </li>
+                          ))
+                        ) : (
+                          <li className="flex items-center px-4 py-2 text-center gap-1">
+                            <IoInformationCircle
+                              size={25}
+                              className="text-cyan-600"
+                            />{" "}
+                            Expense Head is not available. Go to{" "}
+                            <span className="font-bold">
+                              Settings - Expense Head{" "}
+                            </span>
+                          </li>
+                        )}
+                      </ul>
                     </div>
-
-                    {/* reportedTo Dropdown */}
-                    <div className="flex flex-col w-1/2">
-                      <label
-                        htmlFor="amount"
-                        className="text-sm font-medium text-gray-700"
-                      >
-                        Expense Amount
-                      </label>
-                      <input
-                        type="text"
-                        name="amount"
-                        value={finance?.amount}
-                        onChange={handleChange}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex space-x-4">
-                    {/* Group Dropdown */}
-                    <div className="flex flex-col w-1/2">
-                      <label
-                        htmlFor="refaranceNo"
-                        className="text-sm font-medium text-gray-700"
-                      >
-                        Reference No. / Voucher No.
-                      </label>
-                      <input
-                        type="text"
-                        name="refaranceNo"
-                        value={finance?.refaranceNo}
-                        onChange={handleChange}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
-                      />
-                    </div>
-
-                    {/* target */}
-                    <div className="flex flex-col w-1/2">
-                      <label
-                        htmlFor="lastmodifiedby"
-                        className="text-sm font-medium text-gray-700"
-                      >
-                        Last Modified By
-                      </label>
-                      <input
-                        type="text"
-                        name="lastmodifiedby"
-                        value={finance?.lastmodifiedby}
-                        onChange={handleChange}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex space-x-4">
-                    {/* target */}
-                    <div className="flex flex-col w-full">
-                      <label
-                        htmlFor="teamMember"
-                        className="text-sm font-medium text-gray-700"
-                      >
-                        Remark
-                      </label>
-                      <input
-                        type="text"
-                        name="remarks"
-                        value={finance?.remarks}
-                        onChange={handleChange}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
-                      />
-                    </div>
-                  </div>
-
-                  {/* -------------Button------------- */}
-                  <div className="flex justify-end gap-5 mb-6">
-                    <div className="flex justify-end mr-5">
-                      <button
-                        type="submit"
-                        className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
+
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="date"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Date
+                  </label>
+                  <input
+                    type="date"
+                    name="date"
+                    value={finance.date?.split('T')[0] || today}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                  />
+
+              </div>
+            </div>
+
+
+
+            {/* -------------2------------- */}
+              {/* -------------Amount------------- */}
+              <div className="flex space-x-4">
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="amount"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                  Amount
+                  </label>
+                  <input
+                    type="number"
+                    name="amount"
+                    value={finance.amount}
+                    maxLength="15"
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                    placeholder="Enter your Amount"
+                  />
+                </div>
+                {/* -------------Reference Number------------- */}
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="refaranceNo"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                  Reference Number
+                  </label>
+                  <input
+                    type="text"
+                    name="refaranceNo"
+                    value={finance.refaranceNo}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                    placeholder="Enter your Reference Number"
+                  />
+                </div>
+              </div>
+
+            {/* -------------3------------- */}
+
+              <div className="flex space-x-4">
+              <div className="flex flex-col w-full">
+                <label
+                  htmlFor="remarks"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Remark
+                </label>
+                <input
+                  type="text"
+                  name="remarks"
+                  value={finance.remarks}
+                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  onChange={handleChange}
+                  placeholder="Enter Remark"
+                />
+              </div>
+              
+            </div>
+
+
+          </div>
+
+          {/* -------------Button------------- */}
+          <div className="flex justify-end gap-5 mb-6">
+            <div className="flex justify-end mr-5">
+              <button
+                type="submit"
+                className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+              >
+                Save
+              </button>
             </div>
           </div>
-        </form>
+          </div>
+
+        </div >
+      </form >
       </div>
     </>
   );

@@ -274,7 +274,7 @@ export default function ExpenseView({ setShowTopSection }) {
                         {data.refaranceNo}
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data?.date?.split("T", " ") }
+                        {data?.date?.split("T")[0] }
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
                         {data.headName}
