@@ -19,8 +19,8 @@ import { ToastContainer } from "react-toastify";
 import { showErrorToast,showSuccessToast } from "../../../../../utils/toastNotifications";
 
 //Components
-import AddExpense from "./AddExpense";
-import EditExpense from "./EditExpense";
+import AddExpense from "./Expense/AddExpense";
+import EditExpense from "./Expense/EditExpense";
 
 
 export default function ExpenseView({ setShowTopSection }) {
@@ -57,7 +57,7 @@ export default function ExpenseView({ setShowTopSection }) {
 
   useEffect(() => {
     handleLead(); // Fetch the  list on initial load
-  }, []);
+  }, [active]);
 
   //---------------------->---------------------->PAGINATION<----------------------<----------------------
   //controlled from the bottom of the page
