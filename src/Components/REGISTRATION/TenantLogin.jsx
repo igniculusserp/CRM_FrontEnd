@@ -297,10 +297,15 @@ export default function TenantLogin() {
         }
       );
       const logindetail = response.data.data;
-      console.log("Login Response: ", response.data.data.userDetail.businessType);
+      // console.log("Login Response: ", response.data.data.userDetail.businessType);
+      
+      //IMP for handling businessType such as Brokerage, IT, Retail.... etc
       localStorage.setItem("businessType",response.data.data.userDetail.businessType);
+
       localStorage.setItem("token", response.data.data.token);
+      
       localStorage.setItem("userDetail", JSON.stringify(logindetail));
+
       localStorage.setItem("myData_forget", userName);
 
       navigate("/tenantloginOTP");
