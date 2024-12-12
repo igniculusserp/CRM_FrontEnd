@@ -43,6 +43,7 @@ export default function UserSettingForm({
     role: editUser?.role || '',
     createdDate: editUser?.createdDate || '',
     deletedDate: editUser?.deletedDate || '',
+    userName: editUser?.userName || '',
   });
 
   useEffect(() => {
@@ -61,6 +62,8 @@ export default function UserSettingForm({
         role: editUser.role,
         createdDate: editUser.createdDate || '',
         deletedDate: editUser.deletedDate || '',
+        userName: editUser?.userName || '',
+
       });
     } else {
       setFormData({
@@ -77,6 +80,8 @@ export default function UserSettingForm({
         role: '',
         createdDate: '',
         deletedDate: '',
+        userName: '',
+
       });
     }
   }, [isEditMode, editUser]);
@@ -119,6 +124,7 @@ export default function UserSettingForm({
       lastName: formData.lastName,
       email: formData.email,
       contactNo: formData.contactNo,
+      userName: formData.userName || '',
       country: formData.country,
       businessType: formData.businessType || '',
       password: formData.password,
@@ -129,6 +135,8 @@ export default function UserSettingForm({
       createdDate: new Date().toISOString(),
       deletedDate: new Date().toISOString(),
       groupId: selectedRole?.id,
+      
+
     }
 
     const formData_PUT ={
@@ -148,6 +156,7 @@ export default function UserSettingForm({
       isActive: true,
       createdDate: formData.createdDate || null,
       deletedDate: formData.deletedDate || null,
+      
 }
 
  
@@ -325,7 +334,25 @@ export default function UserSettingForm({
               </div>
 
               {/*<---------------3--------------->*/}
+              {/*<---------------userName--------------->*/}
               <div className="flex space-x-4">
+
+              <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="userName"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                  Username
+                  </label>
+                  <input
+                    type="text"
+                    name="userName"
+                    value={formData.userName || ''}
+                    onChange={handleChange}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                  />
+                </div>
+
                 {/*<---------------country--------------->*/}
                 <div className="flex flex-col w-1/2">
                   <label
