@@ -29,6 +29,17 @@ import { main_base_url } from './../../Config/config';
 export default function SidebaBar({ toggle }) {
   const name = getHostnamePart();
   const [welcomedata, setWelcomeData] = useState([]);
+
+  //to manage multiple businessTypes
+  const businessType = localStorage.getItem("businessType");
+  const [business, setBusiness] = useState("");
+  
+  useEffect(() => {
+    setBusiness(businessType);
+    console.log(business)
+  }, []);
+
+
   const sideBar = [
     {
       key: 1,
@@ -109,11 +120,112 @@ export default function SidebaBar({ toggle }) {
       icon: <VscGraph />,
     },
     {
+      key: 14,
+      data: 'MIS Reports',
+      link: '/sidebar/misreports',
+      icon: <IoDocumentTextOutline />,
+    },
+    {
+      key: 15,
+      data: 'Subscription',
+      link: '/sidebar/subscription',
+      icon: <IoDocumentTextOutline />,
+    },
+  ];
+
+  const sideBar_Brokerage = [
+    {
+      key: 1,
+      data: 'Home',
+      link: '/sidebar',
+      icon: <RiHome4Line />,
+    },
+    {
+      key: 2,
+      data: 'Leads',
+      link: '/sidebar/lead',
+      icon: <GrContactInfo />,
+    },
+    {
+      key: 12,
+      data: 'Analytics',
+      link: '/sidebar/analytics',
+      icon: <VscGraph />,
+    },
+    {
+      key: 3,
+      data: 'Contacts',
+      link: '/sidebar/contact',
+      icon: <MdOutlineContactPhone />,
+    },
+    {
+      key: 11,
+      data: 'Reports',
+      link: '/sidebar/reports',
+      icon: <IoDocumentTextOutline />,
+    },
+    {
       key: 14, //newLy Added 1st Sept
       data: 'Financial Activity',
       link: '/sidebar/FinancialActivity',
       icon: <VscGraph />,
     },
+    {
+      key: 4,
+      data: 'Client',
+      link: '/sidebar/client',
+      icon: <FiUsers />,
+    },
+    {
+      key: 5,
+      data: 'Sales order',
+      link: '/sidebar/salesorder',
+      icon: <BsGraphUpArrow />,
+    },
+    {
+      key: 6,
+      data: 'Free Trail',
+      link: '/sidebar/freeTrail',
+      icon: <FaRegHandshake />,
+    },
+    {
+      key: 7,
+      data: 'Follow up',
+      link: '/sidebar/followUp',
+      icon: <SiAmazonsimpleemailservice />,
+    },
+    {
+      key: 8,
+      data: 'Mail Box',
+      link: '/sidebar/mailBox',
+      icon: <MdOutlineEmail />,
+    },
+    {
+      key: 9,
+      data: 'Sms Box',
+      link: '/sidebar/smsBox',
+      icon: <MdOutlineEmail />,
+    },
+    {
+      key: 10,
+      data: 'Voice Box',
+      link: '/sidebar/voicebox',
+      icon: <MdOutlineKeyboardVoice />,
+    },
+    {
+      key: 11,
+      data: 'Reports',
+      link: '/sidebar/reports',
+      icon: <IoDocumentTextOutline />,
+    },
+    
+    {
+      key: 13,
+      data: 'Logs',
+      link: '/sidebar/logs',
+      icon: <VscGraph />,
+    },
+    
     {
       key: 15,
       data: 'MIS Reports',
@@ -162,7 +274,7 @@ console.log(welcomedata)
         </div>
 
         <div className="flex flex-col  my-4">
-          {sideBar.map(({ key, data, icon, link }, index) => (
+        {(business === "Brokerage" ? sideBar_Brokerage : sideBar).map(({ key, data, icon, link }, index) => (
             <Link to={link} onClick={() => handleClick(key)} key={key}>
               <li
                 className={`flex ${toggle ? 'justify-center' : 'justify-start'} 
