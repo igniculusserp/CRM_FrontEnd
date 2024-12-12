@@ -19,8 +19,8 @@ import { ToastContainer } from "react-toastify";
 import { showErrorToast, showSuccessToast } from "../../../../../utils/toastNotifications";
 
 //Components
-import AddBrokerage from "./AddBrokerage";
-import EditBrokerage from "./EditBrokerage";
+import AddBrokerage from "./Brokerage/AddBrokerage";
+import EditBrokerage from "./Brokerage/EditBrokerage";
 
 
 export default function BrokerageView({ setShowTopSection }) {
@@ -60,7 +60,7 @@ export default function BrokerageView({ setShowTopSection }) {
 
   useEffect(() => {
     handleLead(); // Fetch the  list on initial load
-  }, []);
+  }, [active]);
 
   //---------------------->---------------------->PAGINATION<----------------------<----------------------
   //controlled from the bottom of the page

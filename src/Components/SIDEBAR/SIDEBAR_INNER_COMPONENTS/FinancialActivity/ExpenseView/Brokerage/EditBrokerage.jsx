@@ -5,32 +5,34 @@ import { FaAngleDown } from "react-icons/fa";
 
 //external Packages
 import axios from "axios";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import "react-quill/dist/quill.snow.css";
 
 import { IoInformationCircle } from "react-icons/io5";
 //file
-import { tenant_base_url, protocal_url } from "../../../../../Config/config";
-import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import { tenant_base_url, protocal_url } from "../../../../../../Config/config";
+import { getHostnamePart } from "../../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 import { ToastContainer } from "react-toastify";
-import {
-  showSuccessToast,
-  showErrorToast,
-} from "../../../../../utils/toastNotifications";
+import { showSuccessToast, showErrorToast } from "../../../../../../utils/toastNotifications";
 
-export default function AddBrokerage({ setActive, setShowTopSection }) {
+export default function EditBrokerage({
+  setActive,
+  setShowTopSection,
+  editBrokerageId,
+}) {
   //IMP used as ${name} in an API
   const name = getHostnamePart();
   const today = new Date().toISOString().split('T')[0];
 
   const [finance, setFinance] = useState({
-    userName: "",
+    id: "",
+    headName: "",
     date: "",
-    brokerageAmount: "",
-    referenceno: "",
+    amount: 0,
+    refaranceNo: "",
     remarks: "",
-    lastmodifiedby: ""
+    lastmodifiedby: "",
   });
 
   const handleChange = (e) => {
@@ -39,6 +41,50 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
       ...prevTask,
       [name]: value,
     }));
+  };
+
+  //--------------------------------------------------------- Get Data By ID -----------------------------------------------
+
+  useEffect(() => {
+    if (editBrokerageId) {
+      fetchDataById();
+      console.log("Fetching data for ID:", editBrokerageId);
+    }
+  }, [editBrokerageId]);
+
+  const fetchDataById = async () => {
+    // setLoading(true);
+    try {
+      const bearer_token = localStorage.getItem("token");
+      const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/brokeragedetail/get/${editBrokerageId}`,
+        config
+      );
+
+      if (response.status === 200 && response.data.isSuccess) {
+        const finance = response.data.data;
+        setFinance({
+          id: finance.id,
+          userName: finance.userName,
+          date: finance?.date || today,
+          brokerageAmount: finance.brokerageAmount,
+          referenceno: finance.referenceno,
+          remarks: finance.remarks,
+          lastmodifiedby: finance.lastmodifiedby,
+
+
+
+
+        });
+      }
+      console.log(finance)
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+      showErrorToast("Failed to fetch expense details.");
+    } finally {
+      //   setLoading(false);
+    }
   };
 
   //---------->handleSubmit<----------
@@ -55,20 +101,21 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
         },
       };
 
-      const formData_POST = {
+      const formData_PUT = {
+        id: finance.id,
         userName: finance.userName,
-        brokerageAmount: finance.brokerageAmount,
-        date: finance?.date || today,
-        remarks: finance.remarks,
-        referenceno: finance.referenceno,
-        lastmodifiedby: null,
+        date: finance?.date.split('T')[0] || today,
+        brokerageAmount: finance?.brokerageAmount,
+        referenceno: finance?.referenceno,
+        remarks: finance?.remarks,
+        lastmodifiedby: finance?.lastmodifiedby,
       };
 
 
 
-      const response = await axios.post(
-        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/brokeragedetail/add`,
-        formData_POST,
+      const response = await axios.put(
+        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/brokeragedetail/edit/${editBrokerageId}`,
+        formData_PUT,
         config
       );
       if (response.data.isSuccess) {
@@ -78,7 +125,7 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
       // Redirect after a short delay
     } catch (error) {
       console.log(error);
-      showErrorToast('failed');
+      showErrorToast(error.data.message);
     }
   };
 
@@ -90,17 +137,15 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
     setShowTopSection(true);
   };
 
-
-
   return (
     <>
       <ToastContainer />
       <div className="min-h-screen flex flex-col mt-3">
-        <div className="flex justify-between px-3 bg-white border rounded py-3">
-          <div className="flex items-center justify-center gap-3">
-            <h1 className="text-xl">
+        <div className="flex justify-between px-3 bg-white border rounded py-3 ">
+          <div className="flex items-center justify-center gap-3 ">
+            <h1 className="text-xl ">
               {/*  {isEditMode? <h1>Edit Lead</h1>: <>Create Lead</> } */}
-              Add Brokerage
+              Edit Expense
             </h1>
           </div>
           <div>
@@ -121,28 +166,14 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
                 Lead Information
               </h2>
               {/* -------------1------------- */}
-              {/* -------------userName------------- */}
+
               <div className="grid gap-2 p-2">
 
                 <div className="flex space-x-4">
 
 
 
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="userName"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Username
-                    </label>
-                    <input
-                      type="userName"
-                      name="userName"
-                      value={finance.userName}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                    />
-                  </div>
+                  
 
                   <div className="flex flex-col w-1/2">
                     <label
@@ -154,7 +185,7 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
                     <input
                       type="date"
                       name="date"
-                      value={finance.date || today}
+                      value={finance.date.split('T')[0] || today}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                     />
@@ -162,6 +193,7 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
                   </div>
 
                 </div>
+
 
 
 
@@ -176,7 +208,7 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
                       Brokerage Amount
                     </label>
                     <input
-                      type="brokerageAmount"
+                      type="number"
                       name="brokerageAmount"
                       value={finance.brokerageAmount}
                       maxLength="15"
@@ -244,7 +276,7 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
 
           </div >
         </form >
-      </div >
+      </div>
     </>
   );
 }

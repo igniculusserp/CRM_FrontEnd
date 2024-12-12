@@ -10,11 +10,11 @@ import "react-quill/dist/quill.snow.css";
 
 import { IoInformationCircle } from "react-icons/io5";
 //file
-import { tenant_base_url, protocal_url } from "../../../../../Config/config";
-import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import { tenant_base_url, protocal_url } from "../../../../../../Config/config";
+import { getHostnamePart } from "../../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 import { ToastContainer } from "react-toastify";
-import {showSuccessToast, showErrorToast} from "./../../../../../utils/toastNotifications";
+import {showSuccessToast, showErrorToast} from "../../../../../../utils/toastNotifications";
 
 export default function EditExpense({
   setActive,

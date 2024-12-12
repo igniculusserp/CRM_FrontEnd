@@ -47,6 +47,7 @@ export default function Registration() {
     contactNo: "",
     country: "",
     businessType: "",
+    userName: ""
   });
 
   //countryCodes--->>toggle
@@ -146,6 +147,7 @@ export default function Registration() {
       password,
       confirmPassword,
       businessType,
+      userName,
     } = formValues;
   
     // Check if country code and contact number are available
@@ -164,6 +166,7 @@ export default function Registration() {
       createdDate: new Date().toISOString(),
       deletedDate: new Date().toISOString(),
       isActive: true,
+      userName: "",
     };
   
     // Validation
