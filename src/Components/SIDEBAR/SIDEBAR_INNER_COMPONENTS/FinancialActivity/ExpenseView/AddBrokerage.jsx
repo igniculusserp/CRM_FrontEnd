@@ -25,7 +25,7 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
   const today = new Date().toISOString().split('T')[0];
 
   const [finance, setFinance] = useState({
-    userName : "",
+    userName: "",
     date: "",
     brokerageAmount: "",
     referenceno: "",
@@ -56,7 +56,7 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
       };
 
       const formData_POST = {
-        userName : finance.userName,
+        userName: finance.userName,
         brokerageAmount: finance.brokerageAmount,
         date: finance?.date || today,
         remarks: finance.remarks,
@@ -64,7 +64,7 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
         lastmodifiedby: null,
       };
 
-     
+
 
       const response = await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/brokeragedetail/add`,
@@ -82,7 +82,7 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
     }
   };
 
-  
+
 
   //----------------------------------------------------------handleCancel---------------------------------------------
   const handleCancel = () => {
@@ -100,7 +100,7 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-xl">
               {/*  {isEditMode? <h1>Edit Lead</h1>: <>Create Lead</> } */}
-              Add Expense
+              Add Brokerage
             </h1>
           </div>
           <div>
@@ -121,27 +121,28 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
                 Lead Information
               </h2>
               {/* -------------1------------- */}
-              {/* -------------HeadName------------- */}
+              {/* -------------userName------------- */}
               <div className="grid gap-2 p-2">
 
-              <div className="flex space-x-4">
+                <div className="flex space-x-4">
 
-              <div className="flex flex-col w-1/2">
+
+
+                  <div className="flex flex-col w-1/2">
                     <label
-                      htmlFor="date"
+                      htmlFor="userName"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Date
+                      Username
                     </label>
                     <input
-                      type="date"
-                      name="date"
-                      value={finance.date || today}
+                      type="userName"
+                      name="userName"
+                      value={finance.userName}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                     />
-
-                </div>
+                  </div>
 
                   <div className="flex flex-col w-1/2">
                     <label
@@ -158,25 +159,26 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
                       onChange={handleChange}
                     />
 
+                  </div>
+
                 </div>
-              </div>
 
 
 
-              {/* -------------2------------- */}
-                {/* -------------Amount------------- */}
+                {/* -------------2------------- */}
+                {/* -------------brokerageAmount------------- */}
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
-                      htmlFor="amount"
+                      htmlFor="brokerageAmount"
                       className="text-sm font-medium text-gray-700"
                     >
-                    Amount
+                      Brokerage Amount
                     </label>
                     <input
-                      type="number"
-                      name="amount"
-                      value={finance.amount}
+                      type="brokerageAmount"
+                      name="brokerageAmount"
+                      value={finance.brokerageAmount}
                       maxLength="15"
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
@@ -186,15 +188,15 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
                   {/* -------------Reference Number------------- */}
                   <div className="flex flex-col w-1/2">
                     <label
-                      htmlFor="refaranceNo"
+                      htmlFor="referenceno"
                       className="text-sm font-medium text-gray-700"
                     >
-                    Reference Number
+                      Reference Number
                     </label>
                     <input
                       type="text"
-                      name="refaranceNo"
-                      value={finance.refaranceNo}
+                      name="referenceno"
+                      value={finance.referenceno}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter your Reference Number"
@@ -202,42 +204,42 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
                   </div>
                 </div>
 
-              {/* -------------3------------- */}
+                {/* -------------3------------- */}
 
                 <div className="flex space-x-4">
-                <div className="flex flex-col w-full">
-                  <label
-                    htmlFor="remarks"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Remark
-                  </label>
-                  <input
-                    type="text"
-                    name="remarks"
-                    value={finance.remarks}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                    onChange={handleChange}
-                    placeholder="Enter Remark"
-                  />
+                  <div className="flex flex-col w-full">
+                    <label
+                      htmlFor="remarks"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Remark
+                    </label>
+                    <input
+                      type="text"
+                      name="remarks"
+                      value={finance.remarks}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Enter Remark"
+                    />
+                  </div>
+
                 </div>
-                
+
+
               </div>
 
-
-            </div>
-
-            {/* -------------Button------------- */}
-            <div className="flex justify-end gap-5 mb-6">
-              <div className="flex justify-end mr-5">
-                <button
-                  type="submit"
-                  className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
-                >
-                  Save
-                </button>
+              {/* -------------Button------------- */}
+              <div className="flex justify-end gap-5 mb-6">
+                <div className="flex justify-end mr-5">
+                  <button
+                    type="submit"
+                    className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                  >
+                    Save
+                  </button>
+                </div>
               </div>
-            </div>
             </div>
 
           </div >

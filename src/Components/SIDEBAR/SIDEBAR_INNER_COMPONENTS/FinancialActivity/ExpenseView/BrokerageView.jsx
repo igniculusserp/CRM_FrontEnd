@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 //external Packages
 import axios from "axios";
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 //React Icons
 import { FaBars } from "react-icons/fa";
 import { ImFilter } from "react-icons/im";
@@ -16,7 +16,7 @@ import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/Glo
 
 
 import { ToastContainer } from "react-toastify";
-import { showErrorToast,showSuccessToast } from "../../../../../utils/toastNotifications";
+import { showErrorToast, showSuccessToast } from "../../../../../utils/toastNotifications";
 
 //Components
 import AddBrokerage from "./AddBrokerage";
@@ -33,6 +33,10 @@ export default function BrokerageView({ setShowTopSection }) {
   const [active, setActive] = useState(true);
   const [view, setView] = useState(false);
   const [editId, setEditId] = useState();
+
+
+
+
 
   //-------------------get-------------------get-------------------get-------------------get-------------------
   async function handleLead() {
@@ -122,15 +126,27 @@ export default function BrokerageView({ setShowTopSection }) {
 
   //---------------------------------------------------- Handle Edit -----------------------------------------------------
 
-  const handleEdit = (data) => {
+  // const handleEdit = (id) => {
+  //   console.log("Editing ID:", id); // Debug log
+
+  //   setActive(false);
+  //   setView(false);
+  //   setShowTopSection(false);
+  //   setEditId(id);
+  // };
+
+
+  const handleEdit = (id) => {
+    console.log("Editing ID:", id);
     setActive(false);
     setView(false);
-    setShowTopSection(false);
-    setEditId(data);
+    if (setShowTopSection) setShowTopSection(false);
+    setEditId(id);
   };
 
 
-  
+
+
   //--------------------------------------------------------Handle Delete--------------------------------------------
 
   const handleDelete = async (id) => {
@@ -205,7 +221,7 @@ export default function BrokerageView({ setShowTopSection }) {
           <div className="flex min-w-screen justify-between items-center my-4">
             <h1 className="text-3xl font-medium">Brokerage View</h1>
             <button
-                onClick={handleAdd}
+              onClick={handleAdd}
               className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
             >
               Add Brokerage View
@@ -224,11 +240,11 @@ export default function BrokerageView({ setShowTopSection }) {
                       <input type="checkbox" />
                     </th>
                     <th className="px-2 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center text-sm">
-                      <span>Username</span>
-                      <FaBars />
-                    </div>
-                  </th>
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Username</span>
+                        <FaBars />
+                      </div>
+                    </th>
                     <th className="px-2 py-3 text-left border-r font-medium">
                       <div className="flex justify-between items-center text-sm">
                         <span>Brokerage Amount</span>
@@ -282,12 +298,12 @@ export default function BrokerageView({ setShowTopSection }) {
                         {data.brokerageAmount}
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data?.date?.split("T")[0] }
+                        {data?.date?.split("T")[0]}
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
                         {data.referenceno}
                       </td>
-                    
+
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
                         {data?.remarks}
                       </td>
@@ -299,12 +315,12 @@ export default function BrokerageView({ setShowTopSection }) {
                           size={25}
                           color="white"
                           className="bg-blue-500 rounded"
-                            onClick={() => handleEdit(data.id)}
+                          onClick={() => handleEdit(data.id)}
                         />
                         <RiDeleteBin6Fill
                           size={25}
                           color="red"
-                            onClick={() => handleDelete(data.id)}
+                          onClick={() => handleDelete(data.id)}
                         />
                       </td>
                     </tr>
@@ -319,11 +335,10 @@ export default function BrokerageView({ setShowTopSection }) {
                 {/* /---------------------->Previous Button <----------------------< */}
                 <button
                   onClick={() => paginate(currentPage - 1)}
-                  className={`p-1 shadow-md rounded-full text-white ${
-                    currentPage === 1
+                  className={`p-1 shadow-md rounded-full text-white ${currentPage === 1
                       ? "border-gray-200 border-2"
                       : "bg-cyan-500 border-2 border-gray-100"
-                  }`}
+                    }`}
                   disabled={currentPage === 1}
                 >
                   <GrFormPrevious size={25} />
@@ -342,11 +357,10 @@ export default function BrokerageView({ setShowTopSection }) {
                         <button
                           key={page}
                           onClick={() => paginate(page)}
-                          className={`px-4 py-2 rounded mx-1 ${
-                            currentPage === page
+                          className={`px-4 py-2 rounded mx-1 ${currentPage === page
                               ? "bg-blue-600 text-white"
                               : "bg-white text-gray-700 border"
-                          }`}
+                            }`}
                         >
                           {page}
                         </button>
@@ -368,11 +382,10 @@ export default function BrokerageView({ setShowTopSection }) {
                 {/* Next Button */}
                 <button
                   onClick={() => paginate(currentPage + 1)}
-                  className={`p-1 shadow-md rounded-full text-white${
-                    currentPage === totalPage
+                  className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage
                       ? " border-gray-200 border-2"
                       : " bg-cyan-500 border-2 border-gray-100"
-                  }`}
+                    }`}
                   disabled={currentPage === totalPage}
                 >
                   <GrFormNext size={25} />
@@ -389,11 +402,15 @@ export default function BrokerageView({ setShowTopSection }) {
   return (
     <>
       <ToastContainer />
-      {active === true ? <ViewTable /> : view === true 
-      ? 
-      <AddBrokerage setActive={setActive} setShowTopSection={setShowTopSection} />
-      :
-      <EditBrokerage setActive={setActive} setShowTopSection={setShowTopSection} editExpenseId={editId} />}
+      {active ? (
+        <ViewTable />
+      ) : view ? (
+        <AddBrokerage setActive={setActive} setShowTopSection={setShowTopSection} />
+      ) : (
+
+        <EditBrokerage setActive={setActive} setShowTopSection={setShowTopSection} editBrokerageId={editId} />
+
+      )}
     </>
   );
 }
