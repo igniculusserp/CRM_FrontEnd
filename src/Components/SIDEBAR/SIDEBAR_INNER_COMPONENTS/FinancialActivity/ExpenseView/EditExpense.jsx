@@ -183,11 +183,11 @@ export default function EditExpense({
     <>
       <ToastContainer />
       <div className="min-h-screen flex flex-col mt-3">
-        <div className="flex justify-between mx-3 px-3 bg-white border rounded py-3">
+        <div className="flex justify-between  px-3 bg-white border rounded py-3">
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-xl">
               {/*  {isEditMode? <h1>Edit Lead</h1>: <>Create Lead</> } */}
-              Add Expense
+              Edit Expense
             </h1>
           </div>
           <div>

@@ -158,9 +158,9 @@ export default function ExpenseView({ setShowTopSection }) {
     return (
       <>
         {/* -------- PARENT -------- */}
-        <div className="min-h-screen flex flex-col m-3 ">
+        <div className="min-h-screen flex flex-col my-3 ">
           {/* MIDDLE SECTION */}
-          <div className="my-1 flex py-2 items-center justify-end gap-3 bg-white border-2 border-gray-300 pr-2 rounded-lg">
+          <div className="my-1 flex py-2 items-center justify-end gap-3 bg-white border-2 border-gray-300 px-2 rounded-lg">
             {/* ------------------- Filter by date ----------------- */}
 
             <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">

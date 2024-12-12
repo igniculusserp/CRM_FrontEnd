@@ -124,18 +124,6 @@ export default function BrokerageView({ setShowTopSection }) {
   };
 
 
-  //---------------------------------------------------- Handle Edit -----------------------------------------------------
-
-  // const handleEdit = (id) => {
-  //   console.log("Editing ID:", id); // Debug log
-
-  //   setActive(false);
-  //   setView(false);
-  //   setShowTopSection(false);
-  //   setEditId(id);
-  // };
-
-
   const handleEdit = (id) => {
     console.log("Editing ID:", id);
     setActive(false);
@@ -173,7 +161,7 @@ export default function BrokerageView({ setShowTopSection }) {
     return (
       <>
         {/* -------- PARENT -------- */}
-        <div className="min-h-screen flex flex-col m-3 ">
+        <div className="min-h-screen flex flex-col my-3 ">
           {/* MIDDLE SECTION */}
           <div className="my-1 flex py-2 items-center justify-end gap-3 bg-white border-2 border-gray-300 pr-2 rounded-lg">
             {/* ------------------- Filter by date ----------------- */}
@@ -329,7 +317,7 @@ export default function BrokerageView({ setShowTopSection }) {
               </table>
             </div>
 
-            <div className="flex justify-end m-4">
+            <div className="flex justify-end my-4">
               {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
               <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
                 {/* /---------------------->Previous Button <----------------------< */}

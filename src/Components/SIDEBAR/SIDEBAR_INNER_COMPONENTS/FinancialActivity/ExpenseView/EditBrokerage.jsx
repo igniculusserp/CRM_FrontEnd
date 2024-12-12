@@ -104,11 +104,11 @@ export default function EditBrokerage({
       const formData_PUT = {
         id: finance.id,
         userName: finance.userName,
-        date: finance?.date || today,
-        brokerageAmount: finance.brokerageAmount,
-        referenceno: finance.referenceno,
-        remarks: finance.remarks,
-        lastmodifiedby: finance.lastmodifiedby,
+        date: finance?.date.split('T')[0] || today,
+        brokerageAmount: finance?.brokerageAmount,
+        referenceno: finance?.referenceno,
+        remarks: finance?.remarks,
+        lastmodifiedby: finance?.lastmodifiedby,
       };
 
 
@@ -199,7 +199,7 @@ export default function EditBrokerage({
                     <input
                       type="date"
                       name="date"
-                      value={finance.date || today}
+                      value={finance.date.split('T')[0] || today}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                     />

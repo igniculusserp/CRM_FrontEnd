@@ -59,14 +59,16 @@ export default function FinancialActivity() {
           onClick={toggleSmsBoxDropdown}
           onMouseLeave={() => setSmsBoxDropdown(false)}
         >
+        {/*
           <button
-            className="py-2 px-4 border rounded-md  flex justify-between items-center"
+            className=" px-4 border rounded-md  flex justify-between items-center py-2 text-sm"
             id="dropdownDefaultButton"
             type="button"
           >
             Select Head
             <FaAngleDown className="ml-2 text-gray-900" />
           </button>
+          */}
           {smsBoxDropdown && (
             <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
               <ul className="py-2 text-sm text-gray-700">
