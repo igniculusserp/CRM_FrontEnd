@@ -48,6 +48,7 @@ export default function ExpenseView({ setShowTopSection }) {
         config
       );
       setRawData(response.data.data);
+      console.log(rawData)
       setFilteredLeads(response.data.data);
     } catch (error) {
       showErrorToast(error.response.data.message);
@@ -142,7 +143,7 @@ export default function ExpenseView({ setShowTopSection }) {
         },
       };
       await axios.delete(
-        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/brokeragedetail/delete/${id}`,
+        `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/delete/${id}`,
         config
       );
       showSuccessToast('Deleted successfully');
@@ -157,9 +158,9 @@ export default function ExpenseView({ setShowTopSection }) {
     return (
       <>
         {/* -------- PARENT -------- */}
-        <div className="min-h-screen flex flex-col m-3 ">
+        <div className="min-h-screen flex flex-col my-3 ">
           {/* MIDDLE SECTION */}
-          <div className="my-1 flex py-2 items-center justify-end gap-3 bg-white border-2 border-gray-300 pr-2 rounded-lg">
+          <div className="my-1 flex py-2 items-center justify-end gap-3 bg-white border-2 border-gray-300 px-2 rounded-lg">
             {/* ------------------- Filter by date ----------------- */}
 
             <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
@@ -273,7 +274,7 @@ export default function ExpenseView({ setShowTopSection }) {
                         {data.refaranceNo}
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data?.date?.split("T", " ") }
+                        {data?.date?.split("T")[0] }
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
                         {data.headName}
@@ -388,7 +389,3 @@ export default function ExpenseView({ setShowTopSection }) {
   );
 }
 
-
-ExpenseView.propTypes = {
-    setShowTopSection: PropTypes.func.isRequired, 
-  };
