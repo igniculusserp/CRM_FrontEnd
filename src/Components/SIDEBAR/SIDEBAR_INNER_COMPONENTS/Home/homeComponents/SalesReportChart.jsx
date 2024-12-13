@@ -18,23 +18,17 @@ const SalesReportChart = ({ businessType }) => {
       ? { name: 'Shubham', target: 0, targetAchieved: 1000 }
       : { time: '01:00', income: 250, expenses: 93 },
     businessType === 'Brokerage'
-      ? { name: 'Shreyash', target: 50000, targetAchieved: 2000 }
+      ? { name: 'Shreyash', target: 10000, targetAchieved: 22000 }
       : { time: '01:00', income: 200, expenses: 100 },
     businessType === 'Brokerage'
-      ? { name: 'Niranjan', target: 50000, targetAchieved: 20000 }
+      ? { name: 'Niranjan', target: 20000, targetAchieved: 28000 }
       : { time: '01:00', income: 180, expenses: 110 },
     businessType === 'Brokerage'
-      ? { name: 'Nitin', target: 50000, targetAchieved: 40000 }
+      ? { name: 'Nitin', target: 40000, targetAchieved: 30000 }
       : { time: '01:00', income: 250, expenses: 150 },
     businessType === 'Brokerage'
-      ? { name: 'Manish', target: 50000, targetAchieved: 11000 }
-      : { time: '01:00', income: 205, expenses: 93 },
-    businessType === 'Brokerage'
-      ? { name: 'Tarun', target: 50000, targetAchieved: 8000 }
-      : { time: '01:00', income: 105, expenses: 93 },
-    businessType === 'Brokerage'
-      ? { name: 'Jaya', target: 50000, targetAchieved: 90000 }
-      : { time: '01:00', income: 195, expenses: 93 },
+      ? { name: 'Nitin', target: 60000, targetAchieved: 38000 }
+      : { time: '01:00', income: 250, expenses: 150 },
   ];
 
   return (
