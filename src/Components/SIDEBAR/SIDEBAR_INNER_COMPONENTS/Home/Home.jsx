@@ -26,12 +26,18 @@ import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/Global
 //external
 import axios from 'axios';
 
+
 export default function Home() {
+
+  
+  const bearer_token = localStorage.getItem("token");
+  const name = getHostnamePart();
+
+
   //------- Business Type --------
   const businessType = localStorage.getItem('businessType');
   const [business, setBusiness] = useState('');
   //DND
-  const name = getHostnamePart();
   const navigate = useNavigate();
   const [salesData, setSalesData] = useState([]);
   const [leadsData, setLeadsData] = useState([]);
@@ -242,6 +248,35 @@ export default function Home() {
     return () => clearTimeout(timeout);
   }, [user]);
 
+
+  //------------------------------------------------------ Get API ----------------------------------------------------
+
+  const [totalBrokerage, setTotalBrokerage] = useState(0);
+
+  const getDetails = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Report/brokaragetreports/byusertoken`,
+        config
+      );
+      if (response.status === 200) {
+        const Details = response.data.data.totalBrokerage;
+      setTotalBrokerage(Details);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
+    getDetails();
+  }, []);
+
   return (
     <>
       <main className="min-h-screen flex flex-col gap-1">
@@ -253,7 +288,7 @@ export default function Home() {
                   remainingDays < 5 ? 'text-red-500' : 'text-gray-700'
                 } text-xl font-semibold`}
               >
-                Clock is ticking! {remainingDays} day's are left in your trail.
+                Clock is ticking! {remainingDays} day&apos;s are left in your trail.
               </h1>
               <p className="text-xs font-semibold text-gray-500">
                 Pick a perfect plan for your business needs before your trial
@@ -287,7 +322,7 @@ export default function Home() {
               {}
               <h1 className="font-light uppercase text-sm">
                 {business === 'Brokerage'
-                  ? 'Total Leads this month'
+                  ? 'Leads'
                   : 'Lead this month'}
               </h1>
               {/* ------- MIDDLE SECTION ----------- */}
@@ -336,7 +371,7 @@ export default function Home() {
               <h1 className="font-light uppercase text-sm">
                 {/* REVENUE THIS MONTH */}
                 {business === 'Brokerage'
-                  ? 'Client Fund this month'
+                  ? 'Funds'
                   : 'REVENUE THIS MONTH'}
               </h1>
               <div className="flex gap-4 items-center mt-2">
@@ -378,6 +413,56 @@ export default function Home() {
             <h3 className="font-light text-sm">
               Last Month Relative: ${' '}
               <span className="text-sm">{revenueDiffrence}</span>
+            </h3>
+          </div>
+           {/* ------- CARD ------- */}
+           <div className="flex flex-col justify-between bg-white py-4 px-4 rounded-md shadow-lg h-[210px] w-1/4">
+            <div className="flex flex-col gap-2">
+              <h1 className="font-light uppercase text-sm">
+                {/* CLIENT THIS MONTH */}
+                {business === 'Brokerage'
+                  ? 'KYC'
+                  : 'CLIENT THIS MONTH'}
+              </h1>
+              <div className="flex gap-4 items-center mt-2">
+                <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-cyan-500 text-white flex items-center justify-center">
+                  {/* <img src={Profile} alt="Profile Icon" /> */}
+
+                  <FaUsers className="text-white text-3xl" />
+                </button>
+                <div className="flex flex-col gap-1">
+                  <span className="font-bold text-xl">
+                    {currentMonthClientCount}
+                  </span>
+                  <button
+                    className={`flex text-[12px] font-thin p-1 items-center ${
+                      clientStatus == 'up' ? 'bg-green-100' : 'bg-red-100'
+                    } w-max rounded-md justify-between gap-1`}
+                  >
+                    {clientStatus == 'up' ? (
+                      <FaArrowAltCircleUp />
+                    ) : (
+                      <FaArrowAltCircleDown />
+                    )}
+                    <span>{Math.round(clientPercentageChange)}%</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            {/* ---------- PROGRESS BAR --------- */}
+            <div className="h-2 w-full bg-transparent border border-gray-600 rounded-lg mt-2">
+              <div
+                className={`h-full ${
+                  clientStatus == 'up' ? 'bg-blue-600' : 'bg-red-600'
+                }`}
+                style={{
+                  maxWidth: `${Math.abs(Math.round(clientPercentageChange))}%`,
+                }}
+              ></div>
+            </div>
+            <h3 className="font-light text-sm">
+              Last Month Relative:{' '}
+              <span className="text-sm">{clientDiffrence}</span>
             </h3>
           </div>
           {/* ------- CARD ------- */}
@@ -434,64 +519,19 @@ export default function Home() {
               <span className="text-sm">{intrestedLeadsDiffrence}</span>
             </h3>
           </div>
-          {/* ------- CARD ------- */}
-          <div className="flex flex-col justify-between bg-white py-4 px-4 rounded-md shadow-lg h-[210px] w-1/4">
-            <div className="flex flex-col gap-2">
-              <h1 className="font-light uppercase text-sm">
-                {/* CLIENT THIS MONTH */}
-                {business === 'Brokerage'
-                  ? 'Active Clients'
-                  : 'CLIENT THIS MONTH'}
-              </h1>
-              <div className="flex gap-4 items-center mt-2">
-                <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-cyan-500 text-white flex items-center justify-center">
-                  {/* <img src={Profile} alt="Profile Icon" /> */}
-
-                  <FaUsers className="text-white text-3xl" />
-                </button>
-                <div className="flex flex-col gap-1">
-                  <span className="font-bold text-xl">
-                    {currentMonthClientCount}
-                  </span>
-                  <button
-                    className={`flex text-[12px] font-thin p-1 items-center ${
-                      clientStatus == 'up' ? 'bg-green-100' : 'bg-red-100'
-                    } w-max rounded-md justify-between gap-1`}
-                  >
-                    {clientStatus == 'up' ? (
-                      <FaArrowAltCircleUp />
-                    ) : (
-                      <FaArrowAltCircleDown />
-                    )}
-                    <span>{Math.round(clientPercentageChange)}%</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            {/* ---------- PROGRESS BAR --------- */}
-            <div className="h-2 w-full bg-transparent border border-gray-600 rounded-lg mt-2">
-              <div
-                className={`h-full ${
-                  clientStatus == 'up' ? 'bg-blue-600' : 'bg-red-600'
-                }`}
-                style={{
-                  maxWidth: `${Math.abs(Math.round(clientPercentageChange))}%`,
-                }}
-              ></div>
-            </div>
-            <h3 className="font-light text-sm">
-              Last Month Relative:{' '}
-              <span className="text-sm">{clientDiffrence}</span>
-            </h3>
-          </div>
+         
         </div>
         {/* ------- PROGRESS BAR ------- */}
         <div className="flex gap-3 m-2">
           {/* ------- PROGRESS CARD ------- */}
           <div className="flex-4 flex flex-col bg-white py-4 px-4 rounded-md shadow-md w-[400px] justify-between">
-            <h1 className="font-thin text-xl">Custom Segmentation</h1>
+            <h1 className="font-thin text-xl">
+            {business === 'Brokerage'
+                  ? 'Brokerage'
+                  : 'Custom Segmentation'}
+                  </h1>
             <div className="flex items-center flex-col gap-2">
-              <CustomerSegmentationChart />
+              <CustomerSegmentationChart totalBrokerage={totalBrokerage} businessType={businessType} />
               <div className="flex w-full items-center justify-between">
                 <div className="flex items-center gap-1">
                   <div className="w-1 h-3 bg-orange-600"></div>
@@ -527,11 +567,11 @@ export default function Home() {
           </div>
           {/* ------- PROGRESS CARD ------- */}
           <div className="flex-1 flex flex-col bg-white rounded-md shadow-md px-4 py-4 justify-between">
-            <SalesReportChart businessType={businessType} />
+            <SalesReportChart businessType={businessType} totalBrokerage={totalBrokerage} />
           </div>
         </div>
         {/* ------- BOTTOM CARDS ------- */}
-        <div className="flex gap-3 mx-2">
+        {business === 'Brokerage'?"":<div className="flex gap-3 mx-2">
           {/* ------- BOTTOM CARD ------- */}
           <div className="flex-1 flex flex-col bg-white shadow-sm py-6 px-3 rounded-md">
             <SalesPipelineChart />
@@ -540,7 +580,8 @@ export default function Home() {
           <div className="flex-5 flex flex-col py-4 px-4 gap-4 items-center bg-blue-50 rounded-md shadow-md">
             <LeadSourceChart />
           </div>
-        </div>
+        </div>}
+        
       </main>
     </>
   );
