@@ -3,13 +3,15 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import { Link } from 'react-router-dom';
 
-
 //reactIcons
-import { FaArrowAltCircleDown, FaArrowAltCircleUp, FaUsers} from 'react-icons/fa';
+import {
+  FaArrowAltCircleDown,
+  FaArrowAltCircleUp,
+  FaUsers,
+} from 'react-icons/fa';
 import { CiBadgeDollar } from 'react-icons/ci';
 import { FcSalesPerformance } from 'react-icons/fc';
 import { FaUsersRectangle } from 'react-icons/fa6';
-
 
 //Chart
 import SalesPipelineChart from './homeComponents/SalesPipelineChart';
@@ -24,31 +26,84 @@ import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/Global
 //external
 import axios from 'axios';
 
-
-
-
 export default function Home() {
   //------- Business Type --------
-  const businessType = localStorage.getItem("businessType");
-  const [business, setBusiness] = useState("");
+  const businessType = localStorage.getItem('businessType');
+  const [business, setBusiness] = useState('');
   //DND
   const name = getHostnamePart();
   const navigate = useNavigate();
   const [salesData, setSalesData] = useState([]);
   const [leadsData, setLeadsData] = useState([]);
+  const [data, setData] = useState([]);
+  const [targetAchievedData, setTargetAchievedData] = useState([]);
+
+  // ------------- GET TARGET API -------------
+  const fetchTargetData = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const targetRes = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Report/targetreports/byusertoken`,
+        config
+      );
+
+      const res = targetRes?.data?.data;
+      setData(res);
+      console.log(data);
+    } catch (err) {
+      console.log('Error while fetching target api', err);
+    }
+  };
+
+  // ------------- GET TARGET API -------------
+  const fetchTargetAchievedData = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const targetAchievedRes = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Report/brokaragetreports/byusertoken`,
+        config
+      );
+
+      const targetAchievedDat = targetAchievedRes?.data?.data;
+
+      setTargetAchievedData(targetAchievedDat);
+      console.log(targetAchievedData);
+      // console.log(targetAchievedRes?.data?.data)
+    } catch (err) {
+      console.log('Error while fetching target api', err);
+    }
+  };
+
+  // TO FETCH DATA WHEN COMPONENT RENDERS AT FIRST
+  useEffect(() => {
+    fetchTargetData();
+    fetchTargetAchievedData();
+  }, []);
 
   const checkStoredOtp = () => {
-    const storedOtp = localStorage.getItem("otp"); // Retrieve OTP from localStorage
+    const storedOtp = localStorage.getItem('otp'); // Retrieve OTP from localStorage
     if (!storedOtp || storedOtp.length !== 6) {
-      navigate("/tenantloginOTP"); // Redirect if OTP is not valid or doesn't have 6 characters
+      navigate('/tenantloginOTP'); // Redirect if OTP is not valid or doesn't have 6 characters
     }
   };
   //----------calling data in effect-----------
   useEffect(() => {
-    checkStoredOtp()
+    checkStoredOtp();
     handleGetApis();
     //------- Business Type --------
-    console.log("Bussiness Type Dash Board : " ,businessType);
+    console.log('Bussiness Type Dash Board : ', businessType);
     setBusiness(businessType);
   }, [navigate]);
 
@@ -231,8 +286,10 @@ export default function Home() {
             <div className="flex flex-col gap-2">
               {}
               <h1 className="font-light uppercase text-sm">
-                {business==="Brokerage" ?"Total Leads this month":"Lead this month"}
-                </h1>
+                {business === 'Brokerage'
+                  ? 'Total Leads this month'
+                  : 'Lead this month'}
+              </h1>
               {/* ------- MIDDLE SECTION ----------- */}
               <div className="flex items-center gap-4 mt-2">
                 <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-blue-500 text-white flex items-center justify-center">
@@ -278,7 +335,9 @@ export default function Home() {
             <div className="flex flex-col gap-2">
               <h1 className="font-light uppercase text-sm">
                 {/* REVENUE THIS MONTH */}
-                {business==="Brokerage" ?"Client Fund this month":"REVENUE THIS MONTH"}
+                {business === 'Brokerage'
+                  ? 'Client Fund this month'
+                  : 'REVENUE THIS MONTH'}
               </h1>
               <div className="flex gap-4 items-center mt-2">
                 <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-orange-300 text-white flex items-center justify-center">
@@ -326,7 +385,9 @@ export default function Home() {
             <div className="flex flex-col gap-2">
               <h1 className="font-light uppercase text-sm">
                 {/* SALES IN PIPELINE */}
-                {business==="Brokerage" ?"Interested Clients":"SALES IN PIPELINE"}
+                {business === 'Brokerage'
+                  ? 'Interested Clients'
+                  : 'SALES IN PIPELINE'}
               </h1>
               <div className="flex gap-4 items-center mt-2">
                 <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-red-500 text-white flex items-center justify-center">
@@ -378,7 +439,9 @@ export default function Home() {
             <div className="flex flex-col gap-2">
               <h1 className="font-light uppercase text-sm">
                 {/* CLIENT THIS MONTH */}
-                {business==="Brokerage" ?"Active Clients":"CLIENT THIS MONTH"}
+                {business === 'Brokerage'
+                  ? 'Active Clients'
+                  : 'CLIENT THIS MONTH'}
               </h1>
               <div className="flex gap-4 items-center mt-2">
                 <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-cyan-500 text-white flex items-center justify-center">
@@ -464,7 +527,7 @@ export default function Home() {
           </div>
           {/* ------- PROGRESS CARD ------- */}
           <div className="flex-1 flex flex-col bg-white rounded-md shadow-md px-4 py-4 justify-between">
-            <SalesReportChart />
+            <SalesReportChart businessType={businessType} />
           </div>
         </div>
         {/* ------- BOTTOM CARDS ------- */}
