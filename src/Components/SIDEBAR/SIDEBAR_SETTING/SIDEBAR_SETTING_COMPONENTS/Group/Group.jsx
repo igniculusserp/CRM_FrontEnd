@@ -60,12 +60,15 @@ export default function Group() {
         `${protocal_url}${name}.${tenant_base_url}/Admin/group/all`,
         config
       );
-      if (response.status === 200) {
+      if (response.data.isSuccess ) {
         const groups = response.data; // Get the user data
         setGroup(groups?.data); // Set the user data for editing
       }
+      else{
+        showErrorToast('You are not an authorised user')
+      }
     } catch (error) {
-      console.error('Error fetching user for edit:', error);
+      console.log(error)
     }
   };
 

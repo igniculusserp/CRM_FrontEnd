@@ -56,14 +56,17 @@ export default function LeadStatus() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      await axios.delete(
+      const response =  await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/delete/${id}`,
         config
       );
-      showSuccessToast('Deleted successfully');
+      if (response.data.isSuccess ) {
+        console.log('dd')
+        showSuccessToast('Deleted successfully');
+      }
       setData((prevData) => prevData.filter((item) => item.id !== id));
     } catch (error) {
-      showErrorToast(error.response.data.message)
+        showErrorToast(error.response.data.message)
     }
   };
 

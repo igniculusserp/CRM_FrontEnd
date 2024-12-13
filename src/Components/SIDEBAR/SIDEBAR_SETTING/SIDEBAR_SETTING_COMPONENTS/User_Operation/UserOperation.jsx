@@ -122,9 +122,10 @@ export default function UserOperation() {
         const opration = response.data; // Get the user data
         setUsers(opration?.data); // Set the user data for editing
       }
+      
     } catch (error) {
-      console.error("Error fetching user for edit:", error);
-      alert("Error occurred while trying to get data");
+      console.log(error)
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -144,9 +145,11 @@ export default function UserOperation() {
         const opration = response.data; // Get the user data
         setGroupNames(opration?.data); // Set the user data for editing
       }
+      else(
+        showErrorToast("You are not an authorised user")
+      )
     } catch (error) {
-      console.error("Error fetching user for edit:", error);
-      alert("Error occurred while trying to get data");
+      showErrorToast("You are not an authorised user")
     }
   };
 
