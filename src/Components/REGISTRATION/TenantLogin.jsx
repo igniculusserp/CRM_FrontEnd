@@ -291,7 +291,7 @@ export default function TenantLogin() {
         `${protocal_url}${name}.${tenant_base_url}/Users/login`,
         {
           userName: userName,
-          password: password,
+          password: password.trim(),
           deviceType: deviceType,
           deviceAddress: deviceAddress,
         }
