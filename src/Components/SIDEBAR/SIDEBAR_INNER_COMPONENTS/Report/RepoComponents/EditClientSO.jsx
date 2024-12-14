@@ -525,7 +525,7 @@ export default function EditClientSO() {
           </div>
           <div>
             <div
-              // to="/sidebar/reports"
+              // to="/panel/reports"
               onClick={goBack}
               className="px-6 py-1 rounded  border border-blue-500 text-blue-500 "
             >

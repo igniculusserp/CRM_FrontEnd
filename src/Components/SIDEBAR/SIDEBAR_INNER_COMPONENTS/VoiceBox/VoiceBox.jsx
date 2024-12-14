@@ -39,7 +39,7 @@ export default function VoiceBox() {
 
   //   HANDLE TABLE CLICK
   const handleMonitorClick = (id) => {
-    navigate(`/sidebar/createvoice/${id}`);
+    navigate(`/panel/createvoice/${id}`);
   };
 
   //----------------GET----------------
@@ -316,11 +316,11 @@ export default function VoiceBox() {
 
   // Object containing the options
   const dynamicButtons = {
-    Monitoring: { text: 'Create View Box', href: '/sidebar/createvoice' },
-    Reports: { text: 'Create Reports', href: '/sidebar/createreports' },
+    Monitoring: { text: 'Create View Box', href: '/panel/createvoice' },
+    Reports: { text: 'Create Reports', href: '/panel/createreports' },
     'SMS via GMS Gateway': {
       text: 'Send Details',
-      href: '/sidebar/createvoicedetails',
+      href: '/panel/createvoicedetails',
     },
   };
 
@@ -334,7 +334,7 @@ export default function VoiceBox() {
   // State to manage the button text
   const [buttonText, setButtonText] = useState({
     text: 'Create View Box',
-    href: '/sidebar/createvoice',
+    href: '/panel/createvoice',
   });
 
   // Function to handle option click using bracket notation

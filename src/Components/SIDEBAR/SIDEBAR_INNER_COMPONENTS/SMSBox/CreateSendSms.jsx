@@ -289,7 +289,7 @@ export default function CreateSendSms() {
         config
       );
       alert("Successfully Added");
-      navigate(`/sidebar/smsbox`);
+      navigate(`/panel/smsbox`);
     } catch (error) {
       console.error("Error saving pool name", error);
       alert("Failed to save pool. Please try again.");
@@ -303,7 +303,7 @@ export default function CreateSendSms() {
       <div className="flex py-2 px-3 items-center justify-between bg-white rounded-md shadow-md">
         <h1 className="text-xl">Send SMS</h1>
         <Link
-          to="/sidebar/smsbox"
+          to="/panel/smsbox"
           className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
         >
           Cancel

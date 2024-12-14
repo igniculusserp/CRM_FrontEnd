@@ -85,7 +85,7 @@ const CreateMailBox = () => {
         {/* TOP SECTION */}
         <div className="px-3 py-4 bg-white rounded-md flex items-center justify-between m-3">
           <h1 className="text-xl font-bold">Create Mail Box</h1>
-          <Link to="/sidebar/mailBox">
+          <Link to="/panel/mailBox">
             <button className="px-6 py-2 text-center text-sm border border-blue-600 text-blue-600 rounded-md">
               Cancel
             </button>

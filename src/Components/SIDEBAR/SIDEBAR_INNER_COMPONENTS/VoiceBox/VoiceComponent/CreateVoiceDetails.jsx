@@ -40,7 +40,7 @@ export default function CreateVoiceDetails() {
         </h1>
         <div>
           <Link
-            to="/sidebar/voicebox"
+            to="/panel/voicebox"
             className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500 "
           >
             Cancel

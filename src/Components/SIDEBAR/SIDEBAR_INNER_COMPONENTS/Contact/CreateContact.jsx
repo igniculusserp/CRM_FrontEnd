@@ -426,7 +426,7 @@ export default function CreateContact() {
       if (isEditMode) {
         await axios.put(`${protocal_url}${name}.${tenant_base_url}/Contact/contact/update`,formData_PUT, config);
         showSuccessToast("Contact updated successfully!");
-        navigate(`/sidebar/contact`);
+        navigate(`/panel/contact`);
         } 
       }
       catch (error) {
@@ -478,7 +478,7 @@ export default function CreateContact() {
           </div>
           <div>
             <Link
-              to="/sidebar/contact"
+              to="/panel/contact"
               className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500 "
             >
               Cancel

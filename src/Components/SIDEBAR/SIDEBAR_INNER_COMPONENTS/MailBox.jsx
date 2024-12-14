@@ -15,7 +15,7 @@ export default function MailBox() {
   const [filterByData, setFilterByData] = useState(false);
 
   const handleClick = () => {
-    navigate(`/sidebar/createmail`);
+    navigate(`/panel/createmail`);
   };
 
   // TOGGLE MAINBOX DROPDOWN
@@ -364,7 +364,7 @@ export default function MailBox() {
         </div>
         <div className="flex items-center gap-3">
           <Link
-            to="/sidebar/createmail"
+            to="/panel/createmail"
             className="py-2 px-4 border rounded-md bg-blue-600 text-white"
           >
             Create Mail Box

@@ -90,7 +90,7 @@ export default function TenantLoginOTP() {
         showErrorToast(message);
       } else if(!isSucess) {
         showSuccessToast(message);
-        navigate("/sidebar");
+        navigate("/panel");
       }
     } catch (error) {
       showErrorToast(error.response.data.message);

@@ -277,7 +277,7 @@ export default function CreateTrial() {
         config
       );
       alert("Free Trail updated successfully!");
-      navigate(`/sidebar/freeTrail`);
+      navigate(`/panel/freeTrail`);
 
       // Redirect after a short delay
     } catch (error) {
@@ -326,7 +326,7 @@ export default function CreateTrial() {
           </div>
           <div>
             <Link
-              to="/sidebar/freeTrail"
+              to="/panel/freeTrail"
               className="px-6 py-1 rounded  border border-blue-500 text-blue-500 "
             >
               Cancel

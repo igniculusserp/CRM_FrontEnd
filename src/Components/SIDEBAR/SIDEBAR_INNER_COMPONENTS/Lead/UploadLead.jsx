@@ -119,7 +119,7 @@ export default function UploadLead() {
         </h1>
         <div>
           <Link
-            to="/sidebar/lead"
+            to="/panel/lead"
             className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500 "
           >
             Cancel

@@ -71,7 +71,7 @@ export default function SmsBox() {
   };
 
   const handleClick = (sms) => {
-    navigate(`/sidebar/${sms.id}`);
+    navigate(`/panel/${sms.id}`);
   };
 
 
@@ -188,14 +188,14 @@ function handleSmsBoxStatusButton(value) {
 
   // DYNAMIC BUTTONS
   const dynamicButtons = {
-    'Send SMS': { text: 'Send SMS', href: '/sidebar/sendsms' },
-    'Send Email': { text: 'Send Email', href: '/sidebar/sendemail' },
+    'Send SMS': { text: 'Send SMS', href: '/panel/sendsms' },
+    'Send Email': { text: 'Send Email', href: '/panel/sendemail' },
   };
 
   // State to manage the button text
   const [buttonText, setButtonText] = useState({
     text: 'Send SMS',
-    href: '/sidebar/sendsms',
+    href: '/panel/sendsms',
   });
 
 

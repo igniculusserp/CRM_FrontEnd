@@ -46,9 +46,9 @@ export default function Header({ toggle, setToggle }) {
       const registrationDataParsed = JSON.parse(registrationdata || '{}');
       setData(registrationDataParsed.tenantId || '');
       setWelcomeData(JSON.parse(userDetail));
-      if (window.location.pathname === '/sidebar') {
-        navigate('/sidebar');
-      } else if (window.location.pathname !== '/sidebar') {
+      if (window.location.pathname === '/panel') {
+        navigate('/panel/dashboard');
+      } else if (window.location.pathname !== '/panel') {
         navigate(window.location.pathname);
       }
     } else {
@@ -117,7 +117,7 @@ export default function Header({ toggle, setToggle }) {
     { key: 2, logo: <FiMessageSquare />, functionality: handlePopup },
     { key: 3, logo: <IoMdNotifications /> },
     { key: 4, logo: <TbCalendarMonth /> },
-    { key: 5, logo: <IoMdSettings />, link: '/sidebar/setting' },
+    { key: 5, logo: <IoMdSettings />, link: '/panel/setting' },
     {
       key: 6,
       logo: <MdLogout />,

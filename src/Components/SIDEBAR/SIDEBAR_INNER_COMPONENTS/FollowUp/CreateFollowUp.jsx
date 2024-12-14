@@ -132,7 +132,7 @@ const CreateFollowUp = () => {
       );
 
       alert("Follow updated successfully!");
-      navigate(`/sidebar/followup`);
+      navigate(`/panel/followup`);
     } catch (error) {
       // Log the detailed error response
       console.error("Error response:", error.response);
@@ -361,7 +361,7 @@ const CreateFollowUp = () => {
       {/* TOP PART */}
       <div className="px-3 py-2 bg-white rounded-md flex items-center justify-between m-3">
         <h1 className="text-xl font-bold">Edit Follow Up</h1>
-        <Link to="/sidebar/followup">
+        <Link to="/panel/followup">
           <button className="px-6 py-2 text-center text-sm border border-blue-600 text-blue-600 rounded-md">
             Cancel
           </button>

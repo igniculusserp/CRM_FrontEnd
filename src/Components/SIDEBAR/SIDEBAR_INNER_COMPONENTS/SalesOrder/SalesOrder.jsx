@@ -809,7 +809,7 @@ export default function SalesOrder() {
                       <td
                         className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600"
                         onClick={() =>
-                          navigate(`/sidebar/Client_SO/${item.id}`)
+                          navigate(`/panel/clientso/${item.id}`)
                         }
                       >
                         <div className="flex items-center">

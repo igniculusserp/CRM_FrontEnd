@@ -473,7 +473,7 @@ export default function CreateSO() {
           config
         );
         alert("SO updated successfully!");
-        navigate(`/sidebar/lead`);
+        navigate(`/panel/lead`);
       } else {
         await axios.post(
           `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/add`,
@@ -482,7 +482,7 @@ export default function CreateSO() {
         );
         console.log(formData_POST);
         alert("Sales Order created successfully!");
-        navigate(`/sidebar/lead`);
+        navigate(`/panel/lead`);
       }
 
       // Redirect after a short delay
@@ -536,7 +536,7 @@ export default function CreateSO() {
           </div>
           <div>
             <Link
-              to="/sidebar/lead"
+              to="/panel/lead"
               className="px-6 py-1 rounded  border border-blue-500 text-blue-500 "
             >
               Cancel

@@ -144,28 +144,28 @@ export default function MISReports() {
   const dynamicButtons = {
     'General Report': {
       text: 'Add General Report',
-      href: '/sidebar/creategeneral',
+      href: '/panel/creategeneral',
     },
-    'Ft Report': { text: 'Add Ft Report', href: '/sidebar/createft' },
+    'Ft Report': { text: 'Add Ft Report', href: '/panel/createft' },
     'Paid Client Report': {
       text: 'Add Paid Client Report',
-      href: '/sidebar/createpaid',
+      href: '/panel/createpaid',
     },
-    'User Report': { text: 'Add User Report', href: '/sidebar/createuser' },
+    'User Report': { text: 'Add User Report', href: '/panel/createuser' },
     'Calling Report': {
       text: 'Add Calling Report',
-      href: '/sidebar/createcalling',
+      href: '/panel/createcalling',
     },
-    'DND Report': { text: 'Add DND Report', href: '/sidebar/creatednd' },
-    // 'Track Sheet': { text: 'Add Track Sheet', href: '/sidebar/createtrack' },
-    // 'Research Report': { text: 'Add Research Report', href: '/sidebar/createresearch' },
+    'DND Report': { text: 'Add DND Report', href: '/panel/creatednd' },
+    // 'Track Sheet': { text: 'Add Track Sheet', href: '/panel/createtrack' },
+    // 'Research Report': { text: 'Add Research Report', href: '/panel/createresearch' },
   };
 
   const [selectedButton, setSelectedButton] = useState('General Report');
   // State to manage the button text
   const [buttonText, setButtonText] = useState({
     text: 'Add General Report',
-    href: '/sidebar/creategeneral',
+    href: '/panel/creategeneral',
   });
 
   // Function to handle option click using bracket notation

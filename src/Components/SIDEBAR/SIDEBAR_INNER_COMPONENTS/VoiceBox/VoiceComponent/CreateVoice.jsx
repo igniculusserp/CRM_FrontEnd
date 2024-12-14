@@ -190,7 +190,7 @@ const CreateVoice = () => {
         config
       );
       alert('Monitoring Voice Box updated successfully!');
-      navigate(`/sidebar/voicebox`);
+      navigate(`/panel/voicebox`);
 
       // Redirect after a short delay
     } catch (error) {
@@ -210,7 +210,7 @@ const CreateVoice = () => {
           <h1>Edit Voice Box</h1>
         </h1>
         <Link
-          to="/sidebar/voicebox"
+          to="/panel/voicebox"
           className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
         >
           Cancel
