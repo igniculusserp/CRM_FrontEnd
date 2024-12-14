@@ -212,12 +212,7 @@ export default function SidebaBar({ toggle }) {
       link: '/panel/voicebox',
       icon: <MdOutlineKeyboardVoice />,
     },
-    {
-      key: 11,
-      data: 'Reports',
-      link: '/panel/reports',
-      icon: <IoDocumentTextOutline />,
-    },
+    
     
     {
       key: 13,
