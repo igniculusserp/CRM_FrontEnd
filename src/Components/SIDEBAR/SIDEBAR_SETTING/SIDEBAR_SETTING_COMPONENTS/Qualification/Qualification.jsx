@@ -484,7 +484,7 @@ export default function Qualification() {
               Add Qualification
             </button>
           </div>
-          <div className="overflow-x-auto mt-3">
+          <div className="overflow-x-auto mt-3 shadow-md">
             <table className="min-w-full bg-white rounded-md">
               <thead>
                 <tr className="border-b-2">

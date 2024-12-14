@@ -164,7 +164,7 @@ export default function CallTemplate() {
           <div className="w-full">
             <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-              Email Templates 
+              Call Templates 
               </h2>
               <div className="py-2 px-4 min-h-screen relative">
                 <div className="flex space-x-4">
@@ -173,7 +173,7 @@ export default function CallTemplate() {
                       htmlFor="templateDescription"
                       className="text-sm font-medium text-gray-700"
                     >
-                    Email Templates 
+                    Call Templates 
                     </label>
                     <input
                       type="text"
@@ -205,13 +205,13 @@ export default function CallTemplate() {
         <>
           <div className="flex min-w-screen justify-between items-center">
             <h1 className="text-3xl font-medium">
-            Email Template
+            Call Template
             </h1>
             <button
               onClick={handleAdd}
               className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
             >
-            Add Email Template
+            Add call Template
             </button>
           </div>
           <div className="overflow-x-auto mt-3">
@@ -224,7 +224,7 @@ export default function CallTemplate() {
                     </th>
                     <th className="px-2 py-3 text-left border-r font-medium">
                       <div className="flex justify-between items-center text-sm">
-                        <span>Email Template</span>
+                        <span>call Template</span>
                         <FaBars />
                       </div>
                     </th>
