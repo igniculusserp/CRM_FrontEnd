@@ -1,7 +1,8 @@
 // REACT - IN BUILD
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { FaAngleDown } from "react-icons/fa";
+import { ImFilter } from "react-icons/im";
+import { TbRefresh } from "react-icons/tb";
 // REACT - ICONS
 import { IoSearchOutline } from "react-icons/io5";
 import EmployeeReport from "./RepoComponents/EmployeeReport";
@@ -138,120 +139,6 @@ export default function Reports() {
     setSearchDropdown(!searchDropdown);
   };
 
-  // ------------------------------------------------------ Date Filter According to Month -----------------------------------------
-  const [filterSixMonthsDropdown, setFilterSixMonthsDropdown] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState("Last 6 Month");
-    // Filter options
-    const filterData = [
-      { key: 1, name: "Last 1 Month", months: 1 },
-      { key: 2, name: "Last 3 Month", months: 3 },
-      { key: 3, name: "Last 6 Month", months: 6 },
-      { key: 4, name: "Last 9 Month", months: 9 },
-      { key: 5, name: "Last 12 Month", months: 12 },
-      { key: 6, name: "Last 18 Month", months: 18 },
-      { key: 7, name: "Last 24 Month", months: 24 },
-    ];
-  
-    // Toggle dropdown
-    const toggleDropdownFilter = () => {
-      setFilterSixMonthsDropdown(!filterSixMonthsDropdown);
-    };
-  
-    // Handle filter selection
-    const handleFilterSelect = (filter) => {
-      setSelectedFilter(filter.name);
-      setFilterSixMonthsDropdown(false);
-      applyDateFilter(filter.months);
-    };
-  
-    // Apply the selected filter to the data
-    const applyDateFilter = (months) => {
-      const now = new Date();
-      const pastDate = new Date(now.setMonth(now.getMonth() - months));
-    
-      // Define which field to fiassadfsaddgfgfglter by based on selectedId
-      const filterFieldMap = {
-        1: 'paymentDate',
-        2: 'createdDate',
-        3: 'paymentDate',
-        4: 'paymentDate',
-      };
-    
-      const filterField = filterFieldMap[selectedId];
-    
-      if (filterField) {
-        const filtered = getReports.filter((item) => {
-          const itemDate = new Date(item[filterField]); // Assuming 'item.date' is a valid date string
-          return itemDate >= pastDate;
-        });
-        setGetReports(filtered);
-      }
-    };
-    
-
-
-    
-// ----------------------------- Date Filter -----------------------------
-
-const today = new Date().toISOString().split("T")[0]; 
-const [startDate, setStartDate] = useState(today);
-const [endDate, setEndDate] = useState(today);
-
-// Function to filter based on date range
-function handleDateRange(startDate, endDate) {
-  let filteredFollows = currentReports;
-
-  // Convert startDate to the beginning of the day and endDate to the end of the day
-  const start = new Date(startDate);
-  start.setHours(0, 0, 0, 0); // Set time to 00:00:00
-
-  const end = new Date(endDate);
-  end.setHours(23, 59, 59, 999); // Set time to 23:59:59
-
-  // Define which field to filter by based on selectedId
-  const filterFieldMap = {
-    1: 'paymentDate',
-    2: 'createdDate',
-    3: 'paymentDate',
-    4: 'paymentDate',
-  };
-
-  const filterField = filterFieldMap[selectedId];
-
-  if (startDate && endDate && filterField) {
-    filteredFollows = filteredFollows.filter((follow) => {
-      const callbackDate = new Date(follow[filterField]);
-      return callbackDate >= start && callbackDate <= end;
-    });
-  }
-
-  setGetReports(filteredFollows); // Update the filtered result
-}
-
-// UseEffect to trigger handle_DateRange on date change
-useEffect(() => {
-  if (startDate <= endDate) {
-    handleDateRange(startDate, endDate);
-  }
-}, [startDate, endDate]);
-
-
-// --------------------------------- Clear Button --------------------------------
-
-
-const handleClearFilter = () => {
-  console.log("Before Clear: ", getReports);
-  setGetReports(originalReports); // Reset to original data
-  console.log("After Clear: ", originalReports); // Should be the same as originalReports
-  // reset();
-};
-
-// const reset = () => {
-//   setStartDate(today);
-//   setEndDate(today);
-// };
-
-
 
 
   // ---------------------BUTTON THAT ARE VISIBLE IN SALES REPORTS ------------------------------------
@@ -265,6 +152,51 @@ const handleClearFilter = () => {
   const handleButtonClick = (id) => {
     setButtonId(id);
   };
+
+
+  
+  // ----------------------------- Date Filter -----------------------------
+
+
+  const today = new Date().toISOString().split("T")[0];
+  const [startDate, setStartDate] = useState(today);
+  const [endDate, setEndDate] = useState(today);
+
+
+  // Function to filter based on date range
+  function handle_DateRange(startDate, endDate) {
+    let filteredFollows = originalReports;
+
+    // Convert startDate to the beginning of the day and endDate to the end of the day
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
+
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999); // Set time to 23:59:59
+
+    if (startDate && endDate) {
+      filteredFollows = filteredFollows.filter((follow) => {
+        const callbackDate = new Date(follow.date);
+        return callbackDate >= start && callbackDate <= end;
+      });
+    }
+    setGetReports(filteredFollows); // Update the filtered result
+  }
+
+  // UseEffect to trigger handle_DateRange on date change
+  useEffect(() => {
+    if (startDate <= endDate) {
+      handle_DateRange(startDate, endDate);
+    }
+  }, [startDate, endDate]);
+
+
+    //------------------------------------------------------Filter Reset Settings ---------------------------------------------
+
+    const handleResetFilter = () => {
+      setGetReports(originalReports);
+     
+    };
  
 
   return (
@@ -365,48 +297,24 @@ const handleClearFilter = () => {
         )}
 
         {/* -------------- FILTER SECTION ------------------ */}
-        <div className="flex bg-white border-2 gap-2 border-gray-300 py-2 rounded-lg justify-center items-center">
-          {/* Filter Icon Button */}
-          <span className="border-gray-500 px-1">filter</span>
-          {/* ---------------------- MONTHS wISE DROPDOWN FILTER -------------------------*/}
-          <div
-        className="relative"
-        onClick={toggleDropdownFilter}
-        onMouseLeave={() => setFilterSixMonthsDropdown(false)}
-      >
-        <button
-          className="py-1.5 px-1 border rounded-md gap-2 border-blue-600 text-blue-600 flex justify-between items-center w-[150px]"
-          id="dropdownDefaultButton"
-          type="button"
-        >
-          {selectedFilter}
-          <FaAngleDown className="ml-2 text-blue-600" />
-        </button>
-        {filterSixMonthsDropdown && (
-          <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
-            <ul className="py-2 text-sm text-gray-700">
-              {filterData.map((filter) => (
-                <li
-                  className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                  key={filter.key}
-                  onClick={() => handleFilterSelect(filter)}
-                >
-                  {filter.name}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
+        {selectedId===6
+        ?
+        <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
+            {/* Filter Icon Button */}
+            <button className="border-r border-gray-500 px-3">
+              <ImFilter />
+            </button>
 
-          {/*-------------------------------  DATE Range Filter ------------------------------------ */}
-           {/* Date Range Inputs */}
-           <div className="px-1 flex items-center gap-2">
+            {/* Date Range Filter Button */}
+            <button className="border-r border-gray-500 px-3">Filter By</button>
+
+            {/* Date Range Inputs */}
+            <div className="px-3 flex items-center gap-2">
               <label>From:</label>
               <input
                 type="date"
                 value={startDate}
-                className="border rounded px-1 py-1.5"
+                className="border rounded px-2 py-1"
                 onChange={(e) => setStartDate(e.target.value)}
               />
 
@@ -414,13 +322,19 @@ const handleClearFilter = () => {
               <input
                 type="date"
                 value={endDate}
-                className="border rounded px-1 py-1.5"
+                className="border rounded px-2 py-1"
                 onChange={(e) => setEndDate(e.target.value)}
               />
             </div>
-          {/* CLEAR FILTER */}
-          <button className="text-blue-600 flex items-center px-1 text-sm" onClick={handleClearFilter}>Clear Filter</button>
-        </div>
+
+            <div className="p-1 border rounded cursor-pointer" 
+             onClick={handleResetFilter}
+            >
+                <TbRefresh size={25}/>
+            </div>
+          </div>
+        :<></>}
+        
       </div>
 
       {/* ------------TABLE------------ */}
