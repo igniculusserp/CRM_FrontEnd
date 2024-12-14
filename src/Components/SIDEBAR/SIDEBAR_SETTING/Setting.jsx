@@ -27,6 +27,7 @@ import Alert from './SIDEBAR_SETTING_COMPONENTS/Alert/Alert';
 import AccessControl from './SIDEBAR_SETTING_COMPONENTS/AccessControl/AccessControl';
 import PasswordPolicy from './SIDEBAR_SETTING_COMPONENTS/PasswordPolicy/PasswordPolicy';
 import ExpenseHead from './SIDEBAR_SETTING_COMPONENTS/ExpenseHead/ExpenseHead';
+import Permissions from './SIDEBAR_SETTING_COMPONENTS/Permissions/Permissions';
 
 export default function Setting() {
   const location = useLocation();
@@ -62,6 +63,7 @@ export default function Setting() {
     { key: 23, value: "Alerts" },
     { key: 24, value: "Access Control" },
     { key: 25, value: "Password Policy" },
+    { key: 27, value: "Roles & Permissions" },
   ];
 
   const componentMap = {
@@ -78,7 +80,6 @@ export default function Setting() {
     11: EmailTemplate,
     20: CallTemplate,
     12: Plan,
-    // 13: Calendar,
     14: Promotion,
     15: SMSSetting,
     16: EmailSetting,
@@ -91,6 +92,7 @@ export default function Setting() {
     24: AccessControl,
     25: PasswordPolicy,
     26: ExpenseHead,
+    27: Permissions,
   };
 
   const handleButtonClick = (key) => {
