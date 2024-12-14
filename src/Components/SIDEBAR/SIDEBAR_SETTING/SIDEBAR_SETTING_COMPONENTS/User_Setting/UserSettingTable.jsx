@@ -75,10 +75,10 @@ export default function UserSettingTable({ users, handleActiveState, handleClick
           Add User Setting
         </button>
       </div>
-      <div className="overflow-x-auto mt-3">
-        <div className="min-w-full overflow-hidden rounded-md">
+      <div className="overflow-x-auto mt-3 shadow-md">
+        <div className="min-w-full overflow-hidden rounded-md ">
           <table className="min-w-full bg-white">
-            <thead>
+            <thead className="">
               <tr className="border-gray-300 border-b-2">
                 <th className="p-22">
                   <input type="checkbox" />

@@ -694,7 +694,7 @@ export default function Client() {
               <input
                 type="date"
                 value={endDate}
-                className="border rounded px-2 py-1"
+                className="border rounded px-2 py-1"  
                 onChange={(e) => setEndDate(e.target.value)}
               />
             </div>
@@ -710,7 +710,7 @@ export default function Client() {
       <div className="overflow-x-auto mt-3">
         <div className="min-w-full overflow-hidden rounded-md">
           {selectedViewValue === 'Table View' && (
-            <table className="min-w-full bg-white">
+            <table className="min-w-full bg-white"> 
               <thead>
                 <tr className="border-gray-300 border-b-2">
                   {/* CHECKBOX */}

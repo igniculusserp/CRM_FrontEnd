@@ -767,7 +767,7 @@ export default function Contact() {
         </div>
       </div>
       {/*-------Table-------*/}
-      <div className="overflow-x-auto mt-3">
+      <div className="overflow-x-auto mt-3 ">
         <div className="min-w-full overflow-hidden rounded-md">
           {selectedViewValue === "Table View" && (
             <table className="min-w-full bg-white">

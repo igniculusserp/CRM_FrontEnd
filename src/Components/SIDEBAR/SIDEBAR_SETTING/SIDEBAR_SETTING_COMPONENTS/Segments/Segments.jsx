@@ -200,7 +200,7 @@ export default function Segments() {
   };
 
   return (
-    <div className="m-3 min-w-screen">
+    <div className="m-3 min-w-screen shadow-md">
       {active ? (
         <>
           <div className="flex min-w-screen justify-between items-center">

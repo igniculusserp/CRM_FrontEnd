@@ -214,7 +214,7 @@ export default function SMSTemplate() {
             Add SMS Templates
             </button>
           </div>
-          <div className="overflow-x-auto mt-3">
+          <div className="overflow-x-auto mt-3 shadow-md">
             <div className="min-w-full overflow-hidden rounded-md">
               <table className="min-w-full bg-white">
                 <thead>

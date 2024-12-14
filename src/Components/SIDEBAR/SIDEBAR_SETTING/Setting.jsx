@@ -112,12 +112,9 @@ export default function Setting() {
       <div className="flex flex-col m-3">
         <div className="flex justify-between px-3 bg-white border rounded py-3">
           <div className="flex items-center justify-center">
-            <h1 className="text-xl">Setting Dashboard</h1>
+            <h1 className="text-xl py-1">Setting Dashboard</h1>
           </div>
           <div>
-            <button className="px-4 py-1 rounded  border border-blue-500 text-blue-500">
-              Cancel
-            </button>
           </div>
         </div>
       </div>
