@@ -20,6 +20,8 @@ export default function UserSettingForm({
 }) 
 {
 
+  const businessType = localStorage.getItem('businessType');
+
 
   // id is to fetch the user id from the URL
   const { id } = useParams();
@@ -36,7 +38,7 @@ export default function UserSettingForm({
     email: editUser?.email || '',
     contactNo: editUser?.contactNo || '',
     country: editUser?.country || '',
-    businessType: editUser?.businessType || '',
+    businessType: businessType,
     password: editUser?.password || '',
     confirmPassword: editUser?.confirmPassword || '',
     reportedTo: editUser?.reportedTo || '',
@@ -55,7 +57,7 @@ export default function UserSettingForm({
         email: editUser.email,
         contactNo: editUser.contactNo,
         country: editUser.country,
-        businessType: editUser.businessType || '',
+        businessType: businessType,
         password: editUser.password || '',
         confirmPassword: editUser.confirmPassword || '',
         reportedTo: editUser.reportedTo,
@@ -126,7 +128,7 @@ export default function UserSettingForm({
       contactNo: formData.contactNo,
       userName: formData.userName || '',
       country: formData.country,
-      businessType: formData.businessType || '',
+      businessType: businessType,
       password: formData.password,
       confirmPassword: formData.confirmPassword,
       role: formData.role || '',
@@ -146,7 +148,7 @@ export default function UserSettingForm({
       email: formData.email,
       contactNo: formData.contactNo,
       country: formData.country,
-      businessType: formData.businessType || '',
+      businessType: businessType,
       userName: formData.username,
       password: formData.password,
       confirmPassword: formData.confirmPassword,
