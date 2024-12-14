@@ -142,7 +142,7 @@ const CreateOrder = () => {
       {/* TOP PART */}
       <div className="px-3 py-4 bg-white rounded-md flex items-center justify-between m-3">
         <h1 className="text-xl font-bold">Create Sales Oreder</h1>
-        <Link to="/sidebar/salesorder">
+        <Link to="/panel/salesorder">
           <button className="px-6 py-2 text-center text-sm border border-blue-600 text-blue-600 rounded-md">
             Cancel
           </button>

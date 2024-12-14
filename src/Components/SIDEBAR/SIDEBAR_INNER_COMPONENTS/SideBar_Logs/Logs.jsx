@@ -306,14 +306,14 @@ export default function Logs() {
   //   THREE BUTTONS
   // Object containing the options
   const dynamicButtons = {
-    Clients: { text: 'Add Client Logs', href: '/sidebar/createlogs' },
+    Clients: { text: 'Add Client Logs', href: '/panel/createlogs' },
     'SMS Logs': {},
     Chat: {
       text: 'Add Chat Logs',
-      href: '/sidebar/createchats',
+      href: '/panel/createchats',
     },
-    Login: { text: 'Add Login Logs', href: '/sidebar/createlogin' },
-    Extension: { text: 'Add Extension Logs', href: '/sidebar/createextension' },
+    Login: { text: 'Add Login Logs', href: '/panel/createlogin' },
+    Extension: { text: 'Add Extension Logs', href: '/panel/createextension' },
   };
 
   const [selectedButton, setSelectedButton] = useState('Clients');
@@ -321,7 +321,7 @@ export default function Logs() {
   // State to manage the button text
   const [buttonText, setButtonText] = useState({
     text: 'Add Clients Log',
-    href: '/sidebar/createlogs',
+    href: '/panel/createlogs',
   });
 
   const handleClick = (key) => {

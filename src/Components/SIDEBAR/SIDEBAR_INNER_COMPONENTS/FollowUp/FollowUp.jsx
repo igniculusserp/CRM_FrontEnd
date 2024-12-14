@@ -315,7 +315,7 @@ export default function FollowUp() {
 
   // Navigate to Edit Screen
   const handleClick = (id) => {
-    navigate(`/sidebar/createfollowup/${id}`);
+    navigate(`/panel/createfollowup/${id}`);
   };
 
   //-----------------------------------------------> ALL-> ASSIGNED_TO <-functionality <-----------------------------------------------

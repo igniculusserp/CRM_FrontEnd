@@ -297,12 +297,12 @@ export default function Home() {
             </div>
             {/* SECOND */}
             <div className="flex items-center gap-4">
-              <Link to="/sidebar/subscription/">
+              <Link to="/panel/subscription/">
                 <button className="cursor-pointer py-2 bg-cyan-400 text-white text-sm rounded-md px-2 border-none font-semibold shadow-md">
                   Choose Plan
                 </button>
               </Link>
-              <Link to="/sidebar" onClick={() => setShowSubscription(false)}>
+              <Link to="/panel" onClick={() => setShowSubscription(false)}>
                 <button className="py-[2px] border-[0.5px] border-red-400 cursor-pointer px-2 rounded-md text-red-600">
                   X
                 </button>

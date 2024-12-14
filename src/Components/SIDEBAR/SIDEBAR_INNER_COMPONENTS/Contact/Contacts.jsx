@@ -340,7 +340,7 @@ export default function Contact() {
 
   //Enable us to switch to createlead/editlead page with /:id
   let handleClick = (item) => {
-    navigate(`/sidebar/editcontact/${item.id}`);
+    navigate(`/panel/editcontact/${item.id}`);
   };
 
 
@@ -913,7 +913,7 @@ export default function Contact() {
                       <td className="text-center">
                         <button
                           className="bg-gray-900 p-1 text-white text-xm rounded mx-auto"
-                          onClick={() => navigate(`/sidebar/contact/create/so/${item.id}`)}>
+                          onClick={() => navigate(`/panel/contact/create/so/${item.id}`)}>
                           SO
                         </button>
                       </td>

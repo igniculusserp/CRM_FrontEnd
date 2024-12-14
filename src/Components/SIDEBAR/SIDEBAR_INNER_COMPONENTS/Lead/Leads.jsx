@@ -397,7 +397,7 @@ export default function Lead() {
 
   //Enable us to switch to createlead/editlead page with /:id
   let handleClick = (item) => {
-    navigate(`/sidebar/editlead/${item.id}`);
+    navigate(`/panel/editlead/${item.id}`);
   };
 
   // ---------------------->MASS Email FUNCTIONALITY---<----------------------
@@ -885,7 +885,7 @@ export default function Lead() {
           {/* PART-II */}
           {/*  Create Lead */}
           <div className="flex gap-1">
-            <Link to="/sidebar/createlead">
+            <Link to="/panel/createlead">
               <button
                 className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
                 id="dropdownDefaultButton"
@@ -1204,7 +1204,7 @@ export default function Lead() {
                         <button
                           className={business==="Brokerage" ?"bg-black p-1 text-white text-xs rounded mx-auto":"bg-black p-1 text-white text-xm rounded mx-auto"}
                           onClick={() =>
-                            navigate(`/sidebar/lead/create/so/${item.id}`)
+                            navigate(`/panel/lead/create/so/${item.id}`)
                           }
                         >
                           {/* SO */}

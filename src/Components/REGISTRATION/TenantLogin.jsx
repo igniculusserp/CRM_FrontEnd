@@ -155,7 +155,7 @@ export default function TenantLogin() {
       localStorage.setItem("userDetail", JSON.stringify(loginDetail));
       localStorage.setItem("myData_forget", userData.displayName);
 
-      navigate("/sidebar");
+      navigate("/panel");
     } catch (error) {
       if (error.response?.data) {
         console.error("Server Error:", error.response.data);

@@ -71,7 +71,7 @@ export default function FreeTrail() {
   }, [bearer_token, protocal_url, name, tenant_base_url]);
 
   const handleClick = (id) => {
-    navigate(`/sidebar/createtrial/${id}`);
+    navigate(`/panel/createtrial/${id}`);
   };
 
   //   ALL FREE TRIAL TOGGLE
@@ -547,7 +547,7 @@ export default function FreeTrail() {
 
         <div className="flex items-center gap-3">
           {/* <Link
-            to="/sidebar/createtrial"
+            to="/panel/createtrial"
             className="py-2 px-4 border rounded-md bg-blue-600 text-white"
           >
             Create Free Trial

@@ -49,7 +49,7 @@ const FollowupNotificationModal = ({ id, onClose }) => {
   };
 
   const handleViewClick = (id) => {
-    window.location.href = `/sidebar/createfollowup/${id}`; // Navigate to the specified route
+    window.location.href = `/panel/createfollowup/${id}`; // Navigate to the specified route
     onClose();
   };
   return (

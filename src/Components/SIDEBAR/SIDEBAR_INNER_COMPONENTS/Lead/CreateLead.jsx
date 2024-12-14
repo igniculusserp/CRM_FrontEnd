@@ -545,12 +545,12 @@ export default function Createlead() {
         await axios.put(`${protocal_url}${name}.${tenant_base_url}/Lead/lead/update`, formData_PUT, config);
         alert('Lead updated successfully!');
         showSuccessToast('Lead updated successfully!')
-        navigate(`/sidebar/lead`);
+        navigate(`/panel/lead`);
       } else {
         await axios.post(`${protocal_url}${name}.${tenant_base_url}/Lead/lead/add`, formData_POST, config);
         alert('Lead created successfully!');
         showSuccessToast('Lead created successfully')
-        navigate(`/sidebar/lead`);
+        navigate(`/panel/lead`);
       }
     } catch (error) {
       // Handle errors from the API call
@@ -575,7 +575,7 @@ export default function Createlead() {
           </div>
           <div>
             <Link
-              to="/sidebar/lead"
+              to="/panel/lead"
               className="px-6 py-1 rounded  border border-blue-500 text-blue-500 "
             >
               Cancel
