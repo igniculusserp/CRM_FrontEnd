@@ -10,43 +10,19 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { tenant_base_url, protocal_url } from '../../../../../Config/config';
-import { getHostnamePart } from '../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
-import axios from 'axios';
 
-const SalesReportChart = ({ businessType, totalBrokerage }) => {
-  const bearer_token = localStorage.getItem("token");
-  const name = getHostnamePart();
 
-  const [targetAchieved, setTargetAchieved] = useState(0);
+const SalesReportChart = ({ businessType, totalBrokerage, targetAchieved }) => {
+
+
   const [currentWeek, setCurrentWeek] = useState(0);
-
+  
   useEffect(() => {
-    // Fetching details and calculating current week only once on mount
-    getDetails();
+   
     setCurrentWeek(getCurrentWeek());
   }, []);
-
-  const getDetails = async () => {
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${bearer_token}`,
-        },
-      };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Report/targetreports/byusertoken`,
-        config
-      );
-      if (response.status === 200) {
-        const Details = response.data.data.totalTarget;
-        setTargetAchieved(Details);
-      }
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-
+  
+ 
   // Get the current week number within the current month
   const getCurrentWeek = () => {
     const date = new Date();
@@ -65,7 +41,6 @@ const SalesReportChart = ({ businessType, totalBrokerage }) => {
   };
 
   const brokerage = totalBrokerage / 4;
-  const traget = targetAchieved / 4;
 
   // Data for Brokerage
   const brokerageData = [
@@ -73,22 +48,22 @@ const SalesReportChart = ({ businessType, totalBrokerage }) => {
     {
       name: 'First Week',
       target: brokerage * 1,
-      targetAchieved: currentWeek >= 1 ? traget * 1 : null,
+      targetAchieved: currentWeek >= 1 ? targetAchieved : null,
     },
     {
       name: 'Second Week',
       target: brokerage * 2,
-      targetAchieved: currentWeek >= 2 ? traget * 2 : null,
+      targetAchieved: currentWeek >= 2 ? targetAchieved : null,
     },
     {
       name: 'Third Week',
       target: brokerage * 3,
-      targetAchieved: currentWeek >= 3 ? traget * 3 : null,
+      targetAchieved: currentWeek >= 3 ? targetAchieved : null,
     },
     {
       name: 'Fourth Week',
       target: brokerage * 4,
-      targetAchieved: currentWeek >= 4 ? traget * 4 : null,
+      targetAchieved: currentWeek >= 4 ? targetAchieved : null,
     },
   ];
 
@@ -170,6 +145,7 @@ const SalesReportChart = ({ businessType, totalBrokerage }) => {
 SalesReportChart.propTypes = {
   businessType: PropTypes.string.isRequired,
   totalBrokerage: PropTypes.number.isRequired,
+  targetAchieved: PropTypes.number.isRequired
 };
 
 export default SalesReportChart;
