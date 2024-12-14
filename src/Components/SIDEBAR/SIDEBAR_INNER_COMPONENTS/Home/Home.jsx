@@ -252,6 +252,7 @@ export default function Home() {
   //------------------------------------------------------ Get API ----------------------------------------------------
 
   const [totalBrokerage, setTotalBrokerage] = useState(0);
+  const [targetAchieved, setTargetAchieved] = useState(0);
 
   const getDetails = async () => {
     try {
@@ -266,16 +267,45 @@ export default function Home() {
       );
       if (response.status === 200) {
         const Details = response.data.data.totalBrokerage;
-      setTotalBrokerage(Details);
+        setTargetAchieved(Details);
+        console.log("Target Achieved", Details);
+        
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+  
+  
+  const getAchieveDetails = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Report/targetreports/byusertoken`,
+        config
+      );
+      if (response.status === 200) {
+        const Details = response.data.data.totalTarget;
+        setTotalBrokerage(Details);
+        console.log("Total Target", Details);
       }
     } catch (error) {
       console.log("error", error);
     }
   };
 
+
   useEffect(() => {
     getDetails();
+    getAchieveDetails();
   }, []);
+
+
+  const Remain = totalBrokerage - targetAchieved;
 
   return (
     <>
@@ -531,7 +561,31 @@ export default function Home() {
                   : 'Custom Segmentation'}
                   </h1>
             <div className="flex items-center flex-col gap-2">
-              <CustomerSegmentationChart totalBrokerage={totalBrokerage} businessType={businessType} />
+              <CustomerSegmentationChart totalBrokerage={totalBrokerage} businessType={businessType} targetAchieved={targetAchieved} />
+              {businessType==="Brokerage"?
+              <>
+              <div className="flex w-full items-center justify-between">
+                <div className="flex items-center gap-1">
+                  <div className="w-1 h-3 bg-orange-600"></div>
+                  <span className="text-sm">Total Target</span>
+                </div>
+                <div className="flex gap-1">
+                  <span className="text-sm text-gray-700">{totalBrokerage}</span>
+                </div>
+              </div>
+              <div className="flex w-full items-center justify-between">
+                <div className="flex items-center gap-1">
+                  <div className="w-1 h-3 bg-green-300"></div>
+                  <span className="text-sm">Traget Achieved (Brokerage)</span>
+                </div>
+                <div className="flex gap-1">
+                  <span className="text-sm text-gray-700">{targetAchieved}</span>
+                </div>
+              </div>
+             
+              </>
+              :
+              <>
               <div className="flex w-full items-center justify-between">
                 <div className="flex items-center gap-1">
                   <div className="w-1 h-3 bg-orange-600"></div>
@@ -562,12 +616,14 @@ export default function Home() {
                   <span className="text-green-400 text-sm">↑ 424</span>
                 </div>
               </div>
-              <h2 className="font-bold">Remaining: 990</h2>
+              </>}
+              
+              <h2 className="font-bold">Remaining: {businessType==="Brokerage"?Remain<=0?"0":Remain:"900"}</h2>
             </div>
           </div>
           {/* ------- PROGRESS CARD ------- */}
           <div className="flex-1 flex flex-col bg-white rounded-md shadow-md px-4 py-4 justify-between">
-            <SalesReportChart businessType={businessType} totalBrokerage={totalBrokerage} />
+            <SalesReportChart businessType={businessType} totalBrokerage={totalBrokerage} targetAchieved={targetAchieved} />
           </div>
         </div>
         {/* ------- BOTTOM CARDS ------- */}
