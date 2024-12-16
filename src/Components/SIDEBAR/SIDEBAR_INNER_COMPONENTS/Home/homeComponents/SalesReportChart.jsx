@@ -109,7 +109,7 @@ const SalesReportChart = ({ businessType, totalBrokerage, targetAchieved }) => {
               <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <XAxis dataKey="name" tick={{ fontSize: 10 }} tickLine={false}  /> {/* Show only weeks on X-axis */}
+          <XAxis dataKey="name" tick={{ fontSize: 6 }} tickLine={false}  /> {/* Show only weeks on X-axis */}
           <YAxis />
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
