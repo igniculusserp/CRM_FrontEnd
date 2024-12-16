@@ -207,7 +207,7 @@ const CreateVoice = () => {
     <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
       <div className="flex py-2 px-2 items-center justify-between bg-white rounded-md shadow-md">
         <h1 className="text-xl">
-          <h1>Edit Voice Box</h1>
+          <h1>Create Voice Box</h1>
         </h1>
         <Link
           to="/panel/voicebox"
