@@ -61,7 +61,6 @@ export default function LeadStatus() {
         config
       );
       if (response.data.isSuccess ) {
-        console.log('dd')
         showSuccessToast('Deleted successfully');
       }
       setData((prevData) => prevData.filter((item) => item.id !== id));
@@ -89,7 +88,7 @@ export default function LeadStatus() {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
       },
-      validateStatus: (status) => status >= 200 && status < 300, // Treat only 2xx as success
+
     };
 
     try {
