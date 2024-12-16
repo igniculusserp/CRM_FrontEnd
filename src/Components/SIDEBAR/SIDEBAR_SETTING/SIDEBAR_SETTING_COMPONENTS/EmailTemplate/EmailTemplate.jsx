@@ -39,7 +39,7 @@ export default function EmailTemplate() {
       );
       setData(response.data.data);
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      console.error('Error fetching leads:', error);
     }
   }
 
@@ -60,11 +60,10 @@ export default function EmailTemplate() {
         `${protocal_url}${name}.${tenant_base_url}/Admin/emailtemplates/delete/${id}`,
         config
       );
+      showSuccessToast('Data deleted Successfully')
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      showSuccessToast('Deleted successfully');
     } catch (error) {
-      console.log(error);
-      alert('Failed to delete. Please try again.');
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -94,18 +93,18 @@ export default function EmailTemplate() {
       if (isEditMode) {
 
         if(!formData.templateDescription){
-          showErrorToast('Please fill field')
+          showErrorToast('Please enter details')
           return;
         }
         await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/emailtemplates/edit/${formData.id}`,formData, config);
-        alert('Updated successfully');
+        showSuccessToast('Data updated successfully');
       } else {
         if(!formData.templateDescription){
-          showErrorToast('Please fill field ')
+          showErrorToast('Please enter details')
           return;
         }
-        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/emailtemplates/add`, formData, config);
-        showSuccessToast('Added successfully');
+        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/emailtemplates/add`,formData, config);
+        showSuccessToast('Lead status Added successfully');
       }
 
       handleLead(); // Refresh the list
@@ -113,7 +112,7 @@ export default function EmailTemplate() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-     showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -164,7 +163,7 @@ export default function EmailTemplate() {
           <div className="w-full">
             <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-              Email Templates 
+              Email Template
               </h2>
               <div className="py-2 px-4 min-h-screen relative">
                 <div className="flex space-x-4">
@@ -173,7 +172,7 @@ export default function EmailTemplate() {
                       htmlFor="templateDescription"
                       className="text-sm font-medium text-gray-700"
                     >
-                    Email Templates 
+                    Email Template
                     </label>
                     <input
                       type="text"
@@ -200,6 +199,8 @@ export default function EmailTemplate() {
   };
 
   return (
+  <>
+  <ToastContainer/>
     <div className="m-3 min-w-screen">
       {active ? (
         <>
@@ -211,7 +212,7 @@ export default function EmailTemplate() {
               onClick={handleAdd}
               className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
             >
-            Add Email Template
+              Add Email Template 
             </button>
           </div>
           <div className="overflow-x-auto mt-3 shadow-md">
@@ -270,6 +271,7 @@ export default function EmailTemplate() {
       ) : (
         <EditForm data={selectedData} isEditMode={isEditMode} />
       )}
-    </div>
+    </div> 
+  </>
   );
 }

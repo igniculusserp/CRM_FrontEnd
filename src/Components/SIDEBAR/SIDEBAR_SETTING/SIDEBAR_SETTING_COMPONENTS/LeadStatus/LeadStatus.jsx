@@ -112,8 +112,7 @@ export default function LeadStatus() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      console.error('Error saving name', error);
-      alert('Failed to save . Please try again.');
+      showErrorToast(error.response.data.message)
     }
   };
 

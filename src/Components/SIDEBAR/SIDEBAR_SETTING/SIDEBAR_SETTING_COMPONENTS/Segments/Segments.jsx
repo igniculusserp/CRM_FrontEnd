@@ -39,7 +39,7 @@ export default function Segments() {
       );
       setData(response.data.data);
     } catch (error) {
-      showErrorToast(error.response.data.message);
+      console.error('Error fetching leads:', error);
     }
   }
 
@@ -60,11 +60,10 @@ export default function Segments() {
         `${protocal_url}${name}.${tenant_base_url}/Admin/segment/delete/${id}`,
         config
       );
+      showSuccessToast('Segment deleted Successfully')
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      showSuccessToast('Segment deleted successfully');
     } catch (error) {
-      console.log(error);
-      showErrorToast(error.response.data.message);
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -94,14 +93,14 @@ export default function Segments() {
       if (isEditMode) {
 
         if(!formData.segment){
-          showErrorToast('Please enter segment ')
+          showErrorToast('Please enter segment name')
           return;
         }
         await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/segment/edit/${formData.id}`,formData, config);
-        alert('Updated successfully');
+        showSuccessToast('Segment updated successfully');
       } else {
         if(!formData.segment){
-          showErrorToast('Please enter segment ')
+          showErrorToast('Please enter segment name')
           return;
         }
         await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/segment/add`, formData, config);
@@ -164,7 +163,7 @@ export default function Segments() {
           <div className="w-full">
             <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-              Segment 
+              Segment
               </h2>
               <div className="py-2 px-4 min-h-screen relative">
                 <div className="flex space-x-4">
@@ -173,7 +172,7 @@ export default function Segments() {
                       htmlFor="segment"
                       className="text-sm font-medium text-gray-700"
                     >
-                    Segment 
+                    Segment
                     </label>
                     <input
                       type="text"
@@ -200,7 +199,9 @@ export default function Segments() {
   };
 
   return (
-    <div className="m-3 min-w-screen shadow-md">
+  <>
+  <ToastContainer/>
+    <div className="m-3 min-w-screen">
       {active ? (
         <>
           <div className="flex min-w-screen justify-between items-center">
@@ -214,7 +215,7 @@ export default function Segments() {
               Add segment
             </button>
           </div>
-          <div className="overflow-x-auto mt-3">
+          <div className="overflow-x-auto mt-3 shadow-md">
             <div className="min-w-full overflow-hidden rounded-md">
               <table className="min-w-full bg-white">
                 <thead>
@@ -270,6 +271,7 @@ export default function Segments() {
       ) : (
         <EditForm data={selectedData} isEditMode={isEditMode} />
       )}
-    </div>
+    </div> 
+  </>
   );
 }
