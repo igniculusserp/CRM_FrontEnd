@@ -4,6 +4,8 @@ import { ImFilter } from 'react-icons/im';
 import { IoSearchOutline } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { TbRefresh } from "react-icons/tb";
+
 export default function MailBox() {
   const navigate = useNavigate();
 
@@ -318,6 +320,10 @@ export default function MailBox() {
     { key: 7, value: 'Print View' },
   ];
 
+
+
+
+
   return (
     <div className="min-h-screen flex flex-col m-3">
       <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md">
@@ -436,39 +442,41 @@ export default function MailBox() {
             {mailBoxMainData.length}
           </button>
         </div>
-        {/* FILTER BY */}
-        <div className="flex bg-white rounded-lg py-3 items-center border-2 border-gray-300 gap-3 justify-center">
-          <button className="border-r border-gray-500 px-3">
-            <ImFilter />
-          </button>
-          <button className="border-r border-gray-500 px-3">Filter By</button>
-          {/* FILTER DROPDOWN */}
-          <div
-            className="relative"
-            onClick={toggleFilterByData}
-            onMouseLeave={() => setFilterByData(false)}
-          >
-            <label className="px-5 flex items-center gap-2 justify-between text-sm font-bold text-gray-600">
-              09/03/2024
-              <FaAngleDown className="ml-2 text-gray-600" />
-            </label>
-            {filterByData && (
-              <div className="absolute w-56 bg-white border border-gray-300 right-0 top-6 z-10">
-                <ul className="py-2 text-sm text-gray-700">
-                  {filterData.map((filter) => (
-                    <li
-                      className="block px-4 py-2 w-full border-b hover:bg-cyan-500 hover:text-white cursor-pointer"
-                      key={filter.key}
-                    >
-                      {filter.value}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+        {/* ------------------- Filter by date ----------------- */}
+
+        <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
+            {/* Filter Icon Button */}
+            <button className="border-r border-gray-500 px-3">
+              <ImFilter />
+            </button>
+
+            {/* Date Range Filter Button */}
+            <button className="border-r border-gray-500 px-3">Filter By</button>
+
+            {/* Date Range Inputs */}
+            <div className="px-3 flex items-center gap-2">
+              <input
+                type="date"
+                // value={startDate}
+                className="border rounded px-2 py-1"
+                // onChange={(e) => setStartDate(e.target.value)}
+              />
+
+              <input
+                type="date"
+                // value={endDate}
+                className="border rounded px-2 py-1"
+                // onChange={(e) => setEndDate(e.target.value)}
+              />
+            </div>
+
+            <div className="p-1 border rounded cursor-pointer  hover:shadow-md" 
+            // onClick={handleResetFilter}
+            >
+              <TbRefresh size={25}/>
+            </div>
+
           </div>
-          {/* FILTER DROPDOWN ENDS */}
-        </div>
       </div>
 
       {/* TABLE VIEW */}

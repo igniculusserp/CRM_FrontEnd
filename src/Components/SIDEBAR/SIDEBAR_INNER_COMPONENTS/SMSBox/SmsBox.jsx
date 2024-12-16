@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { FaAngleDown, FaBars } from 'react-icons/fa';
 import { ImFilter } from 'react-icons/im';
+
+import { TbRefresh } from "react-icons/tb";
 // import { IoSearchOutline } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
@@ -22,6 +24,7 @@ export default function SmsBox() {
   const [actionDropdown, setActionDropdown] = useState(false);
   const [filterDropdown, setFilterDropdown] = useState(false);
   const [selectedButton, setSelectedButton] = useState('Send SMS');
+  const [getleads, setGetleads] = useState([]);
 
 
   // ------------------------------ E-Mail Settings Get All  ------------------------
@@ -47,8 +50,10 @@ export default function SmsBox() {
           config
         );
       }
+console.log("Data", response);
 
       setGetSmsBox(response.data.data);
+      setGetleads(response.data.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
     }
@@ -176,15 +181,6 @@ function handleSmsBoxStatusButton(value) {
     { key: 8, value: 'Print View' },
   ];
 
-  //   FILTER DROPDOWN DATA
-  const filterData = [
-    { key: 1, value: '12/03/2023' },
-    { key: 2, value: '10/09/2023' },
-    { key: 3, value: '10/09/2023' },
-    { key: 4, value: '12/03/2023' },
-    { key: 4, value: '10/09/2023' },
-    { key: 4, value: '12/03/2023' },
-  ];
 
   // DYNAMIC BUTTONS
   const dynamicButtons = {
@@ -205,6 +201,51 @@ function handleSmsBoxStatusButton(value) {
     setButtonText(dynamicButtons[key]);
     setSelectedButton(key);
   };
+
+  // ----------------------------- Date Filter -----------------------------
+
+  const today = new Date().toISOString().split('T')[0];
+  const [startDate, setStartDate] = useState(today);
+  const [endDate, setEndDate] = useState(today);
+
+  // Function to filter based on date range
+  function handle_DateRange(startDate, endDate) {
+    let filteredFollows = getleads;
+
+    // Convert startDate to the beginning of the day and endDate to the end of the day
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
+
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999); // Set time to 23:59:59
+
+    if (startDate && endDate) {
+      filteredFollows = filteredFollows.filter((follow) => {
+        const callbackDate = new Date(follow.sentDateTime);
+        return callbackDate >= start && callbackDate <= end;
+      });
+    }
+    setFilteredLeads(filteredFollows); // Update the filtered result
+  }
+
+  // UseEffect to trigger handle_DateRange on date change
+  useEffect(() => {
+    if (startDate <= endDate) {
+      handle_DateRange(startDate, endDate);
+    }
+  }, [startDate, endDate]);
+
+  //------------------------------------------------------------------------------------------------
+  
+  //------------------------------------------------------Filter Reset Settings ---------------------------------------------
+
+  const handleResetFilter = () => {
+    setFilteredLeads(getleads);
+    // setLeadStatus('All Lead');
+    // setAssignedTo("Assigned to");
+  };
+
+
 
   return (
     <div className="min-h-screen flex flex-col m-3">
@@ -350,31 +391,39 @@ function handleSmsBoxStatusButton(value) {
               <ImFilter />
             </button>
             <button className="border-r border-gray-500 px-3">Filter By</button>
-            {/* FILTER DROPDOWN */}
-            <div
-              className="relative"
-              onClick={toggleFilterDropdown}
-              onMouseLeave={() => setFilterDropdown(false)}
-            >
-              <label className="px-5 flex items-center gap-2 justify-between text-sm font-bold text-gray-600">
-                09/03/2024
-                <FaAngleDown className="ml-2 text-gray-600" />
-              </label>
-              {filterDropdown && (
-                <div className="absolute w-56 bg-white border border-gray-300 right-0 top-6 z-10">
-                  <ul className="py-2 text-sm text-gray-700">
-                    {currentLeads.map((filter) => (
-                      <li
-                        className="block px-4 py-2 w-full border-b hover:bg-cyan-500 hover:text-white cursor-pointer"
-                        key={filter.key}
-                      >
-                        {filter.value}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+            {/* ------------------- Filter by date ----------------- */}
+
+          <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
+            {/* Filter Icon Button */}
+            <button className="border-r border-gray-500 px-3">
+              <ImFilter />
+            </button>
+
+            {/* Date Range Filter Button */}
+            <button className="border-r border-gray-500 px-3">Filter By</button>
+
+            {/* Date Range Inputs */}
+            <div className="px-3 flex items-center gap-2">
+              <input
+                type="date"
+                value={startDate}
+                className="border rounded px-2 py-1"
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+
+              <input
+                type="date"
+                value={endDate}
+                className="border rounded px-2 py-1"
+                onChange={(e) => setEndDate(e.target.value)}
+              />
             </div>
+
+            <div className="p-1 border rounded cursor-pointer  hover:shadow-md" onClick={handleResetFilter}>
+              <TbRefresh size={25}/>
+            </div>
+
+          </div>
             {/* FILTER DROPDOWN ENDS */}
           </div>
         </div>

@@ -1,4 +1,4 @@
-// firebase-messaging-sw.js
+/* eslint-disable no-undef */
 
 // Import Firebase messaging service worker
 importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js');
@@ -21,11 +21,10 @@ const messaging = firebase.messaging();
 // Handle background messages
 messaging.onBackgroundMessage((payload) => {
   console.log('[firebase-messaging-sw.js] Received background message ', payload);
-  // Customize notification here
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
-    icon: '/firebase-logo.png'
+    icon: '/firebase-logo.png',
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
