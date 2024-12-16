@@ -10,7 +10,7 @@ import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
 import { ToastContainer } from 'react-toastify';
 import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNotifications';
 
-export default function Pools() {
+export default function Pool() {
 
   const name = getHostnamePart(); 
   const bearer_token = localStorage.getItem('token');
@@ -34,12 +34,12 @@ export default function Pools() {
         },
       };
       const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
+        `${protocal_url}${name}.${tenant_base_url}/Admin/Pool/getall`,
         config
       );
       setData(response.data.data);
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      console.error('Error fetching leads:', error);
     }
   }
 
@@ -57,13 +57,13 @@ export default function Pools() {
         },
       };
       await axios.delete(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/pool/delete/${id}`,
+        `${protocal_url}${name}.${tenant_base_url}/Admin/Pool/delete/${id}`,
         config
       );
-      showSuccessToast('Deleted successfully');
+      showSuccessToast('Pool name deleted successfully')
       setData((prevData) => prevData.filter((item) => item.id !== id));
     } catch (error) {
-      showErrorToast(error.responsed.data.message)
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -97,7 +97,7 @@ export default function Pools() {
           return;
         }
         await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/Pool/edit/${formData.id}`,formData, config);
-        showSuccessToast('Pool updated successfully');
+        showSuccessToast('Pool name updated successfully');
       } else {
         if(!formData.poolName){
           showErrorToast('Please enter pool name')
@@ -112,7 +112,7 @@ export default function Pools() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      showErrorToast('Failed to save . Please try again.');
+      console.error('Error saving name', error);
     }
   };
 
@@ -163,7 +163,7 @@ export default function Pools() {
           <div className="w-full">
             <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-              Pool 
+              Pool
               </h2>
               <div className="py-2 px-4 min-h-screen relative">
                 <div className="flex space-x-4">
@@ -172,7 +172,7 @@ export default function Pools() {
                       htmlFor="poolName"
                       className="text-sm font-medium text-gray-700"
                     >
-                    Pool 
+                    Pool
                     </label>
                     <input
                       type="text"
@@ -199,6 +199,8 @@ export default function Pools() {
   };
 
   return (
+  <>
+  <ToastContainer/>
     <div className="m-3 min-w-screen">
       {active ? (
         <>
@@ -223,7 +225,7 @@ export default function Pools() {
                     </th>
                     <th className="px-2 py-3 text-left border-r font-medium">
                       <div className="flex justify-between items-center text-sm">
-                        <span>Pool</span>
+                        <span> Pool</span>
                         <FaBars />
                       </div>
                     </th>
@@ -269,6 +271,7 @@ export default function Pools() {
       ) : (
         <EditForm data={selectedData} isEditMode={isEditMode} />
       )}
-    </div>
+    </div> 
+  </>
   );
 }

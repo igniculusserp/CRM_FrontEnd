@@ -12,7 +12,7 @@ import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNoti
 
 export default function LeadStatus() {
 
-  const name = getHostnamePart();
+  const name = getHostnamePart(); 
   const bearer_token = localStorage.getItem('token');
 
   const [data, setData] = useState([]);
@@ -39,7 +39,7 @@ export default function LeadStatus() {
       );
       setData(response.data.data);
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      console.error('Error fetching leads:', error);
     }
   }
 
@@ -56,16 +56,14 @@ export default function LeadStatus() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response =  await axios.delete(
+      await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/delete/${id}`,
         config
       );
-      if (response.data.isSuccess ) {
-        showSuccessToast('Deleted successfully');
-      }
+      showSuccessToast('Status deleted Successfully')
       setData((prevData) => prevData.filter((item) => item.id !== id));
     } catch (error) {
-        showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message)
     }
   };
 
@@ -84,46 +82,40 @@ export default function LeadStatus() {
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
+    
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
       },
-
     };
 
     try {
-      if (!formData.status) {
-        showErrorToast("Please enter lead");
-        return;
-      }
-
       if (isEditMode) {
-        await axios.put(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/edit/${formData.id}`,
-          formData,
-          config
-        );
-        showSuccessToast("Updated successfully");
+
+        if(!formData.status){
+          showErrorToast('Please enter status name')
+          return;
+        }
+        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/edit/${formData.id}`,formData, config);
+        showSuccessToast('Lead status Updated successfully');
       } else {
-        await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/add`,
-          formData,
-          config
-        );
-        showSuccessToast("Added successfully");
+        if(!formData.status){
+          showErrorToast('Please enter status name')
+          return;
+        }
+        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/add`, formData, config);
+        showSuccessToast('Lead status Added successfully');
       }
 
-      // After successful operation
-      handleLead();
-      setActive(true);
-      setSelectedData(null);
-      setIsEditMode(false);
+      handleLead(); // Refresh the list
+      setActive(true); // Switch back to the list view
+      setSelectedData(null); // Reset the selected
+      setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      console.error("Error caught in catch:", error);
-      showErrorToast(error.response?.data?.message || "An error occurred.");
+      console.error('Error saving name', error);
+      alert('Failed to save . Please try again.');
     }
   };
-
 
   // Handle cancel form action
   const handleCancel = () => {
@@ -148,7 +140,6 @@ export default function LeadStatus() {
       });
     };
 
-
     const handleSubmit = (e) => {
       e.preventDefault();
       handleFormSubmit(formData);
@@ -156,7 +147,7 @@ export default function LeadStatus() {
 
     return (
       <>
-        <ToastContainer />
+      <ToastContainer/>
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">
             {isEditMode ? 'Edit' : 'Add'}
@@ -173,7 +164,7 @@ export default function LeadStatus() {
           <div className="w-full">
             <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-                Lead Status
+              Lead Status
               </h2>
               <div className="py-2 px-4 min-h-screen relative">
                 <div className="flex space-x-4">
@@ -182,7 +173,7 @@ export default function LeadStatus() {
                       htmlFor="status"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Lead Status
+                    Lead Status
                     </label>
                     <input
                       type="text"
@@ -209,18 +200,20 @@ export default function LeadStatus() {
   };
 
   return (
+  <>
+  <ToastContainer/>
     <div className="m-3 min-w-screen">
       {active ? (
         <>
           <div className="flex min-w-screen justify-between items-center">
             <h1 className="text-3xl font-medium">
-              Lead
+            Lead Status
             </h1>
             <button
               onClick={handleAdd}
               className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
             >
-              Add Lead
+              Add status
             </button>
           </div>
           <div className="overflow-x-auto mt-3 shadow-md">
@@ -233,7 +226,7 @@ export default function LeadStatus() {
                     </th>
                     <th className="px-2 py-3 text-left border-r font-medium">
                       <div className="flex justify-between items-center text-sm">
-                        <span>Lead Status</span>
+                        <span> Lead Status</span>
                         <FaBars />
                       </div>
                     </th>
@@ -279,6 +272,7 @@ export default function LeadStatus() {
       ) : (
         <EditForm data={selectedData} isEditMode={isEditMode} />
       )}
-    </div>
+    </div> 
+  </>
   );
 }
