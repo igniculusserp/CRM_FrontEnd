@@ -14,15 +14,20 @@ import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNoti
 
 
 export default function Qualification() {
+  const name = getHostnamePart();
+  const bearer_token = localStorage.getItem('token');
+
+
   const [data, setData] = useState([]);
   const [active, setActive] = useState(true);
   const [selectedData, setSelectedData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
 
-  const name = getHostnamePart();
 
   // Fetch all data
+  //-------------------get-------------------get-------------------get-------------------get-------------------
+
   async function handleLead() {
     const bearer_token = localStorage.getItem('token');
     try {
@@ -37,8 +42,7 @@ export default function Qualification() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error('Error fetching qualifications:', error);
-      alert('Failed to fetch data. Please try again.');
+      showErrorToast('Failed to fetch data. Please try again.');
     }
   }
 
@@ -59,8 +63,8 @@ export default function Qualification() {
         `${protocal_url}${name}.${tenant_base_url}/Admin/qualification/delete/${id}`,
         config
       );
-      setData((prevData) => prevData.filter((item) => item.id !== id));
       showSuccessToast('Deleted successfully');
+      setData((prevData) => prevData.filter((item) => item.id !== id));
     } catch (error) {
       showErrorToast(error.response.data.message)
     }
@@ -98,7 +102,7 @@ export default function Qualification() {
 
     const formData_POST = {        
       userId: formData.userId,
-     userName: formData.userName,
+      userName: formData.userName,
       qualification: formData.qualification,
       workExpierence: formData.workExpierence,
       skill: formData.skill,
