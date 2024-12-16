@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import {
   AreaChart,
   Area,
@@ -9,75 +9,73 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from 'recharts';
-
+} from "recharts";
 
 const SalesReportChart = ({ businessType, totalBrokerage, targetAchieved }) => {
+  const [weeklyData, setWeeklyData] = useState([]);
 
-
-  const [currentWeek, setCurrentWeek] = useState(0);
-  
   useEffect(() => {
-   
-    setCurrentWeek(getCurrentWeek());
-  }, []);
-  
- 
-  // Get the current week number within the current month
-  const getCurrentWeek = () => {
-    const date = new Date();
-    const currentDate = date.getDate(); // Get the current day of the month
-    const currentMonth = date.getMonth(); // Get the current month (0-indexed)
+    generateDynamicData();
+  }, [totalBrokerage, targetAchieved]);
 
-    // Calculate the starting date of the current month
-    const startOfMonth = new Date(date.getFullYear(), currentMonth, 1);
-    const startDay = startOfMonth.getDay(); // Day of the week the month starts
+  const generateDynamicData = () => {
+    const today = new Date();
+    const currentDay = today.getDate();
+    const daysInMonth = new Date(
+      today.getFullYear(),
+      today.getMonth() + 1,
+      0
+    ).getDate();
+    const weeksInMonth = Math.ceil(daysInMonth / 7);
+    const brokeragePerWeek = totalBrokerage / daysInMonth;
+    const totalTargetAchieved = targetAchieved / daysInMonth;
+    let weeklyProgress = [];
+    let weekCount = 1;
+    let totalCount = 0;
+    let total=0;
+    console.log("Today : ", currentDay);
 
-    // Calculate the offset of the first week
-    const adjustedStartDate = currentDate + startDay;
-    
-    // Calculate the current week in the current month
-    return Math.ceil(adjustedStartDate / 7);
+    // Generate data for each day in the month
+    for (let day = 1; day <= daysInMonth; day++) {
+
+      if (day % 7 === 0) {
+        weeklyProgress.push({
+          name: `Week ${weekCount}`,
+          target: brokeragePerWeek * totalCount,
+          targetAchieved: day<=currentDay? totalTargetAchieved*total:null,
+        });
+        weekCount++;
+        totalCount++;
+      } else {
+        weeklyProgress.push({
+          name: null,
+          target: (brokeragePerWeek * totalCount),
+          targetAchieved:day<=currentDay? totalTargetAchieved*total:null,
+        });
+        totalCount++;
+      }
+
+      if(day<=currentDay){
+        total++;
+      }
+      
+    }
+
+    // Set the generated data to the state
+    setWeeklyData(weeklyProgress);
   };
-
-  const brokerage = totalBrokerage / 4;
-
-  // Data for Brokerage
-  const brokerageData = [
-    { name: 'Week Start', target: 0, targetAchieved: 0 },
-    {
-      name: 'First Week',
-      target: brokerage * 1,
-      targetAchieved: currentWeek >= 1 ? targetAchieved : null,
-    },
-    {
-      name: 'Second Week',
-      target: brokerage * 2,
-      targetAchieved: currentWeek >= 2 ? targetAchieved : null,
-    },
-    {
-      name: 'Third Week',
-      target: brokerage * 3,
-      targetAchieved: currentWeek >= 3 ? targetAchieved : null,
-    },
-    {
-      name: 'Fourth Week',
-      target: brokerage * 4,
-      targetAchieved: currentWeek >= 4 ? targetAchieved : null,
-    },
-  ];
 
   // Data for Income/Expense (non-Brokerage)
   const incomeExpenseData = [
-    { time: '01:00', income: 250, expenses: 93 },
-    { time: '02:00', income: 200, expenses: 100 },
-    { time: '03:00', income: 180, expenses: 110 },
-    { time: '04:00', income: 250, expenses: 150 },
-    { time: '05:00', income: 250, expenses: 150 },
+    { time: "01:00", income: 250, expenses: 93 },
+    { time: "02:00", income: 200, expenses: 100 },
+    { time: "03:00", income: 180, expenses: 110 },
+    { time: "04:00", income: 250, expenses: 150 },
+    { time: "05:00", income: 250, expenses: 150 },
   ];
 
   // Select data based on businessType
-  const data = businessType === 'Brokerage' ? brokerageData : incomeExpenseData;
+  const data = businessType === "Brokerage" ? weeklyData : incomeExpenseData;
 
   return (
     <div className="w-full max-w-4xl mx-auto">
@@ -86,16 +84,21 @@ const SalesReportChart = ({ businessType, totalBrokerage, targetAchieved }) => {
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-[#8884d8] rounded-sm"></div>
-            <span>{businessType === 'Brokerage' ? 'Target' : 'Income'}</span>
+            <span>{businessType === "Brokerage" ? "Target" : "Income"}</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-[#82ca9d] rounded-sm"></div>
-            <span>{businessType === 'Brokerage' ? 'Target Achieved' : 'Expenses'}</span>
+            <span>
+              {businessType === "Brokerage" ? "Target Achieved" : "Expenses"}
+            </span>
           </div>
         </div>
       </div>
       <ResponsiveContainer width="100%" height={250}>
-        <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+        <AreaChart
+          data={data}
+          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+        >
           <defs>
             <linearGradient id="colorIncome" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
@@ -106,34 +109,33 @@ const SalesReportChart = ({ businessType, totalBrokerage, targetAchieved }) => {
               <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
             </linearGradient>
           </defs>
-
-          <XAxis dataKey={businessType === 'Brokerage' ? 'name' : 'time'} />
+          <XAxis dataKey="name" tick={{ fontSize: 10 }} tickLine={false}  /> {/* Show only weeks on X-axis */}
           <YAxis />
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
           <Legend />
-
           {/* Area for Target or Income */}
           <Area
             type="monotone"
-            dataKey={businessType === 'Brokerage' ? 'target' : 'income'}
+            dataKey={businessType === "Brokerage" ? "target" : "income"}
             stroke="#8884d8"
             fillOpacity={1}
             fill="url(#colorIncome)"
             strokeWidth={3}
-            dot={{ stroke: '#8884d8', strokeWidth: 2, fill: '#8884d8' }}
+            dot={{ stroke: "#8884d8", strokeWidth: 2, fill: "#8884d8" }}
             activeDot={{ r: 6 }}
           />
-
           {/* Area for Target Achieved or Expenses */}
           <Area
             type="monotone"
-            dataKey={businessType === 'Brokerage' ? 'targetAchieved' : 'expenses'}
+            dataKey={
+              businessType === "Brokerage" ? "targetAchieved" : "expenses"
+            }
             stroke="#82ca9d"
             fillOpacity={1}
             fill="url(#colorExpenses)"
             strokeWidth={3}
-            dot={{ stroke: '#82ca9d', strokeWidth: 2, fill: '#82ca9d' }}
+            dot={{ stroke: "#82ca9d", strokeWidth: 2, fill: "#82ca9d" }}
             activeDot={{ r: 6 }}
           />
         </AreaChart>
@@ -145,7 +147,7 @@ const SalesReportChart = ({ businessType, totalBrokerage, targetAchieved }) => {
 SalesReportChart.propTypes = {
   businessType: PropTypes.string.isRequired,
   totalBrokerage: PropTypes.number.isRequired,
-  targetAchieved: PropTypes.number.isRequired
+  targetAchieved: PropTypes.number.isRequired,
 };
 
 export default SalesReportChart;
