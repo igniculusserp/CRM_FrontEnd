@@ -340,7 +340,7 @@ export default function AccessDevice() {
                       <FaAngleDown className="ml-2 text-gray-400" />
                     </button>
                     {isStatusDropdownOpen && (
-                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10 h-44 overflow-scroll">
                         {errorStatus ? (
                           <div className="py-2 text-red-600">{errorStatus}</div>
                         ) : (

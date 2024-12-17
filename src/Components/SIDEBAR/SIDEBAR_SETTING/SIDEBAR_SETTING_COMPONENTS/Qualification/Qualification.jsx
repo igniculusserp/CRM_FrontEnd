@@ -196,7 +196,6 @@ export default function Qualification() {
       });
     };
 
-    const [errors, setErrors] = useState({});
 
     const handleSubmit = (e) => {
       e.preventDefault(); // Prevent default form submission
@@ -253,9 +252,7 @@ export default function Qualification() {
         userId: userId,
       }));
     };
-    // const handleLog = () => {
-    //   console.log("clicked");
-    // };
+    
     return (
       <>
       <ToastContainer/>
@@ -491,11 +488,11 @@ export default function Qualification() {
           <div className="overflow-x-auto mt-3 shadow-md">
             <table className="min-w-full bg-white rounded-md">
               <thead>
-                <tr className="border-b-2">
-                  <th className="px-2 py-3 text-left font-medium">
-                  <span className='text-sm'>Status</span>
-                  </th>
-                  <th className="px-2 py-3 text-left font-medium">
+                <tr className="border-gray-300 border-b-2">
+                    <th className="px-1 py-3">
+                      <input type="checkbox" />
+                    </th>
+                  <th className=" py-3 text-left font-medium">
                     <div className="flex justify-between items-center text-sm">
                       <span>User Name</span>
                       <FaBars />
@@ -535,9 +532,9 @@ export default function Qualification() {
               <tbody>
                 {data.map((item) => (
                   <tr key={item.id} className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b">
-                    <td className="px-2 py-3">
-                      <input type="checkbox" />
-                    </td>
+                    <td className="px-1 py-3 text-center">
+                        <input type="checkbox" />
+                      </td>
                     <td className="px-2 py-3 text-sm">{item.userName}</td>
                     <td className="px-2 py-3 text-sm">{item.qualification}</td>
                     <td className="px-2 py-3 text-sm">{item.workExpierence}</td>
