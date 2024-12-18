@@ -14,7 +14,6 @@ import "react-quill/dist/quill.snow.css";
 //file
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
 //Images
-import profilepic from "./../../../../assets/images/profilePicEditLead.png";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import { showErrorToast, showSuccessToast } from "../../../../utils/toastNotifications";
 import { ToastContainer } from "react-toastify";
@@ -493,14 +492,8 @@ export default function CreateContact() {
           {/*Parent Div */}
           <div className="w-full">
             {/*CHILD Div------ Image Input */}
-            <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
-              <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-                Contact Image
-              </h2>
-              <img src={profilepic} className=" max-h-24 max-w-24 p-3" />
-            </div>
 
-            <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
+            <div className="m-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                 Contact Details
               </h2>
