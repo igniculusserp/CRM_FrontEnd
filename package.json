@@ -36,7 +36,7 @@
         "react-select": "^5.8.0",
         "react-select-country-list": "^2.2.3",
         "react-switch": "^7.0.0",
-        "react-toastify": "^10.0.5",
+        "react-toastify": "^10.0.6",
         "recharts": "^2.13.3",
         "xlsx": "^0.18.5"
     },
