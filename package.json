@@ -18,7 +18,7 @@
         "@reduxjs/toolkit": "^2.2.7",
         "axios": "^1.7.3",
         "echarts-for-react": "^3.0.2",
-        "firebase": "^10.14.0",
+        "firebase": "^11.1.0",
         "jspdf": "^2.5.2",
         "jspdf-autotable": "^3.8.3",
         "jwt-decode": "^4.0.0",
@@ -36,7 +36,7 @@
         "react-select": "^5.8.0",
         "react-select-country-list": "^2.2.3",
         "react-switch": "^7.0.0",
-        "react-toastify": "^10.0.5",
+        "react-toastify": "^10.0.6",
         "recharts": "^2.13.3",
         "xlsx": "^0.18.5"
     },
