@@ -1217,11 +1217,7 @@ export default function Lead() {
             </table>
           )}
 
-          {/* ------------GRID------------ */}
-          {/* ------------GRID------------ */}
-          {/* ------------GRID------------ */}
-          {/* ------------GRID------------ */}
-          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}
           {selectedViewValue === 'Grid View' && (
             <>
               <div className="min-w-full">
@@ -1233,13 +1229,13 @@ export default function Lead() {
                       key={item.id}
                     >
                       <div className="flex items-center gap-3">
-                        <img src={item.img} height={60} width={60} />
                         <div className="flex flex-col grow">
                           <div className="flex justify-between font-medium">
                             <span className="text-indigo-500">{item.name}</span>
                             <BiEdit
                               size={25}
                               className="bg-white rounded-full shadow-md text-blue-500 p-1"
+                              onClick={() => handleClick(item)}
                             />
                           </div>
                           <div className="flex items-center gap-2 text-sm font-medium">
