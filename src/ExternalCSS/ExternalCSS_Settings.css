@@ -38,3 +38,25 @@
   width: 93vw;
   overflow-x: scroll;
 }
+
+.CustomerTestimonialReview {
+
+  overflow-y: scroll;
+ 
+}
+.CustomerTestimonialReview::-webkit-scrollbar {
+  width: 3px;
+  background: #ffffff00;
+  border-radius: 50%;
+}
+.CustomerTestimonialReview::-webkit-scrollbar-thumb {
+  background-color: rgb(255, 255, 255);
+  border-radius: 50px;
+  width: 2px;
+}
+.CustomerTestimonialReview::-webkit-scrollbar-track {
+  background: #000000;
+  border-radius: 50px;
+  border-left: 1px solid rgb(0, 0, 0);
+  border-right: 1px solid rgb(0, 0, 0);
+}
