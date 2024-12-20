@@ -73,10 +73,9 @@ const VerifyOtp = () => {
     document.getElementById('imageInput').click();
   };
 
+  //OTP Handler ----> Submit Button
   const handleSubmit = async (event) => {
-
   event.preventDefault();
-
    //validation Added for OTP
    if(otp.length < 1 ){
     showErrorToast('Please enter OTP')
@@ -105,7 +104,7 @@ const VerifyOtp = () => {
 };
 
 
-
+//OTP Handler ----> Resend Button
   const handleResend = async (event) => {
     event.preventDefault();
 
@@ -122,13 +121,15 @@ const VerifyOtp = () => {
     }
   };
 
+
+  //Company Name + Img Verification form SUBMIT 
   const handleUpload = async (e) => {
     e.preventDefault();
     const businessType = localStorage.getItem("registrationBusinessType");
     const formData = {
       userId: userId,
-      name: companyName,
-      host: companyName + ".copulaa.com",
+      name: companyName?.replace(/\s+/g, ''),
+      host: companyName?.replace(/\s+/g, '') + ".copulaa.com",
       tenentLogo: base64Image,
       connectionString: "string",
       tenantEmail: emailreg,
@@ -261,9 +262,11 @@ const OtpForm = ({
         <form onSubmit={handleSubmit} className="flex flex-col">
           <div className="flex justify-between mb-2">
             <span>{emailreg}</span>
+            {/* Change button on email 
             <Link to="/" className="text-sm underline text-cyan-500">
               Change
             </Link>
+            */}
           </div>
           <input
             type="number"
