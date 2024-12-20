@@ -272,7 +272,7 @@ console.log(welcomedata)
   </div>
 
   {/* Scrollable Menu Section */}
-  <div className="flex flex-col overflow-y-auto h-full mt-10">
+  <div className="flex flex-col h-full mt-10 CustomerTestimonialReview">
     {(business === "Brokerage" ? sideBar_Brokerage : sideBar).map(({ key, data, icon, link }, index) => (
       <Link to={link} onClick={() => handleClick(key)} key={key}>
         <li
