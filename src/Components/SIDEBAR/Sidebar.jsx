@@ -83,24 +83,24 @@ export default function SidebaBar({ toggle }) {
       link: '/panel/followUp',
       icon: <SiAmazonsimpleemailservice />,
     },
-    {
-      key: 8,
-      data: 'Mail Box',
-      link: '/panel/mailBox',
-      icon: <MdOutlineEmail />,
-    },
+    // {
+    //   key: 8,
+    //   data: 'Mail Box',
+    //   link: '/panel/mailBox',
+    //   icon: <MdOutlineEmail />,
+    // },
     {
       key: 9,
       data: 'Sms Box',
       link: '/panel/smsBox',
       icon: <MdOutlineEmail />,
     },
-    {
-      key: 10,
-      data: 'Voice Box',
-      link: '/panel/voicebox',
-      icon: <MdOutlineKeyboardVoice />,
-    },
+    // {
+    //   key: 10,
+    //   data: 'Voice Box',
+    //   link: '/panel/voicebox',
+    //   icon: <MdOutlineKeyboardVoice />,
+    // },
     {
       key: 11,
       data: 'Reports',
@@ -113,24 +113,24 @@ export default function SidebaBar({ toggle }) {
       link: '/panel/analytics',
       icon: <VscGraph />,
     },
-    {
-      key: 13,
-      data: 'Logs',
-      link: '/panel/logs',
-      icon: <VscGraph />,
-    },
-    {
-      key: 14,
-      data: 'MIS Reports',
-      link: '/panel/misreports',
-      icon: <IoDocumentTextOutline />,
-    },
-    {
-      key: 15,
-      data: 'Subscription',
-      link: '/panel/subscription',
-      icon: <IoDocumentTextOutline />,
-    },
+    // {
+    //   key: 13,
+    //   data: 'Logs',
+    //   link: '/panel/logs',
+    //   icon: <VscGraph />,
+    // },
+    // {
+    //   key: 14,
+    //   data: 'MIS Reports',
+    //   link: '/panel/misreports',
+    //   icon: <IoDocumentTextOutline />,
+    // },
+    // {
+    //   key: 15,
+    //   data: 'Subscription',
+    //   link: '/panel/subscription',
+    //   icon: <IoDocumentTextOutline />,
+    // },
   ];
 
   const sideBar_Brokerage = [
@@ -194,39 +194,39 @@ export default function SidebaBar({ toggle }) {
       link: '/panel/followUp',
       icon: <SiAmazonsimpleemailservice />,
     },
-    {
-      key: 8,
-      data: 'Mail Box',
-      link: '/panel/mailBox',
-      icon: <MdOutlineEmail />,
-    },
+    // {
+    //   key: 8,
+    //   data: 'Mail Box',
+    //   link: '/panel/mailBox',
+    //   icon: <MdOutlineEmail />,
+    // },
     {
       key: 9,
       data: 'Sms Box',
       link: '/panel/smsBox',
       icon: <MdOutlineEmail />,
     },
-    {
-      key: 10,
-      data: 'Voice Box',
-      link: '/panel/voicebox',
-      icon: <MdOutlineKeyboardVoice />,
-    },
+    // {
+    //   key: 10,
+    //   data: 'Voice Box',
+    //   link: '/panel/voicebox',
+    //   icon: <MdOutlineKeyboardVoice />,
+    // },
     
     
-    {
-      key: 13,
-      data: 'Logs',
-      link: '/panel/logs',
-      icon: <VscGraph />,
-    },
+    // {
+    //   key: 13,
+    //   data: 'Logs',
+    //   link: '/panel/logs',
+    //   icon: <VscGraph />,
+    // },
     
-    {
-      key: 15,
-      data: 'MIS Reports',
-      link: '/panel/misreports',
-      icon: <IoDocumentTextOutline />,
-    },
+    // {
+    //   key: 15,
+    //   data: 'MIS Reports',
+    //   link: '/panel/misreports',
+    //   icon: <IoDocumentTextOutline />,
+    // },
     {
       key: 16,
       data: 'Subscription',
@@ -258,39 +258,38 @@ console.log(welcomedata)
 
   return (
     <>
-      <div className={`flex flex-col  bg-cyan-500 gap-3`}>
-        <div className=' mt-4'>
-          <img
-            id="logoImg"
-            src={welcomedata?.tenentLogo || noAvatar}
-            alt="Company Image"
-            className={`mt-3 ${toggle ? 'w-14 h-14' : 'w-24 h-24'} rounded-full shadow-md shadow-cyan-600 object-cover mx-auto border`}
-          />
-        </div>
+    <div className="flex flex-col bg-cyan-500 gap-3 h-screen">
+  {/* Fixed Image Section */}
+  <div className="relative">
+    <div className="sticky top-0 mt-4">
+      <img
+        id="logoImg"
+        src={welcomedata?.tenentLogo || noAvatar}
+        alt="Company Image"
+        className={`mt-3 ${toggle ? 'w-14 h-14' : 'w-24 h-24'} rounded-full shadow-md shadow-cyan-600 object-cover mx-auto border`}
+      />
+    </div>
+  </div>
 
-        <div className="flex flex-col  my-4">
-        {(business === "Brokerage" ? sideBar_Brokerage : sideBar).map(({ key, data, icon, link }, index) => (
-            <Link to={link} onClick={() => handleClick(key)} key={key}>
-              <li
-                className={`flex ${toggle ? 'justify-center' : 'justify-start'} 
-                  items-center gap-3 text-white text-md font-small py-3 shadow-md 
-                  ${index === 0 ? 'border-b-2 border-t-2' : 'border-b-2'} ${index === sideBar.length - 1 ? 'border-b-2' : ''} 
-                  hover:bg-gradient-to-b from-cyan-300 to-cyan-600`}
-                key={key}
-              >
-                <h1 className={`${toggle ? 'flex items-center gap-2 px-3 flex-col' : 'flex items-center gap-2 px-3'}`}>
-                  <span className={`${toggle ? 'text-2xl' : 'text-xl'}`}>
-                    {icon}
-                  </span>
-                  <span className={`${toggle ? 'text-xs whitespace-nowrap' : ''}`}>
-                  {toggle ? data : data}
-                  </span>
-                </h1>
-              </li>
-            </Link>
-          ))}
-        </div>
-        </div>
+  {/* Scrollable Menu Section */}
+  <div className="flex flex-col overflow-y-auto h-full mt-10">
+    {(business === "Brokerage" ? sideBar_Brokerage : sideBar).map(({ key, data, icon, link }, index) => (
+      <Link to={link} onClick={() => handleClick(key)} key={key}>
+        <li
+          className={`flex ${toggle ? 'justify-center' : 'justify-start'} items-center gap-3 text-white text-md font-small py-3 shadow-md ${
+            index === 0 ? 'border-b-2 border-t-2' : 'border-b-2'
+          } ${index === sideBar.length - 1 ? 'border-b-2' : ''} hover:bg-gradient-to-b from-cyan-300 to-cyan-600`}
+        >
+          <h1 className={`${toggle ? 'flex items-center gap-2 px-3 flex-col' : 'flex items-center gap-2 px-3'}`}>
+            <span className={`${toggle ? 'text-2xl' : 'text-xl'}`}>{icon}</span>
+            <span className={`${toggle ? 'text-xs whitespace-nowrap' : ''}`}>{data}</span>
+          </h1>
+        </li>
+      </Link>
+    ))}
+  </div>
+</div>
+
 
     </>
   );

@@ -11,13 +11,12 @@ import autoTable from 'jspdf-autotable';
 import { FaAngleDown, FaPhoneAlt } from 'react-icons/fa';
 import { IoIosMail } from 'react-icons/io';
 import { BiEdit } from 'react-icons/bi';
-import { FaBars } from 'react-icons/fa';
 import { ImFilter } from 'react-icons/im';
 import { MdCall } from 'react-icons/md';
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
 //Folder Imported
-import dp from './../../../../assets/images/dp.png';
+
 import { tenant_base_url, protocal_url } from '../../../../Config/config';
 
 import MassEmail from '../MassEmail/MassEmail';
@@ -722,7 +721,7 @@ export default function Client() {
                     />
                   </th>
 
-                  <th className="px-1 py-3 text-left border-r font-medium">
+                  <th className="px-1 py-3 text-left border-r font-medium max-w-56">
                     <div className="flex justify-between items-center">
                       <span>Client Name</span>
                       
@@ -791,11 +790,7 @@ export default function Client() {
 
                       >
                         <div className="flex items-center">
-                          <img
-                            className="h-6 w-6 mx-1 rounded-full"
-                            src={dp}
-                            alt="DP"
-                          />
+                     
                           <span className="">{item.clientName}</span>
                         </div>
                       </td>

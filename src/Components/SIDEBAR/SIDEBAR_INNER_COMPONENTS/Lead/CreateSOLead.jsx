@@ -17,7 +17,7 @@ import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 import { ToastContainer } from 'react-toastify';
-import { showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
+import { showSuccessToast, showErrorToast } from '../../../../utils/toastNotifications'
 
 export default function CreateSO() {
   //to make id unique

@@ -20,9 +20,6 @@ export default function LeadStatus() {
   const [selectedData, setSelectedData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-
-
-
   // Fetch all  data
   //-------------------get-------------------get-------------------get-------------------get-------------------
   async function handleLead() {
@@ -39,10 +36,9 @@ export default function LeadStatus() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      showErrorToast(error.response.data.message);
     }
   }
-
   useEffect(() => {
     handleLead(); // Fetch the  list on initial load
   }, []);
@@ -60,10 +56,10 @@ export default function LeadStatus() {
         `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/delete/${id}`,
         config
       );
-      showSuccessToast('Status deleted Successfully')
+      showSuccessToast('Deleted Successfully')
       setData((prevData) => prevData.filter((item) => item.id !== id));
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -82,7 +78,6 @@ export default function LeadStatus() {
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
-    
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,

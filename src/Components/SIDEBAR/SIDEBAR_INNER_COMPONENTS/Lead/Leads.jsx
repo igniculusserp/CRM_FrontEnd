@@ -23,8 +23,9 @@ import { TbRefresh } from "react-icons/tb";
 
 
 //Folder Imported
-import dp from './../../../../assets/images/dp.png';
 import { tenant_base_url, protocal_url } from '../../../../Config/config';
+
+//Mass Email
 import MassEmail from '../MassEmail/MassEmail';
 
 import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
@@ -38,6 +39,8 @@ import MultipleAssignModal from './LeadComponents/MultipleAssignModal';
 import MultipuleStatusModal from './LeadComponents/MultipleStatusModal';
 import LeadFeatchModal from "./LeadFeatchModal";
 
+
+//Global Search Element 
 import { SearchElement } from '../SearchElement/SearchElement';
 
 
@@ -1069,43 +1072,36 @@ export default function Lead() {
                       <span className="flex items-center">
                         <FaAngleDown />
                       </span>
-                      <span className="flex items-center">
-                        <FaBars />
-                      </span>
+                  
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center max-w-56">
                       <span>Email</span>
-                      <FaBars />
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium">
                     <div className="flex justify-between items-center">
                       <span>Phone No</span>
-                      <FaBars />
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium">
                     <div className="flex justify-between items-center">
                       <span>Follow Up</span>
-                      <FaBars />
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium max-w-36 min-w-32">
                     <div className="flex justify-between items-center">
                       <span>Segments</span>
-                      <FaBars />
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium w-48">
                     <div className="flex justify-between items-center">
                       <span>Managed By</span>
-                      <FaBars />
                     </div>
                   </th>
-                  <th className="px-1 py-3">
-                    <VscSettings />
+                  <th className="">
+                    <VscSettings className='mx-auto '  size={20}/>
                   </th>
                 </tr>
               </thead>
@@ -1122,7 +1118,7 @@ export default function Lead() {
                   return (
                     <tr
                       key={item.id}
-                      className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                      className="cursor-pointer  border-gray-300 border-b"
                     >
                       {/* CHECKBOX */}
                       <td className="px-2 py-3 text-center">
@@ -1137,16 +1133,12 @@ export default function Lead() {
                         className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600"
                         onClick={() => handleClick(item)}
                       >
-                        <div className="flex items-center">
-                          <img
-                            className="h-6 w-6 mx-1 rounded-full"
-                            src={dp}
-                            alt="DP"
-                          />
-                          <span className="">{item.name}</span>
+                        <div className="text-center">
+                       
+                          <span className="hover:text-blue-500 hover:underline hover:font-semibold text-md">{item.name}</span>
                         </div>
-                        <div className="flex justify-start text-center w-[80%]">
-                          <div className="bg-cyan-500 text-center text-xs  text-white  rounded-full w-full mx-4 py-1 px-1 ">
+                        <div className="flex justify-start text-center mx-auto w-[80%]">
+                          <div className="bg-cyan-500 text-center text-xs  text-white  rounded-full w-full  py-1 px-1 ">
                             {item.leadesStatus}
                           </div>
                         </div>
@@ -1200,15 +1192,22 @@ export default function Lead() {
                       </td>
                       {/*------------------<- Create-SO->------------*/}
                       {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
-                      <td>
+                      <td className='text-center'>
                         <button
-                          className={business==="Brokerage" ?"bg-black p-1 text-white text-xs rounded mx-auto":"bg-black p-1 text-white text-xm rounded mx-auto"}
+                          className={business==="Brokerage" ? "bg-black p-1 text-white text-xs rounded " : ""}
                           onClick={() =>
                             navigate(`/panel/lead/create/so/${item.id}`)
                           }
                         >
                           {/* SO */}
-                          {business==="Brokerage" ?"Create Client":"SO"}
+                          {business==="Brokerage" ? 
+                            "Create Client" :
+                            (<>
+                              <span className=' text-white text-xm rounded p-1 bg-blue-700 shadow-md rounded hover:bg-blue-600'>
+                              SO
+                              </span>
+                              </>)
+                             }
                         </button>
                       </td>
                     </tr>
