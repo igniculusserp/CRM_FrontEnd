@@ -3,6 +3,9 @@ import { useEffect } from "react";
 import {  getToken, onMessage } from "firebase/messaging";
 import { messaging } from "./firebase";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
+
 const NotificationProvider = ({ children }) => {
   useEffect(() => {
     // Manually register the service worker
@@ -34,17 +37,33 @@ const NotificationProvider = ({ children }) => {
     // Listen for messages in the foreground
   }, []);
 
+  // onMessage(messaging, (payload) => {
+  //   console.log("Received Notify message: ", payload);
+  //   if (payload.notification) {
+  //     alert(`Notification: ${payload.notification.title} - ${payload.notification.body}`);
+  //   } else {
+  //     console.warn("No notification object found in payload");
+  //   }
+  // });
+
   onMessage(messaging, (payload) => {
-    console.log("Received Notify message: ", payload);
-    if (payload.notification) {
-      alert(`Notification: ${payload.notification.title} - ${payload.notification.body}`);
-    } else {
-      console.warn("No notification object found in payload");
-    }
-    
+    const { title, body } = payload.notification;
+    toast.info(`${title}: ${body}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light", // You can also use 'dark' theme
+    });
   });
   
-  return <>{children}</>;
+  return <>
+  {children}
+   <ToastContainer />
+  </>;
 };
 
 export default NotificationProvider;
