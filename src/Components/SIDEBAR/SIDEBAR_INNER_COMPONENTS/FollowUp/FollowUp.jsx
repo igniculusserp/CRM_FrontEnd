@@ -633,7 +633,7 @@ export default function FollowUp() {
                 <thead>
                   <tr className="border-gray-300 border-b-2">
                     {/* CHECKBOX for Select All */}
-                    <th className="px-4 py-3 text-left font-medium">
+                    <th className="px-2 py-3 text-left font-medium">
                       <input
                         type="checkbox"
                         onClick={selectAllCheckbox}
@@ -641,12 +641,9 @@ export default function FollowUp() {
                       />
                     </th>
                     {/* CLIENT NAME */}
-                    <th className="px-3 py-3  text-left  border-r font-medium ">
-                      <div className="flex items-center justify-between gap-3">
-                        <span className="text-nowrap">Client Name</span>
-                        <span>
-                          <FaBars />
-                        </span>
+                    <th className="px-1 py-3 text-left border-r font-medium max-w-56 ">
+                      <div className="">
+                        <span className="">Client Name</span>
                       </div>
                     </th>
                     {/* MOBILE */}
@@ -698,7 +695,7 @@ export default function FollowUp() {
                         className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
                       >
                         {/* CHECKBOX */}
-                        <td className="px-4 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                        <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
                           <div className="flex items-center">
                             <input
                               type="checkbox"
@@ -711,11 +708,11 @@ export default function FollowUp() {
                         </td>
                         {/* CLIENT NAME */}
                         <td
-                          className="px-3 py-4 border-b border-gray-300 text-sm leading-5 "
+                          className=" py-4 border-b border-gray-300 text-sm leading-5 "
                           onClick={() => handleClick(order.id)}
                         >
                           <div className="flex items-center">
-                            <span className="ml-2 w-[80px] break-words">
+                            <span className="break-words">
                               {order.name}
                             </span>
                           </div>

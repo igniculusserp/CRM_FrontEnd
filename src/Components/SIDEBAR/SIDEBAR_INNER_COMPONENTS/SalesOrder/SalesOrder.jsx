@@ -21,7 +21,7 @@ import { TbRefresh } from "react-icons/tb";
 
 
 //Folder Imported
-import dp from './../../../../assets/images/dp.png';
+
 import { tenant_base_url, protocal_url } from '../../../../Config/config';
 import MassEmail from '../MassEmail/MassEmail';
 import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
@@ -727,15 +727,10 @@ export default function SalesOrder() {
                       onChange={handleSelectAllCheckbox}
                     />
                   </th>
-                  <th className="px-1 py-3 text-left border-r font-medium max-w-56  ">
+                  <th className="px-1 py-3 text-left border-r font-medium max-w-40 min-w-36  ">
                     <div className="flex justify-between">
                       <span>Client Name</span>
-                      <span className="flex items-center">
-                        <FaAngleDown />
-                      </span>
-                      <span className="flex items-center">
-                        <FaBars />
-                      </span>
+                      
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium">
@@ -813,11 +808,6 @@ export default function SalesOrder() {
                         }
                       >
                         <div className="flex items-center">
-                          <img
-                            className="h-6 w-6 mx-1 rounded-full"
-                            src={dp}
-                            alt="DP"
-                          />
                           <span className="">{item.clientName}</span>
                         </div>
                       

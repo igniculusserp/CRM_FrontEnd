@@ -20,12 +20,15 @@ import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { TbRefresh } from "react-icons/tb";
 
 
-//Folder Imported
-import dp from "./../../../../assets/images/dp.png"
+//Objects Imported
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
-import MassEmail from '../MassEmail/MassEmail';
+
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+
 import { SearchElement } from "../SearchElement/SearchElement";
+
+
+import MassEmail from '../MassEmail/MassEmail';
 
 
 
@@ -243,17 +246,12 @@ export default function Contact() {
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
   const [dropActionsMenu, setdropActionsMenu] = useState([
-    // { key: 0, value: "Actions" },
     { key: 1, value: "Mass Delete" },
     { key: 2, value: "Mass Update" },
     { key: 3, value: "Mass Email" },
     { key: 4, value: "Approve Leads" },
-    // { key: 5, value: "Add to Campaign" },
-    // { key: 6, value: "Export Leads" },
     { key: 7, value: "Export To Excel" },
     { key: 8, value: "Export To PDF" },
-    // { key: 9, value: "Create SO" },
-    // { key: 10, value: "Convert Lead to Contact" },
   ]);
 
   const [dropActionsMenudropDown, setdropActionsMenudropDown] = useState(false);
@@ -421,7 +419,6 @@ export default function Contact() {
 
   //---------------------->---------------------->MANAGE_BY/ASSIGNED_TO<----------------------<ARVIND----------------------
   const roleColors = [
-    // "#f97316", // Red
     "#2563eb", // blue
     "#65a30d", // LimeGreen
     "#7c3aed", // MediumPurple
@@ -783,7 +780,7 @@ export default function Contact() {
                   </th>
 
                   <th className="px-1 py-3 text-left border-r font-medium">
-                    <div className="text-center">
+                    <div className="">
                       <span>
                         Client Name
                       </span>
@@ -826,8 +823,8 @@ export default function Contact() {
                       </span>
                     </div>
                   </th>
-                  <th className="px-1 py-3 ">
-                    <VscSettings />
+                   <th className="">
+                    <VscSettings className='mx-auto '  size={20}/>
                   </th>
                 </tr>
               </thead>
@@ -854,7 +851,6 @@ export default function Contact() {
                       {/* CONTACT NAME */}
                       <td className="px-1 py-4 border-b border-gray-300 text-sm" onClick={() => handleClick(item)}>
                         <div className="flex items-center">
-                          <img className="h-6 w-6 mx-1 rounded-full" src={dp} alt="DP" />
                           <span className="">{item.name}</span>
                         </div>
                       </td>
@@ -912,7 +908,7 @@ export default function Contact() {
                       {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
                       <td className="text-center">
                         <button
-                          className="bg-gray-900 p-1 text-white text-xm rounded mx-auto"
+                          className="p-1 bg-blue-700 shadow-md rounded hover:bg-blue-600 text-white text-xm rounded"
                           onClick={() => navigate(`/panel/contact/create/so/${item.id}`)}>
                           SO
                         </button>

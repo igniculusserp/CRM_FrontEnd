@@ -6,13 +6,15 @@ importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging-compa
 
 // Initialize the Firebase app in the service worker by passing the messagingSenderId
 const firebaseConfig = {
-  apiKey: "AIzaSyBlH633lAfyzkJzUFAmqLnLbbfeJbHv0Qo",
-  authDomain: "igniculusscrm.firebaseapp.com",
-  projectId: "igniculusscrm",
-  storageBucket: "igniculusscrm.appspot.com",
-  messagingSenderId: "802156774823",
-  appId: "1:802156774823:web:da4a57e595e9f92c9ee282",
+  apiKey: "AIzaSyAAgcqDswepf8wSncJox_w9wX2OX2Mejxw",
+  authDomain: "learner-dc009.firebaseapp.com",
+  databaseURL: "https://learner-dc009-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "learner-dc009",
+  storageBucket: "learner-dc009.firebasestorage.app",
+  messagingSenderId: "215967958133",
+  appId: "1:215967958133:web:682c96e93b497f5950a43c"
 };
+
 
 firebase.initializeApp(firebaseConfig);
 
