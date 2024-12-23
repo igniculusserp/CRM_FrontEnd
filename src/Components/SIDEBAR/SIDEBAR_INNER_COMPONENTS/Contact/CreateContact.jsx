@@ -410,14 +410,14 @@ export default function CreateContact() {
         return;
       }
 
-       //Date Logic Validation
-      const today = new Date().toISOString().split('T')[0];
+      //  //Date Logic Validation
+      // const today = new Date().toISOString().split('T')[0];
       
-      //Previous date cannot be selected
-      if(formData_PUT.call_bck_DateTime < today ){
-        showErrorToast('Previous date cannot be selected')
-        return;
-      }
+      // //Previous date cannot be selected
+      // if(formData_PUT.call_bck_DateTime < today ){
+      //   showErrorToast('Previous date cannot be selected')
+      //   return;
+      // }
        
             
        

@@ -837,6 +837,8 @@ export default function Contact() {
                     <tr
                       key={item.id}
                       className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                      onClick={() => handleClick(item)}
+
                     >
                       {/* CHECKBOX */}
                       <td className="px-1 py-3 text-center">
@@ -909,7 +911,11 @@ export default function Contact() {
                       <td className="text-center">
                         <button
                           className="p-1 bg-blue-700 shadow-md rounded hover:bg-blue-600 text-white text-xm rounded"
-                          onClick={() => navigate(`/panel/contact/create/so/${item.id}`)}>
+                          onClick={(e) =>{
+                            e.stopPropagation();
+                            navigate(`/panel/contact/create/so/${item.id}`)
+                            }}
+                            >
                           SO
                         </button>
                       </td>
