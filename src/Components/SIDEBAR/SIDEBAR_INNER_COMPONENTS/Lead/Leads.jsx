@@ -1191,14 +1191,16 @@ export default function Lead() {
                           </div>
                         )}
                       </td>
+                      
                       {/*------------------<- Create-SO->------------*/}
                       {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
                       <td className='text-center'>
                         <button
                           className={business==="Brokerage" ? "bg-black p-1 text-white text-xs rounded " : ""}
-                          onClick={() =>
-                            navigate(`/panel/lead/create/so/${item.id}`)
-                          }
+                          onClick={(e) =>{
+                            e.stopPropagation();
+                            navigate(`/panel/lead/create/so/${item.id}`);
+                          }}
                         >
                           {/* SO */}
                           {business==="Brokerage" ? 

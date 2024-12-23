@@ -820,12 +820,15 @@ export default function Createlead() {
                 {/* -------------Mobile Number------------- */}
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="mobNo"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Mobile Number
-                    </label>
+                  <label
+                  htmlFor="email"
+                  className="text-sm font-medium text-gray-700"
+                >
+                <span className="flex gap-1">
+                Mobile Number
+              <FaStarOfLife size={8} className="text-red-500"/>
+              </span>
+                </label>
                     <input
                       type="text"
                       name="mobNo"
@@ -860,15 +863,12 @@ export default function Createlead() {
                 {/* -------------Email------------- */}
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="email"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                    <span className="flex gap-1">
-                    Email
-                  <FaStarOfLife size={8} className="text-red-500"/>
-                  </span>
-                    </label>
+                  <label
+                  htmlFor="city"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Email
+                </label>
                     <input
                       type="email"
                       name="email"
