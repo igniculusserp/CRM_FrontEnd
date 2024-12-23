@@ -5,6 +5,7 @@ import axios from "axios";
 
 //react-icons
 import { GiDiamonds } from "react-icons/gi";
+import { FaStarOfLife } from "react-icons/fa";
 
 //react-toast
 import { ToastContainer } from "react-toastify";
@@ -74,6 +75,11 @@ export default function VerifyTenant() {
   async function handleSubmit(e) {
     e.preventDefault();
     const emailRegex = /^[A-Za-z0-9](([a-zA-Z0-9,=\.!\-#|\$%\^&\*\+/\?_`\{\}~]+)*)@(?:[0-9a-zA-Z-]+\.)+[a-zA-Z]{2,9}$/;
+
+    if(!userName){
+      showErrorToast('Input field is empty')
+      return;
+    }
     try {
       const response = await axios.post(`${main_base_url}/Tenants/check1`, {
         emailId: userName,
@@ -150,7 +156,10 @@ export default function VerifyTenant() {
                   htmlFor="userName"
                   className="text-xs font-medium text-gray-700"
                 >
+                <span className="flex gap-1">
                   User Name
+                  <FaStarOfLife size={8} className="text-red-500"/>
+                  </span>
                   <input
                     type="email"
                     name="userName"
@@ -161,7 +170,7 @@ export default function VerifyTenant() {
                   />
                 </label>
               
-                <button className="bg-cyan-500 outline-none text-white py-4 text-xs rounded-md font-bold mt-4">
+                <button className="bg-cyan-500 outline-none text-white py-4 text-xs rounded-md font-bold mt-4 hover:shadow-md">
                   Submit
                 </button>
               </form>
@@ -178,10 +187,10 @@ export default function VerifyTenant() {
     
       <div className="mx-auto text-sm mt-8">
         <span className="font-light">
-          Don’t have an Account?
+          Don’t have an Account ?
           <Link to="/registration">
-            <span className="text-cyan-500 font-semibold block text-center underline md:inline-block md:no-underline md:font-normal">
-              Create Account
+            <span className="text-cyan-500 font-semibold block text-center underline md:inline-block md:font-normal ms-1 underline underline-offset-2 hover:scale-110	">
+            Join Us
             </span>
           </Link>
         </span>

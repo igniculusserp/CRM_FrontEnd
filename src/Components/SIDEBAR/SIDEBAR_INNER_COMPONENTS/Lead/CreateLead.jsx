@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 
 //reactIcon
-import { FaAngleDown } from 'react-icons/fa';
+import { FaAngleDown, FaStarOfLife } from 'react-icons/fa';
 import { IoInformationCircle } from 'react-icons/io5';
 
 //reactPackages
@@ -21,6 +21,7 @@ import { ToastContainer } from 'react-toastify';
 import { showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
 
 import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
+import { GrContactInfo } from 'react-icons/gr';
 
 export default function Createlead() {
   //to make id unique
@@ -552,7 +553,6 @@ export default function Createlead() {
         navigate(`/panel/lead`);
       }
     } catch (error) {
-      // Handle errors from the API call
       showErrorToast(error.response?.data?.message || "An error occurred");
       
       
@@ -565,11 +565,22 @@ export default function Createlead() {
       <div className="min-h-screen flex flex-col mt-3">
         <div className="flex justify-between mx-3  bg-white border rounded p-3">
           <div className="flex items-center justify-center gap-3">
-            <h1 className="text-xl">
-              {isEditMode ? <h1>Edit Lead</h1> : <>Create Lead</>}
-            </h1>
-            <h1 className="bg-blue-500 text-xs text-white px-4 py-1 font-medium rounded-lg">
-              Edit Page Layout
+            <h1 className=" text-xl">
+              {isEditMode ? (<>
+                <div className='flex justify-center items-center gap-2  '>
+                <GrContactInfo size={25} />
+                  <h1>Edit Lead</h1>
+                </div>
+                </>
+                ) :
+                 (<>
+                <div className=' flex justify-center items-center  gap-2   '>
+                <GrContactInfo size={25} />
+                  <h1>Create Lead</h1>
+                </div>
+                </>
+                ) 
+                 }
             </h1>
           </div>
           <div>
@@ -607,7 +618,10 @@ export default function Createlead() {
                       htmlFor="name"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Name
+                  <span className="flex gap-1">
+                    Name
+                  <FaStarOfLife size={8} className="text-red-500"/>
+                  </span>
                     </label>
                     <input
                       type="text"
@@ -850,7 +864,10 @@ export default function Createlead() {
                       htmlFor="email"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Email
+                    <span className="flex gap-1">
+                    Email
+                  <FaStarOfLife size={8} className="text-red-500"/>
+                  </span>
                     </label>
                     <input
                       type="email"
@@ -1305,7 +1322,7 @@ export default function Createlead() {
               <div className="flex justify-end px-2">
                 <button
                   type="submit"
-                  className="px-32 py-4 mt-20 mb-2 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+                  className="px-36 py-4 mt-20 mb-2 me-10 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
                 >
                   {isEditMode ? 'Update' : 'Save'}
                 </button>

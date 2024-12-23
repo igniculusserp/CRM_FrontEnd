@@ -21,12 +21,15 @@ import {
 const VerifyOtp = () => {
   const { userId } = useParams();
   const [otp, setOtp] = useState("");
-  const [resendDisabled, setResendDisabled] = useState(false);
+
   const [countdown, setCountdown] = useState(60);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const [base64Image, setBase64Image] = useState('');
   const [emailreg, setEmailreg] = useState("");
+
+  const [resendDisabled, setResendDisabled] = useState(true); // Initialize to true
+
 
 
   useEffect(() => {
@@ -39,6 +42,7 @@ const VerifyOtp = () => {
     }
   }, []);
 
+  // Countdown logic for OTP resend
   useEffect(() => {
     let timer;
     if (resendDisabled) {
@@ -46,10 +50,9 @@ const VerifyOtp = () => {
         setCountdown((prev) => {
           if (prev === 1) {
             clearInterval(timer);
-            setResendDisabled(false);
-            return 60;
+            setResendDisabled(false); // Re-enable resend after countdown finishes
+            return 120;
           }
-
           return prev - 1;
         });
       }, 1000);
@@ -286,9 +289,7 @@ const OtpForm = ({
               {resendDisabled ? `Resend in ${countdown}s` : "Resend"}
             </div>
             <div className="text-right text-sm">
-              <Link to="/" className="underline text-cyan-500">
-                Back to login
-              </Link>
+             
             </div>
           </div>
           <div className="mt-12">

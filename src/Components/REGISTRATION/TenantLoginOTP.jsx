@@ -11,6 +11,7 @@ import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
 import { main_base_url } from "./../../Config/config";
 import { GiDiamonds } from "react-icons/gi";
 import { showSuccessToast, showErrorToast } from "./../../utils/toastNotifications";
+import { FaStarOfLife } from "react-icons/fa";
 
 
 export default function TenantLoginOTP() {
@@ -168,7 +169,10 @@ export default function TenantLoginOTP() {
             <div className="mt-8 md:mt-16">
               <form onSubmit={handleSubmit} className="flex flex-col mx-10">
                 <label htmlFor="forgetemail" className="text-xs font-medium text-gray-700">
-                  Enter OTP
+                 <span className="flex gap-1">
+                                  Please enter OTP here
+                                  <FaStarOfLife size={8} className="text-red-500"/>
+                                  </span>
                 </label>
                 <input
                   type="number"

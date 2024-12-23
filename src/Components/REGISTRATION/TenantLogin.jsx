@@ -36,6 +36,7 @@ import msalInstance, {
 // ---------------------------- Google Import ----------------------------------------
 import {  GoogleLogin } from "@react-oauth/google";
 import {jwtDecode} from "jwt-decode";
+import { FaStarOfLife } from "react-icons/fa";
 
 export default function TenantLogin() {
   //-------------------------------------- Microsoft Authentication Setup --------------------------------
@@ -371,7 +372,10 @@ export default function TenantLogin() {
                     htmlFor="userName"
                     className="text-xs font-medium text-gray-700"
                   >
+                  <span className="flex gap-1">
                     User Name
+                  <FaStarOfLife size={8} className="text-red-500"/>
+                  </span>
                     <input
                       type="email"
                       name="userName"
@@ -386,7 +390,10 @@ export default function TenantLogin() {
                     htmlFor="password"
                     className="text-xs font-medium text-gray-700 relative block"
                   >
+                  <span className="flex gap-1">
                     Password
+                  <FaStarOfLife size={8} className="text-red-500"/>
+                  </span>
                     <input
                       type={passwordEye ? "text" : "password"}
                       name="password"
@@ -425,7 +432,7 @@ export default function TenantLogin() {
                     Reset Password
                   </Link>
 
-                  <button className="bg-cyan-500 outline-none text-white py-4 text-xs rounded-md font-bold mt-4">
+                  <button className="bg-cyan-500 outline-none text-white py-4 text-xs rounded-md font-bold mt-4 hover:shadow-md">
                     Submit
                   </button>
                 </form>
@@ -441,17 +448,19 @@ export default function TenantLogin() {
               </div>
               <button
                 onClick={handleMicrosoftLogin}
-                className="bg-white py-4 text-xs rounded-md font-bold border-2 border-gray-400 mt-8 flex justify-center items-center gap-2"
+                className="bg-white py-4 text-xs rounded-md font-bold border-2 border-gray-400 mt-8 flex justify-center items-center gap-2 hover:shadow-md"
               >
                 Login with Microsoft{" "}
-                <img src={Microsoft} className="h-4 w-4 shadow-md" />
+                <img src={Microsoft} className="h-4 w-4 " />
               </button>
-             
+           
+              {/*//Google Login Commented */}
+              {/*
                 <GoogleLogin
                   onSuccess={handleLoginSuccess}
                   onError={handleLoginError}
                 />
-           
+            */}
             </div>
           </div>
         </div>
