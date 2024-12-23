@@ -44,10 +44,10 @@ const WelcomePage = () => {
 
   return (
     <div className="bg-cyan-500 min-h-screen flex justify-center items-center">
-      <div className="bg-white rounded-3xl sm:w-2/3 lg:w-1/3 w-full mx-6 py-10">
+      <div className="bg-white rounded-3xl sm:w-2/3 lg:w-1/3 w-full mx-6 py-10 shadow-lg">
         <div className="relative w-full">
           <div className="absolute top-8 left-0 w-16 md:w-24">
-            <img src={welcomePageLeft} alt="Decoration" />
+            <img src={welcomePageLeft} alt="Decoration"  />
           </div>
           <div className="absolute top-32 right-0 w-16 md:w-24">
             <img src={welcomePageRight} alt="Decoration" />
@@ -79,7 +79,7 @@ const WelcomePage = () => {
           <div className="flex justify-center items-center">
             <button
               onClick={handleClick}
-              className="font-medium bg-cyan-500 text-white rounded-md w-2/3 py-2 mx-10"
+              className="font-medium bg-cyan-500 text-white rounded-md w-2/3 py-2 mx-10 hover:bg-cyan-"
             >
               Get Started
             </button>

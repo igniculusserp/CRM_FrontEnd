@@ -471,9 +471,6 @@ export default function CreateContact() {
             <h1 className="text-xl">
               <h1>Edit Contact</h1>
             </h1>
-            <h1 className="bg-blue-500 text-xs text-white px-4 py-1 font-medium rounded-lg">
-              Edit Page Layout
-            </h1>
           </div>
           <div>
             <Link

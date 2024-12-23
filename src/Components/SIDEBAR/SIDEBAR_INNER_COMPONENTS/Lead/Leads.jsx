@@ -1118,7 +1118,8 @@ export default function Lead() {
                   return (
                     <tr
                       key={item.id}
-                      className="cursor-pointer  border-gray-300 border-b"
+                      className="cursor-pointer  border-gray-300 border-b hover:bg-gray-100"
+                      onClick={() => handleClick(item)}
                     >
                       {/* CHECKBOX */}
                       <td className="px-2 py-3 text-center">
@@ -1131,7 +1132,7 @@ export default function Lead() {
                       {/* CONTACT NAME */}
                       <td
                         className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600"
-                        onClick={() => handleClick(item)}
+                        
                       >
                         <div className="text-center">
                        
@@ -1190,14 +1191,16 @@ export default function Lead() {
                           </div>
                         )}
                       </td>
+                      
                       {/*------------------<- Create-SO->------------*/}
                       {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
                       <td className='text-center'>
                         <button
                           className={business==="Brokerage" ? "bg-black p-1 text-white text-xs rounded " : ""}
-                          onClick={() =>
-                            navigate(`/panel/lead/create/so/${item.id}`)
-                          }
+                          onClick={(e) =>{
+                            e.stopPropagation();
+                            navigate(`/panel/lead/create/so/${item.id}`);
+                          }}
                         >
                           {/* SO */}
                           {business==="Brokerage" ? 
