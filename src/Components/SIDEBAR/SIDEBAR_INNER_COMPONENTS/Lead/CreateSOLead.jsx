@@ -569,6 +569,275 @@ export default function CreateSO() {
               {/* -------------SALES ORDER INFORMATION STARTS FROM HERE------------- */}
               {/* -------------I--1------------- */}
               {/* -------------Client Name------------- */}
+
+              {business==="Brokerage"?
+              <div className="py-2 px-4 grid gap-2">
+              <div className="flex space-x-4  ">
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="clientName"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Client Name
+                  </label>
+                  <input
+                    type="text"
+                    name="clientName"
+                    value={editLead.clientName}
+                    placeholder="Enter Client's Name"
+                    onChange={handleChange}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                  />
+                </div>
+             {/* -------------Mobile Number------------- */}
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="mobileNo"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Mobile Number
+                  </label>
+                  <input
+                    type="text"
+                    name="mobileNo"
+                    value={editLead.mobileNo}
+                    maxLength="15"
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleContactChange}
+                    placeholder="Enter your Mobile Number"
+                  />
+                </div>
+              </div>
+            
+             
+              
+              <div className="flex space-x-4">
+                
+             
+                {/* -------------Alternate Number------------- */}
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="phoneNo"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Alternate Number
+                  </label>
+                  <input
+                    type="text"
+                    name="phoneNo"
+                    maxLength="15"
+                    value={editLead.phoneNo}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleContactChange}
+                    placeholder="Enter your Alternate Number"
+                  />
+                </div>
+{/* -------------Email------------- */}
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="email"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={editLead.email}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                    placeholder="Enter your Email"
+                  />
+                </div>
+              </div>
+
+              {/* -------------V--1--------------- */}
+              
+              <div className="flex space-x-4">
+               
+                {/* -------------V--2--------------- */}
+                {/* -------------Assigned to------------- */}
+                <div className="flex flex-col w-1/2 relative">
+                  <label
+                    htmlFor="leadesStatus"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Assigned to
+                  </label>
+                  <div
+                    className="relative"
+                    onClick={toggleDropdownassigned_ToDropDown}
+                    onMouseLeave={() =>
+                      setisDropdownassigned_ToDropDown(false)
+                    }
+                  >
+                    <button
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                      id="LeadStatusDropDown"
+                      type="button"
+                    >
+                      {isEditMode
+                        ? defaultTextassigned_ToDropDown
+                        : editLead.assigned_To}
+                      <FaAngleDown className="ml-2 text-gray-400" />
+                    </button>
+                    {isDropdownassigned_ToDropDown && (
+                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-9.9 z-10 ">
+                        <ul className="py-2 text-sm text-gray-700">
+                          {assigned_ToDropDown.map(
+                            ({ key, userName, role }) => (
+                              <li
+                                key={key}
+                                onClick={() =>
+                                  handleDropdownassigned_ToDropDown(
+                                    userName,
+                                    role
+                                  )
+                                }
+                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              >
+                                {userName}-({role})
+                              </li>
+                            )
+                          )}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                 {/* -------------Country------------- */}
+                 <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="country"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Country
+                  </label>
+                  <input
+                    type="text"
+                    name="city"
+                    value={editLead.country}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                    placeholder="Enter your Country"
+                  />
+                </div>
+              </div>
+
+              
+
+              {/* -------------VI--1--------------- */}
+              {/* -------------State------------- */}
+              <div className="flex space-x-4">
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="state"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    State
+                  </label>
+                  <input
+                    type="text"
+                    name="state"
+                    value={editLead.state}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                    placeholder="Enter your State"
+                  />
+                </div>
+                {/* -------------VI--2--------------- */}
+                {/* -------------City------------- */}
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="city"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    name="city"
+                    value={editLead.city}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                    placeholder="Enter your City"
+                  />
+                </div>
+              </div>
+
+              {/* -------------VII--1--------------- */}
+              <div className="flex space-x-4">
+              
+                {/* -------------VII--2--------------- */}
+                {/* -------------PinCode------------- */}
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="postalCode"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Pincode
+                  </label>
+                  <input
+                    type="text"
+                    name="pinCode"
+                    value={editLead.postalCode}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                    placeholder="Enter your pincode"
+                  />
+                </div>
+ {/* -------------Lead Source------------- */}
+
+                <div className="flex flex-col w-1/2 relative">
+                  <label
+                    htmlFor="Pool"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Lead Source
+                  </label>
+                  <div
+                    className="relative"
+                    onMouseLeave={() => setIsPoolDropdownOpen(false)}
+                  >
+                    <button
+                      onClick={toggleDropdown}
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                      id="LeadPoolDropDown"
+                      type="button"
+                    >
+                      {poolEdit === ""
+                        ? defaultTextPool
+                        : editLead.leadSource}
+                      <FaAngleDown className="ml-2 text-gray-400" />
+                    </button>
+                    {isPoolDropdownOpen && (
+                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                        {error ? (
+                          <div className="py-2 text-red-600">{error}</div>
+                        ) : (
+                          <ul className="py-2 text-sm text-gray-700">
+                            {poolToDropDown.map(({ id, poolName }) => (
+                              <li
+                                key={id}
+                                onClick={() =>
+                                  handleDropdownSelection(poolName)
+                                }
+                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              >
+                                {poolName}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+              :
+              
               <div className="py-2 px-4 grid gap-2">
                 <div className="flex space-x-4  ">
                   <div className="flex flex-col w-1/2">
@@ -1052,8 +1321,148 @@ export default function CreateSO() {
                   </div>
                 </div>
               </div>
+              }
+
+
             </div>
             {/* -------------Payment Details INFORMATION STARTS FROM HERE------------- */}
+
+            {business==="Brokerage"?
+            
+            <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
+              <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+                Payment Details
+              </h2>
+              <div className="py-2 px-4 grid gap-2">
+     
+                {/* -------------XI--1------------- */}
+                {/* -------------Total Amount------------- */}
+                <div className="flex space-x-4">
+                 
+                  {/* -------------XI--2------------- */}
+                  {/* -------------  Due Amount------------- */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="due_Amount"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      {/* Due Amount */}
+                      Brokerage
+                    </label>
+                    <input
+                      type="text"
+                      name="due_Amount"
+                      value={editLead.due_Amount}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Brokerage"
+                    />
+                  </div>
+
+                  <div className="flex flex-col w-1/2">
+                    <label htmlFor="amount_paid" className="text-sm font-medium text-gray-700">
+                      Funds
+                    </label>
+                    <input
+                      type="text"
+                      name="amount_paid"
+                      id="amount_paid"
+                      value={editLead.amount_paid}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Funds"
+                    />
+                  </div>
+
+                </div>
+               
+              
+
+
+              {/* -------------XIII--1------------- */}
+              {/* -------------Payment Date------------- */}
+              <div className="flex space-x-4">
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="paymentDate"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Payment Date
+                  </label>
+                  <input
+                    type="date"
+                    name="paymentDate"
+                    value={editLead.paymentDate}
+                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="flex flex-col w-1/2 relative">
+                  <label
+                    htmlFor="segment"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Segment
+                  </label>
+                  <div
+                    className="relative"
+                    onClick={toggleDropdownSegment}
+                    onMouseLeave={() => setisDropdownVisibleSegment(false)}
+                  >
+                    <button
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                      id="LeadStatusDropDown"
+                      type="button"
+                    >
+                      {defaultTextSegmentDropDown}
+                      <FaAngleDown className="ml-2 text-gray-400" />
+                    </button>
+                    {isDropdownVisibleSegment && (
+                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                        <ul className="py-2 text-sm text-gray-700">
+                          {segments.length > 0 ? (
+                            segments.map((segment) => (
+                              <li
+                                key={segment.id}
+                                className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={editLead.segments?.includes(
+                                    segment.segment
+                                  )}
+                                  onChange={() => handleCheckboxChange(segment)}
+                                  className="mr-2"
+                                />
+                                {segment.segment}{' '}
+                                {/* Assuming segment is the property you want to display */}
+                              </li>
+                            ))
+                          ) : (
+                            <li className="flex items-center px-4 py-2 text-center gap-1">
+                              <IoInformationCircle
+                                size={25}
+                                className="text-cyan-600"
+                              />{' '}
+                              Segments not available. Go to{' '}
+                              <span className="font-bold">
+                                Settings - Add Segment{' '}
+                              </span>
+                              .
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+
+              
+            </div>
+          </div>
+            :
             <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                 Payment Details
@@ -1061,7 +1470,8 @@ export default function CreateSO() {
               <div className="py-2 px-4 grid gap-2">
                 {/* -------------IX--1----------------- */}
                 {/* -------------Bank Name------------- */}
-                <div className="flex space-x-4">
+                
+                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="bank_name"
@@ -1133,12 +1543,12 @@ export default function CreateSO() {
                     />
                   </div>
                 </div>
+            
+               
                 {/* -------------XI--1------------- */}
                 {/* -------------Total Amount------------- */}
                 <div className="flex space-x-4">
-                  {business === "Brokerage" ?
-                    ""
-                    : <div className="flex flex-col w-1/2">
+                 <div className="flex flex-col w-1/2">
                       <label
                         htmlFor="totalAmount"
                         className="text-sm font-medium text-gray-700"
@@ -1154,7 +1564,7 @@ export default function CreateSO() {
                         onChange={handleChange}
                         placeholder="Total Amount"
                       />
-                    </div>}
+                    </div>
                   {/* -------------XI--2------------- */}
                   {/* -------------  Due Amount------------- */}
                   <div className="flex flex-col w-1/2">
@@ -1163,7 +1573,7 @@ export default function CreateSO() {
                       className="text-sm font-medium text-gray-700"
                     >
                       {/* Due Amount */}
-                      {business === "Brokerage" ? "Brokerage" : "Due Amount"}
+                     Due Amount
                     </label>
                     <input
                       type="text"
@@ -1177,22 +1587,7 @@ export default function CreateSO() {
                 </div>
                 {/* -------------XII--1------------- */}
                 <div className="flex space-x-4">
-                {business === "Brokerage" ? (
-                  <div className="flex flex-col w-1/2">
-                    <label htmlFor="amount_paid" className="text-sm font-medium text-gray-700">
-                      Funds
-                    </label>
-                    <input
-                      type="text"
-                      name="amount_paid"
-                      id="amount_paid"
-                      value={editLead.amount_paid}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                      placeholder="Funds"
-                    />
-                  </div>
-                ) : (
+               
                   <div className="flex flex-col w-1/2">
                     <label htmlFor="amount_paid" className="text-sm font-medium text-gray-700">
                       Amount Paid
@@ -1207,9 +1602,9 @@ export default function CreateSO() {
                       placeholder="Amount Paid"
                     />
                   </div>
-                )}
+             
                 
-                {business === "IT" && (
+                
                   <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="discount"
@@ -1227,7 +1622,7 @@ export default function CreateSO() {
                       placeholder="Discount"
                     />
                   </div>
-                )}
+            
               </div>
               
 
@@ -1252,6 +1647,8 @@ export default function CreateSO() {
                 </div>
                 {/* -------------XIII--2------------- */}
                 {/* -------------Cheque No Or DD No.------------- */}
+         
+                
                 <div className="flex flex-col w-1/2">
                   <label
                     htmlFor="chequeOrDD_no"
@@ -1268,6 +1665,7 @@ export default function CreateSO() {
                     placeholder="Cheque No Or DD No"
                   />
                 </div>
+            
               </div>
 
               {/* -------------XIV--1------------- */}
@@ -1334,6 +1732,7 @@ export default function CreateSO() {
                 </div>
                 {/* -------------XIV--2------------- */}
                 {/* -------------Sales Order No------------- */}
+              
                 <div className="flex flex-col w-1/2">
                   <label
                     htmlFor="saleS_ODR_NO"
@@ -1349,9 +1748,11 @@ export default function CreateSO() {
                     onChange={handleChange}
                   />
                 </div>
+             
               </div>
             </div>
           </div>
+            }
 
           {/* -------------SALES ORDER INFORMATION STARTS FROM HERE------------- */}
           <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">

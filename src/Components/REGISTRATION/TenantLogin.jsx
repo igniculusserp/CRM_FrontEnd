@@ -298,10 +298,12 @@ export default function TenantLogin() {
         }
       );
       const logindetail = response.data.data;
-      // console.log("Login Response: ", response.data.data.userDetail.businessType);
+      console.log("Login Response: ", response.data);
       
       //IMP for handling businessType such as Brokerage, IT, Retail.... etc
       localStorage.setItem("businessType",response.data.data.userDetail.businessType);
+
+      localStorage.setItem("businessRole",response.data.data.userDetail.role);
 
       localStorage.setItem("token", response.data.data.token);
       
