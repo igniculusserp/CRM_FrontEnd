@@ -156,8 +156,8 @@ const togglePasswordEye = (e) => {
   };
 
   // Handle form submission callback
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleFormSubmit = async (formData) => {
+
 
     const config = {
       headers: {
@@ -191,7 +191,7 @@ const togglePasswordEye = (e) => {
       contactNo: formData.contactNo,
       country: formData.country,
       businessType: businessType,
-      userName: formData.username,
+      userName: formData.userName,
       password: formData.password,
       confirmPassword: formData.confirmPassword,
       role: formData.role,
@@ -301,6 +301,11 @@ const togglePasswordEye = (e) => {
       handleRole();
     }, []);
 
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      handleFormSubmit(formData);
+    };
+
     return (
       <>
         <ToastContainer />
@@ -316,7 +321,7 @@ const togglePasswordEye = (e) => {
           </button>
         </div>
 
-        <form onSubmit={(e) => e.preventDefault()} className="flex">
+        <form onSubmit={handleSubmit} className="flex">
           <div className="w-full">
             <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
