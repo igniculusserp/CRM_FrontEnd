@@ -109,7 +109,7 @@ import Analytics from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Analytics/A
 import Subscription from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Subscription/Subscription.jsx";
 import Chat from "./Components/SIDEBAR/SIDEBAR_SETTING/ChatWindow.jsx";
 
-import { ToastContainer } from "react-toastify";
+
 import NotificationProvider from "./NotificationProvider";
 
 const router = createBrowserRouter([
