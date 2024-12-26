@@ -185,7 +185,6 @@ export default function CreateSO() {
         config
       );
       setassigned_ToDropDown(response.data?.data);
-      console.log("status:", response.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message

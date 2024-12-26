@@ -54,7 +54,6 @@ const LeadFeatchModal = ({ onClose }) => {
         config
       );
   
-      console.log("status", response);
   
       if (response.data.status === 200) {
         toast.success(response.data.message, {

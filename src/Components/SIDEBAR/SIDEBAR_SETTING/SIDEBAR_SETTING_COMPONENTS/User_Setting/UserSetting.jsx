@@ -1,31 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { FaBars } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { FaBars } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 
-import axios from 'axios';
-import { tenant_base_url, protocal_url } from './../../../../../Config/config';
-import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
+import axios from "axios";
+import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
 import { IoIosEyeOff } from "react-icons/io";
 import { IoIosEye } from "react-icons/io";
 
-
-import { ToastContainer } from 'react-toastify';
-import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNotifications';
+import { ToastContainer } from "react-toastify";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../../../../utils/toastNotifications";
 
 export default function UserSetting() {
-
   const name = getHostnamePart();
-  const bearer_token = localStorage.getItem('token');
+  const bearer_token = localStorage.getItem("token");
 
   const [data, setData] = useState([]);
   const [active, setActive] = useState(true);
   const [selectedData, setSelectedData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const businessType = localStorage.getItem('businessType');
+  const businessType = localStorage.getItem("businessType");
 
   const [reportedTo, setreportedTo] = useState([]);
 
@@ -57,32 +58,31 @@ export default function UserSetting() {
 
       // Log the response to verify the status code
       console.log("Response status:", response?.status);
-      const logindetail = response.data.data
+      const logindetail = response.data.data;
       if (response?.data?.data) {
         localStorage.setItem("token", response.data.data.token);
         localStorage.setItem("userDetail", JSON.stringify(logindetail));
-        alert("Login successful")
-        refresh();
+        alert("Login successful");
+        // refresh();
       }
     } catch (error) {
       console.error("Error during login:", error);
     }
   };
 
+  // Password visibility state
+  const [passwordEye, setPasswordEye] = useState(false);
 
-// Password visibility state
-const [passwordEye, setPasswordEye] = useState(false);
-
-// Password visibility toggle
-const togglePasswordEye = (e) => {
-  e.preventDefault(); // Prevent any default action
-  setPasswordEye(!passwordEye); // Toggle the password visibility state
-};
+  // Password visibility toggle
+  const togglePasswordEye = (e) => {
+    e.preventDefault();
+    // setPasswordEye(!passwordEye);
+  };
 
   // Fetch all  data
   //-------------------get-------------------get-------------------get-------------------get-------------------
   async function handleLead() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -93,11 +93,11 @@ const togglePasswordEye = (e) => {
         `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
         config
       );
-      console.log(response?.data?.data, "000")
+      console.log(response?.data?.data, "000");
       setData(response?.data?.data);
-      setreportedTo(response?.data?.data)
+      setreportedTo(response?.data?.data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      console.error("Error fetching leads:", error);
     }
   }
 
@@ -107,8 +107,8 @@ const togglePasswordEye = (e) => {
 
   // Delete  by ID
   const handleDelete = async (id) => {
-    console.log(id)
-    const bearer_token = localStorage.getItem('token');
+    console.log(id);
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -119,11 +119,11 @@ const togglePasswordEye = (e) => {
         `${protocal_url}${name}.${tenant_base_url}/Setting/${id}`,
         config
       );
-      showSuccessToast('User Deleted Successfully')
+      showSuccessToast("User Deleted Successfully");
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      handleLead()
+      handleLead();
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -157,8 +157,6 @@ const togglePasswordEye = (e) => {
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
-
-
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
@@ -172,16 +170,16 @@ const togglePasswordEye = (e) => {
       contactNo: formData.contactNo,
       country: formData.country,
       businessType: businessType,
-      userName: formData.userName || '',
+      userName: formData.userName || "",
       password: formData.password,
       confirmPassword: formData.confirmPassword,
-      role: formData.role || '',
+      role: formData.role || "",
       groupId: null,
       reportedTo: formData.reportedTo,
       isActive: true,
       createdDate: null,
       deletedDate: null,
-    }
+    };
 
     const formData_PUT = {
       userId: formData.userId,
@@ -200,14 +198,17 @@ const togglePasswordEye = (e) => {
       isActive: true,
       createdDate: formData.createdDate || null,
       deletedDate: formData.deletedDate || null,
-    }
+    };
 
-
-    console.log(formData_POST, 'handleSubmitRunned')
+    console.log(formData_POST, "handleSubmitRunned");
 
     try {
       if (isEditMode) {
-        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Setting/update`, formData_PUT, config);
+        await axios.put(
+          `${protocal_url}${name}.${tenant_base_url}/Setting/update`,
+          formData_PUT,
+          config
+        );
       } else {
         if(!formData_POST.firstName){
           showErrorToast('Please enter name');
@@ -251,7 +252,7 @@ const togglePasswordEye = (e) => {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -282,24 +283,25 @@ const togglePasswordEye = (e) => {
     });
 
     useEffect(() => {
-      setFormData(data || {
-        userId: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        contactNo: "",
-        country: "",
-        businessType: "",
-        password: "",
-        confirmPassword: "",
-        reportedTo: "",
-        role: "",
-        createdDate: "",
-        deletedDate: "",
-        userName: "",
-      });
+      setFormData(
+        data || {
+          userId: "",
+          firstName: "",
+          lastName: "",
+          email: "",
+          contactNo: "",
+          country: "",
+          businessType: "",
+          password: "",
+          confirmPassword: "",
+          reportedTo: "",
+          role: "",
+          createdDate: "",
+          deletedDate: "",
+          userName: "",
+        }
+      );
     }, [data]);
-
 
     const handleChange = (e) => {
       setFormData({
@@ -308,12 +310,10 @@ const togglePasswordEye = (e) => {
       });
     };
 
-
-
     // ROLE dropdown management
     const [ROLE, setROLE] = useState([]);
     async function handleRole() {
-      const bearer_token = localStorage.getItem('token');
+      const bearer_token = localStorage.getItem("token");
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
@@ -327,7 +327,7 @@ const togglePasswordEye = (e) => {
         setROLE(response.data.data);
         // console.log("Role data:", response.data.data);
       } catch (error) {
-        console.error('Error fetching roles:', error);
+        console.error("Error fetching roles:", error);
       }
     }
 
@@ -345,7 +345,7 @@ const togglePasswordEye = (e) => {
         <ToastContainer />
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">
-            {isEditMode ? 'Edit' : 'Add'}
+            {isEditMode ? "Edit" : "Add"}
           </h1>
           <button
             onClick={handleCancel}
@@ -376,7 +376,7 @@ const togglePasswordEye = (e) => {
                     <input
                       type="text"
                       name="firstName"
-                      value={formData.firstName || ''}
+                      value={formData.firstName || ""}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
@@ -392,7 +392,7 @@ const togglePasswordEye = (e) => {
                     <input
                       type="text"
                       name="lastName"
-                      value={formData.lastName || ''}
+                      value={formData.lastName || ""}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
@@ -411,7 +411,7 @@ const togglePasswordEye = (e) => {
                     <input
                       type="email"
                       name="email"
-                      value={formData.email || ''}
+                      value={formData.email || ""}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
@@ -427,7 +427,7 @@ const togglePasswordEye = (e) => {
                     <input
                       type="number"
                       name="contactNo"
-                      value={formData.contactNo || ''}
+                      value={formData.contactNo || ""}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
@@ -437,7 +437,6 @@ const togglePasswordEye = (e) => {
                 {/*<---------------3--------------->*/}
                 {/*<---------------userName--------------->*/}
                 <div className="flex space-x-4">
-
                   <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="userName"
@@ -448,7 +447,7 @@ const togglePasswordEye = (e) => {
                     <input
                       type="text"
                       name="userName"
-                      value={formData.userName || ''}
+                      value={formData.userName || ""}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
@@ -465,92 +464,86 @@ const togglePasswordEye = (e) => {
                     <input
                       type="text"
                       name="country"
-                      value={formData.country || ''}
+                      value={formData.country || ""}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
                   </div>
                 </div>
-                  {/*<---------------4--------------->*/}
-              <div className="flex space-x-4">
-              {/* Password Input Field */}
-<div className="flex flex-col w-1/2">
-<label
-  htmlFor="password"
-  className="text-sm font-medium text-gray-700 relative block"
->
-  Password
-  <input
-    type={passwordEye ? 'text' : 'password'}
-    name="password"
-    className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm flex justify-between"
-    value={formData.password}
-    onChange={handleChange}
-    placeholder="********"
-  />
-  <button
-    type="button" // Ensures it's not a form submission button
-    onClick={togglePasswordEye}
-    className="absolute inset-y-0 top-5 right-2 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
-  >
-    {passwordEye ? (
-      <IoIosEye
-        size={22}
-        className={`transition-opacity duration-300 ease-in-out ${
-          passwordEye ? 'opacity-100' : 'opacity-0'
-        }`}
-      />
-    ) : (
-      <IoIosEyeOff
-        size={22}
-        className={`transition-opacity duration-300 ease-in-out ${
-          passwordEye ? 'opacity-0' : 'opacity-100'
-        }`}
-      />
-    )}
-  </button>
-</label>
-</div>
-              {/*<---------------Confirm Password--------------->*/}
-              {/* Password Input Field */}
-<div className="flex flex-col w-1/2">
-<label
-  htmlFor="confirmPassword"
-  className="text-sm font-medium text-gray-700 relative block"
->
- Confirm Password
-  <input
-    type={passwordEye ? 'text' : 'password'}
-    name="confirmPassword"
-    className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm flex justify-between"
-    value={formData.confirmPassword}
-    onChange={handleChange}
-    placeholder="********"
-  />
-  <button
-    type="button" // Ensures it's not a form submission button
-    onClick={togglePasswordEye}
-    className="absolute inset-y-0 top-5 right-2 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
-  >
-    {passwordEye ? (
-      <IoIosEye
-        size={22}
-        className={`transition-opacity duration-300 ease-in-out ${
-          passwordEye ? 'opacity-100' : 'opacity-0'
-        }`}
-      />
-    ) : (
-      <IoIosEyeOff
-        size={22}
-        className={`transition-opacity duration-300 ease-in-out ${
-          passwordEye ? 'opacity-0' : 'opacity-100'
-        }`}
-      />
-    )}
-  </button>
-</label>
-</div>
-            </div>
+                {/*<---------------4--------------->*/}
+                <div className="flex space-x-4">
+                  {/* Password Input Field */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="password"
+                      className="text-sm font-medium text-gray-700 block"
+                    >
+                      Password
+                      <div className="relative">
+                        <input
+                          type={passwordEye ? "text" : "password"}
+                          name="password"
+                          className="mt-1 py-2 pl-2 pr-10 border border-gray-300 rounded-md w-full outline-none text-sm"
+                          value={formData.password}
+                          onChange={handleChange}
+                          placeholder="********"
+                        />
+                        <button
+                          type="button"
+                          onClick={togglePasswordEye}
+                          aria-label="password"
+                       
+                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 transition-opacity duration-300"
+                        >
+                          {passwordEye ? (
+                            <IoIosEye size={22} />
+                          ) : (
+                            <IoIosEyeOff size={22} />
+                          )}
+                        </button>
+                      </div>
+                    </label>
+                  </div>
+                  {/*<---------------Confirm Password--------------->*/}
+                  {/* Password Input Field */}
+                  {/* <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="confirmPassword"
+                      className="text-sm font-medium text-gray-700 relative block"
+                    >
+                      Confirm Password
+                      <input
+                        type={passwordEye ? "text" : "password"}
+                        name="confirmPassword"
+                        className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm flex justify-between"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        placeholder="********"
+                      />
+                      <button
+                        type="button" // Ensures it's not a form submission button
+                        onClick={togglePasswordEye}
+                        className="absolute inset-y-0 top-5 right-2 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
+                      >
+                        {passwordEye ? (
+                          <IoIosEye
+                            size={22}
+                            className={`transition-opacity duration-300 ease-in-out ${
+                              passwordEye ? "opacity-100" : "opacity-0"
+                            }`}
+                          />
+                        ) : (
+                          <IoIosEyeOff
+                            size={22}
+                            className={`transition-opacity duration-300 ease-in-out ${
+                              passwordEye ? "opacity-0" : "opacity-100"
+                            }`}
+                          />
+                        )}
+                      </button>
+                    </label>
+                  </div> */}
+                </div>
                 {/*<---------------5--------------->*/}
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
@@ -563,11 +556,11 @@ const togglePasswordEye = (e) => {
                     <select
                       name="reportedTo"
                       className="mt-1 p-2 border border-gray-300 rounded-md"
-                      value={formData?.reportedTo || ''}
+                      value={formData?.reportedTo || ""}
                       onChange={handleChange}
                     >
                       <option value="" disabled>
-                        {formData?.reportedTo || 'Select'}
+                        {formData?.reportedTo || "Select"}
                       </option>
                       {reportedTo?.map((item) => (
                         <option key={item.id} value={item.reportedTo}>
@@ -576,7 +569,6 @@ const togglePasswordEye = (e) => {
                       ))}
                     </select>
                   </div>
-
 
                   {/* -------------ROLE------------- */}
 
@@ -590,11 +582,11 @@ const togglePasswordEye = (e) => {
                     <select
                       name="role"
                       className="mt-1 p-2 border border-gray-300 rounded-md"
-                      value={formData?.role || ''}
+                      value={formData?.role || ""}
                       onChange={handleChange}
                     >
-                      <option value={formData?.role || ''} disabled>
-                        {formData?.role || 'Select'}
+                      <option value={formData?.role || ""} disabled>
+                        {formData?.role || "Select"}
                       </option>
                       {ROLE?.map((item, i) => (
                         <option key={i} value={item.groupName}>
@@ -612,7 +604,7 @@ const togglePasswordEye = (e) => {
                     type="submit"
                     className="mt-4 w-full hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-6 py-4 rounded-md"
                   >
-                    {isEditMode ? 'Update User' : 'Save User'}
+                    {isEditMode ? "Update User" : "Save User"}
                   </button>
                 </div>
               </div>
@@ -630,9 +622,7 @@ const togglePasswordEye = (e) => {
         {active ? (
           <>
             <div className="flex min-w-screen justify-between items-center">
-              <h1 className="text-3xl font-medium">
-                User
-              </h1>
+              <h1 className="text-3xl font-medium">User</h1>
               <button
                 onClick={handleAdd}
                 className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
@@ -742,16 +732,17 @@ const togglePasswordEye = (e) => {
                         </td>
 
                         <td className="px-2 py-4 text-sm max-w-24 break-words">
-                          {data?.createdDate?.split('T')[0] || ""}
+                          {data?.createdDate?.split("T")[0] || ""}
                         </td>
 
                         <td className="text-center">
-                          <Link onClick={() => handleLoginUser(user)} className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded ">
+                          <Link
+                            onClick={() => handleLoginUser(user)}
+                            className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded "
+                          >
                             Login As
                           </Link>
                         </td>
-
-
 
                         <td className="px-2 py-4 flex gap-3 justify-center">
                           <MdEdit
@@ -763,9 +754,7 @@ const togglePasswordEye = (e) => {
                           <RiDeleteBin6Fill
                             size={25}
                             color="red"
-                            onClick={() => handleDelete(data.userId)
-
-                            }
+                            onClick={() => handleDelete(data.userId)}
                           />
                         </td>
                       </tr>

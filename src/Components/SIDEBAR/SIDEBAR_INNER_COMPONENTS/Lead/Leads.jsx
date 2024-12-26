@@ -154,7 +154,6 @@ export default function Lead() {
     handleLead();
     getAllUsers();
     //------- Business Type --------
-    console.log("Bussiness Role : ", businessRole);
     setBusiness(businessType);
     setAdminRole(businessRole);
   }, []);
@@ -169,30 +168,60 @@ export default function Lead() {
 
   // Function to filter leads
   function handle_LeadStatus(statusValue) {
-    let filteredLeads;
-
-    if (statusValue === "All Lead" || statusValue === null) {
-      // Show all leads when "All Lead" is selected or reset
-      filteredLeads = getleads;
-    } else {
-      // Apply filtering for other statuses
-      filteredLeads = getleads.filter(
-        (lead) => lead.leadesStatus === statusValue
-      );
+    if (activeButtonId === 1) {
+      let filteredLeads;
+      if (statusValue === "All Lead" || statusValue === null) {
+        // Show all leads when "All Lead" is selected or reset
+        filteredLeads = getleads;
+      } else {
+        // Apply filtering for other statuses
+        filteredLeads = getleads.filter(
+          (lead) => lead.leadesStatus === statusValue
+        );
+      }
+      setFilteredLeads(filteredLeads);
     }
-
-    setFilteredLeads(filteredLeads); // Update the filtered leads
-    console.log(filteredLeads); // Log for debugging
+    if (activeButtonId === 2) {
+      let filteredLeads;
+      if (statusValue === "All Lead" || statusValue === null) {
+        // Show all leads when "All Lead" is selected or reset
+        filteredLeads = getleads;
+      } else {
+        // Apply filtering for other statuses
+        filteredLeads = getleads.filter(
+          (lead) => lead.leadesStatus === statusValue
+        );
+      }
+      setFilteredLeads(filteredLeads);
+    }
   }
 
   function handle_AssignedTo(assignedToValue) {
-    let filteredLeads = getleads;
-    if (assignedToValue !== null && assignedToValue !== "Assigned to") {
-      filteredLeads = filteredLeads.filter(
-        (lead) => lead.assigned_To === assignedToValue
-      );
+    if (activeButtonId === 1) {
+      let filtered = getleads;
+      if (assignedToValue !== null && assignedToValue !== "Assigned to") {
+        filtered = filtered.filter(
+          (lead) => lead.assigned_To === assignedToValue
+        );
+      }
+      setFilteredLeads(filtered); // Set the filtered result
     }
-    setFilteredLeads(filteredLeads); // Set the filtered result
+    if (activeButtonId === 3) {
+      let filtered = getleads;
+      if (assignedToValue !== null && assignedToValue !== "Assigned to") {
+        filtered = filtered.filter(
+          (lead) => lead.assigned_To === assignedToValue
+        );
+      }
+      setFilteredLeads(filtered); // Set the filtered result
+    }
+    if (activeButtonId === 4) {
+      let filtered = getleads;
+      if (assignedToValue !== null && assignedToValue !== "Assigned to") {
+        filtered = filtered.filter((lead) => lead.userName === assignedToValue);
+      }
+      setFilteredLeads(filtered); // Set the filtered result
+    }
   }
 
   // Handle selecting an assigned user
@@ -279,7 +308,6 @@ export default function Lead() {
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
 
   const handleStripeButton = (value) => {
-    console.log(value);
     setSelectedViewValue(value);
   };
 
@@ -541,7 +569,6 @@ export default function Lead() {
     e.stopPropagation();
 
     const leadId = item.id;
-    console.log("Checkbox clicked for Lead ID:", leadId);
 
     // Toggle selected IDs
     setSelectedIds((prevSelected) =>
@@ -968,42 +995,45 @@ export default function Lead() {
 
           <div>
             {/* ------------------- Filter by date ----------------- */}
+            {activeButtonId === 1 ? (
+              <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
+                {/* Filter Icon Button */}
+                <button className="border-r border-gray-500 px-3">
+                  <ImFilter />
+                </button>
 
-            <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
-              {/* Filter Icon Button */}
-              <button className="border-r border-gray-500 px-3">
-                <ImFilter />
-              </button>
+                {/* Date Range Filter Button */}
+                <button className="border-r border-gray-500 px-3">
+                  Filter By
+                </button>
 
-              {/* Date Range Filter Button */}
-              <button className="border-r border-gray-500 px-3">
-                Filter By
-              </button>
+                {/* Date Range Inputs */}
+                <div className="px-3 flex items-center gap-2">
+                  <input
+                    type="date"
+                    value={startDate}
+                    className="border rounded px-2 py-1"
+                    onChange={(e) => setStartDate(e.target.value)}
+                  />
 
-              {/* Date Range Inputs */}
-              <div className="px-3 flex items-center gap-2">
-                <input
-                  type="date"
-                  value={startDate}
-                  className="border rounded px-2 py-1"
-                  onChange={(e) => setStartDate(e.target.value)}
-                />
+                  <input
+                    type="date"
+                    value={endDate}
+                    className="border rounded px-2 py-1"
+                    onChange={(e) => setEndDate(e.target.value)}
+                  />
+                </div>
 
-                <input
-                  type="date"
-                  value={endDate}
-                  className="border rounded px-2 py-1"
-                  onChange={(e) => setEndDate(e.target.value)}
-                />
+                <div
+                  className="p-1 border rounded cursor-pointer  hover:shadow-md"
+                  onClick={handleResetFilter}
+                >
+                  <TbRefresh size={25} />
+                </div>
               </div>
-
-              <div
-                className="p-1 border rounded cursor-pointer  hover:shadow-md"
-                onClick={handleResetFilter}
-              >
-                <TbRefresh size={25} />
-              </div>
-            </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
         {/* ---------------------Multi Assign and Multi Change------------------- */}

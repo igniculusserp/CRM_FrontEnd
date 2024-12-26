@@ -299,7 +299,6 @@ export default function EditClientSO() {
         config
       );
       setPoolToDropDown(response.data.data);
-      console.log("status:", response.data.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
       setError("Failed to fetch pools."); // Set error message

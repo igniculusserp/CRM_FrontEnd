@@ -1,52 +1,49 @@
 //react
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { Link } from "react-router-dom";
 
 //reactIcons
 import {
   FaArrowAltCircleDown,
   FaArrowAltCircleUp,
   FaUsers,
-} from 'react-icons/fa';
-import { CiBadgeDollar } from 'react-icons/ci';
-import { FcSalesPerformance } from 'react-icons/fc';
-import { FaUsersRectangle } from 'react-icons/fa6';
+} from "react-icons/fa";
+import { CiBadgeDollar } from "react-icons/ci";
+import { FcSalesPerformance } from "react-icons/fc";
+import { FaUsersRectangle } from "react-icons/fa6";
 
 //Chart
-import SalesPipelineChart from './homeComponents/SalesPipelineChart';
-import LeadSourceChart from './homeComponents/LeadSourceChart';
-import SalesReportChart from './homeComponents/SalesReportChart';
-import CustomerSegmentationChart from './homeComponents/CustomerSegmentationChart';
+import SalesPipelineChart from "./homeComponents/SalesPipelineChart";
+import LeadSourceChart from "./homeComponents/LeadSourceChart";
+import SalesReportChart from "./homeComponents/SalesReportChart";
+import CustomerSegmentationChart from "./homeComponents/CustomerSegmentationChart";
 
 //imports
-import { tenant_base_url, protocal_url } from '../../../../Config/config';
-import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
+import { tenant_base_url, protocal_url } from "../../../../Config/config";
+import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 //external
-import axios from 'axios';
-
+import axios from "axios";
 
 export default function Home() {
-
-  
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
 
-
   //------- Business Type --------
-  const businessType = localStorage.getItem('businessType');
-  const [business, setBusiness] = useState('');
+  const businessType = localStorage.getItem("businessType");
+  const [business, setBusiness] = useState("");
   //DND
   const navigate = useNavigate();
   const [salesData, setSalesData] = useState([]);
   const [leadsData, setLeadsData] = useState([]);
+  const [kycData, setKycData] = useState([]);
   const [data, setData] = useState([]);
   const [targetAchievedData, setTargetAchievedData] = useState([]);
 
   // ------------- GET TARGET API -------------
   const fetchTargetData = async () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -63,13 +60,13 @@ export default function Home() {
       setData(res);
       console.log(data);
     } catch (err) {
-      console.log('Error while fetching target api', err);
+      console.log("Error while fetching target api", err);
     }
   };
 
   // ------------- GET TARGET API -------------
   const fetchTargetAchievedData = async () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -88,7 +85,7 @@ export default function Home() {
       console.log(targetAchievedData);
       // console.log(targetAchievedRes?.data?.data)
     } catch (err) {
-      console.log('Error while fetching target api', err);
+      console.log("Error while fetching target api", err);
     }
   };
 
@@ -99,9 +96,9 @@ export default function Home() {
   }, []);
 
   const checkStoredOtp = () => {
-    const storedOtp = localStorage.getItem('otp'); // Retrieve OTP from localStorage
+    const storedOtp = localStorage.getItem("otp"); // Retrieve OTP from localStorage
     if (!storedOtp || storedOtp.length !== 6) {
-      navigate('/tenantloginOTP'); // Redirect if OTP is not valid or doesn't have 6 characters
+      navigate("/tenantloginOTP"); // Redirect if OTP is not valid or doesn't have 6 characters
     }
   };
   //----------calling data in effect-----------
@@ -109,14 +106,14 @@ export default function Home() {
     checkStoredOtp();
     handleGetApis();
     //------- Business Type --------
-    console.log('Bussiness Type Dash Board : ', businessType);
+    console.log("Bussiness Type Dash Board : ", businessType);
     setBusiness(businessType);
   }, [navigate]);
 
   //------------------------------------------------------------------------------------------------
   //----------------GET----------------
   async function handleGetApis() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -139,8 +136,16 @@ export default function Home() {
       );
       const leadData = leadRes.data.data;
       setLeadsData(leadData); // Set leads data after the second API call is complete
+
+      // Third API call: current month leads report
+      const kycRes = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Report/currentmonthKYC/report`,
+        config
+      );
+      const Kyc = kycRes.data.data;
+      setKycData(Kyc); // Set KYC data after the Third API call is complete
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
 
@@ -172,8 +177,8 @@ export default function Home() {
       : ((currentMonthSales - previousMonthSales) / previousMonthSales) * 100;
   const revenueDiffrence = currentMonthSales - previousMonthSales;
   //-------------------------- Determine increase or decrease status for revenue and sales--------------------------
-  const revenueStatus = revenuePercentageChange > 0 ? 'up' : 'down';
-  const clientStatus = clientPercentageChange > 0 ? 'up' : 'down';
+  const revenueStatus = revenuePercentageChange > 0 ? "up" : "down";
+  const clientStatus = clientPercentageChange > 0 ? "up" : "down";
 
   //----------------------for leads and intrested leads-----------------------------
   const {
@@ -204,14 +209,37 @@ export default function Home() {
   const intrestedLeadsDiffrence =
     currentMonthInterestedLeads - previousMonthInterestedLeads;
   //-------------------------- Determine increase or decrease status for leads and intrested leads--------------------------
-  const leadStatus = leadsPercentage > 0 ? 'up' : 'down';
-  const intrestedLeadStatus = intrestedPercentageChange > 0 ? 'up' : 'down';
+  const leadStatus = leadsPercentage > 0 ? "up" : "down";
+  const intrestedLeadStatus = intrestedPercentageChange > 0 ? "up" : "down";
+
+  
+  //------------ Destructure KYC with fallback values to prevent null or undefined issues-----------------
+   
+    
+  const currentMonthKYC = kycData.currentMonthKYC;
+  const previousMonthKYC = kycData.previousMonthKYC;
+ 
+
+  //----------------Calculate percentage increase for clients-----------------
+  const kycPercentageChange =
+  previousMonthKYC === 0
+      ? currentMonthKYC > 0
+        ? 100
+        : 0
+      : ((currentMonthKYC - previousMonthKYC) /
+      previousMonthKYC) *
+        100;
+  //---------------------last month diffrence-------------------------
+  const kycDiffrence = currentMonthKYC - previousMonthKYC;
+ 
+  //-------------------------- Determine increase or decrease status for revenue and sales--------------------------
+  const kycStatus = kycPercentageChange > 0 ? "up" : "down";
 
   // ------------ DATA FUNCTIONALITY STARTS FROM HERE ------------
   const [remainingDays, setRemainingDays] = useState(0);
   const [showSubscription, setShowSubscription] = useState(true);
 
-  const user = JSON.parse(localStorage.getItem('userDetail'));
+  const user = JSON.parse(localStorage.getItem("userDetail"));
   // USERNAME
   const firstName = user?.userDetail?.firstName;
 
@@ -248,7 +276,6 @@ export default function Home() {
     return () => clearTimeout(timeout);
   }, [user]);
 
-
   //------------------------------------------------------ Get API ----------------------------------------------------
 
   const [totalBrokerage, setTotalBrokerage] = useState(0);
@@ -269,14 +296,12 @@ export default function Home() {
         const Details = response.data.data.totalBrokerage;
         setTargetAchieved(Details);
         console.log("Target Achieved", Details);
-        
       }
     } catch (error) {
       console.log("error", error);
     }
   };
-  
-  
+
   const getAchieveDetails = async () => {
     try {
       const config = {
@@ -298,12 +323,10 @@ export default function Home() {
     }
   };
 
-
   useEffect(() => {
     getDetails();
     getAchieveDetails();
   }, []);
-
 
   const Remain = totalBrokerage - targetAchieved;
 
@@ -315,10 +338,11 @@ export default function Home() {
             <div className="flex flex-col justify-start">
               <h1
                 className={`${
-                  remainingDays < 5 ? 'text-red-500' : 'text-gray-700'
+                  remainingDays < 5 ? "text-red-500" : "text-gray-700"
                 } text-xl font-semibold`}
               >
-                Clock is ticking! {remainingDays} day&apos;s are left in your trail.
+                Clock is ticking! {remainingDays} day&apos;s are left in your
+                trail.
               </h1>
               <p className="text-xs font-semibold text-gray-500">
                 Pick a perfect plan for your business needs before your trial
@@ -342,7 +366,7 @@ export default function Home() {
         )}
         {/* FIRST NAME */}
         <h1 className="text-3xl my-2 font-semibold text-gray-700 px-3 pb-1">
-          Hello, {firstName || 'Shubh'}
+          Hello, {firstName || "Shubh"}
         </h1>
         {/* ------- TOP CARDS ------- */}
         <div className="flex items-center px-2 gap-3">
@@ -351,9 +375,7 @@ export default function Home() {
             <div className="flex flex-col gap-2">
               {}
               <h1 className="font-light uppercase text-sm">
-                {business === 'Brokerage'
-                  ? 'Leads'
-                  : 'Lead this month'}
+                {business === "Brokerage" ? "Leads" : "Lead this month"}
               </h1>
               {/* ------- MIDDLE SECTION ----------- */}
               <div className="flex items-center gap-4 mt-2">
@@ -366,10 +388,10 @@ export default function Home() {
                   <span className="font-bold text-xl">{currentMonthLeads}</span>
                   <button
                     className={`flex text-[12px] font-thin p-1 items-center ${
-                      leadStatus == 'up' ? 'bg-green-100' : 'bg-red-100'
+                      leadStatus == "up" ? "bg-green-100" : "bg-red-100"
                     } w-max rounded-md justify-between gap-1`}
                   >
-                    {leadStatus == 'up' ? (
+                    {leadStatus == "up" ? (
                       <FaArrowAltCircleUp />
                     ) : (
                       <FaArrowAltCircleDown />
@@ -383,7 +405,7 @@ export default function Home() {
             <div className="h-2 w-full bg-transparent border border-gray-600 rounded-lg mt-2">
               <div
                 className={`h-full ${
-                  leadStatus == 'up' ? 'bg-blue-600' : 'bg-red-600'
+                  leadStatus == "up" ? "bg-blue-600" : "bg-red-600"
                 }`}
                 style={{
                   maxWidth: `${Math.abs(Math.round(leadsPercentage))}%`,
@@ -391,7 +413,7 @@ export default function Home() {
               ></div>
             </div>
             <h3 className="font-light text-sm">
-              Last Month Relative:{' '}
+              Last Month Relative:{" "}
               <span className="text-sm">{leadsDiffrence}</span>
             </h3>
           </div>
@@ -400,9 +422,7 @@ export default function Home() {
             <div className="flex flex-col gap-2">
               <h1 className="font-light uppercase text-sm">
                 {/* REVENUE THIS MONTH */}
-                {business === 'Brokerage'
-                  ? 'Funds'
-                  : 'REVENUE THIS MONTH'}
+                {business === "Brokerage" ? "Funds" : "REVENUE THIS MONTH"}
               </h1>
               <div className="flex gap-4 items-center mt-2">
                 <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-orange-300 text-white flex items-center justify-center">
@@ -416,10 +436,10 @@ export default function Home() {
                   </span>
                   <button
                     className={`flex text-[12px] font-thin p-1 items-center ${
-                      revenueStatus == 'up' ? 'bg-green-100' : 'bg-red-100'
+                      revenueStatus == "up" ? "bg-green-100" : "bg-red-100"
                     } w-max rounded-md justify-between gap-1`}
                   >
-                    {revenueStatus == 'up' ? (
+                    {revenueStatus == "up" ? (
                       <FaArrowAltCircleUp />
                     ) : (
                       <FaArrowAltCircleDown />
@@ -433,7 +453,7 @@ export default function Home() {
             <div className="h-2 w-full bg-transparent border border-gray-600 rounded-lg mt-2">
               <div
                 className={`h-full ${
-                  revenueStatus == 'up' ? 'bg-blue-600' : 'bg-red-600'
+                  revenueStatus == "up" ? "bg-blue-600" : "bg-red-600"
                 }`}
                 style={{
                   maxWidth: `${Math.abs(Math.round(revenuePercentageChange))}%`,
@@ -441,18 +461,16 @@ export default function Home() {
               ></div>
             </div>
             <h3 className="font-light text-sm">
-              Last Month Relative: ${' '}
+              Last Month Relative: ${" "}
               <span className="text-sm">{revenueDiffrence}</span>
             </h3>
           </div>
-           {/* ------- CARD ------- */}
-           <div className="flex flex-col justify-between bg-white py-4 px-4 rounded-md shadow-lg h-[210px] w-1/4">
+          {/* ------- CARD ------- */}
+          <div className="flex flex-col justify-between bg-white py-4 px-4 rounded-md shadow-lg h-[210px] w-1/4">
             <div className="flex flex-col gap-2">
               <h1 className="font-light uppercase text-sm">
                 {/* CLIENT THIS MONTH */}
-                {business === 'Brokerage'
-                  ? 'KYC'
-                  : 'CLIENT THIS MONTH'}
+                {business === "Brokerage" ? "KYC" : "CLIENT THIS MONTH"}
               </h1>
               <div className="flex gap-4 items-center mt-2">
                 <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-cyan-500 text-white flex items-center justify-center">
@@ -462,37 +480,71 @@ export default function Home() {
                 </button>
                 <div className="flex flex-col gap-1">
                   <span className="font-bold text-xl">
-                    {currentMonthClientCount}
+                   
+                    {business === "Brokerage" ?currentMonthKYC : currentMonthClientCount}
                   </span>
+                  {business === "Brokerage" ?
+                  <button
+                  className={`flex text-[12px] font-thin p-1 items-center ${
+                    kycStatus == "up" ? "bg-green-100" : "bg-red-100"
+                  } w-max rounded-md justify-between gap-1`}
+                >
+                  {kycStatus == "up" ? (
+                    <FaArrowAltCircleUp />
+                  ) : (
+                    <FaArrowAltCircleDown />
+                  )}
+                  <span>{Math.round(kycPercentageChange)}%</span>
+                </button>
+                  : 
                   <button
                     className={`flex text-[12px] font-thin p-1 items-center ${
-                      clientStatus == 'up' ? 'bg-green-100' : 'bg-red-100'
+                      clientStatus == "up" ? "bg-green-100" : "bg-red-100"
                     } w-max rounded-md justify-between gap-1`}
                   >
-                    {clientStatus == 'up' ? (
+                    {clientStatus == "up" ? (
                       <FaArrowAltCircleUp />
                     ) : (
                       <FaArrowAltCircleDown />
                     )}
                     <span>{Math.round(clientPercentageChange)}%</span>
                   </button>
+                  }
+                  
                 </div>
               </div>
             </div>
             {/* ---------- PROGRESS BAR --------- */}
             <div className="h-2 w-full bg-transparent border border-gray-600 rounded-lg mt-2">
-              <div
-                className={`h-full ${
-                  clientStatus == 'up' ? 'bg-blue-600' : 'bg-red-600'
-                }`}
-                style={{
-                  maxWidth: `${Math.abs(Math.round(clientPercentageChange))}%`,
-                }}
-              ></div>
+            {business === "Brokerage" ?
+            <div
+            className={`h-full ${
+              clientStatus == "up" ? "bg-blue-600" : "bg-red-600"
+            }`}
+            style={{
+              maxWidth: `${Math.abs(Math.round(kycPercentageChange))}%`,
+            }}
+          ></div>
+            : 
+            <div
+            className={`h-full ${
+              clientStatus == "up" ? "bg-blue-600" : "bg-red-600"
+            }`}
+            style={{
+              maxWidth: `${Math.abs(Math.round(clientPercentageChange))}%`,
+            }}
+          ></div>
+           }
+              
             </div>
             <h3 className="font-light text-sm">
-              Last Month Relative:{' '}
+              Last Month Relative:{" "}
+              {business === "Brokerage" ?
+             <span className="text-sm">{kycDiffrence}</span>
+              : 
               <span className="text-sm">{clientDiffrence}</span>
+              }
+              
             </h3>
           </div>
           {/* ------- CARD ------- */}
@@ -500,9 +552,9 @@ export default function Home() {
             <div className="flex flex-col gap-2">
               <h1 className="font-light uppercase text-sm">
                 {/* SALES IN PIPELINE */}
-                {business === 'Brokerage'
-                  ? 'Interested Clients'
-                  : 'SALES IN PIPELINE'}
+                {business === "Brokerage"
+                  ? "Interested Clients"
+                  : "SALES IN PIPELINE"}
               </h1>
               <div className="flex gap-4 items-center mt-2">
                 <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-red-500 text-white flex items-center justify-center">
@@ -516,12 +568,12 @@ export default function Home() {
                   </span>
                   <button
                     className={`flex text-[12px] font-thin p-1 items-center ${
-                      intrestedLeadStatus == 'up'
-                        ? 'bg-green-100'
-                        : 'bg-red-100'
+                      intrestedLeadStatus == "up"
+                        ? "bg-green-100"
+                        : "bg-red-100"
                     } w-max rounded-md justify-between gap-1`}
                   >
-                    {intrestedLeadStatus == 'up' ? (
+                    {intrestedLeadStatus == "up" ? (
                       <FaArrowAltCircleUp />
                     ) : (
                       <FaArrowAltCircleDown />
@@ -535,7 +587,7 @@ export default function Home() {
             <div className="h-2 w-full bg-transparent border border-gray-600 rounded-lg mt-2">
               <div
                 className={`h-full ${
-                  intrestedLeadStatus == 'up' ? 'bg-blue-600' : 'bg-red-600'
+                  intrestedLeadStatus == "up" ? "bg-blue-600" : "bg-red-600"
                 }`}
                 style={{
                   maxWidth: `${Math.abs(
@@ -545,99 +597,120 @@ export default function Home() {
               ></div>
             </div>
             <h3 className="font-light text-sm">
-              Last Month Relative:{' '}
+              Last Month Relative:{" "}
               <span className="text-sm">{intrestedLeadsDiffrence}</span>
             </h3>
           </div>
-         
         </div>
         {/* ------- PROGRESS BAR ------- */}
         <div className="flex gap-3 m-2">
           {/* ------- PROGRESS CARD ------- */}
           <div className="flex-4 flex flex-col bg-white py-4 px-4 rounded-md shadow-md w-[400px] justify-between">
             <h1 className="font-thin text-xl">
-            {business === 'Brokerage'
-                  ? 'Brokerage'
-                  : 'Custom Segmentation'}
-                  </h1>
+              {business === "Brokerage" ? "Brokerage" : "Custom Segmentation"}
+            </h1>
             <div className="flex items-center flex-col gap-2">
-              <CustomerSegmentationChart totalBrokerage={totalBrokerage} businessType={businessType} targetAchieved={targetAchieved} />
-              {businessType==="Brokerage"?
-              <>
-              <div className="flex w-full items-center justify-between">
-                <div className="flex items-center gap-1">
-                  <div className="w-1 h-3 bg-orange-600"></div>
-                  <span className="text-sm">Total Target</span>
-                </div>
-                <div className="flex gap-1">
-                  <span className="text-sm text-gray-700">{totalBrokerage}</span>
-                </div>
-              </div>
-              <div className="flex w-full items-center justify-between">
-                <div className="flex items-center gap-1">
-                  <div className="w-1 h-3 bg-green-300"></div>
-                  <span className="text-sm">Traget Achieved (Brokerage)</span>
-                </div>
-                <div className="flex gap-1">
-                  <span className="text-sm text-gray-700">{targetAchieved}</span>
-                </div>
-              </div>
-             
-              </>
-              :
-              <>
-              <div className="flex w-full items-center justify-between">
-                <div className="flex items-center gap-1">
-                  <div className="w-1 h-3 bg-orange-600"></div>
-                  <span className="text-sm">Small Business</span>
-                </div>
-                <div className="flex gap-1">
-                  <span className="text-sm text-gray-700">1.650</span>
-                  <span className="text-green-400 text-sm">↑ 424</span>
-                </div>
-              </div>
-              <div className="flex w-full items-center justify-between">
-                <div className="flex items-center gap-1">
-                  <div className="w-1 h-3 bg-orange-300"></div>
-                  <span className="text-sm">Enterprise</span>
-                </div>
-                <div className="flex gap-1">
-                  <span className="text-sm text-gray-700">1.650</span>
-                  <span className="text-green-400 text-sm">↑ 424</span>
-                </div>
-              </div>
-              <div className="flex w-full items-center justify-between">
-                <div className="flex items-center gap-1">
-                  <div className="w-1 h-3 bg-blue-600"></div>
-                  <span className="text-sm">Company</span>
-                </div>
-                <div className="flex gap-1">
-                  <span className="text-sm text-gray-700">1.650</span>
-                  <span className="text-green-400 text-sm">↑ 424</span>
-                </div>
-              </div>
-              </>}
-              
-              <h2 className="font-bold">Remaining: {businessType==="Brokerage"?Remain<=0?"0":Remain:"900"}</h2>
+              <CustomerSegmentationChart
+                totalBrokerage={totalBrokerage}
+                businessType={businessType}
+                targetAchieved={targetAchieved}
+              />
+              {businessType === "Brokerage" ? (
+                <>
+                  <div className="flex w-full items-center justify-between">
+                    <div className="flex items-center gap-1">
+                      <div className="w-1 h-3 bg-orange-600"></div>
+                      <span className="text-sm">Total Target</span>
+                    </div>
+                    <div className="flex gap-1">
+                      <span className="text-sm text-gray-700">
+                        {totalBrokerage}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex w-full items-center justify-between">
+                    <div className="flex items-center gap-1">
+                      <div className="w-1 h-3 bg-green-300"></div>
+                      <span className="text-sm">
+                        Traget Achieved (Brokerage)
+                      </span>
+                    </div>
+                    <div className="flex gap-1">
+                      <span className="text-sm text-gray-700">
+                        {targetAchieved}
+                      </span>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex w-full items-center justify-between">
+                    <div className="flex items-center gap-1">
+                      <div className="w-1 h-3 bg-orange-600"></div>
+                      <span className="text-sm">Small Business</span>
+                    </div>
+                    <div className="flex gap-1">
+                      <span className="text-sm text-gray-700">1.650</span>
+                      <span className="text-green-400 text-sm">↑ 424</span>
+                    </div>
+                  </div>
+                  <div className="flex w-full items-center justify-between">
+                    <div className="flex items-center gap-1">
+                      <div className="w-1 h-3 bg-orange-300"></div>
+                      <span className="text-sm">Enterprise</span>
+                    </div>
+                    <div className="flex gap-1">
+                      <span className="text-sm text-gray-700">1.650</span>
+                      <span className="text-green-400 text-sm">↑ 424</span>
+                    </div>
+                  </div>
+                  <div className="flex w-full items-center justify-between">
+                    <div className="flex items-center gap-1">
+                      <div className="w-1 h-3 bg-blue-600"></div>
+                      <span className="text-sm">Company</span>
+                    </div>
+                    <div className="flex gap-1">
+                      <span className="text-sm text-gray-700">1.650</span>
+                      <span className="text-green-400 text-sm">↑ 424</span>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              <h2 className="font-bold">
+                Remaining:{" "}
+                {businessType === "Brokerage"
+                  ? Remain <= 0
+                    ? "0"
+                    : Remain
+                  : "900"}
+              </h2>
             </div>
           </div>
           {/* ------- PROGRESS CARD ------- */}
           <div className="flex-1 flex flex-col bg-white rounded-md shadow-md px-4 py-4 justify-between">
-            <SalesReportChart businessType={businessType} totalBrokerage={totalBrokerage} targetAchieved={targetAchieved} />
+            <SalesReportChart
+              businessType={businessType}
+              totalBrokerage={totalBrokerage}
+              targetAchieved={targetAchieved}
+            />
           </div>
         </div>
         {/* ------- BOTTOM CARDS ------- */}
-        {business === 'Brokerage'?"":<div className="flex gap-3 mx-2">
-          {/* ------- BOTTOM CARD ------- */}
-          <div className="flex-1 flex flex-col bg-white shadow-sm py-6 px-3 rounded-md">
-            <SalesPipelineChart />
+        {business === "Brokerage" ? (
+          ""
+        ) : (
+          <div className="flex gap-3 mx-2">
+            {/* ------- BOTTOM CARD ------- */}
+            <div className="flex-1 flex flex-col bg-white shadow-sm py-6 px-3 rounded-md">
+              <SalesPipelineChart />
+            </div>
+            {/* ------- BOTTOM CARD ------- */}
+            <div className="flex-5 flex flex-col py-4 px-4 gap-4 items-center bg-blue-50 rounded-md shadow-md">
+              <LeadSourceChart />
+            </div>
           </div>
-          {/* ------- BOTTOM CARD ------- */}
-          <div className="flex-5 flex flex-col py-4 px-4 gap-4 items-center bg-blue-50 rounded-md shadow-md">
-            <LeadSourceChart />
-          </div>
-        </div>}
-        
+        )}
       </main>
     </>
   );
