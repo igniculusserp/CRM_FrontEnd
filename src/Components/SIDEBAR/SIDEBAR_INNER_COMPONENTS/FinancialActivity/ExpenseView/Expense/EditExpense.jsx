@@ -144,7 +144,6 @@ export default function EditExpense({
       );
       setleadStatus(response.data.data);
 
-      console.log("status:", response.data.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message

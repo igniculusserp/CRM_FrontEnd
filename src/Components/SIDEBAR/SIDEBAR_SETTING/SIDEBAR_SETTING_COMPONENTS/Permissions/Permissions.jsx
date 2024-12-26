@@ -1,11 +1,15 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
+import { useState, useEffect } from "react";
+import { FaAngleDown } from "react-icons/fa";
+import { IoInformationCircle } from "react-icons/io5";
+import axios from "axios";
+
+import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+
+import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 export default function Permissions() {
-  const [permissionData, setPermissionData] = useState({
-    groupName: '',
-    moduleName: '',
-  });
+  const name = getHostnamePart();
+
   const [isEditMode, setIsEditMode] = useState(false);
 
   //   ON SUBMIT
@@ -13,43 +17,23 @@ export default function Permissions() {
     e.preventDefault();
   };
 
-  // ON CHANGE
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setPermissionData({
-      ...permissionData,
-      [name]: value,
-    });
-  };
-
   //   DROPDOWNS HERE
-  const [dropdownGroupName, setDropdownGroupName] = useState(false);
-  const [defaultGroupNameText, setDefaultGroupNameText] =
-    useState('Group Name');
+
   const [dropdownGroupModule, setDropdownGroupModule] = useState(false);
   const [defaultGroupModuleText, setDefaultGroupModuleText] =
-    useState('Group Module Name');
+    useState("All Group Module");
 
-  //   TOGGLE DROPDOWN GROUPNAME
-  const toggleDropdownGroupName = () => {
-    setDropdownGroupName(!dropdownGroupName);
-  };
-
-  // HANDLE DROPDOWN GROUPNAME
-  const handleDropdownGroupName = (name) => {
-    setDefaultGroupNameText(name);
-    setDropdownGroupName(!dropdownGroupName);
-    setPermissionData((prev) => ({
-      ...prev,
-      name: name,
-    }));
-  };
-
-  //   DUMMY DATA
-  const groupName = [
-    { id: 1, name: 'Group Name' },
-    { id: 2, name: 'Group Name' },
-    { id: 3, name: 'Group Name' },
+  const groupModuleName = [
+    { id: 1, name: "All Group Module" },
+    { id: 2, name: "Leads" },
+    { id: 3, name: "Contacts" },
+    { id: 4, name: "Client" },
+    { id: 5, name: "Sales Order" },
+    { id: 6, name: "Free Trail" },
+    { id: 7, name: "Follow Up" },
+    { id: 8, name: "SMS Box" },
+    { id: 9, name: "Reports" },
+    { id: 10, name: "Analytics" },
   ];
 
   //   TOGGLE DROPDOWN GROUPNAME
@@ -61,18 +45,56 @@ export default function Permissions() {
   const handleDropdownGroupModule = (name) => {
     setDefaultGroupModuleText(name);
     setDropdownGroupModule(!dropdownGroupModule);
-    setPermissionData((prev) => ({
-      ...prev,
-      name: name,
-    }));
   };
 
   //   DUMMY DATA
-  const groupModuleName = [
-    { id: 1, name: 'Group Module Name' },
-    { id: 2, name: 'Group Module Name' },
-    { id: 3, name: 'Group Module Name' },
-  ];
+
+  //----------------------------------------------------------------------------------------
+  //  Group DropDown GET API Is being used here
+  const [grpName, setGrpName] = useState([]);
+
+  async function handleGroupName() {
+    const bearer_token = localStorage.getItem("token");
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/group/all`,
+        config
+      );
+      setGrpName(response.data.data);
+      console.log("Group : ", response.data.data);
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+      // Optionally, set an error state to display a user-friendly message
+    }
+  }
+
+  useEffect(() => {
+    handleGroupName();
+  }, []);
+
+  const [defaultTextLeadStatusDropDown, setdefaultTextLeadStatusDropDown] =
+    useState("Select Group Name");
+  const [isDropdownVisibleLeadStatus, setisDropdownVisibleLeadStatus] =
+    useState(false);
+
+  const toggleDropdownLeadStatus = () => {
+    setisDropdownVisibleLeadStatus(!isDropdownVisibleLeadStatus);
+  };
+
+  const handleDropdownLeadStatus = (leadStatus) => {
+    setdefaultTextLeadStatusDropDown(leadStatus);
+    setisDropdownVisibleLeadStatus(!isDropdownVisibleLeadStatus);
+    // setFollowupsData((prevTask) => ({
+    //   ...prevTask,
+    //   leadesStatus: grpName,
+    // }));
+  };
 
   return (
     <div className="flex min-h-screen flex-col m-3 overflow-x-auto overflow-y-hidden">
@@ -91,44 +113,62 @@ export default function Permissions() {
               <div className="grid gap-2 pb-3 w-full">
                 {/* ------ FIRST ONE -------- */}
                 <div className="flex space-x-4">
-                  {/* ---------- MODULE NAME DROPDOWN ---------- */}
+                  {/* ---------- Group NAME DROPDOWN ---------- */}
+
                   <div className="flex flex-col w-1/2 relative">
                     <label
-                      htmlFor="groupName"
+                      htmlFor="leadesStatus"
                       className="text-sm font-medium text-gray-700"
                     >
                       Group Name
                     </label>
                     <div
                       className="relative"
-                      onClick={toggleDropdownGroupName}
-                      onMouseLeave={() => setDropdownGroupName(false)}
+                      onMouseLeave={() => setisDropdownVisibleLeadStatus(false)}
                     >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                        id="groupName"
+                        id="LeadStatusDropDown"
                         type="button"
+                        onClick={toggleDropdownLeadStatus}
                       >
-                        {isEditMode ? groupName : defaultGroupNameText}
+                        {defaultTextLeadStatusDropDown}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
-                      {dropdownGroupName && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                      {isDropdownVisibleLeadStatus && (
+                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-full z-10">
                           <ul className="py-2 text-sm text-gray-700">
-                            {groupName.map(({ id, name }) => (
-                              <li
-                                key={id}
-                                onClick={() => handleDropdownGroupName(name)}
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                              >
-                                {name}
+                            {grpName.length > 0 ? (
+                              grpName.map((group) => (
+                                <li
+                                  key={group.id}
+                                  onClick={() =>
+                                    handleDropdownLeadStatus(group.groupName)
+                                  }
+                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                >
+                                  {group.groupName}
+                                </li>
+                              ))
+                            ) : (
+                              <li className="flex items-center px-4 py-2 text-center gap-1">
+                                <IoInformationCircle
+                                  size={25}
+                                  className="text-cyan-600"
+                                />
+                                Group Name not available. Go to{" "}
+                                <span className="font-bold">
+                                  Settings - Groups - Add
+                                </span>
+                                .
                               </li>
-                            ))}
+                            )}
                           </ul>
                         </div>
                       )}
                     </div>
                   </div>
+
                   {/* ---------- MODULE NAME DROPDOWN ---------- */}
                   <div className="flex flex-col w-1/2 relative">
                     <label
@@ -140,14 +180,16 @@ export default function Permissions() {
                     <div
                       className="relative"
                       onClick={toggleDropdownGroupModule}
-                      onMouseLeave={() => setDefaultGroupModuleText(false)}
+                      onMouseLeave={() => setDropdownGroupModule(false)} // Close dropdown on mouse leave
                     >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="groupName"
                         type="button"
                       >
-                        {isEditMode ? groupModuleName : defaultGroupModuleText}
+                        {isEditMode
+                          ? defaultGroupModuleText
+                          : defaultGroupModuleText}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {dropdownGroupModule && (
@@ -168,509 +210,489 @@ export default function Permissions() {
                     </div>
                   </div>
                 </div>
-                {/* ---------- CHECK BOXES ---------- */}
-                <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
-                  <h1 className="font-normal mb-2 text-xl">Leads</h1>
-                  {/* ---------- LEAD BOXES ---------- */}
-                  <div className="flex gap-12">
-                    {/* FIRST */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Create</p>
+                {/* ----------Lead CHECK BOXES ---------- */}
+                {defaultGroupModuleText === "Leads" ||
+                defaultGroupModuleText === "All Group Module" ? (
+                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
+                    <h1 className="font-normal mb-2 text-xl">Leads</h1>
+                    {/* ---------- LEAD BOXES ---------- */}
+                    <div className="flex gap-12">
+                      {/* FIRST */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Create</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Upload</p>
+                        </div>
+                        {/* THIRD ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Lead Action</p>
+                        </div>
+                        {/* FOURTH ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Delete</p>
+                        </div>
                       </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Upload</p>
+                      {/* SECOND */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">View</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Internal Assign</p>
+                        </div>
+                        {/* THIRD ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Lead Action Assign</p>
+                        </div>
                       </div>
-                      {/* THIRD ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Lead Action</p>
+                      {/* THIRD */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Marketing Leads</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Outer Assign</p>
+                        </div>
+                        {/* THIRD ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Send Email Template</p>
+                        </div>
                       </div>
-                      {/* FOURTH ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Delete</p>
+                      {/* FOURTH */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Edit</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Global Assign</p>
+                        </div>
+                        {/* THIRD ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Send Email Template</p>
+                        </div>
                       </div>
-                    </div>
-                    {/* SECOND */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>View</p>
+                      {/* FIFTH */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Dispose</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">View Follow Up</p>
+                        </div>
+                        {/* THIRD ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Follow Assign</p>
+                        </div>
                       </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Internal Assign</p>
-                      </div>
-                      {/* THIRD ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Lead Action Assign</p>
-                      </div>
-                    </div>
-                    {/* THIRD */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Marketing Leads</p>
-                      </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Outer Assign</p>
-                      </div>
-                      {/* THIRD ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Send Email Template</p>
-                      </div>
-                    </div>
-                    {/* FOURTH */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Edit</p>
-                      </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Global Assign</p>
-                      </div>
-                      {/* THIRD ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Send Email Template</p>
-                      </div>
-                    </div>
-                    {/* FIFTH */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Dispose</p>
-                      </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>View Follow Up</p>
-                      </div>
-                      {/* THIRD ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Follow Assign</p>
-                      </div>
-                    </div>
-                    {/* SIXTH */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Dispose Clients</p>
-                      </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Bulk Lead Operation</p>
-                      </div>
-                      {/* THIRD ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Refund Payment</p>
+                      {/* SIXTH */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Dispose Clients</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Bulk Lead Operation</p>
+                        </div>
+                        {/* THIRD ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Refund Payment</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  ""
+                )}
+
                 {/* --------- CONTACT --------- */}
-                <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
-                  <h1 className="font-normal mb-2 text-xl">Contact</h1>
-                  {/* CONTACT CHECKBOXES */}
-                  <div className="flex items-center gap-10">
-                    {/* FIRST */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Create</p>
-                    </div>
-                    {/* FIRST */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>View</p>
-                    </div>
-                    {/* THIRD */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Contact Assign</p>
-                    </div>
-                    {/* FOURTH */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Contact Action</p>
-                    </div>
-                    {/* FIFTH */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Contact Action Assign</p>
-                    </div>
-                  </div>
-                </div>
-                {/* --------- MUTUAL FUND --------- */}
-                <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
-                  <h1 className="font-normal mb-2 text-xl">Mutual Fund</h1>
-                  {/* CONTACT CHECKBOXES */}
-                  <div className="flex items-center gap-10">
-                    {/* FIRST */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Create</p>
-                    </div>
-                    {/* FIRST */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>View</p>
-                    </div>
-                    {/* THIRD */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Mutual Fund Assign</p>
-                    </div>
-                    {/* FOURTH */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Mutual Fund Action</p>
-                    </div>
-                    {/* FIFTH */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Mutual Fund Action Assign</p>
+                {defaultGroupModuleText === "Contacts" ||
+                defaultGroupModuleText === "All Group Module" ? (
+                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
+                    <h1 className="font-normal mb-2 text-xl">Contact</h1>
+                    {/* CONTACT CHECKBOXES */}
+                    <div className="flex items-center gap-10">
+                      {/* FIRST */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">Create</p>
+                      </div>
+                      {/* FIRST */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">View</p>
+                      </div>
+                      {/* THIRD */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">Contact Assign</p>
+                      </div>
+                      {/* FOURTH */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">Contact Action</p>
+                      </div>
+                      {/* FIFTH */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">Contact Action Assign</p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  ""
+                )}
+
+                {/* --------- Client  --------- */}
+                {defaultGroupModuleText === "Client" ||
+                defaultGroupModuleText === "All Group Module" ? (
+                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
+                    <h1 className="font-normal mb-2 text-xl">Client</h1>
+                    {/* CONTACT CHECKBOXES */}
+                    <div className="flex items-center gap-10">
+                      {/* FIRST */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">Create</p>
+                      </div>
+                      {/* FIRST */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">View</p>
+                      </div>
+                      {/* THIRD */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">Mutual Fund Assign</p>
+                      </div>
+                      {/* FOURTH */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">Mutual Fund Action</p>
+                      </div>
+                      {/* FIFTH */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">
+                          Mutual Fund Action Assign
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+
                 {/* --------- SO --------- */}
-                <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
-                  <h1 className="font-normal mb-2 text-xl">SO</h1>
-                  {/* ---------- LEAD BOXES ---------- */}
-                  <div className="flex gap-12">
-                    {/* FIRST */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Create</p>
+                {defaultGroupModuleText === "Sales Order" ||
+                defaultGroupModuleText === "All Group Module" ? (
+                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
+                    <h1 className="font-normal mb-2 text-xl">Sales Order</h1>
+                    {/* ---------- LEAD BOXES ---------- */}
+                    <div className="flex gap-12">
+                      {/* FIRST */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Create</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Stop</p>
+                        </div>
                       </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Stop</p>
+                      {/* SECOND */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">View</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Paid Client Assign</p>
+                        </div>
                       </div>
-                    </div>
-                    {/* SECOND */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>View</p>
+                      {/* THIRD */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Edit</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Paid Client Action</p>
+                        </div>
                       </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Paid Client Assign</p>
+                      {/* FOURTH */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Approve SO</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">
+                            Paid Client Action Assign
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    {/* THIRD */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Edit</p>
+                      {/* FIFTH */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Payment Portal</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Payment Edit</p>
+                        </div>
                       </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Paid Client Action</p>
-                      </div>
-                    </div>
-                    {/* FOURTH */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Approve SO</p>
-                      </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Paid Client Action Assign</p>
-                      </div>
-                    </div>
-                    {/* FIFTH */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Payment Portal</p>
-                      </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Payment Edit</p>
-                      </div>
-                    </div>
-                    {/* SIXTH */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Payment Approval</p>
-                      </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Delete</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* --------- COMPLIANCE --------- */}
-                <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
-                  <h1 className="font-normal mb-2 text-xl">Compliance</h1>
-                  {/* ---------- LEAD BOXES ---------- */}
-                  <div className="flex gap-14">
-                    {/* FIRST */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>KYC</p>
-                      </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>SO Report</p>
-                      </div>
-                    </div>
-                    {/* SECOND */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Risk Profile</p>
-                      </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Tax Report</p>
-                      </div>
-                    </div>
-                    {/* THIRD */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Agreement Approved</p>
-                      </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Paid Client Action</p>
-                      </div>
-                    </div>
-                    {/* FOURTH */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>View RPM</p>
-                      </div>
-                    </div>
-                    {/* FIFTH */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Edit RPM</p>
-                      </div>
-                    </div>
-                    {/* SIXTH */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" />
-                        <p className='text-sm font-md'>Invoice</p>
+                      {/* SIXTH */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Payment Approval</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Delete</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                {/* --------- ATTENDANCE --------- */}
-                <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
-                  <h1 className="font-normal mb-2 text-xl">Attendance</h1>
-                  {/* CONTACT CHECKBOXES */}
-                  <div className="flex items-center gap-12">
-                    {/* FIRST */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>View</p>
-                    </div>
-                    {/* FIRST */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Regularization</p>
-                    </div>
-                    {/* THIRD */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p>Manager Approval</p>
-                    </div>
-                    {/* FOURTH */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>HR Approval</p>
-                    </div>
-                  </div>
-                </div>
-                {/* --------- PAY ROLL --------- */}
-                <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
-                  <h1 className="font-normal mb-2 text-xl">Pay Roll</h1>
-                  {/* CONTACT CHECKBOXES */}
-                  <div className="flex items-center gap-12">
-                    {/* FIRST */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>View Salary</p>
-                    </div>
-                    {/* FIRST */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Calculate Salary</p>
-                    </div>
-                  </div>
-                </div>
-                {/* --------- HR EXTRA --------- */}
-                <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
-                  <h1 className="font-normal mb-2 text-xl">HR Extra</h1>
-                  {/* CONTACT CHECKBOXES */}
-                  <div className="flex items-center gap-8">
-                    {/* FIRST */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>ORG Chart</p>
-                    </div>
-                    {/* SECOND */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Scrap Book</p>
-                    </div>
-                    {/* THIRD */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Holiday</p>
-                    </div>
-                  </div>
-                </div>
-                {/* --------- SMS MODULE --------- */}
-                <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
-                  <h1 className="font-normal mb-2 text-xl">SMS Module</h1>
-                  {/* CONTACT CHECKBOXES */}
-                  <div className="flex items-center gap-8">
-                    {/* FIRST */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Send SMS</p>
-                    </div>
-                    {/* SECOND */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>View SMS</p>
+                ) : (
+                  ""
+                )}
+
+                {/* --------- Free Trail --------- */}
+
+                {defaultGroupModuleText === "Free Trail" ||
+                defaultGroupModuleText === "All Group Module" ? (
+                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
+                    <h1 className="font-normal mb-2 text-xl">Free Trail</h1>
+                    {/* ---------- LEAD BOXES ---------- */}
+                    <div className="flex gap-14">
+                      {/* FIRST */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">KYC</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">SO Report</p>
+                        </div>
+                      </div>
+                      {/* SECOND */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Risk Profile</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Tax Report</p>
+                        </div>
+                      </div>
+                      {/* THIRD */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Agreement Approved</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Paid Client Action</p>
+                        </div>
+                      </div>
+                      {/* FOURTH */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">View RPM</p>
+                        </div>
+                      </div>
+                      {/* FIFTH */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Edit RPM</p>
+                        </div>
+                      </div>
+                      {/* SIXTH */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input type="checkbox" />
+                          <p className="text-sm font-md">Invoice</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                {/* --------- LEAVE --------- */}
-                <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
-                  <h1 className="font-normal mb-2 text-xl">Leave</h1>
-                  {/* CONTACT CHECKBOXES */}
-                  <div className="flex items-center gap-8">
-                    {/* FIRST */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Leave Balance</p>
-                    </div>
-                    {/* SECOND */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Leave Application</p>
-                    </div>
-                    {/* THIRD */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>View Leaves</p>
-                    </div>
-                  </div>
-                </div>
-                {/* --------- CALLING MODULE --------- */}
-                <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
-                  <h1 className="font-normal mb-2 text-xl">Calling Module</h1>
-                  {/* CONTACT CHECKBOXES */}
-                  <div className="flex items-center gap-8">
-                    {/* FIRST */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Monitoring</p>
-                    </div>
-                    {/* SECOND */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Reports</p>
-                    </div>
-                    {/* THIRD */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Send SMS Via Gateway</p>
-                    </div>
-                    {/* FOURTH */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>View SMS Via Gateway</p>
-                    </div>
-                    {/* FIFTH */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Miss Call</p>
-                    </div>
-                    {/* SIXTH */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Live Call</p>
-                    </div>
-                    {/* SEVENTH */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Call Blasting</p>
+                ) : (
+                  ""
+                )}
+
+                {/* --------- Follow Up --------- */}
+                {defaultGroupModuleText === "Follow Up" ||
+                defaultGroupModuleText === "All Group Module" ? (
+                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
+                    <h1 className="font-normal mb-2 text-xl">Follow Up</h1>
+                    {/* CONTACT CHECKBOXES */}
+                    <div className="flex items-center gap-12">
+                      {/* FIRST */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">View</p>
+                      </div>
+                      {/* FIRST */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">Regularization</p>
+                      </div>
+                      {/* THIRD */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p>Manager Approval</p>
+                      </div>
+                      {/* FOURTH */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">HR Approval</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                {/* --------- TEAM MEMBERS --------- */}
-                <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
-                  <h1 className="font-normal mb-2 text-xl">Team Members</h1>
-                  {/* CONTACT CHECKBOXES */}
-                  <div className="flex items-center gap-8">
-                    {/* FIRST */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>List</p>
-                    </div>
-                    {/* SECOND */}
-                    <div className="flex gap-3 items-center font-light">
-                      <input type="checkbox" />
-                      <p className='text-sm font-md'>Data</p>
+                ) : (
+                  ""
+                )}
+
+                {/* --------- SMS Box --------- */}
+
+                {defaultGroupModuleText === "SMS Box" ||
+                defaultGroupModuleText === "All Group Module" ? (
+                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
+                    <h1 className="font-normal mb-2 text-xl">SMS Box</h1>
+                    {/* CONTACT CHECKBOXES */}
+                    <div className="flex items-center gap-12">
+                      {/* FIRST */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">View Salary</p>
+                      </div>
+                      {/* FIRST */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">Calculate Salary</p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  ""
+                )}
+
+                {/* --------- Reports --------- */}
+
+                {defaultGroupModuleText === "Reports" ||
+                defaultGroupModuleText === "All Group Module" ? (
+                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
+                    <h1 className="font-normal mb-2 text-xl">Reports</h1>
+                    {/* CONTACT CHECKBOXES */}
+                    <div className="flex items-center gap-8">
+                      {/* FIRST */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">ORG Chart</p>
+                      </div>
+                      {/* SECOND */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">Scrap Book</p>
+                      </div>
+                      {/* THIRD */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">Holiday</p>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+
+                {/* ---------  Analytics --------- */}
+
+                {defaultGroupModuleText === "Analytics" ||
+                defaultGroupModuleText === "All Group Module" ? (
+                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
+                    <h1 className="font-normal mb-2 text-xl">Analytics</h1>
+                    {/* CONTACT CHECKBOXES */}
+                    <div className="flex items-center gap-8">
+                      {/* FIRST */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">Send SMS</p>
+                      </div>
+                      {/* SECOND */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input type="checkbox" />
+                        <p className="text-sm font-md">View SMS</p>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
             {/* BUTTONS */}
