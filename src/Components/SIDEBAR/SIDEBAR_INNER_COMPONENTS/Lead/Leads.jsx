@@ -982,11 +982,10 @@ export default function Lead() {
                   key={id}
                   onClick={() => handleDynamicButtonsClick(id)}
                   className={`px-2 py-1.5 rounded font-light text-md
-          ${
-            activeButtonId === id
-              ? "bg-cyan-500 text-white"
-              : "bg-gray-100 text-gray-700"
-          }`}
+          ${activeButtonId === id
+                      ? "bg-cyan-500 text-white"
+                      : "bg-gray-100 text-gray-700"
+                    }`}
                 >
                   {name}
                 </button>
@@ -1168,8 +1167,8 @@ export default function Lead() {
                     const matchedUser =
                       users?.length > 0
                         ? users?.find(
-                            (user) => user?.userName === item?.assigned_To
-                          )
+                          (user) => user?.userName === item?.assigned_To
+                        )
                         : [];
                     const role = matchedUser?.role;
                     const roleColor = getRoleColorByIndex(role?.length); // Get color for the role
@@ -1184,7 +1183,7 @@ export default function Lead() {
                           <input
                             type="checkbox"
                             checked={selectedIds.includes(item.id)}
-                            onChange={(e) => handleOnCheckBox(e, item)}
+                            onClick={(e) => handleOnCheckBox(e, item)}
                           />
                         </td>
                         {/* CONTACT NAME */}
@@ -1207,12 +1206,22 @@ export default function Lead() {
                           ""
                         ) : (
                           <td className="px-1 py-4 border-b text- border-gray-300 text-sm  break-all max-w-48 min-w-24">
-                            {item.email}
+                           <a
+                              href={`mailto:${item.email}`}
+                              onClick={(event) => event.stopPropagation()}
+                            >
+                              {item.email}
+                            </a>   
                           </td>
                         )}
                         <td className="px-1 py-4 border-b border-gray-300 text-sm">
                           <div className="flex gap-2 items-center">
-                            {item.mobileNo}
+                            <a
+                              href={`tel:${item.mobileNo}`}
+                              onClick={(event) => event.stopPropagation()}
+                            >
+                              {item.mobileNo}
+                            </a>                            
                             <MdCall className="text-red-600" />
                           </div>
                         </td>
@@ -1426,20 +1435,18 @@ export default function Lead() {
           {selectedViewValue === "Table View" && (
             <>
               <div
-                className={`flex justify-end m-4 ${
-                  activeButtonId === 2 ? "hidden" : "flex"
-                }`}
+                className={`flex justify-end m-4 ${activeButtonId === 2 ? "hidden" : "flex"
+                  }`}
               >
                 {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
                 <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
                   {/* /---------------------->Previous Button <----------------------< */}
                   <button
                     onClick={() => paginate(currentPage - 1)}
-                    className={`p-1 shadow-md rounded-full text-white ${
-                      currentPage === 1
+                    className={`p-1 shadow-md rounded-full text-white ${currentPage === 1
                         ? "border-gray-200 border-2"
                         : "bg-cyan-500 border-2 border-gray-100"
-                    }`}
+                      }`}
                     disabled={currentPage === 1}
                   >
                     <GrFormPrevious size={25} />
@@ -1458,11 +1465,10 @@ export default function Lead() {
                           <button
                             key={page}
                             onClick={() => paginate(page)}
-                            className={`px-4 py-2 rounded mx-1 ${
-                              currentPage === page
+                            className={`px-4 py-2 rounded mx-1 ${currentPage === page
                                 ? "bg-blue-600 text-white"
                                 : "bg-white text-gray-700 border"
-                            }`}
+                              }`}
                           >
                             {page}
                           </button>
@@ -1484,11 +1490,10 @@ export default function Lead() {
                   {/* Next Button */}
                   <button
                     onClick={() => paginate(currentPage + 1)}
-                    className={`p-1 shadow-md rounded-full text-white${
-                      currentPage === totalPage
+                    className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage
                         ? " border-gray-200 border-2"
                         : " bg-cyan-500 border-2 border-gray-100"
-                    }`}
+                      }`}
                     disabled={currentPage === totalPage}
                   >
                     <GrFormNext size={25} />
@@ -1496,9 +1501,8 @@ export default function Lead() {
                 </nav>
               </div>
               <div
-                className={`flex justify-center items-center m-4 ${
-                  activeButtonId === 2 ? "hidden" : "flex"
-                }`}
+                className={`flex justify-center items-center m-4 ${activeButtonId === 2 ? "hidden" : "flex"
+                  }`}
               >
                 {/* Additional Content (if any) */}
               </div>
