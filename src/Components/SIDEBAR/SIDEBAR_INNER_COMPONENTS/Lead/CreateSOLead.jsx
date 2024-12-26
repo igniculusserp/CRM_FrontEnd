@@ -623,13 +623,19 @@ export default function CreateSO() {
                     Alternate Number
                   </label>
                   <input
-                    type="text"
+                    type="number"
                     name="phoneNo"
                     maxLength="15"
                     value={editLead.phoneNo}
                     className="mt-1 p-2 border border-gray-300 rounded-md"
                     onChange={handleContactChange}
                     placeholder="Enter your Alternate Number"
+                    onKeyDown={(e) => {
+                      if (e.key === "e" || e.key === "E") {
+                        e.preventDefault(); // Block 'e' and 'E'
+                      }
+                    }}
+                    onWheel={(e) => e.target.blur()} // Disable scroll
                   />
                 </div>
 {/* -------------Email------------- */}
@@ -948,13 +954,20 @@ export default function CreateSO() {
                       Mobile Number
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="mobileNo"
                       value={editLead.mobileNo}
                       maxLength="15"
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleContactChange}
                       placeholder="Enter your Mobile Number"
+                      onKeyDown={(e) => {
+                        if (e.key === "e" || e.key === "E") {
+                          e.preventDefault(); // Block 'e' and 'E'
+                        }
+                      }}
+                      onWheel={(e) => e.target.blur()} // Disable scroll
+
                     />
                   </div>
                   {/* -------------III--2------------- */}
@@ -974,6 +987,13 @@ export default function CreateSO() {
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleContactChange}
                       placeholder="Enter your Alternate Number"
+                      onKeyDown={(e) => {
+                        if (e.key === "e" || e.key === "E") {
+                          e.preventDefault(); // Block 'e' and 'E'
+                        }
+                      }}
+                      onWheel={(e) => e.target.blur()} // Disable scroll
+
                     />
                   </div>
                 </div>
@@ -996,6 +1016,13 @@ export default function CreateSO() {
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="9009 9009 9009"
+                      onKeyDown={(e) => {
+                        if (e.key === "e" || e.key === "E") {
+                          e.preventDefault(); // Block 'e' and 'E'
+                        }
+                      }}
+                      onWheel={(e) => e.target.blur()} // Disable scroll
+
                     />
                   </div>
                   {/* -------------IV--2--------------- */}
@@ -1540,6 +1567,7 @@ export default function CreateSO() {
                       value={editLead.reference_Number}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
+                      
                     />
                   </div>
                 </div>
@@ -1563,6 +1591,12 @@ export default function CreateSO() {
                         className="mt-1 p-2 border border-gray-300 rounded-md"
                         onChange={handleChange}
                         placeholder="Total Amount"
+                        onKeyDown={(e) => {
+                          if (e.key === "e" || e.key === "E") {
+                            e.preventDefault(); // Block 'e' and 'E'
+                          }
+                        }}
+                        onWheel={(e) => e.target.blur()} // Disable scroll
                       />
                     </div>
                   {/* -------------XI--2------------- */}
@@ -1576,12 +1610,18 @@ export default function CreateSO() {
                      Due Amount
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="due_Amount"
                       value={editLead.due_Amount}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Due Amount"
+                      onKeyDown={(e) => {
+                        if (e.key === "e" || e.key === "E") {
+                          e.preventDefault(); // Block 'e' and 'E'
+                        }
+                      }}
+                      onWheel={(e) => e.target.blur()} // Disable scroll
                     />
                   </div>
                 </div>
@@ -1593,13 +1633,19 @@ export default function CreateSO() {
                       Amount Paid
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="amount_paid"
                       id="amount_paid"
                       value={editLead.amount_paid}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Amount Paid"
+                      onKeyDown={(e) => {
+                        if (e.key === "e" || e.key === "E") {
+                          e.preventDefault(); // Block 'e' and 'E'
+                        }
+                      }}
+                      onWheel={(e) => e.target.blur()} // Disable scroll
                     />
                   </div>
              
@@ -1613,13 +1659,19 @@ export default function CreateSO() {
                       Discount
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="discount"
                       id="discount"
                       value={editLead.discount}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Discount"
+                      onKeyDown={(e) => {
+                        if (e.key === "e" || e.key === "E") {
+                          e.preventDefault(); // Block 'e' and 'E'
+                        }
+                      }}
+                      onWheel={(e) => e.target.blur()} // Disable scroll
                     />
                   </div>
             
@@ -1741,7 +1793,7 @@ export default function CreateSO() {
                     Sales Order No
                   </label>
                   <input
-                    type="number"
+                    type="text"
                     name="saleS_ODR_NO"
                     value={editLead.saleS_ODR_NO}
                     className="mt-1 p-2 border border-gray-300 rounded-md"
@@ -1922,7 +1974,7 @@ export default function CreateSO() {
                   </label>
                   <input
                     readOnly
-                    type="test"
+                    type="text"
                     name="status"
                     value="Pending"
                     className="mt-1 p-2 border border-gray-300 rounded-md"
