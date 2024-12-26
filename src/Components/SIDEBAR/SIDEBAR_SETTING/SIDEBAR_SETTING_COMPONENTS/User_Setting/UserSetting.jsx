@@ -209,6 +209,40 @@ const togglePasswordEye = (e) => {
       if (isEditMode) {
         await axios.put(`${protocal_url}${name}.${tenant_base_url}/Setting/update`, formData_PUT, config);
       } else {
+        if(!formData_POST.firstName){
+          showErrorToast('Please enter name');
+          return;
+        }
+      
+        if(!formData_POST.email){
+          showErrorToast('Please enter email');
+          return;
+        }
+      
+        if(!formData_POST.contactNo){
+          showErrorToast('Please enter contact number');
+          return;
+        }
+      
+        if(!formData_POST.password){
+          showErrorToast('Please enter password');
+          return;
+        }
+      
+        if(formData_POST.password !== formData_POST.confirmPassword){
+          showErrorToast('Password doesnt match');
+          return;
+        }
+      
+        if(!formData_POST.reportedTo){
+          showErrorToast('Please selected Reported to');
+          return;
+        }
+      
+        if(!formData_POST.role){
+          showErrorToast('Please selected group name');
+          return;
+        }
         await axios.post(`${protocal_url}${name}.${tenant_base_url}/Setting`, formData_POST, config);
       }
 

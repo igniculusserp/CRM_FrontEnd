@@ -699,7 +699,6 @@ export default function CreateContact() {
                       name="mobNo"
                       value={editLead.mobNo}
                       maxLength="15"
-
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleContactChange}
                       placeholder="Enter your Mobile Number"
