@@ -19,7 +19,7 @@ import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/Global
 import { ToastContainer } from 'react-toastify';
 import { showSuccessToast, showErrorToast } from '../../../../utils/toastNotifications'
 
-export default function CreateSO() {
+export default function CreateSOLead() {
   //to make id unique
   const { id, leadId } = useParams();
   const navigate = useNavigate();
