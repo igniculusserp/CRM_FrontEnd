@@ -720,7 +720,14 @@ export default function FollowUp() {
                         {/* MOBILE */}
                         <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 ">
                           <div className="flex items-center gap-1">
-                            <span>{order.mobileNo}</span>
+                            <span>
+                            <a
+                            href={`tel:${order.mobileNo}`}
+                            onClick={(event) => event.stopPropagation()}
+                          >
+                            {order.mobileNo}
+                          </a>                         
+                            </span>
                             <span className="text-red-400">
                               <MdCall />
                             </span>

@@ -719,7 +719,12 @@ export default function UserSetting() {
                           {data.email}
                         </td>
                         <td className="px-2 py-4 text-sm max-w-24 break-words">
-                          {data.contactNo}
+  <a
+                              href={`tel:${data.contactNo}`}
+                              onClick={(event) => event.stopPropagation()}
+                            >
+                              {data.contactNo}
+                            </a>              
                         </td>
                         <td className="px-2 py-4 text-sm max-w-24 break-words">
                           {data.country}

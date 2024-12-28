@@ -797,7 +797,12 @@ export default function Client() {
 
                       <td className="px-1 py-4 border-b border-gray-300 text-sm w-[15%]">
                         <div className="flex gap-2 items-center">
-                          {item.mobileNo}
+                          <a
+                              href={`tel:${item.mobileNo}`}
+                              onClick={(event) => event.stopPropagation()}
+                            >
+                              {item.mobileNo}
+                            </a>                         
                           <MdCall className="text-red-600" />
                         </div>
                       </td>
