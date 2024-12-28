@@ -797,6 +797,27 @@ export default function Lead() {
 
               {/* --------------------------------     All Lead    -------------------------------------------- */}
 
+            <SearchElement
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <div className="flex gap-1">
+              <button
+                className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
+                onClick={() => setIsFetchModalOpen(true)}
+              >
+                Fetch Leads
+              </button>
+            </div>
+          </div>
+
+          {/* PART-II */}
+          <div className="flex gap-3 items-center justify-center">
+            {/* PART-II */}
+            {/* Stripe-BarDropDown */}
+            {activeButtonId === 2 || activeButtonId === 4 ? (
+              ""
+            ) : (
               <div
                 className="relative my-1 sm:my-0"
                 onClick={toggleMenuAllLead}
