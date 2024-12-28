@@ -867,7 +867,7 @@ export default function Lead() {
                 className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
                 onClick={() => setIsFetchModalOpen(true)}
               >
-                Featch Leads
+                Fetch Leads
               </button>
             </div>
           </div>
