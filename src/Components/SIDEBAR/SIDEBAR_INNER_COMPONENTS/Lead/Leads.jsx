@@ -789,28 +789,13 @@ export default function Lead() {
         {isFeatchModalOpen && <LeadFeatchModal onClose={closeModal} />}
         {/* container bar*/}
         {/* container-I All Leads, Assigned To, Search, Fetch Leads, Wizard, Create Lead, Actions */}
-        <div className="flex justify-between sm:px-3 sm:py-2 p-2 items-center bg-white rounded-lg">
-          <div className="block sm:flex gap-2 sm:gap-3 items-center justify-center ">
+        <div className="flex justify-between px-3 py-2 p-2 items-center bg-white rounded-lg">
+          <div className="flex gap-3 items-center justify-between w-full">
             {/* --------------------------------     Responsive    -------------------------------------------- */}
+           
             {/* --------------------------------     All Lead, Assigned To  DropDown    -------------------------------------------- */}
-            <div className="flex justify-between gap-2">
-
-              {/* --------------------------------     All Lead    -------------------------------------------- */}
-
-            <SearchElement
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <div className="flex gap-1">
-              <button
-                className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
-                onClick={() => setIsFetchModalOpen(true)}
-              >
-                Fetch Leads
-              </button>
-            </div>
-          </div>
-
+            {/* --------------------------------     All Lead    -------------------------------------------- */}
+            
           {/* PART-II */}
           <div className="flex gap-3 items-center justify-center">
             {/* PART-II */}
@@ -824,7 +809,7 @@ export default function Lead() {
                 onMouseLeave={() => setAllLeaddropDown(false)}
               >
                 <button
-                  className="py-2 px-4 sm:py-2 sm:px-4 border rounded-md flex justify-between items-center   sm:min-w-40 sm:max-w-44  truncate"
+                  className="py-2 px-4  border rounded-md flex justify-between items-center   truncate"
                   id="dropdownDefaultButton"
                   type="button"
                 >
@@ -847,6 +832,7 @@ export default function Lead() {
                   </div>
                 )}
               </div>
+            )}
               {/* --------------------------------     ASSIGNED_TO    -------------------------------------------- */}
               {/* All ASSIGNED_TO  DropDown*/}
               <div
@@ -893,10 +879,10 @@ export default function Lead() {
             <div className="flex gap-1">
               <div className="flex gap-1 ">
                 <button
-                  className="px-4 border rounded-md       sm:min-w-40 sm:max-w-44  truncate text-white bg-blue-600 text-center text-xs	sm:text-lg"
+                  className="px-4 border rounded-md   truncate text-white bg-blue-600 text-center 	"
                   onClick={() => setIsFetchModalOpen(true)}
                 >
-                  Featch Leads
+                  Fetch Leads
                 </button>
               </div>
 
@@ -963,12 +949,12 @@ export default function Lead() {
                 {/* --------------------------------     Actions    -------------------------------------------- */}
 
                 <div
-                  className="relative"
+                  className=""
                   onClick={toggleActionsMenuLogo}
                   onMouseLeave={() => setdropActionsMenudropDown(false)}
                 >
                   <button
-                    className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
+                    className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600 "
                     id="dropdownDefaultButton"
                     type="button"
                   >
@@ -1224,9 +1210,9 @@ export default function Lead() {
                             </span>
                           </div>
                           <div className="flex justify-start text-center mx-auto w-[80%]">
-                            <div className="bg-cyan-500 text-center text-xs  text-white  rounded-full w-full  py-1 px-1 ">
+                            <span className="bg-cyan-500  text-white text-xs rounded-full w-[50%]  py-1 px-1  mx-auto">
                               {item.leadesStatus}
-                            </div>
+                            </span>
                           </div>
                         </td>
 
