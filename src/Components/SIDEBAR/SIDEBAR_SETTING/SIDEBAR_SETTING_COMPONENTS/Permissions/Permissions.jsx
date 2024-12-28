@@ -12,6 +12,7 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../../../../utils/toastNotifications";
+import EditPermission from "./EditPermission";
 
 export default function Permissions() {
   const [activeComponent, setActiveComponent] = useState("Table");
@@ -183,7 +184,8 @@ export default function Permissions() {
         <AddPermission onCancel={handleCancel} />
       ) : activeComponent === "Update" ? (
         // <EditAccessControl onCancel={handleCancel} id={selectedId} />
-        "Edit"
+        <EditPermission onCancel={handleCancel} permissionId={selectedId} />
+    
       ) : (
         ""
       )}
