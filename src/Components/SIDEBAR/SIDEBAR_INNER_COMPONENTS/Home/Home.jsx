@@ -149,7 +149,7 @@ export default function Home() {
     }
   }
 
-  //------------ Destructure salesData with fallback values to prevent null or undefined issues-----------------arvind
+  //------------ Destructure salesData with fallback values to prevent null or undefined issues-----------------
   const {
     currentMonthSales = 0,
     previousMonthSales = 0,
@@ -159,22 +159,21 @@ export default function Home() {
 
   //----------------Calculate percentage increase for clients-----------------
   const clientPercentageChange =
-    previousMonthClientCount === 0
-      ? currentMonthClientCount > 0
-        ? 100
-        : 0
-      : ((currentMonthClientCount - previousMonthClientCount) /
+        previousMonthClientCount === 0
+          ? currentMonthClientCount * 100 
+          : ((currentMonthClientCount - previousMonthClientCount) /
           previousMonthClientCount) *
-        100;
+            100;
   //---------------------last month diffrence-------------------------
   const clientDiffrence = currentMonthClientCount - previousMonthClientCount;
   //-------------------------- Calculate percentage increase for revenue-----------------------------
-  const revenuePercentageChange =
-    previousMonthSales === 0
-      ? currentMonthSales > 0
-        ? 100
-        : 0
-      : ((currentMonthSales - previousMonthSales) / previousMonthSales) * 100;
+      const revenuePercentageChange =
+      previousMonthSales === 0
+        ? currentMonthSales * 100 
+        : ((currentMonthSales - previousMonthSales) /
+        previousMonthSales) *
+          100;
+  //---------------------last month diffrence-------------------------
   const revenueDiffrence = currentMonthSales - previousMonthSales;
   //-------------------------- Determine increase or decrease status for revenue and sales--------------------------
   const revenueStatus = revenuePercentageChange > 0 ? "up" : "down";
@@ -189,23 +188,22 @@ export default function Home() {
   } = leadsData || {};
 
   //----------------Calculate percentage increase for leads-----------------
-  const leadsPercentage =
-    previousMonthLeads === 0
-      ? currentMonthLeads > 0
-        ? 100
-        : 0
-      : ((currentMonthLeads - previousMonthLeads) / previousMonthLeads) * 100;
+
+      const leadsPercentage =
+        previousMonthLeads === 0
+          ? currentMonthLeads * 100 
+          : ((currentMonthLeads - previousMonthLeads) /
+          previousMonthLeads) *
+            100;
   //---------------------last month diffrence-------------------------
   const leadsDiffrence = currentMonthLeads - previousMonthLeads;
   //-------------------------- Calculate percentage increase for intrested leads-----------------------------
   const intrestedPercentageChange =
-    previousMonthInterestedLeads === 0
-      ? currentMonthInterestedLeads > 0
-        ? 100
-        : 0
-      : ((currentMonthInterestedLeads - previousMonthInterestedLeads) /
-          previousMonthInterestedLeads) *
-        100;
+  previousMonthInterestedLeads === 0
+    ? currentMonthInterestedLeads * 100 // Multiply current leads directly by 100 if no previous leads.
+    : ((currentMonthInterestedLeads - previousMonthInterestedLeads) /
+        previousMonthInterestedLeads) *
+      100;
   const intrestedLeadsDiffrence =
     currentMonthInterestedLeads - previousMonthInterestedLeads;
   //-------------------------- Determine increase or decrease status for leads and intrested leads--------------------------
@@ -221,14 +219,12 @@ export default function Home() {
  
 
   //----------------Calculate percentage increase for clients-----------------
-  const kycPercentageChange =
-  previousMonthKYC === 0
-      ? currentMonthKYC > 0
-        ? 100
-        : 0
-      : ((currentMonthKYC - previousMonthKYC) /
-      previousMonthKYC) *
-        100;
+        const kycPercentageChange =
+        previousMonthKYC === 0
+          ? currentMonthKYC * 100 
+          : ((currentMonthKYC - previousMonthKYC) /
+          previousMonthKYC) *
+            100;
   //---------------------last month diffrence-------------------------
   const kycDiffrence = currentMonthKYC - previousMonthKYC;
  
