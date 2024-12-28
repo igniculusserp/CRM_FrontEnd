@@ -787,76 +787,15 @@ export default function Lead() {
         )}
         {/* -------------------------------- Fetch modal -------------------------------------------- */}
         {isFeatchModalOpen && <LeadFeatchModal onClose={closeModal} />}
-        {/* containerbar*/}
-        <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg">
-          {/* PART-I */}
-          {/* container- Alleads, search */}
-          <div className="flex gap-3 items-center justify-center ">
-            {/* PART-I */}
-            {/* All Lead  DropDown*/}
-            <div
-              className="relative"
-              onClick={toggleMenuAllLead}
-              onMouseLeave={() => setAllLeaddropDown(false)}
-            >
-              <button
-                className="py-2 px-4 border rounded-md flex justify-between items-center min-w-40 max-w-44 truncate"
-                id="dropdownDefaultButton"
-                type="button"
-              >
-                {leadStatus}
-                <FaAngleDown className="ml-2 text-gray-900" />
-              </button>
-              {allLeaddropDown && (
-                <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
-                  <ul className=" text-sm text-gray-700">
-                    {allLeadData.map((item) => (
-                      <li
-                        key={item.id}
-                        className="block py-2 w-56 px-4  hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                        onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
-                      >
-                        {item.status}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
+        {/* container bar*/}
+        {/* container-I All Leads, Assigned To, Search, Fetch Leads, Wizard, Create Lead, Actions */}
+        <div className="flex justify-between sm:px-3 sm:py-2 p-2 items-center bg-white rounded-lg">
+          <div className="block sm:flex gap-2 sm:gap-3 items-center justify-center ">
+            {/* --------------------------------     Responsive    -------------------------------------------- */}
+            {/* --------------------------------     All Lead, Assigned To  DropDown    -------------------------------------------- */}
+            <div className="flex justify-between gap-2">
 
-            {/* PART-I-ii */}
-            {/* All ASSIGNED_TO  DropDown*/}
-            <div
-              className="relative"
-              onClick={toggleMenuAssigned_To}
-              onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
-            >
-              <button
-                className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 max-w-44"
-                id="dropdownDefaultButton"
-                type="button"
-              >
-                {assignedTo}
-                <FaAngleDown className="ml-2 text-gray-900" />
-              </button>
-              {allAssigned_To_DROPDOWN && (
-                <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
-                  <ul className=" text-sm text-gray-700">
-                    {allAssigned_To_Data.map((item) => (
-                      <li
-                        key={item.id}
-                        className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                        onClick={() => handleAssignedToSelection(item.userName)} // Correct selection logic
-                      >
-                        {item.userName}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-            {/* PART-I */}
-            {/* Search Box */}
+              {/* --------------------------------     All Lead    -------------------------------------------- */}
 
             <SearchElement
               value={searchTerm}
@@ -880,94 +819,185 @@ export default function Lead() {
               ""
             ) : (
               <div
-                className="relative"
-                onClick={togglestripeBar}
-                onMouseLeave={() => setstripeBardropDown(false)}
+                className="relative my-1 sm:my-0"
+                onClick={toggleMenuAllLead}
+                onMouseLeave={() => setAllLeaddropDown(false)}
               >
                 <button
-                  className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center"
+                  className="py-2 px-4 sm:py-2 sm:px-4 border rounded-md flex justify-between items-center   sm:min-w-40 sm:max-w-44  truncate"
                   id="dropdownDefaultButton"
                   type="button"
                 >
-                  <FaBars />
-                  <FaAngleDown className="text-gray-900" />
+                  {leadStatus}
+                  <FaAngleDown className="ml-2 text-gray-900" />
                 </button>
-                {stripeBardropDown && (
-                  <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className="text-sm text-gray-700">
-                      {stripeBar.map(({ key, value }) => (
+                {allLeaddropDown && (
+                  <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+                    <ul className=" text-sm text-gray-700">
+                      {allLeadData.map((item) => (
                         <li
-                          key={key}
-                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          onClick={() => handleStripeButton(value)}
+                          key={item.id}
+                          className="block py-2 w-56 px-4  hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
                         >
-                          {value}
+                          {item.status}
                         </li>
                       ))}
                     </ul>
                   </div>
                 )}
               </div>
-            )}
-            {/* PART-II */}
-            {/*  Create Lead */}
-            <div className="flex gap-1">
-              <Link to="/panel/createlead">
+              {/* --------------------------------     ASSIGNED_TO    -------------------------------------------- */}
+              {/* All ASSIGNED_TO  DropDown*/}
+              <div
+                className="relative my-1 sm:my-0"
+                onClick={toggleMenuAssigned_To}
+                onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
+              >
                 <button
-                  className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
+                  className="py-2 px-4 sm:py-2 sm:px-4 border rounded-md flex justify-between items-center   sm:min-w-40 sm:max-w-44  truncate"
                   id="dropdownDefaultButton"
                   type="button"
                 >
-                  Create Lead
+                  {assignedTo}
+                  <FaAngleDown className="ml-2 text-gray-900" />
                 </button>
-              </Link>
-              {/* PART-II */}
-              {/*  Create Lead Part-II -> down button */}
-              <div
-                className="relative"
-                onClick={togglesdropLogo}
-                onMouseLeave={() => setdropLogodropDown(false)}
-              ></div>
+                {allAssigned_To_DROPDOWN && (
+                  <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+                    <ul className=" text-sm text-gray-700">
+                      {allAssigned_To_Data.map((item) => (
+                        <li
+                          key={item.id}
+                          className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          onClick={() => handleAssignedToSelection(item.userName)} // Correct selection logic
+                        >
+                          {item.userName}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
             </div>
-            {/* PART-II */}
-            {/*-------Action DropDown */}
-            <div
-              className="relative"
-              onClick={toggleActionsMenuLogo}
-              onMouseLeave={() => setdropActionsMenudropDown(false)}
-            >
-              <button
-                className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
-                id="dropdownDefaultButton"
-                type="button"
-              >
-                Actions
-                <FaAngleDown className="text-gray-900" />
-              </button>
-              {dropActionsMenudropDown && (
-                <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
-                  <ul className="text-sm text-gray-700 ">
-                    {dropActionsMenu.map(({ key, value }) => (
-                      <li
-                        key={key}
-                        className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                        onClick={() => handleActionButton(value)}
-                      >
-                        {value}
-                      </li>
-                    ))}
-                  </ul>
+
+            {/* --------------------------------     Search Box     -------------------------------------------- */}
+            <SearchElement
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)
+              }
+            />
+
+            {/* --------------------------------Fetch Leads, Wizrad->OFF, Create Lead Actions  -------------------------------------------- */}
+            {/* --------------------------------     Fetch Leads-button    -------------------------------------------- */}
+
+            <div className="flex gap-1">
+              <div className="flex gap-1 ">
+                <button
+                  className="px-4 border rounded-md       sm:min-w-40 sm:max-w-44  truncate text-white bg-blue-600 text-center text-xs	sm:text-lg"
+                  onClick={() => setIsFetchModalOpen(true)}
+                >
+                  Featch Leads
+                </button>
+              </div>
+
+
+
+              {/* -------------------------------- Wizard ->Hidden for Mobile   -------------------------------------------- */}
+
+              <div className="flex gap-3 items-center justify-center ">
+                {/* Stripe-BarDropDown */}
+                {activeButtonId === 2 || activeButtonId === 4 ? (
+                  ""
+                ) : (
+                  <div
+                    className="relative hidden sm:block"
+                    onClick={togglestripeBar}
+                    onMouseLeave={() => setstripeBardropDown(false)}
+                  >
+                    <button
+                      className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center"
+                      id="dropdownDefaultButton"
+                      type="button"
+                    >
+                      <FaBars />
+                      <FaAngleDown className="text-gray-900" />
+                    </button>
+                    {stripeBardropDown && (
+                      <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 z-10">
+                        <ul className="text-sm text-gray-700">
+                          {stripeBar.map(({ key, value }) => (
+                            <li
+                              key={key}
+                              className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              onClick={() => handleStripeButton(value)}
+                            >
+                              {value}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
+                {/* --------------------------------     Create Lead    -------------------------------------------- */}
+                <div className="flex gap-1">
+                  <Link to="/panel/createlead">
+                    <button
+                      className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
+                      id="dropdownDefaultButton"
+                      type="button"
+                    >
+                      Create Lead
+                    </button>
+                  </Link>
+                  {/* PART-II */}
+                  {/*  Create Lead Part-II -> down button */}
+                  <div
+                    className="relative"
+                    onClick={togglesdropLogo}
+                    onMouseLeave={() => setdropLogodropDown(false)}
+                  >
+                  </div>
                 </div>
-              )}
+                {/* PART-II */}
+                {/* --------------------------------     Actions    -------------------------------------------- */}
+
+                <div
+                  className="relative"
+                  onClick={toggleActionsMenuLogo}
+                  onMouseLeave={() => setdropActionsMenudropDown(false)}
+                >
+                  <button
+                    className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
+                    id="dropdownDefaultButton"
+                    type="button"
+                  >
+                    Actions
+                    <FaAngleDown className="text-gray-900" />
+                  </button>
+                  {dropActionsMenudropDown && (
+                    <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
+                      <ul className="text-sm text-gray-700 ">
+                        {dropActionsMenu.map(({ key, value }) => (
+                          <li
+                            key={key}
+                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            onClick={() => handleActionButton(value)}
+                          >
+                            {value}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>                    
             </div>
           </div>
         </div>
-        {/* 2nd bar Leads and lenghtLeads*/}{" "}
-        {/* 2nd bar Leads and lenghtLeads*/}{" "}
-        {/* 2nd bar Leads and lenghtLeads*/}{" "}
-        {/* 2nd bar Leads and lenghtLeads*/}{" "}
-        {/* 2nd bar Leads and lenghtLeads*/}{" "}
-        {/* 2nd bar Leads and lenghtLeads*/}
+
+
+
         <div className="mt-3 flex justify-between items-center gap-3">
           <div className="flex gap-3 items-center justify-center">
             <h1 className="text-3xl font-medium ">Leads</h1>
@@ -1206,12 +1236,12 @@ export default function Lead() {
                           ""
                         ) : (
                           <td className="px-1 py-4 border-b text- border-gray-300 text-sm  break-all max-w-48 min-w-24">
-                           <a
+                            <a
                               href={`mailto:${item.email}`}
                               onClick={(event) => event.stopPropagation()}
                             >
                               {item.email}
-                            </a>   
+                            </a>
                           </td>
                         )}
                         <td className="px-1 py-4 border-b border-gray-300 text-sm">
@@ -1221,7 +1251,7 @@ export default function Lead() {
                               onClick={(event) => event.stopPropagation()}
                             >
                               {item.mobileNo}
-                            </a>                            
+                            </a>
                             <MdCall className="text-red-600" />
                           </div>
                         </td>
@@ -1308,9 +1338,9 @@ export default function Lead() {
                           >
                             {/* SO */}
                             {business === "Brokerage" ? (
-                             <span className="text-white text-xs rounded p-2   bg-blue-600 shadow-md rounded hover:bg-blue-500">
-                                  Create Client
-                                </span>
+                              <span className="text-white text-xs rounded p-2   bg-blue-600 shadow-md rounded hover:bg-blue-500">
+                                Create Client
+                              </span>
                             ) : (
                               <>
                                 <span className=" text-white text-xm rounded p-1 bg-blue-600 shadow-md rounded hover:bg-blue-500">
@@ -1446,8 +1476,8 @@ export default function Lead() {
                   <button
                     onClick={() => paginate(currentPage - 1)}
                     className={`p-1 shadow-md rounded-full text-white ${currentPage === 1
-                        ? "border-gray-200 border-2"
-                        : "bg-cyan-500 border-2 border-gray-100"
+                      ? "border-gray-200 border-2"
+                      : "bg-cyan-500 border-2 border-gray-100"
                       }`}
                     disabled={currentPage === 1}
                   >
@@ -1468,8 +1498,8 @@ export default function Lead() {
                             key={page}
                             onClick={() => paginate(page)}
                             className={`px-4 py-2 rounded mx-1 ${currentPage === page
-                                ? "bg-blue-600 text-white"
-                                : "bg-white text-gray-700 border"
+                              ? "bg-blue-600 text-white"
+                              : "bg-white text-gray-700 border"
                               }`}
                           >
                             {page}
@@ -1493,8 +1523,8 @@ export default function Lead() {
                   <button
                     onClick={() => paginate(currentPage + 1)}
                     className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage
-                        ? " border-gray-200 border-2"
-                        : " bg-cyan-500 border-2 border-gray-100"
+                      ? " border-gray-200 border-2"
+                      : " bg-cyan-500 border-2 border-gray-100"
                       }`}
                     disabled={currentPage === totalPage}
                   >
