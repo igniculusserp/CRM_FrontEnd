@@ -513,8 +513,8 @@ export default function Lead() {
   //---------------------->---------------------->MANAGE_BY/ASSIGNED_TO<----------------------<ARVIND----------------------
   const roleColors = [
     "#2563eb", // blue
-    // '#65a30d', // LimeGreen
-    // '#7c3aed', // MediumPurple
+    '#22c55e', // LimeGreen
+    '#7c3aed', // MediumPurple
     "#0369a1", //Sky
     "#e11d48", //Rose
   ];
@@ -809,11 +809,11 @@ export default function Lead() {
               </button>
               {allLeaddropDown && (
                 <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
-                  <ul className="py-2 text-sm text-gray-700">
+                  <ul className=" text-sm text-gray-700">
                     {allLeadData.map((item) => (
                       <li
                         key={item.id}
-                        className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                        className="block py-2 w-56 px-4  hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                         onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
                       >
                         {item.status}
@@ -841,7 +841,7 @@ export default function Lead() {
               </button>
               {allAssigned_To_DROPDOWN && (
                 <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
-                  <ul className="py-2 text-sm text-gray-700">
+                  <ul className=" text-sm text-gray-700">
                     {allAssigned_To_Data.map((item) => (
                       <li
                         key={item.id}
@@ -893,7 +893,7 @@ export default function Lead() {
                   <FaAngleDown className="text-gray-900" />
                 </button>
                 {stripeBardropDown && (
-                  <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
+                  <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 z-10">
                     <ul className="text-sm text-gray-700">
                       {stripeBar.map(({ key, value }) => (
                         <li
@@ -945,7 +945,7 @@ export default function Lead() {
                 <FaAngleDown className="text-gray-900" />
               </button>
               {dropActionsMenudropDown && (
-                <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
+                <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
                   <ul className="text-sm text-gray-700 ">
                     {dropActionsMenu.map(({ key, value }) => (
                       <li
@@ -1157,7 +1157,7 @@ export default function Lead() {
                       </th>
                     )}
 
-                    <th className="">
+                    <th className="w-32">
                       <VscSettings className="mx-auto " size={20} />
                     </th>
                   </tr>
@@ -1298,7 +1298,7 @@ export default function Lead() {
                           <button
                             className={
                               business === "Brokerage"
-                                ? "bg-black p-1 text-white text-xs rounded "
+                                ? ""
                                 : ""
                             }
                             onClick={(e) => {
@@ -1308,10 +1308,12 @@ export default function Lead() {
                           >
                             {/* SO */}
                             {business === "Brokerage" ? (
-                              "Create Client"
+                             <span className="text-white text-xs rounded p-2   bg-blue-600 shadow-md rounded hover:bg-blue-500">
+                                  Create Client
+                                </span>
                             ) : (
                               <>
-                                <span className=" text-white text-xm rounded p-1 bg-blue-700 shadow-md rounded hover:bg-blue-600">
+                                <span className=" text-white text-xm rounded p-1 bg-blue-600 shadow-md rounded hover:bg-blue-500">
                                   SO
                                 </span>
                               </>

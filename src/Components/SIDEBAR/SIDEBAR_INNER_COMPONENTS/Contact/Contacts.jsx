@@ -20,6 +20,7 @@ import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { TbRefresh } from "react-icons/tb";
 
 
+
 //Objects Imported
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
 
@@ -50,6 +51,11 @@ export default function Contact() {
 
   //DND
   const [users, setUsers] = useState([]);
+
+  //------- Business Type --------
+const [business, setBusiness] = useState("")
+const businessType = localStorage.getItem("businessType");
+
 
   //created such that to filter leads according to leadStatus
   const [filteredLeads, setFilteredLeads] = useState([]); // Filtered leads
@@ -105,9 +111,10 @@ export default function Contact() {
 
   useEffect(() => {
     handleLead();
-    getAllUsers()
+    getAllUsers();
+    //------- Business Type --------
+    setBusiness(businessType);
   }, []);
-
 
 
   const [leadStatus, setLeadStatus] = useState('All Lead');   // Track the selected lead status
@@ -483,6 +490,7 @@ export default function Contact() {
   //---------------------->---------------------->̧CHECKBOX -> MULTIPLE<----------------------<----------------------
   const [isSelectAllChecked, setIsSelectAllChecked] = useState(false);
   const handleSelectAllCheckbox = (e) => {
+    e.stopPropagation()
     const isChecked = e.target.checked;
     setIsSelectAllChecked(isChecked);
 
@@ -603,7 +611,7 @@ export default function Contact() {
             </button>
             {allLeaddropDown && (
               <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
-                <ul className="py-2 text-sm text-gray-700">
+                <ul className=" text-sm text-gray-700">
                   {allLeadData.map((item) => (
                     <li
                       key={item.id}
@@ -629,7 +637,7 @@ export default function Contact() {
             </button>
             {allAssigned_To_DROPDOWN && (
               <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
-                <ul className="py-2 text-sm text-gray-700">
+                <ul className=" text-sm text-gray-700">
                   {allAssigned_To_Data.map((item) => (
                     <li
                       key={item.id}
@@ -660,7 +668,7 @@ export default function Contact() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {stripeBardropDown && (
-              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
+              <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 z-10">
                 <ul className="text-sm text-gray-700">
                   {stripeBar.map(({ key, value }) => (
                     <li
@@ -689,7 +697,7 @@ export default function Contact() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {dropActionsMenudropDown && (
-              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
+              <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
                 <ul className="text-sm text-gray-700 " >
                   {dropActionsMenu.map(({ key, value }) => (
                     <li
@@ -845,7 +853,7 @@ export default function Contact() {
                         <input
                           type="checkbox"
                           checked={selectedIds.includes(item.id)}
-                          onChange={(e) => handleOnCheckBox(e, item)}
+                          onClick={(e) => handleOnCheckBox(e, item)}
                         />
                       </td>
 
@@ -860,7 +868,13 @@ export default function Contact() {
                       {/* Mobile No */}
                       <td className="px-1 py-4 border-b border-gray-300 text-sm min-w-20 max-w-24 ">
                         <div className="flex gap-2 items-center">
-                          {item.mobileNo}
+
+                          <a
+                              href={`tel:${item.mobileNo}`}
+                              onClick={(event) => event.stopPropagation()}
+                            >
+                              {item.mobileNo}
+                            </a>                         
                           <MdCall className="text-red-600" />
                         </div>
                       </td>
@@ -908,17 +922,34 @@ export default function Contact() {
 
                       {/*------------------<- Create-SO->------------*/}
                       {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
-                      <td className="text-center">
-                        <button
-                          className="p-1 bg-blue-700 shadow-md rounded hover:bg-blue-600 text-white text-xm rounded"
-                          onClick={(e) =>{
-                            e.stopPropagation();
-                            navigate(`/panel/contact/create/so/${item.id}`)
+                     {/*------------------<- Create-SO->------------*/}
+                        {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
+                        <td className="text-center">
+                          <button
+                            className={
+                              business === "Brokerage"
+                                ? ""
+                                : ""
+                            }
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/panel/lead/create/so/${item.id}`);
                             }}
-                            >
-                          SO
-                        </button>
-                      </td>
+                          >
+                            {/* SO */}
+                            {business === "Brokerage" ? (
+                             <span className="text-white text-xs rounded p-2   bg-blue-600 shadow-md rounded hover:bg-blue-500">
+                                  Create Client
+                                </span>
+                            ) : (
+                              <>
+                                <span className=" text-white text-xm rounded p-1 bg-blue-600 shadow-md rounded hover:bg-blue-500">
+                                  SO
+                                </span>
+                              </>
+                            )}
+                          </button>
+                        </td>
                     </tr>
                   );
                 })}
