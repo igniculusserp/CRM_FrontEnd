@@ -829,7 +829,7 @@ export default function Createlead() {
               </span>
                 </label>
                     <input
-                      type="text"
+                      type="number"
                       name="mobNo"
                       maxLength="15"
                       value={editLead.mobNo}
@@ -855,6 +855,10 @@ export default function Createlead() {
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleContactChange}
                       placeholder="Enter your Alternate Number"
+                      
+                      onInput={(e) => {
+                        e.target.value = e.target.value.replace(/[a-zA-Z]/g, ""); // Removes all letters (a to z and A to Z)
+                      }}
                     />
                   </div>
                 </div>

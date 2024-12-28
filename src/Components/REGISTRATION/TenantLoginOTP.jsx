@@ -64,11 +64,6 @@ export default function TenantLoginOTP() {
     event.preventDefault();
 
 
-    // if (otp === '689741') {
-    //   localStorage.setItem("otp", newOtp);  // Save the correct OTP
-    //   navigate('/sidebar');  // Redirect to sidebar if OTP is correct
-    //   return;  // Exit the function if OTP is valid, no need to proceed further
-    // }
 
     //validation Added for OTP
     if(otp.length < 1 ){
@@ -170,21 +165,26 @@ export default function TenantLoginOTP() {
               <form onSubmit={handleSubmit} className="flex flex-col mx-10">
                 <label htmlFor="forgetemail" className="text-xs font-medium text-gray-700">
                  <span className="flex gap-1">
-                                  Please enter OTP here
-                                  <FaStarOfLife size={8} className="text-red-500"/>
-                                  </span>
+                  Please enter OTP here
+                  <FaStarOfLife size={8} className="text-red-500"/>
+                  </span>
                 </label>
                 <input
-                  type="number"
+                  type="text"
+                  maxLength={6}
                   name="otp"
                   value={otp} // Added OTP state binding
                   className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm"
                   onChange={handleChange} // Added onChange handler
                   placeholder="XXX-XXX"
+                  onWheel={(e) => e.target.blur()} // Disable scroll
+                  onInput={(e) => {
+                    e.target.value = e.target.value.replace(/[a-zA-Z+\-{}\|=\[\]\s]/g, ""); // Removes letters, symbols, and whitespaces
+                  }}
                 />
                 <div className="flex flex-col justify-center items-center gap-2 mt-6">
                   <div className="text-sm">
-                    <p>Code has been sent to your mail address</p>
+                    <p>OTP has been sent to your mail address</p>
                     <p className="text-center text-cyan-500">{email}</p>
                   </div>
                   <div className="mt-6">
