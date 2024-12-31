@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+//external Packages
+import axios from "axios";
 import { useLocation } from 'react-router-dom';
 import ButtonGroup from './ButtonGroup';
 import UserSetting from './SIDEBAR_SETTING_COMPONENTS/User_Setting/UserSetting';
@@ -29,7 +31,15 @@ import PasswordPolicy from './SIDEBAR_SETTING_COMPONENTS/PasswordPolicy/Password
 import ExpenseHead from './SIDEBAR_SETTING_COMPONENTS/ExpenseHead/ExpenseHead';
 import Permissions from './SIDEBAR_SETTING_COMPONENTS/Permissions/Permissions';
 
+//Folder Imported
+import { tenant_base_url, protocal_url } from "../../../Config/config";
+import { getHostnamePart } from "./ReusableComponents/GlobalHostUrl";
+
 export default function Setting() {
+
+  const name = getHostnamePart();
+
+
   const location = useLocation();
 
   const [activeTab, setActiveTab] = useState(
@@ -39,7 +49,7 @@ export default function Setting() {
   const buttons = [
     { key: 1, value: "User Setting" },
     { key: 2, value: "User Operation" },
-    { key: 3, value: "Groups" },
+    { key: 3, value: "Group" },
     { key: 4, value: "Department" },
     { key: 5, value: "Designation" },
     { key: 6, value: "Qualification" },
@@ -48,13 +58,13 @@ export default function Setting() {
     { key: 9, value: "Segments" },
     { key: 26, value: "Expense Head" },
     { key: 10, value: "SMS Template" },
-    { key: 11, value: "Email Template" },
+    { key: 11, value: "E-Mail Template" },
     // { key: 20, value: "Call Template" },
     // { key: 12, value: "Plan" },
     // { key: 13, value: "Calendar" },
     // { key: 14, value: "Promotion" },
     { key: 15, value: "SMS Setting" },
-    { key: 16, value: "Email Setting" },
+    { key: 16, value: "E-Mail Setting" },
     // { key: 17, value: "Branch Target" },
     // { key: 18, value: "Notification Popup" },
     // { key: 19, value: "Calling Extension" },
@@ -109,6 +119,53 @@ export default function Setting() {
 
   const ActiveComponent = componentMap[activeTab];
 
+
+  
+  //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
+
+  const businessRole = localStorage.getItem("businessRole");
+  const [permissions, setPermissions] = useState([]);
+
+  async function handleGetPermission() {
+    const bearer_token = localStorage.getItem("token");
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
+        config
+      );
+      console.log("Permission Data : ", response.data.data);
+      const permissionsList = response?.data?.data;
+
+      if (permissionsList) {
+        const serviceBoxPermissions = permissionsList.find(
+          (item) => item.moduleName === "Settings"
+        );
+
+        if (serviceBoxPermissions) {
+          const permissionsArray = serviceBoxPermissions.permissions.split(",");
+          setPermissions(permissionsArray);
+
+          console.log("List : ", permissionsArray);
+
+          //------------------------------------------------------ Set permissions ------------------------------------------------
+
+       
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+    }
+  }
+
+  useEffect(() => {
+    handleGetPermission();
+  }, []);
+
   return (
     <>
       <div className="flex flex-col m-3">
@@ -122,10 +179,14 @@ export default function Setting() {
       </div>
 
       <ButtonGroup
-        buttons={buttons}
-        active={activeTab}
-        onButtonClick={handleButtonClick}
-      />
+      buttons={
+        businessRole === "Admin"
+          ? buttons
+          : buttons.filter(button => permissions.includes(button.value))
+      }
+      active={activeTab}
+      onButtonClick={handleButtonClick}
+    />
 
       <div>{ActiveComponent && <ActiveComponent />}</div>
     </>

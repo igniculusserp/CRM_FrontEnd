@@ -23,19 +23,19 @@ export default function AddPermission({ onCancel }) {
   const [defaultGroupModuleText, setDefaultGroupModuleText] =
     useState("All Group Module");
 
-    const groupModuleName = [
-      { id: 1, name: "All Group Module" },
-      { id: 2, name: "Leads" },
-      { id: 3, name: "Contacts" },
-      { id: 4, name: "Client" },
-      { id: 5, name: "Sales Order" },
-      { id: 6, name: "Free Trail" },
-      { id: 7, name: "Follow Up" },
-      { id: 8, name: "Service Box" },
-      { id: 9, name: "Reports" },
-      { id: 10, name: "Financial Activity" },
-      { id: 11, name: "Settings" },
-    ];
+  const groupModuleName = [
+    { id: 1, name: "All Group Module" },
+    { id: 2, name: "Leads" },
+    { id: 3, name: "Contacts" },
+    { id: 4, name: "Client" },
+    { id: 5, name: "Sales Order" },
+    { id: 6, name: "Free Trail" },
+    { id: 7, name: "Follow Up" },
+    { id: 8, name: "Service Box" },
+    { id: 9, name: "Reports" },
+    { id: 10, name: "Financial Activity" },
+    { id: 11, name: "Settings" },
+  ];
 
   //   TOGGLE DROPDOWN GROUPNAME
   const toggleDropdownGroupModule = () => {
@@ -114,13 +114,13 @@ export default function AddPermission({ onCancel }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const bearer_token = localStorage.getItem("token");
-  
+
     const payload = {
       groupName: defaultTextLeadStatusDropDown,
       moduleName: defaultGroupModuleText,
       permissions,
     };
-  
+
     try {
       const config = {
         headers: {
@@ -128,7 +128,7 @@ export default function AddPermission({ onCancel }) {
           "Content-Type": "application/json",
         },
       };
-  
+
       const response = await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/add`,
         payload,
@@ -136,7 +136,7 @@ export default function AddPermission({ onCancel }) {
       );
       if (response.data.isSuccess) {
         showSuccessToast("Permission added successfully!");
-        
+
         // Call onCancel after a short delay to ensure toast shows first
         setTimeout(() => {
           onCancel();
@@ -147,7 +147,7 @@ export default function AddPermission({ onCancel }) {
       showErrorToast("Failed");
     }
   };
-  
+
   return (
     <div className="flex min-h-screen flex-col m-3 overflow-x-auto overflow-y-hidden">
       <ToastContainer />
@@ -427,65 +427,95 @@ export default function AddPermission({ onCancel }) {
                 {defaultGroupModuleText === "Contacts" ||
                 defaultGroupModuleText === "All Group Module" ? (
                   <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
-                  <h1 className="font-normal mb-2 text-xl">Contacts</h1>
-                  {/* ---------- LEAD BOXES ---------- */}
-                  <div className="flex gap-12 justify-between">
-                    {/* FIRST */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" onChange={() => handleCheckboxChange("Create Sales order")} />
-                        <p className="text-sm font-md">Create Sales order</p>
+                    <h1 className="font-normal mb-2 text-xl">Contacts</h1>
+                    {/* ---------- LEAD BOXES ---------- */}
+                    <div className="flex gap-12 justify-between">
+                      {/* FIRST */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input
+                            type="checkbox"
+                            onChange={() =>
+                              handleCheckboxChange("Create Sales order")
+                            }
+                          />
+                          <p className="text-sm font-md">Create Sales order</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input
+                            type="checkbox"
+                            onChange={() =>
+                              handleCheckboxChange("Edit Contact")
+                            }
+                          />
+                          <p className="text-sm font-md">Edit Contact</p>
+                        </div>
                       </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" onChange={() => handleCheckboxChange("Edit Contact")} />
-                        <p className="text-sm font-md">Edit Contact</p>
+                      {/* SECOND */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input
+                            type="checkbox"
+                            onChange={() =>
+                              handleCheckboxChange("View Contacts")
+                            }
+                          />
+                          <p className="text-sm font-md">View Contacts</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input
+                            type="checkbox"
+                            onChange={() =>
+                              handleCheckboxChange("Export to PDF")
+                            }
+                          />
+                          <p className="text-sm font-md">Export to PDF</p>
+                        </div>
                       </div>
-                    </div>
-                    {/* SECOND */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" onChange={() => handleCheckboxChange("View Contacts")} />
-                        <p className="text-sm font-md">View Contacts</p>
+                      {/* THIRD */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input
+                            type="checkbox"
+                            onChange={() => handleCheckboxChange("Mass Delete")}
+                          />
+                          <p className="text-sm font-md">Mass Delete</p>
+                        </div>
+                        {/* SECOND ITEM */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input
+                            type="checkbox"
+                            onChange={() =>
+                              handleCheckboxChange("Export to Excel")
+                            }
+                          />
+                          <p className="text-sm font-md">Export to Excel</p>
+                        </div>
                       </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" onChange={() => handleCheckboxChange("Export to PDF")} />
-                        <p className="text-sm font-md">Export to PDF</p>
+                      {/* FOURTH */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+                        <div className="flex gap-3 items-center font-light">
+                          <input
+                            type="checkbox"
+                            onChange={() => handleCheckboxChange("Mass E-Mail")}
+                          />
+                          <p className="text-sm font-md">Mass E-Mail</p>
+                        </div>
                       </div>
-                    </div>
-                    {/* THIRD */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" onChange={() => handleCheckboxChange("Mass Delete")} />
-                        <p className="text-sm font-md">Mass Delete</p>
+                      {/* FIFTH */}
+                      <div className="flex flex-col gap-3">
+                        {/* FIRST ROW */}
+
+                        {/* SECOND ITEM */}
                       </div>
-                      {/* SECOND ITEM */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" onChange={() => handleCheckboxChange("Export to Excel")} />
-                        <p className="text-sm font-md">Export to Excel</p>
-                      </div>
-                    </div>
-                    {/* FOURTH */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" onChange={() => handleCheckboxChange("Mass E-Mail")} />
-                        <p className="text-sm font-md">Mass E-Mail</p>
-                      </div>
-                    </div>
-                    {/* FIFTH */}
-                    <div className="flex flex-col gap-3">
-                      {/* FIRST ROW */}
-                
-                      {/* SECOND ITEM */}
                     </div>
                   </div>
-                </div>
-                
                 ) : (
                   ""
                 )}
@@ -788,12 +818,20 @@ export default function AddPermission({ onCancel }) {
                       <div className="flex flex-col gap-3">
                         {/* FIRST ROW */}
                         <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
+                          <input
+                            type="checkbox"
+                            onChange={() =>
+                              handleCheckboxChange("Employee Report")
+                            }
+                          />
                           <p className="text-sm font-md">Employee Report</p>
                         </div>
                         {/* SECOND ITEM */}
                         <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
+                          <input
+                            type="checkbox"
+                            onChange={() => handleCheckboxChange("Monitoring")}
+                          />
                           <p className="text-sm font-md">Monitoring</p>
                         </div>
                       </div>
@@ -801,12 +839,20 @@ export default function AddPermission({ onCancel }) {
                       <div className="flex flex-col gap-3">
                         {/* FIRST ROW */}
                         <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
+                          <input
+                            type="checkbox"
+                            onChange={() => handleCheckboxChange("Lead Report")}
+                          />
                           <p className="text-sm font-md">Lead Report</p>
                         </div>
                         {/* SECOND ITEM */}
                         <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
+                          <input
+                            type="checkbox"
+                            onChange={() =>
+                              handleCheckboxChange("Dispose Leads")
+                            }
+                          />
                           <p className="text-sm font-md">Dispose Leads</p>
                         </div>
                       </div>
@@ -814,7 +860,12 @@ export default function AddPermission({ onCancel }) {
                       <div className="flex flex-col gap-3">
                         {/* FIRST ROW */}
                         <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
+                          <input
+                            type="checkbox"
+                            onChange={() =>
+                              handleCheckboxChange("Client Report")
+                            }
+                          />
                           <p className="text-sm font-md">Client Report</p>
                         </div>
                       </div>
@@ -822,14 +873,14 @@ export default function AddPermission({ onCancel }) {
                       <div className="flex flex-col gap-3">
                         {/* FIRST ROW */}
                         <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
+                          <input
+                            type="checkbox"
+                            onChange={() =>
+                              handleCheckboxChange("Sales Report")
+                            }
+                          />
                           <p className="text-sm font-md">Sales Report</p>
                         </div>
-                      </div>
-                      {/* FIFTH */}
-                      <div className="flex flex-col gap-3">
-                        {/* FIRST ROW */}
-                        {/* SECOND ITEM */}
                       </div>
                     </div>
                   </div>
@@ -849,12 +900,20 @@ export default function AddPermission({ onCancel }) {
                     <div className="flex items-center gap-12">
                       {/* FIRST */}
                       <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" onChange={() => {}} />
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("View Expenses")}
+                        />
                         <p className="text-sm font-md">View Expenses</p>
                       </div>
-                      {/* FIRST */}
+                      {/* SECOND */}
                       <div className="flex gap-3 items-center font-light">
-                        <input type="checkbox" onChange={() => {}} />
+                        <input
+                          type="checkbox"
+                          onChange={() =>
+                            handleCheckboxChange("View Brokerage")
+                          }
+                        />
                         <p className="text-sm font-md">View Brokerage</p>
                       </div>
                     </div>
@@ -867,103 +926,165 @@ export default function AddPermission({ onCancel }) {
                 {defaultGroupModuleText === "Settings" ||
                 defaultGroupModuleText === "All Group Module" ? (
                   <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
-                    <h1 className="font-normal mb-2 text-xl">Settings</h1>
-                    {/* ---------- LEAD BOXES ---------- */}
-                    <div className="flex gap-12 justify-between">
-                      {/* FIRST */}
-                      <div className="flex flex-col gap-3">
-                        {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
-                          <p className="text-sm font-md">User Setting</p>
-                        </div>
-                        {/* SECOND ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
-                          <p className="text-sm font-md">User Operation</p>
-                        </div>
-                        {/* THIRD ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
-                          <p className="text-sm font-md">Group</p>
-                        </div>
-                        {/* FOURTH ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
-                          <p className="text-sm font-md">Department</p>
-                        </div>
+                  <h1 className="font-normal mb-2 text-xl">Settings</h1>
+                  {/* ---------- LEAD BOXES ---------- */}
+                  <div className="flex gap-12 justify-between">
+                    {/* FIRST */}
+                    <div className="flex flex-col gap-3">
+                      {/* FIRST ROW */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("User Setting")}
+                        />
+                        <p className="text-sm font-md">User Setting</p>
                       </div>
-                      {/* SECOND */}
-                      <div className="flex flex-col gap-3">
-                        {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
-                          <p className="text-sm font-md">Designation</p>
-                        </div>
-                        {/* SECOND ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
-                          <p className="text-sm font-md">Qualification</p>
-                        </div>
-                        {/* THIRD ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
-                          <p className="text-sm font-md">Lead Status</p>
-                        </div>
-                        {/* Fourth ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
-                          <p className="text-sm font-md">Pools</p>
-                        </div>
+                      {/* SECOND ITEM */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("User Operation")}
+                        />
+                        <p className="text-sm font-md">User Operation</p>
                       </div>
-                      {/* THIRD */}
-                      <div className="flex flex-col gap-3">
-                        {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
-                          <p className="text-sm font-md">Segments</p>
-                        </div>
-                        {/* SECOND ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
-                          <p className="text-sm font-md">Expense Head</p>
-                        </div>
-                        {/* THIRD ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
-                          <p className="text-sm font-md">SMS Setting</p>
-                        </div>
-                        {/* Fourth ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
-                          <p className="text-sm font-md">Roles & Permissions</p>
-                        </div>
+                      {/* THIRD ITEM */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("Group")}
+                        />
+                        <p className="text-sm font-md">Group</p>
                       </div>
-                      {/* FOURTH */}
-                      <div className="flex flex-col gap-3">
-                        {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
-                          <p className="text-sm font-md">SMS Template</p>
-                        </div>
-                        {/* SECOND ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
-                          <p className="text-sm font-md">Access Device</p>
-                        </div>
-                        {/* THIRD ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input type="checkbox" onChange={() => {}} />
-                          <p className="text-sm font-md">Access Control</p>
-                        </div>
-                      </div>
-                      {/* FIFTH */}
-                      <div className="flex flex-col gap-3">
-                        {/* FIRST ROW */}
-                        {/* SECOND ITEM */}
+                      {/* FOURTH ITEM */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("Department")}
+                        />
+                        <p className="text-sm font-md">Department</p>
                       </div>
                     </div>
+                    {/* SECOND */}
+                    <div className="flex flex-col gap-3">
+                      {/* FIRST ROW */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("Designation")}
+                        />
+                        <p className="text-sm font-md">Designation</p>
+                      </div>
+                      {/* SECOND ITEM */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("Qualification")}
+                        />
+                        <p className="text-sm font-md">Qualification</p>
+                      </div>
+                      {/* THIRD ITEM */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("Lead Status")}
+                        />
+                        <p className="text-sm font-md">Lead Status</p>
+                      </div>
+                      {/* FOURTH ITEM */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("Pools")}
+                        />
+                        <p className="text-sm font-md">Pools</p>
+                      </div>
+                      {/* FIFTH ITEM */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("Roles & Permissions")}
+                        />
+                        <p className="text-sm font-md">Roles & Permissions</p>
+                      </div>
+                    </div>
+                    {/* THIRD */}
+                    <div className="flex flex-col gap-3">
+                      {/* FIRST ROW */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("Segments")}
+                        />
+                        <p className="text-sm font-md">Segments</p>
+                      </div>
+                      {/* SECOND ITEM */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("Expense Head")}
+                        />
+                        <p className="text-sm font-md">Expense Head</p>
+                      </div>
+                      {/* THIRD ITEM */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("SMS Setting")}
+                        />
+                        <p className="text-sm font-md">SMS Setting</p>
+                      </div>
+                      {/* FOURTH ITEM */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("E-Mail Template")}
+                        />
+                        <p className="text-sm font-md">E-Mail Template</p>
+                      </div>
+                    </div>
+                    {/* FOURTH */}
+                    <div className="flex flex-col gap-3">
+                      {/* FIRST ROW */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("SMS Template")}
+                        />
+                        <p className="text-sm font-md">SMS Template</p>
+                      </div>
+                      {/* SECOND ITEM */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("Access Device")}
+                        />
+                        <p className="text-sm font-md">Access Device</p>
+                      </div>
+                      {/* THIRD ITEM */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("Access Control")}
+                        />
+                        <p className="text-sm font-md">Access Control</p>
+                      </div>
+                      {/* Fourth ITEM */}
+                      <div className="flex gap-3 items-center font-light">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleCheckboxChange("E-Mail Setting")}
+                        />
+                        <p className="text-sm font-md">E-Mail Setting</p>
+                      </div>
+                    </div>
+                    {/* FIFTH */}
+                    <div className="flex flex-col gap-3">
+                      {/* FIFTH ROW */}
+                      {/* Additional items can be added here */}
+                    </div>
                   </div>
+                </div>
+                
                 ) : (
                   ""
                 )}
@@ -974,7 +1095,10 @@ export default function AddPermission({ onCancel }) {
               <button
                 type="submit"
                 className="px-10 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white w-max disabled:bg-gray-300 disabled:text-gray-500 disabled:border-gray-300 disabled:cursor-not-allowed"
-                disabled={defaultGroupModuleText === "All Group Module" || defaultTextLeadStatusDropDown==="Select Group Name"}
+                disabled={
+                  defaultGroupModuleText === "All Group Module" ||
+                  defaultTextLeadStatusDropDown === "Select Group Name"
+                }
               >
                 Submit
               </button>

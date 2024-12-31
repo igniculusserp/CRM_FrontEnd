@@ -241,25 +241,19 @@ const businessType = localStorage.getItem("businessType");
     setstripeBardropDown(!stripeBardropDown);
   }
 
-  // DROP_LOGO DROPDOWN------------>>>
-  const [dropLogodropDown, setdropLogodropDown] = useState(false);
 
-  const togglesdropLogo = () => {
-    setdropLogodropDown(!dropLogodropDown);
-  }
+
 
   const [selectedViewValue, setSelectedViewValue] = useState(stripeBar[0].value);
 
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
-  const [dropActionsMenu, setdropActionsMenu] = useState([
-    { key: 1, value: "Mass Delete" },
-    { key: 2, value: "Mass Update" },
-    { key: 3, value: "Mass Email" },
-    { key: 4, value: "Approve Leads" },
-    { key: 7, value: "Export To Excel" },
-    { key: 8, value: "Export To PDF" },
-  ]);
+  const dropActionsMenu = [
+    { key: 1, value: 'Mass Delete' },
+    { key: 3, value: 'Mass E-Mail' },
+    { key: 4, value: 'Export to Excel' },
+    { key: 5, value: 'Export to PDF' },
+  ];
 
   const [dropActionsMenudropDown, setdropActionsMenudropDown] = useState(false);
 
@@ -267,7 +261,7 @@ const businessType = localStorage.getItem("businessType");
     setdropActionsMenudropDown(!dropActionsMenudropDown);
   };
 
-  const handleActionButton = async (value, leadId) => {
+  const handleActionButton = async (value) => {
 
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
     if (value === "Mass Delete") {
@@ -304,14 +298,7 @@ const businessType = localStorage.getItem("businessType");
       }
     }
 
-    // ---------------------->Convert Lead to Contact FUNCTIONALITY*<----------------------
-    if (value === "Convert Lead to Contact") {
-      const userConfirmed = confirm('Are you sure you want to convert this lead to a contact?');
-      if (userConfirmed) {
-        convertType();
-      }
-
-    };
+  
   }
   // ---------------------->MASS DELETE FUNCTIONALITY---###API###<----------------------
   const massDelete = async () => {
@@ -583,6 +570,59 @@ const businessType = localStorage.getItem("businessType");
   };
 
 
+  
+  //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
+
+  const businessRole = localStorage.getItem("businessRole");
+  const [permissions, setPermissions] = useState([]);
+  const [edit, setEdit] = useState(false);
+  const [createSO, setCreateSO] = useState(false);
+  const [viewContact, setViewContact] = useState(false);
+
+  async function handleGetPermission() {
+    const bearer_token = localStorage.getItem("token");
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
+        config
+      );
+      console.log("Permission Data : ", response.data.data);
+      const permissionsList = response?.data?.data;
+
+      if (permissionsList) {
+        const serviceBoxPermissions = permissionsList.find(
+          (item) => item.moduleName === "Contacts"
+        );
+
+        if (serviceBoxPermissions) {
+          const permissionsArray = serviceBoxPermissions.permissions.split(",");
+          setPermissions(permissionsArray);
+
+          console.log("List : ", permissionsArray);
+
+          //------------------------------------------------------ Set permissions ------------------------------------------------
+
+          setEdit(permissionsArray.includes("Edit Contact"));
+          setCreateSO(permissionsArray.includes("Create Sales order"));
+          setViewContact(permissionsArray.includes("View Contacts"));
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+    }
+  }
+
+  useEffect(() => {
+    handleGetPermission();
+  }, []);
+
+
+
   return (
     //parent
     <div className="min-h-screen flex flex-col m-3 ">
@@ -648,6 +688,8 @@ const businessType = localStorage.getItem("businessType");
                     </li>
                   ))}
                 </ul>
+
+                
               </div>
             )}
           </div>
@@ -680,6 +722,7 @@ const businessType = localStorage.getItem("businessType");
                     </li>
                   ))}
                 </ul>
+
               </div>
             )}
           </div>
@@ -698,17 +741,21 @@ const businessType = localStorage.getItem("businessType");
             </button>
             {dropActionsMenudropDown && (
               <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
-                <ul className="text-sm text-gray-700 " >
-                  {dropActionsMenu.map(({ key, value }) => (
-                    <li
-                      key={key}
-                      className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                      onClick={() => handleActionButton(value)}
-                    >
-                      {value}
-                    </li>
-                  ))}
-                </ul>
+             
+
+                <ul className="text-sm text-gray-700">
+                    {dropActionsMenu.map(({ key, value }) =>
+                      permissions.includes(value) ? (
+                        <li
+                          key={key}
+                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          onClick={() => handleActionButton(value)}
+                        >
+                          {value}
+                        </li>
+                      ) : null
+                    )}
+                  </ul>
               </div>
             )}
           </div>
@@ -772,6 +819,8 @@ const businessType = localStorage.getItem("businessType");
         </div>
       </div>
       {/*-------Table-------*/}
+      {viewContact?
+      
       <div className="overflow-x-auto mt-3 ">
         <div className="min-w-full overflow-hidden rounded-md">
           {selectedViewValue === "Table View" && (
@@ -845,7 +894,7 @@ const businessType = localStorage.getItem("businessType");
                     <tr
                       key={item.id}
                       className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
-                      onClick={() => handleClick(item)}
+                      
 
                     >
                       {/* CHECKBOX */}
@@ -859,7 +908,7 @@ const businessType = localStorage.getItem("businessType");
 
 
                       {/* CONTACT NAME */}
-                      <td className="px-1 py-4 border-b border-gray-300 text-sm" onClick={() => handleClick(item)}>
+                      <td className="px-1 py-4 border-b border-gray-300 text-sm" onClick={edit ?() => handleClick(item): undefined}>
                         <div className="flex items-center">
                           <span className="">{item.name}</span>
                         </div>
@@ -924,32 +973,36 @@ const businessType = localStorage.getItem("businessType");
                       {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
                      {/*------------------<- Create-SO->------------*/}
                         {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
-                        <td className="text-center">
-                          <button
-                            className={
-                              business === "Brokerage"
-                                ? ""
-                                : ""
-                            }
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate(`/panel/lead/create/so/${item.id}`);
-                            }}
-                          >
-                            {/* SO */}
-                            {business === "Brokerage" ? (
-                             <span className="text-white text-xs rounded p-2   bg-blue-600 shadow-md rounded hover:bg-blue-500">
-                                  Create Client
-                                </span>
-                            ) : (
-                              <>
-                                <span className=" text-white text-xm rounded p-1 bg-blue-600 shadow-md rounded hover:bg-blue-500">
-                                  SO
-                                </span>
-                              </>
-                            )}
-                          </button>
-                        </td>
+                      {createSO?
+                       <td className="text-center">
+                       <button
+                         className={
+                           business === "Brokerage"
+                             ? ""
+                             : ""
+                         }
+                         onClick={(e) => {
+                           e.stopPropagation();
+                           navigate(`/panel/lead/create/so/${item.id}`);
+                         }}
+                       >
+                         {/* SO */}
+                         {business === "Brokerage" ? (
+                          <span className="text-white text-xs rounded p-2   bg-blue-600 shadow-md rounded hover:bg-blue-500">
+                               Create Client
+                             </span>
+                         ) : (
+                           <>
+                             <span className=" text-white text-xm rounded p-1 bg-blue-600 shadow-md rounded hover:bg-blue-500">
+                               SO
+                             </span>
+                           </>
+                         )}
+                       </button>
+                     </td>
+                    :
+                    <td></td>}
+                       
                     </tr>
                   );
                 })}
@@ -1087,6 +1140,9 @@ const businessType = localStorage.getItem("businessType");
           </>
         )}
       </div>
+      :
+      ""
+    }
     </div>
   );
 }

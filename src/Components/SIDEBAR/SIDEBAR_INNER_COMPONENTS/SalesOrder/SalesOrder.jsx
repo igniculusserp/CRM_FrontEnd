@@ -30,7 +30,7 @@ import {SearchElement} from "../SearchElement/SearchElement";
 
 //-----------------------------ToastContainer-----------------------------
 import { ToastContainer } from 'react-toastify';
-import { showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
+import { showSuccessToast } from './../../../../utils/toastNotifications'
 
 
 const name = getHostnamePart();
@@ -169,12 +169,7 @@ export default function SalesOrder() {
     setstripeBardropDown(!stripeBardropDown);
   };
 
-  // DROP_LOGO DROPDOWN------------>>>
-  const [dropLogodropDown, setdropLogodropDown] = useState(false);
 
-  const togglesdropLogo = () => {
-    setdropLogodropDown(!dropLogodropDown);
-  };
 
   const [selectedViewValue, setSelectedViewValue] = useState(
     stripeBar[0].value
@@ -182,14 +177,13 @@ export default function SalesOrder() {
 
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
-  const [dropActionsMenu, setdropActionsMenu] = useState([
+  const dropActionsMenu = [
     { key: 1, value: 'Mass Delete' },
-    { key: 2, value: 'Mass Update' },
-    { key: 3, value: 'Mass Email' },
-    { key: 4, value: 'Export To Excel' },
-    { key: 5, value: 'Export To PDF' },
+    { key: 3, value: 'Mass E-Mail' },
+    { key: 4, value: 'Export to Excel' },
+    { key: 5, value: 'Export to PDF' },
     { key: 6, value: 'Send SMS' },
-  ]);
+  ];
 
   const [dropActionsMenudropDown, setdropActionsMenudropDown] = useState(false);
 
@@ -197,7 +191,7 @@ export default function SalesOrder() {
     setdropActionsMenudropDown(!dropActionsMenudropDown);
   };
 
-  const handleActionButton = async (value, leadId) => {
+  const handleActionButton = async (value) => {
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
     if (value === 'Mass Delete') {
       const userConfirmed = confirm(
@@ -238,15 +232,7 @@ export default function SalesOrder() {
       }
     }
 
-    // ---------------------->Convert Lead to Contact FUNCTIONALITY*<----------------------
-    if (value === 'Convert Lead to Contact') {
-      const userConfirmed = confirm(
-        'Are you sure you want to convert this lead to a contact?'
-      );
-      if (userConfirmed) {
-        convertType();
-      }
-    }
+  
   };
   // ---------------------->MASS DELETE FUNCTIONALITY---###API###<----------------------
   const massDelete = async () => {
@@ -539,9 +525,62 @@ export default function SalesOrder() {
   };
 
 
+  
+  //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
+
+  const businessRole = localStorage.getItem("businessRole");
+  const [permissions, setPermissions] = useState([]);
+  const [edit, setEdit] = useState(false);
+  const [approve, setApprove] = useState(false);
+
+  async function handleGetPermission() {
+    const bearer_token = localStorage.getItem("token");
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
+        config
+      );
+      console.log("Permission Data : ", response.data.data);
+      const permissionsList = response?.data?.data;
+
+      if (permissionsList) {
+        const serviceBoxPermissions = permissionsList.find(
+          (item) => item.moduleName === "Sales Order"
+        );
+
+        if (serviceBoxPermissions) {
+          const permissionsArray = serviceBoxPermissions.permissions.split(",");
+          setPermissions(permissionsArray);
+
+          console.log("List : ", permissionsArray);
+
+          //------------------------------------------------------ Set permissions ------------------------------------------------
+
+          setEdit(permissionsArray.includes("Edit Sales Order"));
+          setApprove(permissionsArray.includes("Approve Pending"));
+
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+    }
+  }
+
+  useEffect(() => {
+    handleGetPermission();
+  }, []);
+
+
+
   return (
     //parent
     <div className="min-h-screen flex flex-col m-3 ">
+      <ToastContainer />
       {/* Render the modal only when `isModalOpen` is true */}
       {isModalOpen && (
         <MassEmail
@@ -649,17 +688,19 @@ export default function SalesOrder() {
             </button>
             {dropActionsMenudropDown && (
               <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
-                <ul className="text-sm text-gray-700 ">
-                  {dropActionsMenu.map(({ key, value }) => (
-                    <li
-                      key={key}
-                      className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                      onClick={() => handleActionButton(value)}
-                    >
-                      {value}
-                    </li>
-                  ))}
-                </ul>
+                <ul className="text-sm text-gray-700">
+                    {dropActionsMenu.map(({ key, value }) =>
+                      permissions.includes(value) ? (
+                        <li
+                          key={key}
+                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          onClick={() => handleActionButton(value)}
+                        >
+                          {value}
+                        </li>
+                      ) : null
+                    )}
+                  </ul>
               </div>
             )}
           </div>
@@ -803,9 +844,10 @@ export default function SalesOrder() {
                       {/* CONTACT NAME */}
                       <td
                         className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600"
-                        onClick={() =>
-                          navigate(`/panel/clientso/${item.id}`)
+                        onClick={edit ?() =>
+                          navigate(`/panel/clientso/${item.id}`):undefined
                         }
+                       
                       >
                         <div className="flex items-center">
                           <span className="">{item.clientName}</span>
@@ -872,8 +914,8 @@ export default function SalesOrder() {
 
                       <td>
                         <button
-                          onClick={() =>
-                            handlePendingStatus(item.id, item.status)
+                          onClick={approve?() =>
+                            handlePendingStatus(item.id, item.status):undefined
                           }
                           className=" w-[90%]"
                         >
