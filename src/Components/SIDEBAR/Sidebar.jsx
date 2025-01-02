@@ -1,4 +1,3 @@
-//react
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
@@ -237,8 +236,6 @@ export default function SidebaBar({ toggle }) {
 
   const [active, setactive] = useState(sideBar[0].key);
 
-
-  //handleWelcomeData API to fetch details of upcoming details 
   const handlewelcomedata = async () => {
     try {
       const response = await axios.get(`${main_base_url}/Tenants/gettenant/${name}`);
@@ -248,8 +245,6 @@ export default function SidebaBar({ toggle }) {
     }
   };
 
-
-
   useEffect(() => {
     handlewelcomedata();
   }, []);
@@ -258,6 +253,7 @@ export default function SidebaBar({ toggle }) {
     setactive(key);
   };
 
+  console.log(welcomedata)
   return (
     <>
       <div className="flex flex-col bg-cyan-500 gap-3 h-screen">
@@ -266,30 +262,23 @@ export default function SidebaBar({ toggle }) {
           <div className="sticky top-0 mt-4">
             <img
               id="logoImg"
-              alt="Company Image"
-              className={`mt-3 ${toggle ? 'sm:w-14 sm:h-14 w-6 h-6' : 'sm:w-24 sm:h-24 w-10 h-10'} rounded-full shadow-md shadow-cyan-600 object-cover mx-auto border`}
               src={welcomedata?.tenentLogo || noAvatar}
-              />
+              alt="Company Image"
+              className={`mt-3 ${toggle ? 'w-14 h-14' : 'w-24 h-24'} rounded-full shadow-md shadow-cyan-600 object-cover mx-auto border`}
+            />
           </div>
         </div>
-
         {/* Scrollable Menu Section */}
-        <div className="flex flex-col h-full mt-10 CustomerTestimonialReview  ">
+        <div className="flex flex-col h-full mt-10 CustomerTestimonialReview">
           {(business === "Brokerage" ? sideBar_Brokerage : sideBar).map(({ key, data, icon, link }, index) => (
             <Link to={link} onClick={() => handleClick(key)} key={key}>
               <li
-                className={`
-                flex ${toggle ? 'justify-center' : 'justify-start'} 
-                items-center gap-3 text-white text-md font-small py-3 shadow-md 
-                hover:bg-gradient-to-b from-cyan-300 to-cyan-600 
-                ${index === 0 ? 'border-b-2 border-t-2' : 'border-b-2'}  ${index === sideBar.length - 1 ? 'border-b-2' : ''} 
-                `}
+                className={`flex ${toggle ? 'justify-center' : 'justify-start'} items-center gap-3 text-white text-md font-small py-3 shadow-md ${index === 0 ? 'border-b-2 border-t-2' : 'border-b-2'
+                  } ${index === sideBar.length - 1 ? 'border-b-2' : ''} hover:bg-gradient-to-b from-cyan-300 to-cyan-600`}
               >
                 <h1 className={`${toggle ? 'flex items-center gap-2 px-3 flex-col' : 'flex items-center gap-2 px-3'}`}>
-                  
-                  <span className={`${toggle ? 'sm:text-2xl text-md ' : 'sm:text-2xl hidden sm:block '}`}>{icon}</span>
-
-                  <span className={`${toggle ? 'text-md hidden sm:block   whitespace-nowrap ' : 'sm:text-lg text-xs '}`}>{data}</span>
+                  <span className={`${toggle ? 'text-2xl' : 'text-xl'}`}>{icon}</span>
+                  <span className={`${toggle ? 'text-xs whitespace-nowrap' : ''}`}>{data}</span>
                 </h1>
               </li>
             </Link>
@@ -303,4 +292,4 @@ export default function SidebaBar({ toggle }) {
 }
 SidebaBar.propTypes = {
   toggle: PropTypes.bool.isRequired,
-};
+}
