@@ -488,25 +488,12 @@ export default function UserSetting() {
                           onChange={handleChange}
                           placeholder="********"
                         />
-                        <button
-                          type="button"
-                          onClick={togglePasswordEye}
-                          aria-label="password"
-                       
-                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 transition-opacity duration-300"
-                        >
-                          {passwordEye ? (
-                            <IoIosEye size={22} />
-                          ) : (
-                            <IoIosEyeOff size={22} />
-                          )}
-                        </button>
                       </div>
                     </label>
                   </div>
                   {/*<---------------Confirm Password--------------->*/}
                   {/* Password Input Field */}
-                  {/* <div className="flex flex-col w-1/2">
+                   <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="confirmPassword"
                       className="text-sm font-medium text-gray-700 relative block"
@@ -520,29 +507,9 @@ export default function UserSetting() {
                         onChange={handleChange}
                         placeholder="********"
                       />
-                      <button
-                        type="button" // Ensures it's not a form submission button
-                        onClick={togglePasswordEye}
-                        className="absolute inset-y-0 top-5 right-2 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
-                      >
-                        {passwordEye ? (
-                          <IoIosEye
-                            size={22}
-                            className={`transition-opacity duration-300 ease-in-out ${
-                              passwordEye ? "opacity-100" : "opacity-0"
-                            }`}
-                          />
-                        ) : (
-                          <IoIosEyeOff
-                            size={22}
-                            className={`transition-opacity duration-300 ease-in-out ${
-                              passwordEye ? "opacity-0" : "opacity-100"
-                            }`}
-                          />
-                        )}
-                      </button>
+                    
                     </label>
-                  </div> */}
+                  </div>
                 </div>
                 {/*<---------------5--------------->*/}
                 <div className="flex space-x-4">
