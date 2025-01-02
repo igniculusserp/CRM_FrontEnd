@@ -220,26 +220,19 @@ export default function Client() {
     setstripeBardropDown(!stripeBardropDown);
   };
 
-  // DROP_LOGO DROPDOWN------------>>>
-  const [dropLogodropDown, setdropLogodropDown] = useState(false);
-
-  const togglesdropLogo = () => {
-    setdropLogodropDown(!dropLogodropDown);
-  };
-
+ 
   const [selectedViewValue, setSelectedViewValue] = useState(
     stripeBar[0].value
   );
 
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
-  const [dropActionsMenu, setdropActionsMenu] = useState([
-    { key: 2, value: 'Mass Update' },
-    { key: 3, value: 'Mass Email' },
-    { key: 7, value: 'Export To Excel' },
-    { key: 8, value: 'Export To PDF' },
+  const dropActionsMenu=[
+    { key: 3, value: 'Mass E-Mail' },
+    { key: 7, value: 'Export to Excel' },
+    { key: 8, value: 'Export to PDF' },
 
-  ]);
+  ];
 
   const [dropActionsMenudropDown, setdropActionsMenudropDown] = useState(false);
 
@@ -247,7 +240,7 @@ export default function Client() {
     setdropActionsMenudropDown(!dropActionsMenudropDown);
   };
 
-  const handleActionButton = async (value, leadId) => {
+  const handleActionButton = async (value) => {
    
 
     // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
@@ -503,6 +496,51 @@ export default function Client() {
   };
 
   
+  //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
+
+  const businessRole = localStorage.getItem("businessRole");
+  const [permissions, setPermissions] = useState([]);
+
+  async function handleGetPermission() {
+    const bearer_token = localStorage.getItem("token");
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
+        config
+      );
+      console.log("Permission Data : ", response.data.data);
+      const permissionsList = response?.data?.data;
+
+      if (permissionsList) {
+        const serviceBoxPermissions = permissionsList.find(
+          (item) => item.moduleName === "Client"
+        );
+
+        if (serviceBoxPermissions) {
+          const permissionsArray = serviceBoxPermissions.permissions.split(",");
+          setPermissions(permissionsArray);
+
+          console.log("List : ", permissionsArray);
+
+          //------------------------------------------------------ Set permissions ------------------------------------------------
+
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+    }
+  }
+
+  useEffect(() => {
+    handleGetPermission();
+  }, []);
+
+
 
   return (
     //parent
@@ -644,17 +682,19 @@ export default function Client() {
             </button>
             {dropActionsMenudropDown && (
               <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
-                <ul className="text-sm text-gray-700 ">
-                  {dropActionsMenu.map(({ key, value }) => (
-                    <li
-                      key={key}
-                      className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                      onClick={() => handleActionButton(value)}
-                    >
-                      {value}
-                    </li>
-                  ))}
-                </ul>
+                <ul className="text-sm text-gray-700">
+                    {dropActionsMenu.map(({ key, value }) =>
+                      permissions.includes(value) ? (
+                        <li
+                          key={key}
+                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          onClick={() => handleActionButton(value)}
+                        >
+                          {value}
+                        </li>
+                      ) : null
+                    )}
+                  </ul>
               </div>
             )}
           </div>

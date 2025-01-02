@@ -429,7 +429,7 @@ export default function CreateContact() {
         } 
       }
       catch (error) {
-      showErrorToast("An error occurred. Please try again.");
+      showErrorToast("An error occurred. Please try again.",error);
     }
   };
 

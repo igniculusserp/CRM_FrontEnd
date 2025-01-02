@@ -79,11 +79,7 @@ export default function FreeTrail() {
     setAllFreeTrialdropDown(!allFreeTrialdropDown);
   };
 
-  //   SEARCH TOGGLE
-  const [searchBardropDown, setsearchBardropDown] = useState(false);
-  const togglesearchBar = () => {
-    setsearchBardropDown(!searchBardropDown);
-  };
+
 
   //   ACTION TOGGLE
   const [dropActionsMenudropDown, setdropActionsMenudropDown] = useState(false);
@@ -97,13 +93,10 @@ export default function FreeTrail() {
   //   Action Dropdown Menu
   const dropActionsMenu = [
     { key: 1, value: "Mass Delete" },
-    { key: 2, value: "Mass Update" },
-    { key: 3, value: "Mass Email" },
-    { key: 4, value: "Approve Leads" },
-    // { key: 5, value: "Add to Campaign" },
-    { key: 6, value: "Export Leads" },
-    { key: 7, value: "Sheet View" },
-    { key: 8, value: "Print View" },
+    { key: 3, value: "Mass E-Mail" },
+    { key: 5, value: "Export Trail" },
+    { key: 6, value: "Sheet View" },
+    { key: 7, value: "Print View" },
   ];
 
   //----------------STRIPE BAR DROPDOWN----------------
@@ -321,7 +314,6 @@ export default function FreeTrail() {
     doc.save("FreeTrail.pdf");
   };
 
-  const [filteredLeads, setFilteredLeads] = useState([]); // Filtered leads
 
   // States for pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -467,6 +459,55 @@ export default function FreeTrail() {
     setAssignedTo("Managed By");
   };
 
+  //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
+
+  const businessRole = localStorage.getItem("businessRole");
+  const [permissions, setPermissions] = useState([]);
+  const [edit, setEdit] = useState(false);
+
+  async function handleGetPermission() {
+    const bearer_token = localStorage.getItem("token");
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
+        config
+      );
+      console.log("Permission Data : ", response.data.data);
+      const permissionsList = response?.data?.data;
+
+      if (permissionsList) {
+        const serviceBoxPermissions = permissionsList.find(
+          (item) => item.moduleName === "Free Trail"
+        );
+
+        if (serviceBoxPermissions) {
+          const permissionsArray = serviceBoxPermissions.permissions.split(",");
+          setPermissions(permissionsArray);
+
+          console.log("List : ", permissionsArray);
+
+          //------------------------------------------------------ Set permissions ------------------------------------------------
+
+          setEdit(permissionsArray.includes("Edit Follow Up"));
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+    }
+  }
+
+  useEffect(() => {
+    handleGetPermission();
+  }, []);
+
+
+
+
   return (
     <div className="min-h-screen flex flex-col m-3">
       {/* Render the modal only when `isModalOpen` is true */}
@@ -600,17 +641,19 @@ export default function FreeTrail() {
             </button>
             {dropActionsMenudropDown && (
               <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
-                <ul className="text-sm text-gray-700 ">
-                  {dropActionsMenu.map(({ key, value }) => (
-                    <li
-                      key={key}
-                      onClick={() => handleActionButton(value)}
-                      className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                    >
-                      {value}
-                    </li>
-                  ))}
-                </ul>
+                 <ul className="text-sm text-gray-700">
+                    {dropActionsMenu.map(({ key, value }) =>
+                      permissions.includes(value) ? (
+                        <li
+                          key={key}
+                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          onClick={() => handleActionButton(value)}
+                        >
+                          {value}
+                        </li>
+                      ) : null
+                    )}
+                  </ul>
               </div>
             )}
           </div>
@@ -771,7 +814,9 @@ export default function FreeTrail() {
                     {/* CLIENT NAME */}
                     <td
                       className="px-1 py-4 border-b border-gray-300 text-sm leading-5 "
-                      onClick={() => handleClick(order.id)}
+                      onClick={
+                        edit ? () => handleClick(order.id) : undefined
+                      }
                     >
                       <div className="flex items-center">
                         <span className="ml-2 w-[80px] break-all">

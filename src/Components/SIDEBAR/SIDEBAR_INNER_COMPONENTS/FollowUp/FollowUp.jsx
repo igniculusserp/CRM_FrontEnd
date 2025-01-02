@@ -14,7 +14,6 @@ import { MdCall } from "react-icons/md";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { TbRefresh } from "react-icons/tb";
 
-
 //Folder Imported
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
@@ -61,8 +60,8 @@ export default function FollowUp() {
     }
   };
 
-    //---------------------->---------------------->PAGINATION<----------------------<----------------------
-  //controlled from the bottom of the page 
+  //---------------------->---------------------->PAGINATION<----------------------<----------------------
+  //controlled from the bottom of the page
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Define items per page
   const totalPage = Math.ceil(filteredLeads.length / itemsPerPage);
@@ -120,10 +119,8 @@ export default function FollowUp() {
   //----------------ACTION BAR DROPDOWN----------------
   const actions = [
     { key: 1, value: "Mass Delete" },
-    { key: 2, value: "Mass Update" },
-    { key: 3, value: "Mass Email" },
-    { key: 4, value: "Approve Leads" },
-    { key: 5, value: "Export Leads" },
+    { key: 3, value: "Mass E-Mail" },
+    { key: 5, value: "Export Follow Up" },
     { key: 6, value: "Sheet View" },
     { key: 7, value: "Print View" },
   ];
@@ -215,7 +212,7 @@ export default function FollowUp() {
   //-------> XLSX used here
   const exportToTrailExcel = () => {
     // Filter currentLeads based on selectedIds
-    const leadsToExport = currentFollows.filter((lead) =>
+    const leadsToExport = currentLeads.filter((lead) =>
       selectedRows.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
@@ -236,7 +233,7 @@ export default function FollowUp() {
 
   //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
   const exportToTrailPDF = () => {
-    const leadsToExport = currentFollows.filter((lead) =>
+    const leadsToExport = currentLeads.filter((lead) =>
       selectedRows.includes(lead.id)
     );
     if (leadsToExport?.length === 0) {
@@ -265,8 +262,6 @@ export default function FollowUp() {
     doc.save("Followup.pdf");
   };
 
-
-
   // Function to toggle all checkboxes
   const selectAllCheckbox = () => {
     if (selectAll) {
@@ -276,8 +271,8 @@ export default function FollowUp() {
       setSelectAll(false);
     } else {
       // Select all rows in the current page
-      const allIds = currentFollows.map((order) => order.id);
-      const allEmails = currentFollows.map((order) => order.email); // Extract emails
+      const allIds = currentLeads.map((order) => order.id);
+      const allEmails = currentLeads.map((order) => order.email); // Extract emails
       setSelectedRows(allIds);
       setSelectedEmails(allEmails); // Store all emails
       setSelectAll(true);
@@ -420,16 +415,59 @@ export default function FollowUp() {
     setFilteredLeads(filtered);
   }, [searchTerm, followupList]);
 
+  //------------------------------------------------------Filter Reset Settings ---------------------------------------------
 
-    //------------------------------------------------------Filter Reset Settings ---------------------------------------------
+  const handleResetFilter = () => {
+    setFilteredLeads(followupList);
+    // setLeadStatus('All Lead');
+    setAssignedTo("Managed By");
+  };
 
-    const handleResetFilter = () => {
-      setFilteredLeads(followupList);
-      // setLeadStatus('All Lead');
-      setAssignedTo("Managed By");
-    };
+  //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
 
-    
+  const businessRole = localStorage.getItem("businessRole");
+  const [permissions, setPermissions] = useState([]);
+  const [edit, setEdit] = useState(false);
+
+  async function handleGetPermission() {
+    const bearer_token = localStorage.getItem("token");
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
+        config
+      );
+      console.log("Permission Data : ", response.data.data);
+      const permissionsList = response?.data?.data;
+
+      if (permissionsList) {
+        const serviceBoxPermissions = permissionsList.find(
+          (item) => item.moduleName === "Follow Up"
+        );
+
+        if (serviceBoxPermissions) {
+          const permissionsArray = serviceBoxPermissions.permissions.split(",");
+          setPermissions(permissionsArray);
+
+          console.log("List : ", permissionsArray);
+
+          //------------------------------------------------------ Set permissions ------------------------------------------------
+
+          setEdit(permissionsArray.includes("Edit Follow Up"));
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+    }
+  }
+
+  useEffect(() => {
+    handleGetPermission();
+  }, []);
 
   return (
     <>
@@ -563,16 +601,18 @@ export default function FollowUp() {
               </button>
               {actionDropdown && (
                 <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
-                  <ul className="text-sm text-gray-700 ">
-                    {actions.map(({ key, value }) => (
-                      <li
-                        key={key}
-                        className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                        onClick={() => handleActionButton(value)}
-                      >
-                        {value}
-                      </li>
-                    ))}
+                  <ul className="text-sm text-gray-700">
+                    {actions.map(({ key, value }) =>
+                      permissions.includes(value) ? (
+                        <li
+                          key={key}
+                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          onClick={() => handleActionButton(value)}
+                        >
+                          {value}
+                        </li>
+                      ) : null
+                    )}
                   </ul>
                 </div>
               )}
@@ -618,8 +658,11 @@ export default function FollowUp() {
               />
             </div>
 
-            <div className="p-1 border rounded cursor-pointer"  onClick={handleResetFilter}>
-                <TbRefresh size={25}/>
+            <div
+              className="p-1 border rounded cursor-pointer"
+              onClick={handleResetFilter}
+            >
+              <TbRefresh size={25} />
             </div>
           </div>
         </div>
@@ -709,24 +752,24 @@ export default function FollowUp() {
                         {/* CLIENT NAME */}
                         <td
                           className=" py-4 border-b border-gray-300 text-sm leading-5 "
-                          onClick={() => handleClick(order.id)}
+                          onClick={
+                            edit ? () => handleClick(order.id) : undefined
+                          }
                         >
                           <div className="flex items-center">
-                            <span className="break-words">
-                              {order.name}
-                            </span>
+                            <span className="break-words">{order.name}</span>
                           </div>
                         </td>
                         {/* MOBILE */}
                         <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 ">
                           <div className="flex items-center gap-1">
                             <span>
-                            <a
-                            href={`tel:${order.mobileNo}`}
-                            onClick={(event) => event.stopPropagation()}
-                          >
-                            {order.mobileNo}
-                          </a>                         
+                              <a
+                                href={`tel:${order.mobileNo}`}
+                                onClick={(event) => event.stopPropagation()}
+                              >
+                                {order.mobileNo}
+                              </a>
                             </span>
                             <span className="text-red-400">
                               <MdCall />
@@ -773,7 +816,7 @@ export default function FollowUp() {
               <div className="min-w-full">
                 <div className="grid grid-cols-3 gap-3">
                   {/*---------Card starts Here */}
-                  {currentFollows.map((item) => (
+                  {currentLeads.map((item) => (
                     <div
                       className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2"
                       key={item.id}
@@ -849,26 +892,39 @@ export default function FollowUp() {
             </>
           )}
           <div className="flex justify-end m-4">
-             {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
-              <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
-                {/* /---------------------->Previous Button <----------------------< */}
-                <button
-                  onClick={() => paginate(currentPage - 1)}
-                  className={`p-1 shadow-md rounded-full text-white ${currentPage === 1 ? 'border-gray-200 border-2' : 'bg-cyan-500 border-2 border-gray-100'}`}
-                  disabled={currentPage === 1}
-                >
-                <GrFormPrevious size={25}/>
-                </button>
+            {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
+            <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
+              {/* /---------------------->Previous Button <----------------------< */}
+              <button
+                onClick={() => paginate(currentPage - 1)}
+                className={`p-1 shadow-md rounded-full text-white ${
+                  currentPage === 1
+                    ? "border-gray-200 border-2"
+                    : "bg-cyan-500 border-2 border-gray-100"
+                }`}
+                disabled={currentPage === 1}
+              >
+                <GrFormPrevious size={25} />
+              </button>
 
-                {/* /---------------------->Dynamic Page Numbers <----------------------< */}
-                {Array.from({ length: totalPage }, (_, i) => i + 1).map((page) => {
+              {/* /---------------------->Dynamic Page Numbers <----------------------< */}
+              {Array.from({ length: totalPage }, (_, i) => i + 1).map(
+                (page) => {
                   // Logic for ellipsis and showing only a subset of pages
-                  if (page === 1 || page === totalPage ||  (page >= currentPage - 1 && page <= currentPage + 1)){
+                  if (
+                    page === 1 ||
+                    page === totalPage ||
+                    (page >= currentPage - 1 && page <= currentPage + 1)
+                  ) {
                     return (
                       <button
                         key={page}
                         onClick={() => paginate(page)}
-                        className={`px-4 py-2 rounded mx-1 ${currentPage === page ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border'}`}
+                        className={`px-4 py-2 rounded mx-1 ${
+                          currentPage === page
+                            ? "bg-blue-600 text-white"
+                            : "bg-white text-gray-700 border"
+                        }`}
                       >
                         {page}
                       </button>
@@ -884,20 +940,22 @@ export default function FollowUp() {
                     );
                   }
                   return null;
-                })}
+                }
+              )}
 
-                {/* Next Button */}
-                <button
-                  onClick={() => paginate(currentPage + 1)}
-
-                  className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage  ? ' border-gray-200 border-2' : ' bg-cyan-500 border-2 border-gray-100'}`}
-
-                  disabled={currentPage === totalPage}
-                >
+              {/* Next Button */}
+              <button
+                onClick={() => paginate(currentPage + 1)}
+                className={`p-1 shadow-md rounded-full text-white${
+                  currentPage === totalPage
+                    ? " border-gray-200 border-2"
+                    : " bg-cyan-500 border-2 border-gray-100"
+                }`}
+                disabled={currentPage === totalPage}
+              >
                 <GrFormNext size={25} />
-                
-                </button>
-              </nav>
+              </button>
+            </nav>
           </div>
         </div>
       </div>

@@ -300,7 +300,6 @@ export default function EditPermission({ onCancel, permissionId }) {
                 ) : (
                   ""
                 )}
-
                 {/* --------- CONTACT --------- */}
                 {defaultGroupModuleText === "Contacts" ? (
                   <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
@@ -402,7 +401,6 @@ export default function EditPermission({ onCancel, permissionId }) {
                 ) : (
                   ""
                 )}
-
                 {/* --------- Client --------- */}
                 {defaultGroupModuleText === "Client" ? (
                   <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
@@ -454,7 +452,6 @@ export default function EditPermission({ onCancel, permissionId }) {
                 ) : (
                   ""
                 )}
-
                 {/* --------- SO --------- */}
                 {defaultGroupModuleText === "Sales Order" ? (
                   <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
@@ -538,7 +535,6 @@ export default function EditPermission({ onCancel, permissionId }) {
                 ) : (
                   ""
                 )}
-
                 {/* --------- Free Trail --------- */}
                 {defaultGroupModuleText === "Free Trail" ? (
                   <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
@@ -607,7 +603,6 @@ export default function EditPermission({ onCancel, permissionId }) {
                 ) : (
                   ""
                 )}
-
                 {/* --------- Follow Up --------- */}
                 {defaultGroupModuleText === "Follow Up" ? (
                   <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
@@ -678,7 +673,6 @@ export default function EditPermission({ onCancel, permissionId }) {
                 ) : (
                   ""
                 )}
-
                 {/* --------- SMS Box --------- */}
                 {defaultGroupModuleText === "Service Box" ? (
                   <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
@@ -705,286 +699,271 @@ export default function EditPermission({ onCancel, permissionId }) {
                 ) : (
                   ""
                 )}
-
                 {/* --------- Reports --------- */}
-
                 {defaultGroupModuleText === "Reports" ? (
-                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
+                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
                     <h1 className="font-normal mb-2 text-xl">Reports</h1>
                     {/* ---------- LEAD BOXES ---------- */}
                     <div className="flex gap-12 justify-between">
                       {/* FIRST */}
                       <div className="flex flex-col gap-3">
-                        {/* FIRST ROW */}
                         <div className="flex gap-3 items-center font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Employee Report")}
-                            onChange={() => {}}
+                            onChange={() =>
+                              handleCheckboxChange("Employee Report")
+                            }
                           />
                           <p className="text-sm font-md">Employee Report</p>
                         </div>
-                        {/* SECOND ITEM */}
                         <div className="flex gap-3 items-center font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Monitoring")}
-                            onChange={() => {}}
+                            onChange={() => handleCheckboxChange("Monitoring")}
                           />
                           <p className="text-sm font-md">Monitoring</p>
                         </div>
                       </div>
                       {/* SECOND */}
                       <div className="flex flex-col gap-3">
-                        {/* FIRST ROW */}
                         <div className="flex gap-3 items-center font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Lead Report")}
-                            onChange={() => {}}
+                            onChange={() => handleCheckboxChange("Lead Report")}
                           />
                           <p className="text-sm font-md">Lead Report</p>
                         </div>
-                        {/* SECOND ITEM */}
                         <div className="flex gap-3 items-center font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Dispose Leads")}
-                            onChange={() => {}}
+                            onChange={() =>
+                              handleCheckboxChange("Dispose Leads")
+                            }
                           />
                           <p className="text-sm font-md">Dispose Leads</p>
                         </div>
                       </div>
                       {/* THIRD */}
                       <div className="flex flex-col gap-3">
-                        {/* FIRST ROW */}
                         <div className="flex gap-3 items-center font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Client Report")}
-                            onChange={() => {}}
+                            onChange={() =>
+                              handleCheckboxChange("Client Report")
+                            }
                           />
                           <p className="text-sm font-md">Client Report</p>
                         </div>
                       </div>
                       {/* FOURTH */}
                       <div className="flex flex-col gap-3">
-                        {/* FIRST ROW */}
                         <div className="flex gap-3 items-center font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Sales Report")}
-                            onChange={() => {}}
+                            onChange={() =>
+                              handleCheckboxChange("Sales Report")
+                            }
                           />
                           <p className="text-sm font-md">Sales Report</p>
                         </div>
                       </div>
-                      {/* FIFTH */}
-                      <div className="flex flex-col gap-3">
-                        {/* FIRST ROW */}
-                        {/* SECOND ITEM */}
-                      </div>
                     </div>
                   </div>
                 ) : (
                   ""
                 )}
-
+              
                 {/* ---------  Financial Activity --------- */}
-
                 {defaultGroupModuleText === "Financial Activity" ? (
-                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
-                    <h1 className="font-normal mb-2 text-xl">
-                      Financial Activity
-                    </h1>
-                    {/* CONTACT CHECKBOXES */}
-                    <div className="flex items-center gap-12">
-                      {/* FIRST */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input
-                          type="checkbox"
-                          checked={permissions.includes("View Expenses")}
-                          onChange={() => {}}
-                        />
-                        <p className="text-sm font-md">View Expenses</p>
-                      </div>
-                      {/* FIRST */}
-                      <div className="flex gap-3 items-center font-light">
-                        <input
-                          type="checkbox"
-                          checked={permissions.includes("View Brokerage")}
-                          onChange={() => {}}
-                        />
-                        <p className="text-sm font-md">View Brokerage</p>
-                      </div>
-                    </div>
-                  </div>
+                 <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
+                 <h1 className="font-normal mb-2 text-xl">Financial Activity</h1>
+                 <div className="flex gap-12 justify-between">
+                   <div className="flex flex-col gap-3">
+                     <div className="flex gap-3 items-center font-light">
+                       <input
+                         type="checkbox"
+                         checked={permissions.includes("View Expenses")}
+                         onChange={() => handleCheckboxChange("View Expenses")}
+                       />
+                       <p className="text-sm font-md">View Expenses</p>
+                     </div>
+                     <div className="flex gap-3 items-center font-light">
+                       <input
+                         type="checkbox"
+                         checked={permissions.includes("View Brokerage")}
+                         onChange={() => handleCheckboxChange("View Brokerage")}
+                       />
+                       <p className="text-sm font-md">View Brokerage</p>
+                     </div>
+                   </div>
+                 </div>
+               </div>
                 ) : (
                   ""
                 )}
-
                 {/* ----------Settings CHECK BOXES ---------- */}
                 {defaultGroupModuleText === "Settings" ? (
-                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
-                    <h1 className="font-normal mb-2 text-xl">Settings</h1>
-                    {/* ---------- LEAD BOXES ---------- */}
-                    <div className="flex gap-12 justify-between">
-                      {/* FIRST */}
-                      <div className="flex flex-col gap-3">
-                        {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input
-                            type="checkbox"
-                            checked={permissions.includes("User Setting")}
-                            onChange={() => {}}
-                          />
-                          <p className="text-sm font-md">User Setting</p>
+                      <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
+                      <h1 className="font-normal mb-2 text-xl">Settings</h1>
+                      {/* ---------- SETTINGS SECTION ---------- */}
+                      <div className="flex gap-12 justify-between">
+                        {/* FIRST COLUMN */}
+                        <div className="flex flex-col gap-3">
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("User Setting")}
+                              onChange={() => handleCheckboxChange("User Setting")}
+                            />
+                            <p className="text-sm font-md">User Setting</p>
+                          </div>
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("User Operation")}
+                              onChange={() => handleCheckboxChange("User Operation")}
+                            />
+                            <p className="text-sm font-md">User Operation</p>
+                          </div>
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("Group")}
+                              onChange={() => handleCheckboxChange("Group")}
+                            />
+                            <p className="text-sm font-md">Group</p>
+                          </div>
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("Department")}
+                              onChange={() => handleCheckboxChange("Department")}
+                            />
+                            <p className="text-sm font-md">Department</p>
+                          </div>
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("Roles & Permissions")}
+                              onChange={() => handleCheckboxChange("Roles & Permissions")}
+                            />
+                            <p className="text-sm font-md">Roles & Permissions</p>
+                          </div>
                         </div>
-                        {/* SECOND ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input
-                            type="checkbox"
-                            checked={permissions.includes("User Operation")}
-                            onChange={() => {}}
-                          />
-                          <p className="text-sm font-md">User Operation</p>
+                        {/* SECOND COLUMN */}
+                        <div className="flex flex-col gap-3">
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("Designation")}
+                              onChange={() => handleCheckboxChange("Designation")}
+                            />
+                            <p className="text-sm font-md">Designation</p>
+                          </div>
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("Qualification")}
+                              onChange={() => handleCheckboxChange("Qualification")}
+                            />
+                            <p className="text-sm font-md">Qualification</p>
+                          </div>
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("Lead Status")}
+                              onChange={() => handleCheckboxChange("Lead Status")}
+                            />
+                            <p className="text-sm font-md">Lead Status</p>
+                          </div>
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("Pools")}
+                              onChange={() => handleCheckboxChange("Pools")}
+                            />
+                            <p className="text-sm font-md">Pools</p>
+                          </div>
                         </div>
-                        {/* THIRD ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input
-                            type="checkbox"
-                            checked={permissions.includes("Group")}
-                            onChange={() => {}}
-                          />
-                          <p className="text-sm font-md">Group</p>
+                        {/* THIRD COLUMN */}
+                        <div className="flex flex-col gap-3">
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("Segments")}
+                              onChange={() => handleCheckboxChange("Segments")}
+                            />
+                            <p className="text-sm font-md">Segments</p>
+                          </div>
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("Expense Head")}
+                              onChange={() => handleCheckboxChange("Expense Head")}
+                            />
+                            <p className="text-sm font-md">Expense Head</p>
+                          </div>
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("SMS Setting")}
+                              onChange={() => handleCheckboxChange("SMS Setting")}
+                            />
+                            <p className="text-sm font-md">SMS Setting</p>
+                          </div>
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("E-Mail Template")}
+                              onChange={() => handleCheckboxChange("E-Mail Template")}
+                            />
+                            <p className="text-sm font-md">E-Mail Template</p>
+                          </div>
                         </div>
-                        {/* FOURTH ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input
-                            type="checkbox"
-                            checked={permissions.includes("Department")}
-                            onChange={() => {}}
-                          />
-                          <p className="text-sm font-md">Department</p>
+                        {/* FOURTH COLUMN */}
+                        <div className="flex flex-col gap-3">
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("SMS Template")}
+                              onChange={() => handleCheckboxChange("SMS Template")}
+                            />
+                            <p className="text-sm font-md">SMS Template</p>
+                          </div>
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("Access Device")}
+                              onChange={() => handleCheckboxChange("Access Device")}
+                            />
+                            <p className="text-sm font-md">Access Device</p>
+                          </div>
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("Access Control")}
+                              onChange={() => handleCheckboxChange("Access Control")}
+                            />
+                            <p className="text-sm font-md">Access Control</p>
+                          </div>
+                          <div className="flex gap-3 items-center font-light">
+                            <input
+                              type="checkbox"
+                              checked={permissions.includes("E-Mail Setting")}
+                              onChange={() => handleCheckboxChange("E-Mail Setting")}
+                            />
+                            <p className="text-sm font-md">E-Mail Setting</p>
+                          </div>
                         </div>
-                      </div>
-                      {/* SECOND */}
-                      <div className="flex flex-col gap-3">
-                        {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input
-                            type="checkbox"
-                            checked={permissions.includes("Designation")}
-                            onChange={() => {}}
-                          />
-                          <p className="text-sm font-md">Designation</p>
-                        </div>
-                        {/* SECOND ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input
-                            type="checkbox"
-                            checked={permissions.includes("Qualification")}
-                            onChange={() => {}}
-                          />
-                          <p className="text-sm font-md">Qualification</p>
-                        </div>
-                        {/* THIRD ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input
-                            type="checkbox"
-                            checked={permissions.includes("Lead Status")}
-                            onChange={() => {}}
-                          />
-                          <p className="text-sm font-md">Lead Status</p>
-                        </div>
-                        {/* Fourth ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input
-                            type="checkbox"
-                            checked={permissions.includes("Pools")}
-                            onChange={() => {}}
-                          />
-                          <p className="text-sm font-md">Pools</p>
-                        </div>
-                      </div>
-                      {/* THIRD */}
-                      <div className="flex flex-col gap-3">
-                        {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input
-                            type="checkbox"
-                            checked={permissions.includes("Segments")}
-                            onChange={() => {}}
-                          />
-                          <p className="text-sm font-md">Segments</p>
-                        </div>
-                        {/* SECOND ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input
-                            type="checkbox"
-                            checked={permissions.includes("Expense Head")}
-                            onChange={() => {}}
-                          />
-                          <p className="text-sm font-md">Expense Head</p>
-                        </div>
-                        {/* THIRD ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input
-                            type="checkbox"
-                            checked={permissions.includes("SMS Setting")}
-                            onChange={() => {}}
-                          />
-                          <p className="text-sm font-md">SMS Setting</p>
-                        </div>
-                        {/* Fourth ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input
-                            type="checkbox"
-                            checked={permissions.includes(
-                              "Roles & Permissions"
-                            )}
-                            onChange={() => {}}
-                          />
-                          <p className="text-sm font-md">Roles & Permissions</p>
-                        </div>
-                      </div>
-                      {/* FOURTH */}
-                      <div className="flex flex-col gap-3">
-                        {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input
-                            type="checkbox"
-                            checked={permissions.includes("SMS Template")}
-                            onChange={() => {}}
-                          />
-                          <p className="text-sm font-md">SMS Template</p>
-                        </div>
-                        {/* SECOND ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input
-                            type="checkbox"
-                            checked={permissions.includes("Access Device")}
-                            onChange={() => {}}
-                          />
-                          <p className="text-sm font-md">Access Device</p>
-                        </div>
-                        {/* THIRD ITEM */}
-                        <div className="flex gap-3 items-center font-light">
-                          <input
-                            type="checkbox"
-                            checked={permissions.includes("Access Control")}
-                            onChange={() => {}}
-                          />
-                          <p className="text-sm font-md">Access Control</p>
-                        </div>
-                      </div>
-                      {/* FIFTH */}
-                      <div className="flex flex-col gap-3">
-                        {/* FIRST ROW */}
-                        {/* SECOND ITEM */}
+                       
                       </div>
                     </div>
-                  </div>
                 ) : (
                   ""
                 )}

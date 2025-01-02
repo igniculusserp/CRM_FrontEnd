@@ -30,36 +30,36 @@ export default function Reports() {
   //----------------GET ----------------
   async function handleGetReport(reportId = selectedId) {
     const bearer_token = localStorage.getItem("token");
-  
+
     const urls = {
-      1 : "/Report/performance/report/byusertoken",
-      2 : "/Lead/leads/byusertoken",
-      3 : "/SalesOrder/salesOrder/clientbyusertoken",
-      4 : "/Report/performance/report/byusertoken",
-      6 : `/Report/callingreports/byusertoken`
+      1: "/Report/performance/report/byusertoken",
+      2: "/Lead/leads/byusertoken",
+      3: "/SalesOrder/salesOrder/clientbyusertoken",
+      4: "/Report/performance/report/byusertoken",
+      6: `/Report/callingreports/byusertoken`,
     };
-  
+
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-  
+
       const endpoint = urls[reportId];
-  
+
       if (!endpoint) {
         throw new Error("Invalid report selection.");
       }
-  
+
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}${endpoint}`,
         config
       );
-  
+
       const data = response.data.data;
       setGetReports(data);
-      console.log(getReports)
+      console.log(getReports);
       setOriginalReports(data); // Store original unfiltered data
     } catch (error) {
       console.error("Error fetching reports:", error);
@@ -83,21 +83,13 @@ export default function Reports() {
   const currentReports = getReports.slice(indexOfFirstItem, indexOfLastItem);
 
   //----------------STRIPE BAR DROPDOWN----------------
-  const stripeBar = [
-    { key: 1, value: "Table View" },
-    { key: 2, value: "Grid View" },
-  ];
-
-  const [selectedViewValue, setSelectedViewValue] = useState(
-    stripeBar[0].value
-  );
 
   //   DYNAMIC BUTTONS
   const dynamicButtons = [
     { id: 1, name: "Employee Report" },
-    { id: 2, name: "Leads Report" },
-    { id: 3, name: "Client Reports" },
-    { id: 4, name: "Sales Reports" },
+    { id: 2, name: "Lead Report" },
+    { id: 3, name: "Client Report" },
+    { id: 4, name: "Sales Report" },
     { id: 5, name: "Dispose Leads" },
     { id: 6, name: "Monitoring" },
   ];
@@ -139,29 +131,23 @@ export default function Reports() {
     setSearchDropdown(!searchDropdown);
   };
 
-
-
   // ---------------------BUTTON THAT ARE VISIBLE IN SALES REPORTS ------------------------------------
   const buttons = [
-    { id: 1, name: 'Source Wise' },
-    { id: 2, name: 'Employee Wise' },
+    { id: 1, name: "Source Wise" },
+    { id: 2, name: "Employee Wise" },
   ];
- 
+
   const [buttonId, setButtonId] = useState(1);
- 
+
   const handleButtonClick = (id) => {
     setButtonId(id);
   };
 
-
-  
   // ----------------------------- Date Filter -----------------------------
-
 
   const today = new Date().toISOString().split("T")[0];
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(today);
-
 
   // Function to filter based on date range
   function handle_DateRange(startDate, endDate) {
@@ -190,33 +176,89 @@ export default function Reports() {
     }
   }, [startDate, endDate]);
 
+  //------------------------------------------------------Filter Reset Settings ---------------------------------------------
 
-    //------------------------------------------------------Filter Reset Settings ---------------------------------------------
+  const handleResetFilter = () => {
+    setGetReports(originalReports);
+  };
 
-    const handleResetFilter = () => {
-      setGetReports(originalReports);
-     
-    };
- 
+  //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
+
+  const businessRole = localStorage.getItem("businessRole");
+  const [permissions, setPermissions] = useState([]);
+  const [employee, setEmployee] = useState(false);
+  const [lead, setLead] = useState(false);
+  const [client, setClient] = useState(false);
+  const [sales, setSales] = useState(false);
+  const [dispose, setDispose] = useState(false);
+  const [monitoring, setMonitoring] = useState(false);
+
+  async function handleGetPermission() {
+    const bearer_token = localStorage.getItem("token");
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
+        config
+      );
+      console.log("Permission Data : ", response.data.data);
+      const permissionsList = response?.data?.data;
+
+      if (permissionsList) {
+        const serviceBoxPermissions = permissionsList.find(
+          (item) => item.moduleName === "Reports"
+        );
+
+        if (serviceBoxPermissions) {
+          const permissionsArray = serviceBoxPermissions.permissions.split(",");
+          setPermissions(permissionsArray);
+          //------------------------------------------------------ Set permissions ------------------------------------------------
+
+          setEmployee(permissionsArray.includes("Employee Report"));
+          setLead(permissionsArray.includes("Lead Report"));
+          setClient(permissionsArray.includes("Client Report"));
+          setSales(permissionsArray.includes("Sales Report"));
+          setDispose(permissionsArray.includes("Dispose Leads"));
+          setMonitoring(permissionsArray.includes("Monitoring"));
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+    }
+  }
+
+  useEffect(() => {
+    handleGetPermission();
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col m-3">
       <div className="py-2 px-3 bg-white gap-3 flex items-center justify-between rounded-md">
         <div className="flex gap-3">
           {dynamicButtons.map(({ id, name }) => (
-            <button
-              key={id}
-              onClick={() => handleOptionClick(id)}
-              className={`px-5 py-1.5 rounded font-light text-md
-                    ${
-                      selectedId === id
-                        ? "bg-cyan-500 text-white"
-                        : "bg-gray-100 text-gray-700"
-                    }
-                  `}
-            >
-              {name}
-            </button>
+            <>
+              {permissions.includes(name) ? (
+                <button
+                  key={id}
+                  onClick={() => handleOptionClick(id)}
+                  className={`px-5 py-1.5 rounded font-light text-md
+                 ${
+                   selectedId === id
+                     ? "bg-cyan-500 text-white"
+                     : "bg-gray-100 text-gray-700"
+                 }
+               `}
+                >
+                  {name}
+                </button>
+              ) : (
+                ""
+              )}
+            </>
           ))}
         </div>
         {/* SEARCH DROPDOWN */}
@@ -269,7 +311,7 @@ export default function Reports() {
                 case 5:
                   return "Dispose Lead";
                 case 6:
-                    return "Monitoring";
+                  return "Monitoring";
               }
             })()}
           </h1>
@@ -286,8 +328,8 @@ export default function Reports() {
                 key={id}
                 className={`py-2 px-1 text-[12px] ${
                   buttonId === id
-                    ? 'bg-cyan-500 text-white'
-                    : 'bg-gray-100 text-gray-700'
+                    ? "bg-cyan-500 text-white"
+                    : "bg-gray-100 text-gray-700"
                 } rounded-md shadow-md`}
               >
                 {name}
@@ -297,9 +339,8 @@ export default function Reports() {
         )}
 
         {/* -------------- FILTER SECTION ------------------ */}
-        {selectedId===6
-        ?
-        <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
+        {selectedId === 6 ? (
+          <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
             {/* Filter Icon Button */}
             <button className="border-r border-gray-500 px-3">
               <ImFilter />
@@ -327,84 +368,85 @@ export default function Reports() {
               />
             </div>
 
-            <div className="p-1 border rounded cursor-pointer" 
-             onClick={handleResetFilter}
+            <div
+              className="p-1 border rounded cursor-pointer"
+              onClick={handleResetFilter}
             >
-                <TbRefresh size={25}/>
+              <TbRefresh size={25} />
             </div>
           </div>
-        :<></>}
-        
+        ) : (
+          <></>
+        )}
       </div>
 
       {/* ------------TABLE------------ */}
       <div className="overflow-x-auto">
         {/* EMPLOYEE REPORT TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === "Table View" && selectedId === 1 && (
+          {selectedId === 1 && employee && (
             <EmployeeReport currentReports={currentReports} />
           )}
         </div>
         {/* LEAD REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === "Table View" && selectedId === 2 && (
+          {selectedId === 2 && lead && (
             <LeadsReport currentReports={currentReports} />
           )}
         </div>
         {/* CLIENT REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === "Table View" && selectedId === 3 && (
+          {selectedId === 3 && client && (
             <ClientReports currentReports={currentReports} />
           )}
         </div>
         {/* SALES REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === "Table View" && selectedId === 4 && (
+          {selectedId === 4 && sales && (
             <SalesReports currentReports={currentReports} btn={buttonId} />
           )}
         </div>
         {/* DISPOSE REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === "Table View" && selectedId === 5 && (
+          {selectedId === 5 && dispose && (
             <DisposeLeads currentReports={currentReports} />
           )}
         </div>
         {/* Monitoring TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-        {selectedViewValue === "Table View" && selectedId === 6 && (
-          <Monitoring currentReports={currentReports} />
-        )}
-      </div>
+          {selectedId === 6 && monitoring && (
+            <Monitoring currentReports={currentReports} />
+          )}
+        </div>
       </div>
 
       {/* PAGINATION */}
-      {selectedViewValue === "Table View" && (
-        <>
-          <div className="flex justify-end m-4">
-            <nav>
-              <ul className="inline-flex items-center">
-                {Array.from(
-                  { length: Math.ceil(getReports.length / itemsPerPage) },
-                  (_, i) => (
-                    <li key={i + 1}>
-                      <button
-                        onClick={() => paginate(i + 1)}
-                        className={`px-4 py-2 mx-1 ${
-                          currentPage === i + 1
-                            ? "bg-blue-500 text-white"
-                            : "bg-white text-gray-700 border"
-                        }`}
-                      >
-                        {i + 1}
-                      </button>
-                    </li>
-                  )
-                )}
-              </ul>
-            </nav>
-          </div>
-        </>
-      )}
+
+      <>
+        <div className="flex justify-end m-4">
+          <nav>
+            <ul className="inline-flex items-center">
+              {Array.from(
+                { length: Math.ceil(getReports.length / itemsPerPage) },
+                (_, i) => (
+                  <li key={i + 1}>
+                    <button
+                      onClick={() => paginate(i + 1)}
+                      className={`px-4 py-2 mx-1 ${
+                        currentPage === i + 1
+                          ? "bg-blue-500 text-white"
+                          : "bg-white text-gray-700 border"
+                      }`}
+                    >
+                      {i + 1}
+                    </button>
+                  </li>
+                )
+              )}
+            </ul>
+          </nav>
+        </div>
+      </>
     </div>
   );
 }
