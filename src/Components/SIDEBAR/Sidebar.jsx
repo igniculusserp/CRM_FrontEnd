@@ -253,7 +253,7 @@ export default function SidebaBar({ toggle }) {
     setactive(key);
   };
 
-  console.log(welcomedata)
+console.log(welcomedata)
   return (
     <>
       <div className="flex flex-col bg-cyan-500 gap-3 h-screen">

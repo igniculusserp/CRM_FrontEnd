@@ -25,24 +25,23 @@
   scrollbar-width: none;
 }
 .Side_Bar_Large{
-  width: 18vw;
+  width: 9vw;
 }
+.Main_Screen_Large{
+  width: 91vw;
+  overflow-x: scroll;
+}
+
 .Side_Bar_Small{
-  width: 7vw;
+  width: 18vw;
 }
 .Main_Screen_Small{
   width: 82vw;
   /* overflow-x: scroll;  */
 }
-.Main_Screen_Large{
-  width: 93vw;
-  overflow-x: scroll;
-}
 
 .CustomerTestimonialReview {
-
   overflow-y: scroll;
- 
 }
 .CustomerTestimonialReview::-webkit-scrollbar {
   width: 3px;
