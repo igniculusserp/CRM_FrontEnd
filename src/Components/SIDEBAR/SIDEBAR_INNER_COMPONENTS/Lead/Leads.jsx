@@ -1,7 +1,6 @@
 //react
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 
 //external Packages
 import axios from "axios";
@@ -10,15 +9,13 @@ import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
 //React Icons
-import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
+import { FaAngleDown, FaPhoneAlt, FaBars } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
-import { FaBars } from "react-icons/fa";
 import { VscSettings } from "react-icons/vsc";
 import { ImFilter } from "react-icons/im";
 import { MdCall } from "react-icons/md";
-import { GrFormPrevious } from "react-icons/gr";
-import { GrFormNext } from "react-icons/gr";
+import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import { TbRefresh } from "react-icons/tb";
 
 //Folder Imported
@@ -28,7 +25,6 @@ import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import MassEmail from "../MassEmail/MassEmail";
 
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
-
 import LeadOperations from "./LeadComponents/LeadOperations";
 import LeadAction from "./LeadComponents/LeadAction";
 import UploadLead from "./LeadComponents/UploadLead";
@@ -43,14 +39,10 @@ import { SearchElement } from "../SearchElement/SearchElement";
 
 //-----------------------------ToastContainer-----------------------------
 import { ToastContainer } from "react-toastify";
-import {
-  showSuccessToast,
-  showErrorToast,
-} from "./../../../../utils/toastNotifications";
+import {showSuccessToast, showErrorToast} from "./../../../../utils/toastNotifications";
 
 export default function Lead() {
   const navigate = useNavigate();
-  const location = useLocation();
   const name = getHostnamePart();
 
   //------- Business Type --------
@@ -158,8 +150,9 @@ export default function Lead() {
     setAdminRole(businessRole);
   }, []);
 
+  //Bar -> I of i
   const [leadStatus, setLeadStatus] = useState("All Lead"); // Track the selected lead status
-  const [assignedTo, setAssignedTo] = useState("Assigned to"); // Track the selected assigned user
+  //Bar -> I of i
 
   function handleLeadStatusSelection(status) {
     setLeadStatus(status); // Update leadStatus state
@@ -171,10 +164,8 @@ export default function Lead() {
     if (activeButtonId === 1) {
       let filteredLeads;
       if (statusValue === "All Lead" || statusValue === null) {
-        // Show all leads when "All Lead" is selected or reset
         filteredLeads = getleads;
       } else {
-        // Apply filtering for other statuses
         filteredLeads = getleads.filter(
           (lead) => lead.leadesStatus === statusValue
         );
@@ -184,10 +175,8 @@ export default function Lead() {
     if (activeButtonId === 2) {
       let filteredLeads;
       if (statusValue === "All Lead" || statusValue === null) {
-        // Show all leads when "All Lead" is selected or reset
         filteredLeads = getleads;
       } else {
-        // Apply filtering for other statuses
         filteredLeads = getleads.filter(
           (lead) => lead.leadesStatus === statusValue
         );
@@ -195,6 +184,42 @@ export default function Lead() {
       setFilteredLeads(filteredLeads);
     }
   }
+
+   //-----------------------------------------------> ALL-> LEADS <-functionality <-----------------------------------------------
+
+   const [allLeaddropDown, setAllLeaddropDown] = useState(false);
+   const toggleMenuAllLead = () => {
+     setAllLeaddropDown(!allLeaddropDown);
+   };
+ 
+   //-----------------------------------------------> ALL LEADS DATA <-----------------------------------------------
+   //----------------STATUS DROPDOWN----------------
+   const [allLeadData, setallLeadData] = useState([]);
+   async function handleLeadStatus() {
+     const bearer_token = localStorage.getItem("token");
+ 
+     try {
+       const config = {
+         headers: {
+           Authorization: `Bearer ${bearer_token}`,
+         },
+       };
+       const response = await axios.get(
+         `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
+         config
+       );
+       setallLeadData(response.data.data);
+     } catch (error) {
+       console.error("Error fetching leads:", error);
+     }
+   }
+ 
+   useEffect(() => {
+     handleLeadStatus();
+   }, []);
+
+
+  const [assignedTo, setAssignedTo] = useState("Assigned to"); // Track the selected assigned user
 
   function handle_AssignedTo(assignedToValue) {
     if (activeButtonId === 1) {
@@ -229,39 +254,6 @@ export default function Lead() {
     setAssignedTo(user); // Update assignedTo state
     handle_AssignedTo(user); // Apply both filters
   }
-
-  //-----------------------------------------------> ALL-> LEADS <-functionality <-----------------------------------------------
-
-  const [allLeaddropDown, setAllLeaddropDown] = useState(false);
-  const toggleMenuAllLead = () => {
-    setAllLeaddropDown(!allLeaddropDown);
-  };
-
-  //-----------------------------------------------> ALL LEADS DATA <-----------------------------------------------
-  //----------------STATUS DROPDOWN----------------
-  const [allLeadData, setallLeadData] = useState([]);
-  async function handleLeadStatus() {
-    const bearer_token = localStorage.getItem("token");
-
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${bearer_token}`,
-        },
-      };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
-        config
-      );
-      setallLeadData(response.data.data);
-    } catch (error) {
-      console.error("Error fetching leads:", error);
-    }
-  }
-
-  useEffect(() => {
-    handleLeadStatus();
-  }, []);
 
   //-----------------------------------------------> ALL-> ASSIGNED_TO <-functionality <-----------------------------------------------
 
@@ -298,8 +290,8 @@ export default function Lead() {
 
   //------------------------------------------------------------------------------------------------
 
-  //------------------------------------------------------------------------------------------------
-  //----------------STRIPE BAR DROPDOWN----------------
+
+  //------------------------------------------------------------------------------------------------STRIPE BAR DROPDOWN------------------------------------------------------------------------------------------------
   const stripeBar = [
     { key: 1, value: "Table View" },
     { key: 2, value: "Grid View" },
@@ -326,6 +318,7 @@ export default function Lead() {
   );
 
   //------------------------------------------------------------------------------------------------
+  
   //----------------ACTION BAR DROPDOWN----------------
   const [dropActionsMenu, setdropActionsMenu] = useState([
     // { key: 0, value: "Actions" },
@@ -395,6 +388,8 @@ export default function Lead() {
       }
     }
   };
+
+
   // ---------------------->MASS DELETE FUNCTIONALITY---###API###<----------------------
   const massDelete = async () => {
     const bearer_token = localStorage.getItem("token");
@@ -804,7 +799,7 @@ export default function Lead() {
               ""
             ) : (
               <div
-                className="relative my-1 sm:my-0"
+                className="relative my-1 "
                 onClick={toggleMenuAllLead}
                 onMouseLeave={() => setAllLeaddropDown(false)}
               >
@@ -836,12 +831,12 @@ export default function Lead() {
               {/* --------------------------------     ASSIGNED_TO    -------------------------------------------- */}
               {/* All ASSIGNED_TO  DropDown*/}
               <div
-                className="relative my-1 sm:my-0"
+                className="relative my-1"
                 onClick={toggleMenuAssigned_To}
                 onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
               >
                 <button
-                  className="py-2 px-4 sm:py-2 sm:px-4 border rounded-md flex justify-between items-center   sm:min-w-40 sm:max-w-44  truncate"
+                  className="py-2 px-4 border rounded-md flex justify-between items-center   truncate"
                   id="dropdownDefaultButton"
                   type="button"
                 >
@@ -849,12 +844,12 @@ export default function Lead() {
                   <FaAngleDown className="ml-2 text-gray-900" />
                 </button>
                 {allAssigned_To_DROPDOWN && (
-                  <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+                  <div className="absolute bg-white border border-gray-300 rounded-md top-10  z-10">
                     <ul className=" text-sm text-gray-700">
                       {allAssigned_To_Data.map((item) => (
                         <li
                           key={item.id}
-                          className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          className="block py-2 w-56 px-4  hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                           onClick={() => handleAssignedToSelection(item.userName)} // Correct selection logic
                         >
                           {item.userName}
@@ -962,7 +957,7 @@ export default function Lead() {
                     <FaAngleDown className="text-gray-900" />
                   </button>
                   {dropActionsMenudropDown && (
-                    <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
+                    <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-30 right-5 z-10">
                       <ul className="text-sm text-gray-700 ">
                         {dropActionsMenu.map(({ key, value }) => (
                           <li
