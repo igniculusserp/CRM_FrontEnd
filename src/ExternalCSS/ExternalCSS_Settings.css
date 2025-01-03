@@ -177,21 +177,21 @@ input[type="number"] {
 /* Extra small devices (phones) */
 @media only screen and (max-width: 576px) {
 
-  /* .Side_Bar_Large{
-    width: 23vw;
+  .Side_Bar_Large{
+    width: 21vw;
   }
   .Main_Screen_Large{
-    width: 77vw;
+    width: 79vw;
     overflow-x: scroll;
-  } */
+  }
   
-  .Side_Bar_Small{
+  /* .Side_Bar_Small{
     background-color: rgb(6 182 212 / var(--tw-bg-opacity, 1));
     width: 35vw;
   }
   .Main_Screen_Small{
     width: 65vw;
-  }
+  } */
  
  
 }
