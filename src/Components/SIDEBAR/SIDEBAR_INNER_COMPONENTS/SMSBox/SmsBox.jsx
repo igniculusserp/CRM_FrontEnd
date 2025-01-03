@@ -145,18 +145,18 @@ export default function SmsBox() {
   ];
 
   //   FOR SAVING VALUES
-  function handleSmsBoxStatusButton(value) {
-    console.log(value);
-    if (value === null || value === "ALL") {
-      setFilteredSmsBox(getSmsBox);
-    } else {
-      // Filter leads based on the value
-      const filtered = getSmsBox.filter(
-        (getleads) => getleads.leadesStatus === value
-      );
-      console.log(filtered);
-    }
-  }
+  // function handleSmsBoxStatusButton(value) {
+  //   console.log(value);
+  //   if (value === null || value === "ALL") {
+  //     setFilteredSmsBox(getSmsBox);
+  //   } else {
+  //     // Filter leads based on the value
+  //     const filtered = getSmsBox.filter(
+  //       (getleads) => getleads.leadesStatus === value
+  //     );
+  //     console.log(filtered);
+  //   }
+  // }
 
   // ACTION DROPDOWN DATA
   const dropActionsMenu = [
@@ -238,6 +238,7 @@ export default function SmsBox() {
   const businessRole = localStorage.getItem("businessRole");
 
   const [smsPermission, setSMSPermission] = useState(false);
+  const [permissions, setPermissions] = useState([]);
   const [emailPermission, setEmailPermission] = useState(false);
 
   async function handleGetPermission() {
@@ -262,7 +263,7 @@ export default function SmsBox() {
 
         if (serviceBoxPermissions) {
           const permissionsArray = serviceBoxPermissions.permissions.split(",");
-
+          setPermissions(permissionsArray);
           //------------------------------------------------------ Set permissions ------------------------------------------------
           setSMSPermission(permissionsArray.includes("Send SMS"));
           setEmailPermission(permissionsArray.includes("Send Email"));
@@ -321,7 +322,9 @@ export default function SmsBox() {
           </div>
           {/* DYNAMIC BUTTONS */}
           <div className="flex gap-4">
-            {Object.keys(dynamicButtons).map((key) => (
+            {Object.keys(dynamicButtons).map((key) => 
+            
+            permissions.includes(key) ?(
               <button
                 key={key}
                 onClick={() => handleOptionClick(key)}
@@ -335,7 +338,8 @@ export default function SmsBox() {
               >
                 {key}
               </button>
-            ))}
+            ):null
+            )}
           </div>
         </div>
         <div className="flex gap-3">
@@ -475,14 +479,14 @@ export default function SmsBox() {
         {/* SEND SMS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {selectedViewValue === "Table View" &&
-            selectedButton === "Send SMS" && (
+            selectedButton === "Send SMS" &&  permissions.includes("Send SMS") && (
               <SendSMS currentSms={currentSms} />
             )}
         </div>
         {/* SEND EMAIL TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {selectedViewValue === "Table View" &&
-            selectedButton === "Send Email" && (
+            selectedButton === "Send Email" &&  permissions.includes("Send E-Mail") && (
               <SendEmail
                 currentSms={currentSms}
                 handleCheckboxClick={handleCheckboxClick}
