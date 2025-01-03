@@ -274,10 +274,10 @@ console.log(welcomedata)
             <Link to={link} onClick={() => handleClick(key)} key={key}>
               <li
                 className={`flex ${toggle ? 'justify-center' : 'justify-start'} items-center gap-3 text-white text-md font-small py-3 shadow-md ${index === 0 ? 'border-b-2 border-t-2' : 'border-b-2'
-                  } ${index === sideBar.length - 1 ? 'border-b-2' : ''} hover:bg-gradient-to-b from-cyan-300 to-cyan-600`}
+                  } ${index === sideBar.length - 1 ? 'border-b-2' : ''} hover:bg-gradient-to-b from-cyan-300 to-cyan-700`}
               >
                 <h1 className={`${toggle ? 'flex items-center gap-1 flex-col px-1' : 'flex items-center gap-2 px-2'}`}>
-                  <span className={`${toggle ? 'sm:text-xl text-sm' : 'text-lg'}`}>{icon}</span>
+                  <span className={`${toggle ? 'sm:text-xl text-sm' : 'text-xl'}`}>{icon}</span>
                   <span className={`${toggle ? 'text-xs whitespace-nowrap ' : 'text-md'}`}>{data}</span>
                 </h1>
               </li>
