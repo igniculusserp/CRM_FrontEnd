@@ -684,7 +684,7 @@ export default function Client() {
               <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
                 <ul className="text-sm text-gray-700">
                     {dropActionsMenu.map(({ key, value }) =>
-                      permissions.includes(value) ? (
+                      permissions.includes(value) || businessRole==="Admin" ? (
                         <li
                           key={key}
                           className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"

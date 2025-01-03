@@ -324,7 +324,7 @@ export default function SmsBox() {
           <div className="flex gap-4">
             {Object.keys(dynamicButtons).map((key) => 
             
-            permissions.includes(key) ?(
+            permissions.includes(key) || businessRole==="Admin" ?(
               <button
                 key={key}
                 onClick={() => handleOptionClick(key)}
@@ -344,7 +344,7 @@ export default function SmsBox() {
         </div>
         <div className="flex gap-3">
           {/* DYNAMIC BUTTONS LINKS */}
-          {smsPermission && buttonText.text === "Send SMS" ? (
+          {(smsPermission || businessRole==="Admin") && buttonText.text === "Send SMS" ? (
             <Link to={buttonText.href}>
               <button className="px-3 py-2 bg-blue-600 text-center text-md text-white rounded-md w-[150px]">
                 {buttonText.text}
@@ -353,7 +353,7 @@ export default function SmsBox() {
           ) : (
             ""
           )}
-          {emailPermission && buttonText.text === "Send Email" ? (
+          {(emailPermission || businessRole==="Admin") && buttonText.text === "Send Email" ? (
             <Link to={buttonText.href}>
               <button className="px-3 py-2 bg-blue-600 text-center text-md text-white rounded-md w-[150px]">
                 {buttonText.text}
@@ -479,14 +479,14 @@ export default function SmsBox() {
         {/* SEND SMS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {selectedViewValue === "Table View" &&
-            selectedButton === "Send SMS" &&  permissions.includes("Send SMS") && (
+            selectedButton === "Send SMS" &&  (emailPermission|| businessRole==="Admin") && (
               <SendSMS currentSms={currentSms} />
             )}
         </div>
         {/* SEND EMAIL TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {selectedViewValue === "Table View" &&
-            selectedButton === "Send Email" &&  permissions.includes("Send E-Mail") && (
+            selectedButton === "Send Email" &&  (smsPermission|| businessRole==="Admin") && (
               <SendEmail
                 currentSms={currentSms}
                 handleCheckboxClick={handleCheckboxClick}
