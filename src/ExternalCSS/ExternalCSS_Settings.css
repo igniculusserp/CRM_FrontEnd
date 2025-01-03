@@ -24,25 +24,10 @@
   scroll-behavior: smooth;
   scrollbar-width: none;
 }
-.Side_Bar_Large{
-  width: 18vw;
-}
-.Side_Bar_Small{
-  width: 7vw;
-}
-.Main_Screen_Small{
-  width: 82vw;
-  /* overflow-x: scroll;  */
-}
-.Main_Screen_Large{
-  width: 93vw;
-  overflow-x: scroll;
-}
+
 
 .CustomerTestimonialReview {
-
   overflow-y: scroll;
- 
 }
 .CustomerTestimonialReview::-webkit-scrollbar {
   width: 3px;
@@ -70,4 +55,139 @@ input[type="number"]::-webkit-outer-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield; /* For Firefox */
+}
+
+
+/* Extra extra large devices (extra-large desktops) */
+
+
+
+/* Extra extra large devices (extra-large desktops) */
+@media only screen and (min-width: 1400px) {
+
+  .Side_Bar_Large{
+    width: 7vw;
+  }
+  .Main_Screen_Large{
+    width: 93vw;
+    overflow-x: scroll;
+  }
+  
+  .Side_Bar_Small{
+    width:12vw;
+  }
+  .Main_Screen_Small{
+    width: 88vw;
+    /* overflow-x: scroll;  */
+  }
+
+}
+
+
+/* Extra large devices (large desktops and high-resolution displays) */
+@media only screen  and (max-width: 1400px) and (min-width: 1200px) {
+
+  .Side_Bar_Large{
+    width: 5vw;
+  }
+  .Main_Screen_Large{
+    width: 95vw;
+    overflow-x: scroll;
+  }
+  
+  .Side_Bar_Small{
+    width: 12vw;
+  }
+  .Main_Screen_Small{
+    width: 88vw;
+    /* overflow-x: scroll;  */
+  }
+}
+
+
+/* Large devices (desktops and laptops) */
+@media only screen and (max-width: 1200px) and (min-width: 992px) {
+  .Side_Bar_Large{
+    width: 5vw;
+  }
+  .Main_Screen_Large{
+    width: 95vw;
+    overflow-x: scroll;
+  }
+  
+  .Side_Bar_Small{
+    width: 12vw;
+  }
+  .Main_Screen_Small{
+    width: 88vw;
+    /* overflow-x: scroll;  */
+  }
+
+}
+
+/* Medium devices (tablets and small laptops) */
+@media only screen and (max-width: 992px) and (min-width: 768px){
+
+  .Side_Bar_Large{
+    width: 5vw;
+  }
+  .Main_Screen_Large{
+    width: 95vw;
+    overflow-x: scroll;
+  }
+  
+  .Side_Bar_Small{
+    width: 12vw;
+  }
+  .Main_Screen_Small{
+    width: 88vw;
+    /* overflow-x: scroll;  */
+  }
+
+
+}
+
+
+/* Small devices (phones and small tablets) */
+@media only screen and (max-width: 768px) and (min-width: 576px){
+ 
+  .Side_Bar_Large{
+    width: 22vw;
+  }
+  .Main_Screen_Large{
+    width: 78vw;
+    overflow-x: scroll;
+  }
+  
+  .Side_Bar_Small{
+    width: 35vw;
+  }
+  .Main_Screen_Small{
+    width: 65vw;
+  }
+ 
+ 
+ 
+}
+
+
+/* Extra small devices (phones) */
+@media only screen and (max-width: 576px) {
+
+  .Side_Bar_Large{
+    width: 23vw;
+  }
+  .Main_Screen_Large{
+    width: 77vw;
+    overflow-x: scroll;
+  }
+  
+  .Side_Bar_Small{
+    width: 35vw;
+  }
+  .Main_Screen_Small{
+    width: 65vw;
+  }
+ 
+ 
 }
