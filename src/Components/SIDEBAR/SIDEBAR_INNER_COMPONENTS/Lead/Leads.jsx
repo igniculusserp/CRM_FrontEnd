@@ -1,6 +1,7 @@
 //react
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 //external Packages
 import axios from "axios";
@@ -9,13 +10,15 @@ import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
 //React Icons
-import { FaAngleDown, FaPhoneAlt, FaBars } from "react-icons/fa";
+import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
+import { FaBars } from "react-icons/fa";
 import { VscSettings } from "react-icons/vsc";
 import { ImFilter } from "react-icons/im";
 import { MdCall } from "react-icons/md";
-import { GrFormPrevious, GrFormNext } from "react-icons/gr";
+import { GrFormPrevious } from "react-icons/gr";
+import { GrFormNext } from "react-icons/gr";
 import { TbRefresh } from "react-icons/tb";
 
 //Folder Imported
@@ -25,6 +28,7 @@ import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import MassEmail from "../MassEmail/MassEmail";
 
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+
 import LeadOperations from "./LeadComponents/LeadOperations";
 import LeadAction from "./LeadComponents/LeadAction";
 import UploadLead from "./LeadComponents/UploadLead";
@@ -39,10 +43,14 @@ import { SearchElement } from "../SearchElement/SearchElement";
 
 //-----------------------------ToastContainer-----------------------------
 import { ToastContainer } from "react-toastify";
-import {showSuccessToast, showErrorToast} from "./../../../../utils/toastNotifications";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "./../../../../utils/toastNotifications";
 
 export default function Lead() {
   const navigate = useNavigate();
+  const location = useLocation();
   const name = getHostnamePart();
 
   //------- Business Type --------
@@ -150,9 +158,8 @@ export default function Lead() {
     setAdminRole(businessRole);
   }, []);
 
-  //Bar -> I of i
   const [leadStatus, setLeadStatus] = useState("All Lead"); // Track the selected lead status
-  //Bar -> I of i
+  const [assignedTo, setAssignedTo] = useState("Assigned to"); // Track the selected assigned user
 
   function handleLeadStatusSelection(status) {
     setLeadStatus(status); // Update leadStatus state
@@ -164,8 +171,10 @@ export default function Lead() {
     if (activeButtonId === 1) {
       let filteredLeads;
       if (statusValue === "All Lead" || statusValue === null) {
+        // Show all leads when "All Lead" is selected or reset
         filteredLeads = getleads;
       } else {
+        // Apply filtering for other statuses
         filteredLeads = getleads.filter(
           (lead) => lead.leadesStatus === statusValue
         );
@@ -175,8 +184,10 @@ export default function Lead() {
     if (activeButtonId === 2) {
       let filteredLeads;
       if (statusValue === "All Lead" || statusValue === null) {
+        // Show all leads when "All Lead" is selected or reset
         filteredLeads = getleads;
       } else {
+        // Apply filtering for other statuses
         filteredLeads = getleads.filter(
           (lead) => lead.leadesStatus === statusValue
         );
@@ -184,42 +195,6 @@ export default function Lead() {
       setFilteredLeads(filteredLeads);
     }
   }
-
-   //-----------------------------------------------> ALL-> LEADS <-functionality <-----------------------------------------------
-
-   const [allLeaddropDown, setAllLeaddropDown] = useState(false);
-   const toggleMenuAllLead = () => {
-     setAllLeaddropDown(!allLeaddropDown);
-   };
- 
-   //-----------------------------------------------> ALL LEADS DATA <-----------------------------------------------
-   //----------------STATUS DROPDOWN----------------
-   const [allLeadData, setallLeadData] = useState([]);
-   async function handleLeadStatus() {
-     const bearer_token = localStorage.getItem("token");
- 
-     try {
-       const config = {
-         headers: {
-           Authorization: `Bearer ${bearer_token}`,
-         },
-       };
-       const response = await axios.get(
-         `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
-         config
-       );
-       setallLeadData(response.data.data);
-     } catch (error) {
-       console.error("Error fetching leads:", error);
-     }
-   }
- 
-   useEffect(() => {
-     handleLeadStatus();
-   }, []);
-
-
-  const [assignedTo, setAssignedTo] = useState("Assigned to"); // Track the selected assigned user
 
   function handle_AssignedTo(assignedToValue) {
     if (activeButtonId === 1) {
@@ -254,6 +229,39 @@ export default function Lead() {
     setAssignedTo(user); // Update assignedTo state
     handle_AssignedTo(user); // Apply both filters
   }
+
+  //-----------------------------------------------> ALL-> LEADS <-functionality <-----------------------------------------------
+
+  const [allLeaddropDown, setAllLeaddropDown] = useState(false);
+  const toggleMenuAllLead = () => {
+    setAllLeaddropDown(!allLeaddropDown);
+  };
+
+  //-----------------------------------------------> ALL LEADS DATA <-----------------------------------------------
+  //----------------STATUS DROPDOWN----------------
+  const [allLeadData, setallLeadData] = useState([]);
+  async function handleLeadStatus() {
+    const bearer_token = localStorage.getItem("token");
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
+        config
+      );
+      setallLeadData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+    }
+  }
+
+  useEffect(() => {
+    handleLeadStatus();
+  }, []);
 
   //-----------------------------------------------> ALL-> ASSIGNED_TO <-functionality <-----------------------------------------------
 
@@ -290,8 +298,8 @@ export default function Lead() {
 
   //------------------------------------------------------------------------------------------------
 
-
-  //------------------------------------------------------------------------------------------------STRIPE BAR DROPDOWN------------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------------
+  //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
     { key: 1, value: "Table View" },
     { key: 2, value: "Grid View" },
@@ -318,18 +326,16 @@ export default function Lead() {
   );
 
   //------------------------------------------------------------------------------------------------
-  
   //----------------ACTION BAR DROPDOWN----------------
-  const [dropActionsMenu, setdropActionsMenu] = useState([
+  const dropActionsMenu = [
     // { key: 0, value: "Actions" },
     { key: 1, value: "Mass Delete" },
-    { key: 2, value: "Mass Update" },
-    { key: 3, value: "Mass Email" },
+    { key: 3, value: "Mass E-Mail" },
     { key: 4, value: "Approve Leads" },
-    { key: 5, value: "Export To Excel" },
-    { key: 6, value: "Export To PDF" },
+    { key: 5, value: "Export to Excel" },
+    { key: 6, value: "Export to PDF" },
     { key: 7, value: "Convert Lead to Contact" },
-  ]);
+  ];
 
   const [dropActionsMenudropDown, setdropActionsMenudropDown] = useState(false);
 
@@ -388,8 +394,6 @@ export default function Lead() {
       }
     }
   };
-
-
   // ---------------------->MASS DELETE FUNCTIONALITY---###API###<----------------------
   const massDelete = async () => {
     const bearer_token = localStorage.getItem("token");
@@ -508,8 +512,8 @@ export default function Lead() {
   //---------------------->---------------------->MANAGE_BY/ASSIGNED_TO<----------------------<ARVIND----------------------
   const roleColors = [
     "#2563eb", // blue
-    '#22c55e', // LimeGreen
-    '#7c3aed', // MediumPurple
+    "#22c55e", // LimeGreen
+    "#7c3aed", // MediumPurple
     "#0369a1", //Sky
     "#e11d48", //Rose
   ];
@@ -759,6 +763,64 @@ export default function Lead() {
     setAssignedTo("Assigned to");
   };
 
+  //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
+
+  const [permissions, setPermissions] = useState([]);
+  const [edit, setEdit] = useState(false);
+  const [createSO, setCreateSO] = useState(false);
+  const [viewLeads, setviewLeads] = useState(false);
+  const [createLead, setCreateLead] = useState(false);
+  const [viewName, setViewName] = useState("");
+  const [fetchLead, setFetchLead] = useState(false);
+
+  async function handleGetPermission() {
+    const bearer_token = localStorage.getItem("token");
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
+        config
+      );
+      console.log("Permission Data : ", response.data.data);
+      const permissionsList = response?.data?.data;
+
+      if (permissionsList) {
+        const serviceBoxPermissions = permissionsList.find(
+          (item) => item.moduleName === "Leads"
+        );
+
+        if (serviceBoxPermissions) {
+          const permissionsArray = serviceBoxPermissions.permissions.split(",");
+          setPermissions(permissionsArray);
+
+          console.log("List : ", permissionsArray);
+
+          //------------------------------------------------------ Set permissions ------------------------------------------------
+          if (permissionsArray.includes("View Leads")) {
+            setViewName("Leads");
+          } else {
+            setViewName("");
+          }
+          setEdit(permissionsArray.includes("Edit Lead"));
+          setCreateSO(permissionsArray.includes("Create Sales Order"));
+          setviewLeads(permissionsArray.includes("View Leads"));
+          setCreateLead(permissionsArray.includes("Create Lead"));
+          setFetchLead(permissionsArray.includes("Fetch Leads"));
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+    }
+  }
+
+  useEffect(() => {
+    handleGetPermission();
+  }, []);
+
   return (
     //parent
     <>
@@ -782,15 +844,95 @@ export default function Lead() {
         )}
         {/* -------------------------------- Fetch modal -------------------------------------------- */}
         {isFeatchModalOpen && <LeadFeatchModal onClose={closeModal} />}
-        {/* container bar*/}
-        {/* container-I All Leads, Assigned To, Search, Fetch Leads, Wizard, Create Lead, Actions */}
-        <div className="flex justify-between px-3 py-2 p-2 items-center bg-white rounded-lg">
-          <div className="flex gap-3 items-center justify-between w-full">
-            {/* --------------------------------     Responsive    -------------------------------------------- */}
-           
-            {/* --------------------------------     All Lead, Assigned To  DropDown    -------------------------------------------- */}
-            {/* --------------------------------     All Lead    -------------------------------------------- */}
-            
+        {/* containerbar*/}
+        <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg">
+          {/* PART-I */}
+          {/* container- Alleads, search */}
+          <div className="flex gap-3 items-center justify-center ">
+            {/* PART-I */}
+            {/* All Lead  DropDown*/}
+            <div
+              className="relative"
+              onClick={toggleMenuAllLead}
+              onMouseLeave={() => setAllLeaddropDown(false)}
+            >
+              <button
+                className="py-2 px-4 border rounded-md flex justify-between items-center min-w-40 max-w-44 truncate"
+                id="dropdownDefaultButton"
+                type="button"
+              >
+                {leadStatus}
+                <FaAngleDown className="ml-2 text-gray-900" />
+              </button>
+              {allLeaddropDown && (
+                <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+                  <ul className=" text-sm text-gray-700">
+                    {allLeadData.map((item) => (
+                      <li
+                        key={item.id}
+                        className="block py-2 w-56 px-4  hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                        onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
+                      >
+                        {item.status}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+
+            {/* PART-I-ii */}
+            {/* All ASSIGNED_TO  DropDown*/}
+            <div
+              className="relative"
+              onClick={toggleMenuAssigned_To}
+              onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
+            >
+              <button
+                className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 max-w-44"
+                id="dropdownDefaultButton"
+                type="button"
+              >
+                {assignedTo}
+                <FaAngleDown className="ml-2 text-gray-900" />
+              </button>
+              {allAssigned_To_DROPDOWN && (
+                <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+                  <ul className=" text-sm text-gray-700">
+                    {allAssigned_To_Data.map((item) => (
+                      <li
+                        key={item.id}
+                        className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                        onClick={() => handleAssignedToSelection(item.userName)} // Correct selection logic
+                      >
+                        {item.userName}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+            {/* PART-I */}
+            {/* Search Box */}
+
+            <SearchElement
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            {fetchLead ? (
+              <div className="flex gap-1">
+                <button
+                  className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
+                  onClick={() => setIsFetchModalOpen(true)}
+                >
+                  Fetch Leads
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+
           {/* PART-II */}
           <div className="flex gap-3 items-center justify-center">
             {/* PART-II */}
@@ -799,28 +941,28 @@ export default function Lead() {
               ""
             ) : (
               <div
-                className="relative my-1 "
-                onClick={toggleMenuAllLead}
-                onMouseLeave={() => setAllLeaddropDown(false)}
+                className="relative"
+                onClick={togglestripeBar}
+                onMouseLeave={() => setstripeBardropDown(false)}
               >
                 <button
-                  className="py-2 px-4  border rounded-md flex justify-between items-center   truncate"
+                  className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center"
                   id="dropdownDefaultButton"
                   type="button"
                 >
-                  {leadStatus}
-                  <FaAngleDown className="ml-2 text-gray-900" />
+                  <FaBars />
+                  <FaAngleDown className="text-gray-900" />
                 </button>
-                {allLeaddropDown && (
-                  <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
-                    <ul className=" text-sm text-gray-700">
-                      {allLeadData.map((item) => (
+                {stripeBardropDown && (
+                  <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 z-10">
+                    <ul className="text-sm text-gray-700">
+                      {stripeBar.map(({ key, value }) => (
                         <li
-                          key={item.id}
-                          className="block py-2 w-56 px-4  hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
+                          key={key}
+                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          onClick={() => handleStripeButton(value)}
                         >
-                          {item.status}
+                          {value}
                         </li>
                       ))}
                     </ul>
@@ -828,157 +970,71 @@ export default function Lead() {
                 )}
               </div>
             )}
-              {/* --------------------------------     ASSIGNED_TO    -------------------------------------------- */}
-              {/* All ASSIGNED_TO  DropDown*/}
-              <div
-                className="relative my-1"
-                onClick={toggleMenuAssigned_To}
-                onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
-              >
-                <button
-                  className="py-2 px-4 border rounded-md flex justify-between items-center   truncate"
-                  id="dropdownDefaultButton"
-                  type="button"
-                >
-                  {assignedTo}
-                  <FaAngleDown className="ml-2 text-gray-900" />
-                </button>
-                {allAssigned_To_DROPDOWN && (
-                  <div className="absolute bg-white border border-gray-300 rounded-md top-10  z-10">
-                    <ul className=" text-sm text-gray-700">
-                      {allAssigned_To_Data.map((item) => (
-                        <li
-                          key={item.id}
-                          className="block py-2 w-56 px-4  hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          onClick={() => handleAssignedToSelection(item.userName)} // Correct selection logic
-                        >
-                          {item.userName}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* --------------------------------     Search Box     -------------------------------------------- */}
-            <SearchElement
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)
-              }
-            />
-
-            {/* --------------------------------Fetch Leads, Wizrad->OFF, Create Lead Actions  -------------------------------------------- */}
-            {/* --------------------------------     Fetch Leads-button    -------------------------------------------- */}
-
-            <div className="flex gap-1">
-              <div className="flex gap-1 ">
-                <button
-                  className="px-4 border rounded-md   truncate text-white bg-blue-600 text-center 	"
-                  onClick={() => setIsFetchModalOpen(true)}
-                >
-                  Fetch Leads
-                </button>
-              </div>
-
-
-
-              {/* -------------------------------- Wizard ->Hidden for Mobile   -------------------------------------------- */}
-
-              <div className="flex gap-3 items-center justify-center ">
-                {/* Stripe-BarDropDown */}
-                {activeButtonId === 2 || activeButtonId === 4 ? (
-                  ""
-                ) : (
-                  <div
-                    className="relative hidden sm:block"
-                    onClick={togglestripeBar}
-                    onMouseLeave={() => setstripeBardropDown(false)}
-                  >
-                    <button
-                      className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center"
-                      id="dropdownDefaultButton"
-                      type="button"
-                    >
-                      <FaBars />
-                      <FaAngleDown className="text-gray-900" />
-                    </button>
-                    {stripeBardropDown && (
-                      <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 z-10">
-                        <ul className="text-sm text-gray-700">
-                          {stripeBar.map(({ key, value }) => (
-                            <li
-                              key={key}
-                              className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                              onClick={() => handleStripeButton(value)}
-                            >
-                              {value}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                )}
-                {/* --------------------------------     Create Lead    -------------------------------------------- */}
-                <div className="flex gap-1">
-                  <Link to="/panel/createlead">
-                    <button
-                      className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
-                      id="dropdownDefaultButton"
-                      type="button"
-                    >
-                      Create Lead
-                    </button>
-                  </Link>
-                  {/* PART-II */}
-                  {/*  Create Lead Part-II -> down button */}
-                  <div
-                    className="relative"
-                    onClick={togglesdropLogo}
-                    onMouseLeave={() => setdropLogodropDown(false)}
-                  >
-                  </div>
-                </div>
-                {/* PART-II */}
-                {/* --------------------------------     Actions    -------------------------------------------- */}
-
-                <div
-                  className=""
-                  onClick={toggleActionsMenuLogo}
-                  onMouseLeave={() => setdropActionsMenudropDown(false)}
-                >
+            {/* PART-II */}
+            {/*  Create Lead */}
+            {createLead ? (
+              <div className="flex gap-1">
+                <Link to="/panel/createlead">
                   <button
-                    className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600 "
+                    className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
                     id="dropdownDefaultButton"
                     type="button"
                   >
-                    Actions
-                    <FaAngleDown className="text-gray-900" />
+                    Create Lead
                   </button>
-                  {dropActionsMenudropDown && (
-                    <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-30 right-5 z-10">
-                      <ul className="text-sm text-gray-700 ">
-                        {dropActionsMenu.map(({ key, value }) => (
-                          <li
-                            key={key}
-                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                            onClick={() => handleActionButton(value)}
-                          >
-                            {value}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                </Link>
+                {/* PART-II */}
+                {/*  Create Lead Part-II -> down button */}
+                <div
+                  className="relative"
+                  onClick={togglesdropLogo}
+                  onMouseLeave={() => setdropLogodropDown(false)}
+                ></div>
+              </div>
+            ) : (
+              ""
+            )}
+            {/* PART-II */}
+            {/*-------Action DropDown */}
+            <div
+              className="relative"
+              onClick={toggleActionsMenuLogo}
+              onMouseLeave={() => setdropActionsMenudropDown(false)}
+            >
+              <button
+                className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
+                id="dropdownDefaultButton"
+                type="button"
+              >
+                Actions
+                <FaAngleDown className="text-gray-900" />
+              </button>
+              {dropActionsMenudropDown && (
+                <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
+                  <ul className="text-sm text-gray-700">
+                    {dropActionsMenu.map(({ key, value }) =>
+                      permissions.includes(value) ? (
+                        <li
+                          key={key}
+                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          onClick={() => handleActionButton(value)}
+                        >
+                          {value}
+                        </li>
+                      ) : null
+                    )}
+                  </ul>
                 </div>
-              </div>                    
+              )}
             </div>
           </div>
         </div>
-
-
-
+        {/* 2nd bar Leads and lenghtLeads*/}{" "}
+        {/* 2nd bar Leads and lenghtLeads*/}{" "}
+        {/* 2nd bar Leads and lenghtLeads*/}{" "}
+        {/* 2nd bar Leads and lenghtLeads*/}{" "}
+        {/* 2nd bar Leads and lenghtLeads*/}{" "}
+        {/* 2nd bar Leads and lenghtLeads*/}
         <div className="mt-3 flex justify-between items-center gap-3">
           <div className="flex gap-3 items-center justify-center">
             <h1 className="text-3xl font-medium ">Leads</h1>
@@ -988,19 +1044,21 @@ export default function Lead() {
 
             {/* BUTTONS */}
             <div className="flex gap-2">
-              {dynamicButtons.map(({ id, name }) => (
-                <button
-                  key={id}
-                  onClick={() => handleDynamicButtonsClick(id)}
-                  className={`px-2 py-1.5 rounded font-light text-md
-          ${activeButtonId === id
-                      ? "bg-cyan-500 text-white"
-                      : "bg-gray-100 text-gray-700"
+              {dynamicButtons.map(({ id, name }) =>
+                permissions.includes(name) || name === viewName ? (
+                  <button
+                    key={id}
+                    onClick={() => handleDynamicButtonsClick(id)}
+                    className={`px-2 py-1.5 rounded font-light text-md ${
+                      activeButtonId === id
+                        ? "bg-cyan-500 text-white"
+                        : "bg-gray-100 text-gray-700"
                     }`}
-                >
-                  {name}
-                </button>
-              ))}
+                  >
+                    {name}
+                  </button>
+                ) : null
+              )}
             </div>
           </div>
 
@@ -1097,431 +1155,445 @@ export default function Lead() {
           </div>
         )}
         {/*-------Table-------*/}
-        <div className="overflow-x-auto mt-3 ">
-          <div className="min-w-full overflow-hidden rounded-md shadow-lg">
-            {selectedViewValue === "Table View" && activeButtonId === 1 && (
-              <table className="min-w-full bg-white">
-                <thead>
-                  <tr className="border-gray-300 border-b-2">
-                    {/* CHECKBOX */}
-                    <th className="px-2 py-3">
-                      <input
-                        type="checkbox"
-                        checked={isSelectAllChecked}
-                        onChange={handleSelectAllCheckbox}
-                      />
-                    </th>
-                    <th className="px-1 py-3 text-left border-r font-medium max-w-56  ">
-                      <div className="flex justify-between">
-                        <span>Lead Name</span>
-                        <span className="flex items-center">
-                          <FaAngleDown />
-                        </span>
-                      </div>
-                    </th>
-                    {business === "Brokerage" ? (
-                      ""
-                    ) : (
-                      <th className="px-1 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center max-w-56">
-                          <span>Email</span>
+        {viewLeads ? (
+          <div className="overflow-x-auto mt-3 ">
+            <div className="min-w-full overflow-hidden rounded-md shadow-lg">
+              {selectedViewValue === "Table View" && activeButtonId === 1 && (
+                <table className="min-w-full bg-white">
+                  <thead>
+                    <tr className="border-gray-300 border-b-2">
+                      {/* CHECKBOX */}
+                      <th className="px-2 py-3">
+                        <input
+                          type="checkbox"
+                          checked={isSelectAllChecked}
+                          onChange={handleSelectAllCheckbox}
+                        />
+                      </th>
+                      <th className="px-1 py-3 text-left border-r font-medium max-w-56  ">
+                        <div className="flex justify-between">
+                          <span>Lead Name</span>
+                          <span className="flex items-center">
+                            <FaAngleDown />
+                          </span>
                         </div>
                       </th>
-                    )}
-                    <th className="px-1 py-3 text-left border-r font-medium">
-                      <div className="flex justify-between items-center">
-                        <span>Phone No</span>
-                      </div>
-                    </th>
-                    {business === "Brokerage" ? (
-                      ""
-                    ) : (
+                      {business === "Brokerage" ? (
+                        ""
+                      ) : (
+                        <th className="px-1 py-3 text-left border-r font-medium">
+                          <div className="flex justify-between items-center max-w-56">
+                            <span>Email</span>
+                          </div>
+                        </th>
+                      )}
                       <th className="px-1 py-3 text-left border-r font-medium">
                         <div className="flex justify-between items-center">
-                          <span>Follow Up</span>
+                          <span>Phone No</span>
                         </div>
                       </th>
-                    )}
-                    <th className="px-1 py-3 text-left border-r font-medium max-w-36 min-w-32">
-                      <div className="flex justify-between items-center">
-                        <span>Segments</span>
-                      </div>
-                    </th>
-
-                    {business === "Brokerage" ? (
-                      <>
-                        {adminRole === "Admin" ? (
-                          <th className="px-1 py-3 text-left border-r font-medium w-48">
-                            <div className="flex justify-between items-center">
-                              <span>Managed By</span>
-                            </div>
-                          </th>
-                        ) : (
-                          ""
-                        )}
-                      </>
-                    ) : (
-                      <th className="px-1 py-3 text-left border-r font-medium w-48">
+                      {business === "Brokerage" ? (
+                        ""
+                      ) : (
+                        <th className="px-1 py-3 text-left border-r font-medium">
+                          <div className="flex justify-between items-center">
+                            <span>Follow Up</span>
+                          </div>
+                        </th>
+                      )}
+                      <th className="px-1 py-3 text-left border-r font-medium max-w-36 min-w-32">
                         <div className="flex justify-between items-center">
-                          <span>Managed By</span>
+                          <span>Segments</span>
                         </div>
                       </th>
-                    )}
 
-                    <th className="w-32">
-                      <VscSettings className="mx-auto " size={20} />
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentLeads?.map((item) => {
-                    const matchedUser =
-                      users?.length > 0
-                        ? users?.find(
-                          (user) => user?.userName === item?.assigned_To
-                        )
-                        : [];
-                    const role = matchedUser?.role;
-                    const roleColor = getRoleColorByIndex(role?.length); // Get color for the role
-                    return (
-                      <tr
-                        key={item.id}
-                        className="cursor-pointer  border-gray-300 border-b hover:bg-gray-100"
-                        onClick={() => handleClick(item)}
-                      >
-                        {/* CHECKBOX */}
-                        <td className="px-2 py-3 text-center">
-                          <input
-                            type="checkbox"
-                            checked={selectedIds.includes(item.id)}
-                            onClick={(e) => handleOnCheckBox(e, item)}
-                          />
-                        </td>
-                        {/* CONTACT NAME */}
-                        <td className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                          <div className="text-center">
-                            <span className="hover:text-blue-500 hover:underline hover:font-semibold text-md">
-                              {item.name}
-                            </span>
-                          </div>
-                          <div className="flex justify-start text-center mx-auto w-[80%]">
-                            <span className="bg-cyan-500  text-white text-xs rounded-full w-[100%]  py-1 px-1  mx-auto">
-                              {item.leadesStatus}
-                            </span>
-                          </div>
-                        </td>
-
-                        {/* EMAIL */}
-
-                        {business === "Brokerage" ? (
-                          ""
-                        ) : (
-                          <td className="px-1 py-4 border-b text- border-gray-300 text-sm  break-all max-w-48 min-w-24">
-                            <a
-                              href={`mailto:${item.email}`}
-                              onClick={(event) => event.stopPropagation()}
-                            >
-                              {item.email}
-                            </a>
-                          </td>
-                        )}
-                        <td className="px-1 py-4 border-b border-gray-300 text-sm">
-                          <div className="flex gap-2 items-center">
-                            <a
-                              href={`tel:${item.mobileNo}`}
-                              onClick={(event) => event.stopPropagation()}
-                            >
-                              {item.mobileNo}
-                            </a>
-                            <MdCall className="text-red-600" />
-                          </div>
-                        </td>
-                        {/*call_bck_DateTime*/}
-                        {business === "Brokerage" ? (
-                          ""
-                        ) : (
-                          <td className="px-1 py-4 border-b border-gray-300 text-sm">
-                            {
-                              item.call_bck_DateTime
-                                ?.replace("T", " ")
-                                .split(":00")[0]
-                            }
-                          </td>
-                        )}
-                        {/* Segments */}
-                        <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
-                          <div>
-                            {item.segments && (
-                              <span>
-                                {item.segments
-                                  .filter((segment) => segment.length > 1)
-                                  .join(", ")}
-                              </span>
-                            )}
-                          </div>
-                        </td>
-                        {/* Assigned To and User Role */}
-
-                        {business === "Brokerage" ? (
-                          <>
-                            {adminRole === "Admin" ? (
-                              <td className="px-2 py-4 border-b border-gray-300 text-sm text-center">
-                                {matchedUser && (
-                                  <div
-                                    className="text-xs font-semibold text-white px-2 py-2 rounded-full w-[100%] bg-cyan-500"
-                                    style={{
-                                      backgroundColor: roleColor
-                                        ? roleColor
-                                        : "",
-                                      borderRadius: "8px",
-                                      padding: 8,
-                                      textAlign: "center",
-                                    }}
-                                  >
-                                    {item.assigned_To} - ({matchedUser?.role})
-                                  </div>
-                                )}
-                              </td>
-                            ) : (
-                              ""
-                            )}
-                          </>
-                        ) : (
-                          <td className="px-2 py-4 border-b border-gray-300 text-sm text-center">
-                            {matchedUser && (
-                              <div
-                                className="text-xs font-semibold text-white px-2 py-2 rounded-full w-[100%] bg-cyan-500"
-                                style={{
-                                  backgroundColor: roleColor ? roleColor : "",
-                                  borderRadius: "8px",
-                                  padding: 8,
-                                  textAlign: "center",
-                                }}
-                              >
-                                {item.assigned_To} - ({matchedUser?.role})
+                      {business === "Brokerage" ? (
+                        <>
+                          {adminRole === "Admin" ? (
+                            <th className="px-1 py-3 text-left border-r font-medium w-48">
+                              <div className="flex justify-between items-center">
+                                <span>Managed By</span>
                               </div>
-                            )}
-                          </td>
-                        )}
-                        {/*------------------<- Create-SO->------------*/}
-                        {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
-                        <td className="text-center">
-                          <button
-                            className={
-                              business === "Brokerage"
-                                ? ""
-                                : ""
-                            }
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate(`/panel/lead/create/so/${item.id}`);
-                            }}
-                          >
-                            {/* SO */}
-                            {business === "Brokerage" ? (
-                              <span className="text-white text-xs rounded p-2   bg-blue-600 shadow-md rounded hover:bg-blue-500">
-                                Create Client
-                              </span>
-                            ) : (
-                              <>
-                                <span className=" text-white text-xm rounded p-1 bg-blue-600 shadow-md rounded hover:bg-blue-500">
-                                  SO
-                                </span>
-                              </>
-                            )}
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            )}
+                            </th>
+                          ) : (
+                            ""
+                          )}
+                        </>
+                      ) : (
+                        <th className="px-1 py-3 text-left border-r font-medium w-48">
+                          <div className="flex justify-between items-center">
+                            <span>Managed By</span>
+                          </div>
+                        </th>
+                      )}
 
-            {/* ------------GRID------------ */}
-            {/* ------------GRID------------ */}
-            {/* ------------GRID------------ */}
-            {/* ------------GRID------------ */}
-            {/* ------------GRID------------ */}
-            {selectedViewValue === "Grid View" && (
-              <>
-                <div className="min-w-full">
-                  <div className="grid grid-cols-3 gap-3">
-                    {/*---------Card starts Here */}
-                    {currentLeads.map((item) => (
-                      <div
-                        className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2"
-                        key={item.id}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="flex flex-col grow">
-                            <div className="flex justify-between font-medium">
-                              <span className="text-indigo-500">
+                      <th className="w-32">
+                        <VscSettings className="mx-auto " size={20} />
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentLeads?.map((item) => {
+                      const matchedUser =
+                        users?.length > 0
+                          ? users?.find(
+                              (user) => user?.userName === item?.assigned_To
+                            )
+                          : [];
+                      const role = matchedUser?.role;
+                      const roleColor = getRoleColorByIndex(role?.length); // Get color for the role
+                      return (
+                        <tr
+                          key={item.id}
+                          className="cursor-pointer  border-gray-300 border-b hover:bg-gray-100"
+                          // onClick={() => handleClick(item)}
+                        >
+                          {/* CHECKBOX */}
+                          <td className="px-2 py-3 text-center">
+                            <input
+                              type="checkbox"
+                              checked={selectedIds.includes(item.id)}
+                              onClick={(e) => handleOnCheckBox(e, item)}
+                            />
+                          </td>
+                          {/* CONTACT NAME */}
+                          <td
+                            onClick={edit ? () => handleClick(item) : undefined}
+                            className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600"
+                          >
+                            <div className="text-center">
+                              <span className="hover:text-blue-500 hover:underline hover:font-semibold text-md">
                                 {item.name}
                               </span>
-                              <BiEdit
-                                size={25}
-                                className="bg-white rounded-full shadow-md text-blue-500 p-1"
-                                onClick={() => handleClick(item)}
-                              />
                             </div>
-                            <div className="flex items-center gap-2 text-sm font-medium">
-                              {item.leadesStatus}
+                            <div className="flex justify-start text-center mx-auto w-[80%]">
+                              <div className="bg-cyan-500 text-center text-xs  text-white  rounded-full w-full  py-1 px-1 ">
+                                {item.leadesStatus}
+                              </div>
+                            </div>
+                          </td>
+
+                          {/* EMAIL */}
+
+                          {business === "Brokerage" ? (
+                            ""
+                          ) : (
+                            <td className="px-1 py-4 border-b text- border-gray-300 text-sm  break-all max-w-48 min-w-24">
+                              <a
+                                href={`mailto:${item.email}`}
+                                onClick={(event) => event.stopPropagation()}
+                              >
+                                {item.email}
+                              </a>
+                            </td>
+                          )}
+                          <td className="px-1 py-4 border-b border-gray-300 text-sm">
+                            <div className="flex gap-2 items-center">
+                              <a
+                                href={`tel:${item.mobileNo}`}
+                                onClick={(event) => event.stopPropagation()}
+                              >
+                                {item.mobileNo}
+                              </a>
+                              <MdCall className="text-red-600" />
+                            </div>
+                          </td>
+                          {/*call_bck_DateTime*/}
+                          {business === "Brokerage" ? (
+                            ""
+                          ) : (
+                            <td className="px-1 py-4 border-b border-gray-300 text-sm">
+                              {
+                                item.call_bck_DateTime
+                                  ?.replace("T", " ")
+                                  .split(":00")[0]
+                              }
+                            </td>
+                          )}
+                          {/* Segments */}
+                          <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
+                            <div>
+                              {item.segments && (
+                                <span>
+                                  {item.segments
+                                    .filter((segment) => segment.length > 1)
+                                    .join(", ")}
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                          {/* Assigned To and User Role */}
+
+                          {business === "Brokerage" ? (
+                            <>
+                              {adminRole === "Admin" ? (
+                                <td className="px-2 py-4 border-b border-gray-300 text-sm text-center">
+                                  {matchedUser && (
+                                    <div
+                                      className="text-xs font-semibold text-white px-2 py-2 rounded-full w-[100%] bg-cyan-500"
+                                      style={{
+                                        backgroundColor: roleColor
+                                          ? roleColor
+                                          : "",
+                                        borderRadius: "8px",
+                                        padding: 8,
+                                        textAlign: "center",
+                                      }}
+                                    >
+                                      {item.assigned_To} - ({matchedUser?.role})
+                                    </div>
+                                  )}
+                                </td>
+                              ) : (
+                                ""
+                              )}
+                            </>
+                          ) : (
+                            <td className="px-2 py-4 border-b border-gray-300 text-sm text-center">
+                              {matchedUser && (
+                                <div
+                                  className="text-xs font-semibold text-white px-2 py-2 rounded-full w-[100%] bg-cyan-500"
+                                  style={{
+                                    backgroundColor: roleColor ? roleColor : "",
+                                    borderRadius: "8px",
+                                    padding: 8,
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  {item.assigned_To} - ({matchedUser?.role})
+                                </div>
+                              )}
+                            </td>
+                          )}
+                          {/*------------------<- Create-SO->------------*/}
+                          {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
+                          {createSO ? (
+                            <td className="text-center">
+                              <button
+                                className={business === "Brokerage" ? "" : ""}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate(`/panel/lead/create/so/${item.id}`);
+                                }}
+                              >
+                                {/* SO */}
+                                {business === "Brokerage" ? (
+                                  <span className="text-white text-xs rounded p-2   bg-blue-600 shadow-md rounded hover:bg-blue-500">
+                                    Create Client
+                                  </span>
+                                ) : (
+                                  <>
+                                    <span className=" text-white text-xm rounded p-1 bg-blue-600 shadow-md rounded hover:bg-blue-500">
+                                      SO
+                                    </span>
+                                  </>
+                                )}
+                              </button>
+                            </td>
+                          ) : (
+                            <td></td>
+                          )}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              )}
+
+              {/* ------------GRID------------ */}
+              {/* ------------GRID------------ */}
+              {/* ------------GRID------------ */}
+              {/* ------------GRID------------ */}
+              {/* ------------GRID------------ */}
+              {selectedViewValue === "Grid View" && (
+                <>
+                  <div className="min-w-full">
+                    <div className="grid grid-cols-3 gap-3">
+                      {/*---------Card starts Here */}
+                      {currentLeads.map((item) => (
+                        <div
+                          className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2"
+                          key={item.id}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="flex flex-col grow">
+                              <div className="flex justify-between font-medium">
+                                <span className="text-indigo-500">
+                                  {item.name}
+                                </span>
+                                <BiEdit
+                                  size={25}
+                                  className="bg-white rounded-full shadow-md text-blue-500 p-1"
+                                  onClick={() => handleClick(item)}
+                                />
+                              </div>
+                              <div className="flex items-center gap-2 text-sm font-medium">
+                                {item.leadesStatus}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                            <div className="w-2/4 text-gray-500 text-sm">
+                              Company name
+                            </div>
+                            <div className="2-2/4 font-medium text-sm">
+                              {item.company}
+                            </div>
+                          </div>
+
+                          <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                            <div className="w-2/4 text-gray-500 text-sm">
+                              Title
+                            </div>
+                            <div className="2-2/4 font-medium text-sm">
+                              {item.tital}
+                            </div>
+                          </div>
+
+                          <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                            <div className="w-2/4">
+                              <IoIosMail className="text-2xl" />
+                            </div>
+                            <div className="2-2/4 font-medium  text-sm">
+                              {item.email}
+                            </div>
+                          </div>
+
+                          <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                            <div className="w-2/4">
+                              <FaPhoneAlt className="text-xl" />
+                            </div>
+                            <div className="2-2/4 font-medium text-sm">
+                              {item.phoneNo}
+                            </div>
+                          </div>
+                          <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                            <div className="w-2/4 text-gray-500 text-sm">
+                              Lead Source
+                            </div>
+                            <div className="2-2/4 font-medium text-sm">
+                              {item.leadsSource}
                             </div>
                           </div>
                         </div>
-                        <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                          <div className="w-2/4 text-gray-500 text-sm">
-                            Company name
-                          </div>
-                          <div className="2-2/4 font-medium text-sm">
-                            {item.company}
-                          </div>
-                        </div>
-
-                        <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                          <div className="w-2/4 text-gray-500 text-sm">
-                            Title
-                          </div>
-                          <div className="2-2/4 font-medium text-sm">
-                            {item.tital}
-                          </div>
-                        </div>
-
-                        <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                          <div className="w-2/4">
-                            <IoIosMail className="text-2xl" />
-                          </div>
-                          <div className="2-2/4 font-medium  text-sm">
-                            {item.email}
-                          </div>
-                        </div>
-
-                        <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                          <div className="w-2/4">
-                            <FaPhoneAlt className="text-xl" />
-                          </div>
-                          <div className="2-2/4 font-medium text-sm">
-                            {item.phoneNo}
-                          </div>
-                        </div>
-                        <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                          <div className="w-2/4 text-gray-500 text-sm">
-                            Lead Source
-                          </div>
-                          <div className="2-2/4 font-medium text-sm">
-                            {item.leadsSource}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
+                </>
+              )}
+            </div>
+
+            {/* LEAD OPERATIONS TABLE */}
+            <div className="min-w-full overflow-hidden rounded-md">
+              {/* MONITORING TABLE */}
+              {selectedViewValue === "Table View" && activeButtonId === 2 && (
+                <UploadLead />
+              )}
+            </div>
+
+            {/* LEAD ACTION TABLE */}
+            <div className="min-w-full overflow-hidden rounded-md">
+              {/* LEAD ACTION TABLE */}
+              {selectedViewValue === "Table View" && activeButtonId === 3 && (
+                <LeadOperations
+                  currentLeads={currentLeads}
+                  selectedIds={selectedIds}
+                  handleOnCheckBox={handleOnCheckBox}
+                  isSelectAllChecked={isSelectAllChecked}
+                  handleSelectAllCheckbox={handleSelectAllCheckbox}
+                />
+              )}
+              {/* RENDERING UPLOAD LEADS PAGE */}
+              {activeButtonId === 4 && (
+                <LeadAction currentLeads={currentLeads} />
+              )}
+            </div>
+
+            {selectedViewValue === "Table View" && (
+              <>
+                <div
+                  className={`flex justify-end m-4 ${
+                    activeButtonId === 2 ? "hidden" : "flex"
+                  }`}
+                >
+                  {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
+                  <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
+                    {/* /---------------------->Previous Button <----------------------< */}
+                    <button
+                      onClick={() => paginate(currentPage - 1)}
+                      className={`p-1 shadow-md rounded-full text-white ${
+                        currentPage === 1
+                          ? "border-gray-200 border-2"
+                          : "bg-cyan-500 border-2 border-gray-100"
+                      }`}
+                      disabled={currentPage === 1}
+                    >
+                      <GrFormPrevious size={25} />
+                    </button>
+
+                    {/* /---------------------->Dynamic Page Numbers <----------------------< */}
+                    {Array.from({ length: totalPage }, (_, i) => i + 1).map(
+                      (page) => {
+                        // Logic for ellipsis and showing only a subset of pages
+                        if (
+                          page === 1 ||
+                          page === totalPage ||
+                          (page >= currentPage - 1 && page <= currentPage + 1)
+                        ) {
+                          return (
+                            <button
+                              key={page}
+                              onClick={() => paginate(page)}
+                              className={`px-4 py-2 rounded mx-1 ${
+                                currentPage === page
+                                  ? "bg-blue-600 text-white"
+                                  : "bg-white text-gray-700 border"
+                              }`}
+                            >
+                              {page}
+                            </button>
+                          );
+                        } else if (
+                          (page === currentPage - 2 && page > 1) || // Add ellipsis before current
+                          (page === currentPage + 2 && page < totalPage) // Add ellipsis after current
+                        ) {
+                          return (
+                            <span key={page} className="px-2 text-gray-500">
+                              ...
+                            </span>
+                          );
+                        }
+                        return null;
+                      }
+                    )}
+
+                    {/* Next Button */}
+                    <button
+                      onClick={() => paginate(currentPage + 1)}
+                      className={`p-1 shadow-md rounded-full text-white${
+                        currentPage === totalPage
+                          ? " border-gray-200 border-2"
+                          : " bg-cyan-500 border-2 border-gray-100"
+                      }`}
+                      disabled={currentPage === totalPage}
+                    >
+                      <GrFormNext size={25} />
+                    </button>
+                  </nav>
+                </div>
+                <div
+                  className={`flex justify-center items-center m-4 ${
+                    activeButtonId === 2 ? "hidden" : "flex"
+                  }`}
+                >
+                  {/* Additional Content (if any) */}
                 </div>
               </>
             )}
           </div>
-
-          {/* LEAD OPERATIONS TABLE */}
-          <div className="min-w-full overflow-hidden rounded-md">
-            {/* MONITORING TABLE */}
-            {selectedViewValue === "Table View" && activeButtonId === 2 && (
-              <UploadLead />
-            )}
-          </div>
-
-          {/* LEAD ACTION TABLE */}
-          <div className="min-w-full overflow-hidden rounded-md">
-            {/* LEAD ACTION TABLE */}
-            {selectedViewValue === "Table View" && activeButtonId === 3 && (
-              <LeadOperations
-                currentLeads={currentLeads}
-                selectedIds={selectedIds}
-                handleOnCheckBox={handleOnCheckBox}
-                isSelectAllChecked={isSelectAllChecked}
-                handleSelectAllCheckbox={handleSelectAllCheckbox}
-              />
-            )}
-            {/* RENDERING UPLOAD LEADS PAGE */}
-            {activeButtonId === 4 && <LeadAction currentLeads={currentLeads} />}
-          </div>
-
-          {selectedViewValue === "Table View" && (
-            <>
-              <div
-                className={`flex justify-end m-4 ${activeButtonId === 2 ? "hidden" : "flex"
-                  }`}
-              >
-                {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
-                <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
-                  {/* /---------------------->Previous Button <----------------------< */}
-                  <button
-                    onClick={() => paginate(currentPage - 1)}
-                    className={`p-1 shadow-md rounded-full text-white ${currentPage === 1
-                      ? "border-gray-200 border-2"
-                      : "bg-cyan-500 border-2 border-gray-100"
-                      }`}
-                    disabled={currentPage === 1}
-                  >
-                    <GrFormPrevious size={25} />
-                  </button>
-
-                  {/* /---------------------->Dynamic Page Numbers <----------------------< */}
-                  {Array.from({ length: totalPage }, (_, i) => i + 1).map(
-                    (page) => {
-                      // Logic for ellipsis and showing only a subset of pages
-                      if (
-                        page === 1 ||
-                        page === totalPage ||
-                        (page >= currentPage - 1 && page <= currentPage + 1)
-                      ) {
-                        return (
-                          <button
-                            key={page}
-                            onClick={() => paginate(page)}
-                            className={`px-4 py-2 rounded mx-1 ${currentPage === page
-                              ? "bg-blue-600 text-white"
-                              : "bg-white text-gray-700 border"
-                              }`}
-                          >
-                            {page}
-                          </button>
-                        );
-                      } else if (
-                        (page === currentPage - 2 && page > 1) || // Add ellipsis before current
-                        (page === currentPage + 2 && page < totalPage) // Add ellipsis after current
-                      ) {
-                        return (
-                          <span key={page} className="px-2 text-gray-500">
-                            ...
-                          </span>
-                        );
-                      }
-                      return null;
-                    }
-                  )}
-
-                  {/* Next Button */}
-                  <button
-                    onClick={() => paginate(currentPage + 1)}
-                    className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage
-                      ? " border-gray-200 border-2"
-                      : " bg-cyan-500 border-2 border-gray-100"
-                      }`}
-                    disabled={currentPage === totalPage}
-                  >
-                    <GrFormNext size={25} />
-                  </button>
-                </nav>
-              </div>
-              <div
-                className={`flex justify-center items-center m-4 ${activeButtonId === 2 ? "hidden" : "flex"
-                  }`}
-              >
-                {/* Additional Content (if any) */}
-              </div>
-            </>
-          )}
-        </div>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );

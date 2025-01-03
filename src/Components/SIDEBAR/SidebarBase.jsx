@@ -12,7 +12,7 @@ export default function SidebarBase() {
     <div className="flex min-h-screen">
       {/* SidebarBar is fixed in place */}
       <div
-        className={`h-screen sticky top-0 scrollbar-hidden ${
+        className={`h-screen sticky top-0 scrollbar-hidden  ${
           toggle ? "Side_Bar_Large" : "Side_Bar_Small"
         }`}
       >

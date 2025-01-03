@@ -159,7 +159,7 @@ export default function SidebaBar({ toggle }) {
     },
     {
       key: 14, //newLy Added 1st Sept
-      data: 'Financial Activity',
+      data: 'Finance ',
       link: '/panel/FinancialActivity',
       icon: <VscGraph />,
     },
@@ -256,7 +256,7 @@ export default function SidebaBar({ toggle }) {
 console.log(welcomedata)
   return (
     <>
-      <div className="flex flex-col bg-cyan-500 gap-3 h-screen">
+      <div className="flex flex-col bg-cyan-500 gap-3  ">
         {/* Fixed Image Section */}
         <div className="relative">
           <div className="sticky top-0 mt-4">
@@ -264,21 +264,21 @@ console.log(welcomedata)
               id="logoImg"
               src={welcomedata?.tenentLogo || noAvatar}
               alt="Company Image"
-              className={`mt-3 ${toggle ? 'w-14 h-14' : 'w-24 h-24'} rounded-full shadow-md shadow-cyan-600 object-cover mx-auto border`}
+              className={`mt-3 ${toggle ? 'w-14 h-14' : 'w-20 h-20'} rounded-full shadow-md shadow-cyan-600 object-cover mx-auto border`}
             />
           </div>
         </div>
         {/* Scrollable Menu Section */}
-        <div className="flex flex-col h-full mt-10 CustomerTestimonialReview">
+        <div className="flex flex-col h-full mt-10 CustomerTestimonialReview ">
           {(business === "Brokerage" ? sideBar_Brokerage : sideBar).map(({ key, data, icon, link }, index) => (
             <Link to={link} onClick={() => handleClick(key)} key={key}>
               <li
-                className={`flex ${toggle ? 'justify-center' : 'justify-start'} items-center gap-3 text-white text-md font-small py-3 shadow-md ${index === 0 ? 'border-b-2 border-t-2' : 'border-b-2'
+                className={`flex ${toggle ? 'justify-start sm:justify-center' : 'justify-start'} items-center gap-3 text-white text-md font-small py-3 shadow-md ${index === 0 ? 'border-b-2 border-t-2' : 'border-b-2'
                   } ${index === sideBar.length - 1 ? 'border-b-2' : ''} hover:bg-gradient-to-b from-cyan-300 to-cyan-600`}
               >
-                <h1 className={`${toggle ? 'flex items-center gap-2 px-3 flex-col' : 'flex items-center gap-2 px-3'}`}>
-                  <span className={`${toggle ? 'text-2xl' : 'text-xl'}`}>{icon}</span>
-                  <span className={`${toggle ? 'text-xs whitespace-nowrap' : ''}`}>{data}</span>
+                <h1 className={`${toggle ? 'flex items-center gap-2  flex-col px-1' : 'flex items-center gap-2 px-2'}`}>
+                  <span className={`${toggle ? 'sm:text-xl hidden sm:block ' : 'text-lg'}`}>{icon}</span>
+                  <span className={`${toggle ? 'text-xs whitespace-nowrap ' : 'text-md'}`}>{data}</span>
                 </h1>
               </li>
             </Link>
