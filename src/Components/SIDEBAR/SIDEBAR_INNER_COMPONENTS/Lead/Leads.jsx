@@ -10,15 +10,13 @@ import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
 //React Icons
-import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
+import { FaAngleDown, FaPhoneAlt, FaBars } from "react-icons/fa";
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
-import { FaBars } from "react-icons/fa";
 import { VscSettings } from "react-icons/vsc";
 import { ImFilter } from "react-icons/im";
 import { MdCall } from "react-icons/md";
-import { GrFormPrevious } from "react-icons/gr";
-import { GrFormNext } from "react-icons/gr";
 import { TbRefresh } from "react-icons/tb";
 
 //Folder Imported
@@ -27,11 +25,13 @@ import { tenant_base_url, protocal_url } from "../../../../Config/config";
 //Mass Email
 import MassEmail from "../MassEmail/MassEmail";
 
+//name
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 import LeadOperations from "./LeadComponents/LeadOperations";
 import LeadAction from "./LeadComponents/LeadAction";
 import UploadLead from "./LeadComponents/UploadLead";
+
 import LeadAssignModal from "./LeadComponents/LeadAssignModal";
 import LeadStatusModal from "./LeadComponents/LeadStatusModal";
 import MultipleAssignModal from "./LeadComponents/MultipleAssignModal";
@@ -43,10 +43,7 @@ import { SearchElement } from "../SearchElement/SearchElement";
 
 //-----------------------------ToastContainer-----------------------------
 import { ToastContainer } from "react-toastify";
-import {
-  showSuccessToast,
-  showErrorToast,
-} from "./../../../../utils/toastNotifications";
+import {showSuccessToast,showErrorToast} from "./../../../../utils/toastNotifications";
 
 export default function Lead() {
   const navigate = useNavigate();
