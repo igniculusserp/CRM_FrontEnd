@@ -797,7 +797,7 @@ export default function Lead() {
           console.log("List : ", permissionsArray);
 
           //------------------------------------------------------ Set permissions ------------------------------------------------
-          if (permissionsArray.includes("View Leads")) {
+          if (permissionsArray.includes("View Leads") || businessRole==="Admin") {
             setViewName("Leads");
           } else {
             setViewName("");
@@ -916,7 +916,7 @@ export default function Lead() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            {fetchLead ? (
+            {fetchLead || businessRole==="Admin" ? (
               <div className="flex gap-1">
                 <button
                   className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
@@ -969,7 +969,7 @@ export default function Lead() {
             )}
             {/* PART-II */}
             {/*  Create Lead */}
-            {createLead ? (
+            {createLead || businessRole==="Admin" ?  (
               <div className="flex gap-1">
                 <Link to="/panel/createlead">
                   <button
@@ -1010,7 +1010,7 @@ export default function Lead() {
                 <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
                   <ul className="text-sm text-gray-700">
                     {dropActionsMenu.map(({ key, value }) =>
-                      permissions.includes(value) ? (
+                      permissions.includes(value) || businessRole==="Admin" ? (
                         <li
                           key={key}
                           className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
@@ -1042,7 +1042,7 @@ export default function Lead() {
             {/* BUTTONS */}
             <div className="flex gap-2">
               {dynamicButtons.map(({ id, name }) =>
-                permissions.includes(name) || name === viewName ? (
+                permissions.includes(name) || name === viewName || businessRole==="Admin" ? (
                   <button
                     key={id}
                     onClick={() => handleDynamicButtonsClick(id)}
@@ -1152,7 +1152,7 @@ export default function Lead() {
           </div>
         )}
         {/*-------Table-------*/}
-        {viewLeads ? (
+        {viewLeads || businessRole==="Admin" ? (
           <div className="overflow-x-auto mt-3 ">
             <div className="min-w-full overflow-hidden rounded-md shadow-lg">
               {selectedViewValue === "Table View" && activeButtonId === 1 && (
@@ -1255,7 +1255,7 @@ export default function Lead() {
                           </td>
                           {/* CONTACT NAME */}
                           <td
-                            onClick={edit ? () => handleClick(item) : undefined}
+                            onClick={edit || businessRole==="Admin" ? () => handleClick(item) : undefined}
                             className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600"
                           >
                             <div className="text-center">
@@ -1364,7 +1364,7 @@ export default function Lead() {
                           )}
                           {/*------------------<- Create-SO->------------*/}
                           {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
-                          {createSO ? (
+                          {createSO || businessRole==="Admin" ? (
                             <td className="text-center">
                               <button
                                 className={business === "Brokerage" ? "" : ""}
