@@ -603,7 +603,7 @@ export default function FollowUp() {
                 <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
                   <ul className="text-sm text-gray-700">
                     {actions.map(({ key, value }) =>
-                      permissions.includes(value) ? (
+                      permissions.includes(value) || businessRole==="Admin" ? (
                         <li
                           key={key}
                           className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
@@ -753,7 +753,7 @@ export default function FollowUp() {
                         <td
                           className=" py-4 border-b border-gray-300 text-sm leading-5 "
                           onClick={
-                            edit ? () => handleClick(order.id) : undefined
+                            edit || businessRole==="Admin"? () => handleClick(order.id) : undefined
                           }
                         >
                           <div className="flex items-center">

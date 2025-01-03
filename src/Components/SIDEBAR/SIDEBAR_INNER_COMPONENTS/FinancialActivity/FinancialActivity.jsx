@@ -84,7 +84,7 @@ export default function FinancialActivity() {
             {/* DYNAMIC BUTTONS */}
             <div className="flex gap-4">
               {Object.keys(dynamicButtons).map((key) =>
-                permissions.includes(key) ? (
+                permissions.includes(key)|| businessRole==="Admin" ? (
                   <button
                     key={key}
                     onClick={() => handleOptionClick(key)}
@@ -128,12 +128,12 @@ export default function FinancialActivity() {
         </div>
       )}
       {selectedButton === "View Expenses" ? (
-        permissions.includes("View Expenses") ? (
+        permissions.includes("View Expenses")|| businessRole==="Admin" ? (
           <ExpenseView setShowTopSection={setShowTopSection} />
         ) : (
           ""
         )
-      ) : permissions.includes("View Brokerage") ? (
+      ) : permissions.includes("View Brokerage") || businessRole==="Admin"  ? (
         <BrokerageView />
       ) : (
         ""

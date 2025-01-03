@@ -745,7 +745,7 @@ const businessType = localStorage.getItem("businessType");
 
                 <ul className="text-sm text-gray-700">
                     {dropActionsMenu.map(({ key, value }) =>
-                      permissions.includes(value) ? (
+                      permissions.includes(value) || businessRole==="Admin" ? (
                         <li
                           key={key}
                           className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
@@ -819,7 +819,7 @@ const businessType = localStorage.getItem("businessType");
         </div>
       </div>
       {/*-------Table-------*/}
-      {viewContact?
+      {viewContact || businessRole==="Admin"?
       
       <div className="overflow-x-auto mt-3 ">
         <div className="min-w-full overflow-hidden rounded-md">
@@ -908,7 +908,7 @@ const businessType = localStorage.getItem("businessType");
 
 
                       {/* CONTACT NAME */}
-                      <td className="px-1 py-4 border-b border-gray-300 text-sm" onClick={edit ?() => handleClick(item): undefined}>
+                      <td className="px-1 py-4 border-b border-gray-300 text-sm" onClick={edit || businessRole==="Admin" ?() => handleClick(item): undefined}>
                         <div className="flex items-center">
                           <span className="">{item.name}</span>
                         </div>
@@ -973,7 +973,7 @@ const businessType = localStorage.getItem("businessType");
                       {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
                      {/*------------------<- Create-SO->------------*/}
                         {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
-                      {createSO?
+                      {createSO || businessRole==="Admin" ?
                        <td className="text-center">
                        <button
                          className={

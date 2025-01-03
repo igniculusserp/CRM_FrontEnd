@@ -241,7 +241,7 @@ export default function Reports() {
         <div className="flex gap-3">
           {dynamicButtons.map(({ id, name }) => (
             <>
-              {permissions.includes(name) ? (
+              {permissions.includes(name) || businessRole==="Admin" ? (
                 <button
                   key={id}
                   onClick={() => handleOptionClick(id)}
@@ -384,37 +384,37 @@ export default function Reports() {
       <div className="overflow-x-auto">
         {/* EMPLOYEE REPORT TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedId === 1 && employee && (
+          {selectedId === 1 && (employee || businessRole==="Admin") && (
             <EmployeeReport currentReports={currentReports} />
           )}
         </div>
         {/* LEAD REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedId === 2 && lead && (
+          {selectedId === 2 && (lead|| businessRole==="Admin") && (
             <LeadsReport currentReports={currentReports} />
           )}
         </div>
         {/* CLIENT REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedId === 3 && client && (
+          {selectedId === 3 && (client|| businessRole==="Admin") && (
             <ClientReports currentReports={currentReports} />
           )}
         </div>
         {/* SALES REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedId === 4 && sales && (
+          {selectedId === 4 && (sales|| businessRole==="Admin") && (
             <SalesReports currentReports={currentReports} btn={buttonId} />
           )}
         </div>
         {/* DISPOSE REPORTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedId === 5 && dispose && (
+          {selectedId === 5 && (dispose|| businessRole==="Admin") && (
             <DisposeLeads currentReports={currentReports} />
           )}
         </div>
         {/* Monitoring TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
-          {selectedId === 6 && monitoring && (
+          {selectedId === 6 && (monitoring|| businessRole==="Admin") && (
             <Monitoring currentReports={currentReports} />
           )}
         </div>
