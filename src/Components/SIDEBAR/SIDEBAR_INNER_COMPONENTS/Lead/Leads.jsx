@@ -1,7 +1,6 @@
 //react
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 
 //external Packages
 import axios from "axios";
@@ -28,10 +27,13 @@ import MassEmail from "../MassEmail/MassEmail";
 //name
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
+
+//files
 import LeadOperations from "./LeadComponents/LeadOperations";
 import LeadAction from "./LeadComponents/LeadAction";
 import UploadLead from "./LeadComponents/UploadLead";
 
+//modals
 import LeadAssignModal from "./LeadComponents/LeadAssignModal";
 import LeadStatusModal from "./LeadComponents/LeadStatusModal";
 import MultipleAssignModal from "./LeadComponents/MultipleAssignModal";
@@ -47,7 +49,6 @@ import {showSuccessToast,showErrorToast} from "./../../../../utils/toastNotifica
 
 export default function Lead() {
   const navigate = useNavigate();
-  const location = useLocation();
   const name = getHostnamePart();
 
   //------- Business Type --------
@@ -86,7 +87,7 @@ export default function Lead() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   //------------------------------------------------------------------------------------------------
-  //----------------GET----------------
+  //----------------GET--->API<-------------------
   async function handleLead(id) {
     const bearer_token = localStorage.getItem("token");
     try {
@@ -113,7 +114,6 @@ export default function Lead() {
         );
 
         const data = response.data.data;
-
         setCurrentPage(1);
         setGetleads(data);
         setFilteredLeads(data);
@@ -147,23 +147,22 @@ export default function Lead() {
     }
   };
 
+
+  //useEffect ==> to fetch handleLead, getAllUsers, bussiness, & AdminRole
   useEffect(() => {
     handleLead();
     getAllUsers();
-    //------- Business Type --------
     setBusiness(businessType);
     setAdminRole(businessRole);
   }, []);
-
-  const [leadStatus, setLeadStatus] = useState("All Lead"); // Track the selected lead status
-  const [assignedTo, setAssignedTo] = useState("Assigned to"); // Track the selected assigned user
-
+  
   function handleLeadStatusSelection(status) {
     setLeadStatus(status); // Update leadStatus state
     handle_LeadStatus(status); // Apply filter based on selected status
   }
-
-  // Function to filter leads
+  
+  
+  // Function to --------------> filter leads <--------------
   function handle_LeadStatus(statusValue) {
     if (activeButtonId === 1) {
       let filteredLeads;
@@ -227,16 +226,22 @@ export default function Lead() {
     handle_AssignedTo(user); // Apply both filters
   }
 
-  //-----------------------------------------------> ALL-> LEADS <-functionality <-----------------------------------------------
+  //-----------------------------------------------> ALL LEADS-->>DROPDOWN<-----------------------------------------------
+  //BY_DEFAULT-TEXT
+  const [leadStatus, setLeadStatus] = useState("All Lead"); // Track the selected lead status
 
+  //->DROPDOWN_STATE
   const [allLeaddropDown, setAllLeaddropDown] = useState(false);
+  
+  //->TOGGLE 
   const toggleMenuAllLead = () => {
     setAllLeaddropDown(!allLeaddropDown);
   };
+  
 
-  //-----------------------------------------------> ALL LEADS DATA <-----------------------------------------------
-  //----------------STATUS DROPDOWN----------------
+  //ARRAY TO STORE DATA
   const [allLeadData, setallLeadData] = useState([]);
+  
   async function handleLeadStatus() {
     const bearer_token = localStorage.getItem("token");
 
@@ -261,13 +266,17 @@ export default function Lead() {
   }, []);
 
   //-----------------------------------------------> ALL-> ASSIGNED_TO <-functionality <-----------------------------------------------
-
+  
+  //BY_DEFAULT-TEXT
+  const [assignedTo, setAssignedTo] = useState("Assigned to"); // Track the selected assigned user
+  
+  //->DROPDOWN_STATE
   const [allAssigned_To_DROPDOWN, setallAssigned_To_DROPDOWN] = useState(false);
+  
   const toggleMenuAssigned_To = () => {
     setallAssigned_To_DROPDOWN(!allAssigned_To_DROPDOWN);
   };
 
-  //-----------------------------------------------> ALL ASSIGNED_TO DATA <-----------------------------------------------
   //----------------ASSIGNED_TO DROPDOWN----------------
   const [allAssigned_To_Data, setallAssigned_To_Data] = useState([]);
   async function handleallAssigned_To() {
@@ -293,37 +302,54 @@ export default function Lead() {
     handleallAssigned_To();
   }, []);
 
-  //------------------------------------------------------------------------------------------------
 
-  //------------------------------------------------------------------------------------------------
-  //----------------STRIPE BAR DROPDOWN----------------
+  //-------------------------------->WIZARD DROPDOWN<--------------------------------
+  //DATA
   const stripeBar = [
-    { key: 1, value: "Table View" },
-    { key: 2, value: "Grid View" },
+    { 
+      key: 1, 
+      value: "Table View" 
+    },
+    {
+      key: 2, 
+      value: "Grid View" 
+    },
   ];
 
+  //state to manage dropDown onMouseLeave
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
 
-  const handleStripeButton = (value) => {
-    setSelectedViewValue(value);
-  };
-
-  const togglestripeBar = () => {
-    setstripeBardropDown(!stripeBardropDown);
-  };
-
-  const [dropLogodropDown, setdropLogodropDown] = useState(false);
-
-  const togglesdropLogo = () => {
-    setdropLogodropDown(!dropLogodropDown);
-  };
-
+  //By Default value - to <TABLE VIEW>
   const [selectedViewValue, setSelectedViewValue] = useState(
     stripeBar[0].value
   );
 
-  //------------------------------------------------------------------------------------------------
-  //----------------ACTION BAR DROPDOWN----------------
+
+   //function to open/close dropdown onMouseLeave
+   const togglestripeBar = () => {
+    setstripeBardropDown(!stripeBardropDown);
+  };
+
+  //function to select value from dropDown
+  const handleStripeButton = (value) => {
+    setSelectedViewValue(value);
+  };
+
+ 
+  //dropDown --> state OnClick
+  const [dropLogodropDown, setdropLogodropDown] = useState(false);
+
+  //dropDown --> function OnClick
+  const togglesdropLogo = () => {
+    setdropLogodropDown(!dropLogodropDown);
+  };
+
+
+
+
+  //-------------------------------------------------------------------------------------
+  
+  //-------------------------------->ACTION BAR DROPDOWN<--------------------------------
   const dropActionsMenu = [
     // { key: 0, value: "Actions" },
     { key: 1, value: "Mass Delete" },
@@ -448,6 +474,7 @@ export default function Lead() {
   //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
   //-------> XLSX used here
   const exportToExcel = () => {
+    console.log('runned')
     const leadsToExport = currentLeads.filter((lead) =>
       selectedIds.includes(lead.id)
     );
@@ -632,7 +659,7 @@ export default function Lead() {
   const handleDynamicButtonsClick = (id) => {
     setActiveButtonId(id); // Update state first
     localStorage.setItem("activeButtonId", id);
-    handleLead(id); // Pass the clicked button's id directly
+    handleLead(id); 
   };
 
   useEffect(() => {
