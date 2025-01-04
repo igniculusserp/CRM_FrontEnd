@@ -20,7 +20,7 @@ export default function SidebarBase() {
         <SidebarBar toggle={toggle} setToggle={setToggle} />
       </div>
       {/* Main content and header */}
-      <div  className={`flex flex-col ${
+      <div  className={`h-screen flex flex-col ${
           toggle ? "Main_Screen_Large" : "Main_Screen_Small"
         }`}>
         <Header toggle={toggle} setToggle={setToggle} />
