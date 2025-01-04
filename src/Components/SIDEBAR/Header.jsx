@@ -113,10 +113,8 @@ export default function Header({ toggle, setToggle }) {
   };
 
   const menu = [
-    { key: 1, logo: <RiAddBoxFill /> },
     { key: 2, logo: <FiMessageSquare />, functionality: handlePopup },
     { key: 3, logo: <IoMdNotifications /> },
-    { key: 4, logo: <TbCalendarMonth /> },
     { key: 5, logo: <IoMdSettings />, link: '/panel/setting' },
     {
       key: 6,
@@ -146,21 +144,22 @@ export default function Header({ toggle, setToggle }) {
   return (
     <>
       <ToastContainer />
-      <div className="flex justify-between items-center py-3 mx-3 overflow-visible">
-        <div className="flex justify-center items-center">
+      <div className="flex justify-between items-center py-3 mx-3 sm:min-w-screen">
+      <div className="flex justify-center items-center  ">
+        {/*-> Toggle Button <-*/}
           <button
             className="flex flex-start bg-cyan-500 text-white shadow rounded-full text-lg p-1 "
             onClick={() => setToggle(!toggle)}
           >
             {toggle ? <FaBarsStaggered /> : <FaBars />}
           </button>
-
-          <button className="flex items-center gap-2 border rounded-full py-1 px-2 ml-[10px]">
+        {/*-> Igniculuss DropDown Button hidden For mobile <-*/}
+          <button className="sm:flex items-center gap-2 border rounded-full py-1 px-2 ml-4 hidden ">
             Igniculuss <FaAngleDown />
           </button>
         </div>
 
-        <div className="flex gap-1 justify-end items-center">
+        <div className="flex gap-1 justify-start sm:justify-end  items-center shadow rounded-full px-2">
           {menu.map(({ key, logo, link, functionality }) => (
             <div
               key={key}
