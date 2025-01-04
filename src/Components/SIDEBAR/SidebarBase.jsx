@@ -16,7 +16,7 @@ export default function SidebarBase() {
           toggle ? "Side_Bar_Large" : "Side_Bar_Small"
         }`}
       >
-        <SidebarBar toggle={toggle} />
+        <SidebarBar toggle={toggle} setToggle={setToggle} />
       </div>
       {/* Main content and header */}
       <div  className={`flex flex-col ${
