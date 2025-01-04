@@ -9,8 +9,9 @@ export default function SidebarBase() {
   const [toggle, setToggle] = useState(false);
 
   return (
-    <div className="flex ">
+    <div className="flex reative">
       {/* SidebarBar is fixed in place */}
+      <div className={toggle?"hide_View":"Show_View"} onClick={()=>{setToggle(false)}} />
       <div
         className={`h-screen sticky top-0 scrollbar-hidden  ${
           toggle ? "Side_Bar_Large" : "Side_Bar_Small"

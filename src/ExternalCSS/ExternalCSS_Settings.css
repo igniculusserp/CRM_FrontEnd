@@ -159,12 +159,12 @@ input[type="number"] {
 @media only screen and (max-width: 768px) and (min-width: 576px){
  
   .Side_Bar_Large{
-    width: 20vw;
+    width: 150px;
     position: absolute;
     z-index: 5;
   }
   .Main_Screen_Large{
-    width: 80vw;
+    width: 100vw;
     /* overflow-x: scroll; */
   }
   
@@ -198,12 +198,12 @@ input[type="number"] {
 @media only screen and (max-width: 576px) {
 
   .Side_Bar_Large{
-    width: 20vw;
+    width: 150px;
     position: absolute;
     z-index: 5;
   }
   .Main_Screen_Large{
-    width: 80vw;
+    width: 100vw;
     /* overflow-x: scroll; */
   }
   
@@ -228,7 +228,5 @@ input[type="number"] {
   }
   .Show_View{
     display: none;
-  }
- 
- 
+  } 
 }
