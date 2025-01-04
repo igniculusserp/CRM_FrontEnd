@@ -47,9 +47,9 @@ import CreateOrder from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/CreateOrd
 import CreateMailBox from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/CreateMailBox.jsx";
 
 // SMS BOX => INNER COMPONENT
-import SmsBox from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SMSBox/SmsBox.jsx";
-import CreateSendSms from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SMSBox/CreateSendSms.jsx";
-import CreateSendEmail from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SMSBox/SMSComponents/CreateSendEmail.jsx";
+import ServiceBox from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/ServiceBox/ServiceBox.jsx";
+import CreateSendSms from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/ServiceBox/CreateSendSms.jsx";
+import CreateSendEmail from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/ServiceBox/SMSComponents/CreateSendEmail.jsx"
 
 // Financial Activity => INNER COMPONENT
 import FinancialActivity from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FinancialActivity/FinancialActivity.jsx";
@@ -181,9 +181,9 @@ const router = createBrowserRouter([
       { path: "/panel/createmail", element: <CreateMailBox /> },
 
       // SMS BOX => INNER COMPONENT
-      { path: "/panel/smsBox", element: <SmsBox /> },
-      { path: "/panel/sendsms", element: <CreateSendSms /> },
-      { path: "/panel/sendemail", element: <CreateSendEmail /> },
+      { path: "/panel/servicebox", element: <ServiceBox /> },
+      { path: "/panel/sendsms",    element: <CreateSendSms /> },
+      { path: "/panel/sendemail",  element: <CreateSendEmail /> },
 
       // SMS BOX => INNER COMPONENT
       { path: "/panel/FinancialActivity", element: <FinancialActivity /> },

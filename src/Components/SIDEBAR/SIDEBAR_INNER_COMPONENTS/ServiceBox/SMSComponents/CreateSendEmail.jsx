@@ -226,7 +226,7 @@ const handleSubmit = async (e) => {
       config
     );
     alert("Successfully Added");
-    navigate(`/panel/smsbox`);
+    navigate(`/panel/servicebox`);
     console.log("Response from the server:", response.data);
   } catch (error) {
     console.error("Error sending email data:", error);
@@ -234,18 +234,12 @@ const handleSubmit = async (e) => {
   }
 };
 
-
-
-
-
-  
-
   return (
     <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
       <div className="flex py-2 px-3 items-center justify-between bg-white rounded-md shadow-md">
         <h1 className="text-xl">Send Email</h1>
         <Link
-          to="/panel/smsbox"
+          to="/panel/servicebox"
           className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
         >
           Cancel

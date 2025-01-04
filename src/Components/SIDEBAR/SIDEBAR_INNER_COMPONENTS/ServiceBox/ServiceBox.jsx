@@ -13,7 +13,7 @@ import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
-export default function SmsBox() {
+export default function ServiceBox() {
   const navigate = useNavigate();
   const name = getHostnamePart();
 
