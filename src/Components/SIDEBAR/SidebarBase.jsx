@@ -9,14 +9,18 @@ export default function SidebarBase() {
   const [toggle, setToggle] = useState(false);
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen relative">
+     <div
+  className={toggle ? "hide_View" : "Show_View"}
+  onClick={() => setToggle(!toggle)}
+/>
       {/* SidebarBar is fixed in place */}
       <div
         className={`h-screen sticky top-0 scrollbar-hidden  ${
           toggle ? "Side_Bar_Large" : "Side_Bar_Small"
         }`}
       >
-        <SidebarBar toggle={toggle} />
+        <SidebarBar toggle={toggle} setToggle={setToggle} />
       </div>
       {/* Main content and header */}
       <div  className={`flex flex-col ${

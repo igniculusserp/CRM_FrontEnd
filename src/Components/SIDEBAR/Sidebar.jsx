@@ -15,7 +15,6 @@ import { IoDocumentTextOutline } from 'react-icons/io5';
 import { VscGraph } from 'react-icons/vsc';
 import { FaRegHandshake } from 'react-icons/fa6';
 import { MdOutlineEmail } from 'react-icons/md';
-import { MdOutlineKeyboardVoice } from 'react-icons/md';
 import PropTypes from 'prop-types';
 import noAvatar from "../../assets/images/noAvatar.png";
 
@@ -25,7 +24,7 @@ import { getHostnamePart } from './SIDEBAR_SETTING/ReusableComponents/GlobalHost
 import { main_base_url } from './../../Config/config';
 
 
-export default function SidebaBar({ toggle }) {
+export default function SidebaBar({ toggle, setToggle }) {
   const name = getHostnamePart();
   const [welcomedata, setWelcomeData] = useState([]);
 
@@ -251,6 +250,7 @@ export default function SidebaBar({ toggle }) {
 
   let handleClick = (key) => {
     setactive(key);
+    setToggle(false);
   };
 
 console.log(welcomedata)
@@ -292,4 +292,5 @@ console.log(welcomedata)
 }
 SidebaBar.propTypes = {
   toggle: PropTypes.bool.isRequired,
+  setToggle: PropTypes.bool.isRequired,
 }
