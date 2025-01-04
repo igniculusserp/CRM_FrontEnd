@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate for naviga
 import { Link } from "react-router-dom";
 
 //reactIcons
+import { ImCancelCircle } from "react-icons/im";
+
 import {
   FaArrowAltCircleDown,
   FaArrowAltCircleUp,
@@ -328,10 +330,20 @@ export default function Home() {
 
   return (
     <>
-      <main className="min-h-screen flex flex-col gap-1">
+      <main className="min-h-screen flex flex-col gap-1 ">
         {showSubscription && (
-          <div className="flex items-center justify-between bg-white shadow-md px-3 py-1.5 border-[0.5px] border-top transition transform duration-500 ease-in-out animate-fade-in animate-slide-down text-white p-4">
+          <div className="
+            flex items-center justify-between 
+            bg-white 
+            shadow-md 
+            border-t-2 
+            transition transform duration-500 ease-in-out animate-fade-in animate-slide-down 
+            text-white 
+            py-2 px-3
+            "
+            >
             <div className="flex flex-col justify-start">
+            {/*Condition if reamining days are less than 5  */}
               <h1
                 className={`${
                   remainingDays < 5 ? "text-red-500" : "text-gray-700"
@@ -348,14 +360,12 @@ export default function Home() {
             {/* SECOND */}
             <div className="flex items-center gap-4">
               <Link to="/panel/subscription/">
-                <button className="cursor-pointer py-2 bg-cyan-400 text-white text-sm rounded-md px-2 border-none font-semibold shadow-md">
+                <button className="cursor-pointer py-2 bg-cyan-500 text-white text-sm rounded-md px-2 border-none font-semibold hover:shadow-md">
                   Choose Plan
                 </button>
               </Link>
               <Link to="/panel" onClick={() => setShowSubscription(false)}>
-                <button className="py-[2px] border-[0.5px] border-red-400 cursor-pointer px-2 rounded-md text-red-600">
-                  X
-                </button>
+                <ImCancelCircle color="red" size={25} />
               </Link>
             </div>
           </div>
