@@ -199,17 +199,23 @@ export default function AddPermission({ onCancel }) {
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-full z-10">
                           <ul className="py-2 text-sm text-gray-700">
                             {grpName.length > 0 ? (
-                              grpName.map((group) => (
-                                <li
-                                  key={group.id}
-                                  onClick={() =>
-                                    handleDropdownLeadStatus(group.groupName)
-                                  }
-                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                                >
-                                  {group.groupName}
-                                </li>
-                              ))
+                              grpName.map((group) => 
+                                
+                                group.groupName ==="Admin" ? null : 
+
+                                  (
+                                  <li
+                                    key={group.id}
+                                    onClick={() =>
+                                      handleDropdownLeadStatus(group.groupName)
+                                    }
+                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                  >
+                                    {group.groupName}
+                                  </li>
+                                )
+                                
+                            )
                             ) : (
                               <li className="flex items-center px-4 py-2 text-center gap-1">
                                 <IoInformationCircle
