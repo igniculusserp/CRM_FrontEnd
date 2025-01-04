@@ -9,7 +9,7 @@ export default function SidebarBase() {
   const [toggle, setToggle] = useState(false);
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex ">
       {/* SidebarBar is fixed in place */}
       <div
         className={`h-screen sticky top-0 scrollbar-hidden  ${
