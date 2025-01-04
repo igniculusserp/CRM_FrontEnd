@@ -90,8 +90,8 @@ export default function SidebaBar({ toggle }) {
     // },
     {
       key: 9,
-      data: 'Sms Box',
-      link: '/panel/smsBox',
+      data: 'Service Box',
+      link: '/panel/servicebox',
       icon: <MdOutlineEmail />,
     },
     // {
@@ -201,8 +201,8 @@ export default function SidebaBar({ toggle }) {
     // },
     {
       key: 9,
-      data: 'Sms Box',
-      link: '/panel/smsBox',
+      data: 'Service Box',
+      link: '/panel/servicebox',
       icon: <MdOutlineEmail />,
     },
     // {
