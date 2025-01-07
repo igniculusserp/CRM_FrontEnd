@@ -80,7 +80,7 @@ const SalesReportChart = ({ businessType, totalBrokerage, targetAchieved }) => {
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="flex w-full items-center justify-between">
-        <h2 className="text-xl font-thin text-left mb-4">Sales Report</h2>
+        <h2 className="text-xl font-normal text-left mb-4">Sales Report</h2>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-[#8884d8] rounded-sm"></div>

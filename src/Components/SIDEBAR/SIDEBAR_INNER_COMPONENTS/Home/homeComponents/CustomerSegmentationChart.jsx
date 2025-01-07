@@ -72,9 +72,9 @@ const CustomerSegmentationChart = ({ totalBrokerage, businessType,targetAchieved
         </Pie>
       </PieChart>
 
-      <div className="absolute text-center top-14 bottom-8">
+      <div className="absolute text-center top-14 bottom-8 text-sm">
         <p>Target Achieved</p>
-        <p className="text-2l font-semibold">{Percentage} %</p>
+        <p className="text-lg font-normal">{Percentage} %</p>
       </div>
     </div>
   );

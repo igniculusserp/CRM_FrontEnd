@@ -383,9 +383,9 @@ export default function Home() {
         </h1>
         {/* ------- TOP CARDS ------- */}
         {/* ------- 4 Card, Charo ki alag alag CSS {Parent}  ------- */}
-        <div className="sm:flex items-center px-2 sm:gap-3 gap-2 grid grid-cols-2">
+        <div className="sm:grid sm:grid-cols-2 items-center px-2 sm:gap-3 gap-2 grid grid-cols-2 lg:flex">
           {/* ------- CARD --> CHILD:1------- */}
-          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 sm:w-1/4 ">
+          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 md:w-4/4  lg:w-1/4">
             <div className="flex flex-col">
               { }
               <h1 className="font-light uppercase text-sm font-medium	">
@@ -441,7 +441,7 @@ export default function Home() {
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------- */}
           {/* ------- CARD --> CHILD:2 ------- */}
-          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 sm:w-1/4 ">
+          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44  md:w-4/4  lg:w-1/4">
             <div className="flex flex-col">
               <h1 className="font-light uppercase text-sm font-medium">
                 {business === "Brokerage" ? "Funds" : "REVENUE THIS MONTH"}
@@ -493,7 +493,7 @@ export default function Home() {
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------- */}
           {/* ------- CARD --> CHILD:3------- */}
-          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 sm:w-1/4 ">
+          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 md:w-4/4  lg:w-1/4">
             <div className="flex flex-col">
               { }
               <h1 className="font-light uppercase text-sm font-medium	">
@@ -580,7 +580,7 @@ export default function Home() {
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------- */}
           {/* ------- CARD --> CHILD -> 4 ------- */}
-          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 sm:w-1/4 ">
+          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 md:w-4/4  lg:w-1/4">
             <div className="flex flex-col">
               { }
               <h1 className="font-light uppercase text-sm font-medium	">
@@ -641,8 +641,8 @@ export default function Home() {
           {/* ---------------------------------------------------------------------------------------------------------------- */}
 
         <div className="sm:flex gap-3 m-2 grid grid-cols-1">
-          <div className="flex-4 flex flex-col bg-white py-4 px-4 rounded-md shadow-md w-[400px] justify-between">
-            <h1 className="font-thin text-xl">
+          <div className="flex-4 flex flex-col bg-white py-4 px-4 rounded-md shadow-md sm:w-72 w-full  justify-between">
+            <h1 className="font-normal text-xl">
               {business === "Brokerage" ? "Brokerage" : "Custom Segmentation"}
             </h1>
             <div className="flex items-center flex-col gap-2">
