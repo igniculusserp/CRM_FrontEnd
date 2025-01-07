@@ -576,12 +576,12 @@ export default function VoiceBox() {
       </div>
 
       {/* ------------TABLE------------ */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto leads_Table_Main_Container">
         {/* MONITORING TABLE */}
-        <div className="min-w-full overflow-hidden rounded-md">
+        <div className="min-w-full leads_Table_Container rounded-md">
           {selectedViewValue === 'Table View' &&
             selectedButton === 'Monitoring' && (
-              <table className="min-w-full bg-white">
+              <table className="min-w-full bg-white leads_Table">
                 {/* ----------------- TABLE HEAD START ----------------- */}
                 <thead>
                   <tr className="border-gray-300 border-b-2">
@@ -737,10 +737,10 @@ export default function VoiceBox() {
         </div>
 
         {/* REPORTS TABLE */}
-        <div className="min-w-full overflow-hidden rounded-md">
+        <div className="min-w-full leads_Table_Container rounded-md">
           {selectedViewValue === 'Table View' &&
             selectedButton === 'Reports' && (
-              <table className="min-w-full bg-white">
+              <table className="min-w-full bg-white leads_Table">
                 {/* ----- TABLE HEAD ----- */}
                 <thead>
                   <tr className="border-gray-300 border-b-2">
@@ -904,10 +904,10 @@ export default function VoiceBox() {
         </div>
 
         {/* GATEWAY TABLE */}
-        <div className="min-w-full overflow-hidden rounded-md">
+        <div className="min-w-full leads_Table_Container rounded-md">
           {selectedViewValue === 'Table View' &&
             selectedButton === 'SMS via GMS Gateway' && (
-              <table className="min-w-full bg-white">
+              <table className="min-w-full bg-white leads_Table">
                 {/* -------- TABLE HEAD -------- */}
                 <thead>
                   <tr className="border-gray-300 border-b-2">

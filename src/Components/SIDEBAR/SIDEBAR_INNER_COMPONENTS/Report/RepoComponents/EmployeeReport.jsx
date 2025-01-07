@@ -4,7 +4,7 @@ import { FaBars } from 'react-icons/fa'; // Assuming you are using Font Awesome
 
 export default function EmployeeReport({ currentReports }) {
   return (
-    <table className="min-w-full bg-white">
+    <table className="min-w-full bg-white leads_Table">
       {/* ----------------- TABLE HEAD START ----------------- */}
       <thead>
         <tr className="border-gray-300 border-b-2">

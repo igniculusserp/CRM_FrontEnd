@@ -475,16 +475,16 @@ export default function ServiceBox() {
       </div>
 
       {/* ------------TABLE------------ */}
-      <div className="overflow-x-auto mt-3">
+      <div className="overflow-x-auto mt-3 leads_Table_Main_Container">
         {/* SEND SMS TABLE */}
-        <div className="min-w-full overflow-hidden rounded-md">
+        <div className="min-w-full leads_Table_Container rounded-md">
           {selectedViewValue === "Table View" &&
             selectedButton === "Send SMS" &&  (emailPermission|| businessRole==="Admin") && (
               <SendSMS currentSms={currentSms} />
             )}
         </div>
         {/* SEND EMAIL TABLE */}
-        <div className="min-w-full overflow-hidden rounded-md">
+        <div className="min-w-full leads_Table_Container rounded-md">
           {selectedViewValue === "Table View" &&
             selectedButton === "Send Email" &&  (smsPermission|| businessRole==="Admin") && (
               <SendEmail

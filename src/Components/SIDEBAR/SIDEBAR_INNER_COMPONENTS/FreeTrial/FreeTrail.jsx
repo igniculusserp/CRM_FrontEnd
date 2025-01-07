@@ -708,11 +708,11 @@ export default function FreeTrail() {
         </div>
       </div>
       {/* TABLE VIEW */}
-      <div className="overflow-x-auto ">
-        <div className="min-w-full rounded-md overflow-hidden">
+      <div className="overflow-x-auto leads_Table_Main_Container">
+        <div className="min-w-full rounded-md leads_Table_Container">
           {/*-------Table-------*/}
           {selectedViewValue === "Table View" && (
-            <table className="min-w-full bg-white">
+            <table className="min-w-full bg-white leads_Table">
               {/*--------------TABLE DATA START------------- */}
               <thead>
                 <tr className="border-gray-300 border-b-2">

@@ -7,7 +7,7 @@ export default function Monitoring({ currentReports }) {
   return (
     <>
 
-    <table className="min-w-full bg-white">
+    <table className="min-w-full bg-white leads_Table">
       {/* ----------------- TABLE HEAD START ----------------- */}
       <thead>
         <tr className="border-gray-300 border-b-2">

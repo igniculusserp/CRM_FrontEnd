@@ -381,39 +381,39 @@ export default function Reports() {
       </div>
 
       {/* ------------TABLE------------ */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto leads_Table_Main_Container">
         {/* EMPLOYEE REPORT TABLE */}
-        <div className="min-w-full overflow-hidden rounded-md">
+        <div className="min-w-full leads_Table_Container rounded-md">
           {selectedId === 1 && (employee || businessRole==="Admin") && (
             <EmployeeReport currentReports={currentReports} />
           )}
         </div>
         {/* LEAD REPORTS TABLE */}
-        <div className="min-w-full overflow-hidden rounded-md">
+        <div className="min-w-full leads_Table_Container rounded-md">
           {selectedId === 2 && (lead|| businessRole==="Admin") && (
             <LeadsReport currentReports={currentReports} />
           )}
         </div>
         {/* CLIENT REPORTS TABLE */}
-        <div className="min-w-full overflow-hidden rounded-md">
+        <div className="min-w-full leads_Table_Container rounded-md">
           {selectedId === 3 && (client|| businessRole==="Admin") && (
             <ClientReports currentReports={currentReports} />
           )}
         </div>
         {/* SALES REPORTS TABLE */}
-        <div className="min-w-full overflow-hidden rounded-md">
+        <div className="min-w-full leads_Table_Container rounded-md">
           {selectedId === 4 && (sales|| businessRole==="Admin") && (
             <SalesReports currentReports={currentReports} btn={buttonId} />
           )}
         </div>
         {/* DISPOSE REPORTS TABLE */}
-        <div className="min-w-full overflow-hidden rounded-md">
+        <div className="min-w-full leads_Table_Container rounded-md">
           {selectedId === 5 && (dispose|| businessRole==="Admin") && (
             <DisposeLeads currentReports={currentReports} />
           )}
         </div>
         {/* Monitoring TABLE */}
-        <div className="min-w-full overflow-hidden rounded-md">
+        <div className="min-w-full leads_Table_Container rounded-md">
           {selectedId === 6 && (monitoring|| businessRole==="Admin") && (
             <Monitoring currentReports={currentReports} />
           )}

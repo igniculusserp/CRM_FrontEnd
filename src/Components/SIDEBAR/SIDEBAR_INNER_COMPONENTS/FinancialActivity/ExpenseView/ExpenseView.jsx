@@ -214,11 +214,11 @@ export default function ExpenseView({ setShowTopSection }) {
           </div>
 
           {/* TABLE VIEW */}
-          <div className="overflow-x-auto">
-            <div className="min-w-full rounded-md overflow-hidden">
+          <div className="overflow-x-auto leads_Table_Main_Container">
+            <div className="min-w-full rounded-md leads_Table_Container">
               {/*--------------TABLE HEAD START------------- */}
 
-              <table className="min-w-full bg-white">
+              <table className="min-w-full bg-white leads_Table">
                 <thead>
                   <tr className="border-gray-300 border-b-2">
                     <th className="px-1 py-3">
