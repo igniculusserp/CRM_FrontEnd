@@ -28,7 +28,7 @@ export default function SidebarBase() {
         <div className="flex-grow overflow-auto bg-gray-300">
           <Outlet />
           {/* CHAT POPUP */}
-          <ChatPopup />
+
         </div>
       </div>
     </div>
