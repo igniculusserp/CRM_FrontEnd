@@ -1,13 +1,13 @@
 //react
 import { useEffect, useState } from "react";
-import {Link, useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 //external
 import axios from "axios";
 
 //reactIcons
 import { ImCancelCircle } from "react-icons/im";
-import { FaArrowAltCircleDown,FaArrowAltCircleUp,FaUsers} from "react-icons/fa";
+import { FaArrowAltCircleDown, FaArrowAltCircleUp, FaUsers } from "react-icons/fa";
 import { CiBadgeDollar } from "react-icons/ci";
 import { FcSalesPerformance } from "react-icons/fc";
 import { FaUsersRectangle } from "react-icons/fa6";
@@ -29,7 +29,7 @@ export default function Home() {
   //------- Business Type --------
   const businessType = localStorage.getItem("businessType");
   const [business, setBusiness] = useState("");
-  
+
   //
   const navigate = useNavigate();
 
@@ -161,26 +161,26 @@ export default function Home() {
 
   //----------------Calculate percentage increase for clients-----------------
   const clientPercentageChange =
-        previousMonthClientCount === 0
-          ? currentMonthClientCount * 100 
-          : ((currentMonthClientCount - previousMonthClientCount) /
-          previousMonthClientCount) *
-            100;
+    previousMonthClientCount === 0
+      ? currentMonthClientCount * 100
+      : ((currentMonthClientCount - previousMonthClientCount) /
+        previousMonthClientCount) *
+      100;
   //---------------------last month diffrence-------------------------
-  
+
   const clientDiffrence = currentMonthClientCount - previousMonthClientCount;
-  
+
   //-------------------------- Calculate percentage increase for revenue-----------------------------
   const revenuePercentageChange =
-      previousMonthSales === 0
-        ? currentMonthSales * 100 
-        : ((currentMonthSales - previousMonthSales) /
+    previousMonthSales === 0
+      ? currentMonthSales * 100
+      : ((currentMonthSales - previousMonthSales) /
         previousMonthSales) *
-          100;
-  
+      100;
+
   //---------------------last month diffrence-------------------------
   const revenueDiffrence = currentMonthSales - previousMonthSales;
-  
+
   //-------------------------- Determine increase or decrease status for revenue and sales--------------------------
   const revenueStatus = revenuePercentageChange > 0 ? "up" : "down";
   const clientStatus = clientPercentageChange > 0 ? "up" : "down";
@@ -196,47 +196,47 @@ export default function Home() {
   //----------------Calculate percentage increase for leads-----------------
 
   const leadsPercentage =
-        previousMonthLeads === 0
-          ? currentMonthLeads * 100 
-          : ((currentMonthLeads - previousMonthLeads) /
-          previousMonthLeads) *
-            100;
+    previousMonthLeads === 0
+      ? currentMonthLeads * 100
+      : ((currentMonthLeads - previousMonthLeads) /
+        previousMonthLeads) *
+      100;
   //---------------------last month diffrence-------------------------
   const leadsDiffrence = currentMonthLeads - previousMonthLeads;
-  
+
   //-------------------------- Calculate percentage increase for intrested leads-----------------------------
   const intrestedPercentageChange =
-  previousMonthInterestedLeads === 0
-    ? currentMonthInterestedLeads * 100 // Multiply current leads directly by 100 if no previous leads.
-    : ((currentMonthInterestedLeads - previousMonthInterestedLeads) /
+    previousMonthInterestedLeads === 0
+      ? currentMonthInterestedLeads * 100 // Multiply current leads directly by 100 if no previous leads.
+      : ((currentMonthInterestedLeads - previousMonthInterestedLeads) /
         previousMonthInterestedLeads) *
       100;
   const intrestedLeadsDiffrence =
     currentMonthInterestedLeads - previousMonthInterestedLeads;
   //-------------------------- Determine increase or decrease status for leads and intrested leads--------------------------
-  
-  
+
+
   const leadStatus = leadsPercentage > 0 ? "up" : "down";
   const intrestedLeadStatus = intrestedPercentageChange > 0 ? "up" : "down";
 
-  
+
   //------------ Destructure KYC with fallback values to prevent null or undefined issues-----------------
-   
-    
+
+
   const currentMonthKYC = kycData.currentMonthKYC;
   const previousMonthKYC = kycData.previousMonthKYC;
- 
+
 
   //----------------Calculate percentage increase for clients-----------------
-        const kycPercentageChange =
-        previousMonthKYC === 0
-          ? currentMonthKYC * 100 
-          : ((currentMonthKYC - previousMonthKYC) /
-          previousMonthKYC) *
-            100;
+  const kycPercentageChange =
+    previousMonthKYC === 0
+      ? currentMonthKYC * 100
+      : ((currentMonthKYC - previousMonthKYC) /
+        previousMonthKYC) *
+      100;
   //---------------------last month diffrence-------------------------
   const kycDiffrence = currentMonthKYC - previousMonthKYC;
- 
+
   //-------------------------- Determine increase or decrease status for revenue and sales--------------------------
   const kycStatus = kycPercentageChange > 0 ? "up" : "down";
 
@@ -348,13 +348,12 @@ export default function Home() {
             text-white 
             py-2 px-3
             "
-            >
+          >
             <div className="flex flex-col justify-start">
-            {/*Condition if reamining days are less than 5  */}
+              {/*Condition if reamining days are less than 5  */}
               <h1
-                className={`${
-                  remainingDays < 5 ? "text-red-500" : "text-gray-700"
-                } text-xl font-semibold`}
+                className={`${remainingDays < 5 ? "text-red-500" : "text-gray-700"
+                  } text-xl font-semibold`}
               >
                 Clock is ticking! {remainingDays} day&apos;s are left in your
                 trail.
@@ -385,27 +384,27 @@ export default function Home() {
         {/* ------- 4 Card, Charo ki alag alag CSS {Parent}  ------- */}
         <div className="sm:flex items-center px-2 sm:gap-3 gap-2 grid grid-cols-2">
           {/* ------- CARD --> CHILD:1------- */}
-          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg min-h-44 sm:w-1/4 ">
+          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 sm:w-1/4 ">
             <div className="flex flex-col">
-              {}
+              { }
               <h1 className="font-light uppercase text-sm font-medium	">
                 {business === "Brokerage" ? "Leads" : "Lead this month"}
               </h1>
               {/* ------- CARD--> 1 ---> Logo and SideText --> Parent ----------- */}
               <div className="flex items-center justify-between mt-2  ">
-              
-              {/* ------- CARD--> 1 ---> Logo --> C1 ----------- */}
-              <div className=" px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-blue-500 text-white flex items-center justify-center">
-                            {/* ------- CARD--> 1 ---> Logo --> C1 ----------- */}
-              <FaUsersRectangle className="text-2xl sm:text-4xl " />
-              </div>
-              {/* ------- CARD--> 1 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
-              <div className="flex flex-col items-center justify-center gap-1 ">
 
-                  <span className="text-lg font-semibold sm:text-xl sm:sm:font-bold">
-                  {currentMonthLeads}
+                {/* ------- CARD--> 1 ---> Logo --> C1 ----------- */}
+                <div className=" px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-blue-500 text-white flex items-center justify-center">
+                  {/* ------- CARD--> 1 ---> Logo --> C1 ----------- */}
+                  <FaUsersRectangle className="text-2xl sm:text-4xl " />
+                </div>
+                {/* ------- CARD--> 1 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
+                <div className="flex flex-col items-center justify-center gap-1 ">
+
+                  <span className="text-lg font-semibold sm:text-xl sm:font-bold">
+                    {currentMonthLeads}
                   </span>
-                  
+
                   <div
                     className={`
                       flex items-center gap-1 p-1 rounded-lg
@@ -418,161 +417,162 @@ export default function Home() {
                       <FaArrowAltCircleDown className="text-sm" />
                     )}
                     <span className="text-sm sm:text-md">{Math.round(leadsPercentage)}%</span>
-                 
-                    </div>
+
+                  </div>
                 </div>
               </div>
             </div>
             {/* ------- CARD--> 1 ---> PROGRESS BAR  --> C3 ----------- */}
             <div className="h-2 w-full bg-transparent border border-gray-500 rounded-lg ">
               <div
-                className={`h-full ${
-                  leadStatus == "up" ? "bg-blue-600" : "bg-red-500"
-                }`}
+                className={`h-full ${leadStatus == "up" ? "bg-blue-600" : "bg-red-500"
+                  }`}
                 style={{
                   maxWidth: `${Math.abs(Math.round(leadsPercentage))}%`,
                 }}
               ></div>
             </div>
-                        {/* ------- CARD--> 1 ---> Last Line{Text}--> C4 ----------- */}
+            {/* ------- CARD--> 1 ---> Last Line{Text}--> C4 ----------- */}
             <h3 className="font-light text-sm">
               Last Month Relative:{" "}
               <span className="text-sm">{leadsDiffrence}</span>
             </h3>
           </div>
           {/* ------- CARD --> CHILD:2 ------- */}
-          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg min-h-44 sm:w-1/4 ">
+          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 sm:w-1/4 ">
             <div className="flex flex-col">
               <h1 className="font-light uppercase text-sm font-medium">
                 {business === "Brokerage" ? "Funds" : "REVENUE THIS MONTH"}
               </h1>
               {/* ------- CARD--> 2 ---> Logo and SideText --> Parent ----------- */}
               <div className="flex items-center justify-between mt-2">
-              {/* ------- CARD--> 2 ---> Logo --> C1 ----------- */}
+                {/* ------- CARD--> 2 ---> Logo --> C1 ----------- */}
                 <div className="px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-orange-400 text-white flex items-center justify-center">
-                <CiBadgeDollar className="text-2xl sm:text-4xl " />
+                  <CiBadgeDollar className="text-2xl sm:text-4xl " />
                 </div>
                 {/* ------- CARD--> 2 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
                 <div className="flex flex-col items-center justify-center gap-1 ">
+                  <span className="text-lg font-semibold sm:text-xl sm:font-bold">
+                    {currentMonthSales}
+                  </span>
 
-                <span className="text-lg font-semibold sm:text-xl sm:sm:font-bold">
-                {currentMonthSales}
-                </span>
-          
-                <div
-                className={`
+                  <div
+                    className={`
                   flex items-center gap-1 p-1 rounded-lg
                   ${leadStatus == "up" ? "bg-green-200" : "bg-red-200"}
                 `}
-              >
-                {leadStatus == "up" ? (
-                  <FaArrowAltCircleUp className="text-sm" />
-                ) : (
-                  <FaArrowAltCircleDown className="text-sm" />
-                )}
-                <span className="text-sm sm:text-md">{Math.round(leadsPercentage)}%</span>
-             
-                </div>
+                  >
+                    {leadStatus == "up" ? (
+                      <FaArrowAltCircleUp className="text-sm" />
+                    ) : (
+                      <FaArrowAltCircleDown className="text-sm" />
+                    )}
+                    <span className="text-sm sm:text-md">{Math.round(leadsPercentage)}%</span>
+
+                  </div>
                 </div>
               </div>
             </div>
-              {/* ------- CARD--> 1 ---> PROGRESS BAR  --> C3 ----------- */}
-              <div className="h-2 w-full bg-transparent border border-gray-500 rounded-lg ">
+            {/* ------- CARD--> 2 ---> PROGRESS BAR  --> C3 ----------- */}
+            <div className="h-2 w-full bg-transparent border border-gray-500 rounded-lg ">
               <div
-                className={`h-full ${
-                  leadStatus == "up" ? "bg-blue-600" : "bg-red-500"
-                }`}
+                className={`h-full ${leadStatus == "up" ? "bg-blue-600" : "bg-red-600"
+                  }`}
                 style={{
                   maxWidth: `${Math.abs(Math.round(leadsPercentage))}%`,
                 }}
               ></div>
             </div>
-                        {/* ------- CARD--> 1 ---> Last Line{Text}--> C4 ----------- */}
+            {/* ------- CARD--> 2 ---> Last Line{Text}--> C4 ----------- */}
             <h3 className="font-light text-sm">
               Last Month Relative:{" "}
               <span className="text-sm">{revenueDiffrence}</span>
             </h3>
           </div>
-          {/* ------- CARD ------- */}
-          <div className="flex flex-col justify-between bg-white py-4 px-4 rounded-md shadow-lg h-[210px] w-1/4">
-            <div className="flex flex-col gap-2">
-              <h1 className="font-light uppercase text-sm">
-                {/* CLIENT THIS MONTH */}
+          {/* ------- CARD --> CHILD:3------- */}
+          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 sm:w-1/4 ">
+            <div className="flex flex-col">
+              { }
+              <h1 className="font-light uppercase text-sm font-medium	">
                 {business === "Brokerage" ? "KYC" : "CLIENT THIS MONTH"}
               </h1>
-              <div className="flex gap-4 items-center mt-2">
-                <button className="py-3 px-3 h-20 w-20 rounded-[90%] bg-cyan-500 text-white flex items-center justify-center">
-                  {/* <img src={Profile} alt="Profile Icon" /> */}
+              {/* ------- CARD--> 3 ---> Logo and SideText --> Parent ----------- */}
+              <div className="flex items-center justify-between mt-2  ">
+                {/* ------- CARD--> 3 ---> Logo --> C1 ----------- */}
+                <div className=" px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-blue-500 text-white flex items-center justify-center">
+                  <FaUsers className="text-2xl sm:text-2xl " />
+                </div>
+                {/* ------- CARD--> 3 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
 
-                  <FaUsers className="text-white text-3xl" />
-                </button>
-                <div className="flex flex-col gap-1">
-                  <span className="font-bold text-xl">
-                   
-                    {business === "Brokerage" ?currentMonthKYC : currentMonthClientCount}
+                <div className="flex flex-col items-center justify-center gap-1 ">
+
+                  <span className="text-lg font-semibold sm:text-xl sm:font-bold ">
+
+                    {business === "Brokerage" ? currentMonthKYC : currentMonthClientCount}
                   </span>
                   {business === "Brokerage" ?
-                  <button
-                  className={`flex text-[12px] font-thin p-1 items-center ${
-                    kycStatus == "up" ? "bg-green-100" : "bg-red-100"
-                  } w-max rounded-md justify-between gap-1`}
-                >
-                  {kycStatus == "up" ? (
-                    <FaArrowAltCircleUp />
-                  ) : (
-                    <FaArrowAltCircleDown />
-                  )}
-                  <span>{Math.round(kycPercentageChange)}%</span>
-                </button>
-                  : 
-                  <button
-                    className={`flex text-[12px] font-thin p-1 items-center ${
-                      clientStatus == "up" ? "bg-green-100" : "bg-red-100"
-                    } w-max rounded-md justify-between gap-1`}
-                  >
-                    {clientStatus == "up" ? (
-                      <FaArrowAltCircleUp />
-                    ) : (
-                      <FaArrowAltCircleDown />
-                    )}
-                    <span>{Math.round(clientPercentageChange)}%</span>
-                  </button>
+                    <div
+                      className={`
+                      flex items-center gap-1 p-1 rounded-lg
+                      ${leadStatus == "up" ? "bg-green-200" : "bg-red-200"}
+                    `}
+                    >
+                      {kycStatus == "up" ? (
+                        <FaArrowAltCircleUp className="text-sm" />
+                      ) : (
+                        <FaArrowAltCircleDown className="text-sm" />
+                      )}
+                      <span className="text-sm sm:text-md">{Math.round(kycPercentageChange)}%</span>
+                    </div>
+                    :
+                    <div
+                      className={`
+                    flex items-center gap-1 p-1 rounded-lg
+                    ${leadStatus == "up" ? "bg-green-200" : "bg-red-200"}
+                  `}
+                    >
+                      {clientStatus == "up" ? (
+                        <FaArrowAltCircleUp className="text-sm" />
+                      ) : (
+                        <FaArrowAltCircleDown className="text-sm" />
+                      )}
+                      <span className="text-sm sm:text-md">{Math.round(clientPercentageChange)}%</span>
+                    </div>
                   }
-                  
+
                 </div>
               </div>
             </div>
             {/* ---------- PROGRESS BAR --------- */}
-            <div className="h-2 w-full bg-transparent border border-gray-600 rounded-lg mt-2">
-            {business === "Brokerage" ?
-            <div
-            className={`h-full ${
-              clientStatus == "up" ? "bg-blue-600" : "bg-red-600"
-            }`}
-            style={{
-              maxWidth: `${Math.abs(Math.round(kycPercentageChange))}%`,
-            }}
-          ></div>
-            : 
-            <div
-            className={`h-full ${
-              clientStatus == "up" ? "bg-blue-600" : "bg-red-600"
-            }`}
-            style={{
-              maxWidth: `${Math.abs(Math.round(clientPercentageChange))}%`,
-            }}
-          ></div>
-           }
-              
+            <div className="h-2 w-full bg-transparent border border-gray-500 rounded-lg ">
+              {business === "Brokerage" ?
+                <div
+                  className={`h-full ${clientStatus == "up" ? "bg-blue-600" : "bg-red-600"
+                    }`}
+                  style={{
+                    maxWidth: `${Math.abs(Math.round(kycPercentageChange))}%`,
+                  }}
+                ></div>
+                :
+                <div
+                  className={`h-full ${clientStatus == "up" ? "bg-blue-600" : "bg-red-600"
+                    }`}
+                  style={{
+                    maxWidth: `${Math.abs(Math.round(clientPercentageChange))}%`,
+                  }}
+                >
+                </div>
+              }
+
             </div>
             <h3 className="font-light text-sm">
               Last Month Relative:{" "}
               {business === "Brokerage" ?
-             <span className="text-sm">{kycDiffrence}</span>
-              : 
-              <span className="text-sm">{clientDiffrence}</span>
+                <span className="text-sm">{kycDiffrence}</span>
+                :
+                <span className="text-sm">{clientDiffrence}</span>
               }
-              
+
             </h3>
           </div>
           {/* ------- CARD ------- */}
@@ -595,11 +595,10 @@ export default function Home() {
                     {currentMonthInterestedLeads}
                   </span>
                   <button
-                    className={`flex text-[12px] font-thin p-1 items-center ${
-                      intrestedLeadStatus == "up"
+                    className={`flex text-[12px] font-thin p-1 items-center ${intrestedLeadStatus == "up"
                         ? "bg-green-100"
                         : "bg-red-100"
-                    } w-max rounded-md justify-between gap-1`}
+                      } w-max rounded-md justify-between gap-1`}
                   >
                     {intrestedLeadStatus == "up" ? (
                       <FaArrowAltCircleUp />
@@ -614,9 +613,8 @@ export default function Home() {
             {/* ---------- PROGRESS BAR --------- */}
             <div className="h-2 w-full bg-transparent border border-gray-600 rounded-lg mt-2">
               <div
-                className={`h-full ${
-                  intrestedLeadStatus == "up" ? "bg-blue-600" : "bg-red-600"
-                }`}
+                className={`h-full ${intrestedLeadStatus == "up" ? "bg-blue-600" : "bg-red-600"
+                  }`}
                 style={{
                   maxWidth: `${Math.abs(
                     Math.round(intrestedPercentageChange)
