@@ -383,9 +383,9 @@ export default function Home() {
         </h1>
         {/* ------- TOP CARDS ------- */}
         {/* ------- 4 Card, Charo ki alag alag CSS {Parent}  ------- */}
-        <div className="sm:flex items-center px-2 sm:gap-3 gap-2 grid grid-cols-2">
+        <div className="sm:grid sm:grid-cols-2 items-center px-2 sm:gap-3 gap-2 grid grid-cols-2 lg:flex">
           {/* ------- CARD --> CHILD:1------- */}
-          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 sm:w-1/4 ">
+          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 md:w-4/4  lg:w-1/4">
             <div className="flex flex-col">
               { }
               <h1 className="font-light uppercase text-sm font-medium	">
@@ -441,7 +441,7 @@ export default function Home() {
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------- */}
           {/* ------- CARD --> CHILD:2 ------- */}
-          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 sm:w-1/4 ">
+          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44  md:w-4/4  lg:w-1/4">
             <div className="flex flex-col">
               <h1 className="font-light uppercase text-sm font-medium">
                 {business === "Brokerage" ? "Funds" : "REVENUE THIS MONTH"}
@@ -493,7 +493,7 @@ export default function Home() {
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------- */}
           {/* ------- CARD --> CHILD:3------- */}
-          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 sm:w-1/4 ">
+          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 md:w-4/4  lg:w-1/4">
             <div className="flex flex-col">
               { }
               <h1 className="font-light uppercase text-sm font-medium	">
@@ -580,7 +580,7 @@ export default function Home() {
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------- */}
           {/* ------- CARD --> CHILD -> 4 ------- */}
-          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 sm:w-1/4 ">
+          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 md:w-4/4  lg:w-1/4">
             <div className="flex flex-col">
               { }
               <h1 className="font-light uppercase text-sm font-medium	">
@@ -641,8 +641,8 @@ export default function Home() {
           {/* ---------------------------------------------------------------------------------------------------------------- */}
 
         <div className="sm:flex gap-3 m-2 grid grid-cols-1">
-          <div className="flex-4 flex flex-col bg-white py-4 px-4 rounded-md shadow-md w-[400px] justify-between">
-            <h1 className="font-thin text-xl">
+          <div className="flex-4 flex flex-col bg-white py-4 px-4 rounded-md shadow-md sm:w-72 w-full  justify-between">
+            <h1 className="font-normal text-xl">
               {business === "Brokerage" ? "Brokerage" : "Custom Segmentation"}
             </h1>
             <div className="flex items-center flex-col gap-2">
@@ -724,7 +724,7 @@ export default function Home() {
             </div>
           </div>
           {/* ------- PROGRESS CARD ------- */}
-          <div className="flex-1 flex flex-col bg-white rounded-md shadow-md px-4 py-4 justify-between">
+          <div className="flex-1 flex flex-col bg-white rounded-md shadow-md px-4 py-4 justify-between ">
             <SalesReportChart
               businessType={businessType}
               totalBrokerage={totalBrokerage}
@@ -735,14 +735,15 @@ export default function Home() {
         {/* ------- BOTTOM CARDS ------- */}
         {business === "Brokerage" ? (
           ""
-        ) : (
-          <div className="flex gap-3 mx-2">
+        ) :
+          (
+          <div className="sm:flex gap-3 mx-2 md:grid md:grid-cols-1 gap-3">
             {/* ------- BOTTOM CARD ------- */}
-            <div className="flex-1 flex flex-col bg-white shadow-sm py-6 px-3 rounded-md">
+            <div className="flex  flex-col bg-white shadow-sm py-6 px-3 rounded-md">
               <SalesPipelineChart />
             </div>
             {/* ------- BOTTOM CARD ------- */}
-            <div className="flex-5 flex flex-col py-4 px-4 gap-4 items-center bg-blue-50 rounded-md shadow-md">
+            <div className="flex flex-col py-4 px-4 gap-4 items-center bg-blue-50 rounded-md shadow-md mt-3 min-h-72 mb-4">
               <LeadSourceChart />
             </div>
           </div>
