@@ -869,19 +869,19 @@ export default function Lead() {
         {/* -------------------------------- Fetch modal -------------------------------------------- */}
         {isFeatchModalOpen && <LeadFeatchModal onClose={closeModal} />}
         {/* containerbar*/}
-        <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg">
+        <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg flex-wrap gap-3">
           {/* PART-I */}
           {/* container- Alleads, search */}
-          <div className="flex gap-3 items-center justify-center ">
+          <div className="flex gap-3 items-start justify-start flex-wrap">
             {/* PART-I */}
             {/* All Lead  DropDown*/}
             <div
-              className="relative"
+              className="relative button_MaxWidth"
               onClick={toggleMenuAllLead}
               onMouseLeave={() => setAllLeaddropDown(false)}
             >
               <button
-                className="py-2 px-4 border rounded-md flex justify-between items-center min-w-40 max-w-44 truncate"
+                className="py-2 px-4 border rounded-md flex justify-between items-center min-w-40 max-w-44 truncate button_MaxWidth"
                 id="dropdownDefaultButton"
                 type="button"
               >
@@ -907,13 +907,14 @@ export default function Lead() {
 
             {/* PART-I-ii */}
             {/* All ASSIGNED_TO  DropDown*/}
+           
             <div
-              className="relative"
+              className="relative button_MaxWidth"
               onClick={toggleMenuAssigned_To}
               onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
             >
               <button
-                className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 max-w-44"
+                className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 max-w-44 button_MaxWidth"
                 id="dropdownDefaultButton"
                 type="button"
               >
@@ -943,10 +944,12 @@ export default function Lead() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
+
+            {/* Fetch Box */}
             {fetchLead || businessRole==="Admin" ? (
-              <div className="flex gap-1">
+              <div className="flex gap-1 button_MaxWidth">
                 <button
-                  className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
+                  className="py-2 px-4 border rounded-lg gap-2 flex justify-center items-center text-white bg-blue-600 button_MaxWidth"
                   onClick={() => setIsFetchModalOpen(true)}
                 >
                   Fetch Leads
@@ -958,19 +961,19 @@ export default function Lead() {
           </div>
 
           {/* PART-II */}
-          <div className="flex gap-3 items-center justify-center">
+          <div className="flex gap-3 items-center justify-center flex-wrap button_MaxWidth">
             {/* PART-II */}
             {/* Stripe-BarDropDown */}
             {activeButtonId === 2 || activeButtonId === 4 ? (
               ""
             ) : (
               <div
-                className="relative"
+                className="relative hide_Component "
                 onClick={togglestripeBar}
                 onMouseLeave={() => setstripeBardropDown(false)}
               >
                 <button
-                  className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center"
+                  className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center "
                   id="dropdownDefaultButton"
                   type="button"
                 >
@@ -997,10 +1000,10 @@ export default function Lead() {
             {/* PART-II */}
             {/*  Create Lead */}
             {createLead || businessRole==="Admin" ?  (
-              <div className="flex gap-1">
-                <Link to="/panel/createlead">
+              <div className="flex button_MaxWidth">
+                <Link to="/panel/createlead" className="button_MaxWidth">
                   <button
-                    className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-white bg-blue-600"
+                    className="py-2 px-4 border rounded-lg gap-2 flex justify-center items-center text-white bg-blue-600 button_MaxWidth"
                     id="dropdownDefaultButton"
                     type="button"
                   >
@@ -1021,12 +1024,12 @@ export default function Lead() {
             {/* PART-II */}
             {/*-------Action DropDown */}
             <div
-              className="relative"
+              className="relative button_MaxWidth"
               onClick={toggleActionsMenuLogo}
               onMouseLeave={() => setdropActionsMenudropDown(false)}
             >
               <button
-                className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
+                className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600 button_MaxWidth"
                 id="dropdownDefaultButton"
                 type="button"
               >
@@ -1059,21 +1062,21 @@ export default function Lead() {
         {/* 2nd bar Leads and lenghtLeads*/}{" "}
         {/* 2nd bar Leads and lenghtLeads*/}{" "}
         {/* 2nd bar Leads and lenghtLeads*/}
-        <div className="mt-3 flex justify-between items-center gap-3">
-          <div className="flex gap-3 items-center justify-center">
+        <div className="mt-3 flex justify-between items-center gap-3 flex-wrap leads_Button_Main_Container">
+          <div className="flex gap-3 items-center justify-start leads_Button_Main_Container">
             <h1 className="text-3xl font-medium ">Leads</h1>
             <h1 className="bg-blue-600 text-white px-2 py-2 min-w-10 text-center rounded-md text-md shadow-md">
               {getleads?.length}
             </h1>
 
             {/* BUTTONS */}
-            <div className="flex gap-2">
+            <div className="flex gap-2 leads_Button_Container">
               {dynamicButtons.map(({ id, name }) =>
                 permissions.includes(name) || name === viewName || businessRole==="Admin" ? (
                   <button
                     key={id}
                     onClick={() => handleDynamicButtonsClick(id)}
-                    className={`px-2 py-1.5 rounded font-light text-md ${
+                    className={`px-2 py-1.5 rounded font-light text-md whitespace-nowrap leads_Button ${
                       activeButtonId === id
                         ? "bg-cyan-500 text-white"
                         : "bg-gray-100 text-gray-700"
@@ -1086,33 +1089,33 @@ export default function Lead() {
             </div>
           </div>
 
-          <div>
+          <div className="date_Filter_Main_Container">
             {/* ------------------- Filter by date ----------------- */}
             {activeButtonId === 1 ? (
-              <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
+              <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-center items-center date_Filter_Main_Container">
                 {/* Filter Icon Button */}
-                <button className="border-r border-gray-500 px-3">
+                <button className="border-r border-gray-500 px-3 filter_Image_Display">
                   <ImFilter />
                 </button>
 
                 {/* Date Range Filter Button */}
-                <button className="border-r border-gray-500 px-3">
+                <button className="border-r border-gray-500 px-3 whitespace-nowrap filter_Text">
                   Filter By
                 </button>
 
                 {/* Date Range Inputs */}
-                <div className="px-3 flex items-center gap-2">
+                <div className="px-3 flex items-center gap-2 filter_Date_Container">
                   <input
                     type="date"
                     value={startDate}
-                    className="border rounded px-2 py-1"
+                    className="border rounded px-2 py-1 filter_Date"
                     onChange={(e) => setStartDate(e.target.value)}
                   />
 
                   <input
                     type="date"
                     value={endDate}
-                    className="border rounded px-2 py-1"
+                    className="border rounded px-2 py-1 filter_Date"
                     onChange={(e) => setEndDate(e.target.value)}
                   />
                 </div>
@@ -1121,7 +1124,7 @@ export default function Lead() {
                   className="p-1 border rounded cursor-pointer  hover:shadow-md"
                   onClick={handleResetFilter}
                 >
-                  <TbRefresh size={25} />
+                  <TbRefresh size={25} className="filter_Reset_Image" />
                 </div>
               </div>
             ) : (
@@ -1129,24 +1132,6 @@ export default function Lead() {
             )}
           </div>
         </div>
-        {/* ---------------------Multi Assign and Multi Change------------------- */}
-        {/* {activeButtonId === 3 && (
-        <>
-          <div className="relative text-left">
-            <select
-              value={selectedValue}
-              onChange={handleChange}
-              className="block w-max px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-            >
-              {leadOperations.map((operation) => (
-                <option key={operation.key} value={operation.value}>
-                  {operation.value}
-                </option>
-              ))}
-            </select>
-          </div>
-        </>
-      )} */}
         {activeButtonId === 3 && (
           <div
             className="relative my-1"
@@ -1180,10 +1165,10 @@ export default function Lead() {
         )}
         {/*-------Table-------*/}
         {viewLeads || businessRole==="Admin" ? (
-          <div className="overflow-x-auto mt-3 ">
-            <div className="min-w-full overflow-hidden rounded-md shadow-lg">
+          <div className="overflow-x-auto mt-3 leads_Table_Main_Container">
+            <div className="min-w-full rounded-md shadow-lg leads_Table_Container">
               {selectedViewValue === "Table View" && activeButtonId === 1 && (
-                <table className="min-w-full bg-white">
+                <table className="min-w-full bg-white leads_Table">
                   <thead>
                     <tr className="border-gray-300 border-b-2">
                       {/* CHECKBOX */}
