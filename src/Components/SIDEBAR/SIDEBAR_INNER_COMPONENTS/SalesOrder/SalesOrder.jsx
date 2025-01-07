@@ -754,10 +754,10 @@ export default function SalesOrder() {
         </div>
       </div>
       {/*-------Table-------*/}
-      <div className="overflow-x-auto mt-3">
-        <div className="min-w-full overflow-hidden rounded-md">
+      <div className="overflow-x-auto mt-3 leads_Table_Main_Container">
+        <div className="min-w-full leads_Table_Container rounded-md">
           {selectedViewValue === 'Table View' && (
-            <table className="min-w-full bg-white">
+            <table className="min-w-full bg-white leads_Table">
               <thead>
                 <tr className="border-gray-300 border-b-2">
                   {/* CHECKBOX */}

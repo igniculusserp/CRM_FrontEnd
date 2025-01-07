@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 export default function ClientReports({ currentReports }) {
   const navigate = useNavigate(); // Add this line
   return (
-    <table className="min-w-full bg-white">
+    <table className="min-w-full bg-white leads_Table">
       {/* ----------------- TABLE HEAD START ----------------- */}
       <thead>
         <tr className="border-gray-300 border-b-2">
