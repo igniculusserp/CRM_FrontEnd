@@ -724,7 +724,7 @@ export default function Home() {
             </div>
           </div>
           {/* ------- PROGRESS CARD ------- */}
-          <div className="flex-1 flex flex-col bg-white rounded-md shadow-md px-4 py-4 justify-between">
+          <div className="flex-1 flex flex-col bg-white rounded-md shadow-md px-4 py-4 justify-between ">
             <SalesReportChart
               businessType={businessType}
               totalBrokerage={totalBrokerage}
@@ -735,14 +735,15 @@ export default function Home() {
         {/* ------- BOTTOM CARDS ------- */}
         {business === "Brokerage" ? (
           ""
-        ) : (
-          <div className="flex gap-3 mx-2">
+        ) :
+          (
+          <div className="sm:flex gap-3 mx-2 md:grid md:grid-cols-1 gap-3">
             {/* ------- BOTTOM CARD ------- */}
-            <div className="flex-1 flex flex-col bg-white shadow-sm py-6 px-3 rounded-md">
+            <div className="flex  flex-col bg-white shadow-sm py-6 px-3 rounded-md">
               <SalesPipelineChart />
             </div>
             {/* ------- BOTTOM CARD ------- */}
-            <div className="flex-5 flex flex-col py-4 px-4 gap-4 items-center bg-blue-50 rounded-md shadow-md">
+            <div className="flex flex-col py-4 px-4 gap-4 items-center bg-blue-50 rounded-md shadow-md mt-3 min-h-72 mb-4">
               <LeadSourceChart />
             </div>
           </div>

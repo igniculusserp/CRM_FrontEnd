@@ -50,11 +50,11 @@ const SalesPipelineChart = () => {
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-thin text-left mb-4">Sales Pipeline</h2>
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1">
+    <div className="w-full sm:max-w-4xl  mx-auto">
+      <div className="flex items-center justify-between ">
+        <h2 className="text-lg font-normal text-left mb-4">Sales Pipeline</h2>
+        <div className="sm:flex sm:gap-2 items-center grid grid-cols-2">
+          <div className="flex items-center gap-1 ">
             <div className="w-3 h-3 rounded-sm bg-[#8884d8]"></div>
             <span>Prospecting</span>
           </div>
@@ -73,7 +73,7 @@ const SalesPipelineChart = () => {
             onMouseLeave={() => setFilterDropdown(false)}
           >
             <button
-              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 max-w-44 truncate"
+              className="py-2 px-2 border rounded-md flex justify-between items-center w-28 truncate text-sm"
               id="filter"
               type="button"
             >
