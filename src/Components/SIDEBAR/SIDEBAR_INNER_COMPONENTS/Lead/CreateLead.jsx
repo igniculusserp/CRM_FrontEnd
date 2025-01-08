@@ -585,7 +585,8 @@ export default function Createlead() {
           {/* ------------------------------------------------> Text and Logo  <------------------------------------------------ */}
           <div className="flex items-center justify-center gap-3 ">
             <h1 className=" text-xl">
-              {isEditMode ? (<>
+              {isEditMode ? (
+                <>
                 <div className='flex justify-center items-center gap-2  '>
                   <GrContactInfo size={25} />
                   <h1>Edit Lead</h1>
@@ -624,10 +625,10 @@ export default function Createlead() {
                 Lead Information
               </h2>
               {/* -------------Parent------------- */}
-              <div className="grid sm:grid-cols-1 space-y-3 p-2 ">
+              <div className="flex flex-col  space-y-3 p-2 ">
               {/* Name Section */}
-              <div className="grid sm:grid-cols-2 grid-cols-1 gap-4 ">
-                <div className="sm:mr-0 mr-8">
+              <div className="flex w-full gap-4 ">
+                <div className=" w-1/2">
                   <label
                     htmlFor="name"
                     className="text-sm font-medium text-gray-700"
@@ -648,7 +649,7 @@ export default function Createlead() {
             
                   
                   {/* -------------Language------------- */}
-                  <div className="flex flex-col w-full relative">
+                  <div className="flex flex-col w-1/2 relative">
                     <label
                       htmlFor="language"
                       className="text-sm font-medium text-gray-700"
