@@ -441,3 +441,39 @@ input[type="number"] {
    }
  }
 
+/* ------------------------------------------------------------ Reports -----------------------------------------------*/
+
+.reports_Buttons_Main_Container{
+  width: 100%;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.reports_Buttons_Container{
+  width: 15%;
+  white-space: nowrap;
+  max-width: 18%;
+  min-width: 140px;
+}
+@media (max-width: 1119px) {
+  .reports_Buttons_Container{
+    width: 32%;
+    max-width: 32%;
+  }
+}
+
+@media (max-width: 652px) {
+  .reports_Buttons_Container{
+    width: 48%;
+    max-width: 49%;
+  }
+}
+@media (max-width: 460px) {
+  .reports_Buttons_Container{
+    width: 100%;
+    max-width: 100%;
+  }
+  .reports_Heading_Text{
+    font-size: 22px;
+  }
+}
+
