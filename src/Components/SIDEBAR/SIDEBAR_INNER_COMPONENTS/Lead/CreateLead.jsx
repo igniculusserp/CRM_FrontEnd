@@ -1,17 +1,20 @@
 //react
 import { useState, useEffect } from 'react';
 
+//reactPackages
+import { Link, useNavigate, useParams } from 'react-router-dom';
+
 //reactIcon
 import { FaAngleDown, FaStarOfLife } from 'react-icons/fa';
 import { IoInformationCircle } from 'react-icons/io5';
-
-//reactPackages
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { GrContactInfo } from 'react-icons/gr';
 
 //external Packages
 import axios from 'axios';
 import ReactQuill from 'react-quill';
+
 import 'react-quill/dist/quill.snow.css';
+
 //file
 import { tenant_base_url, protocal_url } from '../../../../Config/config';
 
@@ -21,15 +24,14 @@ import { ToastContainer } from 'react-toastify';
 import { showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
 
 import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
-import { GrContactInfo } from 'react-icons/gr';
 
 export default function Createlead() {
   //to make id unique
   const { id } = useParams();
   const navigate = useNavigate();
 
-  //form description is kept-out
-  const [description, setdescription] = useState('Add Text Here');
+  //-->--->createLead/editLead--> Schema<->Model
+
   const [editLead, seteditLead] = useState({
     id: '',
     name: '',
@@ -61,6 +63,8 @@ export default function Createlead() {
     segments: [],
   });
 
+  const [description, setdescription] = useState('Add Text Here');
+
   //----------------------------------------------------------------------------------------
   //using a global name
   const name = getHostnamePart();
@@ -90,7 +94,10 @@ export default function Createlead() {
         config
       );
       const data = response.data.data;
+
+      //desciption is kept out of model
       setdescription(data.description);
+
       seteditLead({
         id: data.id || '',
         name: data.name || '',
@@ -126,7 +133,7 @@ export default function Createlead() {
     }
   }
 
-  //----------------------------------------------------------------------------------------
+  //---------------------------> Language <---------------------------
   //LanguageDropDown
   const LanguageDropDown = [
     { key: 1, name: "English" },
@@ -155,16 +162,26 @@ export default function Createlead() {
     }));
   };
 
-
-
   //----------------------------------------------------------------------------------------
-  //PooL / Lead Source ToDropDown
+
+  //---------------------------> Lead Source <---------------------------
+  //PooL API used in -> Lead Source DropDown
   const [poolToDropDown, setPoolToDropDown] = useState([]);
+
+  //default text for LeadStatus
   const [defaultTextPool, setDefaultTextPool] = useState("Select Lead Source");
+
+  //dropDown State
   const [isPoolDropdownOpen, setIsPoolDropdownOpen] = useState(false);
+
+  //error
   const [error, setError] = useState(null); // New error state
+
+  //
   const [poolEdit, setPoolEdit] = useState("");
 
+
+  //--------------------------> GET API --> leadSource <--------------------------
   const handlePool = async () => {
     const bearerToken = localStorage.getItem("token");
     const config = {
@@ -172,7 +189,6 @@ export default function Createlead() {
         Authorization: `Bearer ${bearerToken}`,
       },
     };
-
     try {
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
@@ -204,7 +220,8 @@ export default function Createlead() {
   };
 
   //----------------------------------------------------------------------------------------
-  //LeadStatusDropDown GET API Is being used here
+
+  //---------------------------> Lead Source <---------------------------
   const [leadStatus, setleadStatus] = useState('');
 
   async function handleLeadStatus() {
@@ -225,7 +242,6 @@ export default function Createlead() {
       console.log('status:', response.data.data);
     } catch (error) {
       console.error('Error fetching leads:', error);
-      // Optionally, set an error state to display a user-friendly message
     }
   }
 
@@ -251,8 +267,9 @@ export default function Createlead() {
     }));
   };
 
-  //----------------------------------------------------------------------------------------
-  // Segment GET API Is being used here
+  //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  //---------------------------> Segment <---------------------------
   const [segments, setSegments] = useState([]);
   async function handleSegment() {
     const bearer_token = localStorage.getItem('token');
@@ -315,9 +332,11 @@ export default function Createlead() {
 
     console.log('Selected segments:', updatedSegments);
   };
-  // Segment GET API Is being used here
 
-  //----------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  //---------------------------> Assigned To <---------------------------
+
   //assigned_ToDropDown
   const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
 
@@ -380,15 +399,15 @@ export default function Createlead() {
 
   //------------------------------------------Mobile Regex------------------------------------------
   const handleContactChange = (event) => {
-    const inputValue = event.target.value.replace(/[^0-9]/g, ""); 
+    const inputValue = event.target.value.replace(/[^0-9]/g, "");
     const { name } = event.target;
-  
+
     seteditLead((prevState) => ({
       ...prevState,
       [name]: inputValue,
     }));
   };
-  
+
 
   //------------------------------------------Email Regex------------------------------------------
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -398,7 +417,6 @@ export default function Createlead() {
   //two different schemas, one for PUT and one for POST
   const handleSubmit = async (event) => {
     event.preventDefault();
-
 
     const bearer_token = localStorage.getItem('token');
 
@@ -475,8 +493,8 @@ export default function Createlead() {
       console.log(formData_POST)
 
       //------------------------------------------------------------------------------------> Validations//--> Validations//--> Validations//--> Validations//--> Validations
-      
-      
+
+
       if (!formData_POST.name || !formData_PUT.name) {
         showErrorToast('Please enter name')
         return;
@@ -496,27 +514,25 @@ export default function Createlead() {
         showErrorToast('Invalid mobile number')
         return;
       }
-      
+
       if ((formData_POST.email && !emailRegex.test(formData_POST.email)) || (formData_PUT.email && !emailRegex.test(formData_PUT.email))) {
         showErrorToast('Invalid email format');
         return;
       }
 
-       //Date Logic Validation
-       const today = new Date().toISOString().split('T')[0];
-      
+      //Date Logic Validation
+      const today = new Date().toISOString().split('T')[0];
+
       //Previous date cannot be selected
-      if(formData_POST.trialStartDate < today ){
+      if (formData_POST.trialStartDate < today) {
         showErrorToast('Previous date cannot be selected')
         return;
       }
 
-      if(formData_POST.trialEndDate < today ){
+      if (formData_POST.trialEndDate < today) {
         showErrorToast('Previous date cannot be selected')
         return;
       }
-
-      
 
       //Date should not be more than 1 or less than 1
       const date = (formData_POST.trialEndDate?.split('-')[2] - formData_POST.trialStartDate?.split('-')[2])
@@ -524,11 +540,11 @@ export default function Createlead() {
       if (formData_POST.trialStartDate && formData_POST.trialEndDate && date === 1) {
         if (formData_POST.segments.length === 0) {
           showErrorToast('Please Select segments');
-          return; 
+          return;
         }
       }
 
-     
+
       if (formData_POST.trialStartDate && !formData_POST.trialEndDate) {
         showErrorToast("Please Select trial end date");
         return;
@@ -553,39 +569,44 @@ export default function Createlead() {
       }
     } catch (error) {
       showErrorToast(error.response?.data?.message || "An error occurred");
-      
-      
+
+
     }
   }
 
   return (
     <>
       <ToastContainer />
-      <div className="min-h-screen flex flex-col mt-3">
-        <div className="flex justify-between mx-3  bg-white border rounded p-3">
-          <div className="flex items-center justify-center gap-3">
+      {/* ------------------------------------------------> Parent <------------------------------------------------ */}
+      <div className="min-h-screen min-w-screen flex flex-col mt-3">
+
+        {/* ------------------------------------------------> Heading  <------------------------------------------------ */}
+        <div className="flex justify-between mx-3  bg-white border rounded p-3 ">
+          {/* ------------------------------------------------> Text and Logo  <------------------------------------------------ */}
+          <div className="flex items-center justify-center gap-3 ">
             <h1 className=" text-xl">
               {isEditMode ? (<>
                 <div className='flex justify-center items-center gap-2  '>
-                <GrContactInfo size={25} />
+                  <GrContactInfo size={25} />
                   <h1>Edit Lead</h1>
                 </div>
+              </>
+              ) :
+                (<>
+                  <div className=' flex justify-center items-center  gap-2   '>
+                    <GrContactInfo size={25} />
+                    <h1>Create Lead</h1>
+                  </div>
                 </>
-                ) :
-                 (<>
-                <div className=' flex justify-center items-center  gap-2   '>
-                <GrContactInfo size={25} />
-                  <h1>Create Lead</h1>
-                </div>
-                </>
-                ) 
-                 }
+                )
+              }
             </h1>
           </div>
           <div>
+            {/* ------------------------------------------------> Cancel Button  <------------------------------------------------ */}
             <Link
               to="/panel/lead"
-              className="px-6 py-1 rounded  border border-blue-500 text-blue-500 "
+              className="sm:px-6 py-1 px-4 rounded  border border-blue-500 text-blue-500 "
             >
               Cancel
             </Link>
@@ -595,41 +616,37 @@ export default function Createlead() {
         {/* -------------FORM Starts FROM HERE------------- */}
         {/* Lead Image */}
         <form onSubmit={handleSubmit} className="flex mb-6">
-          {/*-FORM- */}
-          {/*Parent Div */}
-          <div className="w-full">
-            {/*CHILD Div------ Image Input */}
-           
-
-            <div className="m-3 bg-white rounded-xl shadow-md ">
+          {/* ------------------------------------------------> FORM PARENT includes 4 tabs <------------------------------------------------ */}
+          <div className="w-screen">
+            {/* ------------------------------------------------>TAB  1 :  Lead Information TAB <------------------------------------------------ */}
+            <div className="m-3 bg-white rounded-xl shadow-md  ">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                 Lead Information
               </h2>
-
-              {/* -------------LEAD INFORMATION STARTS FROM HERE------------- */}
-              {/*CHILD Div------ Image Input */}
-              {/* -------------1------------- */}
-              {/* -------------Name------------- */}
-              <div className="grid gap-2 p-2">
-                <div className="flex space-x-4 ">
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="name"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                  <span className="flex gap-1">
-                    Name
-                  <FaStarOfLife size={8} className="text-red-500"/>
-                  </span>
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={editLead.name}
-                      onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
+              {/* -------------Parent------------- */}
+              <div className="grid sm:grid-cols-1 space-y-3 p-2 ">
+              {/* Name Section */}
+              <div className="grid sm:grid-cols-2 grid-cols-1 gap-4 ">
+                <div className="sm:mr-0 mr-8">
+                  <label
+                    htmlFor="name"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    <span className="flex gap-1">
+                      Name
+                      <FaStarOfLife size={8} className="text-red-500" />
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={editLead.name}
+                    onChange={handleChange}
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full "
+                  />
+                </div>
+            
+                  
                   {/* -------------Language------------- */}
                   <div className="flex flex-col w-1/2 relative">
                     <label
@@ -819,15 +836,15 @@ export default function Createlead() {
                 {/* -------------Mobile Number------------- */}
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
-                  <label
-                  htmlFor="email"
-                  className="text-sm font-medium text-gray-700"
-                >
-                <span className="flex gap-1">
-                Mobile Number
-              <FaStarOfLife size={8} className="text-red-500"/>
-              </span>
-                </label>
+                    <label
+                      htmlFor="email"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      <span className="flex gap-1">
+                        Mobile Number
+                        <FaStarOfLife size={8} className="text-red-500" />
+                      </span>
+                    </label>
                     <input
                       type="number"
                       name="mobNo"
@@ -837,7 +854,7 @@ export default function Createlead() {
                       onChange={handleContactChange}
                       placeholder="Enter your Mobile Number"
                     />
-                   
+
                   </div>
                   {/* -------------Alternate Number------------- */}
                   <div className="flex flex-col w-1/2">
@@ -855,7 +872,7 @@ export default function Createlead() {
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleContactChange}
                       placeholder="Enter your Alternate Number"
-                      
+
                       onInput={(e) => {
                         e.target.value = e.target.value.replace(/[a-zA-Z]/g, ""); // Removes all letters (a to z and A to Z)
                       }}
@@ -866,12 +883,12 @@ export default function Createlead() {
                 {/* -------------Email------------- */}
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
-                  <label
-                  htmlFor="city"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Email
-                </label>
+                    <label
+                      htmlFor="city"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Email
+                    </label>
                     <input
                       type="email"
                       name="email"
@@ -1036,6 +1053,277 @@ export default function Createlead() {
                   </div>
                   {/* -------------Description------------- */}
                 </div>{' '}
+                {/* -------------9------------- */}
+                {/* -------------Risk Capcity------------- */}
+                <div className="flex space-x-4">
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="riskCapcity"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Risk Capacity
+                    </label>
+                    <input
+                      type="text"
+                      name="riskCapcity"
+                      value={editLead.riskCapcity}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Enter Risk Capacity"
+                    />
+                  </div>
+                  {/* -------------Trading Time------------- */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="tradingTime"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Trading Time
+                    </label>
+                    <input
+                      type="text"
+                      name="tradingTime"
+                      value={editLead.tradingTime}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Enter Trading Time"
+                    />
+                  </div>
+                </div>
+                {/* -------------10------------- */}
+                {/* -------------Trading Type------------- */}
+                <div className="flex space-x-4">
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="tradingType"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Trading Type
+                    </label>
+                    <input
+                      type="text"
+                      name="tradingType"
+                      value={editLead.tradingType}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {/* -------------investmet------------- */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="investmet"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Information
+                    </label>
+                    <input
+                      type="text"
+                      name="investmet"
+                      value={editLead.investmet}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                {/* -------------11------------- */}
+                {/* -------------Advisory Exp------------- */}
+                <div className="flex space-x-4">
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="empNadvisoryExpame"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Advisory Exp
+                    </label>
+                    <input
+                      type="text"
+                      name="advisoryExp"
+                      value={editLead.advisoryExp}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Enter your Advisory"
+                    />
+                  </div>
+                  {/* -------------Segments------------- */}
+                  <div className="flex flex-col w-1/2 relative">
+                    <label
+                      htmlFor="segment"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Segment
+                    </label>
+                    <div
+                      className="relative"
+                      onClick={toggleDropdownSegment}
+                      onMouseLeave={() => setisDropdownVisibleSegment(false)}
+                    >
+                      <button
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        id="LeadStatusDropDown"
+                        type="button"
+                      >
+                        {defaultTextSegmentDropDown}
+                        <FaAngleDown className="ml-2 text-gray-400" />
+                      </button>
+                      {isDropdownVisibleSegment && (
+                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                          <ul className="py-2 text-sm text-gray-700">
+                            {segments.length > 0 ? (
+                              segments.map((segment) => (
+                                <li
+                                  key={segment.id}
+                                  className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={editLead.segments.includes(
+                                      segment.segment
+                                    )}
+                                    onChange={() =>
+                                      handleCheckboxChange(segment)
+                                    }
+                                    className="mr-2"
+                                  />
+                                  {segment.segment}{' '}
+                                  {/* Assuming 'segment' is the property you want to display */}
+                                </li>
+                              ))
+                            ) : (
+                              <li className="flex items-center px-4 py-2 text-center gap-1">
+                                <IoInformationCircle
+                                  size={25}
+                                  className="text-cyan-600"
+                                />{' '}
+                                Segments not available. Go to{' '}
+                                <span className="font-bold">
+                                  Settings - Add Segment{' '}
+                                </span>
+                                .
+                              </li>
+                            )}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                {/* -------------11------------- */}
+                {/* -------------Trail Start Date------------- */}
+                <div className="flex space-x-4">
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="trialStartDate"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Trail Start Date
+                    </label>
+                    <input
+                      type="date"
+                      name="trialStartDate"
+                      value={editLead.trialStartDate?.split('T')[0]}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {/* -------------Trail End Date------------- */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="trialEndDate"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Trail End Date
+                    </label>
+                    <input
+                      type="date"
+                      name="trialEndDate"
+                      value={editLead.trialEndDate?.split('T')[0]}
+                      onChange={handleChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
+                </div>
+                {/* -------------12------------- */}
+                {/* -------------Trading Years------------- */}
+                <div className="flex space-x-4">
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="tradingYears"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Trading Years
+                    </label>
+                    <input
+                      type="text"
+                      name="tradingYears"
+                      value={editLead.tradingYears}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Enter years"
+                    />
+                    {/* -------------callBackDateTime ------------- */}
+                  </div>
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="callBackDateTime"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      CallBack DateTime
+                    </label>
+                    <input
+                      type="datetime-local"
+                      name="callBackDateTime"
+                      value={editLead.callBackDateTime}
+                      onChange={handleChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
+                </div>
+                {/* -------------13------------- */}
+                {/* -------------contactID ------------- */}
+                <div className="flex space-x-4">
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="contactId"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Contact ID
+                    </label>
+                    <input
+                      type="text"
+                      name="contactId"
+                      value={editLead.contactId}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Enter ContactID"
+                    />
+                  </div>
+                  {/* -------------lastModifiedBy ------------- */}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="lastModifiedBy"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Last Modified By
+                    </label>
+                    <input
+                      type="text"
+                      name="lastModifiedBy"
+                      value={editLead.lastModifiedBy}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Enter details"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div> <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow ">
+              <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+                Trading Experience
+              </h2>
+
+              {/* -------------Address Information STARTS FROM HERE------------- */}
+              <div className="grid gap-2 p-2">
+
                 {/* -------------9------------- */}
                 {/* -------------Risk Capcity------------- */}
                 <div className="flex space-x-4">
