@@ -872,16 +872,16 @@ export default function Lead() {
         <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg flex-wrap gap-3">
           {/* PART-I */}
           {/* container- Alleads, search */}
-          <div className="flex gap-3 items-start justify-start flex-wrap">
+          <div className="flex gap-3 items-start justify-between flex-wrap">
             {/* PART-I */}
             {/* All Lead  DropDown*/}
             <div
-              className="relative button_MaxWidth"
+              className="relative button_MaxWidth_first_layer_Container"
               onClick={toggleMenuAllLead}
               onMouseLeave={() => setAllLeaddropDown(false)}
             >
               <button
-                className="py-2 px-4 border rounded-md flex justify-between items-center min-w-40 max-w-44 truncate button_MaxWidth"
+                className="py-2 px-4 border rounded-md flex justify-between items-center min-w-40 max-w-44 truncate button_MaxWidth_first_layer"
                 id="dropdownDefaultButton"
                 type="button"
               >
@@ -909,12 +909,12 @@ export default function Lead() {
             {/* All ASSIGNED_TO  DropDown*/}
            
             <div
-              className="relative button_MaxWidth"
+              className="relative button_MaxWidth_first_layer_Container"
               onClick={toggleMenuAssigned_To}
               onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
             >
               <button
-                className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 max-w-44 button_MaxWidth"
+                className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 max-w-44 button_MaxWidth_first_layer"
                 id="dropdownDefaultButton"
                 type="button"
               >
@@ -947,9 +947,9 @@ export default function Lead() {
 
             {/* Fetch Box */}
             {fetchLead || businessRole==="Admin" ? (
-              <div className="flex gap-1 button_MaxWidth">
+              <div className="flex gap-1 button_MaxWidth_first_layer_Container">
                 <button
-                  className="py-2 px-4 border rounded-lg gap-2 flex justify-center items-center text-white bg-blue-600 button_MaxWidth"
+                  className="py-2 px-4 border rounded-lg gap-2 flex justify-center items-center text-white bg-blue-600 button_MaxWidth_first_layer"
                   onClick={() => setIsFetchModalOpen(true)}
                 >
                   Fetch Leads
@@ -961,19 +961,19 @@ export default function Lead() {
           </div>
 
           {/* PART-II */}
-          <div className="flex gap-3 items-center justify-center flex-wrap button_MaxWidth">
+          <div className="flex gap-3 items-center flex-wrap button_MaxWidth_Main_Container" >
             {/* PART-II */}
             {/* Stripe-BarDropDown */}
             {activeButtonId === 2 || activeButtonId === 4 ? (
               ""
             ) : (
               <div
-                className="relative hide_Component "
+                className="relative hide_Component button_MaxWidth_Container"
                 onClick={togglestripeBar}
                 onMouseLeave={() => setstripeBardropDown(false)}
               >
                 <button
-                  className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center "
+                  className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center button_MaxWidth"
                   id="dropdownDefaultButton"
                   type="button"
                 >
@@ -1000,7 +1000,7 @@ export default function Lead() {
             {/* PART-II */}
             {/*  Create Lead */}
             {createLead || businessRole==="Admin" ?  (
-              <div className="flex button_MaxWidth">
+              <div className="flex button_MaxWidth_Container">
                 <Link to="/panel/createlead" className="button_MaxWidth">
                   <button
                     className="py-2 px-4 border rounded-lg gap-2 flex justify-center items-center text-white bg-blue-600 button_MaxWidth"
@@ -1024,7 +1024,7 @@ export default function Lead() {
             {/* PART-II */}
             {/*-------Action DropDown */}
             <div
-              className="relative button_MaxWidth"
+              className="relative button_MaxWidth_Container"
               onClick={toggleActionsMenuLogo}
               onMouseLeave={() => setdropActionsMenudropDown(false)}
             >
@@ -1105,13 +1105,14 @@ export default function Lead() {
 
                 {/* Date Range Inputs */}
                 <div className="px-3 flex items-center gap-2 filter_Date_Container">
+                <label className="hide_Filter_Text">From:</label>
                   <input
                     type="date"
                     value={startDate}
                     className="border rounded px-2 py-1 filter_Date"
                     onChange={(e) => setStartDate(e.target.value)}
                   />
-
+<label className="hide_Filter_Text">To:</label>
                   <input
                     type="date"
                     value={endDate}
@@ -1124,7 +1125,7 @@ export default function Lead() {
                   className="p-1 border rounded cursor-pointer  hover:shadow-md"
                   onClick={handleResetFilter}
                 >
-                  <TbRefresh size={25} className="filter_Reset_Image" />
+                  <TbRefresh className="filter_Reset_Image" />
                 </div>
               </div>
             ) : (

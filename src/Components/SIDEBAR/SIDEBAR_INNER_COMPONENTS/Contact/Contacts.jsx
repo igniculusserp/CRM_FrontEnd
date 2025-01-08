@@ -638,11 +638,11 @@ const businessType = localStorage.getItem("businessType");
       <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg flex-wrap gap-3">
         {/* PART-I */}
         {/* container- Alleads, search */}
-        <div className="flex gap-3 items-center justify-center ">
+        <div className="flex gap-3 items-center justify-start contact_Dropdown_Main_Container flex-wrap">
           {/* PART-I */}{/* All Lead DropDown*/}
-          <div className="relative" onClick={toggleMenuAllLead} onMouseLeave={() => setAllLeaddropDown(false)}>
+          <div className="relative whitespace-nowrap contact_Dropdown_Container" onClick={toggleMenuAllLead} onMouseLeave={() => setAllLeaddropDown(false)}>
             <button
-              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 max-w-44 truncate"
+              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 truncate contact_Dropdown_Button"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -650,7 +650,7 @@ const businessType = localStorage.getItem("businessType");
               <FaAngleDown className="ml-2 text-gray-900" />
             </button>
             {allLeaddropDown && (
-              <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+              <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10 ">
                 <ul className=" text-sm text-gray-700">
                   {allLeadData.map((item) => (
                     <li
@@ -666,9 +666,9 @@ const businessType = localStorage.getItem("businessType");
             )}
           </div>
           {/* PART-I-ii */}{/* All MANAGED_BY  DropDown*/}
-          <div className="relative" onClick={toggleMenuAssigned_To} onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}>
+          <div className="relative whitespace-nowrap contact_Dropdown_Container" onClick={toggleMenuAssigned_To} onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}>
             <button
-              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 max-w-44"
+              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 contact_Dropdown_Button"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -698,7 +698,7 @@ const businessType = localStorage.getItem("businessType");
         </div>
 
         {/* PART-II */}
-        <div className="flex gap-3 items-center justify-center">
+        <div className="flex gap-3 items-center justify-start action_Button_Main_Container">
           {/* PART-II */}{/* Stripe-BarDropDown */}
           <div className="relative hide_Component" onClick={togglestripeBar} onMouseLeave={() => setstripeBardropDown(false)}>
             <button
@@ -726,13 +726,11 @@ const businessType = localStorage.getItem("businessType");
               </div>
             )}
           </div>
-          {/* PART-II */}
-          <div className="flex gap-1">
-          </div>
+        
           {/* PART-II */}{/*-------Action DropDown */}
-          <div className="relative" onClick={toggleActionsMenuLogo} onMouseLeave={() => setdropActionsMenudropDown(false)}>
+          <div className="relative action_Button_Container" onClick={toggleActionsMenuLogo} onMouseLeave={() => setdropActionsMenudropDown(false)}>
             <button
-              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
+              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600 action_Button"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -762,7 +760,7 @@ const businessType = localStorage.getItem("businessType");
         </div>
       </div>
       {/* 2nd bar Leads and lenghtLeads*/}   {/* 2nd bar Leads and lenghtLeads*/}   {/* 2nd bar Leads and lenghtLeads*/}   {/* 2nd bar Leads and lenghtLeads*/}   {/* 2nd bar Leads and lenghtLeads*/}   {/* 2nd bar Leads and lenghtLeads*/}
-      <div className="mt-3 flex justify-between items-center gap-3">
+      <div className="mt-3 flex justify-between items-center gap-3 flex-wrap">
         <div className="flex gap-3">
           <h1 className="text-3xl font-medium ">
             Contacts
@@ -774,45 +772,44 @@ const businessType = localStorage.getItem("businessType");
             {getleads?.length}
           </h1>
         </div>
-        <div>
+
+        <div className="date_Filter_Main_Container">
           {/* ------------------- Filter by date ----------------- */}
-
-
-          <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
+          <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-center items-center date_Filter_Main_Container">
 
             {/* Filter Icon Button */}
-            <button className="border-r border-gray-500 px-3">
+            <button className="border-r border-gray-500 px-3 filter_Image_Display">
               <ImFilter />
             </button>
 
             {/* Date Range Filter Button */}
             <button
-              className="border-r border-gray-500 px-3"
+              className="border-r border-gray-500 px-3 whitespace-nowrap filter_Text"
             >
               Filter By
             </button>
 
             {/* Date Range Inputs */}
-            <div className="px-3 flex items-center gap-2">
-              <label>From:</label>
+            <div className="px-3 flex items-center gap-2 filter_Date_Container">
+              <label className="hide_Filter_Text">From:</label>
               <input
                 type="date"
                 value={startDate}
-                className="border rounded px-2 py-1"
+                className="border rounded px-2 py-1 filter_Date"
                 onChange={(e) => setStartDate(e.target.value)}
               />
 
-              <label>To:</label>
+              <label className="hide_Filter_Text">To:</label>
               <input
                 type="date"
                 value={endDate}
-                className="border rounded px-2 py-1"
+                className="border rounded px-2 py-1 filter_Date"
                 onChange={(e) => setEndDate(e.target.value)}
               />
             </div>
 
             <div className="p-1 border rounded cursor-pointer" onClick={handleResetFilter}>
-               <TbRefresh size = {25}/>
+               <TbRefresh className="filter_Reset_Image"/>
             </div>
             
           </div>
@@ -822,7 +819,7 @@ const businessType = localStorage.getItem("businessType");
       {viewContact || businessRole==="Admin"?
       
       <div className="overflow-x-auto mt-3 leads_Table_Main_Container">
-        <div className="min-w-full  rounded-md leads_Table_Container">
+        <div className="min-w-full  rounded-md shadow-lg leads_Table_Container">
           {selectedViewValue === "Table View" && (
             <table className="min-w-full bg-white leads_Table">
               <thead>
@@ -838,50 +835,50 @@ const businessType = localStorage.getItem("businessType");
 
                   <th className="px-1 py-3 text-left border-r font-medium">
                     <div className="">
-                      <span>
+                      <span className="whitespace-nowrap">
                         Client Name
                       </span>
                     </div>
                   </th>
-                  <th className="px-1 py-3 text-left border-r font-medium min-w-16 max-w-20">
+                  <th className="px-1 py-3 text-left border-r font-medium min-w-16 ">
                     <div className="text-center">
-                      <span>
+                      <span  className="whitespace-nowrap">
                         Mobile
                       </span>
                     </div>
                   </th>
 
 
-                  <th className="px-1 py-3 text-left border-r font-medium min-w-16 max-w-20">
+                  <th className="px-1 py-3 text-left border-r font-medium min-w-16 ">
                     <div className="text-center">
                       <span>
                         Segment
                       </span>
                     </div>
                   </th>
-                  <th className="px-1 py-3 text-left border-r font-medium  min-w-20 max-w-24 relative">
+                  <th className="px-1 py-3 text-left border-r font-medium  min-w-20  relative">
                     <div className="text-center">
-                      <span>
+                      <span  className="whitespace-nowrap">
                         Free Trail
                       </span>
                     </div>
                   </th>
-                  <th className="px-1 py-3 text-left border-r font-medium max-w-16">
+                  <th className="px-1 py-3 text-left border-r font-medium ">
                     <div className="text-center">
-                      <span>
+                      <span  className="whitespace-nowrap">
                         Follow Up
                       </span>
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium">
                     <div className="text-center">
-                      <span>
+                      <span className="whitespace-nowrap">
                         Managed By
                       </span>
                     </div>
                   </th>
                    <th className="">
-                    <VscSettings className='mx-auto '  size={20}/>
+                    <VscSettings className='mx-auto whitespace-nowrap'  size={20}/>
                   </th>
                 </tr>
               </thead>
@@ -898,7 +895,7 @@ const businessType = localStorage.getItem("businessType");
 
                     >
                       {/* CHECKBOX */}
-                      <td className="px-1 py-3 text-center">
+                      <td className="px-1 py-3 text-center px-2">
                         <input
                           type="checkbox"
                           checked={selectedIds.includes(item.id)}
@@ -908,19 +905,20 @@ const businessType = localStorage.getItem("businessType");
 
 
                       {/* CONTACT NAME */}
-                      <td className="px-1 py-4 border-b border-gray-300 text-sm" onClick={edit || businessRole==="Admin" ?() => handleClick(item): undefined}>
+                      <td className="px-2 py-4 border-b border-gray-300 text-sm" onClick={edit || businessRole==="Admin" ?() => handleClick(item): undefined}>
                         <div className="flex items-center">
-                          <span className="">{item.name}</span>
+                          <span className="whitespace-nowrap">{item.name}</span>
                         </div>
                       </td>
 
                       {/* Mobile No */}
-                      <td className="px-1 py-4 border-b border-gray-300 text-sm min-w-20 max-w-24 ">
+                      <td className="px-2 py-4 border-b border-gray-300 text-sm min-w-20  ">
                         <div className="flex gap-2 items-center">
 
                           <a
                               href={`tel:${item.mobileNo}`}
                               onClick={(event) => event.stopPropagation()}
+                              className="whitespace-nowrap"
                             >
                               {item.mobileNo}
                             </a>                         
@@ -929,10 +927,10 @@ const businessType = localStorage.getItem("businessType");
                       </td>
 
                       {/* Segments */}
-                      <td className="px-1 py-4 border-b border-gray-300 text-sm  ">
+                      <td className="px-2 py-4 border-b border-gray-300 text-sm  ">
                         <div>
                           {item.segments && (
-                            <span className="">
+                            <span className="whitespace-nowrap">
                               {item.segments
                                 .filter((segment) => segment.length > 1)
                                 .join(", ")}
@@ -941,11 +939,11 @@ const businessType = localStorage.getItem("businessType");
                         </div>
                       </td>
 
-                      <td className="px-1 py-4 border-b border-gray-300 text-sm text-center">
+                      <td className="px-2 py-4 border-b border-gray-300 text-sm text-center whitespace-nowrap">
                         {(item.trialStartDate?.split('T')[0])}
                       </td>
 
-                      <td className="px-1 py-4 border-b border-gray-300 text-sm text-center">
+                      <td className="px-2 py-4 border-b border-gray-300 text-sm text-center whitespace-nowrap">
                         {(item.call_bck_DateTime?.replace("T", " "))?.split(':').slice(0, 2).join(':')}
                       </td>
 
@@ -953,7 +951,7 @@ const businessType = localStorage.getItem("businessType");
                       <td className="px-2 py-4 border-b border-gray-300 text-sm  w-[20%] ">
                         {matchedUser && (
                           <div
-                            className="text-xs font-semibold text-white py-2 mx-auto rounded-full w-[90%]"
+                            className="text-xs font-semibold text-white py-2 mx-auto rounded-full w-[90%] whitespace-nowrap"
                             style={{
                               backgroundColor: roleColor ? roleColor : "#000",
                               borderRadius: "8px",
@@ -974,7 +972,7 @@ const businessType = localStorage.getItem("businessType");
                      {/*------------------<- Create-SO->------------*/}
                         {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
                       {createSO || businessRole==="Admin" ?
-                       <td className="text-center">
+                       <td className="text-center px-2">
                        <button
                          className={
                            business === "Brokerage"
@@ -988,12 +986,12 @@ const businessType = localStorage.getItem("businessType");
                        >
                          {/* SO */}
                          {business === "Brokerage" ? (
-                          <span className="text-white text-xs rounded p-2   bg-blue-600 shadow-md rounded hover:bg-blue-500">
+                          <span className="text-white text-xs rounded p-2   bg-blue-600 shadow-md whitespace-nowrap hover:bg-blue-500">
                                Create Client
                              </span>
                          ) : (
                            <>
-                             <span className=" text-white text-xm rounded p-1 bg-blue-600 shadow-md rounded hover:bg-blue-500">
+                             <span className=" text-white text-xm rounded p-1 bg-blue-600 shadow-md whitespace-nowrap hover:bg-blue-500">
                                SO
                              </span>
                            </>
