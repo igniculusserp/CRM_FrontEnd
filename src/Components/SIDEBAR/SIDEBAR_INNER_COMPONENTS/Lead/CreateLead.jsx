@@ -578,7 +578,7 @@ export default function Createlead() {
     <>
       <ToastContainer />
       {/* ------------------------------------------------> Parent <------------------------------------------------ */}
-      <div className="min-h-screen min-w-screen flex flex-col mt-3">
+      <div className=" mt-3">
 
         {/* ------------------------------------------------> Heading  <------------------------------------------------ */}
         <div className="flex justify-between mx-3  bg-white border rounded p-3 ">
@@ -648,7 +648,7 @@ export default function Createlead() {
             
                   
                   {/* -------------Language------------- */}
-                  <div className="flex flex-col w-1/2 relative">
+                  <div className="flex flex-col w-full relative">
                     <label
                       htmlFor="language"
                       className="text-sm font-medium text-gray-700"
@@ -657,7 +657,7 @@ export default function Createlead() {
                     </label>
 
                     <div
-                      className="relative"
+                      className="relative "
                       onClick={toggleDropdownLanguage}
                       onMouseLeave={() => setisDropdownVisibleLanguage(false)}
                     >
