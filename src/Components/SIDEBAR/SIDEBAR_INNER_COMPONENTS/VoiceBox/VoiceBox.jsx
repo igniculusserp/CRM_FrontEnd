@@ -397,7 +397,7 @@ export default function VoiceBox() {
           onClose={closeModal} // Pass function to close modal
         />
       )}
-      <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md">
+      <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md flex-wrap gap-3">
         <div className="flex gap-3">
           {/* TOP */}
           {/* ALL VOICEBOX DROPDOWN */}
@@ -469,7 +469,7 @@ export default function VoiceBox() {
 
           {/* Stripe-BarDropDown */}
           <div
-            className="relative"
+            className="relative hide_Component"
             onClick={togglestripeBar}
             onMouseLeave={() => setstripeBardropDown(false)}
           >
