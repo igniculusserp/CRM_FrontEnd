@@ -225,7 +225,7 @@ input[type="number"] {
 
 /* ------------------------------------------------------Search Bar ----------------------------------------------------- */
 
-@media (max-width: 897px) {
+@media (max-width: 898px) {
   .searchBox_Order {
     width: 100% !important;
     order: -1;
@@ -313,11 +313,51 @@ input[type="number"] {
 }
 
 
-@media (max-width: 897px) {
+@media (max-width: 898px) {
   .leads_Button_Main_Container {
     flex-wrap: wrap;
   }
 }
+
+
+@media(max-width: 898px){
+  .button_MaxWidth_first_layer_Container {
+    width: 31.9% !important;
+    max-width: 31.9% !important;
+  }
+  .button_MaxWidth_first_layer {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .button_MaxWidth_Main_Container {
+    width: 100% !important;
+    justify-content: space-between;
+  }
+  .button_MaxWidth_Container {
+    width: 31.9% !important;
+    max-width: 31.9% !important;
+  }
+  .button_MaxWidth {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+ }
+ @media(max-width: 769px){
+  .button_MaxWidth_Container {
+    width: 48.5% !important;
+    max-width: 48.5% !important;
+  }
+ }
+ 
+ @media(max-width: 648px){
+  .button_MaxWidth_first_layer_Container {
+    width: 48.5% !important;
+    max-width: 48.5% !important;
+    /* min-width: 130px !important; */
+  }
+ 
+ }
 
 @media (max-width: 600px) {
   .leads_Button_Container {
@@ -330,7 +370,12 @@ input[type="number"] {
 }
 
 @media (max-width: 492px) {
-  .button_MaxWidth {
+  .button_MaxWidth_first_layer_Container {
+    width: 100% !important;
+    max-width: 100% !important;
+    /* min-width: 130px !important; */
+  }
+  .button_MaxWidth_Container {
     width: 100% !important;
     max-width: 100% !important;
   }
