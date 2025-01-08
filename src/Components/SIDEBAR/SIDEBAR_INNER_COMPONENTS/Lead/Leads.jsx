@@ -1105,13 +1105,14 @@ export default function Lead() {
 
                 {/* Date Range Inputs */}
                 <div className="px-3 flex items-center gap-2 filter_Date_Container">
+                <label className="hide_Filter_Text">From:</label>
                   <input
                     type="date"
                     value={startDate}
                     className="border rounded px-2 py-1 filter_Date"
                     onChange={(e) => setStartDate(e.target.value)}
                   />
-
+<label className="hide_Filter_Text">To:</label>
                   <input
                     type="date"
                     value={endDate}
@@ -1124,7 +1125,7 @@ export default function Lead() {
                   className="p-1 border rounded cursor-pointer  hover:shadow-md"
                   onClick={handleResetFilter}
                 >
-                  <TbRefresh size={25} className="filter_Reset_Image" />
+                  <TbRefresh className="filter_Reset_Image" />
                 </div>
               </div>
             ) : (

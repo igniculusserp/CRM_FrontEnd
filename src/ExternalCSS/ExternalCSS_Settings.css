@@ -221,69 +221,35 @@ input[type="number"] {
   }
 }
 
-/* --------------------------------------Common css for all screen ----------------------------- */
-.leads_Table_Main_Container {
-  width: 100%;
-}
-.leads_Table_Container {
-  width: 100%;
-  overflow-y: scroll;
-}
-.leads_Table {
-  width: max-content;
-}
+/* ------------------------------------------------------ Common css for all screen ------------------------------------------ */
 
-
-
-/* ---------------------------------------Leads------------------------------------------ */
-.filter_Reset_Image {
-  width: 25px !important;
-  height: 25px !important;
-}
-.leads_Button_Container {
-  width: 100%;
-}
-.leads_Button {
-  width: 25%;
-  min-width: 130px;
-}
-.date_Filter_Main_Container {
-  width: 100%;
-}
-.leads_Button_Main_Container {
-  width: 100%;
-}
-
-
-
+/* ------------------------------------------------------Search Bar ----------------------------------------------------- */
 
 @media (max-width: 897px) {
   .searchBox_Order {
     width: 100% !important;
     order: -1;
   }
-  .leads_Button_Main_Container {
-    flex-wrap: wrap;
-  }
 }
 
-@media (max-width: 600px) {
-  .leads_Button_Container {
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  .leads_Button {
-    width: 49%;
-  }
+/* ------------------------------------------------------- Date Filter --------------------------------------------- */
+
+.filter_Reset_Image {
+  width: 25px !important;
+  height: 25px !important;
 }
 
-@media (max-width: 550px) {
+.date_Filter_Main_Container {
+  width: 100%;
+}
+
+@media (max-width: 620px) {
   .filter_Image_Display {
     display: none;
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 580px) {
   .date_Filter_Main_Container {
     gap: 5px !important;
   }
@@ -300,17 +266,11 @@ input[type="number"] {
     height: 15px !important;
   }
 }
-
-@media (max-width: 492px) {
-  .button_MaxWidth {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-  .leads_Button {
-    width: 100%;
+@media (max-width: 500px) {
+  .hide_Filter_Text{
+    display: none;
   }
 }
-
 @media (max-width: 418px) {
   .filter_Text {
     padding: 0 !important;
@@ -322,3 +282,117 @@ input[type="number"] {
     padding: 0 !important;
   }
 }
+
+
+
+/* --------------------------------------------------------- Table CSS --------------------------------------------- */
+.leads_Table_Main_Container {
+  width: 100%;
+}
+.leads_Table_Container {
+  width: 100%;
+  overflow-y: scroll;
+}
+.leads_Table {
+  width: max-content;
+}
+
+
+/* ---------------------------------------Leads------------------------------------------ */
+
+.leads_Button_Container {
+  width: 100%;
+}
+.leads_Button {
+  width: 25%;
+  min-width: 130px;
+}
+
+.leads_Button_Main_Container {
+  width: 100%;
+}
+
+
+@media (max-width: 897px) {
+  .leads_Button_Main_Container {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 600px) {
+  .leads_Button_Container {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .leads_Button {
+    width: 49%;
+  }
+}
+
+@media (max-width: 492px) {
+  .button_MaxWidth {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .leads_Button {
+    width: 100%;
+  }
+}
+
+
+
+/* --------------------------------------------------------- Contacts ---------------------------------------------- */
+
+@media (max-width: 996px) {
+ .contact_Dropdown_Main_Container {
+  width: 100%;
+ }
+ .action_Button_Main_Container{
+  width: 100% !important;
+ 
+ }
+}
+
+@media (max-width: 897px) {
+  .contact_Dropdown_Container {
+   width: 48.99%;
+  }
+  .contact_Dropdown_Button {
+    width: 100% !important;
+   }
+   .action_Button_Main_Container{
+    justify-content: space-between;
+   }
+   .action_Button_Container{
+    width: 50% !important;
+    display: flex;
+    justify-content: end !important;
+   }
+  .action_Button{
+    width: 98% !important;
+   }
+ }
+
+ @media (max-width: 768px) {
+  .action_Button_Container{
+    width: 100% !important;
+    justify-content: start !important;
+   }
+  .action_Button{
+    width: 49% !important;
+   }
+ }
+
+ @media (max-width: 648px) {
+  .contact_Dropdown_Container {
+   width: 100%;
+  }
+  .contact_Dropdown_Button {
+    width: 100% !important;
+   }
+  
+   .action_Button{
+    width: 100% !important;
+   }
+ }
+
