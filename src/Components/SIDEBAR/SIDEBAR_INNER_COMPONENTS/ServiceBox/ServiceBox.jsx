@@ -280,7 +280,7 @@ export default function ServiceBox() {
 
   return (
     <div className="min-h-screen flex flex-col m-3">
-      <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md">
+      <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md flex-wrap gap-3">
         <div className="flex gap-3">
           {/* ALL SMSBOX DROPDOWN */}
           <div

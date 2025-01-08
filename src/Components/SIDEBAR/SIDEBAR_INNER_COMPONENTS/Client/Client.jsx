@@ -554,7 +554,7 @@ export default function Client() {
         />
       )}
       {/* containerbar*/}
-      <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg">
+      <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg flex-wrap gap-3">
         {/* PART-I */}
         {/* container- Alleads, search */}
         <div className="flex gap-3 items-center justify-center ">
@@ -634,7 +634,7 @@ export default function Client() {
           {/* PART-II */}
           {/* Stripe-BarDropDown */}
           <div
-            className="relative"
+            className="relative hide_Component"
             onClick={togglestripeBar}
             onMouseLeave={() => setstripeBardropDown(false)}
           >

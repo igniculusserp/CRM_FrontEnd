@@ -635,7 +635,7 @@ const businessType = localStorage.getItem("businessType");
       )}
 
       {/* containerbar*/}
-      <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg">
+      <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg flex-wrap gap-3">
         {/* PART-I */}
         {/* container- Alleads, search */}
         <div className="flex gap-3 items-center justify-center ">
@@ -700,7 +700,7 @@ const businessType = localStorage.getItem("businessType");
         {/* PART-II */}
         <div className="flex gap-3 items-center justify-center">
           {/* PART-II */}{/* Stripe-BarDropDown */}
-          <div className="relative" onClick={togglestripeBar} onMouseLeave={() => setstripeBardropDown(false)}>
+          <div className="relative hide_Component" onClick={togglestripeBar} onMouseLeave={() => setstripeBardropDown(false)}>
             <button
               className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center"
               id="dropdownDefaultButton"
