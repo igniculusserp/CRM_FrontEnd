@@ -983,7 +983,7 @@ const businessType = localStorage.getItem("businessType");
                          }
                          onClick={(e) => {
                            e.stopPropagation();
-                           navigate(`/panel/lead/create/so/${item.id}`);
+                           navigate(`/panel/contact/create/so/${item.id}`);
                          }}
                        >
                          {/* SO */}

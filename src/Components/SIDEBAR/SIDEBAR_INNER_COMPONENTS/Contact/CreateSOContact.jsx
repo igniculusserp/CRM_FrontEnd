@@ -62,9 +62,7 @@ export default function CreateSOContact() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(
-`${protocal_url}${name}.${tenant_base_url}/Contact/contact/${id}`
-, config);
+      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Contact/contact/${id}`, config);
       const data = response.data.data;
 
       seteditLead({

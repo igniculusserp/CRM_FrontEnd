@@ -641,7 +641,7 @@ export default function Home() {
           {/* ---------------------------------------------------------------------------------------------------------------- */}
 
         <div className="sm:flex gap-3 m-2 grid grid-cols-1">
-          <div className="flex-4 flex flex-col bg-white py-4 px-4 rounded-md shadow-md sm:w-72 w-full  justify-between">
+          <div className="flex-4 flex flex-col bg-white py-4 px-4 rounded-md shadow-md sm:w-96 w-full  justify-between">
             <h1 className="font-normal text-xl">
               {business === "Brokerage" ? "Brokerage" : "Custom Segmentation"}
             </h1>
