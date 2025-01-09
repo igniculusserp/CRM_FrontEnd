@@ -237,15 +237,15 @@ export default function Reports() {
 
   return (
     <div className="min-h-screen flex flex-col m-3">
-      <div className="py-2 px-3 bg-white gap-3 flex items-center justify-between rounded-md">
-        <div className="flex gap-3">
+      <div className="py-2 px-3 bg-white gap-3 flex items-center justify-between rounded-md " >
+        <div className="flex gap-3 reports_Buttons_Main_Container" >
           {dynamicButtons.map(({ id, name }) => (
             <>
               {permissions.includes(name) || businessRole==="Admin" ? (
                 <button
                   key={id}
                   onClick={() => handleOptionClick(id)}
-                  className={`px-5 py-1.5 rounded font-light text-md
+                  className={`px-3 py-1.5 rounded font-light text-md reports_Buttons_Container
                  ${
                    selectedId === id
                      ? "bg-cyan-500 text-white"
@@ -261,43 +261,13 @@ export default function Reports() {
             </>
           ))}
         </div>
-        {/* SEARCH DROPDOWN */}
-        <div
-          className="relative"
-          onClick={toggleDropdownSearch}
-          onMouseLeave={() => setSearchDropdown(false)}
-        >
-          <button
-            className="py-2 px-6 border rounded-full gap-2 flex justify-between items-center"
-            id="dropdownDefaultButton"
-            type="button"
-          >
-            <span>
-              <IoSearchOutline />
-            </span>
-            <span>Search</span>
-          </button>
-          {searchDropdown && (
-            <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
-              <ul className="py-2 text-sm text-gray-700">
-                {searchData.map(({ key, name }) => (
-                  <li
-                    className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                    key={key}
-                  >
-                    {name}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
+       
       </div>
 
       {/* FILTER BY SECTION */}
-      <div className="mt-3 mb-3 flex justify-between items-center gap-3">
+      <div className="mt-3 mb-3 flex justify-between items-center gap-3 flex-wrap">
         <div className="flex gap-3">
-          <h1 className="text-3xl font-medium">
+          <h1 className="text-3xl font-medium reports_Heading_Text">
             {(() => {
               switch (selectedId) {
                 case 1:
@@ -340,41 +310,42 @@ export default function Reports() {
 
         {/* -------------- FILTER SECTION ------------------ */}
         {selectedId === 6 ? (
-          <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
-            {/* Filter Icon Button */}
-            <button className="border-r border-gray-500 px-3">
-              <ImFilter />
-            </button>
+          // <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
+          //   {/* Filter Icon Button */}
+          //   <button className="border-r border-gray-500 px-3">
+          //     <ImFilter />
+          //   </button>
 
-            {/* Date Range Filter Button */}
-            <button className="border-r border-gray-500 px-3">Filter By</button>
+          //   {/* Date Range Filter Button */}
+          //   <button className="border-r border-gray-500 px-3">Filter By</button>
 
-            {/* Date Range Inputs */}
-            <div className="px-3 flex items-center gap-2">
-              <label>From:</label>
-              <input
-                type="date"
-                value={startDate}
-                className="border rounded px-2 py-1"
-                onChange={(e) => setStartDate(e.target.value)}
-              />
+          //   {/* Date Range Inputs */}
+          //   <div className="px-3 flex items-center gap-2">
+          //     <label>From:</label>
+          //     <input
+          //       type="date"
+          //       value={startDate}
+          //       className="border rounded px-2 py-1"
+          //       onChange={(e) => setStartDate(e.target.value)}
+          //     />
 
-              <label>To:</label>
-              <input
-                type="date"
-                value={endDate}
-                className="border rounded px-2 py-1"
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </div>
+          //     <label>To:</label>
+          //     <input
+          //       type="date"
+          //       value={endDate}
+          //       className="border rounded px-2 py-1"
+          //       onChange={(e) => setEndDate(e.target.value)}
+          //     />
+          //   </div>
 
-            <div
-              className="p-1 border rounded cursor-pointer"
-              onClick={handleResetFilter}
-            >
-              <TbRefresh size={25} />
-            </div>
-          </div>
+          //   <div
+          //     className="p-1 border rounded cursor-pointer"
+          //     onClick={handleResetFilter}
+          //   >
+          //     <TbRefresh size={25} />
+          //   </div>
+          // </div>
+          <></>
         ) : (
           <></>
         )}

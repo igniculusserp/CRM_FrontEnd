@@ -77,10 +77,10 @@ export default function FinancialActivity() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col m-3">
+    <div className="min-h-screen flex flex-col m-3 ">
       {showTopSection && (
-        <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md flex-wrap gap-3">
-          <div className="flex gap-3">
+        <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md flex-wrap gap-3 finance_Buttons_Text finance_Buttons_Main_Container">
+          <div className="flex ">
             {/* DYNAMIC BUTTONS */}
             <div className="flex gap-4">
               {Object.keys(dynamicButtons).map((key) =>
@@ -88,7 +88,7 @@ export default function FinancialActivity() {
                   <button
                     key={key}
                     onClick={() => handleOptionClick(key)}
-                    className={`px-4 py-1.5 rounded font-light text-md ${
+                    className={`px-4 py-1.5 rounded font-light text-md whitespace-nowrap ${
                       selectedButton === key
                         ? "bg-cyan-500 text-white"
                         : "bg-gray-100 text-gray-700"
@@ -111,7 +111,7 @@ export default function FinancialActivity() {
                     <ul className="py-2 text-sm text-gray-700">
                       {smsDropdown.map(({ key, value }) => (
                         <li
-                          className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer "
                           key={key}
                         >
                           {value}
