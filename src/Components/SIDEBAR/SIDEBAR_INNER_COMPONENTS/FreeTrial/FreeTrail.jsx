@@ -519,15 +519,15 @@ export default function FreeTrail() {
       )}
 
       <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md flex-wrap gap-3">
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-center justify-start contact_Dropdown_Main_Container flex-wrap">
           {/* AllContact  DropDown*/}
           <div
-            className="relative"
+            className="relative whitespace-nowrap contact_Dropdown_Container"
             onClick={toggleMenuAllFreeTrial}
             onMouseLeave={() => setAllFreeTrialdropDown(false)}
           >
             <button
-              className="py-2 px-4 border rounded-md  flex justify-between items-center"
+              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 truncate contact_Dropdown_Button"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -553,12 +553,12 @@ export default function FreeTrail() {
 
           {/* All ASSIGNED_TO  DropDown*/}
           <div
-            className="relative"
+            className="relative  whitespace-nowrap contact_Dropdown_Container"
             onClick={toggleMenuAssigned_To}
             onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
           >
             <button
-              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 max-w-44"
+              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 contact_Dropdown_Button"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -586,13 +586,8 @@ export default function FreeTrail() {
           <SearchElement value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
         </div>
 
-        <div className="flex items-center gap-3">
-          {/* <Link
-            to="/panel/createtrial"
-            className="py-2 px-4 border rounded-md bg-blue-600 text-white"
-          >
-            Create Free Trial
-          </Link> */}
+        <div className="flex items-center gap-3 justify-start action_Button_Main_Container">
+       
 
           {/* Stripe-BarDropDown */}
           <div
@@ -627,12 +622,12 @@ export default function FreeTrail() {
 
           {/* ACTION DROPDOWM START */}
           <div
-            className="relative"
+            className="relative action_Button_Container"
             onClick={toggleActionsMenuLogo}
             onMouseLeave={() => setdropActionsMenudropDown(false)}
           >
             <button
-              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600   border-blue-600"
+              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600   border-blue-600 action_Button"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -660,7 +655,7 @@ export default function FreeTrail() {
         </div>
       </div>
       {/* FILTER BY */}
-      <div className="my-1 flex py-2 justify-between items-center gap-3">
+      <div className="my-1 flex py-2 justify-between items-center gap-3 flex-wrap">
         <div className="flex gap-3">
           <h1 className="text-3xl font-medium ">Free Trail</h1>
           <h1 className="bg-blue-600 text-white p-2 min-w-10 text-center rounded text-sm shadow-md">
@@ -669,42 +664,43 @@ export default function FreeTrail() {
         </div>
 
         {/* ------------------- Filter by date ----------------- */}
-
-        <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
+<div className="date_Filter_Main_Container">
+        <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-center items-center date_Filter_Main_Container">
           {/* Filter Icon Button */}
-          <button className="border-r border-gray-500 px-3">
+          <button className="border-r border-gray-500 pr-2 filter_Image_Display">
             <ImFilter />
           </button>
 
           {/* Date Range Filter Button */}
           <button
-            className="border-r border-gray-500 px-3"
+            className="border-r border-gray-500 px-2  whitespace-nowrap filter_Text"
             onClick={() => handle_DateRange(startDate, endDate)}
           >
             Filter By
           </button>
 
           {/* Date Range Inputs */}
-          <div className="px-3 flex items-center gap-2">
-            <label>From:</label>
+          <div className="px-2 flex items-center gap-2 filter_Date_Container">
+            <label className="hide_Filter_Text">From:</label>
             <input
               type="date"
               value={startDate}
-              className="border rounded px-2 py-1"
+              className="border rounded px-2 py-1 filter_Date"
               onChange={(e) => setStartDate(e.target.value)}
             />
 
-            <label>To:</label>
+            <label className="hide_Filter_Text">To:</label>
             <input
               type="date"
               value={endDate}
-              className="border rounded px-2 py-1"
+              className="border rounded px-2 py-1 filter_Date"
               onChange={(e) => setEndDate(e.target.value)}
             />
           </div>
           <div className="p-1 border rounded cursor-pointer" onClick={handleResetFilter}>
-          <TbRefresh size = {25}/>
+          <TbRefresh className="filter_Reset_Image"/>
           </div>
+        </div>
         </div>
       </div>
       {/* TABLE VIEW */}
