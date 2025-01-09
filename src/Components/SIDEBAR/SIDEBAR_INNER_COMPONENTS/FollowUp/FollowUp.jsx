@@ -600,7 +600,7 @@ export default function FollowUp() {
                 <FaAngleDown className="text-gray-900" />
               </button>
               {actionDropdown && (
-                <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
+                <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
                   <ul className="text-sm text-gray-700">
                     {actions.map(({ key, value }) =>
                       permissions.includes(value) || businessRole==="Admin" ? (
