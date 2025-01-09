@@ -9,6 +9,7 @@ import autoTable from 'jspdf-autotable';
 
 //React Icons
 import { FaAngleDown, FaPhoneAlt } from 'react-icons/fa';
+import { FaBars } from "react-icons/fa";
 import { IoIosMail } from 'react-icons/io';
 import { BiEdit } from 'react-icons/bi';
 import { ImFilter } from 'react-icons/im';
@@ -557,16 +558,16 @@ export default function Client() {
       <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg flex-wrap gap-3">
         {/* PART-I */}
         {/* container- Alleads, search */}
-        <div className="flex gap-3 items-center justify-center ">
+        <div className="flex gap-3 items-center justify-start contact_Dropdown_Main_Container flex-wrap">
           {/* PART-I */}
           {/* All Lead  DropDown*/}
           <div
-            className="relative"
+            className="relative whitespace-nowrap contact_Dropdown_Container"
             onClick={toggleMenuAllLead}
             onMouseLeave={() => setAllLeaddropDown(false)}
           >
             <button
-              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 max-w-44 truncate"
+              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 truncate contact_Dropdown_Button"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -592,12 +593,12 @@ export default function Client() {
           {/* PART-I-ii */}
           {/* All ASSIGNED_TO  DropDown*/}
           <div
-            className="relative"
+            className="relative whitespace-nowrap contact_Dropdown_Container"
             onClick={toggleMenuAssigned_To}
             onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
           >
             <button
-              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 max-w-44"
+              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 contact_Dropdown_Button"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -630,7 +631,7 @@ export default function Client() {
         </div>
 
         {/* PART-II */}
-        <div className="flex gap-3 items-center justify-center">
+        <div className="flex gap-3 items-center justify-start action_Button_Main_Container">
           {/* PART-II */}
           {/* Stripe-BarDropDown */}
           <div
@@ -643,7 +644,7 @@ export default function Client() {
               id="dropdownDefaultButton"
               type="button"
             >
-              
+              <FaBars />
               <FaAngleDown className="text-gray-900" />
             </button>
             {stripeBardropDown && (
@@ -668,12 +669,12 @@ export default function Client() {
           {/* PART-II */}
           {/*-------Action DropDown */}
           <div
-            className="relative"
+            className="relative action_Button_Container"
             onClick={toggleActionsMenuLogo}
             onMouseLeave={() => setdropActionsMenudropDown(false)}
           >
             <button
-              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
+              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600 action_Button"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -700,7 +701,7 @@ export default function Client() {
           </div>
         </div>
       </div>
-      <div className="mt-3 flex justify-between items-center gap-3">
+      <div className="mt-3 flex justify-between items-center gap-3 flex-wrap">
         <div className="flex gap-3">
           <h1 className="text-3xl font-medium ">Client</h1>
           <h1 className="bg-blue-600 text-white p-2 min-w-10 text-center rounded text-sm shadow-md">
@@ -708,38 +709,38 @@ export default function Client() {
           </h1>
         </div>
 
-        <div>
+        <div className="date_Filter_Main_Container">
           {/* ------------------- Filter by date ----------------- */}
-          <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
+          <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-center items-center date_Filter_Main_Container">
             {/* Filter Icon Button */}
-            <button className="border-r border-gray-500 px-3">
+            <button className="border-r border-gray-500 pr-3 filter_Image_Display">
               <ImFilter />
             </button>
 
             {/* Date Range Filter Button */}
-            <button className="border-r border-gray-500 px-3">Filter By</button>
+            <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Text">Filter By</button>
 
             {/* Date Range Inputs */}
-            <div className="px-3 flex items-center gap-2">
-              <label>From:</label>
+            <div className="px-2 flex items-center gap-2 filter_Date_Container">
+              <label className="hide_Filter_Text">From:</label>
               <input
                 type="date"
                 value={startDate}
-                className="border rounded px-2 py-1"
+                className="border rounded px-2 py-1 filter_Date"
                 onChange={(e) => setStartDate(e.target.value)}
               />
 
-              <label>To:</label>
+              <label className="hide_Filter_Text">To:</label>
               <input
                 type="date"
                 value={endDate}
-                className="border rounded px-2 py-1"  
+                className="border rounded px-2 py-1 filter_Date"  
                 onChange={(e) => setEndDate(e.target.value)}
               />
             </div>
 
             <div className="p-1 border rounded cursor-pointer" onClick={handleResetFilter}>
-               <TbRefresh size={25}/>
+               <TbRefresh className="filter_Reset_Image"/>
             </div>
 
           </div>
@@ -762,7 +763,7 @@ export default function Client() {
                   </th>
 
                   <th className="px-1 py-3 text-left border-r font-medium max-w-56">
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center whitespace-nowrap">
                       <span>Client Name</span>
                       
                     </div>
