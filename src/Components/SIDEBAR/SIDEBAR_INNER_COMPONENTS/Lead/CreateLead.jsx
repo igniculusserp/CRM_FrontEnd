@@ -29,7 +29,7 @@ import { showSuccessToast, showErrorToast } from './../../../../utils/toastNotif
 import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 
 //dropDown --->>> customHooks
-import useLeadStatus from '../../../../data/dropdown/Hooks/LeadStatus/useLeadStatus';
+import useLeadStatus from '../../../../Hooks/LeadStatus/useLeadStatus';
 
 export default function Createlead() {
   //to make id unique
