@@ -1078,8 +1078,9 @@ export default function Createlead() {
 
                 {/* ------------------------------------1------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Risk Capacity && Trading Time>------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                  {/* -------------Risk Capacity------------- */}
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="riskCapcity"
                       className="text-sm font-medium text-gray-700"
@@ -1090,13 +1091,13 @@ export default function Createlead() {
                       type="text"
                       name="riskCapcity"
                       value={editLead.riskCapcity}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter Risk Capacity"
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />
                   </div>
                   {/* -------------Trading Time------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="tradingTime"
                       className="text-sm font-medium text-gray-700"
@@ -1107,16 +1108,17 @@ export default function Createlead() {
                       type="text"
                       name="tradingTime"
                       value={editLead.tradingTime}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter Trading Time"
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />
                   </div>
                 </div>
-                {/* -------------10------------- */}
-                {/* -------------Trading Type------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                {/* ------------------------------------2------------------------------------- */}
+                {/* -------------SUB -> Parent -> <Trading Type && Investmet>------------- */}
+                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                  {/* -------------Trading Type------------- */}
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="tradingType"
                       className="text-sm font-medium text-gray-700"
@@ -1127,31 +1129,32 @@ export default function Createlead() {
                       type="text"
                       name="tradingType"
                       value={editLead.tradingType}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />
                   </div>
-                  {/* -------------investmet------------- */}
-                  <div className="flex flex-col w-1/2">
+                  {/* -------------Investmet------------- */}
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="investmet"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Information
+                      Investment
                     </label>
                     <input
                       type="text"
                       name="investmet"
                       value={editLead.investmet}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />
                   </div>
                 </div>
-                {/* -------------11------------- */}
-                {/* -------------Advisory Exp------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                {/* ------------------------------------2------------------------------------- */}
+                {/* -------------SUB -> Parent -> <Trading Type && Segments>------------- */}
+                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                  {/* -------------Trading Type------------- */}
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="empNadvisoryExpame"
                       className="text-sm font-medium text-gray-700"
@@ -1162,13 +1165,13 @@ export default function Createlead() {
                       type="text"
                       name="advisoryExp"
                       value={editLead.advisoryExp}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter your Advisory"
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />
                   </div>
                   {/* -------------Segments------------- */}
-                  <div className="flex flex-col w-1/2 relative">
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="segment"
                       className="text-sm font-medium text-gray-700"
@@ -1181,9 +1184,9 @@ export default function Createlead() {
                       onMouseLeave={() => setisDropdownVisibleSegment(false)}
                     >
                       <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="LeadStatusDropDown"
                         type="button"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                       >
                         {defaultTextSegmentDropDown}
                         <FaAngleDown className="ml-2 text-gray-400" />
@@ -1230,10 +1233,11 @@ export default function Createlead() {
                     </div>
                   </div>
                 </div>
-                {/* -------------11------------- */}
-                {/* -------------Trail Start Date------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                {/* ------------------------------------2------------------------------------- */}
+                {/* -------------SUB -> Parent -> <Trail Start Date && Trail End Date>------------- */}
+                <div className="grid sm:grid-cols-2 grid-cols-2 gap-2 sm:gap-4">
+                  {/* -------------Trail Start Date------------- */}
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="trialStartDate"
                       className="text-sm font-medium text-gray-700"
@@ -1249,7 +1253,7 @@ export default function Createlead() {
                     />
                   </div>
                   {/* -------------Trail End Date------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="trialEndDate"
                       className="text-sm font-medium text-gray-700"
@@ -1265,10 +1269,11 @@ export default function Createlead() {
                     />
                   </div>
                 </div>
-                {/* -------------12------------- */}
-                {/* -------------Trading Years------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                {/* ------------------------------------3------------------------------------- */}
+                {/* -------------SUB -> Parent -> <Trading Years && CallBack DateTime>------------- */}
+                <div className="grid sm:grid-cols-2 grid-cols-2 gap-2 sm:gap-4">
+                  {/* -------------Trading Years------------- */}
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="tradingYears"
                       className="text-sm font-medium text-gray-700"
@@ -1285,7 +1290,7 @@ export default function Createlead() {
                     />
                     {/* -------------callBackDateTime ------------- */}
                   </div>
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="callBackDateTime"
                       className="text-sm font-medium text-gray-700"
@@ -1301,10 +1306,12 @@ export default function Createlead() {
                     />
                   </div>
                 </div>
-                {/* -------------13------------- */}
-                {/* -------------contactID ------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+              {/* ------------------------------------3------------------------------------- */}
+                {/* -------------SUB -> Parent -> <Trading Years && CallBack DateTime>------------- */}
+                <div className="grid sm:grid-cols-2 grid-cols-2 gap-2 sm:gap-4">
+                  {/* -------------Trading Years------------- */}
+                  <div className="flex flex-col relative ">
+
                     <label
                       htmlFor="contactId"
                       className="text-sm font-medium text-gray-700"
@@ -1321,7 +1328,7 @@ export default function Createlead() {
                     />
                   </div>
                   {/* -------------lastModifiedBy ------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="lastModifiedBy"
                       className="text-sm font-medium text-gray-700"
@@ -1355,7 +1362,7 @@ export default function Createlead() {
                   <ReactQuill
                     name="description"
                     value={description}
-                    className="text-balance hyphens-auto  max-h-full h-60 mt-1"
+                    className="text-balance hyphens-auto max-h-full sm:h-60 h-40  mt-1 "
                     theme="snow"
                     onChange={setdescription}
                     placeholder="Add Description"
@@ -1365,7 +1372,7 @@ export default function Createlead() {
               <div className="flex justify-end px-2">
                 <button
                   type="submit"
-                  className="px-36 py-4 mt-20 mb-2 me-10 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+                  className="px-36 py-4 sm:mt-20 mt-16 mb-2 sm:me-10 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white w-full sm:w-1/3"
                 >
                   {isEditMode ? 'Update' : 'Save'}
                 </button>
