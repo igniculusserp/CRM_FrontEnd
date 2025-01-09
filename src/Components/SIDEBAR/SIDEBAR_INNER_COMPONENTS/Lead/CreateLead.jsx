@@ -13,17 +13,23 @@ import { GrContactInfo } from 'react-icons/gr';
 import axios from 'axios';
 import ReactQuill from 'react-quill';
 
+//textBox
 import 'react-quill/dist/quill.snow.css';
 
 //file
 import { tenant_base_url, protocal_url } from '../../../../Config/config';
 
+//LanguageDropDownFile
+import languageDropDown from '../../../../data/dropdown/Languages/language'
 
 //-----------------------------ToastContainer-----------------------------
 import { ToastContainer } from 'react-toastify';
 import { showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
 
 import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
+
+//dropDown --->>> customHooks
+import useLeadStatus from '../../../../data/dropdown/Hooks/LeadStatus/useLeadStatus';
 
 export default function Createlead() {
   //to make id unique
@@ -67,7 +73,16 @@ export default function Createlead() {
 
   //----------------------------------------------------------------------------------------
   //using a global name
+  
   const name = getHostnamePart();
+
+  //const bearer_token for API Config  
+  const bearer_token = localStorage.getItem('token');
+
+  //leadStatus CustomHook__URL
+  const leadstatus_apiUrl = `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`;
+
+  const { leadStatus } = useLeadStatus(leadstatus_apiUrl, bearer_token);
 
   //imp to identify mode
   const [isEditMode, setIsEditMode] = useState(false);
@@ -82,7 +97,7 @@ export default function Createlead() {
 
   //GET by ID---------------------------//GET---------------------------//GET---------------------------by ID-----------by ID
   async function handleLead() {
-    const bearer_token = localStorage.getItem('token');
+
     try {
       const config = {
         headers: {
@@ -134,14 +149,6 @@ export default function Createlead() {
   }
 
   //---------------------------> Language <---------------------------
-  //LanguageDropDown
-  const LanguageDropDown = [
-    { key: 1, name: "English" },
-    { key: 2, name: "Portuguese" },
-    { key: 3, name: "Hindi" },
-    { key: 4, name: "Arabic" },
-    { key: 5, name: "Japanese" },
-  ];
 
   const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] =
     useState("Select Language");
@@ -168,7 +175,7 @@ export default function Createlead() {
   //PooL API used in -> Lead Source DropDown
   const [poolToDropDown, setPoolToDropDown] = useState([]);
 
-  //default text for LeadStatus
+  //default text for Lead Source
   const [defaultTextPool, setDefaultTextPool] = useState("Select Lead Source");
 
   //dropDown State
@@ -222,32 +229,32 @@ export default function Createlead() {
   //----------------------------------------------------------------------------------------
 
   //---------------------------> Lead Source <---------------------------
-  const [leadStatus, setleadStatus] = useState('');
+  // const [leadStatus, setleadStatus] = useState('');
 
-  async function handleLeadStatus() {
-    const bearer_token = localStorage.getItem('token');
+  // async function handleLeadStatus() {
+  //   const bearer_token = localStorage.getItem('token');
 
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${bearer_token}`,
-        },
-      };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
-        config
-      );
-      setleadStatus(response.data.data);
+  //   try {
+  //     const config = {
+  //       headers: {
+  //         Authorization: `Bearer ${bearer_token}`,
+  //       },
+  //     };
+  //     const response = await axios.get(
+  //       `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
+  //       config
+  //     );
+  //     setleadStatus(response.data.data);
 
-      console.log('status:', response.data.data);
-    } catch (error) {
-      console.error('Error fetching leads:', error);
-    }
-  }
+  //     console.log('status:', response.data.data);
+  //   } catch (error) {
+  //     console.error('Error fetching leads:', error);
+  //   }
+  // }
 
-  useEffect(() => {
-    handleLeadStatus();
-  }, []);
+  // useEffect(() => {
+  //   handleLeadStatus();
+  // }, []);
 
   const [defaultTextLeadStatusDropDown, setdefaultTextLeadStatusDropDown] =
     useState('Select Status');
@@ -675,7 +682,7 @@ export default function Createlead() {
                       {isDropdownVisibleLanguage && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
                           <ul className="py-2 text-sm text-gray-700">
-                            {LanguageDropDown.map(({ key, name }) => (
+                            {languageDropDown.map(({ key, name }) => (
                               <li
                                 key={key}
                                 onClick={() => handleDropdownLanguage(name)}

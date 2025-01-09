@@ -7,6 +7,8 @@ import { FaAngleDown } from "react-icons/fa";
 //reactPackages
 import { Link, useNavigate, useParams } from "react-router-dom";
 
+import languageDropDown from '../../../../data/dropdown/Languages/language'
+
 //external Packages
 import axios from "axios";
 import ReactQuill from "react-quill";
@@ -285,7 +287,6 @@ export default function CreateContact() {
       console.log('status:', response.data);
     } catch (error) {
       console.error('Error fetching leads:', error);
-      // Optionally, set an error state to display a user-friendly message
     }
   }
 
@@ -341,8 +342,6 @@ export default function CreateContact() {
   //------------------------------------------Email Regex------------------------------------------
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-
-
   //---------->handleSubmit<----------
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -384,7 +383,6 @@ export default function CreateContact() {
         call_bck_DateTime: editLead.callBackDateTime || null,
         contactID: editLead.contactId,
         lastModifiedBy: editLead.lastModifiedBy,
-        //----------------//
         description: description,
       };
       
@@ -410,18 +408,7 @@ export default function CreateContact() {
         return;
       }
 
-      //  //Date Logic Validation
-      // const today = new Date().toISOString().split('T')[0];
-      
-      // //Previous date cannot be selected
-      // if(formData_PUT.call_bck_DateTime < today ){
-      //   showErrorToast('Previous date cannot be selected')
-      //   return;
-      // }
-       
             
-       
-
       if (isEditMode) {
         await axios.put(`${protocal_url}${name}.${tenant_base_url}/Contact/contact/update`,formData_PUT, config);
         showSuccessToast("Contact updated successfully!");
@@ -435,15 +422,6 @@ export default function CreateContact() {
 
   //----------------------------------------------------------------------------------------
   //LanguageDropDown
-
-  const LanguageDropDown = [
-    { key: 1, name: "English" },
-    { key: 2, name: "Portuguese" },
-    { key: 3, name: "Hindi" },
-    { key: 4, name: "Arabic" },
-    { key: 5, name: "Japanese" },
-  ];
-
   const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] =
     useState("Select Language");
   const [isDropdownVisibleLanguage, setisDropdownVisibleLanguage] =
@@ -544,7 +522,7 @@ export default function CreateContact() {
                       {isDropdownVisibleLanguage && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
                           <ul className="py-2 text-sm text-gray-700">
-                            {LanguageDropDown.map(({ key, name }) => (
+                            {languageDropDown.map(({ key, name }) => (
                               <li
                                 key={key}
                                 onClick={() => handleDropdownLanguage(name)}

@@ -399,7 +399,7 @@ export default function Home() {
                 {/* ------- CARD--> 1 ---> Logo --> C1 ----------- */}
                 <div className=" px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-teal-500 text-white flex items-center justify-center">
                   {/* ------- CARD--> 1 ---> Logo --> C1 ----------- */}
-                  <GrContactInfo className="text-2xl sm:text-4xl " />
+                  <GrContactInfo className="text-2xl sm:text-5xl " />
                 </div>
                 {/* ------- CARD--> 1 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
                 <div className="flex flex-col items-center justify-center gap-1 ">
@@ -452,7 +452,7 @@ export default function Home() {
               <div className="flex items-center justify-between mt-2">
                 {/* ------- CARD--> 2 ---> Logo --> C1 ----------- */}
                 <div className="px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-rose-500 text-white flex items-center justify-center">
-                  <LuIndianRupee className="text-2xl sm:text-4xl " />
+                  <LuIndianRupee className="text-2xl sm:text-5xl " />
                 </div>
                 {/* ------- CARD--> 2 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
                 <div className="flex flex-col items-center justify-center gap-1 ">
@@ -505,7 +505,7 @@ export default function Home() {
               <div className="flex items-center justify-between mt-2  ">
                 {/* ------- CARD--> 3 ---> Logo --> C1 ----------- */}
                 <div className=" px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-lime-500 text-white flex items-center justify-center">
-                  <MdOutlineGroups2 className="text-2xl sm:text-4xl " />
+                  <MdOutlineGroups2 className="text-2xl sm:text-5xl " />
                 </div>
                 {/* ------- CARD--> 3 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
 
@@ -593,10 +593,10 @@ export default function Home() {
               {/* ------- CARD--> 4 ---> Logo and SideText --> Parent ----------- */}
               <div className="flex items-center justify-between mt-2  ">
                 <div className=" px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-sky-500 text-white flex items-center justify-center">
-                {/* ------- CARD--> 1 ---> Logo --> C1 ----------- */}
-                  <GiHumanPyramid className="text-2xl sm:text-4xl font- " />
+                {/* ------- CARD--> 4 ---> Logo --> C1 ----------- */}
+                  <GiHumanPyramid className="text-2xl sm:text-5xl  " />
                 </div>
-                {/* ------- CARD--> 1 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
+                {/* ------- CARD--> 4 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
 
                 
                 <div className="flex flex-col items-center justify-center gap-1 ">
