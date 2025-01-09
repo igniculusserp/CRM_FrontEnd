@@ -27,7 +27,6 @@ import MassEmail from "../MassEmail/MassEmail";
 //name
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
-
 //files
 import LeadOperations from "./LeadComponents/LeadOperations";
 import LeadAction from "./LeadComponents/LeadAction";
@@ -45,7 +44,10 @@ import { SearchElement } from "../SearchElement/SearchElement";
 
 //-----------------------------ToastContainer-----------------------------
 import { ToastContainer } from "react-toastify";
-import {showSuccessToast,showErrorToast} from "./../../../../utils/toastNotifications";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "./../../../../utils/toastNotifications";
 
 export default function Lead() {
   const navigate = useNavigate();
@@ -147,7 +149,6 @@ export default function Lead() {
     }
   };
 
-
   //useEffect ==> to fetch handleLead, getAllUsers, bussiness, & AdminRole
   useEffect(() => {
     handleLead();
@@ -155,13 +156,12 @@ export default function Lead() {
     setBusiness(businessType);
     setAdminRole(businessRole);
   }, []);
-  
+
   function handleLeadStatusSelection(status) {
     setLeadStatus(status); // Update leadStatus state
     handle_LeadStatus(status); // Apply filter based on selected status
   }
-  
-  
+
   // Function to --------------> filter leads <--------------
   function handle_LeadStatus(statusValue) {
     if (activeButtonId === 1) {
@@ -232,16 +232,15 @@ export default function Lead() {
 
   //->DROPDOWN_STATE
   const [allLeaddropDown, setAllLeaddropDown] = useState(false);
-  
-  //->TOGGLE 
+
+  //->TOGGLE
   const toggleMenuAllLead = () => {
     setAllLeaddropDown(!allLeaddropDown);
   };
-  
 
   //ARRAY TO STORE DATA
   const [allLeadData, setallLeadData] = useState([]);
-  
+
   async function handleLeadStatus() {
     const bearer_token = localStorage.getItem("token");
 
@@ -266,13 +265,13 @@ export default function Lead() {
   }, []);
 
   //-----------------------------------------------> ALL-> ASSIGNED_TO <-functionality <-----------------------------------------------
-  
+
   //BY_DEFAULT-TEXT
   const [assignedTo, setAssignedTo] = useState("Assigned to"); // Track the selected assigned user
-  
+
   //->DROPDOWN_STATE
   const [allAssigned_To_DROPDOWN, setallAssigned_To_DROPDOWN] = useState(false);
-  
+
   const toggleMenuAssigned_To = () => {
     setallAssigned_To_DROPDOWN(!allAssigned_To_DROPDOWN);
   };
@@ -302,17 +301,16 @@ export default function Lead() {
     handleallAssigned_To();
   }, []);
 
-
   //-------------------------------->WIZARD DROPDOWN<--------------------------------
   //DATA
   const stripeBar = [
-    { 
-      key: 1, 
-      value: "Table View" 
+    {
+      key: 1,
+      value: "Table View",
     },
     {
-      key: 2, 
-      value: "Grid View" 
+      key: 2,
+      value: "Grid View",
     },
   ];
 
@@ -324,9 +322,8 @@ export default function Lead() {
     stripeBar[0].value
   );
 
-
-   //function to open/close dropdown onMouseLeave
-   const togglestripeBar = () => {
+  //function to open/close dropdown onMouseLeave
+  const togglestripeBar = () => {
     setstripeBardropDown(!stripeBardropDown);
   };
 
@@ -335,7 +332,6 @@ export default function Lead() {
     setSelectedViewValue(value);
   };
 
- 
   //dropDown --> state OnClick
   const [dropLogodropDown, setdropLogodropDown] = useState(false);
 
@@ -344,11 +340,8 @@ export default function Lead() {
     setdropLogodropDown(!dropLogodropDown);
   };
 
-
-
-
   //-------------------------------------------------------------------------------------
-  
+
   //-------------------------------->ACTION BAR DROPDOWN<--------------------------------
   const dropActionsMenu = [
     // { key: 0, value: "Actions" },
@@ -474,7 +467,7 @@ export default function Lead() {
   //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
   //-------> XLSX used here
   const exportToExcel = () => {
-    console.log('runned')
+    console.log("runned");
     const leadsToExport = currentLeads.filter((lead) =>
       selectedIds.includes(lead.id)
     );
@@ -659,7 +652,7 @@ export default function Lead() {
   const handleDynamicButtonsClick = (id) => {
     setActiveButtonId(id); // Update state first
     localStorage.setItem("activeButtonId", id);
-    handleLead(id); 
+    handleLead(id);
   };
 
   useEffect(() => {
@@ -824,7 +817,10 @@ export default function Lead() {
           console.log("List : ", permissionsArray);
 
           //------------------------------------------------------ Set permissions ------------------------------------------------
-          if (permissionsArray.includes("View Leads") || businessRole==="Admin") {
+          if (
+            permissionsArray.includes("View Leads") ||
+            businessRole === "Admin"
+          ) {
             setViewName("Leads");
           } else {
             setViewName("");
@@ -907,7 +903,7 @@ export default function Lead() {
 
             {/* PART-I-ii */}
             {/* All ASSIGNED_TO  DropDown*/}
-           
+
             <div
               className="relative button_MaxWidth_first_layer_Container"
               onClick={toggleMenuAssigned_To}
@@ -946,7 +942,7 @@ export default function Lead() {
             />
 
             {/* Fetch Box */}
-            {fetchLead || businessRole==="Admin" ? (
+            {fetchLead || businessRole === "Admin" ? (
               <div className="flex gap-1 button_MaxWidth_first_layer_Container">
                 <button
                   className="py-2 px-4 border rounded-lg gap-2 flex justify-center items-center text-white bg-blue-600 button_MaxWidth_first_layer"
@@ -961,7 +957,7 @@ export default function Lead() {
           </div>
 
           {/* PART-II */}
-          <div className="flex gap-3 items-center flex-wrap button_MaxWidth_Main_Container" >
+          <div className="flex gap-3 items-center flex-wrap button_MaxWidth_Main_Container">
             {/* PART-II */}
             {/* Stripe-BarDropDown */}
             {activeButtonId === 2 || activeButtonId === 4 ? (
@@ -999,7 +995,7 @@ export default function Lead() {
             )}
             {/* PART-II */}
             {/*  Create Lead */}
-            {createLead || businessRole==="Admin" ?  (
+            {createLead || businessRole === "Admin" ? (
               <div className="flex button_MaxWidth_Container">
                 <Link to="/panel/createlead" className="button_MaxWidth">
                   <button
@@ -1040,7 +1036,8 @@ export default function Lead() {
                 <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 z-10">
                   <ul className="text-sm text-gray-700">
                     {dropActionsMenu.map(({ key, value }) =>
-                      permissions.includes(value) || businessRole==="Admin" ? (
+                      permissions.includes(value) ||
+                      businessRole === "Admin" ? (
                         <li
                           key={key}
                           className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
@@ -1072,7 +1069,9 @@ export default function Lead() {
             {/* BUTTONS */}
             <div className="flex gap-2 leads_Button_Container">
               {dynamicButtons.map(({ id, name }) =>
-                permissions.includes(name) || name === viewName || businessRole==="Admin" ? (
+                permissions.includes(name) ||
+                name === viewName ||
+                businessRole === "Admin" ? (
                   <button
                     key={id}
                     onClick={() => handleDynamicButtonsClick(id)}
@@ -1089,49 +1088,53 @@ export default function Lead() {
             </div>
           </div>
 
-          <div className="date_Filter_Main_Container">
-            {/* ------------------- Filter by date ----------------- */}
             {activeButtonId === 1 ? (
-              <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-center items-center date_Filter_Main_Container">
-                {/* Filter Icon Button */}
-                <button className="border-r border-gray-500 px-3 ">
-                  <ImFilter className="filter_Image_Size" />
-                </button>
+          <div className="date_Filter_Main_Container">
+          {/* ------------------- Filter by date ----------------- */}
+          <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
 
-                {/* Date Range Filter Button */}
-                <button className="border-r border-gray-500 px-3 whitespace-nowrap filter_Image_Display">
-                  Filter By
-                </button>
+            {/* Filter Icon Button */}
+            <div className="flex items-center">
+            <button className="border-r border-gray-500 pr-2">
+              <ImFilter className="filter_Image_Size" />
+            </button>
 
-                {/* Date Range Inputs */}
-                <div className="px-3 flex items-center gap-2 filter_Date_Container">
-                <label className="hide_Filter_Text">From:</label>
-                  <input
-                    type="date"
-                    value={startDate}
-                    className="border rounded px-2 py-2 filter_Date"
-                    onChange={(e) => setStartDate(e.target.value)}
-                  />
-<label className="hide_Filter_Text">To:</label>
-                  <input
-                    type="date"
-                    value={endDate}
-                    className="border rounded px-2 py-2 filter_Date"
-                    onChange={(e) => setEndDate(e.target.value)}
-                  />
-                </div>
+            {/* Date Range Filter Button */}
+            <button
+              className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display"
+            >
+              Filter By
+            </button>
 
-                <div
-                  className="p-2 border rounded cursor-pointer reset_paddings  hover:shadow-md"
-                  onClick={handleResetFilter}
-                >
-                  <TbRefresh className="filter_Reset_Image" />
-                </div>
-              </div>
+            {/* Date Range Inputs */}
+            <div className="px-2 flex items-center gap-2 filter_Date_Container">
+              <label className="hide_Filter_Text">From:</label>
+              <input
+                type="date"
+                value={startDate}
+                className="border rounded px-2 py-2 filter_Date"
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+
+              <label className="hide_Filter_Text">To:</label>
+              <input
+                type="date"
+                value={endDate}
+                className="border rounded px-2 py-2 filter_Date"
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+            </div>
+            </div>
+            
+            <div className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center" onClick={handleResetFilter}>
+            <label className="hide_Filter_Text ">Reset</label>
+               <TbRefresh className="filter_Reset_Image"/>
+            </div>
+          </div>
+        </div>
             ) : (
               ""
             )}
-          </div>
         </div>
         {activeButtonId === 3 && (
           <div
@@ -1165,7 +1168,7 @@ export default function Lead() {
           </div>
         )}
         {/*-------Table-------*/}
-        {viewLeads || businessRole==="Admin" ? (
+        {viewLeads || businessRole === "Admin" ? (
           <div className="overflow-x-auto mt-3 leads_Table_Main_Container">
             <div className="min-w-full rounded-md shadow-lg leads_Table_Container">
               {selectedViewValue === "Table View" && activeButtonId === 1 && (
@@ -1268,7 +1271,11 @@ export default function Lead() {
                           </td>
                           {/* CONTACT NAME */}
                           <td
-                            onClick={edit || businessRole==="Admin" ? () => handleClick(item) : undefined}
+                            onClick={
+                              edit || businessRole === "Admin"
+                                ? () => handleClick(item)
+                                : undefined
+                            }
                             className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600"
                           >
                             <div className="text-center">
@@ -1377,7 +1384,7 @@ export default function Lead() {
                           )}
                           {/*------------------<- Create-SO->------------*/}
                           {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
-                          {createSO || businessRole==="Admin" ? (
+                          {createSO || businessRole === "Admin" ? (
                             <td className="text-center">
                               <button
                                 className={business === "Brokerage" ? "" : ""}

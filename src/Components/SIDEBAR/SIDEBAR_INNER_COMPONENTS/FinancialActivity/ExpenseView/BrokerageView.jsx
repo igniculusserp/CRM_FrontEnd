@@ -90,7 +90,7 @@ export default function BrokerageView({ setShowTopSection }) {
     end.setHours(23, 59, 59, 999); // Set to the end of the day
 
     const filteredFollows = rawData.filter((follow) => {
-      const callbackDate = new Date(follow.call_bck_DateTime);
+      const callbackDate = new Date(follow.date);
       // Log values for debugging
       console.log("Callback Date:", callbackDate, "Start:", start, "End:", end);
       return callbackDate >= start && callbackDate <= end;
@@ -163,47 +163,49 @@ export default function BrokerageView({ setShowTopSection }) {
         {/* -------- PARENT -------- */}
         <div className="min-h-screen flex flex-col my-3 ">
           {/* MIDDLE SECTION */}
-          <div className="my-1 date_Filter_Main_Container">
-            {/* ------------------- Filter by date ----------------- */}
+          <div className="date_Filter_Main_Container">
+          {/* ------------------- Filter by date ----------------- */}
+          <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
 
-            <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-center items-center date_Filter_Main_Container">
-              {/* Filter Icon Button */}
-              <button className="border-r border-gray-500 pr-2 ">
-                <ImFilter className="filter_Image_Size" />
-              </button>
+            {/* Filter Icon Button */}
+            <div className="flex items-center">
+            <button className="border-r border-gray-500 pr-2">
+              <ImFilter className="filter_Image_Size" />
+            </button>
 
-              {/* Date Range Filter Button */}
-              <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display">
-                Filter By
-              </button>
+            {/* Date Range Filter Button */}
+            <button
+              className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display"
+            >
+              Filter By
+            </button>
 
-              {/* Date Range Inputs */}
-              <div className="px-2 flex items-center gap-2 filter_Date_Container">
-                <label className="hide_Filter_Text">From:</label>
-                <input
-                  type="date"
-                  value={startDate}
-                  className="border rounded px-2 py-2 filter_Date"
-                  onChange={(e) => setStartDate(e.target.value)}
-                />
+            {/* Date Range Inputs */}
+            <div className="px-2 flex items-center gap-2 filter_Date_Container">
+              <label className="hide_Filter_Text">From:</label>
+              <input
+                type="date"
+                value={startDate}
+                className="border rounded px-2 py-2 filter_Date"
+                onChange={(e) => setStartDate(e.target.value)}
+              />
 
-                <label className="hide_Filter_Text">To:</label>
-                <input
-                  type="date"
-                  value={endDate}
-                  className="border rounded px-2 py-2 filter_Date"
-                  onChange={(e) => setEndDate(e.target.value)}
-                />
-              </div>
-
-              <div
-                className="p-2 border rounded cursor-pointer reset_paddings"
-                onClick={handleResetFilter}
-              >
-                <TbRefresh className="filter_Reset_Image" />
-              </div>
+              <label className="hide_Filter_Text">To:</label>
+              <input
+                type="date"
+                value={endDate}
+                className="border rounded px-2 py-2 filter_Date"
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+            </div>
+            </div>
+            
+            <div className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center" onClick={handleResetFilter}>
+            <label className="hide_Filter_Text ">Reset</label>
+               <TbRefresh className="filter_Reset_Image"/>
             </div>
           </div>
+        </div>
 
           {/* Add SECTION */}
           <div className="flex min-w-screen justify-between items-center my-4 gap-3 flex-wrap">
