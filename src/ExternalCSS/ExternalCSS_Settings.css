@@ -477,3 +477,20 @@ input[type="number"] {
   }
 }
 
+
+/* ---------------------------------------------------- Finance ----------------------------- */
+
+
+
+@media (max-width: 460px) {
+  .finance_Buttons_Text{
+    font-size: 14px;
+   
+  }
+  .finance_Buttons_Main_Container{
+    justify-content: center !important;
+  }
+  .finance_Heading_Text{
+    font-size: 22px;
+  }
+}
