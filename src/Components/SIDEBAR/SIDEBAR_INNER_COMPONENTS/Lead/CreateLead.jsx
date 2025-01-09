@@ -624,11 +624,14 @@ export default function Createlead() {
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                 Lead Information
               </h2>
-              {/* -------------Parent------------- */}
-              <div className="flex flex-col  space-y-3 p-2 ">
-              {/* Name Section */}
-              <div className="flex w-full gap-4 ">
-                <div className=" w-1/2">
+              {/* -------------Parent <Lead Information Inputs>------------- */}
+              <div className=" space-y-3 p-2 ">
+             
+              {/* ------------------------------------1------------------------------------- */}
+              {/* -------------SUB -> Parent -> <Name && Language>------------- */}
+              <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                  {/* -------------Name------------- */}
+                  <div className="flex flex-col relative ">
                   <label
                     htmlFor="name"
                     className="text-sm font-medium text-gray-700"
@@ -643,13 +646,14 @@ export default function Createlead() {
                     name="name"
                     value={editLead.name}
                     onChange={handleChange}
+                    placeholder="Enter your Name"
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full "
                   />
                 </div>
             
                   
                   {/* -------------Language------------- */}
-                  <div className="flex flex-col w-1/2 relative">
+                  <div className="flex flex-col relative">
                     <label
                       htmlFor="language"
                       className="text-sm font-medium text-gray-700"
@@ -688,10 +692,12 @@ export default function Createlead() {
                     </div>
                   </div>
                 </div>
-                {/* -------------2------------- */}
+                
+                {/* ------------------------------------2------------------------------------- */}  
+                {/* -------------SUB -> Parent -> <Company && Lead title>------------- */}
+                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
                 {/* -------------Company------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                <div className="flex flex-col relative ">
                     <label
                       htmlFor="company"
                       className="text-sm font-medium text-gray-700"
@@ -702,9 +708,9 @@ export default function Createlead() {
                       type="text"
                       name="company"
                       value={editLead.company}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter your Company"
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full "
                     />
                   </div>
                   {/* -------------Title------------- */}
