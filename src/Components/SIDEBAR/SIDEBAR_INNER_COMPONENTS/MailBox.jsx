@@ -447,7 +447,7 @@ export default function MailBox() {
         <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
             {/* Filter Icon Button */}
             <button className="border-r border-gray-500 px-3">
-              <ImFilter />
+              <ImFilter className="filter_Image_Size" />
             </button>
 
             {/* Date Range Filter Button */}
@@ -470,7 +470,7 @@ export default function MailBox() {
               />
             </div>
 
-            <div className="p-1 border rounded cursor-pointer  hover:shadow-md" 
+            <div className="p-2 border rounded cursor-pointer reset_paddings  hover:shadow-md" 
             // onClick={handleResetFilter}
             >
               <TbRefresh size={25}/>

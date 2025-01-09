@@ -543,7 +543,7 @@ export default function VoiceBox() {
         <div className="flex bg-white border-2 border-gray-300 py-2 rounded-lg justify-center items-center">
           {/* Filter Icon Button */}
           <button className="border-r border-gray-500 px-3">
-            <ImFilter />
+            <ImFilter className="filter_Image_Size" />
           </button>
 
           {/* Date Range Filter Button */}

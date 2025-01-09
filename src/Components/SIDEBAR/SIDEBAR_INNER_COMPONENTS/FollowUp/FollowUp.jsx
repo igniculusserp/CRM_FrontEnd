@@ -484,15 +484,15 @@ export default function FollowUp() {
         <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg flex-wrap gap-3">
           {/* PART-I */}
           {/* container- FollowUp, search */}
-          <div className="flex gap-3 items-center justify-center ">
+          <div className="flex gap-3 items-center justify-start contact_Dropdown_Main_Container flex-wrap ">
             {/* ALL FOLLOW UPS DROPDOWN */}
             <div
-              className="relative"
+              className="relative whitespace-nowrap contact_Dropdown_Container"
               onClick={toggleFollowupDropdown}
               onMouseLeave={() => setFollowupDropdown(false)}
             >
               <button
-                className="py-2 px-4 border rounded-md  flex justify-between items-center"
+                className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 truncate contact_Dropdown_Button"
                 id="dropdownDefaultButton"
                 type="button"
               >
@@ -518,12 +518,12 @@ export default function FollowUp() {
             {/* PART-I-ii */}
             {/* All ASSIGNED_TO  DropDown*/}
             <div
-              className="relative"
+              className="relative whitespace-nowrap contact_Dropdown_Container"
               onClick={toggleMenuAssigned_To}
               onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
             >
               <button
-                className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 max-w-44"
+                className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 contact_Dropdown_Button"
                 id="dropdownDefaultButton"
                 type="button"
               >
@@ -553,7 +553,7 @@ export default function FollowUp() {
             />
           </div>
           {/* PART-II */}
-          <div className="flex gap-3 items-center justify-center">
+          <div className="flex gap-3 items-center justify-start action_Button_Main_Container">
             {/* PART-II */}
             {/* Stripe-BarDropDown */}
             <div
@@ -587,12 +587,12 @@ export default function FollowUp() {
             </div>
             {/* ACTIONS DROPDWON */}
             <div
-              className="relative"
+              className="relative action_Button_Container"
               onClick={toggleActionDropdown}
               onMouseLeave={() => setActionDropdown(false)}
             >
               <button
-                className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
+                className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600 action_Button"
                 id="dropdownDefaultButton"
                 type="button"
               >
@@ -603,7 +603,8 @@ export default function FollowUp() {
                 <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
                   <ul className="text-sm text-gray-700">
                     {actions.map(({ key, value }) =>
-                      permissions.includes(value) || businessRole==="Admin" ? (
+                      permissions.includes(value) ||
+                      businessRole === "Admin" ? (
                         <li
                           key={key}
                           className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
@@ -621,7 +622,7 @@ export default function FollowUp() {
           </div>
         </div>
         {/* MIDDLE SECTION */}
-        <div className="my-1 flex py-2 items-center justify-between gap-3">
+        <div className="my-1 flex py-2 items-center justify-between gap-3 flex-wrap">
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-3xl font-medium ">Follow Up</h1>
             <h1 className="bg-blue-600 text-white p-2   min-w-10 text-center rounded-md text-sm shadow-md">
@@ -629,40 +630,43 @@ export default function FollowUp() {
             </h1>
           </div>
           {/* ------------------- Filter by date ----------------- */}
+          <div className="date_Filter_Main_Container">
+            <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-center items-center date_Filter_Main_Container">
+              {/* Filter Icon Button */}
+              <button className="border-r border-gray-500 pr-2 ">
+                <ImFilter className="filter_Image_Size" />
+              </button>
 
-          <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
-            {/* Filter Icon Button */}
-            <button className="border-r border-gray-500 px-3">
-              <ImFilter />
-            </button>
+              {/* Date Range Filter Button */}
+              <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display">
+                Filter By
+              </button>
 
-            {/* Date Range Filter Button */}
-            <button className="border-r border-gray-500 px-3">Filter By</button>
+              {/* Date Range Inputs */}
+              <div className="px-2 flex items-center gap-2 filter_Date_Container">
+                <label  className="hide_Filter_Text">From:</label>
+                <input
+                  type="date"
+                  value={startDate}
+                  className="border rounded px-2 py-2 filter_Date"
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
 
-            {/* Date Range Inputs */}
-            <div className="px-3 flex items-center gap-2">
-              <label>From:</label>
-              <input
-                type="date"
-                value={startDate}
-                className="border rounded px-2 py-1"
-                onChange={(e) => setStartDate(e.target.value)}
-              />
+                <label  className="hide_Filter_Text">To:</label>
+                <input
+                  type="date"
+                  value={endDate}
+                  className="border rounded px-2 py-2 filter_Date"
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+              </div>
 
-              <label>To:</label>
-              <input
-                type="date"
-                value={endDate}
-                className="border rounded px-2 py-1"
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </div>
-
-            <div
-              className="p-1 border rounded cursor-pointer"
-              onClick={handleResetFilter}
-            >
-              <TbRefresh size={25} />
+              <div
+                className="p-2 border rounded cursor-pointer reset_paddings"
+                onClick={handleResetFilter}
+              >
+                <TbRefresh  className="filter_Reset_Image"/>
+              </div>
             </div>
           </div>
         </div>
@@ -753,7 +757,9 @@ export default function FollowUp() {
                         <td
                           className=" py-4 border-b border-gray-300 text-sm leading-5 "
                           onClick={
-                            edit || businessRole==="Admin"? () => handleClick(order.id) : undefined
+                            edit || businessRole === "Admin"
+                              ? () => handleClick(order.id)
+                              : undefined
                           }
                         >
                           <div className="flex items-center">

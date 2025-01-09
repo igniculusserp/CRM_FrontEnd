@@ -1094,12 +1094,12 @@ export default function Lead() {
             {activeButtonId === 1 ? (
               <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-center items-center date_Filter_Main_Container">
                 {/* Filter Icon Button */}
-                <button className="border-r border-gray-500 px-3 filter_Image_Display">
-                  <ImFilter />
+                <button className="border-r border-gray-500 px-3 ">
+                  <ImFilter className="filter_Image_Size" />
                 </button>
 
                 {/* Date Range Filter Button */}
-                <button className="border-r border-gray-500 px-3 whitespace-nowrap filter_Text">
+                <button className="border-r border-gray-500 px-3 whitespace-nowrap filter_Image_Display">
                   Filter By
                 </button>
 
@@ -1109,20 +1109,20 @@ export default function Lead() {
                   <input
                     type="date"
                     value={startDate}
-                    className="border rounded px-2 py-1 filter_Date"
+                    className="border rounded px-2 py-2 filter_Date"
                     onChange={(e) => setStartDate(e.target.value)}
                   />
 <label className="hide_Filter_Text">To:</label>
                   <input
                     type="date"
                     value={endDate}
-                    className="border rounded px-2 py-1 filter_Date"
+                    className="border rounded px-2 py-2 filter_Date"
                     onChange={(e) => setEndDate(e.target.value)}
                   />
                 </div>
 
                 <div
-                  className="p-1 border rounded cursor-pointer  hover:shadow-md"
+                  className="p-2 border rounded cursor-pointer reset_paddings  hover:shadow-md"
                   onClick={handleResetFilter}
                 >
                   <TbRefresh className="filter_Reset_Image" />
