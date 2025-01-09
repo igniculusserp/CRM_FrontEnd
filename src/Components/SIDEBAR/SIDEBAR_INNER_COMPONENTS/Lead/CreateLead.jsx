@@ -587,11 +587,11 @@ export default function Createlead() {
             <h1 className=" text-xl">
               {isEditMode ? (
                 <>
-                <div className='flex justify-center items-center gap-2  '>
-                  <GrContactInfo size={25} />
-                  <h1>Edit Lead</h1>
-                </div>
-              </>
+                  <div className='flex justify-center items-center gap-2  '>
+                    <GrContactInfo size={25} />
+                    <h1>Edit Lead</h1>
+                  </div>
+                </>
               ) :
                 (<>
                   <div className=' flex justify-center items-center  gap-2   '>
@@ -626,32 +626,30 @@ export default function Createlead() {
               </h2>
               {/* -------------Parent <Lead Information Inputs>------------- */}
               <div className=" space-y-3 p-2 ">
-             
-              {/* ------------------------------------1------------------------------------- */}
-              {/* -------------SUB -> Parent -> <Name && Language>------------- */}
-              <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                {/* ------------------------------------1------------------------------------- */}
+                {/* -------------SUB -> Parent -> <Name && Language>------------- */}
+                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
                   {/* -------------Name------------- */}
                   <div className="flex flex-col relative ">
-                  <label
-                    htmlFor="name"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    <span className="flex gap-1">
-                      Name
-                      <FaStarOfLife size={8} className="text-red-500" />
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={editLead.name}
-                    onChange={handleChange}
-                    placeholder="Enter your Name"
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full "
-                  />
-                </div>
-            
-                  
+                    <label
+                      htmlFor="name"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      <span className="flex gap-1">
+                        Name
+                        <FaStarOfLife size={8} className="text-red-500" />
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={editLead.name}
+                      onChange={handleChange}
+                      placeholder="Enter your Name"
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    />
+                  </div>
                   {/* -------------Language------------- */}
                   <div className="flex flex-col relative">
                     <label
@@ -692,12 +690,12 @@ export default function Createlead() {
                     </div>
                   </div>
                 </div>
-                
-                {/* ------------------------------------2------------------------------------- */}  
-                {/* -------------SUB -> Parent -> <Company && Lead title>------------- */}
+
+                {/* ------------------------------------2------------------------------------- */}
+                {/* -------------SUB -> Parent -> < Company &&  Title >------------- */}
                 <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
-                {/* -------------Company------------- */}
-                <div className="flex flex-col relative ">
+                  {/* -------------Company------------- */}
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="company"
                       className="text-sm font-medium text-gray-700"
@@ -714,7 +712,7 @@ export default function Createlead() {
                     />
                   </div>
                   {/* -------------Title------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="title"
                       className="text-sm font-medium text-gray-700"
@@ -725,16 +723,18 @@ export default function Createlead() {
                       type="text"
                       name="title"
                       value={editLead.title}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter Title"
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full "
+
                     />
                   </div>
                 </div>
-                {/* -------------3------------- */}
-                {/* -------------Lead Source------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2 relative">
+                {/* ------------------------------------3------------------------------------- */}
+                {/* -------------SUB -> Parent -> <Lead Source && Lead Status>------------- */}
+                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                  {/* -------------Lead Source------------- */}
+                  <div className="flex flex-col relative">
                     <label
                       htmlFor="Pool"
                       className="text-sm font-medium text-gray-700"
@@ -782,7 +782,7 @@ export default function Createlead() {
 
                   {/* -------------Lead Status------------- */}
 
-                  <div className="flex flex-col w-1/2 relative">
+                  <div className="flex flex-col relative">
                     <label
                       htmlFor="leadesStatus"
                       className="text-sm font-medium text-gray-700"
@@ -839,10 +839,11 @@ export default function Createlead() {
                   </div>
                 </div>
 
-                {/* -------------4------------- */}
-                {/* -------------Mobile Number------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                {/* ------------------------------------4------------------------------------- */}
+                {/* -------------SUB -> Parent -> <Mobile Numbe && Alternate Number>------------- */}
+                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                  {/* -------------Mobile Number------------- */}
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="email"
                       className="text-sm font-medium text-gray-700"
@@ -864,7 +865,7 @@ export default function Createlead() {
 
                   </div>
                   {/* -------------Alternate Number------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="phNo"
                       className="text-sm font-medium text-gray-700"
@@ -879,17 +880,18 @@ export default function Createlead() {
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleContactChange}
                       placeholder="Enter your Alternate Number"
-
                       onInput={(e) => {
                         e.target.value = e.target.value.replace(/[a-zA-Z]/g, ""); // Removes all letters (a to z and A to Z)
                       }}
                     />
                   </div>
                 </div>
-                {/* -------------5------------- */}
-                {/* -------------Email------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                {/* ------------------------------------5------------------------------------- */}
+                {/* -------------SUB -> Parent -> <Email && Assigned TO>------------- */}
+                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                  {/* -------------Email------------- */}
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="city"
                       className="text-sm font-medium text-gray-700"
@@ -900,13 +902,13 @@ export default function Createlead() {
                       type="email"
                       name="email"
                       value={editLead.email}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter your Email"
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full "
                     />
                   </div>
                   {/* -------------Assigned to------------- */}
-                  <div className="flex flex-col w-1/2 relative">
+                  <div className="flex flex-col relative">
                     <label
                       htmlFor="leadesStatus"
                       className="text-sm font-medium text-gray-700"
@@ -957,18 +959,19 @@ export default function Createlead() {
                 </div>
               </div>
             </div>
-            {/* -------------Address INFORMATION STARTS FROM HERE------------- */}
-            <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow ">
+
+            {/* ------------------------------------------------>TAB  2 :  Address Information  TAB <------------------------------------------------ */}
+            <div className="m-3 bg-white rounded-xl shadow-md  ">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                 Address Information
               </h2>
-
-              {/* -------------Address Information STARTS FROM HERE------------- */}
-              {/* -------------6------------- */}
-              {/* -------------Street------------- */}
-              <div className="grid gap-2 p-2">
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+              {/* -------------Parent <Address Information Inputs>------------- */}
+              <div className=" space-y-3 p-2 ">
+                {/* ------------------------------------1------------------------------------- */}
+                {/* -------------SUB -> Parent -> <Street && Pincode>------------- */}
+                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                  {/* -------------Street------------- */}
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="street"
                       className="text-sm font-medium text-gray-700"
@@ -979,13 +982,13 @@ export default function Createlead() {
                       type="text"
                       name="street"
                       value={editLead.street}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter your Street"
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />
                   </div>
-                  {/* -------------PinCode------------- */}
-                  <div className="flex flex-col w-1/2">
+                  {/* -------------Pincode------------- */}
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="pinCode"
                       className="text-sm font-medium text-gray-700"
@@ -996,16 +999,17 @@ export default function Createlead() {
                       type="text"
                       name="pinCode"
                       value={editLead.pinCode}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter your pincode"
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />
                   </div>
                 </div>
-                {/* -------------7------------- */}
-                {/* -------------Country------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                {/* ------------------------------------2------------------------------------- */}
+                {/* -------------SUB -> Parent -> <Country && City>------------- */}
+                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                  {/* -------------Country------------- */}
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="country"
                       className="text-sm font-medium text-gray-700"
@@ -1016,13 +1020,13 @@ export default function Createlead() {
                       type="text"
                       name="country"
                       value={editLead.country}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
-                      placeholder="Enter your Country Name"
+                      placeholder="Enter your Country name"
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />
                   </div>
                   {/* -------------City------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="city"
                       className="text-sm font-medium text-gray-700"
@@ -1033,16 +1037,18 @@ export default function Createlead() {
                       type="text"
                       name="city"
                       value={editLead.city}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter your City name"
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />
                   </div>
                 </div>
-                {/* -------------8------------- */}
-                {/* -------------State------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                {/* -------------3------------- */}
+                {/* -------------SUB -> Parent -> <State>------------- */}
+
+                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                  {/* -------------State------------- */}
+                  <div className="flex flex-col relative ">
                     <label
                       htmlFor="state"
                       className="text-sm font-medium text-gray-700"
@@ -1053,286 +1059,25 @@ export default function Createlead() {
                       type="text"
                       name="state"
                       value={editLead.state}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter your State name"
-                    />
-                  </div>
-                  {/* -------------Description------------- */}
-                </div>{' '}
-                {/* -------------9------------- */}
-                {/* -------------Risk Capcity------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="riskCapcity"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Risk Capacity
-                    </label>
-                    <input
-                      type="text"
-                      name="riskCapcity"
-                      value={editLead.riskCapcity}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                      placeholder="Enter Risk Capacity"
-                    />
-                  </div>
-                  {/* -------------Trading Time------------- */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="tradingTime"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Trading Time
-                    </label>
-                    <input
-                      type="text"
-                      name="tradingTime"
-                      value={editLead.tradingTime}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                      placeholder="Enter Trading Time"
-                    />
-                  </div>
-                </div>
-                {/* -------------10------------- */}
-                {/* -------------Trading Type------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="tradingType"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Trading Type
-                    </label>
-                    <input
-                      type="text"
-                      name="tradingType"
-                      value={editLead.tradingType}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  {/* -------------investmet------------- */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="investmet"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Information
-                    </label>
-                    <input
-                      type="text"
-                      name="investmet"
-                      value={editLead.investmet}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
-                {/* -------------11------------- */}
-                {/* -------------Advisory Exp------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="empNadvisoryExpame"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Advisory Exp
-                    </label>
-                    <input
-                      type="text"
-                      name="advisoryExp"
-                      value={editLead.advisoryExp}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                      placeholder="Enter your Advisory"
-                    />
-                  </div>
-                  {/* -------------Segments------------- */}
-                  <div className="flex flex-col w-1/2 relative">
-                    <label
-                      htmlFor="segment"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Segment
-                    </label>
-                    <div
-                      className="relative"
-                      onClick={toggleDropdownSegment}
-                      onMouseLeave={() => setisDropdownVisibleSegment(false)}
-                    >
-                      <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                        id="LeadStatusDropDown"
-                        type="button"
-                      >
-                        {defaultTextSegmentDropDown}
-                        <FaAngleDown className="ml-2 text-gray-400" />
-                      </button>
-                      {isDropdownVisibleSegment && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                          <ul className="py-2 text-sm text-gray-700">
-                            {segments.length > 0 ? (
-                              segments.map((segment) => (
-                                <li
-                                  key={segment.id}
-                                  className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                                >
-                                  <input
-                                    type="checkbox"
-                                    checked={editLead.segments.includes(
-                                      segment.segment
-                                    )}
-                                    onChange={() =>
-                                      handleCheckboxChange(segment)
-                                    }
-                                    className="mr-2"
-                                  />
-                                  {segment.segment}{' '}
-                                  {/* Assuming 'segment' is the property you want to display */}
-                                </li>
-                              ))
-                            ) : (
-                              <li className="flex items-center px-4 py-2 text-center gap-1">
-                                <IoInformationCircle
-                                  size={25}
-                                  className="text-cyan-600"
-                                />{' '}
-                                Segments not available. Go to{' '}
-                                <span className="font-bold">
-                                  Settings - Add Segment{' '}
-                                </span>
-                                .
-                              </li>
-                            )}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                {/* -------------11------------- */}
-                {/* -------------Trail Start Date------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="trialStartDate"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Trail Start Date
-                    </label>
-                    <input
-                      type="date"
-                      name="trialStartDate"
-                      value={editLead.trialStartDate?.split('T')[0]}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  {/* -------------Trail End Date------------- */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="trialEndDate"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Trail End Date
-                    </label>
-                    <input
-                      type="date"
-                      name="trialEndDate"
-                      value={editLead.trialEndDate?.split('T')[0]}
-                      onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                </div>
-                {/* -------------12------------- */}
-                {/* -------------Trading Years------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="tradingYears"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Trading Years
-                    </label>
-                    <input
-                      type="text"
-                      name="tradingYears"
-                      value={editLead.tradingYears}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                      placeholder="Enter years"
-                    />
-                    {/* -------------callBackDateTime ------------- */}
-                  </div>
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="callBackDateTime"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      CallBack DateTime
-                    </label>
-                    <input
-                      type="datetime-local"
-                      name="callBackDateTime"
-                      value={editLead.callBackDateTime}
-                      onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                </div>
-                {/* -------------13------------- */}
-                {/* -------------contactID ------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="contactId"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Contact ID
-                    </label>
-                    <input
-                      type="text"
-                      name="contactId"
-                      value={editLead.contactId}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                      placeholder="Enter ContactID"
-                    />
-                  </div>
-                  {/* -------------lastModifiedBy ------------- */}
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="lastModifiedBy"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Last Modified By
-                    </label>
-                    <input
-                      type="text"
-                      name="lastModifiedBy"
-                      value={editLead.lastModifiedBy}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                      placeholder="Enter details"
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+
                     />
                   </div>
                 </div>
               </div>
-            </div> <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow ">
+            </div>
+            {/* ------------------------------------------------>TAB  3 :  Trading Information TAB <------------------------------------------------ */}
+            <div className="m-3 bg-white rounded-xl shadow-md  ">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-                Trading Experience
+                Trading Information
               </h2>
+              {/* -------------Parent <Lead Information Inputs>------------- */}
+              <div className=" space-y-3 p-2 ">
 
-              {/* -------------Address Information STARTS FROM HERE------------- */}
-              <div className="grid gap-2 p-2">
-
-                {/* -------------9------------- */}
-                {/* -------------Risk Capcity------------- */}
+                {/* ------------------------------------1------------------------------------- */}
+                {/* -------------SUB -> Parent -> <Risk Capacity && Trading Time>------------- */}
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
                     <label
