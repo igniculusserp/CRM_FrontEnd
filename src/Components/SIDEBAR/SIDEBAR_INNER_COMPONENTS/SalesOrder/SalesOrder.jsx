@@ -715,12 +715,12 @@ export default function SalesOrder() {
 
           <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-center items-center date_Filter_Main_Container">
             {/* Filter Icon Button */}
-            <button className="border-r border-gray-500 pr-2 filter_Image_Display">
-              <ImFilter />
+            <button className="border-r border-gray-500 pr-2 ">
+              <ImFilter className="filter_Image_Size" />
             </button>
 
             {/* Date Range Filter Button */}
-            <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Text">Filter By</button>
+            <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display">Filter By</button>
 
             {/* Date Range Inputs */}
             <div className="px-2 flex items-center gap-2 filter_Date_Container">
@@ -728,7 +728,7 @@ export default function SalesOrder() {
               <input
                 type="date"
                 value={startDate}
-                className="border rounded px-2 py-1 filter_Date"
+                className="border rounded px-2 py-2 filter_Date"
                 onChange={(e) => setStartDate(e.target.value)}
               />
 
@@ -736,12 +736,12 @@ export default function SalesOrder() {
               <input
                 type="date"
                 value={endDate}
-                className="border rounded px-2 py-1 filter_Date"
+                className="border rounded px-2 py-2 filter_Date"
                 onChange={(e) => setEndDate(e.target.value)}
               />
             </div>
 
-            <div className="p-1 border rounded cursor-pointer"  onClick={handleResetFilter}>
+            <div className="p-2 border rounded cursor-pointer reset_paddings"  onClick={handleResetFilter}>
             <TbRefresh className="filter_Reset_Image"/>
             </div>
 
