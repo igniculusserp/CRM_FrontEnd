@@ -1170,6 +1170,33 @@ export default function Createlead() {
                       className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />
                   </div>
+
+                  {/* -------------Trading Years------------- */}
+                  <div className="flex flex-col relative ">
+                    <label
+                      htmlFor="tradingYears"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Trading Years
+                    </label>
+                    <input
+                      type="text"
+                      name="tradingYears"
+                      value={editLead.tradingYears}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Enter years"
+                    />
+                  </div>
+
+                </div>
+
+                {/* ------------------------------------3------------------------------------- */}
+                {/* -------------SUB -> Parent -> <Trading Years && CallBack DateTime>------------- */}
+                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+
+
                   {/* -------------Segments------------- */}
                   <div className="flex flex-col relative ">
                     <label
@@ -1232,6 +1259,22 @@ export default function Createlead() {
                       )}
                     </div>
                   </div>
+
+                  <div className="flex flex-col relative ">
+                    <label
+                      htmlFor="callBackDateTime"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      CallBack DateTime
+                    </label>
+                    <input
+                      type="datetime-local"
+                      name="callBackDateTime"
+                      value={editLead.callBackDateTime}
+                      onChange={handleChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
                 </div>
                 {/* ------------------------------------2------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Trail Start Date && Trail End Date>------------- */}
@@ -1270,43 +1313,6 @@ export default function Createlead() {
                   </div>
                 </div>
                 {/* ------------------------------------3------------------------------------- */}
-                {/* -------------SUB -> Parent -> <Trading Years && CallBack DateTime>------------- */}
-                <div className="grid sm:grid-cols-2 grid-cols-2 gap-2 sm:gap-4">
-                  {/* -------------Trading Years------------- */}
-                  <div className="flex flex-col relative ">
-                    <label
-                      htmlFor="tradingYears"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Trading Years
-                    </label>
-                    <input
-                      type="text"
-                      name="tradingYears"
-                      value={editLead.tradingYears}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                      placeholder="Enter years"
-                    />
-                    {/* -------------callBackDateTime ------------- */}
-                  </div>
-                  <div className="flex flex-col relative ">
-                    <label
-                      htmlFor="callBackDateTime"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      CallBack DateTime
-                    </label>
-                    <input
-                      type="datetime-local"
-                      name="callBackDateTime"
-                      value={editLead.callBackDateTime}
-                      onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                </div>
-              {/* ------------------------------------3------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Trading Years && CallBack DateTime>------------- */}
                 <div className="grid sm:grid-cols-2 grid-cols-2 gap-2 sm:gap-4">
                   {/* -------------Trading Years------------- */}
