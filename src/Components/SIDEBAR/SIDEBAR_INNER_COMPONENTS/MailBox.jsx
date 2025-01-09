@@ -387,7 +387,7 @@ export default function MailBox() {
               id="defaultDropdown"
             >
               {stripeBarDropdown && (
-                <div className="absolute bg-white border border-gray-300 right-0 top-10 z-10">
+                <div className="absolute bg-white border border-gray-300 top-10 z-10">
                   <ul className="py-2 text-sm text-gray-700">
                     {stripeBar.map(({ key, value }) => (
                       <li
@@ -415,7 +415,7 @@ export default function MailBox() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {actionDropdown && (
-              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
+              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
                 <ul className="text-sm text-gray-700 " >
                   {dropActionsMenu.map(({ key, value }) => (
                     <li

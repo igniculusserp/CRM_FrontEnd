@@ -738,7 +738,7 @@ const businessType = localStorage.getItem("businessType");
               <FaAngleDown className="text-gray-900" />
             </button>
             {dropActionsMenudropDown && (
-              <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
+              <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 z-10">
              
 
                 <ul className="text-sm text-gray-700">
@@ -778,19 +778,19 @@ const businessType = localStorage.getItem("businessType");
           <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-center items-center date_Filter_Main_Container">
 
             {/* Filter Icon Button */}
-            <button className="border-r border-gray-500 px-3 filter_Image_Display">
+            <button className="border-r border-gray-500 pr-2 filter_Image_Display">
               <ImFilter />
             </button>
 
             {/* Date Range Filter Button */}
             <button
-              className="border-r border-gray-500 px-3 whitespace-nowrap filter_Text"
+              className="border-r border-gray-500 px-2 whitespace-nowrap filter_Text"
             >
               Filter By
             </button>
 
             {/* Date Range Inputs */}
-            <div className="px-3 flex items-center gap-2 filter_Date_Container">
+            <div className="px-2 flex items-center gap-2 filter_Date_Container">
               <label className="hide_Filter_Text">From:</label>
               <input
                 type="date"
