@@ -1,3 +1,5 @@
+import { FaRupeeSign } from "react-icons/fa";
+
 import {
   LineChart,
   Line,
@@ -17,29 +19,38 @@ const data = [
 const LeadSourceChart = () => {
   return (
     <>
-      <div style={{ width: '100%', height: 200 }}>
+      <div style={{ width: '100%', height: 300 }}>
         <h3 className="text-xl font-thin mb-1">Lead Source</h3>
         <div className="flex text-sm items-center justify-between gap-2">
           <div className="flex items-center flex-col">
             <div className="flex items-center">
               <div className="w-3 h-3 bg-cyan-400 rounded-md"></div>
-              <span className="text-sm font-thin">Total Revenue</span>
+              <span className="text-md ">Total Revenue</span>
             </div>
-            <p className="text-[8px] font-semibold m-0">$45,456.00 USD</p>
+            <p className="flex jusitify-center items-center text-xs  my-1">
+              <FaRupeeSign />
+              45,456.00 Rs
+            </p>
           </div>
           <div className="flex items-center flex-col">
             <div className="flex items-center">
               <div className="w-3 h-3 bg-cyan-400 rounded-md"></div>
-              <span className="text-sm font-thin">Total Sales</span>
+              <span className="text-sm ">Total Sales</span>
             </div>
-            <p className="text-[8px] font-semibold m-0">$45,456.00 USD</p>
+            <p className="flex jusitify-center items-center text-xs  my-1">
+            <FaRupeeSign />
+            45,456.00 Rs
+          </p>
           </div>
           <div className="flex items-center flex-col">
             <div className="flex items-center">
               <div className="w-3 h-3 bg-cyan-400 rounded-md"></div>
-              <span className="text-sm font-thin">Total Views</span>
+              <span className="text-sm ">Total Views</span>
             </div>
-            <p className="text-[8px] font-semibold m-0">$45,456.00 USD</p>
+            <p className="flex jusitify-center items-center text-xs  my-1">
+              <FaRupeeSign />
+              45,456.00 Rs
+            </p>
           </div>
         </div>
         <ResponsiveContainer>

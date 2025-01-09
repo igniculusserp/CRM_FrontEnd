@@ -8,10 +8,12 @@ import axios from "axios";
 //reactIcons
 import { ImCancelCircle } from "react-icons/im";
 import { FaArrowAltCircleDown, FaArrowAltCircleUp, FaUsers } from "react-icons/fa";
-import { CiBadgeDollar } from "react-icons/ci";
-
+import { LuIndianRupee } from "react-icons/lu";
+import { MdOutlineGroups2 } from "react-icons/md";
 import { GiHumanPyramid } from "react-icons/gi";
 import { FaUsersRectangle } from "react-icons/fa6";
+import { GrContactInfo } from 'react-icons/gr';
+
 
 //Chart
 import SalesPipelineChart from "./homeComponents/SalesPipelineChart";
@@ -397,7 +399,7 @@ export default function Home() {
                 {/* ------- CARD--> 1 ---> Logo --> C1 ----------- */}
                 <div className=" px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-teal-500 text-white flex items-center justify-center">
                   {/* ------- CARD--> 1 ---> Logo --> C1 ----------- */}
-                  <FaUsersRectangle className="text-2xl sm:text-4xl " />
+                  <GrContactInfo className="text-2xl sm:text-4xl " />
                 </div>
                 {/* ------- CARD--> 1 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
                 <div className="flex flex-col items-center justify-center gap-1 ">
@@ -450,7 +452,7 @@ export default function Home() {
               <div className="flex items-center justify-between mt-2">
                 {/* ------- CARD--> 2 ---> Logo --> C1 ----------- */}
                 <div className="px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-rose-500 text-white flex items-center justify-center">
-                  <CiBadgeDollar className="text-2xl sm:text-4xl " />
+                  <LuIndianRupee className="text-2xl sm:text-4xl " />
                 </div>
                 {/* ------- CARD--> 2 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
                 <div className="flex flex-col items-center justify-center gap-1 ">
@@ -503,7 +505,7 @@ export default function Home() {
               <div className="flex items-center justify-between mt-2  ">
                 {/* ------- CARD--> 3 ---> Logo --> C1 ----------- */}
                 <div className=" px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-lime-500 text-white flex items-center justify-center">
-                  <FaUsers className="text-2xl sm:text-2xl " />
+                  <MdOutlineGroups2 className="text-2xl sm:text-4xl " />
                 </div>
                 {/* ------- CARD--> 3 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
 
@@ -592,7 +594,7 @@ export default function Home() {
               <div className="flex items-center justify-between mt-2  ">
                 <div className=" px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-sky-500 text-white flex items-center justify-center">
                 {/* ------- CARD--> 1 ---> Logo --> C1 ----------- */}
-                  <GiHumanPyramid className="text-2xl sm:text-4xl " />
+                  <GiHumanPyramid className="text-2xl sm:text-4xl font- " />
                 </div>
                 {/* ------- CARD--> 1 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
 
@@ -743,7 +745,7 @@ export default function Home() {
               <SalesPipelineChart />
             </div>
             {/* ------- BOTTOM CARD ------- */}
-            <div className="flex flex-col py-4 px-4 gap-4 items-center bg-blue-50 rounded-md shadow-md mt-3 min-h-72 mb-4">
+            <div className="flex  py-4 px-4 gap-4  bg-blue-50 rounded-md shadow-md mt-3 h-[400px] mb-4">
               <LeadSourceChart />
             </div>
           </div>
