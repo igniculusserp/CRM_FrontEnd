@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { getHostnamePart } from "../../Components/SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import { protocal_url, tenant_base_url } from "../../Config/config";
 
-export default function useLeadStatus(url, bearer_token){
+export default function useLeadStatus() {
+  const bearer_token = localStorage.getItem('token');
+  const name = getHostnamePart();
+
   const [leadStatus, setLeadStatus] = useState([]);
   const [error, setError] = useState(null);
-
 
   useEffect(() => {
     const fetchLeadStatus = async () => {
@@ -14,7 +18,10 @@ export default function useLeadStatus(url, bearer_token){
             Authorization: `Bearer ${bearer_token}`,
           },
         };
-        const response = await axios.get(url, config);
+        const response = await axios.get(
+          `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
+          config
+        );
         setLeadStatus(response.data.data);
       } catch (err) {
         setError(err);
@@ -22,9 +29,7 @@ export default function useLeadStatus(url, bearer_token){
     };
 
     fetchLeadStatus();
-  }, [url, bearer_token]);
+  }, []); // Correct dependency array
 
   return { leadStatus };
 };
-
-

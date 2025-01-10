@@ -3,31 +3,33 @@ import axios from "axios";
 import { getHostnamePart } from "../../Components/SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import { protocal_url, tenant_base_url } from "../../Config/config";
 
-export default function useLeadSource() {
+export default function useSegment() {
     const bearer_token = localStorage.getItem('token');
     const name = getHostnamePart();
 
-    const [leadSource, setleadSource] = useState([]);
+
+    const [segments, setsegments] = useState([]);
     const [error, setError] = useState(null);
 
-
     useEffect(() => {
-        const fetchLeadStatus = async () => {
+        const fetchSegments = async () => {
             try {
                 const config = {
                     headers: {
                         Authorization: `Bearer ${bearer_token}`,
                     },
                 };
-                const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`, config);
-                setleadSource(response.data.data);
+                const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`, config);
+                setsegments(response.data.data);
+                console.log(segments)
             } catch (err) {
                 setError(err);
             }
         };
 
-        fetchLeadStatus();
-    }, []);
+        fetchSegments();
+    },
+        []);
+    return { segments };
 
-    return { leadSource };
-};
+}
