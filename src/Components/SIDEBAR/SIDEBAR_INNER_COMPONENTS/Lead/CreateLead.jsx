@@ -30,6 +30,8 @@ import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/Global
 
 //dropDown --->>> customHooks
 import useLeadStatus from '../../../../Hooks/LeadStatus/useLeadStatus';
+import useLeadSource from '../../../../Hooks/LeadSource/useLeadSource';
+import useManagedBy from '../../../../Hooks/ManagedBy/useManagedBy';
 
 export default function Createlead() {
   //to make id unique
@@ -37,7 +39,6 @@ export default function Createlead() {
   const navigate = useNavigate();
 
   //-->--->createLead/editLead--> Schema<->Model
-
   const [editLead, seteditLead] = useState({
     id: '',
     name: '',
@@ -81,8 +82,13 @@ export default function Createlead() {
 
   //leadStatus CustomHook__URL
   const leadstatus_apiUrl = `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`;
+  const leadSource_apiUrl = `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`;
+  const managedBy_apiUrl =  `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`;
+
 
   const { leadStatus } = useLeadStatus(leadstatus_apiUrl, bearer_token);
+  const { leadSource } = useLeadSource(leadSource_apiUrl, bearer_token)
+  const { managedBy } = useManagedBy(managedBy_apiUrl, bearer_token)
 
   //imp to identify mode
   const [isEditMode, setIsEditMode] = useState(false);
@@ -188,29 +194,7 @@ export default function Createlead() {
   const [poolEdit, setPoolEdit] = useState("");
 
 
-  //--------------------------> GET API --> leadSource <--------------------------
-  const handlePool = async () => {
-    const bearerToken = localStorage.getItem("token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${bearerToken}`,
-      },
-    };
-    try {
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
-        config
-      );
-      setPoolToDropDown(response.data.data);
-    } catch (error) {
-      console.error("Error fetching leads:", error);
-      setError("Failed to fetch pools."); // Set error message
-    }
-  };
-
-  useEffect(() => {
-    handlePool();
-  }, []);
+  
 
   const toggleDropdown = () => {
     setIsPoolDropdownOpen((prev) => !prev);
@@ -228,33 +212,7 @@ export default function Createlead() {
 
   //----------------------------------------------------------------------------------------
 
-  //---------------------------> Lead Source <---------------------------
-  // const [leadStatus, setleadStatus] = useState('');
-
-  // async function handleLeadStatus() {
-  //   const bearer_token = localStorage.getItem('token');
-
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         Authorization: `Bearer ${bearer_token}`,
-  //       },
-  //     };
-  //     const response = await axios.get(
-  //       `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
-  //       config
-  //     );
-  //     setleadStatus(response.data.data);
-
-  //     console.log('status:', response.data.data);
-  //   } catch (error) {
-  //     console.error('Error fetching leads:', error);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   handleLeadStatus();
-  // }, []);
+  
 
   const [defaultTextLeadStatusDropDown, setdefaultTextLeadStatusDropDown] =
     useState('Select Status');
@@ -347,30 +305,6 @@ export default function Createlead() {
   //assigned_ToDropDown
   const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
 
-  async function handleAssigned_To() {
-    const bearer_token = localStorage.getItem('token');
-
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${bearer_token}`,
-        },
-      };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
-      );
-      setassigned_ToDropDown(response.data?.data);
-      console.log('status:', response.data);
-    } catch (error) {
-      console.error('Error fetching leads:', error);
-      // Optionally, set an error state to display a user-friendly message
-    }
-  }
-
-  useEffect(() => {
-    handleAssigned_To();
-  }, []);
 
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
     useState('Select Assigned');
@@ -769,9 +703,10 @@ export default function Createlead() {
                             <div className="py-2 text-red-600">{error}</div>
                           ) : (
                             <ul className="py-2 text-sm text-gray-700">
-                              {poolToDropDown.map(({ id, poolName }) => (
+                            {leadSource.length > 0 ? (
+                              leadSource.map(({ key, poolName }) => (
                                 <li
-                                  key={id}
+                                  key={key}
                                   onClick={() =>
                                     handleDropdownSelection(poolName)
                                   }
@@ -779,8 +714,21 @@ export default function Createlead() {
                                 >
                                   {poolName}
                                 </li>
-                              ))}
-                            </ul>
+                              ))
+                            ) : (
+                              <li className="flex items-center px-4 py-2 text-center gap-1">
+                                <IoInformationCircle
+                                  size={25}
+                                  className="text-cyan-600"
+                                />{' '}
+                                Lead status not available. Go to{' '}
+                                <span className="font-bold">
+                                  Settings - Add Pool{' '}
+                                </span>
+                                .
+                              </li>
+                            )}
+                          </ul>
                           )}
                         </div>
                       )}
@@ -942,7 +890,7 @@ export default function Createlead() {
                       {isDropdownassigned_ToDropDown && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                           <ul className="py-2 text-sm text-gray-700">
-                            {assigned_ToDropDown.map(
+                            {managedBy.map(
                               ({ userName, role }, index) => (
                                 <li
                                   key={index}
