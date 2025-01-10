@@ -80,18 +80,11 @@ export default function Createlead() {
   //const bearer_token for API Config  
   const bearer_token = localStorage.getItem('token');
 
-  //----------------------------------------------------------------------------------------
-  // Custom Hook 
-  const leadstatus_apiUrl = `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`;
-  const leadSource_apiUrl = `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`;
-  const managedBy_apiUrl =  `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`;
-  const segment_apiUrl =    `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`;
-
   // Custom Hook
-  const { leadStatus } = useLeadStatus(leadstatus_apiUrl, bearer_token);
-  const { leadSource } = useLeadSource(leadSource_apiUrl, bearer_token)
-  const { managedBy } = useManagedBy(managedBy_apiUrl, bearer_token)
-  const { segments } = useSegment(segment_apiUrl, bearer_token)
+  const { leadStatus } = useLeadStatus();
+  const { leadSource } = useLeadSource();  
+  const { managedBy } = useManagedBy()
+  const { segments } = useSegment()
 
   //imp to identify mode
   const [isEditMode, setIsEditMode] = useState(false);
