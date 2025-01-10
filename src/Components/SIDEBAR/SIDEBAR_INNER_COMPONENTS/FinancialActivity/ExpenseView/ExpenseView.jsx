@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 //external Packages
 import axios from "axios";
-import PropTypes from 'prop-types'; 
+import PropTypes from "prop-types";
 //React Icons
 import { FaBars } from "react-icons/fa";
 import { ImFilter } from "react-icons/im";
@@ -14,14 +14,15 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
-
 import { ToastContainer } from "react-toastify";
-import { showErrorToast,showSuccessToast } from "../../../../../utils/toastNotifications";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../../../../utils/toastNotifications";
 
 //Components
 import AddExpense from "./Expense/AddExpense";
 import EditExpense from "./Expense/EditExpense";
-
 
 export default function ExpenseView({ setShowTopSection }) {
   //   const bearer_token = localStorage.getItem("token");
@@ -48,7 +49,7 @@ export default function ExpenseView({ setShowTopSection }) {
         config
       );
       setRawData(response.data.data);
-      console.log(rawData)
+      console.log(rawData);
       setFilteredLeads(response.data.data);
     } catch (error) {
       showErrorToast(error.response.data.message);
@@ -78,32 +79,29 @@ export default function ExpenseView({ setShowTopSection }) {
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(today);
 
-  // Function to filter based on date range
   function handle_DateRange(startDate, endDate) {
+    let filteredFollows = rawData;
 
+    // Convert startDate to the beginning of the day and endDate to the end of the day
     const start = new Date(startDate);
-    start.setHours(0, 0, 0, 0); // Set to the start of the day
+    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
 
     const end = new Date(endDate);
-    end.setHours(23, 59, 59, 999); // Set to the end of the day
+    end.setHours(23, 59, 59, 999); // Set time to 23:59:59
 
-    const filteredFollows = rawData.filter((follow) => {
-      const callbackDate = new Date(follow.date);
-      // Log values for debugging
-      console.log("Callback Date:", callbackDate, "Start:", start, "End:", end);
-      return callbackDate >= start && callbackDate <= end;
-    });
-
-    setFilteredLeads(filteredFollows); // Update filtered results
+    if (startDate && endDate) {
+      filteredFollows = filteredFollows.filter((follow) => {
+        const callbackDate = new Date(follow.date);
+        return callbackDate >= start && callbackDate <= end;
+      });
+    }
+    setFilteredLeads(filteredFollows);
   }
- 
 
   // Trigger handle_DateRange when startDate or endDate changes
   useEffect(() => {
-    if (new Date(startDate) <= new Date(endDate)) {
+    if (startDate <= endDate) {
       handle_DateRange(startDate, endDate);
-    } else {
-      console.error("Start date cannot be after end date");
     }
   }, [startDate, endDate]);
 
@@ -115,13 +113,11 @@ export default function ExpenseView({ setShowTopSection }) {
 
   //----------------------------------------------------Handle Add ----------------------------------------------------------
 
-
   const handleAdd = () => {
     setActive(false);
     setView(true);
     setShowTopSection(false);
   };
-
 
   //---------------------------------------------------- Handle Edit -----------------------------------------------------
 
@@ -132,12 +128,10 @@ export default function ExpenseView({ setShowTopSection }) {
     setEditId(data);
   };
 
-
-  
   //--------------------------------------------------------Handle Delete--------------------------------------------
 
   const handleDelete = async (id) => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -148,11 +142,11 @@ export default function ExpenseView({ setShowTopSection }) {
         `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/delete/${id}`,
         config
       );
-      showSuccessToast('Deleted successfully');
+      showSuccessToast("Deleted successfully");
       setFilteredLeads((prevData) => prevData.filter((item) => item.id !== id));
       // handleLead();
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -162,55 +156,57 @@ export default function ExpenseView({ setShowTopSection }) {
         {/* -------- PARENT -------- */}
         <div className="min-h-screen flex flex-col my-3 ">
           {/* MIDDLE SECTION */}
-         <div className="date_Filter_Main_Container">
-          {/* ------------------- Filter by date ----------------- */}
-          <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
+          <div className="date_Filter_Main_Container">
+            {/* ------------------- Filter by date ----------------- */}
+            <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
+              {/* Filter Icon Button */}
+              <div className="flex items-center">
+                <button className="border-r border-gray-500 pr-2">
+                  <ImFilter className="filter_Image_Size" />
+                </button>
 
-            {/* Filter Icon Button */}
-            <div className="flex items-center">
-            <button className="border-r border-gray-500 pr-2">
-              <ImFilter className="filter_Image_Size" />
-            </button>
+                {/* Date Range Filter Button */}
+                <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display">
+                  Filter By
+                </button>
 
-            {/* Date Range Filter Button */}
-            <button
-              className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display"
-            >
-              Filter By
-            </button>
+                {/* Date Range Inputs */}
+                <div className="px-2 flex items-center gap-2 filter_Date_Container">
+                  <label className="hide_Filter_Text">From:</label>
+                  <input
+                    type="date"
+                    value={startDate}
+                    className="border rounded px-2 py-2 filter_Date"
+                    onBlur={(e) => setStartDate(e.target.value)}
+                  />
 
-            {/* Date Range Inputs */}
-            <div className="px-2 flex items-center gap-2 filter_Date_Container">
-              <label className="hide_Filter_Text">From:</label>
-              <input
-                type="date"
-                value={startDate}
-                className="border rounded px-2 py-2 filter_Date"
-                onChange={(e) => setStartDate(e.target.value)}
-              />
+                  <label className="hide_Filter_Text">To:</label>
+                  <input
+                    type="date"
+                    value={endDate}
+                    className="border rounded px-2 py-2 filter_Date"
+                    onBlur={(e) => setEndDate(e.target.value)}
+                  />
+                </div>
+              </div>
 
-              <label className="hide_Filter_Text">To:</label>
-              <input
-                type="date"
-                value={endDate}
-                className="border rounded px-2 py-2 filter_Date"
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </div>
-            </div>
-            
-            <div className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center" onClick={handleResetFilter}>
-            <label className="hide_Filter_Text ">Reset</label>
-               <TbRefresh className="filter_Reset_Image"/>
+              <div
+                className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center"
+                onClick={handleResetFilter}
+              >
+                <label className="hide_Filter_Text ">Reset</label>
+                <TbRefresh className="filter_Reset_Image" />
+              </div>
             </div>
           </div>
-        </div>
 
           {/* Add SECTION */}
           <div className="flex min-w-screen justify-between items-center my-4 gap-3 flex-wrap">
-            <h1 className="text-3xl font-medium whitespace-nowrap finance_Heading_Text">Expense View</h1>
+            <h1 className="text-3xl font-medium whitespace-nowrap finance_Heading_Text">
+              Expense View
+            </h1>
             <button
-                onClick={handleAdd}
+              onClick={handleAdd}
               className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded whitespace-nowrap "
             >
               Add Expense
@@ -278,7 +274,7 @@ export default function ExpenseView({ setShowTopSection }) {
                         {data.refaranceNo}
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {data?.date?.split("T")[0] }
+                        {data?.date?.split("T")[0]}
                       </td>
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
                         {data.headName}
@@ -294,12 +290,12 @@ export default function ExpenseView({ setShowTopSection }) {
                           size={25}
                           color="white"
                           className="bg-blue-500 rounded"
-                            onClick={() => handleEdit(data.id)}
+                          onClick={() => handleEdit(data.id)}
                         />
                         <RiDeleteBin6Fill
                           size={25}
                           color="red"
-                            onClick={() => handleDelete(data.id)}
+                          onClick={() => handleDelete(data.id)}
                         />
                       </td>
                     </tr>
@@ -380,16 +376,23 @@ export default function ExpenseView({ setShowTopSection }) {
     );
   };
 
-
   return (
     <>
       <ToastContainer />
-      {active === true ? <ViewTable /> : view === true 
-      ? 
-      <AddExpense setActive={setActive} setShowTopSection={setShowTopSection} />
-      :
-      <EditExpense setActive={setActive} setShowTopSection={setShowTopSection} editExpenseId={editId} />}
+      {active === true ? (
+        <ViewTable />
+      ) : view === true ? (
+        <AddExpense
+          setActive={setActive}
+          setShowTopSection={setShowTopSection}
+        />
+      ) : (
+        <EditExpense
+          setActive={setActive}
+          setShowTopSection={setShowTopSection}
+          editExpenseId={editId}
+        />
+      )}
     </>
   );
 }
-

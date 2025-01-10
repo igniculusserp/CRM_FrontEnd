@@ -187,7 +187,7 @@ export default function BrokerageView({ setShowTopSection }) {
                 type="date"
                 value={startDate}
                 className="border rounded px-2 py-2 filter_Date"
-                onChange={(e) => setStartDate(e.target.value)}
+                onBlur={(e) => setStartDate(e.target.value)}
               />
 
               <label className="hide_Filter_Text">To:</label>
@@ -195,7 +195,7 @@ export default function BrokerageView({ setShowTopSection }) {
                 type="date"
                 value={endDate}
                 className="border rounded px-2 py-2 filter_Date"
-                onChange={(e) => setEndDate(e.target.value)}
+                onBlur={(e) => setEndDate(e.target.value)}
               />
             </div>
             </div>
