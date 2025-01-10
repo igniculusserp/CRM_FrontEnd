@@ -32,6 +32,7 @@ import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/Global
 import useLeadStatus from '../../../../Hooks/LeadStatus/useLeadStatus';
 import useLeadSource from '../../../../Hooks/LeadSource/useLeadSource';
 import useManagedBy from '../../../../Hooks/ManagedBy/useManagedBy';
+import useSegment from '../../../../Hooks/Segment/useSegment';
 
 export default function Createlead() {
   //to make id unique
@@ -74,21 +75,23 @@ export default function Createlead() {
 
   //----------------------------------------------------------------------------------------
   //using a global name
-  
   const name = getHostnamePart();
 
   //const bearer_token for API Config  
   const bearer_token = localStorage.getItem('token');
 
-  //leadStatus CustomHook__URL
+  //----------------------------------------------------------------------------------------
+  // Custom Hook 
   const leadstatus_apiUrl = `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`;
   const leadSource_apiUrl = `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`;
   const managedBy_apiUrl =  `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`;
+  const segment_apiUrl =    `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`;
 
-
+  // Custom Hook
   const { leadStatus } = useLeadStatus(leadstatus_apiUrl, bearer_token);
   const { leadSource } = useLeadSource(leadSource_apiUrl, bearer_token)
   const { managedBy } = useManagedBy(managedBy_apiUrl, bearer_token)
+  const { segments } = useSegment(segment_apiUrl, bearer_token)
 
   //imp to identify mode
   const [isEditMode, setIsEditMode] = useState(false);
@@ -154,8 +157,9 @@ export default function Createlead() {
     }
   }
 
-  //---------------------------> Language <---------------------------
+  //----------------------------------------------------------------------------------------
 
+  //---------------------------> Language <---------------------------
   const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] =
     useState("Select Language");
 
@@ -178,9 +182,6 @@ export default function Createlead() {
   //----------------------------------------------------------------------------------------
 
   //---------------------------> Lead Source <---------------------------
-  //PooL API used in -> Lead Source DropDown
-  const [poolToDropDown, setPoolToDropDown] = useState([]);
-
   //default text for Lead Source
   const [defaultTextPool, setDefaultTextPool] = useState("Select Lead Source");
 
@@ -234,30 +235,7 @@ export default function Createlead() {
 
   //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  //---------------------------> Segment <---------------------------
-  const [segments, setSegments] = useState([]);
-  async function handleSegment() {
-    const bearer_token = localStorage.getItem('token');
-
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${bearer_token}`,
-        },
-      };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
-        config
-      );
-      setSegments(response.data.data);
-      // console.log("segment:", response.data.data);
-    } catch (error) {
-      console.error('Error fetching segments:', error);
-    }
-  }
-
   useEffect(() => {
-    handleSegment();
     setdefaultTextSegmentDropDown(
       editLead.segments.length > 0 ? editLead.segments.join(", ") : "Select Segment"
     );
@@ -273,17 +251,17 @@ export default function Createlead() {
   };
 
   const handleCheckboxChange = (segment) => {
-    const isChecked = editLead.segments.includes(segment.segment);
+    const isChecked = editLead.segments.includes(segment);
 
     let updatedSegments;
     if (isChecked) {
       // Remove segment if already selected
       updatedSegments = editLead.segments.filter(
-        (selectedSegment) => selectedSegment !== segment.segment
+        (selectedSegment) => selectedSegment !== segment
       );
     } else {
       // Add segment if not already selected
-      updatedSegments = [...editLead.segments, segment.segment];
+      updatedSegments = [...editLead.segments, segment];
     }
     seteditLead((prev) => ({
       ...prev,
@@ -1177,23 +1155,22 @@ export default function Createlead() {
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                           <ul className="py-2 text-sm text-gray-700">
                             {segments.length > 0 ? (
-                              segments.map((segment) => (
+                              segments.map(({ key, segment }) => (
                                 <li
-                                  key={segment.id}
+                                  key={key}
                                   className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                                 >
                                   <input
                                     type="checkbox"
                                     checked={editLead.segments.includes(
-                                      segment.segment
+                                      segment
                                     )}
                                     onChange={() =>
                                       handleCheckboxChange(segment)
                                     }
                                     className="mr-2"
                                   />
-                                  {segment.segment}{' '}
-                                  {/* Assuming 'segment' is the property you want to display */}
+                                  {segment}
                                 </li>
                               ))
                             ) : (

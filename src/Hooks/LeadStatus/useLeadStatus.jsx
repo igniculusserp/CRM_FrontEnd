@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function useLeadStatus(url, bearer_token){
+export default function useLeadStatus(url, bearer_token) {
   const [leadStatus, setLeadStatus] = useState([]);
   const [error, setError] = useState(null);
 

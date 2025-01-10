@@ -26,5 +26,3 @@ export default function useLeadSource(url, bearer_token){
 
   return { leadSource };
 };
-
-
