@@ -1385,7 +1385,7 @@ export default function Createlead() {
               <div className="flex justify-end px-2">
                 <button
                   type="submit"
-                  className="px-36 py-4 sm:mt-20 mt-16 mb-2 sm:me-10 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white w-full sm:w-1/3"
+                  className="px-36 py-4 mt-24 mb-2 sm:me-10 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white w-full sm:w-1/3"
                 >
                   {isEditMode ? 'Update' : 'Save'}
                 </button>
