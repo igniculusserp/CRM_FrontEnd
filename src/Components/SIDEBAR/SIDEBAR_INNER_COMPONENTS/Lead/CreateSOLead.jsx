@@ -18,11 +18,20 @@ import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/Global
 
 import { ToastContainer } from 'react-toastify';
 import { showSuccessToast, showErrorToast } from '../../../../utils/toastNotifications'
+import useSegment from "../../../../Hooks/Segment/useSegment";
+import { IoInformationCircle } from "react-icons/io5";
+import useManagedBy from "../../../../Hooks/ManagedBy/useManagedBy";
+import useLeadSource from "../../../../Hooks/LeadSource/useLeadSource";
 
 export default function CreateSOLead() {
   //to make id unique
   const { id, leadId } = useParams();
   const navigate = useNavigate();
+
+  const { segments } = useSegment();
+  const { managedBy } = useManagedBy();
+  const { leadSource } = useLeadSource();
+  
 
   //------- Business Type --------
   const businessType = localStorage.getItem("businessType");
@@ -98,27 +107,7 @@ export default function CreateSOLead() {
 
   //----------------------------------------------------------------------------------------
 
-  // Segment GET API Is being used here
-  const [segments, setSegments] = useState([]);
-  async function handleSegment() {
-    const bearer_token = localStorage.getItem('token');
 
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${bearer_token}`,
-        },
-      };
-      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`, config);
-      setSegments(response.data.data);
-    } catch (error) {
-      console.error('Error fetching segments:', error);
-    }
-  }
-
-  useEffect(() => {
-    handleSegment();
-  }, []);
 
   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] = useState('Select Segment');
   const [isDropdownVisibleSegment, setisDropdownVisibleSegment] = useState(false);
@@ -128,17 +117,17 @@ export default function CreateSOLead() {
   };
 
   const handleCheckboxChange = (segment) => {
-    const isChecked = editLead.segments.includes(segment.segment);
+    const isChecked = editLead.segments.includes(segment);
 
     let updatedSegments;
     if (isChecked) {
-      // Remove segment if already selected
+
       updatedSegments = editLead.segments.filter(
-        (selectedSegment) => selectedSegment !== segment.segment
+        (selectedSegment) => selectedSegment !== segment
       );
     } else {
       // Add segment if not already selected
-      updatedSegments = [...editLead.segments, segment.segment];
+      updatedSegments = [...editLead.segments, segment];
     }
     seteditLead((prev) => ({
       ...prev,
@@ -147,30 +136,36 @@ export default function CreateSOLead() {
   };
   // Segment GET API Is being used here
 
+  useEffect(() => {
+    setdefaultTextSegmentDropDown(
+      editLead.segments?.length > 0 ? editLead?.segments?.join(", ") : "Select Segment"
+    );
+  }, [editLead]);
+
   //----------------------------------------------------------------------------------------
   //assigned_ToDropDown  Is being used here
-  const [assigned_ToDropDown, setassigned_ToDropDown] = useState({});
+  // const [assigned_ToDropDown, setassigned_ToDropDown] = useState({});
 
-  async function handleAssigned_To() {
-    const bearer_token = localStorage.getItem("token");
+  // async function handleAssigned_To() {
+  //   const bearer_token = localStorage.getItem("token");
 
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${bearer_token}`,
-        },
-      };
-      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`, config);
-      setassigned_ToDropDown(response.data.data);
-    } catch (error) {
-      console.error("Error fetching leads:", error);
-      // Optionally, set an error state to display a user-friendly message
-    }
-  }
+  //   try {
+  //     const config = {
+  //       headers: {
+  //         Authorization: `Bearer ${bearer_token}`,
+  //       },
+  //     };
+  //     const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`, config);
+  //     setassigned_ToDropDown(response.data.data);
+  //   } catch (error) {
+  //     console.error("Error fetching leads:", error);
+  //     // Optionally, set an error state to display a user-friendly message
+  //   }
+  // }
 
-  useEffect(() => {
-    handleAssigned_To();
-  }, []);
+  // useEffect(() => {
+  //   handleAssigned_To();
+  // }, []);
 
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
     useState();
@@ -294,30 +289,30 @@ export default function CreateSOLead() {
   const [error, setError] = useState(null); // New error state
   const [poolEdit, setPoolEdit] = useState("");
 
-  const handlePool = async () => {
-    const bearerToken = localStorage.getItem("token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${bearerToken}`,
-      },
-    };
+  // const handlePool = async () => {
+  //   const bearerToken = localStorage.getItem("token");
+  //   const config = {
+  //     headers: {
+  //       Authorization: `Bearer ${bearerToken}`,
+  //     },
+  //   };
 
-    try {
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
-        config
-      );
-      setPoolToDropDown(response.data.data);
+  //   try {
+  //     const response = await axios.get(
+  //       `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
+  //       config
+  //     );
+  //     setPoolToDropDown(response.data.data);
 
-    } catch (error) {
-      console.error("Error fetching leads:", error);
-      setError("Failed to fetch pools."); // Set error message
-    }
-  };
+  //   } catch (error) {
+  //     console.error("Error fetching leads:", error);
+  //     setError("Failed to fetch pools."); // Set error message
+  //   }
+  // };
 
-  useEffect(() => {
-    handlePool();
-  }, []);
+  // useEffect(() => {
+  //   handlePool();
+  // }, []);
 
   const toggleDropdown = () => {
     setIsPoolDropdownOpen((prev) => !prev);
@@ -727,7 +722,7 @@ export default function CreateSOLead() {
                         {isDropdownassigned_ToDropDown && (
                           <div className="absolute w-full bg-white border border-gray-300 rounded-md top-9.9 z-10 ">
                             <ul className="py-2 text-sm text-gray-700">
-                              {assigned_ToDropDown.map(
+                              {managedBy.map(
                                 ({ key, userName, role }) => (
                                   <li
                                     key={key}
@@ -860,7 +855,7 @@ export default function CreateSOLead() {
                               <div className="py-2 text-red-600">{error}</div>
                             ) : (
                               <ul className="py-2 text-sm text-gray-700">
-                                {poolToDropDown.map(({ id, poolName }) => (
+                                {leadSource.map(({ id, poolName }) => (
                                   <li
                                     key={id}
                                     onClick={() =>
@@ -1507,21 +1502,21 @@ export default function CreateSOLead() {
                         {isDropdownVisibleSegment && (
                           <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                             <ul className="py-2 text-sm text-gray-700">
-                              {segments.length > 0 ? (
-                                segments.map((segment) => (
+                            {segments?.length > 0 ? (
+                              segments.map(({ key, segment }) => (
                                   <li
-                                    key={segment.id}
+                                    key={key}
                                     className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                                   >
                                     <input
                                       type="checkbox"
                                       checked={editLead.segments?.includes(
-                                        segment.segment
+                                        segment
                                       )}
                                       onChange={() => handleCheckboxChange(segment)}
                                       className="mr-2"
                                     />
-                                    {segment.segment}{' '}
+                                    {segment}{' '}
                                     {/* Assuming segment is the property you want to display */}
                                   </li>
                                 ))

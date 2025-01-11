@@ -1147,7 +1147,7 @@ export default function Createlead() {
                       {isDropdownVisibleSegment && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                           <ul className="py-2 text-sm text-gray-700">
-                            {segments.length > 0 ? (
+                            {segments?.length > 0 ? (
                               segments.map(({ key, segment }) => (
                                 <li
                                   key={key}
@@ -1155,7 +1155,7 @@ export default function Createlead() {
                                 >
                                   <input
                                     type="checkbox"
-                                    checked={editLead.segments.includes(
+                                    checked={editLead.segments?.includes(
                                       segment
                                     )}
                                     onChange={() =>
