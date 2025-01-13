@@ -16,8 +16,9 @@ import ReactQuill from 'react-quill';
 //textBox
 import 'react-quill/dist/quill.snow.css';
 
-//file
+//API-Keywords
 import { tenant_base_url, protocal_url } from '../../../../Config/config';
+import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 
 //LanguageDropDownFile
 import languageDropDown from '../../../../data/dropdown/Languages/language'
@@ -26,7 +27,6 @@ import languageDropDown from '../../../../data/dropdown/Languages/language'
 import { ToastContainer } from 'react-toastify';
 import { showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
 
-import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 
 //dropDown --->>> customHooks
 import useLeadStatus from '../../../../Hooks/LeadStatus/useLeadStatus';
@@ -39,42 +39,7 @@ export default function Createlead() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  //-->--->createLead/editLead--> Schema<->Model
-  const [editLead, seteditLead] = useState({
-    id: '',
-    name: '',
-    language: '',
-    company: '',
-    email: '',
-    title: '',
-    leadSource: '',
-    leadesStatus: '',
-    mobNo: '',
-    phNo: '',
-    assigned_To: '',
-    street: '',
-    pinCode: '',
-    country: '',
-    city: '',
-    state: '',
-    riskCapcity: '',
-    tradingTime: '',
-    tradingType: '',
-    investmet: '',
-    advisoryExp: '',
-    trialStartDate: '',
-    trialEndDate: '',
-    tradingYears: '',
-    callBackDateTime: '',
-    contactId: '',
-    lastModifiedBy: '',
-    segments: [],
-  });
-
-  const [description, setdescription] = useState('Add Text Here');
-
-  //----------------------------------------------------------------------------------------
-  //using a global name
+  //IMP used as ${name} in an API
   const name = getHostnamePart();
 
   //const bearer_token for API Config  
@@ -86,6 +51,41 @@ export default function Createlead() {
   const { managedBy } = useManagedBy()
   const { segments } = useSegment()
 
+    //-->--->createLead/editLead--> Schema<->Model
+  const [editLead, seteditLead] = useState({
+      id: '',
+      name: '',
+      language: '',
+      company: '',
+      email: '',
+      title: '',
+      leadSource: '',
+      leadesStatus: '',
+      mobNo: '',
+      phNo: '',
+      assigned_To: '',
+      street: '',
+      pinCode: '',
+      country: '',
+      city: '',
+      state: '',
+      riskCapcity: '',
+      tradingTime: '',
+      tradingType: '',
+      investmet: '',
+      advisoryExp: '',
+      trialStartDate: '',
+      trialEndDate: '',
+      tradingYears: '',
+      callBackDateTime: '',
+      contactId: '',
+      lastModifiedBy: '',
+      segments: [],
+  });
+    
+  //form description is kept-out
+  const [description, setdescription] = useState('Add Text Here');
+  
   //imp to identify mode
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -1147,7 +1147,7 @@ export default function Createlead() {
                       {isDropdownVisibleSegment && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                           <ul className="py-2 text-sm text-gray-700">
-                            {segments.length > 0 ? (
+                            {segments?.length > 0 ? (
                               segments.map(({ key, segment }) => (
                                 <li
                                   key={key}
@@ -1155,7 +1155,7 @@ export default function Createlead() {
                                 >
                                   <input
                                     type="checkbox"
-                                    checked={editLead.segments.includes(
+                                    checked={editLead.segments?.includes(
                                       segment
                                     )}
                                     onChange={() =>
