@@ -14,12 +14,15 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import ProtectedRoute from "./ProtectedRoute.jsx";
 
+//Login
+import TenantLogin from "./Components/REGISTRATION/TenantLogin.jsx";
+import TenantLoginOTP from "./Components/REGISTRATION/TenantLoginOTP.jsx";
+
 //Registration
 import Registration from "./Components/REGISTRATION/Registration.jsx";
 import Verifyotp from "./Components/REGISTRATION/Verifyotp.jsx";
 import VerifyTenant from "./Components/REGISTRATION/VerifyTenant.jsx";
-import TenantLogin from "./Components/REGISTRATION/TenantLogin.jsx";
-import TenantLoginOTP from "./Components/REGISTRATION/TenantLoginOTP.jsx";
+
 
 //Forget Password
 import ForgetPass from "./Components/REGISTRATION/ForgetPass.jsx";
@@ -31,7 +34,14 @@ import ForgetPassSuccess from "./Components/REGISTRATION/ForgetPassSuccess.jsx";
 import SidebarBase from "./Components/SIDEBAR/SidebarBase.jsx";
 import WelcomePage from "./Components/REGISTRATION/WelcomePage.jsx";
 
-//SiderBar Inner-Components
+//SiderBar Modules
+//Home
+import Home from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Home/Home.jsx";
+
+//Leads -> 
+import Lead from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Lead/Leads.jsx";
+import Createlead from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Lead/CreateLead.jsx";
+
 
 import Client from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Client/Client.jsx";
 import SalesOrder from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SalesOrder/SalesOrder.jsx";
@@ -40,8 +50,7 @@ import Logs from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/Log
 import MailBox from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MailBox.jsx";
 import GroupChat from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/GroupChat.jsx";
 
-//Shivam ---> CreateTrial-->|-->|-->CreateVoice
-import Home from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Home/Home.jsx";
+
 
 import CreateOrder from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/CreateOrder.jsx";
 import CreateMailBox from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/CreateMailBox.jsx";
@@ -62,12 +71,7 @@ import CreateFollowUp from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Follow
 import FreeTrail from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FreeTrial/FreeTrail.jsx";
 import CreateTrial from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FreeTrial/CreateTrial.jsx";
 
-//only for Testing
-import Test from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Test.jsx";
 
-//Inner Lead -> Component
-import Lead from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Lead/Leads.jsx";
-import Createlead from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Lead/CreateLead.jsx";
 
 // Inner Contact --> Component
 import Contact from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Contact/Contacts.jsx";
@@ -109,24 +113,32 @@ import Analytics from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Analytics/A
 import Subscription from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Subscription/Subscription.jsx";
 import Chat from "./Components/SIDEBAR/SIDEBAR_SETTING/ChatWindow.jsx";
 
-
+//Notification Provider -->--> -->--> #Firebase
 import NotificationProvider from "./NotificationProvider";
 
-const router = createBrowserRouter([
-  { path: "/", element: <App /> },
-  { path: "/VerifyTenant", element: <VerifyTenant /> },
-  { path: "/tenantlogin", element: <TenantLogin /> },
-  { path: "/tenantloginOTP", element: <TenantLoginOTP /> },
-  { path: "/registration", element: <Registration /> },
-  { path: "/verifyotp/:userId", element: <Verifyotp /> },
-  { path: "/welcome/:tenantId", element: <WelcomePage /> },
-  { path: "*", element: <Test /> },
+//only for Testing
+import Test from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Test.jsx";
 
-  { path: "/forgetpassword", element: <ForgetPass /> },
-  { path: "/forgetpasswordotp", element: <ForgetPassOTP /> },
-  { path: "/forgetresetpass", element: <ForgetResetPassword /> },
-  { path: "/forgetpasssucess", element: <ForgetPassSuccess /> },
-  { path: "/test", element: <Test /> },
+
+const router = createBrowserRouter([
+  //Login
+  { path: "/", element: <App /> },
+  { path: "/VerifyTenant",            element: <VerifyTenant /> },
+  { path: "/tenantlogin",             element: <TenantLogin /> },
+  { path: "/tenantloginOTP",          element: <TenantLoginOTP /> },
+
+  //Registration
+  { path: "/registration",            element: <Registration /> },
+  { path: "/verifyotp/:userId",       element: <Verifyotp /> },
+  { path: "/welcome/:tenantId",       element: <WelcomePage /> },
+
+  //Forget Password
+  { path: "/forgetpassword",          element: <ForgetPass /> },
+  { path: "/forgetpasswordotp",       element: <ForgetPassOTP /> },
+  { path: "/forgetresetpass",         element: <ForgetResetPassword /> },
+  { path: "/forgetpasssucess",        element: <ForgetPassSuccess /> },
+
+  { path: "/test",                    element: <Test /> },
   {
     path: "/panel",
     element: (
@@ -138,78 +150,85 @@ const router = createBrowserRouter([
       { path: "/panel", element: <Home /> },
 
       //Lead->
-      { path: "/panel/dashboard", element: <Home /> },
-      { path: "/panel/lead", element: <Lead /> },
-      { path: "/panel/editlead/:id", element: <Createlead /> },
-      { path: "/panel/createlead", element: <Createlead /> },
-
-      { path: "/panel/lead/create/so/:id", element: <CreateSOLead /> },
+      { path: "/panel/dashboard",             element: <Home /> },
+      { path: "/panel/lead",                  element: <Lead /> },
+      { path: "/panel/editlead/:id",          element: <Createlead /> },
+      { path: "/panel/createlead",            element: <Createlead /> },
+      { path: "/panel/lead/create/so/:id",    element: <CreateSOLead /> },
 
       //Contacts->
-      { path: "/panel/contact", element: <Contact /> },
-      { path: "/panel/createcontact", element: <CreateContact /> },
-      { path: "/panel/editContact/:id", element: <CreateContact /> },
+      { path: "/panel/contact",               element: <Contact /> },
+      { path: "/panel/createcontact",         element: <CreateContact /> },
+      { path: "/panel/editContact/:id",       element: <CreateContact /> },
       { path: "/panel/contact/create/so/:id", element: <CreateSOContact /> },
 
       //FreeTrail ->
-      { path: "/panel/freeTrail", element: <FreeTrail /> },
-      { path: "/panel/createtrial/:id", element: <CreateTrial /> },
+      { path: "/panel/freeTrail",             element: <FreeTrail /> },
+      { path: "/panel/createtrial/:id",       element: <CreateTrial /> },
 
       //FollowUp ->
-      { path: "/panel/followup", element: <FollowUp /> },
-      { path: "/panel/createfollowup/:id", element: <CreateFollowUp /> },
+      { path: "/panel/followup",                element: <FollowUp /> },
+      { path: "/panel/createfollowup/:id",      element: <CreateFollowUp /> },
 
-      // VoiceBox ->
-      { path: "/panel/voicebox", element: <VoiceBox /> },
-      { path: "/panel/createvoice", element: <CreateVoice /> },
-      { path: "/panel/createvoicedetails", element: <CreateVoiceDetails /> },
-      { path: "/panel/createreports", element: <CreateVoiceReports /> },
+      //VoiceBox ->
+      { path: "/panel/voicebox",                      element: <VoiceBox /> },
+      { path: "/panel/createvoice",                   element: <CreateVoice /> },
+      { path: "/panel/createvoicedetails",            element: <CreateVoiceDetails /> },
+      { path: "/panel/createvoicereports",            element: <CreateVoiceReports /> },
 
-      // LOGS
-      { path: "/panel/logs", element: <Logs /> },
-      { path: "/panel/createlogs", element: <CreateLogs /> },
-      { path: "/panel/createchats", element: <CreateChats /> },
-      { path: "/panel/createextension", element: <CreateExtension /> },
-      { path: "/panel/createlogin", element: <CreateLogin /> },
+      //LOGS
+      { path: "/panel/logs",                          element: <Logs /> },
+      { path: "/panel/createlogs",                    element: <CreateLogs /> },
+      { path: "/panel/createchats",                   element: <CreateChats /> },
+      { path: "/panel/createextension",               element: <CreateExtension /> },
+      { path: "/panel/createlogin",                   element: <CreateLogin /> },
 
-      // CLIENT => INNER COMPONENT
-      { path: "/panel/client", element: <Client /> },
+      //CLIENT
+      { path: "/panel/client",          element: <Client /> },
 
-      { path: "/panel/salesorder", element: <SalesOrder /> },
-      { path: "/panel/createorder", element: <CreateOrder /> },
-      { path: "/panel/mailBox", element: <MailBox /> },
-      { path: "/panel/createmail", element: <CreateMailBox /> },
+      //SALESORDER
+      { path: "/panel/salesorder",      element: <SalesOrder /> },
+      { path: "/panel/createorder",     element: <CreateOrder /> },
+      
+      //MAILBOX
+      { path: "/panel/mailBox",         element: <MailBox /> },
+      { path: "/panel/createmail",      element: <CreateMailBox /> },
 
-      // SMS BOX => INNER COMPONENT
-      { path: "/panel/servicebox", element: <ServiceBox /> },
-      { path: "/panel/sendsms",    element: <CreateSendSms /> },
-      { path: "/panel/sendemail",  element: <CreateSendEmail /> },
+      // SERVICE BOX 
+      { path: "/panel/servicebox",        element: <ServiceBox /> },
+      { path: "/panel/sendsms",           element: <CreateSendSms /> },
+      { path: "/panel/sendemail",         element: <CreateSendEmail /> },
 
-      // SMS BOX => INNER COMPONENT
-      { path: "/panel/FinancialActivity", element: <FinancialActivity /> },
-      // Report => INNER COMPONENT
-      { path: "/panel/reports", element: <Reports /> },
-      { path: "/panel/clientso/:id", element: <EditClientSO /> },
-      { path: "/panel/analytics", element: <Analytics /> },
+      // Financial Activity 
+      { path: "/panel/FinancialActivity",   element: <FinancialActivity /> },
+     
+      // Report
+      { path: "/panel/reports",             element: <Reports /> },
+      { path: "/panel/clientso/:id",        element: <EditClientSO /> },
 
-      // MIS REPORT => INNER COMPONENT
-      { path: "/panel/misreports", element: <MISReports /> },
-      { path: "/panel/creategeneral", element: <GeneralReport /> },
-      { path: "/panel/createft", element: <FtReport /> },
-      { path: "/panel/createpaid", element: <PaidClientReport /> },
-      { path: "/panel/createuser", element: <UserReport /> },
-      { path: "/panel/createcalling", element: <CallingReport /> },
-      { path: "/panel/creatednd", element: <DNDReport /> },
-      { path: "/panel/createtrack", element: <TrackSheet /> },
-      { path: "/panel/createresearch", element: <ResearchReport /> },
+      // ANALYTICS 
+      { path: "/panel/analytics",           element: <Analytics /> },
 
-      { path: "/panel/groupChat", element: <GroupChat /> },
-      { path: "/panel/setting", element: <Setting /> },
+      // MIS REPORT 
+      { path: "/panel/misreports",        element: <MISReports /> },
+      { path: "/panel/creategeneral",     element: <GeneralReport /> },
+      { path: "/panel/createft",          element: <FtReport /> },
+      { path: "/panel/createpaid",        element: <PaidClientReport /> },
+      { path: "/panel/createuser",        element: <UserReport /> },
+      { path: "/panel/createcalling",     element: <CallingReport /> },
+      { path: "/panel/creatednd",         element: <DNDReport /> },
+      { path: "/panel/createtrack",       element: <TrackSheet /> },
+      { path: "/panel/createresearch",    element: <ResearchReport /> },
 
-      { path: "/panel/subscription", element: <Subscription /> },
-      { path: "/panel/chat", element: <Chat /> },
+      { path: "/panel/groupChat",         element: <GroupChat /> },
+      { path: "/panel/setting",           element: <Setting /> },
 
-      { path: "*", element: <Test /> },
+      { path: "/panel/subscription",      element: <Subscription /> },
+      
+      
+      { path: "/panel/chat",              element: <Chat /> },
+
+      { path: "*",                        element: <Test /> },
     ],
   },
 ]);
@@ -219,7 +238,6 @@ createRoot(document.getElementById("root")).render(
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <FollowUpNotificationProvider>
         <NotificationProvider>
-          {/* <ToastContainer /> */}
           <RouterProvider router={router} />
         </NotificationProvider>
       </FollowUpNotificationProvider>
