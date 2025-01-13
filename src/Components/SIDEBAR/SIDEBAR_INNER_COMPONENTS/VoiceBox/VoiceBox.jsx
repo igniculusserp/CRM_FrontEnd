@@ -317,7 +317,7 @@ export default function VoiceBox() {
   // Object containing the options
   const dynamicButtons = {
     Monitoring: { text: 'Create View Box', href: '/panel/createvoice' },
-    Reports: { text: 'Create Reports', href: '/panel/createreports' },
+    Reports: { text: 'Create Reports', href: '/panel/createvoicereports' },
     'SMS via GMS Gateway': {
       text: 'Send Details',
       href: '/panel/createvoicedetails',
