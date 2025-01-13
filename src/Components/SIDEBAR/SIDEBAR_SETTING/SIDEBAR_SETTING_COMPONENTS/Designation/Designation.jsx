@@ -205,7 +205,7 @@ export default function Designation() {
     <div className="m-3 min-w-screen">
       {active ? (
         <>
-          <div className="flex min-w-screen justify-between items-center">
+          <div className="flex min-w-screen justify-between items-center flex-wrap gap-5">
             <h1 className="text-3xl font-medium">
             Designation
             </h1>
@@ -216,9 +216,9 @@ export default function Designation() {
               Add Designation
             </button>
           </div>
-          <div className="overflow-x-auto mt-3 shadow-md">
-            <div className="min-w-full overflow-hidden rounded-md">
-              <table className="min-w-full bg-white">
+          <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
+            <div className="min-w-full rounded-md leads_Table_Container">
+              <table className="min-w-full bg-white leads_Table">
                 <thead>
                   <tr className="border-gray-300 border-b-2">
                     <th className="px-1 py-3">

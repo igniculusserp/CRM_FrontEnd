@@ -508,3 +508,41 @@ input[type="number"] {
    width: 100%;
   }
 }
+
+/* ---------------------------------------------- Service Box ------------------------------------------ */
+@media (max-width: 897px) {
+.service_Button_Main_Container{
+  width: 100%;
+}
+.service_Button_Container{
+  width: 48.9%;
+}
+.service_Action_Main_Container{
+  width: 100%;
+  /* border:1px solid red; */
+  justify-content: space-between;
+}
+.service_Action_Container{
+  width: 42%;
+}
+.service_Action_Button{
+  width: 100%;
+}
+}
+@media (max-width: 768px) {
+  .service_Action_Container{
+    width: 48.9%;
+  }
+}
+@media (max-width: 648px) {
+  .service_Button_Main_Container{
+    flex-wrap: wrap;
+  }
+  .service_Button_Container{
+    width: 100%;
+  }
+  .service_Action_Container{
+    width: 100%;
+  }
+}
+

@@ -213,7 +213,7 @@ export default function ExpenseHead() {
     <div className="m-3 min-w-screen">
       {active ? (
         <>
-          <div className="flex min-w-screen justify-between items-center">
+          <div className="flex min-w-screen justify-between items-center flex-wrap gap-5">
             <h1 className="text-3xl font-medium">Expense Detail</h1>
             <button
               onClick={handleAdd}
@@ -222,8 +222,8 @@ export default function ExpenseHead() {
               Add Expense Head
             </button>
           </div>
-          <div className="overflow-x-auto mt-3 shadow-md">
-            <div className="min-w-full overflow-hidden rounded-md">
+          <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
+            <div className="min-w-full rounded-md leads_Table_Container leads_Table">
               <table className="min-w-full bg-white">
                 <thead>
                   <tr className="border-gray-300 border-b-2">

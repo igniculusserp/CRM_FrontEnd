@@ -335,7 +335,7 @@ export default function EmailSetting() {
     <div className="m-3">
       {active ? (
         <>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center flex-wrap gap-5">
             <h1 className="text-3xl font-medium">Email Setting</h1>
             <button
               onClick={handleAdd}
@@ -344,8 +344,9 @@ export default function EmailSetting() {
               Add Email Setting
             </button>
           </div>
-          <div className="overflow-x-auto mt-3 shadow-md">
-            <table className="min-w-full bg-white rounded-md">
+          <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
+            <div className="min-w-full rounded-md leads_Table_Container">
+            <table className="min-w-full bg-white rounded-md leads_Table">
               <thead>
                 <tr className="border-gray-300 border-b-2">
                   <th className="px-1 py-3">
@@ -418,6 +419,7 @@ export default function EmailSetting() {
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         </>
       ) : (

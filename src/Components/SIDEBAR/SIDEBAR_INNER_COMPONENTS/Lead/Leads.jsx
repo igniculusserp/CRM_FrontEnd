@@ -359,7 +359,7 @@ export default function Lead() {
     setdropActionsMenudropDown(!dropActionsMenudropDown);
   };
 
-  const handleActionButton = async (value, leadId) => {
+  const handleActionButton = async (value) => {
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
     if (value === "Mass Delete") {
       const userConfirmed = confirm(
