@@ -1,48 +1,59 @@
 //react
 import { useState, useEffect } from "react";
-//reactIcon
-import { FaAngleDown, FaStarOfLife } from "react-icons/fa";
-import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
 //reactPackages
 import { Link, useNavigate, useParams } from "react-router-dom";
+
+//reactIcon
+import { FaAngleDown, FaStarOfLife } from "react-icons/fa";
+import { IoInformationCircle } from "react-icons/io5";
 
 //external Packages
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-//file
+//API-Keywords
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
+//LanguageDropDownFile
+import languageDropDown from "../../../../data/dropdown/Languages/language";
+
+//Toast-Conatainer
 import { ToastContainer } from 'react-toastify';
 import { showSuccessToast, showErrorToast } from '../../../../utils/toastNotifications'
+
+//dropDown --->>> customHooks
 import useSegment from "../../../../Hooks/Segment/useSegment";
-import { IoInformationCircle } from "react-icons/io5";
 import useManagedBy from "../../../../Hooks/ManagedBy/useManagedBy";
 import useLeadSource from "../../../../Hooks/LeadSource/useLeadSource";
+import useLeadStatus from "../../../../Hooks/LeadStatus/useLeadStatus";
 
 export default function CreateSOLead() {
-  //to make id unique
-  const { id, leadId } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
 
+  //IMP used as ${name} in an API
+  const name = getHostnamePart();
+
+  //const bearer_token for API Config  
+  const bearer_token = localStorage.getItem("token");
+
+  // Custom Hook
+  const {leadStatus} = useLeadStatus();
   const { segments } = useSegment();
   const { managedBy } = useManagedBy();
   const { leadSource } = useLeadSource();
   
-
   //------- Business Type --------
   const businessType = localStorage.getItem("businessType");
   const [business, setBusiness] = useState("");
 
   //form description is kept-out
   const [description, setdescription] = useState("Add Text Here");
-  const [editLead, seteditLead] = useState({});
 
-  //IMP used as ${name} in an API
-  const name = getHostnamePart();
+  const [editLead, seteditLead] = useState({});
 
   //imp to identify mode
   const [isEditMode, setIsEditMode] = useState(false);
@@ -64,7 +75,6 @@ export default function CreateSOLead() {
 
   //GET by ID---------------------------//GET---------------------------//GET---------------------------by ID-----------by ID
   async function handleLeadbyId() {
-    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -107,6 +117,11 @@ export default function CreateSOLead() {
 
   //----------------------------------------------------------------------------------------
 
+  useEffect(() => {
+    setdefaultTextSegmentDropDown(
+      editLead.segments?.length > 0 ? editLead.segments.join(", ") : "Select Segment"
+    );
+  }, [editLead]);
 
 
   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] = useState('Select Segment');
@@ -121,7 +136,7 @@ export default function CreateSOLead() {
 
     let updatedSegments;
     if (isChecked) {
-
+      // Remove segment if already selected
       updatedSegments = editLead.segments.filter(
         (selectedSegment) => selectedSegment !== segment
       );
@@ -133,44 +148,21 @@ export default function CreateSOLead() {
       ...prev,
       segments: updatedSegments,
     }));
-  };
-  // Segment GET API Is being used here
 
-  useEffect(() => {
     setdefaultTextSegmentDropDown(
-      editLead.segments?.length > 0 ? editLead?.segments?.join(", ") : "Select Segment"
+      updatedSegments?.length > 0 ? updatedSegments.join(", ") : "Select Segment"
     );
-  }, [editLead]);
+
+
+    console.log('Selected segments:', updatedSegments);
+  };
 
   //----------------------------------------------------------------------------------------
-  //assigned_ToDropDown  Is being used here
-  // const [assigned_ToDropDown, setassigned_ToDropDown] = useState({});
+  //assigned_ToDropDown
+  const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
 
-  // async function handleAssigned_To() {
-  //   const bearer_token = localStorage.getItem("token");
-
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         Authorization: `Bearer ${bearer_token}`,
-  //       },
-  //     };
-  //     const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`, config);
-  //     setassigned_ToDropDown(response.data.data);
-  //   } catch (error) {
-  //     console.error("Error fetching leads:", error);
-  //     // Optionally, set an error state to display a user-friendly message
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   handleAssigned_To();
-  // }, []);
-
-  const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
-    useState();
-  const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
-    useState(false);
+  const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] = useState();
+  const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] = useState(false);
 
   const toggleDropdownassigned_ToDropDown = () => {
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
@@ -289,30 +281,6 @@ export default function CreateSOLead() {
   const [error, setError] = useState(null); // New error state
   const [poolEdit, setPoolEdit] = useState("");
 
-  // const handlePool = async () => {
-  //   const bearerToken = localStorage.getItem("token");
-  //   const config = {
-  //     headers: {
-  //       Authorization: `Bearer ${bearerToken}`,
-  //     },
-  //   };
-
-  //   try {
-  //     const response = await axios.get(
-  //       `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
-  //       config
-  //     );
-  //     setPoolToDropDown(response.data.data);
-
-  //   } catch (error) {
-  //     console.error("Error fetching leads:", error);
-  //     setError("Failed to fetch pools."); // Set error message
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   handlePool();
-  // }, []);
 
   const toggleDropdown = () => {
     setIsPoolDropdownOpen((prev) => !prev);
@@ -331,14 +299,6 @@ export default function CreateSOLead() {
 
   //----------------------------------------------------------------------------------------
   //LanguageDropDown
-
-  const LanguageDropDown = [
-    { key: 1, name: "English" },
-    { key: 2, name: "Portuguese" },
-    { key: 3, name: "Hindi" },
-    { key: 4, name: "Arabic" },
-    { key: 5, name: "Japanese" },
-  ];
 
   const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] =
     useState("Select Language");
@@ -556,11 +516,7 @@ export default function CreateSOLead() {
         <div className="flex justify-between mx-3 px-3 bg-white border rounded py-3">
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-xl">
-              {/*  {isEditMode? <h1>Edit Lead</h1>: <>Create Lead</> } */}
               Create Sales Order
-            </h1>
-            <h1 className="bg-blue-500 text-xs text-white px-4 py-1 font-medium rounded-lg">
-              Edit Page Layout
             </h1>
           </div>
           <div>
@@ -926,7 +882,7 @@ export default function CreateSOLead() {
                         {isDropdownVisibleLanguage && (
                           <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
                             <ul className="py-2 text-sm text-gray-700">
-                              {LanguageDropDown.map(({ key, name }) => (
+                              {languageDropDown.map(({ key, name }) => (
                                 <li
                                   key={key}
                                   onClick={() => handleDropdownLanguage(name)}
@@ -1142,7 +1098,7 @@ export default function CreateSOLead() {
                         {isDropdownassigned_ToDropDown && (
                           <div className="absolute w-full bg-white border border-gray-300 rounded-md top-9.9 z-10 ">
                             <ul className="py-2 text-sm text-gray-700">
-                              {assigned_ToDropDown.map(
+                              {managedBy.map(
                                 ({ key, userName, role }) => (
                                   <li
                                     key={key}
@@ -1379,7 +1335,7 @@ export default function CreateSOLead() {
                               <div className="py-2 text-red-600">{error}</div>
                             ) : (
                               <ul className="py-2 text-sm text-gray-700">
-                                {poolToDropDown.map(({ id, poolName }) => (
+                                {leadSource?.map(({ id, poolName }) => (
                                   <li
                                     key={id}
                                     onClick={() =>
@@ -1503,7 +1459,7 @@ export default function CreateSOLead() {
                           <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                             <ul className="py-2 text-sm text-gray-700">
                             {segments?.length > 0 ? (
-                              segments.map(({ key, segment }) => (
+                              segments?.map(({ key, segment }) => (
                                   <li
                                     key={key}
                                     className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
@@ -1810,22 +1766,21 @@ export default function CreateSOLead() {
                         {isDropdownVisibleSegment && (
                           <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                             <ul className="py-2 text-sm text-gray-700">
-                              {segments.length > 0 ? (
-                                segments.map((segment) => (
+                              {segments?.length > 0 ? (
+                                segments.map(({ key, segment }) => (
                                   <li
                                     key={segment.id}
                                     className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                                   >
                                     <input
                                       type="checkbox"
-                                      checked={editLead.segments?.includes(
-                                        segment.segment
+                                      checked={editLead?.segments?.includes(
+                                        segment
                                       )}
                                       onChange={() => handleCheckboxChange(segment)}
                                       className="mr-2"
                                     />
-                                    {segment.segment}{' '}
-                                    {/* Assuming segment is the property you want to display */}
+                                    {segment}
                                   </li>
                                 ))
                               ) : (
