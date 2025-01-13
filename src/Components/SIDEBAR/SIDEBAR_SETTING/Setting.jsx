@@ -1,50 +1,50 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 //external Packages
 import axios from "axios";
-import { useLocation } from 'react-router-dom';
-import ButtonGroup from './ButtonGroup';
-import UserSetting from './SIDEBAR_SETTING_COMPONENTS/User_Setting/UserSetting';
-import UserOperation from './SIDEBAR_SETTING_COMPONENTS/User_Operation/UserOperation';
-import Group from './SIDEBAR_SETTING_COMPONENTS/Group/Group';
-import Department from './SIDEBAR_SETTING_COMPONENTS/Department/Department';
-import Designation from './SIDEBAR_SETTING_COMPONENTS/Designation/Designation';
-import Qualification from './SIDEBAR_SETTING_COMPONENTS/Qualification/Qualification';
-import LeadStatus from './SIDEBAR_SETTING_COMPONENTS/LeadStatus/LeadStatus';
-import Pools from './SIDEBAR_SETTING_COMPONENTS/Pools/Pools';
-import Segments from './SIDEBAR_SETTING_COMPONENTS/Segments/Segments';
-import SMSTemplate from './SIDEBAR_SETTING_COMPONENTS/SMSTemplate/SMSTemplate';
-import EmailTemplate from './SIDEBAR_SETTING_COMPONENTS/EmailTemplate/EmailTemplate';
-import CallTemplate from './SIDEBAR_SETTING_COMPONENTS/CallTemplate/CallTemplate';
-import Plan from './SIDEBAR_SETTING_COMPONENTS/Plan/Plan';
+import { useLocation } from "react-router-dom";
+import UserSetting from "./SIDEBAR_SETTING_COMPONENTS/User_Setting/UserSetting";
+import UserOperation from "./SIDEBAR_SETTING_COMPONENTS/User_Operation/UserOperation";
+import Group from "./SIDEBAR_SETTING_COMPONENTS/Group/Group";
+import Department from "./SIDEBAR_SETTING_COMPONENTS/Department/Department";
+import Designation from "./SIDEBAR_SETTING_COMPONENTS/Designation/Designation";
+import Qualification from "./SIDEBAR_SETTING_COMPONENTS/Qualification/Qualification";
+import LeadStatus from "./SIDEBAR_SETTING_COMPONENTS/LeadStatus/LeadStatus";
+import Pools from "./SIDEBAR_SETTING_COMPONENTS/Pools/Pools";
+import Segments from "./SIDEBAR_SETTING_COMPONENTS/Segments/Segments";
+import SMSTemplate from "./SIDEBAR_SETTING_COMPONENTS/SMSTemplate/SMSTemplate";
+import EmailTemplate from "./SIDEBAR_SETTING_COMPONENTS/EmailTemplate/EmailTemplate";
+import CallTemplate from "./SIDEBAR_SETTING_COMPONENTS/CallTemplate/CallTemplate";
+import Plan from "./SIDEBAR_SETTING_COMPONENTS/Plan/Plan";
 // import Calendar from './Calendar';
-import Promotion from './SIDEBAR_SETTING_COMPONENTS/Promotion/Promotion';
-import SMSSetting from './SIDEBAR_SETTING_COMPONENTS/SMSSetting/SMSSetting';
-import EmailSetting from './SIDEBAR_SETTING_COMPONENTS/EmailSetting/EmailSetting';
-import BranchTarget from './SIDEBAR_SETTING_COMPONENTS/BranchTarget/BranchTarget';
-import NotificationPopup from './SIDEBAR_SETTING_COMPONENTS/NotificationPopup/NotificationPopup';
-import CallingExtension from './SIDEBAR_SETTING_COMPONENTS/CallingExtension/CallingExtension';
+import Promotion from "./SIDEBAR_SETTING_COMPONENTS/Promotion/Promotion";
+import SMSSetting from "./SIDEBAR_SETTING_COMPONENTS/SMSSetting/SMSSetting";
+import EmailSetting from "./SIDEBAR_SETTING_COMPONENTS/EmailSetting/EmailSetting";
+import BranchTarget from "./SIDEBAR_SETTING_COMPONENTS/BranchTarget/BranchTarget";
+import NotificationPopup from "./SIDEBAR_SETTING_COMPONENTS/NotificationPopup/NotificationPopup";
+import CallingExtension from "./SIDEBAR_SETTING_COMPONENTS/CallingExtension/CallingExtension";
 import AccessDevice from "./SIDEBAR_SETTING_COMPONENTS/AccessDevice/AccessDevice";
-import Dlp from './SIDEBAR_SETTING_COMPONENTS/DLP/Dlp';
-import Alert from './SIDEBAR_SETTING_COMPONENTS/Alert/Alert';
-import AccessControl from './SIDEBAR_SETTING_COMPONENTS/AccessControl/AccessControl';
-import PasswordPolicy from './SIDEBAR_SETTING_COMPONENTS/PasswordPolicy/PasswordPolicy';
-import ExpenseHead from './SIDEBAR_SETTING_COMPONENTS/ExpenseHead/ExpenseHead';
-import Permissions from './SIDEBAR_SETTING_COMPONENTS/Permissions/Permissions';
+import Dlp from "./SIDEBAR_SETTING_COMPONENTS/DLP/Dlp";
+import Alert from "./SIDEBAR_SETTING_COMPONENTS/Alert/Alert";
+import AccessControl from "./SIDEBAR_SETTING_COMPONENTS/AccessControl/AccessControl";
+import PasswordPolicy from "./SIDEBAR_SETTING_COMPONENTS/PasswordPolicy/PasswordPolicy";
+import ExpenseHead from "./SIDEBAR_SETTING_COMPONENTS/ExpenseHead/ExpenseHead";
+import Permissions from "./SIDEBAR_SETTING_COMPONENTS/Permissions/Permissions";
 
 //Folder Imported
 import { tenant_base_url, protocal_url } from "../../../Config/config";
 import { getHostnamePart } from "./ReusableComponents/GlobalHostUrl";
 
 export default function Setting() {
+  const navigate = useNavigate();
 
   const name = getHostnamePart();
 
+  // ------------------------------------------------------Handle Navigation --------------------------------------------------
 
-  const location = useLocation();
-
-  const [activeTab, setActiveTab] = useState(
-    () => parseInt(localStorage.getItem('activeTab')) || 1
-  );
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
 
   const buttons = [
     { key: 1, value: "User Setting" },
@@ -105,22 +105,6 @@ export default function Setting() {
     27: Permissions,
   };
 
-  const handleButtonClick = (key) => {
-    setActiveTab(key);
-    localStorage.setItem("activeTab", key);
-  };
-
-  useEffect(() => {
-    return () => {
-      // This will run when the component unmounts
-      localStorage.removeItem("activeTab");
-    };
-  }, [location]);
-
-  const ActiveComponent = componentMap[activeTab];
-
-
-  
   //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
 
   const businessRole = localStorage.getItem("businessRole");
@@ -153,8 +137,6 @@ export default function Setting() {
           console.log("List : ", permissionsArray);
 
           //------------------------------------------------------ Set permissions ------------------------------------------------
-
-       
         }
       }
     } catch (error) {
@@ -173,22 +155,173 @@ export default function Setting() {
           <div className="flex items-center justify-center">
             <h1 className="text-xl py-1">Setting Dashboard</h1>
           </div>
-          <div>
+        </div>
+        <div className="min-h-screen bg-gray-10 flex  items-start py-8 settings_Border">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-6 w-full">
+       {/* -------------------------------- User Setting Card ------------------------------------------- */}
+          <div
+            className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center"
+          >
+            <h2 className="text-xl font-semibold mb-4">User - Settings</h2>
+            <div className="flex flex-col space-y-3 w-full">
+              <button
+                // onClick={() => handleNavigation(`/page1/card${index + 1}`)}
+                className="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              >
+                Go to Page 1
+              </button>
+              <button
+                // onClick={() => handleNavigation(`/page2/card${index + 1}`)}
+                className="py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600"
+              >
+                Go to Page 2
+              </button>
+              <button
+                // onClick={() => handleNavigation(`/page3/card${index + 1}`)}
+                className="py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+              >
+                Go to Page 3
+              </button>
+              <button
+                // onClick={() => handleNavigation(`/page4/card${index + 1}`)}
+                className="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600"
+              >
+                Go to Page 4
+              </button>
+            </div>
           </div>
+
+          <div
+            className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center"
+          >
+            <h2 className="text-xl font-semibold mb-4">Card</h2>
+            <div className="flex flex-col space-y-3 w-full">
+              <button
+                // onClick={() => handleNavigation(`/page1/card${index + 1}`)}
+                className="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              >
+                Go to Page 1
+              </button>
+              <button
+                // onClick={() => handleNavigation(`/page2/card${index + 1}`)}
+                className="py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600"
+              >
+                Go to Page 2
+              </button>
+              <button
+                // onClick={() => handleNavigation(`/page3/card${index + 1}`)}
+                className="py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+              >
+                Go to Page 3
+              </button>
+              <button
+                // onClick={() => handleNavigation(`/page4/card${index + 1}`)}
+                className="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600"
+              >
+                Go to Page 4
+              </button>
+            </div>
+          </div>
+
+          <div
+            className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center"
+          >
+            <h2 className="text-xl font-semibold mb-4">Card</h2>
+            <div className="flex flex-col space-y-3 w-full">
+              <button
+                // onClick={() => handleNavigation(`/page1/card${index + 1}`)}
+                className="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              >
+                Go to Page 1
+              </button>
+              <button
+                // onClick={() => handleNavigation(`/page2/card${index + 1}`)}
+                className="py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600"
+              >
+                Go to Page 2
+              </button>
+              <button
+                // onClick={() => handleNavigation(`/page3/card${index + 1}`)}
+                className="py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+              >
+                Go to Page 3
+              </button>
+              <button
+                // onClick={() => handleNavigation(`/page4/card${index + 1}`)}
+                className="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600"
+              >
+                Go to Page 4
+              </button>
+            </div>
+          </div>
+
+          <div
+            className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center"
+          >
+            <h2 className="text-xl font-semibold mb-4">Card</h2>
+            <div className="flex flex-col space-y-3 w-full">
+              <button
+                // onClick={() => handleNavigation(`/page1/card${index + 1}`)}
+                className="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              >
+                Go to Page 1
+              </button>
+              <button
+                // onClick={() => handleNavigation(`/page2/card${index + 1}`)}
+                className="py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600"
+              >
+                Go to Page 2
+              </button>
+              <button
+                // onClick={() => handleNavigation(`/page3/card${index + 1}`)}
+                className="py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+              >
+                Go to Page 3
+              </button>
+              <button
+                // onClick={() => handleNavigation(`/page4/card${index + 1}`)}
+                className="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600"
+              >
+                Go to Page 4
+              </button>
+            </div>
+          </div>
+
+          <div
+            className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center"
+          >
+            <h2 className="text-xl font-semibold mb-4">Card</h2>
+            <div className="flex flex-col space-y-3 w-full">
+              <button
+                // onClick={() => handleNavigation(`/page1/card${index + 1}`)}
+                className="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              >
+                Go to Page 1
+              </button>
+              <button
+                // onClick={() => handleNavigation(`/page2/card${index + 1}`)}
+                className="py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600"
+              >
+                Go to Page 2
+              </button>
+              <button
+                // onClick={() => handleNavigation(`/page3/card${index + 1}`)}
+                className="py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+              >
+                Go to Page 3
+              </button>
+              <button
+                // onClick={() => handleNavigation(`/page4/card${index + 1}`)}
+                className="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600"
+              >
+                Go to Page 4
+              </button>
+            </div>
+          </div>
+    
+      </div>
         </div>
       </div>
-
-      <ButtonGroup
-      buttons={
-        businessRole === "Admin"
-          ? buttons
-          : buttons.filter(button => permissions.includes(button.value))
-      }
-      active={activeTab}
-      onButtonClick={handleButtonClick}
-    />
-
-      <div>{ActiveComponent && <ActiveComponent />}</div>
     </>
   );
 }
