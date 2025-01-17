@@ -7,7 +7,6 @@ import { FaAngleDown } from "react-icons/fa";
 //reactPackages
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import languageDropDown from '../../../../data/dropdown/Languages/language'
 
 //external Packages
 import axios from "axios";

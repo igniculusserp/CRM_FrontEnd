@@ -20,8 +20,8 @@ import 'react-quill/dist/quill.snow.css';
 import { tenant_base_url, protocal_url } from '../../../../Config/config';
 import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
 
-//LanguageDropDownFile
-import languageDropDown from '../../../../data/dropdown/Languages/language'
+//LanguageDropDown
+import languageDropDown from '../../../../data/dropdown/Languages/languageDropdown'
 
 //-----------------------------ToastContainer-----------------------------
 import { ToastContainer } from 'react-toastify';
@@ -187,8 +187,6 @@ export default function Createlead() {
   //
   const [poolEdit, setPoolEdit] = useState("");
 
-
-  
 
   const toggleDropdown = () => {
     setIsPoolDropdownOpen((prev) => !prev);
@@ -527,7 +525,6 @@ export default function Createlead() {
         </div>
 
         {/* -------------FORM Starts FROM HERE------------- */}
-        {/* Lead Image */}
         <form onSubmit={handleSubmit} className="flex mb-6">
           {/* ------------------------------------------------> FORM PARENT includes 4 tabs <------------------------------------------------ */}
           <div className="w-screen">
@@ -833,7 +830,7 @@ export default function Createlead() {
                       className="mt-1 p-2 border border-gray-300 rounded-md w-full "
                     />
                   </div>
-                  {/* -------------Assigned to------------- */}
+                  {/* -------------Managed by------------- */}
                   <div className="flex flex-col relative">
                     <label
                       htmlFor="leadesStatus"
@@ -882,6 +879,7 @@ export default function Createlead() {
                       )}
                     </div>
                   </div>
+                  
                 </div>
               </div>
             </div>

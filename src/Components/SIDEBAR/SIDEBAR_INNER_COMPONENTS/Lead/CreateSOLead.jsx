@@ -17,8 +17,19 @@ import "react-quill/dist/quill.snow.css";
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
-//LanguageDropDownFile
-import languageDropDown from "../../../../data/dropdown/Languages/language";
+//dropDown --->>> Data
+
+//LanguageDropDown
+import languageDropDown from "../../../../data/dropdown/Languages/languageDropdown"
+
+//businessDropDown
+import businessDropDown from "../../../../data/dropdown/Business/businessDropdown";
+
+//serviceDropDown
+import serviceDropDown from "../../../../data/dropdown/Term/termDropDown";
+
+//term
+import termDropDown from "../../../../data/dropdown/Term/termDropDown";
 
 //Toast-Conatainer
 import { ToastContainer } from 'react-toastify';
@@ -41,11 +52,11 @@ export default function CreateSOLead() {
   const bearer_token = localStorage.getItem("token");
 
   // Custom Hook
-  const {leadStatus} = useLeadStatus();
+  const { leadStatus } = useLeadStatus();
   const { segments } = useSegment();
   const { managedBy } = useManagedBy();
   const { leadSource } = useLeadSource();
-  
+
   //------- Business Type --------
   const businessType = localStorage.getItem("businessType");
   const [business, setBusiness] = useState("");
@@ -87,21 +98,21 @@ export default function CreateSOLead() {
       seteditLead({
         //Personal Details
         leadId: data.id || "",
-        clientName: data.name || "",
-        language: data.language || "",
-        mobileNo: data.mobileNo || "",
-        phoneNo: data.phoneNo || "",
-        email: data.email || "",
-        assigned_To: data.assigned_To || "N/A",
-        street: data.street || "",
-        postalCode: data.postalCode || "",
-        country: data.country || "",
-        city: data.city || "",
-        state: data.state || "",
-        advisaryExp: data.advisaryExp || "",
+        clientName: data?.name || "",
+        language: data?.language || "",
+        mobileNo: data?.mobileNo || "",
+        phoneNo: data?.phoneNo || "",
+        email: data?.email || "",
+        assigned_To: data?.assigned_To || "N/A",
+        street: data?.street || "",
+        postalCode: data?.postalCode || "",
+        country: data?.country || "",
+        city: data?.city || "",
+        state: data?.state || "",
+        advisaryExp: data?.advisaryExp || "",
 
         //Payment Details
-        segments: data.segments || [],
+        segments: data?.segments || [],
 
         // Service Details
         subscription_start_date: data?.trialStartDate ? data.trialStartDate.split("T")[0] : null,
@@ -159,7 +170,6 @@ export default function CreateSOLead() {
 
   //----------------------------------------------------------------------------------------
   //assigned_ToDropDown
-  const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
 
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] = useState();
   const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] = useState(false);
@@ -192,12 +202,6 @@ export default function CreateSOLead() {
 
   //----------------------------------------------------------------------------------------
   //Service
-  const Service_DropDown = [
-    { key: 1, name: "SMS" },
-    { key: 3, name: "Call" },
-    { key: 2, name: "What's App" },
-  ];
-
   const [defaultText_Service_DropDown, setDefaultText_Service_DropDown] =
     useState("Select Service");
 
@@ -218,14 +222,7 @@ export default function CreateSOLead() {
   };
 
   //----------------------------------------------------------------------------------------
-  //TERM
-  const Term_DropDown = [
-    { key: 1, name: "Monthly" },
-    { key: 2, name: "Quartely" },
-    { key: 3, name: "Half Yearly" },
-    { key: 4, name: "Yearly" },
-  ];
-
+  //Term
   const [defaultText_Term_DropDown, setDefaultText_Term_DropDown] =
     useState("Select Term");
 
@@ -246,14 +243,6 @@ export default function CreateSOLead() {
 
   //----------------------------------------------------------------------------------------
   //Business Type
-  const BusinessTypeDropDown = [
-    { key: 1, name: "IT" },
-    { key: 2, name: "eCommerce" },
-    { key: 3, name: "Marketing" },
-    { key: 4, name: "Hospitality" },
-    { key: 5, name: "Brokerage" },
-  ];
-
   const [defaultTextbusinessTypeDropDown, setDefaultTextbusinessTypeDropDown] =
     useState("Select Business Type");
 
@@ -274,11 +263,18 @@ export default function CreateSOLead() {
   };
 
   //----------------------------------------------------------------------------------------
-  //PooL_ToDropDown
-  const [poolToDropDown, setPoolToDropDown] = useState([]);
+
+  //---------------------------> Lead Source <---------------------------
+  //default text for Lead Source
   const [defaultTextPool, setDefaultTextPool] = useState("Select Lead Source");
+
+  //dropDown State
   const [isPoolDropdownOpen, setIsPoolDropdownOpen] = useState(false);
+
+  //error
   const [error, setError] = useState(null); // New error state
+
+  //
   const [poolEdit, setPoolEdit] = useState("");
 
 
@@ -289,7 +285,6 @@ export default function CreateSOLead() {
   const handleDropdownSelection = (poolName) => {
     setIsPoolDropdownOpen(false);
     setDefaultTextPool(poolName);
-
     seteditLead((prev) => ({
       ...prev,
       leadSource: poolName,
@@ -299,9 +294,9 @@ export default function CreateSOLead() {
 
   //----------------------------------------------------------------------------------------
   //LanguageDropDown
+  const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] = useState("Select Language");
 
-  const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] =
-    useState("Select Language");
+  //dropDown State
   const [isDropdownVisibleLanguage, setisDropdownVisibleLanguage] =
     useState(false);
 
@@ -512,17 +507,22 @@ export default function CreateSOLead() {
   return (
     <>
       <ToastContainer />
-      <div className="min-h-screen flex flex-col mt-3">
-        <div className="flex justify-between mx-3 px-3 bg-white border rounded py-3">
-          <div className="flex items-center justify-center gap-3">
-            <h1 className="text-xl">
+      {/* ------------------------------------------------> Parent <------------------------------------------------ */}
+
+      <div className="mt-3">
+        {/* ------------------------------------------------> Heading  <------------------------------------------------ */}
+        <div className="flex justify-between mx-3  bg-white border rounded p-3 ">
+          {/* ------------------------------------------------> Text and Logo  <------------------------------------------------ */}
+          <div className="flex items-center justify-center gap-3 ">
+            <h1 className=" text-xl">
               Create Sales Order
             </h1>
           </div>
           <div>
+            {/* ------------------------------------------------> Cancel Button  <------------------------------------------------ */}
             <Link
               to="/panel/lead"
-              className="px-6 py-1 rounded  border border-blue-500 text-blue-500 "
+              className="sm:px-6 py-1 px-4 rounded  border border-blue-500 text-blue-500 "
             >
               Cancel
             </Link>
@@ -530,29 +530,30 @@ export default function CreateSOLead() {
         </div>
 
         {/* -------------FORM Starts FROM HERE------------- */}
-        {/* Lead Image */}
-        <form onSubmit={handleSubmit} className="flex">
-          {/*-FORM- */}
-          {/*Parent Div */}
-          <div className="w-full">
+        <form onSubmit={handleSubmit} className="flex mb-6">
+          {/* ------------------------------------------------> FORM PARENT includes 4 tabs <------------------------------------------------ */}
+          <div className="w-screen">
             {/*CHILD Div------ Image Input */}
 
-            <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
+            <div className="m-3 bg-white rounded-xl shadow-md  ">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                 Personal Details
               </h2>
 
-              {/* -------------SALES ORDER INFORMATION STARTS FROM HERE------------- */}
-              {/* -------------I--1------------- */}
-              {/* -------------Client Name------------- */}
 
+              {/* -------------Parent <SALES ORDER INFORMATION STARTS FROM HERE>------------- */}
               {business === "Brokerage" ?
-                <div className="py-2 px-4 grid gap-2">
-                  <div className="flex space-x-4  ">
-                    <div className="flex flex-col w-1/2">
+                <div className="space-y-3 p-2">
+                  {/* ------------------------------------1------------------------------------- */}
+                  {/* -------------SUB -> Parent -> <Name && Mobile Number>------------- */}
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                    {/* -------------Client Name------------- */}
+                    <div className="flex flex-col relative ">
+
                       <label
                         htmlFor="clientName"
                         className="text-sm font-medium text-gray-700"
+
                       >
                         <span className="flex gap-1">
                           Client Name
@@ -565,11 +566,12 @@ export default function CreateSOLead() {
                         value={editLead.clientName}
                         placeholder="Enter Client's Name"
                         onChange={handleChange}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                       />
                     </div>
                     {/* -------------Mobile Number------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="mobileNo"
                         className="text-sm font-medium text-gray-700"
@@ -584,7 +586,7 @@ export default function CreateSOLead() {
                         name="mobileNo"
                         value={editLead.mobileNo}
                         maxLength="15"
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleContactChange}
                         placeholder="Enter your Mobile Number"
                       />
@@ -592,12 +594,12 @@ export default function CreateSOLead() {
                   </div>
 
 
-
-                  <div className="flex space-x-4">
-
-
+                  {/* ------------------------------------2------------------------------------- */}
+                  {/* -------------SUB -> Parent -> <Alternate Numbe && EMail>------------- */}
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
                     {/* -------------Alternate Number------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="phoneNo"
                         className="text-sm font-medium text-gray-700"
@@ -609,7 +611,7 @@ export default function CreateSOLead() {
                         name="phoneNo"
                         maxLength="15"
                         value={editLead.phoneNo}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full "
                         onChange={handleContactChange}
                         placeholder="Enter your Alternate Number"
                         onKeyDown={(e) => {
@@ -621,7 +623,8 @@ export default function CreateSOLead() {
                       />
                     </div>
                     {/* -------------Email------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="email"
                         className="text-sm font-medium text-gray-700"
@@ -635,28 +638,23 @@ export default function CreateSOLead() {
                         type="email"
                         name="email"
                         value={editLead.email}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
                         onChange={handleChange}
                         placeholder="Enter your Email"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                       />
                     </div>
                   </div>
 
-                  {/* -------------V--1--------------- */}
-
-                  <div className="flex space-x-4">
-
-                    {/* -------------V--2--------------- */}
+                  {/* ------------------------------------3------------------------------------- */}
+                  {/* -------------SUB -> Parent -> <Managed By && Lead Status>------------- */}
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
                     {/* -------------Managed By------------- */}
-                    <div className="flex flex-col w-1/2 relative">
+                    <div className="flex flex-col relative">
                       <label
                         htmlFor="leadesStatus"
                         className="text-sm font-medium text-gray-700"
                       >
-                        <span className="flex gap-1">
-                          Managed By
-                          <FaStarOfLife size={8} className="text-red-500" />
-                        </span>
+                        Managed By
                       </label>
                       <div
                         className="relative"
@@ -671,22 +669,19 @@ export default function CreateSOLead() {
                           type="button"
                         >
                           {isEditMode
-                            ? defaultTextassigned_ToDropDown
-                            : editLead.assigned_To}
+                            ? editLead.assigned_To
+                            : defaultTextassigned_ToDropDown}
                           <FaAngleDown className="ml-2 text-gray-400" />
                         </button>
                         {isDropdownassigned_ToDropDown && (
-                          <div className="absolute w-full bg-white border border-gray-300 rounded-md top-9.9 z-10 ">
+                          <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                             <ul className="py-2 text-sm text-gray-700">
                               {managedBy.map(
-                                ({ key, userName, role }) => (
+                                ({ userName, role }, index) => (
                                   <li
-                                    key={key}
+                                    key={index}
                                     onClick={() =>
-                                      handleDropdownassigned_ToDropDown(
-                                        userName,
-                                        role
-                                      )
+                                      handleDropdownassigned_ToDropDown(userName, role)
                                     }
                                     className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                                   >
@@ -701,7 +696,8 @@ export default function CreateSOLead() {
                     </div>
 
                     {/* -------------Country------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="country"
                         className="text-sm font-medium text-gray-700"
@@ -712,7 +708,7 @@ export default function CreateSOLead() {
                         type="text"
                         name="city"
                         value={editLead.country}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Enter your Country"
                       />
@@ -723,8 +719,10 @@ export default function CreateSOLead() {
 
                   {/* -------------VI--1--------------- */}
                   {/* -------------State------------- */}
-                  <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="state"
                         className="text-sm font-medium text-gray-700"
@@ -735,14 +733,15 @@ export default function CreateSOLead() {
                         type="text"
                         name="state"
                         value={editLead.state}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Enter your State"
                       />
                     </div>
                     {/* -------------VI--2--------------- */}
                     {/* -------------City------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="city"
                         className="text-sm font-medium text-gray-700"
@@ -753,7 +752,7 @@ export default function CreateSOLead() {
                         type="text"
                         name="city"
                         value={editLead.city}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Enter your City"
                       />
@@ -761,11 +760,13 @@ export default function CreateSOLead() {
                   </div>
 
                   {/* -------------VII--1--------------- */}
-                  <div className="flex space-x-4">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
 
                     {/* -------------VII--2--------------- */}
                     {/* -------------PinCode------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="postalCode"
                         className="text-sm font-medium text-gray-700"
@@ -776,14 +777,15 @@ export default function CreateSOLead() {
                         type="text"
                         name="pinCode"
                         value={editLead.postalCode}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Enter your pincode"
                       />
                     </div>
                     {/* -------------Lead Source------------- */}
 
-                    <div className="flex flex-col w-1/2 relative">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="Pool"
                         className="text-sm font-medium text-gray-700"
@@ -797,6 +799,7 @@ export default function CreateSOLead() {
                         <button
                           onClick={toggleDropdown}
                           className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+
                           id="LeadPoolDropDown"
                           type="button"
                         >
@@ -834,7 +837,8 @@ export default function CreateSOLead() {
 
                 <div className="py-2 px-4 grid gap-2">
                   <div className="flex space-x-4  ">
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="clientName"
                         className="text-sm font-medium text-gray-700"
@@ -850,12 +854,13 @@ export default function CreateSOLead() {
                         value={editLead.clientName}
                         placeholder="Enter Client's Name"
                         onChange={handleChange}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                       />
                     </div>
                     {/* -------------I--2------------- */}
                     {/* -------------Language------------- */}
-                    <div className="flex flex-col w-1/2 relative">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="language"
                         className="text-sm font-medium text-gray-700"
@@ -869,6 +874,7 @@ export default function CreateSOLead() {
                       >
                         <button
                           className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+
                           id="LanguageDropDown"
                           type="button"
                         >
@@ -882,7 +888,7 @@ export default function CreateSOLead() {
                         {isDropdownVisibleLanguage && (
                           <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
                             <ul className="py-2 text-sm text-gray-700">
-                              {languageDropDown.map(({ key, name }) => (
+                              {languageDropDown?.map(({ key, name }) => (
                                 <li
                                   key={key}
                                   onClick={() => handleDropdownLanguage(name)}
@@ -898,9 +904,11 @@ export default function CreateSOLead() {
                     </div>
                   </div>
                   {/* -------------II--1------------- */}
-                  <div className="flex space-x-4">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
                     {/* -------------Father's Name------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="fathesName"
                         className="text-sm font-medium text-gray-700"
@@ -911,13 +919,14 @@ export default function CreateSOLead() {
                         type="text"
                         name="fatherName"
                         value={editLead.fatherName}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Enter Father's Name"
                       />
                     </div>
                     {/* -------------Mother's Name------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="motherName"
                         className="text-sm font-medium text-gray-700"
@@ -928,7 +937,7 @@ export default function CreateSOLead() {
                         type="text"
                         name="motherName"
                         value={editLead.motherName}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Enter Mother's Name"
                       />
@@ -936,8 +945,10 @@ export default function CreateSOLead() {
                   </div>
                   {/* -------------III--1------------- */}
                   {/* -------------Mobile Number------------- */}
-                  <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="mobileNo"
                         className="text-sm font-medium text-gray-700"
@@ -952,7 +963,7 @@ export default function CreateSOLead() {
                         name="mobileNo"
                         value={editLead.mobileNo}
                         maxLength="15"
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleContactChange}
                         placeholder="Enter your Mobile Number"
                         onKeyDown={(e) => {
@@ -966,7 +977,8 @@ export default function CreateSOLead() {
                     </div>
                     {/* -------------III--2------------- */}
                     {/* -------------Alternate Number------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="phoneNo"
                         className="text-sm font-medium text-gray-700"
@@ -978,7 +990,7 @@ export default function CreateSOLead() {
                         name="phoneNo"
                         maxLength="15"
                         value={editLead.phoneNo}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleContactChange}
                         placeholder="Enter your Alternate Number"
                         onKeyDown={(e) => {
@@ -994,8 +1006,10 @@ export default function CreateSOLead() {
 
                   {/* -------------IV--1--------------- */}
                   {/* -------------UIDAI Id------------- */}
-                  <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="uidaI_Id_No"
                         className="text-sm font-medium text-gray-700"
@@ -1010,7 +1024,7 @@ export default function CreateSOLead() {
                         name="uidaI_Id_No"
                         maxLength="12"
                         value={editLead.uidaI_Id_No}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="9009 9009 9009"
                         onKeyDown={(e) => {
@@ -1024,7 +1038,8 @@ export default function CreateSOLead() {
                     </div>
                     {/* -------------IV--2--------------- */}
                     {/* -------------Pan Card No.------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="panCard_No"
                         className="text-sm font-medium text-gray-700"
@@ -1046,8 +1061,10 @@ export default function CreateSOLead() {
                   </div>
                   {/* -------------V--1--------------- */}
                   {/* -------------Email------------- */}
-                  <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="email"
                         className="text-sm font-medium text-gray-700"
@@ -1061,14 +1078,15 @@ export default function CreateSOLead() {
                         type="email"
                         name="email"
                         value={editLead.email}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Enter your Email"
                       />
                     </div>
                     {/* -------------V--2--------------- */}
                     {/* -------------Managed By------------- */}
-                    <div className="flex flex-col w-1/2 relative">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="leadesStatus"
                         className="text-sm font-medium text-gray-700"
@@ -1087,6 +1105,7 @@ export default function CreateSOLead() {
                       >
                         <button
                           className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+
                           id="LeadStatusDropDown"
                           type="button"
                         >
@@ -1123,8 +1142,10 @@ export default function CreateSOLead() {
 
                   {/* -------------0--1--------------- */}
                   {/* -------------DOB------------- */}
-                  <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="dob"
                         className="text-sm font-medium text-gray-700"
@@ -1135,13 +1156,14 @@ export default function CreateSOLead() {
                         type="date"
                         name="state"
                         value={editLead.dob}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                       />
                     </div>
                     {/* -------------0--2--------------- */}
                     {/* -------------Country------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="country"
                         className="text-sm font-medium text-gray-700"
@@ -1152,7 +1174,7 @@ export default function CreateSOLead() {
                         type="text"
                         name="city"
                         value={editLead.country}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Enter your Country"
                       />
@@ -1161,8 +1183,10 @@ export default function CreateSOLead() {
 
                   {/* -------------VI--1--------------- */}
                   {/* -------------State------------- */}
-                  <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="state"
                         className="text-sm font-medium text-gray-700"
@@ -1173,14 +1197,15 @@ export default function CreateSOLead() {
                         type="text"
                         name="state"
                         value={editLead.state}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Enter your State"
                       />
                     </div>
                     {/* -------------VI--2--------------- */}
                     {/* -------------City------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="city"
                         className="text-sm font-medium text-gray-700"
@@ -1191,7 +1216,7 @@ export default function CreateSOLead() {
                         type="text"
                         name="city"
                         value={editLead.city}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Enter your City"
                       />
@@ -1200,8 +1225,10 @@ export default function CreateSOLead() {
 
                   {/* -------------VII--1--------------- */}
                   {/* -------------Street------------- */}
-                  <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="street"
                         className="text-sm font-medium text-gray-700"
@@ -1212,14 +1239,15 @@ export default function CreateSOLead() {
                         type="text"
                         name="street"
                         value={editLead.street}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Enter your Street"
                       />
                     </div>
                     {/* -------------VII--2--------------- */}
                     {/* -------------PinCode------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="postalCode"
                         className="text-sm font-medium text-gray-700"
@@ -1230,7 +1258,7 @@ export default function CreateSOLead() {
                         type="text"
                         name="pinCode"
                         value={editLead.postalCode}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Enter your pincode"
                       />
@@ -1238,9 +1266,11 @@ export default function CreateSOLead() {
                   </div>
 
                   {/* -------------VIII--1--------------- */}
-                  <div className="flex space-x-4">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
                     {/* -------------Business Type------------- */}
-                    <div className="flex flex-col w-1/2 relative">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="businessType"
                         className="text-sm font-medium text-gray-700"
@@ -1256,6 +1286,7 @@ export default function CreateSOLead() {
                       >
                         <button
                           className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+
                           id="businessTypeDropDown"
                           type="button"
                         >
@@ -1267,7 +1298,7 @@ export default function CreateSOLead() {
                         {isDropdownVisiblebusinessType && (
                           <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                             <ul className="py-2 text-sm text-gray-700">
-                              {BusinessTypeDropDown.map(({ key, name }) => (
+                              {businessDropDown.map(({ key, name }) => (
                                 <li
                                   key={key}
                                   onClick={() =>
@@ -1287,7 +1318,8 @@ export default function CreateSOLead() {
                     </div>
                     {/* -------------VIII--2--------------- */}
                     {/* -------------Advisory Experience------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="advisaryExp"
                         className="text-sm font-medium text-gray-700"
@@ -1298,7 +1330,7 @@ export default function CreateSOLead() {
                         type="text"
                         name="advisaryExp"
                         value={editLead.advisaryExp}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Enter years"
                       />
@@ -1306,8 +1338,10 @@ export default function CreateSOLead() {
                   </div>
                   {/* -------------IX--1--------------- */}
                   {/* -------------Lead Source------------- */}
-                  <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2 relative">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="Pool"
                         className="text-sm font-medium text-gray-700"
@@ -1321,6 +1355,7 @@ export default function CreateSOLead() {
                         <button
                           onClick={toggleDropdown}
                           className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+
                           id="LeadPoolDropDown"
                           type="button"
                         >
@@ -1370,43 +1405,46 @@ export default function CreateSOLead() {
 
                   {/* -------------XI--1------------- */}
                   {/* -------------Total Amount------------- */}
-                  <div className="flex space-x-4">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
 
                     {/* -------------XI--2------------- */}
                     {/* -------------  Brokerage------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="due_Amount"
                         className="text-sm font-medium text-gray-700"
                       >
-                      <span className="flex gap-1">
-                      Brokerage
-                      <FaStarOfLife size={8} className="text-red-500" />
-                    </span>
+                        <span className="flex gap-1">
+                          Brokerage
+                          <FaStarOfLife size={8} className="text-red-500" />
+                        </span>
                       </label>
                       <input
                         type="text"
                         name="due_Amount"
                         value={editLead.due_Amount}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Brokerage"
                       />
                     </div>
 
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label htmlFor="amount_paid" className="text-sm font-medium text-gray-700">
-                      <span className="flex gap-1">
-                      Funds
-                      <FaStarOfLife size={8} className="text-red-500" />
-                    </span>
+                        <span className="flex gap-1">
+                          Funds
+                          <FaStarOfLife size={8} className="text-red-500" />
+                        </span>
                       </label>
                       <input
                         type="text"
                         name="amount_paid"
                         id="amount_paid"
                         value={editLead.amount_paid}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Funds"
                       />
@@ -1419,8 +1457,10 @@ export default function CreateSOLead() {
 
                   {/* -------------XIII--1------------- */}
                   {/* -------------Payment Date------------- */}
-                  <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="paymentDate"
                         className="text-sm font-medium text-gray-700"
@@ -1431,11 +1471,12 @@ export default function CreateSOLead() {
                         type="date"
                         name="paymentDate"
                         value={editLead.paymentDate}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                       />
                     </div>
-                    <div className="flex flex-col w-1/2 relative">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="segment"
                         className="text-sm font-medium text-gray-700"
@@ -1449,6 +1490,7 @@ export default function CreateSOLead() {
                       >
                         <button
                           className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+
                           id="LeadStatusDropDown"
                           type="button"
                         >
@@ -1458,8 +1500,8 @@ export default function CreateSOLead() {
                         {isDropdownVisibleSegment && (
                           <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                             <ul className="py-2 text-sm text-gray-700">
-                            {segments?.length > 0 ? (
-                              segments?.map(({ key, segment }) => (
+                              {segments?.length > 0 ? (
+                                segments?.map(({ key, segment }) => (
                                   <li
                                     key={key}
                                     className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
@@ -1509,8 +1551,10 @@ export default function CreateSOLead() {
                   {/* -------------IX--1----------------- */}
                   {/* -------------Bank Name------------- */}
 
-                  <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="bank_name"
                         className="text-sm font-medium text-gray-700"
@@ -1521,14 +1565,15 @@ export default function CreateSOLead() {
                         type="text"
                         name="bank_name"
                         value={editLead.bank_name}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Bank Name"
                       />
                     </div>
                     {/* -------------IX--2----------------- */}
                     {/* -------------Branch Name------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="branch_name"
                         className="text-sm font-medium text-gray-700"
@@ -1539,7 +1584,7 @@ export default function CreateSOLead() {
                         type="text"
                         name="branch_name"
                         value={editLead.branch_name}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Branch Name"
                       />
@@ -1547,8 +1592,10 @@ export default function CreateSOLead() {
                   </div>
                   {/* -------------X--1----------------- */}
                   {/* -------------Payment Mode------------- */}
-                  <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="paymenT_MODE"
                         className="text-sm font-medium text-gray-700"
@@ -1559,13 +1606,14 @@ export default function CreateSOLead() {
                         type="text"
                         name="paymenT_MODE"
                         value={editLead.paymenT_MODE}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                       />
                     </div>
                     {/* -------------X--2----------------- */}
                     {/* -------------Ref No------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="reference_Number"
                         className="text-sm font-medium text-gray-700"
@@ -1579,7 +1627,7 @@ export default function CreateSOLead() {
                         type="text"
                         name="reference_Number"
                         value={editLead.reference_Number}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
 
                       />
@@ -1589,8 +1637,10 @@ export default function CreateSOLead() {
 
                   {/* -------------XI--1------------- */}
                   {/* -------------Total Amount------------- */}
-                  <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="totalAmount"
                         className="text-sm font-medium text-gray-700"
@@ -1602,7 +1652,7 @@ export default function CreateSOLead() {
                         type="number"
                         name="totalAmount"
                         value={editLead.totalAmount}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Total Amount"
                         onKeyDown={(e) => {
@@ -1615,7 +1665,8 @@ export default function CreateSOLead() {
                     </div>
                     {/* -------------XI--2------------- */}
                     {/* -------------  Due Amount------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="due_Amount"
                         className="text-sm font-medium text-gray-700"
@@ -1627,7 +1678,7 @@ export default function CreateSOLead() {
                         type="number"
                         name="due_Amount"
                         value={editLead.due_Amount}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Due Amount"
                         onKeyDown={(e) => {
@@ -1640,9 +1691,11 @@ export default function CreateSOLead() {
                     </div>
                   </div>
                   {/* -------------XII--1------------- */}
-                  <div className="flex space-x-4">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
 
-                    <div className="flex flex-col w-1/2">
+
+                    <div className="flex flex-col relative">
+
                       <label htmlFor="amount_paid" className="text-sm font-medium text-gray-700">
                         <span className="flex gap-1">
                           Amount Paid
@@ -1654,7 +1707,7 @@ export default function CreateSOLead() {
                         name="amount_paid"
                         id="amount_paid"
                         value={editLead.amount_paid}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Amount Paid"
                         onKeyDown={(e) => {
@@ -1668,7 +1721,8 @@ export default function CreateSOLead() {
 
 
 
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="discount"
                         className="text-sm font-medium text-gray-700"
@@ -1680,7 +1734,7 @@ export default function CreateSOLead() {
                         name="discount"
                         id="discount"
                         value={editLead.discount}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Discount"
                         onKeyDown={(e) => {
@@ -1698,8 +1752,10 @@ export default function CreateSOLead() {
 
                   {/* -------------XIII--1------------- */}
                   {/* -------------Payment Date------------- */}
-                  <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="paymentDate"
                         className="text-sm font-medium text-gray-700"
@@ -1713,7 +1769,7 @@ export default function CreateSOLead() {
                         type="date"
                         name="paymentDate"
                         value={editLead.paymentDate}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                       />
                     </div>
@@ -1721,7 +1777,8 @@ export default function CreateSOLead() {
                     {/* -------------Cheque No Or DD No.------------- */}
 
 
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="chequeOrDD_no"
                         className="text-sm font-medium text-gray-700"
@@ -1732,7 +1789,7 @@ export default function CreateSOLead() {
                         type="text"
                         name="chequeOrDD_no"
                         value={editLead.chequeOrDD_no}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Cheque No Or DD No"
                       />
@@ -1741,9 +1798,11 @@ export default function CreateSOLead() {
                   </div>
 
                   {/* -------------XIV--1------------- */}
-                  <div className="flex space-x-4">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
                     {/* -------------Product-------------> Means Segments */}
-                    <div className="flex flex-col w-1/2 relative">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="segment"
                         className="text-sm font-medium text-gray-700"
@@ -1757,6 +1816,7 @@ export default function CreateSOLead() {
                       >
                         <button
                           className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+
                           id="LeadStatusDropDown"
                           type="button"
                         >
@@ -1804,7 +1864,8 @@ export default function CreateSOLead() {
                     {/* -------------XIV--2------------- */}
                     {/* -------------Sales Order No------------- */}
 
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="saleS_ODR_NO"
                         className="text-sm font-medium text-gray-700"
@@ -1815,7 +1876,7 @@ export default function CreateSOLead() {
                         type="text"
                         name="saleS_ODR_NO"
                         value={editLead.saleS_ODR_NO}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                       />
                     </div>
@@ -1836,8 +1897,10 @@ export default function CreateSOLead() {
                 {/* -------------period_of_Subscription------------- */}
                 {business === "Brokerage" ?
                   "" :
-                  <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="period_of_Subscription"
                         className="text-sm font-medium text-gray-700"
@@ -1848,14 +1911,15 @@ export default function CreateSOLead() {
                         type="text"
                         name="period_of_Subscription"
                         value={editLead.period_of_Subscription}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                         placeholder="Period of Subscription"
                       />
                     </div>
                     {/* -------------Select Term------------- */}
                     {/* -------------XV--2------------- */}
-                    <div className="flex flex-col w-1/2 relative">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="term"
                         className="text-sm font-medium text-gray-700"
@@ -1869,6 +1933,7 @@ export default function CreateSOLead() {
                       >
                         <button
                           className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+
                           id="termDropDown"
                           type="button"
                         >
@@ -1878,7 +1943,7 @@ export default function CreateSOLead() {
                         {isDropdownVisible_Term_ && (
                           <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                             <ul className="py-2 text-sm text-gray-700">
-                              {Term_DropDown.map(({ key, name }) => (
+                              {termDropDown.map(({ key, name }) => (
                                 <li
                                   key={key}
                                   onClick={() =>
@@ -1902,8 +1967,10 @@ export default function CreateSOLead() {
                 {/* -------------Subscription Start Date------------- */}
                 {business === "Brokerage" ?
                   "" :
-                  <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="subscription_start_date"
                         className="text-sm font-medium text-gray-700"
@@ -1914,13 +1981,14 @@ export default function CreateSOLead() {
                         type="date"
                         name="subscription_start_date"
                         value={editLead.subscription_start_date}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                         onChange={handleChange}
                       />
                     </div>
                     {/* -------------XVI--2------------- */}
                     {/* -------------subscription_end_date------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex flex-col relative">
+
                       <label
                         htmlFor="subscription_end_date"
                         className="text-sm font-medium text-gray-700"
@@ -1932,16 +2000,18 @@ export default function CreateSOLead() {
                         name="subscription_end_date"
                         value={editLead.subscription_end_date}
                         onChange={handleChange}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                       />
                     </div>
                   </div>
                 }
 
                 {/* -------------XVII--1------------- */}
-                <div className="flex space-x-4">
+                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
                   {/* -------------Service------------- */} {/* sms , wp,  */}
-                  <div className="flex flex-col w-1/2 relative">
+                  <div className="flex flex-col relative">
+
                     <label
                       htmlFor="service"
                       className="text-sm font-medium text-gray-700"
@@ -1955,6 +2025,7 @@ export default function CreateSOLead() {
                     >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+
                         id="serviceDropDown"
                         type="button"
                       >
@@ -1966,7 +2037,7 @@ export default function CreateSOLead() {
                       {isDropdownVisible_Service_ && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                           <ul className="py-2 text-sm text-gray-700">
-                            {Service_DropDown.map(({ key, name }) => (
+                            {serviceDropDown.map(({ key, name }) => (
                               <li
                                 key={key}
                                 onClick={() =>
@@ -1984,7 +2055,8 @@ export default function CreateSOLead() {
                   </div>
                   {/* -------------XVII--2------------- */}
                   {/* -------------Status------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex flex-col relative">
+
                     <label
                       htmlFor="status"
                       className="text-sm font-medium text-gray-700"
@@ -1996,11 +2068,12 @@ export default function CreateSOLead() {
                       type="text"
                       name="status"
                       value="Pending"
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />
                   </div>
                 </div>
-                <div className="flex space-x-4">
+                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+
                   {/* -------------Service------------- */} {/* sms , wp,  */}
                   {/* -------------Remark------------- */}
                   <div className="flex flex-col w-full">
@@ -2014,7 +2087,7 @@ export default function CreateSOLead() {
                       type="text"
                       name="remarks"
                       value={editLead.remarks}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                       onChange={handleChange}
                     />
                   </div>
