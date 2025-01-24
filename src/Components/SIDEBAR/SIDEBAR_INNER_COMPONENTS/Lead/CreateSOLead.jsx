@@ -1,3 +1,8 @@
+//NOTE-->>
+//BROKERAGE + ADVISARY 
+
+
+
 //react
 import { useState, useEffect } from "react";
 
@@ -18,7 +23,6 @@ import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 //dropDown --->>> Data
-
 //LanguageDropDown
 import languageDropDown from "../../../../data/dropdown/Languages/languageDropdown"
 
@@ -39,7 +43,7 @@ import { showSuccessToast, showErrorToast } from '../../../../utils/toastNotific
 import useSegment from "../../../../Hooks/Segment/useSegment";
 import useManagedBy from "../../../../Hooks/ManagedBy/useManagedBy";
 import useLeadSource from "../../../../Hooks/LeadSource/useLeadSource";
-import useLeadStatus from "../../../../Hooks/LeadStatus/useLeadStatus";
+
 
 export default function CreateSOLead() {
   const { id } = useParams();
@@ -52,7 +56,6 @@ export default function CreateSOLead() {
   const bearer_token = localStorage.getItem("token");
 
   // Custom Hook
-  const { leadStatus } = useLeadStatus();
   const { segments } = useSegment();
   const { managedBy } = useManagedBy();
   const { leadSource } = useLeadSource();
@@ -103,7 +106,7 @@ export default function CreateSOLead() {
         mobileNo: data?.mobileNo || "",
         phoneNo: data?.phoneNo || "",
         email: data?.email || "",
-        assigned_To: data?.assigned_To || "N/A",
+        assigned_To: data?.assigned_To || 'N/A',
         street: data?.street || "",
         postalCode: data?.postalCode || "",
         country: data?.country || "",
@@ -127,14 +130,14 @@ export default function CreateSOLead() {
   }
 
   //----------------------------------------------------------------------------------------
-
   useEffect(() => {
     setdefaultTextSegmentDropDown(
       editLead.segments?.length > 0 ? editLead.segments.join(", ") : "Select Segment"
     );
   }, [editLead]);
 
-
+  //----------------------------------------------------------------------------------------
+  //Segment
   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] = useState('Select Segment');
   const [isDropdownVisibleSegment, setisDropdownVisibleSegment] = useState(false);
 
@@ -170,8 +173,7 @@ export default function CreateSOLead() {
 
   //----------------------------------------------------------------------------------------
   //assigned_ToDropDown
-
-  const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] = useState();
+  const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] = useState("Selected Managed By");
   const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] = useState(false);
 
   const toggleDropdownassigned_ToDropDown = () => {
@@ -192,13 +194,7 @@ export default function CreateSOLead() {
     }));
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    seteditLead((prevTask) => ({
-      ...prevTask,
-      [name]: value,
-    }));
-  };
+
 
   //----------------------------------------------------------------------------------------
   //Service
@@ -329,8 +325,17 @@ export default function CreateSOLead() {
   //------------------------------------------Email Regex------------------------------------------
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+  //---------->handleChange<----------
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    seteditLead((prevTask) => ({
+      ...prevTask,
+      [name]: value,
+    }));
+  };
+
   //---------->handleSubmit<----------
-  //two different models one for PUT and one for POST
+  //models, PUT, and POST
   const handleSubmit = async (event) => {
     event.preventDefault();
     const bearer_token = localStorage.getItem("token");
@@ -542,6 +547,9 @@ export default function CreateSOLead() {
 
 
               {/* -------------Parent <SALES ORDER INFORMATION STARTS FROM HERE>------------- */}
+              {/* ------------------------------------< business === "Brokerage" >------------------------------------- */}
+              {/* ------------------------------------< Client Name, Mobile Number, Alternate Number, Email, Managed By, Country, State, City, Pin-Code >------------------------------------- */}
+
               {business === "Brokerage" ?
                 <div className="space-y-3 p-2">
                   {/* ------------------------------------1------------------------------------- */}
@@ -761,9 +769,6 @@ export default function CreateSOLead() {
 
                   {/* -------------VII--1--------------- */}
                   <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
-
-
-                    {/* -------------VII--2--------------- */}
                     {/* -------------PinCode------------- */}
                     <div className="flex flex-col relative">
 
@@ -782,10 +787,9 @@ export default function CreateSOLead() {
                         placeholder="Enter your pincode"
                       />
                     </div>
-                    {/* -------------Lead Source------------- */}
-
+                    {/* -------------VII--2--------------- */}
                     <div className="flex flex-col relative">
-
+                      {/* -------------Lead Source------------- */}
                       <label
                         htmlFor="Pool"
                         className="text-sm font-medium text-gray-700"
@@ -833,10 +837,15 @@ export default function CreateSOLead() {
                     </div>
                   </div>
                 </div>
+
+
                 :
 
-                <div className="py-2 px-4 grid gap-2">
-                  <div className="flex space-x-4  ">
+                // {/* ------------------------------------< businessType === "Other" >------------------------------------- */}
+                // {/* ------------------------------------< Client Name, Language, Father's Name, Mother's Name , Mobile Number, Alternate Number, UIDAI Id, Pan Card, Email, Managed By, DOB, Country, State, City, Street, Pin-Code >------------------------------------- */}
+
+                <div className="space-y-3 p-2">
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
                     <div className="flex flex-col relative">
 
                       <label
@@ -924,7 +933,7 @@ export default function CreateSOLead() {
                         placeholder="Enter Father's Name"
                       />
                     </div>
-                    {/* -------------Mother's Name------------- */}
+                    {/* -------------Mother's Name ------------- */}
                     <div className="flex flex-col relative">
 
                       <label
@@ -1389,11 +1398,16 @@ export default function CreateSOLead() {
                     </div>
                   </div>
                 </div>
+                // {/* ------------------------------------------------------------------------------ */}
               }
 
 
             </div>
-            {/* -------------Payment Details INFORMATION STARTS FROM HERE------------- */}
+            {/* ------------------------------------------------>TAB  2 : Payment Details TAB <------------------------------------------------ */}
+
+            {/* ------------------------------------< businessType === "Brokerage" >------------------------------------- */}
+            {/* ------------------------------------< Brokerage, Funds, Payment Date, Segment   >------------------------------------- */}
+
 
             {business === "Brokerage" ?
 
@@ -1403,14 +1417,14 @@ export default function CreateSOLead() {
                 </h2>
                 <div className="py-2 px-4 grid gap-2">
 
-                  {/* -------------XI--1------------- */}
-                  {/* -------------Total Amount------------- */}
+                  {/* ------------------------------------XI------------------------------------- */}
+                  {/* -------------SUB -> Parent -> <Brokerage && Funds>------------- */}
                   <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
 
 
-                    {/* -------------XI--2------------- */}
-                    {/* -------------  Brokerage------------- */}
+                    {/* -------------XI--1------------- */}
                     <div className="flex flex-col relative">
+                      {/* -------------  Brokerage ------------- */}
 
                       <label
                         htmlFor="due_Amount"
@@ -1431,8 +1445,9 @@ export default function CreateSOLead() {
                       />
                     </div>
 
+                    {/* -------------XI--1------------- */}
                     <div className="flex flex-col relative">
-
+                      {/* -------------  Funds ------------- */}
                       <label htmlFor="amount_paid" className="text-sm font-medium text-gray-700">
                         <span className="flex gap-1">
                           Funds
@@ -1449,7 +1464,6 @@ export default function CreateSOLead() {
                         placeholder="Funds"
                       />
                     </div>
-
                   </div>
 
 
@@ -1542,7 +1556,15 @@ export default function CreateSOLead() {
 
                 </div>
               </div>
+
+
               :
+
+
+
+              // {/* ------------------------------------< businessType === "Other" >------------------------------------- */}
+              // {/* -------------Bank Name, Branch Name, Payment Mode ,Ref No ,Total Amount ,Due Amount ,Amount Paid ,Discount ,Payment Date ,Cheque No Or DD No., Segment, Sales Order No------------- */}
+
               <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
                 <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                   Payment Details
@@ -1550,7 +1572,6 @@ export default function CreateSOLead() {
                 <div className="py-2 px-4 grid gap-2">
                   {/* -------------IX--1----------------- */}
                   {/* -------------Bank Name------------- */}
-
                   <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
 
                     <div className="flex flex-col relative">
@@ -1692,10 +1713,8 @@ export default function CreateSOLead() {
                   </div>
                   {/* -------------XII--1------------- */}
                   <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
-
-
                     <div className="flex flex-col relative">
-
+                      {/* -------------Amount Paid------------- */}
                       <label htmlFor="amount_paid" className="text-sm font-medium text-gray-700">
                         <span className="flex gap-1">
                           Amount Paid
@@ -1722,6 +1741,7 @@ export default function CreateSOLead() {
 
 
                     <div className="flex flex-col relative">
+                      {/* -------------Discount------------- */}
 
                       <label
                         htmlFor="discount"
@@ -1800,7 +1820,7 @@ export default function CreateSOLead() {
                   {/* -------------XIV--1------------- */}
                   <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
 
-                    {/* -------------Product-------------> Means Segments */}
+                    {/* -------------Segments-------------> */}
                     <div className="flex flex-col relative">
 
                       <label
@@ -1884,23 +1904,29 @@ export default function CreateSOLead() {
                   </div>
                 </div>
               </div>
+              // {/* ------------------------------------------------------------------------------ */}
             }
 
-            {/* -------------SALES ORDER INFORMATION STARTS FROM HERE------------- */}
+            {/* ------------------------------------------------>TAB  3 : SALES ORDER INFORMATION TAB <------------------------------------------------ */}
             <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                 Service Details
               </h2>
               <div className="py-2 px-4 grid gap-2">
                 {/* -------------SALES ORDER INFORMATION FORM STARTS FROM HERE------------- */}
-                {/* -------------XV--1------------- */}
-                {/* -------------period_of_Subscription------------- */}
+                {/* ------------------------------------< businessType === "Brokerage" >------------------------------------- */}
+                {/* ------------------------------------< Service, Status, Remarks   >------------------------------------- */}
+
+                {/* ------------------------------------< businessType === "Other" >------------------------------------- */}
+                {/* ------------------------------------< Period of Subscription, Term, Subscription Start Date, Subscription End Date, Service, Status, Remarks>------------------------------------- */}
+
+
                 {business === "Brokerage" ?
                   "" :
                   <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
-
+                    {/* -------------SUB -> Parent -> <Period of Subscription && Funds>------------- */}
                     <div className="flex flex-col relative">
-
+                      {/* -------------Period of Subscription & Term------------- */}
                       <label
                         htmlFor="period_of_Subscription"
                         className="text-sm font-medium text-gray-700"
@@ -1916,7 +1942,7 @@ export default function CreateSOLead() {
                         placeholder="Period of Subscription"
                       />
                     </div>
-                    {/* -------------Select Term------------- */}
+                    {/* -------------Term------------- */}
                     {/* -------------XV--2------------- */}
                     <div className="flex flex-col relative">
 
@@ -1985,8 +2011,10 @@ export default function CreateSOLead() {
                         onChange={handleChange}
                       />
                     </div>
+
                     {/* -------------XVI--2------------- */}
                     {/* -------------subscription_end_date------------- */}
+
                     <div className="flex flex-col relative">
 
                       <label
@@ -2009,7 +2037,7 @@ export default function CreateSOLead() {
                 {/* -------------XVII--1------------- */}
                 <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
 
-                  {/* -------------Service------------- */} {/* sms , wp,  */}
+                  {/* -------------Service------------- */}
                   <div className="flex flex-col relative">
 
                     <label
@@ -2053,6 +2081,7 @@ export default function CreateSOLead() {
                       )}
                     </div>
                   </div>
+
                   {/* -------------XVII--2------------- */}
                   {/* -------------Status------------- */}
                   <div className="flex flex-col relative">
@@ -2074,7 +2103,7 @@ export default function CreateSOLead() {
                 </div>
                 <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
 
-                  {/* -------------Service------------- */} {/* sms , wp,  */}
+
                   {/* -------------Remark------------- */}
                   <div className="flex flex-col w-full">
                     <label
