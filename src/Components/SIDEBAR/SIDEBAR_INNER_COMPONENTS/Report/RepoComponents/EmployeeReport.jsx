@@ -75,6 +75,6 @@ EmployeeReport.propTypes = {
       target: PropTypes.number.isRequired,
       targetAchieved: PropTypes.number.isRequired,
       targetRemaining: PropTypes.number.isRequired,
-    })
+    }),
   ).isRequired,
 };
