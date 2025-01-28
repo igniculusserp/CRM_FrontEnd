@@ -59,7 +59,7 @@ export default function CreateTrial() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Trail/getbyid/${id}`,
-        config
+        config,
       );
       const data = response.data.data;
       setdescription(data.description);
@@ -102,7 +102,7 @@ export default function CreateTrial() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
-        config
+        config,
       );
       setSegments(response.data.data);
       // console.log("segment:", response.data.data);
@@ -114,7 +114,9 @@ export default function CreateTrial() {
   useEffect(() => {
     handleSegment();
     setdefaultTextSegmentDropDown(
-      editTrail.segments.length > 0 ? editTrail.segments.join(", ") : "Select Segment"
+      editTrail.segments.length > 0
+        ? editTrail.segments.join(", ")
+        : "Select Segment",
     );
   }, [editTrail]);
 
@@ -134,7 +136,7 @@ export default function CreateTrial() {
     if (isChecked) {
       // Remove segment if already selected
       updatedSegments = editTrail.segments.filter(
-        (selectedSegment) => selectedSegment !== segment.segment
+        (selectedSegment) => selectedSegment !== segment.segment,
       );
     } else {
       // Add segment if not already selected
@@ -146,9 +148,10 @@ export default function CreateTrial() {
     }));
 
     setdefaultTextSegmentDropDown(
-      updatedSegments.length > 0 ? updatedSegments.join(", ") : "Select Segment"
+      updatedSegments.length > 0
+        ? updatedSegments.join(", ")
+        : "Select Segment",
     );
-
 
     console.log("Selected segments:", updatedSegments);
   };
@@ -169,10 +172,9 @@ export default function CreateTrial() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
+        config,
       );
       setassigned_ToDropDown(response.data?.data);
-      console.log("status:", response.data);
     } catch (error) {
       console.error("Error fetching Trail:", error);
       // Optionally, set an error state to display a user-friendly message
@@ -194,10 +196,10 @@ export default function CreateTrial() {
 
   const handleDropdownassigned_ToDropDown = (
     assigned_To_Username,
-    assigned_To_Role
+    assigned_To_Role,
   ) => {
     setdefaultTextassigned_ToDropDown(
-      assigned_To_Username + " " + assigned_To_Role
+      assigned_To_Username + " " + assigned_To_Role,
     );
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     setEditTrail((prevTask) => ({
@@ -274,10 +276,10 @@ export default function CreateTrial() {
       await axios.put(
         `${protocal_url}${name}.${tenant_base_url}/Trail/update`,
         formData_PUT,
-        config
+        config,
       );
       alert("Free Trail updated successfully!");
-      navigate(`/sidebar/freeTrail`);
+      navigate(`/panel/freeTrail`);
 
       // Redirect after a short delay
     } catch (error) {
@@ -326,7 +328,7 @@ export default function CreateTrial() {
           </div>
           <div>
             <Link
-              to="/sidebar/freeTrail"
+              to="/panel/freeTrail"
               className="px-6 py-1 rounded  border border-blue-500 text-blue-500 "
             >
               Cancel
@@ -415,8 +417,8 @@ export default function CreateTrial() {
                         {!isEditMode
                           ? defaultTextLanguageDropDown
                           : setEditTrail.language === ""
-                          ? defaultTextLanguageDropDown
-                          : setEditTrail.language}
+                            ? defaultTextLanguageDropDown
+                            : setEditTrail.language}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLanguage && (
@@ -533,14 +535,14 @@ export default function CreateTrial() {
                                   onClick={() =>
                                     handleDropdownassigned_ToDropDown(
                                       userName,
-                                      role
+                                      role,
                                     )
                                   }
                                   className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                                 >
                                   {userName}-({role})
                                 </li>
-                              )
+                              ),
                             )}
                           </ul>
                         </div>
@@ -579,7 +581,7 @@ export default function CreateTrial() {
                                 <input
                                   type="checkbox"
                                   checked={editTrail.segments.includes(
-                                    segment.segment
+                                    segment.segment,
                                   )}
                                   onChange={() => handleCheckboxChange(segment)}
                                   className="mr-2"

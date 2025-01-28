@@ -43,7 +43,7 @@ export default function BrowserRestriction() {
       await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/Security/browserestriction/add`,
         requestBody,
-        config
+        config,
       );
       alert("Successfully Added");
     } catch (error) {

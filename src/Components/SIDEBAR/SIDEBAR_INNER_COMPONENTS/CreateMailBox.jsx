@@ -1,21 +1,21 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const CreateMailBox = () => {
   const [editMail, setEditMail] = useState({
-    clientName: '',
-    alternateNumber: '',
-    number: '',
-    mail: '',
-    mailType: '',
-    type: '',
+    clientName: "",
+    alternateNumber: "",
+    number: "",
+    mail: "",
+    mailType: "",
+    type: "",
   });
   const [isEditMode, setIsEditMode] = useState(false);
   const [mailTimeDropdown, setMailTimeDropdown] = useState(false);
-  const [defaultMailText, setDefaultMailText] = useState('Mail Type');
+  const [defaultMailText, setDefaultMailText] = useState("Mail Type");
   const [typeDropdown, setTypeDropdown] = useState(false);
-  const [defaultTypeText, setDefaultTypeText] = useState('Type');
+  const [defaultTypeText, setDefaultTypeText] = useState("Type");
 
   // HANDLING INPUT CHANGE
   const handleChange = (e) => {
@@ -65,18 +65,18 @@ const CreateMailBox = () => {
 
   // MAILTYPE DATA
   const mailTypeData = [
-    { key: 1, name: 'Hey, How are you!' },
-    { key: 2, name: 'Hey, How are you!' },
-    { key: 3, name: 'Hey, How are you!' },
-    { key: 4, name: 'Hey, How are you!' },
+    { key: 1, name: "Hey, How are you!" },
+    { key: 2, name: "Hey, How are you!" },
+    { key: 3, name: "Hey, How are you!" },
+    { key: 4, name: "Hey, How are you!" },
   ];
 
   // TYPE DATA
   const typeData = [
-    { key: 1, name: 'Calling Person' },
-    { key: 2, name: 'Calling Person' },
-    { key: 3, name: 'Calling Person' },
-    { key: 4, name: 'Calling Person' },
+    { key: 1, name: "Calling Person" },
+    { key: 2, name: "Calling Person" },
+    { key: 3, name: "Calling Person" },
+    { key: 4, name: "Calling Person" },
   ];
 
   return (
@@ -85,7 +85,7 @@ const CreateMailBox = () => {
         {/* TOP SECTION */}
         <div className="px-3 py-4 bg-white rounded-md flex items-center justify-between m-3">
           <h1 className="text-xl font-bold">Create Mail Box</h1>
-          <Link to="/sidebar/mailBox">
+          <Link to="/panel/mailBox">
             <button className="px-6 py-2 text-center text-sm border border-blue-600 text-blue-600 rounded-md">
               Cancel
             </button>
@@ -262,7 +262,7 @@ const CreateMailBox = () => {
                 type="submit"
                 className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
               >
-                {isEditMode ? 'Update' : 'Save'}
+                {isEditMode ? "Update" : "Save"}
               </button>
             </div>
           </div>

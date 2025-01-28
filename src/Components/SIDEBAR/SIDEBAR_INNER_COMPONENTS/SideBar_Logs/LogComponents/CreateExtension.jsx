@@ -1,16 +1,16 @@
 // REACT - ROUTER - DOM
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
-import ReactQuill from 'react-quill';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
+import ReactQuill from "react-quill";
+import { Link } from "react-router-dom";
 
 export default function CreateExtension() {
-  const [description, setDescription] = useState('Hello, ');
+  const [description, setDescription] = useState("Hello, ");
   const [isEditMode, setIsEditMode] = useState(false);
   const [editExtension, setEditExtension] = useState({
-    username: '',
-    givenTime: '',
-    extensionNumber: '',
+    username: "",
+    givenTime: "",
+    extensionNumber: "",
   });
 
   // HANDLE INPUT CHANGE
@@ -30,18 +30,18 @@ export default function CreateExtension() {
   //   DROPDOWNS
   const [usernameDropdown, setUsernameDropdown] = useState(false);
   const [defaultUsernameDropdownText, setDefaultUsernameDropdownText] =
-    useState('Username');
+    useState("Username");
   const [extensionNumberDropdown, setExtensionNumberDropdown] = useState(false);
   const [
     defaultExtensionNuberDropdownText,
     setDefaultExtensionNuberDropdownText,
-  ] = useState('Username');
+  ] = useState("Username");
 
   // USERNAME DUMMY DATA
   const usernameData = [
-    { key: 1, name: 'Shubham Mishra' },
-    { key: 2, name: 'Shubham Mishra' },
-    { key: 3, name: 'Shubham Mishra' },
+    { key: 1, name: "Shubham Mishra" },
+    { key: 2, name: "Shubham Mishra" },
+    { key: 3, name: "Shubham Mishra" },
   ];
 
   // TOGGLE USERNAME DROPDOWN
@@ -84,7 +84,7 @@ export default function CreateExtension() {
       <div className="flex py-2 px-3 items-center justify-between bg-white rounded-md shadow-md">
         <h1 className="text-xl">Add Extension Logs</h1>
         <Link
-          to="/sidebar/logs"
+          to="/panel/logs"
           className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
         >
           Cancel
@@ -235,7 +235,7 @@ export default function CreateExtension() {
               type="submit"
               className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
             >
-              {isEditMode ? 'Update' : 'Save'}
+              {isEditMode ? "Update" : "Save"}
             </button>
           </div>
         </div>

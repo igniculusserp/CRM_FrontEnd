@@ -1,9 +1,9 @@
-import { FaBars } from 'react-icons/fa';
+import { FaBars } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 export default function ClientReports({ currentReports }) {
   const navigate = useNavigate(); // Add this line
   return (
-    <table className="min-w-full bg-white">
+    <table className="min-w-full bg-white leads_Table">
       {/* ----------------- TABLE HEAD START ----------------- */}
       <thead>
         <tr className="border-gray-300 border-b-2">
@@ -79,10 +79,9 @@ export default function ClientReports({ currentReports }) {
               <input type="checkbox" />
             </td>
             {/* CLIENT ID */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-blue-600"
-             onClick={() =>
-              navigate(`/sidebar/Client_SO/${report.id}`)
-            }
+            <td
+              className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-blue-600"
+              onClick={() => navigate(`/panel/clientso/${report.id}`)}
             >
               {report.id}
             </td>

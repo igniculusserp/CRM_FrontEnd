@@ -85,7 +85,7 @@ export default function EditClientSO() {
 
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesorder/${id}`,
-        config
+        config,
       );
       const data = response.data.data;
       console.log("Fetched segments:", response.data.data);
@@ -93,8 +93,8 @@ export default function EditClientSO() {
         typeof data.segments === "string"
           ? data.segments.split(",")
           : Array.isArray(data.segments)
-          ? data.segments
-          : [];
+            ? data.segments
+            : [];
 
       seteditLead({
         id: data.id,
@@ -164,7 +164,7 @@ export default function EditClientSO() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
-        config
+        config,
       );
       setSegments(response.data.data);
       // console.log("segment:", response.data.data);
@@ -176,7 +176,9 @@ export default function EditClientSO() {
   useEffect(() => {
     handleSegment();
     setdefaultTextSegmentDropDown(
-      editLead.segments.length > 0 ? editLead.segments.join(", ") : "Select Segment"
+      editLead.segments.length > 0
+        ? editLead.segments.join(", ")
+        : "Select Segment",
     );
   }, [editLead]);
 
@@ -198,7 +200,7 @@ export default function EditClientSO() {
     if (isChecked) {
       // Remove segment if already selected
       updatedSegments = editLead.segments.filter(
-        (selectedSegment) => selectedSegment !== segmentName
+        (selectedSegment) => selectedSegment !== segmentName,
       );
     } else {
       // Add segment if not already selected
@@ -211,9 +213,10 @@ export default function EditClientSO() {
     }));
 
     setdefaultTextSegmentDropDown(
-      updatedSegments.length > 0 ? updatedSegments.join(", ") : "Select Segment"
+      updatedSegments.length > 0
+        ? updatedSegments.join(", ")
+        : "Select Segment",
     );
-
 
     console.log("Selected segments:", updatedSegments);
   };
@@ -234,7 +237,7 @@ export default function EditClientSO() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
+        config,
       );
       setassigned_ToDropDown(response.data.data);
     } catch (error) {
@@ -258,10 +261,10 @@ export default function EditClientSO() {
 
   const handleDropdownassigned_ToDropDown = (
     assigned_To_Username,
-    assigned_To_Role
+    assigned_To_Role,
   ) => {
     setdefaultTextassigned_ToDropDown(
-      assigned_To_Username + " " + assigned_To_Role
+      assigned_To_Username + " " + assigned_To_Role,
     );
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     seteditLead((prevTask) => ({
@@ -296,10 +299,9 @@ export default function EditClientSO() {
     try {
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
-        config
+        config,
       );
       setPoolToDropDown(response.data.data);
-      console.log("status:", response.data.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
       setError("Failed to fetch pools."); // Set error message
@@ -468,7 +470,7 @@ export default function EditClientSO() {
       await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesorder/edit`,
         formData_PUT,
-        config
+        config,
       );
 
       alert("Client Details updated successfully!");
@@ -525,7 +527,7 @@ export default function EditClientSO() {
           </div>
           <div>
             <div
-              // to="/sidebar/reports"
+              // to="/panel/reports"
               onClick={goBack}
               className="px-6 py-1 rounded  border border-blue-500 text-blue-500 "
             >
@@ -590,8 +592,8 @@ export default function EditClientSO() {
                         {!isEditMode
                           ? defaultTextLanguageDropDown
                           : editLead.language === ""
-                          ? defaultTextLanguageDropDown
-                          : editLead.language}
+                            ? defaultTextLanguageDropDown
+                            : editLead.language}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLanguage && (
@@ -779,14 +781,14 @@ export default function EditClientSO() {
                                   onClick={() =>
                                     handleDropdownassigned_ToDropDown(
                                       userName,
-                                      role
+                                      role,
                                     )
                                   }
                                   className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                                 >
                                   {userName}-({role})
                                 </li>
-                              )
+                              ),
                             )}
                           </ul>
                         </div>
@@ -949,7 +951,7 @@ export default function EditClientSO() {
                                 key={key}
                                 onClick={() =>
                                   handleDropdownisDropdownVisiblebusinessType(
-                                    name
+                                    name,
                                   )
                                 }
                                 className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
@@ -1262,7 +1264,7 @@ export default function EditClientSO() {
                                 <input
                                   type="checkbox"
                                   checked={editLead.segments.includes(
-                                    segment.segment
+                                    segment.segment,
                                   )}
                                   onChange={() => handleCheckboxChange(segment)}
                                   className="mr-2"

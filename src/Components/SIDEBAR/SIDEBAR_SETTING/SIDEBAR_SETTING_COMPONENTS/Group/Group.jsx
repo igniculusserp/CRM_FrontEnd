@@ -1,27 +1,30 @@
-import { useState, useEffect } from 'react';
-import { FaAngleDown, FaBars } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { tenant_base_url, protocal_url } from './../../../../../Config/config';
-import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
+import { useState, useEffect } from "react";
+import { FaAngleDown, FaBars } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
 
-import { ToastContainer } from 'react-toastify';
-import {showSuccessToast, showErrorToast} from './../../../../../utils/toastNotifications'
+import { ToastContainer } from "react-toastify";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "./../../../../../utils/toastNotifications";
 
 export default function Group() {
-  const bearer_token = localStorage.getItem('token');
-  
+  const bearer_token = localStorage.getItem("token");
+
   const name = getHostnamePart();
-  
+
   const { id } = useParams();
   const [active, setActive] = useState(true);
   const [formData, setFormData] = useState({
-    groupName: '',
-    userCount: '',
-    leadLimit: '',
-    fetchLimit: '',
+    groupName: "",
+    userCount: "",
+    leadLimit: "",
+    fetchLimit: "",
   });
   const [editLead, setEditLead] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -29,17 +32,17 @@ export default function Group() {
   //group
   const [group, setGroup] = useState([]);
   const [defaultTextGroupDropDown, setDefaultTextGroupDropDown] =
-    useState('Select Group');
+    useState("Select Group");
   const [isDropdownVisibleGroup, setIsDropdownVisibleGroup] = useState(false);
 
   const handleActiveState = () => {
     setActive(!active);
     setIsEditMode(false); // Reset edit mode when switching views
     setFormData({
-      groupName: '',
-      userCount: '',
-      leadLimit: '',
-      fetchLimit: '',
+      groupName: "",
+      userCount: "",
+      leadLimit: "",
+      fetchLimit: "",
     }); // Reset form data
   };
 
@@ -58,14 +61,16 @@ export default function Group() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/group/all`,
-        config
+        config,
       );
-      if (response.status === 200) {
+      if (response.data.isSuccess) {
         const groups = response.data; // Get the user data
         setGroup(groups?.data); // Set the user data for editing
+      } else {
+        showErrorToast("You are not an authorised user");
       }
     } catch (error) {
-      console.error('Error fetching user for edit:', error);
+      console.log(error);
     }
   };
 
@@ -93,9 +98,9 @@ export default function Group() {
     e.preventDefault();
 
     if (isEditMode) {
-      handleUpdateGroup();      //Edit   API 
+      handleUpdateGroup(); //Edit   API
     } else {
-      handleCreateGroup();      //Create API
+      handleCreateGroup(); //Create API
     }
   };
 
@@ -118,11 +123,8 @@ export default function Group() {
     setIsDropdownVisibleGroup(false);
   };
 
-//Create API-------------------Create API-------------------Create API-------------------Create API-------------------
+  //Create API-------------------Create API-------------------Create API-------------------Create API-------------------
   const handleCreateGroup = async () => {
-
-
-   
     try {
       const config = {
         headers: {
@@ -130,37 +132,37 @@ export default function Group() {
         },
       };
 
-      if(!formData.groupName){
-        showErrorToast('Please enter group name')
-        return;
-      }
-      
-      if(!formData.userCount){
-        showErrorToast('Please enter user count')
+      if (!formData.groupName) {
+        showErrorToast("Please enter group name");
         return;
       }
 
-      if(!formData.leadLimit){
-        showErrorToast('Please enter lead limit')
+      if (!formData.userCount) {
+        showErrorToast("Please enter user count");
         return;
       }
 
-      if(!formData.fetchLimit){
-        showErrorToast('Please enter fetch limit')
+      if (!formData.leadLimit) {
+        showErrorToast("Please enter lead limit");
         return;
       }
 
-      
-      
+      if (!formData.fetchLimit) {
+        showErrorToast("Please enter fetch limit");
+        return;
+      }
 
-      const response = await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/group/add`, formData, config);
+      const response = await axios.post(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/group/add`,
+        formData,
+        config,
+      );
       getGroupsLists();
-      showSuccessToast('Group created successfully')
+      showSuccessToast("Group created successfully");
       setActive(!active);
-
     } catch (error) {
-      console.error('Error fetching users:', error);
-      showErrorToast(error.response.data.message)
+      console.error("Error fetching users:", error);
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -174,12 +176,12 @@ export default function Group() {
       };
       const response = await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/Admin/group/delete/${id}`,
-        config
+        config,
       );
       getGroupsLists();
-      showSuccessToast('Group deleted Successfully');
+      showSuccessToast("Group deleted Successfully");
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -195,21 +197,21 @@ export default function Group() {
       const response = await axios.put(
         `${protocal_url}${name}.${tenant_base_url}/Admin/group/edit/${formData?.id}`,
         formData,
-        config
+        config,
       );
       getGroupsLists();
       handleActiveState();
     } catch (error) {
-        showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message);
     }
   };
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       <div className="m-3 min-w-screen">
         {active ? (
           <>
-            <div className="flex min-w-screen justify-between items-center">
+            <div className="flex min-w-screen justify-between items-center flex-wrap gap-5">
               <h1 className="text-3xl font-medium">Groups Lists</h1>
               <button
                 onClick={handleActiveState}
@@ -218,9 +220,9 @@ export default function Group() {
                 Add Groups
               </button>
             </div>
-            <div className="overflow-x-auto mt-3">
-              <div className="min-w-full overflow-hidden rounded-md">
-                <table className="min-w-full bg-white">
+            <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
+              <div className="min-w-full rounded-md leads_Table_Container">
+                <table className="min-w-full bg-white leads_Table">
                   <thead>
                     <tr className="border-gray-300 border-b-2">
                       <th className="px-1 py-3">
@@ -311,7 +313,7 @@ export default function Group() {
           <>
             <div className="flex min-w-screen justify-between items-center">
               <h1 className="text-3xl font-medium">
-                {isEditMode ? 'Edit Group' : 'Add New Group'}
+                {isEditMode ? "Edit Group" : "Add New Group"}
               </h1>
               <button
                 onClick={handleActiveState}
@@ -341,12 +343,12 @@ export default function Group() {
                         <input
                           type="text"
                           name="groupName"
-                          value={formData.groupName || ''}
+                          value={formData.groupName || ""}
                           onChange={handleChange}
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                         />
                         {errors.groupName && (
-                          <span style={{ color: 'red' }}>
+                          <span style={{ color: "red" }}>
                             {errors.groupName}
                           </span>
                         )}
@@ -363,7 +365,7 @@ export default function Group() {
                         <input
                           type="number"
                           name="fetchLimit"
-                          value={formData.fetchLimit || ''}
+                          value={formData.fetchLimit || ""}
                           onChange={handleChange}
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                         />
@@ -383,7 +385,7 @@ export default function Group() {
                         <input
                           type="number"
                           name="userCount"
-                          value={formData.userCount || ''}
+                          value={formData.userCount || ""}
                           onChange={handleChange}
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                         />
@@ -400,7 +402,7 @@ export default function Group() {
                         <input
                           type="number"
                           name="leadLimit"
-                          value={formData.leadLimit || ''}
+                          value={formData.leadLimit || ""}
                           onChange={handleChange}
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                         />
@@ -415,7 +417,7 @@ export default function Group() {
                         type="submit"
                         className="px-32 py-4 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
                       >
-                        {isEditMode ? 'Update' : 'Save'}
+                        {isEditMode ? "Update" : "Save"}
                       </button>
                     </div>
                   </div>

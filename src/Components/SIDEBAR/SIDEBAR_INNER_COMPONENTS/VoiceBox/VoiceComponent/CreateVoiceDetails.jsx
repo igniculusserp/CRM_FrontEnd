@@ -1,21 +1,21 @@
 // REACT-INBUILD
-import { useState } from 'react';
+import { useState } from "react";
 // REACT - QUILL
-import ReactQuill from 'react-quill';
+import ReactQuill from "react-quill";
 // REACT-ROUTER-DOM
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export default function CreateVoiceDetails() {
   // CREATE AND EDIT MODE
   const [isEditMode, setIsEditMode] = useState(false);
 
   // INPUT HANDLING WITH STATE
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState("");
   const [editDetails, setEditDetails] = useState({
-    id: '',
-    sendMode: '',
-    textMsg: '',
-    number: '',
+    id: "",
+    sendMode: "",
+    textMsg: "",
+    number: "",
   });
 
   const handleChange = (e) => {
@@ -40,7 +40,7 @@ export default function CreateVoiceDetails() {
         </h1>
         <div>
           <Link
-            to="/sidebar/voicebox"
+            to="/panel/voicebox"
             className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500 "
           >
             Cancel
@@ -147,7 +147,7 @@ export default function CreateVoiceDetails() {
                 type="submit"
                 className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
               >
-                {isEditMode ? 'Update' : 'Save'}
+                {isEditMode ? "Update" : "Save"}
               </button>
             </div>
           </div>

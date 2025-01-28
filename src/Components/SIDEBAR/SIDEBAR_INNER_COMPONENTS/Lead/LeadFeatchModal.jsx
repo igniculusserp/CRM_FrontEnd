@@ -28,14 +28,14 @@ const LeadFeatchModal = ({ onClose }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     if (!bearer_token) {
       showErrorToast("No token found, please log in again.");
       return;
     }
-  
+
     setLoading(true);
-  
+
     try {
       const config = {
         headers: {
@@ -43,24 +43,24 @@ const LeadFeatchModal = ({ onClose }) => {
           "Content-Type": "application/json",
         },
       };
-  
+
       const formData_POST = {
         leadCount: leadCount,
       };
-  
+
       const response = await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/LeadOpration/leads/fetchleads`,
         formData_POST,
-        config
+        config,
       );
-  
-      console.log("status", response);
-  
+
       if (response.data.status === 200) {
         toast.success(response.data.message, {
           onClose: () => {
             onClose(); // Close modal after the toast is dismissed
-          },autoClose:2000, theme: "colored",
+          },
+          autoClose: 2000,
+          theme: "colored",
         });
       } else if (response.data.status === 402) {
         showErrorToast(response.data.message);
@@ -86,11 +86,10 @@ const LeadFeatchModal = ({ onClose }) => {
       setLoading(false);
     }
   };
- 
 
   return (
     <>
-      <ToastContainer  />
+      <ToastContainer />
 
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
         <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">

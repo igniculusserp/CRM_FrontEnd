@@ -1,22 +1,22 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function UploadLead() {
   const [isEditMode, setIsEditMode] = useState(false);
   const [editLead, setEditLead] = useState({
-    file: '',
-    nameColNum: '',
-    emailColNum: '',
-    investAmountColNum: '',
-    stateColNum: '',
-    mobColNum: '',
-    occupationColNum: '',
-    cityColNum: '',
-    descriptionColNum: '',
-    assigned_To: '',
-    pool: '',
-    status: '',
+    file: "",
+    nameColNum: "",
+    emailColNum: "",
+    investAmountColNum: "",
+    stateColNum: "",
+    mobColNum: "",
+    occupationColNum: "",
+    cityColNum: "",
+    descriptionColNum: "",
+    assigned_To: "",
+    pool: "",
+    status: "",
   });
 
   //   HANDLING INPUTS
@@ -36,18 +36,18 @@ export default function UploadLead() {
   //   DROPDOWNS STATE AND THEIR OTHER FUNCTIONALITY
   const [assignedToDropdown, setAssignedToDropdown] = useState(false);
   const [defaultAssignedToText, setDefaultAssignedToText] =
-    useState('Assigned To');
+    useState("Assigned To");
   const [poolDropdown, setPoolDropdown] = useState(false);
-  const [defaultPoolText, setDefaultPoolText] = useState('pool');
+  const [defaultPoolText, setDefaultPoolText] = useState("pool");
   const [statusDropdown, setStatusDropdown] = useState(false);
-  const [defaultStatusText, setDefaultStatusText] = useState('status');
+  const [defaultStatusText, setDefaultStatusText] = useState("status");
 
   // ASSIGNED TO DATA
   const assignedToData = [
-    { key: 1, name: 'Assigned To' },
-    { key: 2, name: 'Assigned To' },
-    { key: 3, name: 'Assigned To' },
-    { key: 4, name: 'Assigned To' },
+    { key: 1, name: "Assigned To" },
+    { key: 2, name: "Assigned To" },
+    { key: 3, name: "Assigned To" },
+    { key: 4, name: "Assigned To" },
   ];
 
   //   TOGGLE ASSIGNED TO DROPDOWN
@@ -67,10 +67,10 @@ export default function UploadLead() {
 
   // LEAD VENDER DUMMY DATA
   const poolData = [
-    { key: 1, name: 'pool' },
-    { key: 1, name: 'pool' },
-    { key: 1, name: 'pool' },
-    { key: 1, name: 'pool' },
+    { key: 1, name: "pool" },
+    { key: 1, name: "pool" },
+    { key: 1, name: "pool" },
+    { key: 1, name: "pool" },
   ];
 
   //   TOGGLE ASSIGNED TO DROPDOWN
@@ -90,10 +90,10 @@ export default function UploadLead() {
 
   // FLUSH DUMMY DATA
   const statusData = [
-    { key: 1, name: 'Status' },
-    { key: 2, name: 'Status' },
-    { key: 3, name: 'Status' },
-    { key: 4, name: 'Status' },
+    { key: 1, name: "Status" },
+    { key: 2, name: "Status" },
+    { key: 3, name: "Status" },
+    { key: 4, name: "Status" },
   ];
 
   // TOGGLE FLUSH
@@ -119,7 +119,7 @@ export default function UploadLead() {
         </h1>
         <div>
           <Link
-            to="/sidebar/lead"
+            to="/panel/lead"
             className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500 "
           >
             Cancel
@@ -404,7 +404,7 @@ export default function UploadLead() {
                   type="submit"
                   className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
                 >
-                  {isEditMode ? 'Update' : 'Save'}
+                  {isEditMode ? "Update" : "Save"}
                 </button>
               </div>
             </div>

@@ -1,30 +1,33 @@
-import { useState, useEffect } from 'react';
-import { FaBars } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
-import { FaAngleDown } from 'react-icons/fa';
-import axios from 'axios';
-import { tenant_base_url, protocal_url } from './../../../../../Config/config';
+import { useState, useEffect } from "react";
+import { FaBars } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { FaAngleDown } from "react-icons/fa";
+import axios from "axios";
+import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 
+import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
 
-import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
-
-import { ToastContainer } from 'react-toastify';
-import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNotifications';
-
+import { ToastContainer } from "react-toastify";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../../../../utils/toastNotifications";
 
 export default function Qualification() {
+  const name = getHostnamePart();
+  const bearer_token = localStorage.getItem("token");
+
   const [data, setData] = useState([]);
   const [active, setActive] = useState(true);
   const [selectedData, setSelectedData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-
-  const name = getHostnamePart();
-
   // Fetch all data
+  //-------------------get-------------------get-------------------get-------------------get-------------------
+
   async function handleLead() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -33,12 +36,11 @@ export default function Qualification() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/qualification/getall`,
-        config
+        config,
       );
       setData(response.data.data);
     } catch (error) {
-      console.error('Error fetching qualifications:', error);
-      alert('Failed to fetch data. Please try again.');
+      showErrorToast("Failed to fetch data. Please try again.");
     }
   }
 
@@ -48,7 +50,7 @@ export default function Qualification() {
 
   // Delete qualification by ID
   const handleDelete = async (id) => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -57,12 +59,12 @@ export default function Qualification() {
       };
       await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/Admin/qualification/delete/${id}`,
-        config
+        config,
       );
+      showSuccessToast("Deleted successfully");
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      showSuccessToast('Deleted successfully');
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -75,13 +77,13 @@ export default function Qualification() {
 
   const handleAdd = () => {
     setSelectedData({
-      id: '',
-      userId: '',
-      userName: '',
-      qualification: '',
-      workExpierence: '',
-      skill: '',
-      achievements: '',
+      id: "",
+      userId: "",
+      userName: "",
+      qualification: "",
+      workExpierence: "",
+      skill: "",
+      achievements: "",
     });
     setActive(false);
     setIsEditMode(false);
@@ -89,57 +91,67 @@ export default function Qualification() {
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
       },
     };
 
-    const formData_POST = {        
+    const formData_POST = {
       userId: formData.userId,
-     userName: formData.userName,
+      userName: formData.userName,
       qualification: formData.qualification,
       workExpierence: formData.workExpierence,
       skill: formData.skill,
       achievements: formData.achievements,
-    }
+    };
 
-    const formData_PUT ={  
-        userId: formData.userId,
-        userName: formData.userName,
-        qualification: formData.qualification,
-        workExpierence: formData.workExpierence,
-        skill: formData.skill,
-        achievements: formData.achievements,
-      }
-    
-      if(!formData_POST.userName){
-        showErrorToast('Please select username')
-        return;
-      }
-      if(!formData_POST.qualification){
-        showErrorToast('Please enter qualification')
-        return;
-      } if(!formData_POST.workExpierence){
-        showErrorToast('Please select work expierence')
-        return;
-      } if(!formData_POST.skill){
-        showErrorToast('Please enter skill')
-        return;
-      }if(!formData_POST.achievements){
-        showErrorToast('Please enter achievements')
-        return;
-      }
+    const formData_PUT = {
+      userId: formData.userId,
+      userName: formData.userName,
+      qualification: formData.qualification,
+      workExpierence: formData.workExpierence,
+      skill: formData.skill,
+      achievements: formData.achievements,
+    };
+
+    if (!formData_POST.userName) {
+      showErrorToast("Please select username");
+      return;
+    }
+    if (!formData_POST.qualification) {
+      showErrorToast("Please enter qualification");
+      return;
+    }
+    if (!formData_POST.workExpierence) {
+      showErrorToast("Please select work expierence");
+      return;
+    }
+    if (!formData_POST.skill) {
+      showErrorToast("Please enter skill");
+      return;
+    }
+    if (!formData_POST.achievements) {
+      showErrorToast("Please enter achievements");
+      return;
+    }
 
     try {
       if (isEditMode) {
-        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/qualification/edit/${formData.id}`,formData_PUT,config);
-        showSuccessToast('Updated successfully')
-      } else {
-        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/qualification/add`, formData_POST, config
+        await axios.put(
+          `${protocal_url}${name}.${tenant_base_url}/Admin/qualification/edit/${formData.id}`,
+          formData_PUT,
+          config,
         );
-        showSuccessToast('Added successfully');
+        showSuccessToast("Updated successfully");
+      } else {
+        await axios.post(
+          `${protocal_url}${name}.${tenant_base_url}/Admin/qualification/add`,
+          formData_POST,
+          config,
+        );
+        showSuccessToast("Added successfully");
       }
 
       handleLead(); // Refresh the list
@@ -147,7 +159,7 @@ export default function Qualification() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -161,26 +173,26 @@ export default function Qualification() {
   // Form Component for Adding/Updating
   const EditForm = ({ data, isEditMode }) => {
     const [formData, setFormData] = useState({
-      id: '',
-      userId: '',
-      userName: '',
-      qualification: '',
-      workExpierence: '',
-      skill: '',
-      achievements: '',
+      id: "",
+      userId: "",
+      userName: "",
+      qualification: "",
+      workExpierence: "",
+      skill: "",
+      achievements: "",
     });
 
     useEffect(() => {
       setFormData(
         data || {
-          id: '',
-          userId: '',
-          userName: '',
-          qualification: '',
-          workExpierence: '',
-          skill: '',
-          achievements: '',
-        }
+          id: "",
+          userId: "",
+          userName: "",
+          qualification: "",
+          workExpierence: "",
+          skill: "",
+          achievements: "",
+        },
       );
     }, [data]);
 
@@ -192,8 +204,6 @@ export default function Qualification() {
       });
     };
 
-    const [errors, setErrors] = useState({});
-
     const handleSubmit = (e) => {
       e.preventDefault(); // Prevent default form submission
       handleFormSubmit(formData); // Call to submit the form data
@@ -204,7 +214,7 @@ export default function Qualification() {
     const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
 
     async function handleAssigned_To() {
-      const bearer_token = localStorage.getItem('token');
+      const bearer_token = localStorage.getItem("token");
 
       try {
         const config = {
@@ -214,12 +224,12 @@ export default function Qualification() {
         };
         const response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Setting/Alluser`,
-          config
+          config,
         );
         setassigned_ToDropDown(response.data);
-        console.log('status:', response.data);
+        console.log("status:", response.data);
       } catch (error) {
-        console.error('Error fetching leads:', error);
+        console.error("Error fetching leads:", error);
         // Optionally, set an error state to display a user-friendly message
       }
     }
@@ -229,7 +239,7 @@ export default function Qualification() {
     }, []);
 
     const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
-      useState('Select User Name');
+      useState("Select User Name");
     const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
       useState(false);
 
@@ -239,7 +249,7 @@ export default function Qualification() {
 
     const handleDropdownassigned_ToDropDown = (
       assigned_To_Username,
-      userId
+      userId,
     ) => {
       setdefaultTextassigned_ToDropDown(assigned_To_Username);
       setisDropdownassigned_ToDropDown(false);
@@ -249,15 +259,13 @@ export default function Qualification() {
         userId: userId,
       }));
     };
-    // const handleLog = () => {
-    //   console.log("clicked");
-    // };
+
     return (
       <>
-      <ToastContainer/>
+        <ToastContainer />
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-medium">
-            {isEditMode ? 'Edit Qualification' : 'Add Qualification'}
+            {isEditMode ? "Edit Qualification" : "Add Qualification"}
           </h1>
           <button
             onClick={handleCancel}
@@ -295,7 +303,6 @@ export default function Qualification() {
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                           placeholder="Enter User Id"
                         />
-
                       </div>
                       {/* CLIENT NAME FIELD */}
                       {isEditMode ? (
@@ -340,7 +347,7 @@ export default function Qualification() {
                                   id="LeadStatusDropDown"
                                   type="button"
                                 >
-                                  {formData.userName === ''
+                                  {formData.userName === ""
                                     ? defaultTextassigned_ToDropDown
                                     : formData.userName}
                                   <FaAngleDown className="ml-2 text-gray-400" />
@@ -355,14 +362,14 @@ export default function Qualification() {
                                             onClick={() =>
                                               handleDropdownassigned_ToDropDown(
                                                 userName,
-                                                userId
+                                                userId,
                                               )
                                             }
                                             className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                                           >
                                             {userName}
                                           </li>
-                                        )
+                                        ),
                                       )}
                                     </ul>
                                   </div>
@@ -461,7 +468,7 @@ export default function Qualification() {
                   className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md"
                   // onClick={handleLog}
                 >
-                  {isEditMode ? 'Update' : 'Save'}
+                  {isEditMode ? "Update" : "Save"}
                 </button>
               </div>
             </div>
@@ -475,7 +482,7 @@ export default function Qualification() {
     <div className="m-3">
       {active ? (
         <>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center flex-wrap gap-5">
             <h1 className="text-3xl font-medium">Qualifications</h1>
             <button
               onClick={handleAdd}
@@ -484,77 +491,86 @@ export default function Qualification() {
               Add Qualification
             </button>
           </div>
-          <div className="overflow-x-auto mt-3">
-            <table className="min-w-full bg-white rounded-md">
-              <thead>
-                <tr className="border-b-2">
-                  <th className="px-2 py-3 text-left font-medium">
-                  <span className='text-sm'>Status</span>
-                  </th>
-                  <th className="px-2 py-3 text-left font-medium">
-                    <div className="flex justify-between items-center text-sm">
-                      <span>User Name</span>
-                      <FaBars />
-                    </div>
-                  </th>
-                  <th className="px-2 py-3 text-left font-medium">
-                    <div className="flex justify-between items-center text-sm">
-                      <span>Qualification</span>
-                      <FaBars />
-                    </div>
-                  </th>
-                  <th className="px-2 py-3 text-left font-medium">
-                    <div className="flex justify-between items-center text-sm">
-                      <span>work Experience</span>
-                      <FaBars />
-                    </div>
-                  </th>
-                  <th className="px-2 py-3 text-left font-medium">
-                    <div className="flex justify-between items-center text-sm">
-                      <span>Skills</span>
-                      <FaBars />
-                    </div>
-                  </th>
-                  <th className="px-2 py-3 text-left font-medium">
-                    <div className="flex justify-between items-center text-sm">
-                      <span>Achievements</span>
-                      <FaBars />
-                    </div>
-                  </th>
-                  <th className="px-2 py-3 text-left font-medium">
-                    <div className="flex justify-between items-center text-sm">
-                      <span>Action</span>
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((item) => (
-                  <tr key={item.id} className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b">
-                    <td className="px-2 py-3">
+          <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
+            <div className="min-w-full rounded-md leads_Table_Container">
+              <table className="min-w-full bg-white rounded-md leads_Table">
+                <thead>
+                  <tr className="border-gray-300 border-b-2">
+                    <th className="px-1 py-3">
                       <input type="checkbox" />
-                    </td>
-                    <td className="px-2 py-3 text-sm">{item.userName}</td>
-                    <td className="px-2 py-3 text-sm">{item.qualification}</td>
-                    <td className="px-2 py-3 text-sm">{item.workExpierence}</td>
-                    <td className="px-2 py-3 text-sm">{item.skill}</td>
-                    <td className="px-2 py-3 text-sm">{item.achievements}</td>
-                    <td className="px-2 py-4 flex gap-3 justify-center">
-                      <MdEdit
-                        size={25}
-                        className="bg-blue-500 rounded text-white"
-                        onClick={() => handleEdit(item)}
-                      />
-                      <RiDeleteBin6Fill
-                        size={25}
-                        color="red"
-                        onClick={() => handleDelete(item.id)}
-                      />
-                    </td>
+                    </th>
+                    <th className=" py-3 text-left font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>User Name</span>
+                        <FaBars />
+                      </div>
+                    </th>
+                    <th className="px-2 py-3 text-left font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Qualification</span>
+                        <FaBars />
+                      </div>
+                    </th>
+                    <th className="px-2 py-3 text-left font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>work Experience</span>
+                        <FaBars />
+                      </div>
+                    </th>
+                    <th className="px-2 py-3 text-left font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Skills</span>
+                        <FaBars />
+                      </div>
+                    </th>
+                    <th className="px-2 py-3 text-left font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Achievements</span>
+                        <FaBars />
+                      </div>
+                    </th>
+                    <th className="px-2 py-3 text-left font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Action</span>
+                      </div>
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {data.map((item) => (
+                    <tr
+                      key={item.id}
+                      className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                    >
+                      <td className="px-1 py-3 text-center">
+                        <input type="checkbox" />
+                      </td>
+                      <td className="px-2 py-3 text-sm">{item.userName}</td>
+                      <td className="px-2 py-3 text-sm">
+                        {item.qualification}
+                      </td>
+                      <td className="px-2 py-3 text-sm">
+                        {item.workExpierence}
+                      </td>
+                      <td className="px-2 py-3 text-sm">{item.skill}</td>
+                      <td className="px-2 py-3 text-sm">{item.achievements}</td>
+                      <td className="px-2 py-4 flex gap-3 justify-center">
+                        <MdEdit
+                          size={25}
+                          className="bg-blue-500 rounded text-white"
+                          onClick={() => handleEdit(item)}
+                        />
+                        <RiDeleteBin6Fill
+                          size={25}
+                          color="red"
+                          onClick={() => handleDelete(item.id)}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </>
       ) : (

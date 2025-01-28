@@ -39,8 +39,8 @@ export default function AddAccessControl({ onCancel }) {
               ? "Valid Always"
               : "Custom"
             : type === "checkbox"
-            ? checked
-            : value,
+              ? checked
+              : value,
       };
       console.log("Updated Control Details:", updatedDetails); // Log updated control details
       return updatedDetails;
@@ -77,7 +77,7 @@ export default function AddAccessControl({ onCancel }) {
       await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/Security/accesscontrol/add`,
         requestBody,
-        config
+        config,
       );
       alert("Successfully Added");
       onCancel();
@@ -122,7 +122,7 @@ export default function AddAccessControl({ onCancel }) {
       <form onSubmit={handleFormSubmit}>
         <div className="flex py-2 px-2 items-center justify-between bg-white rounded-md shadow-md">
           <h1 className="text-xl">Access Control</h1>
-{/*------------------------------------------------- Cancel Button--------------------------------------------- */}          
+          {/*------------------------------------------------- Cancel Button--------------------------------------------- */}
           <button
             onClick={onCancel}
             className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
@@ -306,14 +306,12 @@ export default function AddAccessControl({ onCancel }) {
                 </div>
               </div>
             </div>
-
-            
           </div>
         </div>
-{/*------------------------------------------------- Bottom Section--------------------------------------------- */}
+        {/*------------------------------------------------- Bottom Section--------------------------------------------- */}
         <div className="flex flex-col overflow-x-auto overflow-y-hidden">
           <div className="overflow-hidden shadow-md">
-{/*------------------------------------------------- Button Section--------------------------------------------- */}
+            {/*------------------------------------------------- Button Section--------------------------------------------- */}
             <div className="flex gap-3 my-3 items-center">
               {buttons.map(({ id, text }) => (
                 <button
@@ -332,7 +330,7 @@ export default function AddAccessControl({ onCancel }) {
               ))}
             </div>
 
- {/*------------------------------------------------- Restriction Section--------------------------------------------- */}           
+            {/*------------------------------------------------- Restriction Section--------------------------------------------- */}
             {/* BROWSE RESTRICTION */}
             {selectedId === 1 && (
               <>
@@ -349,8 +347,8 @@ export default function AddAccessControl({ onCancel }) {
             {/* GEO LOCATION */}
             {selectedId === 5 && <>5</>}
 
-{/*------------------------------------------------- Save Button Section--------------------------------------------- */}
-          <div className="flex justify-end px-4 bg-white">
+            {/*------------------------------------------------- Save Button Section--------------------------------------------- */}
+            <div className="flex justify-end px-4 bg-white">
               <div className="flex justify-end">
                 <button
                   type="submit"

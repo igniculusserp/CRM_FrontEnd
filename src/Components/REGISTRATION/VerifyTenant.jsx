@@ -1,61 +1,72 @@
 //react
-import { Link,  useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 //react-icons
 import { GiDiamonds } from "react-icons/gi";
+import { FaStarOfLife } from "react-icons/fa";
 
 //react-toast
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {showSuccessToast, showErrorToast} from "../../utils/toastNotifications";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "../../utils/toastNotifications";
 
 //imgUsed
 import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
 import CRMLoginPage from "./../../assets/images/CRMLoginPage.png";
 
 import { getHostnamePart } from "../SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
-import { main_base_url, protocal_url, tenant_base_url, urlchange_base } from "../../Config/config";
+import {
+  main_base_url,
+  protocal_url,
+  tenant_base_url,
+  urlchange_base,
+} from "../../Config/config";
 
 export default function VerifyTenant() {
   const [userName, setuserName] = useState("");
 
-  const name = getHostnamePart(); 
-  console.log("Hostname part:", name); 
-  
-  
+  const name = getHostnamePart();
+  console.log("Hostname part:", name);
+
   useEffect(() => {
     const apiUrl = `${protocal_url}${name}.${tenant_base_url}/Tenants/check`;
-    console.log("Constructed API URL:", apiUrl); 
+    console.log("Constructed API URL:", apiUrl);
 
     const verifyTenant = async () => {
       try {
-        const response = await axios.post(apiUrl, {
-          tenantName: name, 
-          tenanturl: apiUrl 
-        }, 
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
+        const response = await axios.post(
+          apiUrl,
+          {
+            tenantName: name,
+            tenanturl: apiUrl,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+        );
 
-        console.log("API Response:", response); 
+        console.log("API Response:", response);
         const { isSuccess } = response.data;
 
         if (isSuccess) {
           {
-          showSuccessToast("Tenant Verified!");
-          setTimeout(() => {
-            //localhost
+            showSuccessToast("Tenant Verified!");
+            setTimeout(() => {
+              //localhost
               const newUrl = `http://${name}.localhost:5173/tenantlogin`;
-            
-            //forServer
-            //  const newUrl = `http://${name}.${urlchange_base}/tenantlogin `
-            window.location.href = newUrl;
-          }, 100);
-        }
+
+              //forServer
+              //  const newUrl = `http://${name}.${urlchange_base}/tenantlogin `
+              window.location.href = newUrl;
+            }, 100);
+          }
         } else {
           showErrorToast("Tenant verification failed");
         }
@@ -70,34 +81,37 @@ export default function VerifyTenant() {
   function handleusername(e) {
     setuserName(e.target.value);
   }
-   
+
   async function handleSubmit(e) {
     e.preventDefault();
-    const emailRegex = /^[A-Za-z0-9](([a-zA-Z0-9,=\.!\-#|\$%\^&\*\+/\?_`\{\}~]+)*)@(?:[0-9a-zA-Z-]+\.)+[a-zA-Z]{2,9}$/;
+    const emailRegex =
+      /^[A-Za-z0-9](([a-zA-Z0-9,=\.!\-#|\$%\^&\*\+/\?_`\{\}~]+)*)@(?:[0-9a-zA-Z-]+\.)+[a-zA-Z]{2,9}$/;
+
+    if (!userName) {
+      showErrorToast("Input field is empty");
+      return;
+    }
     try {
       const response = await axios.post(`${main_base_url}/Tenants/check1`, {
         emailId: userName,
       });
-    
-      const {isSuccess, data, message} = response.data
 
-      if(!isSuccess){
-          showErrorToast(message)
-          
-        }
-        else{
-          showSuccessToast("Login Successful!");
-          setTimeout(() => {
-            //localhost
-              const newUrl = `http://${data.name}.localhost:5173/tenantlogin`;
-            
-            //forServer
-            //  const newUrl = `http://${data.name}.${urlchange_base}/tenantlogin `
-            window.location.href = newUrl;
-          }, 100);
-        }
+      const { isSuccess, data, message } = response.data;
+
+      if (!isSuccess) {
+        showErrorToast(message);
+      } else {
+        showSuccessToast("Login Successful!");
+        setTimeout(() => {
+          //localhost
+          const newUrl = `http://${data.name}.localhost:5173/tenantlogin`;
+
+          //forServer
+          //  const newUrl = `http://${data.name}.${urlchange_base}/tenantlogin `
+          window.location.href = newUrl;
+        }, 100);
       }
-    catch (error) {
+    } catch (error) {
       if (error.response.data) {
         showErrorToast(error);
       }
@@ -150,7 +164,10 @@ export default function VerifyTenant() {
                   htmlFor="userName"
                   className="text-xs font-medium text-gray-700"
                 >
-                  User Name
+                  <span className="flex gap-1">
+                    User Name
+                    <FaStarOfLife size={8} className="text-red-500" />
+                  </span>
                   <input
                     type="email"
                     name="userName"
@@ -160,32 +177,31 @@ export default function VerifyTenant() {
                     placeholder="specimen@company.com"
                   />
                 </label>
-              
-                <button className="bg-cyan-500 outline-none text-white py-4 text-xs rounded-md font-bold mt-4">
+
+                <button className="bg-cyan-500 outline-none text-white py-4 text-xs rounded-md font-bold mt-4 hover:shadow-md">
                   Submit
                 </button>
               </form>
-             
-          <div className="relative text-center mt-8">
-          <div className="absolute inset-2 flex items-center">
-            <div className="w-full border-t border-gray-300" />
-          </div>
-          <div className="relative inline-block px-4 bg-white text-sm">
-            <span className="font-light">Or Join Us</span>
-          </div>
-        </div>
-        </div>
-    
-      <div className="mx-auto text-sm mt-8">
-        <span className="font-light">
-          Don’t have an Account?
-          <Link to="/registration">
-            <span className="text-cyan-500 font-semibold block text-center underline md:inline-block md:no-underline md:font-normal">
-              Create Account
-            </span>
-          </Link>
-        </span>
 
+              <div className="relative text-center mt-8">
+                <div className="absolute inset-2 flex items-center">
+                  <div className="w-full border-t border-gray-300" />
+                </div>
+                <div className="relative inline-block px-4 bg-white text-sm">
+                  <span className="font-light">Or Join Us</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mx-auto text-sm mt-8">
+              <span className="font-light">
+                Don’t have an Account ?
+                <Link to="/registration">
+                  <span className="text-cyan-500 font-semibold block text-center underline md:inline-block md:font-normal ms-1 underline underline-offset-2 hover:scale-110	">
+                    Join Us
+                  </span>
+                </Link>
+              </span>
             </div>
           </div>
         </div>

@@ -1,32 +1,27 @@
-import { useState, useEffect } from 'react';
-import { FaBars } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
-import axios from 'axios';
-import { tenant_base_url, protocal_url } from './../../../../../Config/config';
-import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
+import { useState, useEffect } from "react";
+import { FaBars } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import axios from "axios";
+import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
 
-
-import { ToastContainer } from 'react-toastify';
-import { showErrorToast } from '../../../../../utils/toastNotifications';
+import { ToastContainer } from "react-toastify";
+import { showErrorToast } from "../../../../../utils/toastNotifications";
 
 export default function CallTemplate() {
-
-  const name = getHostnamePart(); 
-  const bearer_token = localStorage.getItem('token');
+  const name = getHostnamePart();
+  const bearer_token = localStorage.getItem("token");
 
   const [data, setData] = useState([]);
   const [active, setActive] = useState(true);
   const [selectedData, setSelectedData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-
-
-
   // Fetch all  data
   //-------------------get-------------------get-------------------get-------------------get-------------------
   async function handleLead() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -35,11 +30,11 @@ export default function CallTemplate() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/emailtemplates/getall`,
-        config
+        config,
       );
       setData(response.data.data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      console.error("Error fetching leads:", error);
     }
   }
 
@@ -49,7 +44,7 @@ export default function CallTemplate() {
 
   // Delete  by ID
   const handleDelete = async (id) => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -58,13 +53,13 @@ export default function CallTemplate() {
       };
       await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/Admin/emailtemplates/delete/${id}`,
-        config
+        config,
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert('Deleted successfully');
+      alert("Deleted successfully");
     } catch (error) {
       console.log(error);
-      alert('Failed to delete. Please try again.');
+      alert("Failed to delete. Please try again.");
     }
   };
 
@@ -76,14 +71,13 @@ export default function CallTemplate() {
   };
 
   const handleAdd = () => {
-    setSelectedData({ templateDescription: '' });
+    setSelectedData({ templateDescription: "" });
     setActive(false);
     setIsEditMode(false);
   };
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
-    
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
@@ -92,20 +86,27 @@ export default function CallTemplate() {
 
     try {
       if (isEditMode) {
-
-        if(!formData.templateDescription){
-          showErrorToast('Please fill field')
+        if (!formData.templateDescription) {
+          showErrorToast("Please fill field");
           return;
         }
-        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/emailtemplates/edit/${formData.id}`,formData, config);
-        alert('Updated successfully');
+        await axios.put(
+          `${protocal_url}${name}.${tenant_base_url}/Admin/emailtemplates/edit/${formData.id}`,
+          formData,
+          config,
+        );
+        alert("Updated successfully");
       } else {
-        if(!formData.templateDescription){
-          showErrorToast('Please fill field ')
+        if (!formData.templateDescription) {
+          showErrorToast("Please fill field ");
           return;
         }
-        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/emailtemplates/add`, formData, config);
-        alert('Added successfully');
+        await axios.post(
+          `${protocal_url}${name}.${tenant_base_url}/Admin/emailtemplates/add`,
+          formData,
+          config,
+        );
+        alert("Added successfully");
       }
 
       handleLead(); // Refresh the list
@@ -113,8 +114,8 @@ export default function CallTemplate() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      console.error('Error saving name', error);
-      alert('Failed to save . Please try again.');
+      console.error("Error saving name", error);
+      alert("Failed to save . Please try again.");
     }
   };
 
@@ -127,10 +128,13 @@ export default function CallTemplate() {
 
   // Form Component for Adding/Updating
   const EditForm = ({ data, isEditMode }) => {
-    const [formData, setFormData] = useState({ id: '', templateDescription: '' });
+    const [formData, setFormData] = useState({
+      id: "",
+      templateDescription: "",
+    });
 
     useEffect(() => {
-      setFormData(data || { id: '', templateDescription: '' });
+      setFormData(data || { id: "", templateDescription: "" });
     }, [data]);
 
     // Handle form input changes
@@ -150,7 +154,7 @@ export default function CallTemplate() {
       <div>
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">
-            {isEditMode ? 'Edit' : 'Add'}
+            {isEditMode ? "Edit" : "Add"}
           </h1>
           <button
             onClick={handleCancel}
@@ -164,7 +168,7 @@ export default function CallTemplate() {
           <div className="w-full">
             <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-              Email Templates 
+                Call Templates
               </h2>
               <div className="py-2 px-4 min-h-screen relative">
                 <div className="flex space-x-4">
@@ -173,12 +177,12 @@ export default function CallTemplate() {
                       htmlFor="templateDescription"
                       className="text-sm font-medium text-gray-700"
                     >
-                    Email Templates 
+                      Call Templates
                     </label>
                     <input
                       type="text"
                       name="templateDescription"
-                      value={formData.templateDescription || ''}
+                      value={formData.templateDescription || ""}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
@@ -189,7 +193,7 @@ export default function CallTemplate() {
                   type="submit"
                   className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute top-[200px]"
                 >
-                  {isEditMode ? 'Update' : 'Save'}
+                  {isEditMode ? "Update" : "Save"}
                 </button>
               </div>
             </div>
@@ -204,14 +208,12 @@ export default function CallTemplate() {
       {active ? (
         <>
           <div className="flex min-w-screen justify-between items-center">
-            <h1 className="text-3xl font-medium">
-            Email Template
-            </h1>
+            <h1 className="text-3xl font-medium">Call Template</h1>
             <button
               onClick={handleAdd}
               className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
             >
-            Add Email Template
+              Add call Template
             </button>
           </div>
           <div className="overflow-x-auto mt-3">
@@ -224,7 +226,7 @@ export default function CallTemplate() {
                     </th>
                     <th className="px-2 py-3 text-left border-r font-medium">
                       <div className="flex justify-between items-center text-sm">
-                        <span>Email Template</span>
+                        <span>call Template</span>
                         <FaBars />
                       </div>
                     </th>

@@ -35,7 +35,7 @@ const FollowupNotificationModal = ({ id, onClose }) => {
     try {
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/FollowUp/getbyid/${id}`,
-        config
+        config,
       );
 
       if (response.status === 200 && response.data.isSuccess) {
@@ -49,7 +49,7 @@ const FollowupNotificationModal = ({ id, onClose }) => {
   };
 
   const handleViewClick = (id) => {
-    window.location.href = `/sidebar/createfollowup/${id}`; // Navigate to the specified route
+    window.location.href = `/panel/createfollowup/${id}`; // Navigate to the specified route
     onClose();
   };
   return (

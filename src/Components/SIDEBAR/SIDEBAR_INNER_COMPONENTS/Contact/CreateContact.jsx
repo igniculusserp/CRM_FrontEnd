@@ -14,9 +14,11 @@ import "react-quill/dist/quill.snow.css";
 //file
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
 //Images
-import profilepic from "./../../../../assets/images/profilePicEditLead.png";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
-import { showErrorToast, showSuccessToast } from "../../../../utils/toastNotifications";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../../../utils/toastNotifications";
 import { ToastContainer } from "react-toastify";
 //------------------------------------------------------------------------------->CODE STARTS FROM HERE<-------------------------------------------------------------------------------
 export default function CreateContact() {
@@ -80,11 +82,14 @@ export default function CreateContact() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Contact/contact/${id}`,config);
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Contact/contact/${id}`,
+        config,
+      );
       const data = response.data.data;
-      
+
       setdescription(data.description);
-      
+
       seteditLead({
         id: data.id || "",
         name: data.name || "",
@@ -92,11 +97,11 @@ export default function CreateContact() {
         company: data.company || "",
         title: data.tital || "",
         leadSource: data.leadsSource || "",
-        leadesStatus: data.leadesStatus || 'N/A',
+        leadesStatus: data.leadesStatus || "N/A",
         mobNo: data.mobileNo || "",
         phNo: data.phoneNo || "",
         email: data.email || "",
-        assigned_To: data.assigned_To || 'N/A',
+        assigned_To: data.assigned_To || "N/A",
         callBackDateTime: data.call_bck_DateTime || "",
         street: data.street || "",
         pinCode: data.postalCode || "",
@@ -139,7 +144,10 @@ export default function CreateContact() {
     };
 
     try {
-      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`, config);
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
+        config,
+      );
       setPoolToDropDown(response.data.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
@@ -177,7 +185,10 @@ export default function CreateContact() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`, config);
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
+        config,
+      );
       setleadStatus(response.data.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
@@ -218,7 +229,10 @@ export default function CreateContact() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,config);
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
+        config,
+      );
       setSegments(response.data.data);
     } catch (error) {
       console.error("Error fetching segments:", error);
@@ -228,7 +242,9 @@ export default function CreateContact() {
   useEffect(() => {
     handleSegment();
     setdefaultTextSegmentDropDown(
-      editLead.segments.length > 0 ? editLead.segments.join(", ") : "Select Segment"
+      editLead.segments.length > 0
+        ? editLead.segments.join(", ")
+        : "Select Segment",
     );
   }, [editLead]);
 
@@ -248,7 +264,7 @@ export default function CreateContact() {
     if (isChecked) {
       // Remove segment if already selected
       updatedSegments = editLead.segments.filter(
-        (selectedSegment) => selectedSegment !== segment.segment
+        (selectedSegment) => selectedSegment !== segment.segment,
       );
     } else {
       // Add segment if not already selected
@@ -259,7 +275,9 @@ export default function CreateContact() {
       segments: updatedSegments,
     }));
     setdefaultTextSegmentDropDown(
-      updatedSegments.length > 0 ? updatedSegments.join(", ") : "Select Segment"
+      updatedSegments.length > 0
+        ? updatedSegments.join(", ")
+        : "Select Segment",
     );
     console.log("Selected segments:", updatedSegments);
   };
@@ -270,7 +288,7 @@ export default function CreateContact() {
   const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
 
   async function handleAssigned_To() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
@@ -280,13 +298,12 @@ export default function CreateContact() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
+        config,
       );
       setassigned_ToDropDown(response.data?.data);
-      console.log('status:', response.data);
+      console.log("status:", response.data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
-      // Optionally, set an error state to display a user-friendly message
+      console.error("Error fetching leads:", error);
     }
   }
 
@@ -295,7 +312,7 @@ export default function CreateContact() {
   }, []);
 
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
-    useState('Select Assigned');
+    useState("Select Assigned");
   const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
     useState(false);
 
@@ -305,10 +322,10 @@ export default function CreateContact() {
 
   const handleDropdownassigned_ToDropDown = (
     assigned_To_Username,
-    assigned_To_Role
+    assigned_To_Role,
   ) => {
     setdefaultTextassigned_ToDropDown(
-      assigned_To_Username + ' ' + assigned_To_Role
+      assigned_To_Username + " " + assigned_To_Role,
     );
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     seteditLead((prevTask) => ({
@@ -325,24 +342,19 @@ export default function CreateContact() {
     }));
   };
 
-
-
   //------------------------------------------Mobile Regex------------------------------------------
   const handleContactChange = (event) => {
-    const inputValue = event.target.value.replace(/[^0-9]/g, ""); 
+    const inputValue = event.target.value.replace(/[^0-9]/g, "");
     const { name } = event.target;
-  
+
     seteditLead((prevState) => ({
       ...prevState,
       [name]: inputValue,
     }));
   };
-  
 
   //------------------------------------------Email Regex------------------------------------------
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
 
   //---------->handleSubmit<----------
   const handleSubmit = async (event) => {
@@ -385,66 +397,48 @@ export default function CreateContact() {
         call_bck_DateTime: editLead.callBackDateTime || null,
         contactID: editLead.contactId,
         lastModifiedBy: editLead.lastModifiedBy,
-        //----------------//
         description: description,
       };
-      
 
-      if(!formData_PUT.name){
-        showErrorToast('Please enter name')
+      if (!formData_PUT.name) {
+        showErrorToast("Please enter name");
         return;
       }
 
-      if(!formData_PUT.mobileNo){
-        showErrorToast('Please enter mobile')
+      if (!formData_PUT.mobileNo) {
+        showErrorToast("Please enter mobile");
         return;
       }
 
-
-      if (formData_PUT.mobileNo.length < 9 || formData_PUT.mobileNo.length > 15) {
-        showErrorToast('Invalid mobile number')
+      if (
+        formData_PUT.mobileNo.length < 9 ||
+        formData_PUT.mobileNo.length > 15
+      ) {
+        showErrorToast("Invalid mobile number");
         return;
       }
 
-      if ((formData_PUT.email && !emailRegex.test(formData_PUT.email))) {
-        showErrorToast('Invalid email format');
+      if (formData_PUT.email && !emailRegex.test(formData_PUT.email)) {
+        showErrorToast("Invalid email format");
         return;
       }
-
-       //Date Logic Validation
-      const today = new Date().toISOString().split('T')[0];
-      
-      //Previous date cannot be selected
-      if(formData_PUT.call_bck_DateTime < today ){
-        showErrorToast('Previous date cannot be selected')
-        return;
-      }
-       
-            
-       
 
       if (isEditMode) {
-        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Contact/contact/update`,formData_PUT, config);
+        await axios.put(
+          `${protocal_url}${name}.${tenant_base_url}/Contact/contact/update`,
+          formData_PUT,
+          config,
+        );
         showSuccessToast("Contact updated successfully!");
-        navigate(`/sidebar/contact`);
-        } 
+        navigate(`/panel/contact`);
       }
-      catch (error) {
-      showErrorToast("An error occurred. Please try again.");
+    } catch (error) {
+      showErrorToast("An error occurred. Please try again.", error);
     }
   };
 
   //----------------------------------------------------------------------------------------
   //LanguageDropDown
-
-  const LanguageDropDown = [
-    { key: 1, name: "English" },
-    { key: 2, name: "Portuguese" },
-    { key: 3, name: "Hindi" },
-    { key: 4, name: "Arabic" },
-    { key: 5, name: "Japanese" },
-  ];
-
   const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] =
     useState("Select Language");
   const [isDropdownVisibleLanguage, setisDropdownVisibleLanguage] =
@@ -465,20 +459,17 @@ export default function CreateContact() {
 
   return (
     <>
-      <ToastContainer/>
+      <ToastContainer />
       <div className="min-h-screen flex flex-col mt-3">
         <div className="flex justify-between mx-3 px-3 bg-white border rounded py-3">
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-xl">
               <h1>Edit Contact</h1>
             </h1>
-            <h1 className="bg-blue-500 text-xs text-white px-4 py-1 font-medium rounded-lg">
-              Edit Page Layout
-            </h1>
           </div>
           <div>
             <Link
-              to="/sidebar/contact"
+              to="/panel/contact"
               className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500 "
             >
               Cancel
@@ -493,14 +484,8 @@ export default function CreateContact() {
           {/*Parent Div */}
           <div className="w-full">
             {/*CHILD Div------ Image Input */}
-            <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
-              <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-                Contact Image
-              </h2>
-              <img src={profilepic} className=" max-h-24 max-w-24 p-3" />
-            </div>
 
-            <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
+            <div className="m-3 bg-white rounded-xl shadow-md flex-grow">
               <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                 Contact Details
               </h2>
@@ -547,14 +532,14 @@ export default function CreateContact() {
                         {!isEditMode
                           ? defaultTextLanguageDropDown
                           : editLead.language === ""
-                          ? defaultTextLanguageDropDown
-                          : editLead.language}
+                            ? defaultTextLanguageDropDown
+                            : editLead.language}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLanguage && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
                           <ul className="py-2 text-sm text-gray-700">
-                            {LanguageDropDown.map(({ key, name }) => (
+                            {languageDropDown.map(({ key, name }) => (
                               <li
                                 key={key}
                                 onClick={() => handleDropdownLanguage(name)}
@@ -633,20 +618,19 @@ export default function CreateContact() {
                       </button>
                       {isPoolDropdownOpen && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                          
-                            <ul className="py-2 text-sm text-gray-700">
-                              {poolToDropDown.map(({ id, poolName }) => (
-                                <li
-                                  key={id}
-                                  onClick={() =>
-                                    handleDropdownSelection(poolName)
-                                  }
-                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                                >
-                                  {poolName}
-                                </li>
-                              ))}
-                            </ul>
+                          <ul className="py-2 text-sm text-gray-700">
+                            {poolToDropDown.map(({ id, poolName }) => (
+                              <li
+                                key={id}
+                                onClick={() =>
+                                  handleDropdownSelection(poolName)
+                                }
+                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              >
+                                {poolName}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                       )}
                     </div>
@@ -709,7 +693,6 @@ export default function CreateContact() {
                       name="mobNo"
                       value={editLead.mobNo}
                       maxLength="15"
-
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleContactChange}
                       placeholder="Enter your Mobile Number"
@@ -728,7 +711,6 @@ export default function CreateContact() {
                       name="phNo"
                       value={editLead.phNo}
                       maxLength="15"
-
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleContactChange}
                       placeholder="Enter your Alternate Number"
@@ -760,7 +742,7 @@ export default function CreateContact() {
                       htmlFor="leadesStatus"
                       className="text-sm font-medium text-gray-700"
                     >
-                    Managed By
+                      Managed By
                     </label>
                     <div
                       className="relative"
@@ -789,14 +771,14 @@ export default function CreateContact() {
                                   onClick={() =>
                                     handleDropdownassigned_ToDropDown(
                                       userName,
-                                      role
+                                      role,
                                     )
                                   }
                                   className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                                 >
                                   {userName}-({role})
                                 </li>
-                              )
+                              ),
                             )}
                           </ul>
                         </div>
@@ -1032,7 +1014,7 @@ export default function CreateContact() {
                                 <input
                                   type="checkbox"
                                   checked={editLead.segments.includes(
-                                    segment.segment
+                                    segment.segment,
                                   )}
                                   onChange={() => handleCheckboxChange(segment)}
                                   className="mr-2"

@@ -1,7 +1,3 @@
-export default function Meetings(){
-    return(
-        <>
-        
-        </>
-    )
+export default function Meetings() {
+  return <></>;
 }

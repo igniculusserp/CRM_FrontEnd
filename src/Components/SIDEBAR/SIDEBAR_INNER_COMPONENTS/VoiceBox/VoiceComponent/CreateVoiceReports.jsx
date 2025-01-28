@@ -1,27 +1,27 @@
 // REACT INBUILD
-import { useState } from 'react';
+import { useState } from "react";
 // REACT-ROUTER-DOM
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 // REACT QUILL FOR DESCRIPTION
-import ReactQuill from 'react-quill';
+import ReactQuill from "react-quill";
 
 export default function CreateVoiceReports() {
   // INPUT HANDLING WITH STATE
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState("");
   const [editReport, setEditReport] = useState({
-    id: '',
-    name: '',
-    reportingTo: '',
-    totalIncomingCall: '',
-    totalTimeOutGoingCall: '',
-    totalCallAttempt: '',
-    designation: '',
-    incomingCall: '',
-    outgoingCall: '',
-    phNo: '',
-    assigned_To: '',
-    totalAnsweredCall: '',
+    id: "",
+    name: "",
+    reportingTo: "",
+    totalIncomingCall: "",
+    totalTimeOutGoingCall: "",
+    totalCallAttempt: "",
+    designation: "",
+    incomingCall: "",
+    outgoingCall: "",
+    phNo: "",
+    assigned_To: "",
+    totalAnsweredCall: "",
   });
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -46,7 +46,7 @@ export default function CreateVoiceReports() {
         </h1>
         <div>
           <Link
-            to="/sidebar/voicebox"
+            to="/panel/voicebox"
             className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500 "
           >
             Cancel
@@ -270,7 +270,7 @@ export default function CreateVoiceReports() {
                 type="submit"
                 className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
               >
-                {isEditMode ? 'Update' : 'Save'}
+                {isEditMode ? "Update" : "Save"}
               </button>
             </div>
           </div>

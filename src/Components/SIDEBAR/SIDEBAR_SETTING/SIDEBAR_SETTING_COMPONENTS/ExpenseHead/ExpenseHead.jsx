@@ -1,21 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import axios from 'axios';
-import PropTypes from 'prop-types';
+import axios from "axios";
+import PropTypes from "prop-types";
 
-import { FaBars } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { FaBars } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 
-import { tenant_base_url, protocal_url } from './../../../../../Config/config';
-import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
+import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
 
-import { ToastContainer } from 'react-toastify';
-import {showErrorToast, showSuccessToast} from '../../../../../utils/toastNotifications';
+import { ToastContainer } from "react-toastify";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../../../../utils/toastNotifications";
 
 export default function ExpenseHead() {
   const name = getHostnamePart();
-  const bearer_token = localStorage.getItem('token');
+  const bearer_token = localStorage.getItem("token");
 
   const [data, setData] = useState([]);
   const [active, setActive] = useState(true);
@@ -25,7 +28,7 @@ export default function ExpenseHead() {
   // GET BY ID
   //-------------------get-------------------get-------------------get-------------------get-------------------
   async function handleLead() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -34,7 +37,7 @@ export default function ExpenseHead() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/headsdescriptions/getall`,
-        config
+        config,
       );
       setData(response.data.data);
       console.log(response.data.data);
@@ -49,7 +52,7 @@ export default function ExpenseHead() {
 
   // Delete  by ID
   const handleDelete = async (id) => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -58,10 +61,10 @@ export default function ExpenseHead() {
       };
       await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/headsdescriptions/delete/${id}`,
-        config
+        config,
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      showSuccessToast('Deleted successfully');
+      showSuccessToast("Deleted successfully");
     } catch (error) {
       showErrorToast(error.response.data.message);
     }
@@ -75,7 +78,7 @@ export default function ExpenseHead() {
   };
 
   const handleAdd = () => {
-    setSelectedData({ headDescription: '' });
+    setSelectedData({ headDescription: "" });
     setActive(false);
     setIsEditMode(false);
   };
@@ -93,16 +96,16 @@ export default function ExpenseHead() {
         await axios.put(
           `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/headsDescriptions/edit/${formData.id}`,
           formData,
-          config
+          config,
         );
-        showSuccessToast('Updated successfully');
+        showSuccessToast("Updated successfully");
       } else {
         await axios.post(
           `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/headdescription/add`,
           formData,
-          config
+          config,
         );
-        showSuccessToast('Created Successfully');
+        showSuccessToast("Created Successfully");
       }
 
       handleLead(); // Refresh the list
@@ -124,12 +127,12 @@ export default function ExpenseHead() {
   // Form Component for Adding/Updating
   const EditForm = ({ data, isEditMode }) => {
     const [formData, setFormData] = useState({
-      id: '',
-      headDescription: '',
+      id: "",
+      headDescription: "",
     });
 
     useEffect(() => {
-      setFormData(data || { id: '', headDescription: '' });
+      setFormData(data || { id: "", headDescription: "" });
     }, [data]);
 
     // Handle form input changes
@@ -151,7 +154,7 @@ export default function ExpenseHead() {
         <ToastContainer />
         <div className="flex min-w-screen justify-between items-center">
           <h1 className="text-3xl font-medium">
-            {isEditMode ? 'Edit' : 'Add'}
+            {isEditMode ? "Edit" : "Add"}
           </h1>
           <button
             onClick={handleCancel}
@@ -180,7 +183,7 @@ export default function ExpenseHead() {
                     <input
                       type="text"
                       name="headDescription"
-                      value={formData.headDescription || ''}
+                      value={formData.headDescription || ""}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
@@ -191,7 +194,7 @@ export default function ExpenseHead() {
                   type="submit"
                   className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute top-[200px]"
                 >
-                  {isEditMode ? 'Update' : 'Save'}
+                  {isEditMode ? "Update" : "Save"}
                 </button>
               </div>
             </div>
@@ -213,7 +216,7 @@ export default function ExpenseHead() {
     <div className="m-3 min-w-screen">
       {active ? (
         <>
-          <div className="flex min-w-screen justify-between items-center">
+          <div className="flex min-w-screen justify-between items-center flex-wrap gap-5">
             <h1 className="text-3xl font-medium">Expense Detail</h1>
             <button
               onClick={handleAdd}
@@ -222,12 +225,11 @@ export default function ExpenseHead() {
               Add Expense Head
             </button>
           </div>
-          <div className="overflow-x-auto mt-3">
-            <div className="min-w-full overflow-hidden rounded-md">
+          <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
+            <div className="min-w-full rounded-md leads_Table_Container leads_Table">
               <table className="min-w-full bg-white">
                 <thead>
                   <tr className="border-gray-300 border-b-2">
-                    
                     <th className="px-1 py-3">
                       <input type="checkbox" />
                     </th>
@@ -237,7 +239,7 @@ export default function ExpenseHead() {
                         <span>Head Name</span>
                       </div>
                     </th>
-                  
+
                     {/* ACTION */}
                     <th className="px-2 py-3  font-medium">
                       <div className="flex justify-between items-center text-sm">
@@ -259,7 +261,7 @@ export default function ExpenseHead() {
                       <td className="px-2 py-4 text-sm max-w-24 break-words">
                         {data.headDescription}
                       </td>
-                     
+
                       <td className="px-2 py-4 flex gap-3 justify-left">
                         <MdEdit
                           size={25}

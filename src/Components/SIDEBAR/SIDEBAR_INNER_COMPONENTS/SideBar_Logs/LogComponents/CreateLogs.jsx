@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
-import ReactQuill from 'react-quill';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
+import ReactQuill from "react-quill";
+import { Link } from "react-router-dom";
 
 export default function CreateLogs() {
-  const [description, setDescription] = useState('HELLO, ');
+  const [description, setDescription] = useState("HELLO, ");
   const [isEditMode, setIsEditMode] = useState(false);
   const [editLogs, setEditLogs] = useState({
-    number: '',
-    createdBy: '',
-    createdTime: '',
-    clientName: '',
-    operation: '',
+    number: "",
+    createdBy: "",
+    createdTime: "",
+    clientName: "",
+    operation: "",
   });
 
   // INPUT CHANGE
@@ -31,14 +31,14 @@ export default function CreateLogs() {
   // CLIENT NAME DROPDOWN ->
   const [clientNameDropdown, setClientNameDropdown] = useState(false);
   const [defaultClientNameText, setDefaultClientNameText] =
-    useState('client name');
+    useState("client name");
 
   // CLIENT NAME DATA =>
   const clientNameData = [
-    { key: 1, name: 'Shubham Mishra' },
-    { key: 2, name: 'Shubham Mishra' },
-    { key: 3, name: 'Shubham Mishra' },
-    { key: 4, name: 'Shubham Mishra' },
+    { key: 1, name: "Shubham Mishra" },
+    { key: 2, name: "Shubham Mishra" },
+    { key: 3, name: "Shubham Mishra" },
+    { key: 4, name: "Shubham Mishra" },
   ];
 
   // TOGGLE CLIENT NAME DROPDOWN
@@ -60,7 +60,7 @@ export default function CreateLogs() {
       <div className="flex py-2 px-3 items-center justify-between bg-white rounded-md shadow-md">
         <h1 className="text-xl">Add Client Logs</h1>
         <Link
-          to="/sidebar/logs"
+          to="/panel/logs"
           className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
         >
           Cancel
@@ -230,7 +230,7 @@ export default function CreateLogs() {
               type="submit"
               className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
             >
-              {isEditMode ? 'Update' : 'Save'}
+              {isEditMode ? "Update" : "Save"}
             </button>
           </div>
         </div>

@@ -1,27 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 //external Packages
-import axios from 'axios';
+import axios from "axios";
 
-import * as XLSX from 'xlsx';
-import { jsPDF } from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 //React Icons
-import { FaAngleDown, FaBars, FaPhoneAlt } from 'react-icons/fa';
-import { IoIosMail } from 'react-icons/io';
-import { BiEdit } from 'react-icons/bi';
-import { ImFilter } from 'react-icons/im';
-import { IoSearchOutline } from 'react-icons/io5';
-import { Link, useNavigate } from 'react-router-dom';
+import { FaAngleDown, FaBars, FaPhoneAlt } from "react-icons/fa";
+import { IoIosMail } from "react-icons/io";
+import { BiEdit } from "react-icons/bi";
+import { ImFilter } from "react-icons/im";
+import { IoSearchOutline } from "react-icons/io5";
+import { Link, useNavigate } from "react-router-dom";
 
 //Folder Imported
-import { tenant_base_url, protocal_url } from './../../../../Config/config';
-import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
-import MassEmail from '../MassEmail/MassEmail';
+import { tenant_base_url, protocal_url } from "./../../../../Config/config";
+import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import MassEmail from "../MassEmail/MassEmail";
 
 export default function VoiceBox() {
   const navigate = useNavigate();
 
-  const bearer_token = localStorage.getItem('token');
+  const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
 
   // Mass Email
@@ -39,7 +39,7 @@ export default function VoiceBox() {
 
   //   HANDLE TABLE CLICK
   const handleMonitorClick = (id) => {
-    navigate(`/sidebar/createvoice/${id}`);
+    navigate(`/panel/createvoice/${id}`);
   };
 
   //----------------GET----------------
@@ -54,7 +54,7 @@ export default function VoiceBox() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/VoiceBox/allvoicebox/byusertoken`,
-        config
+        config,
       );
       if (response.status === 200) {
         const followup = response.data; // Get the user data
@@ -62,7 +62,7 @@ export default function VoiceBox() {
         setGetVoice(followup?.data);
       }
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
     }
   };
 
@@ -72,8 +72,8 @@ export default function VoiceBox() {
 
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
-    { key: 1, value: 'Table View' },
-    { key: 2, value: 'Grid View' },
+    { key: 1, value: "Table View" },
+    { key: 2, value: "Grid View" },
   ];
 
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
@@ -88,7 +88,7 @@ export default function VoiceBox() {
   };
 
   const [selectedViewValue, setSelectedViewValue] = useState(
-    stripeBar[0].value
+    stripeBar[0].value,
   );
 
   // TOGGLE VOICEBOX DROPDOWN
@@ -108,53 +108,52 @@ export default function VoiceBox() {
 
   //   SEARCH BAR DATA
 
-
   //   ALLVOICE DROPDOWN DATA
   const allVoiceDropdown = [
-    { key: 1, value: 'Man Insited' },
-    { key: 2, value: 'Man Insited' },
-    { key: 3, value: 'Man Insited' },
-    { key: 4, value: 'Man Insited' },
-    { key: 4, value: 'Man Insited' },
-    { key: 4, value: 'Man Insited' },
+    { key: 1, value: "Man Insited" },
+    { key: 2, value: "Man Insited" },
+    { key: 3, value: "Man Insited" },
+    { key: 4, value: "Man Insited" },
+    { key: 4, value: "Man Insited" },
+    { key: 4, value: "Man Insited" },
   ];
 
   // ACTION DROPDOWN DATA
   const dropActionsMenu = [
-    { key: 1, value: 'Mass Delete' },
-    { key: 2, value: 'Mass Update' },
-    { key: 3, value: 'Mass Email' },
-    { key: 4, value: 'Approve Leads' },
+    { key: 1, value: "Mass Delete" },
+    { key: 2, value: "Mass Update" },
+    { key: 3, value: "Mass Email" },
+    { key: 4, value: "Approve Leads" },
     // { key: 5, value: "Add to Campaign" },
-    { key: 6, value: 'Export Leads' },
-    { key: 7, value: 'Sheet View' },
-    { key: 8, value: 'Print View' },
+    { key: 6, value: "Export Leads" },
+    { key: 7, value: "Sheet View" },
+    { key: 8, value: "Print View" },
   ];
 
   // On click of Action Button
   const handleActionButton = async (value) => {
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
-    if (value === 'Mass Delete') {
+    if (value === "Mass Delete") {
       const userConfirmed = confirm(
-        'Are you sure you want to Delete the selected Data?'
+        "Are you sure you want to Delete the selected Data?",
       );
       if (userConfirmed) {
         handleMassTrailDelete(selectedRows);
       }
     }
     // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
-    if (value === 'Mass Email') {
+    if (value === "Mass Email") {
       const userConfirmed = confirm(
-        'Are you sure you want to Send E-Mail to the selected Data?'
+        "Are you sure you want to Send E-Mail to the selected Data?",
       );
       if (userConfirmed) {
         openMassEmailModal(selectedEmails);
       }
     }
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
-    if (value === 'Sheet View') {
+    if (value === "Sheet View") {
       const userConfirmed = confirm(
-        'Are you sure you want to export the selected data?'
+        "Are you sure you want to export the selected data?",
       );
       if (userConfirmed) {
         exportToTrailExcel(selectedRows);
@@ -162,9 +161,9 @@ export default function VoiceBox() {
     }
 
     // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
-    if (value === 'Print View') {
+    if (value === "Print View") {
       const userConfirmed = confirm(
-        'Are you sure you want to export the selected Leads?'
+        "Are you sure you want to export the selected Leads?",
       );
       if (userConfirmed) {
         exportToTrailPDF(selectedRows);
@@ -185,8 +184,8 @@ export default function VoiceBox() {
       const deleteRequests = ids.map((id) =>
         axios.delete(
           `${protocal_url}${name}.${tenant_base_url}/VoiceBox/delete/${id}`,
-          config
-        )
+          config,
+        ),
       );
 
       // Wait for all delete requests to finish
@@ -196,7 +195,7 @@ export default function VoiceBox() {
       getVoiceBoxMonitorLists(); // Refresh the list after deletion
       alert(`${responses.length} items successfully deleted.`);
     } catch (error) {
-      console.error('Error deleting follow-ups:', error);
+      console.error("Error deleting follow-ups:", error);
     }
   };
 
@@ -206,7 +205,7 @@ export default function VoiceBox() {
     if (selectedEmails.length > 0) {
       setIsModalOpen(true); // Open the modal
     } else {
-      alert('Selected Entity dose not have E-Mail Address.');
+      alert("Selected Entity dose not have E-Mail Address.");
     }
   };
 
@@ -219,10 +218,10 @@ export default function VoiceBox() {
   const exportToTrailExcel = () => {
     // Filter currentLeads based on selectedIds
     const leadsToExport = currentSms.filter((lead) =>
-      selectedRows.includes(lead.id)
+      selectedRows.includes(lead.id),
     );
     if (leadsToExport?.length === 0) {
-      alert('No leads selected to export');
+      alert("No leads selected to export");
       return;
     }
 
@@ -231,24 +230,24 @@ export default function VoiceBox() {
 
     // Create a new workbook and append the worksheet
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Selected FollowUp');
+    XLSX.utils.book_append_sheet(wb, ws, "Selected FollowUp");
 
     // Export the workbook to an Excel file
-    XLSX.writeFile(wb, 'SelectedFollowupData.xlsx');
+    XLSX.writeFile(wb, "SelectedFollowupData.xlsx");
   };
 
   //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
   const exportToTrailPDF = () => {
     const leadsToExport = currentSms.filter((lead) =>
-      selectedRows.includes(lead.id)
+      selectedRows.includes(lead.id),
     );
     if (leadsToExport?.length === 0) {
-      alert('No leads selected to export');
+      alert("No leads selected to export");
       return;
     }
     const doc = new jsPDF();
     // const role = matchedUser?.role;
-    const tableColumn = ['ID', 'Name', 'Email', 'Phone No.', 'Assigned To'];
+    const tableColumn = ["ID", "Name", "Email", "Phone No.", "Assigned To"];
     // Map the leads data to rows
     const tableRows = leadsToExport?.map((lead) => [
       lead.id,
@@ -258,14 +257,14 @@ export default function VoiceBox() {
       lead.assigned_To,
     ]);
     // Add a title to the PDF
-    doc.text('Selected Leads Data', 14, 16);
+    doc.text("Selected Leads Data", 14, 16);
     // Add the table to the PDF
     autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
       startY: 22, // Position the table after the title
     });
-    doc.save('Followup.pdf');
+    doc.save("Followup.pdf");
   };
 
   // Function to toggle all checkboxes
@@ -296,7 +295,7 @@ export default function VoiceBox() {
         : [...prevSelectedRows, id];
 
       // Log the updated selectedRows
-      console.log('Updated Selected Rows:', newSelectedRows);
+      console.log("Updated Selected Rows:", newSelectedRows);
       return newSelectedRows;
     });
 
@@ -307,7 +306,7 @@ export default function VoiceBox() {
         : [...prevSelectedEmails, email];
 
       // Log the updated selectedEmails
-      console.log('@@@===', newSelectedEmails);
+      console.log("@@@===", newSelectedEmails);
       return newSelectedEmails;
     });
 
@@ -316,30 +315,30 @@ export default function VoiceBox() {
 
   // Object containing the options
   const dynamicButtons = {
-    Monitoring: { text: 'Create View Box', href: '/sidebar/createvoice' },
-    Reports: { text: 'Create Reports', href: '/sidebar/createreports' },
-    'SMS via GMS Gateway': {
-      text: 'Send Details',
-      href: '/sidebar/createvoicedetails',
+    Monitoring: { text: "Create View Box", href: "/panel/createvoice" },
+    Reports: { text: "Create Reports", href: "/panel/createvoicereports" },
+    "SMS via GMS Gateway": {
+      text: "Send Details",
+      href: "/panel/createvoicedetails",
     },
   };
 
   const handleCheckboxClick = (e, id) => {
     e.stopPropagation(); // Prevent row click
-    console.log('ID:', id); // Replace with your logic to handle checkbox click
+    console.log("ID:", id); // Replace with your logic to handle checkbox click
   };
 
-  const [selectedButton, setSelectedButton] = useState('Monitoring');
+  const [selectedButton, setSelectedButton] = useState("Monitoring");
 
   // State to manage the button text
   const [buttonText, setButtonText] = useState({
-    text: 'Create View Box',
-    href: '/sidebar/createvoice',
+    text: "Create View Box",
+    href: "/panel/createvoice",
   });
 
   // Function to handle option click using bracket notation
   const handleOptionClick = (key) => {
-    console.log('Clicked key:', key);
+    console.log("Clicked key:", key);
     setButtonText(dynamicButtons[key]);
     setSelectedButton(key);
   };
@@ -356,7 +355,7 @@ export default function VoiceBox() {
 
   // ----------------------------- Date Filter -----------------------------
 
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(today);
 
@@ -397,7 +396,7 @@ export default function VoiceBox() {
           onClose={closeModal} // Pass function to close modal
         />
       )}
-      <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md">
+      <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md flex-wrap gap-3">
         <div className="flex gap-3">
           {/* TOP */}
           {/* ALL VOICEBOX DROPDOWN */}
@@ -433,7 +432,6 @@ export default function VoiceBox() {
           {/* SEARCH DROPDOWN */}
 
           <div className="flex justify-center items-center">
-
             <input
               type="text"
               placeholder="Search..."
@@ -450,8 +448,8 @@ export default function VoiceBox() {
               className={`px-3 py-1.5 rounded font-light text-md shadow-md
                 ${
                   selectedButton === key
-                    ? 'bg-cyan-500 text-white'
-                    : 'bg-gray-100 text-gray-700'
+                    ? "bg-cyan-500 text-white"
+                    : "bg-gray-100 text-gray-700"
                 }
               `}
             >
@@ -463,13 +461,13 @@ export default function VoiceBox() {
         <div className="flex gap-2">
           <Link to={buttonText.href}>
             <button className="bg-blue-600 text-white px-2 py-2 text-center rounded-md text-md shadow-md w-[150px]">
-              {buttonText.text || 'Create Voice Box'}
+              {buttonText.text || "Create Voice Box"}
             </button>
           </Link>
 
           {/* Stripe-BarDropDown */}
           <div
-            className="relative"
+            className="relative hide_Component"
             onClick={togglestripeBar}
             onMouseLeave={() => setstripeBardropDown(false)}
           >
@@ -512,7 +510,7 @@ export default function VoiceBox() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {actionDropdown && (
-              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 right-0 z-10">
+              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
                 <ul className="text-sm text-gray-700 ">
                   {dropActionsMenu.map(({ key, value }) => (
                     <li
@@ -543,7 +541,7 @@ export default function VoiceBox() {
         <div className="flex bg-white border-2 border-gray-300 py-2 rounded-lg justify-center items-center">
           {/* Filter Icon Button */}
           <button className="border-r border-gray-500 px-3">
-            <ImFilter />
+            <ImFilter className="filter_Image_Size" />
           </button>
 
           {/* Date Range Filter Button */}
@@ -576,12 +574,12 @@ export default function VoiceBox() {
       </div>
 
       {/* ------------TABLE------------ */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto leads_Table_Main_Container">
         {/* MONITORING TABLE */}
-        <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === 'Table View' &&
-            selectedButton === 'Monitoring' && (
-              <table className="min-w-full bg-white">
+        <div className="min-w-full leads_Table_Container rounded-md">
+          {selectedViewValue === "Table View" &&
+            selectedButton === "Monitoring" && (
+              <table className="min-w-full bg-white leads_Table">
                 {/* ----------------- TABLE HEAD START ----------------- */}
                 <thead>
                   <tr className="border-gray-300 border-b-2">
@@ -702,7 +700,7 @@ export default function VoiceBox() {
                       </td>
                       {/* CALL DATE */}
                       <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                        {voice.callDateTime.split('T')[0]}
+                        {voice.callDateTime.split("T")[0]}
                       </td>
                       {/* SOURCE */}
                       <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
@@ -716,7 +714,7 @@ export default function VoiceBox() {
                       <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
                         <p
                           className={
-                            voice.type === 'Incoming'
+                            voice.type === "Incoming"
                               ? `text-green-600`
                               : `text-red-400`
                           }
@@ -737,10 +735,10 @@ export default function VoiceBox() {
         </div>
 
         {/* REPORTS TABLE */}
-        <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === 'Table View' &&
-            selectedButton === 'Reports' && (
-              <table className="min-w-full bg-white">
+        <div className="min-w-full leads_Table_Container rounded-md">
+          {selectedViewValue === "Table View" &&
+            selectedButton === "Reports" && (
+              <table className="min-w-full bg-white leads_Table">
                 {/* ----- TABLE HEAD ----- */}
                 <thead>
                   <tr className="border-gray-300 border-b-2">
@@ -904,10 +902,10 @@ export default function VoiceBox() {
         </div>
 
         {/* GATEWAY TABLE */}
-        <div className="min-w-full overflow-hidden rounded-md">
-          {selectedViewValue === 'Table View' &&
-            selectedButton === 'SMS via GMS Gateway' && (
-              <table className="min-w-full bg-white">
+        <div className="min-w-full leads_Table_Container rounded-md">
+          {selectedViewValue === "Table View" &&
+            selectedButton === "SMS via GMS Gateway" && (
+              <table className="min-w-full bg-white leads_Table">
                 {/* -------- TABLE HEAD -------- */}
                 <thead>
                   <tr className="border-gray-300 border-b-2">
@@ -1017,7 +1015,7 @@ export default function VoiceBox() {
       </div>
 
       {/* PAGINATION */}
-      {selectedViewValue === 'Grid View' && (
+      {selectedViewValue === "Grid View" && (
         <>
           <div className="min-w-full">
             <div className="grid grid-cols-3 gap-3">
@@ -1074,7 +1072,7 @@ export default function VoiceBox() {
                       Follow Up Date
                     </div>
                     <div className="2-2/4 font-medium text-sm">
-                      {item.call_bck_DateTime.replace('T', ' ')}
+                      {item.call_bck_DateTime.replace("T", " ")}
                     </div>
                   </div>
                   <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
@@ -1084,7 +1082,7 @@ export default function VoiceBox() {
                         <span className="">
                           {item.segments
                             .filter((segment) => segment.length > 1)
-                            .join(', ')}
+                            .join(", ")}
                         </span>
                       )}
                     </div>
@@ -1106,14 +1104,14 @@ export default function VoiceBox() {
                     onClick={() => paginate(i + 1)}
                     className={`px-4 py-2 mx-1 ${
                       currentPage === i + 1
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-white text-gray-700 border'
+                        ? "bg-blue-500 text-white"
+                        : "bg-white text-gray-700 border"
                     }`}
                   >
                     {i + 1}
                   </button>
                 </li>
-              )
+              ),
             )}
           </ul>
         </nav>

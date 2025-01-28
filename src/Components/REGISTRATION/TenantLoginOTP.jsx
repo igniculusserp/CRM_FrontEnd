@@ -10,8 +10,11 @@ import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
 
 import { main_base_url } from "./../../Config/config";
 import { GiDiamonds } from "react-icons/gi";
-import { showSuccessToast, showErrorToast } from "./../../utils/toastNotifications";
-
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "./../../utils/toastNotifications";
+import { FaStarOfLife } from "react-icons/fa";
 
 export default function TenantLoginOTP() {
   const navigate = useNavigate();
@@ -20,7 +23,7 @@ export default function TenantLoginOTP() {
   const [resendDisabled, setResendDisabled] = useState(true); // Initialize to true
   const [countdown, setCountdown] = useState(120);
 
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   // Countdown logic for OTP resend
   useEffect(() => {
@@ -52,7 +55,7 @@ export default function TenantLoginOTP() {
 
   const handleChange = (event) => {
     const newOtp = event.target.value;
-    
+
     setOtp(newOtp); // Update state
     localStorage.setItem("otp", newOtp); // Store OTP in localStorage
     console.log(newOtp, "dd");
@@ -62,35 +65,29 @@ export default function TenantLoginOTP() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-
-    // if (otp === '689741') {
-    //   localStorage.setItem("otp", newOtp);  // Save the correct OTP
-    //   navigate('/sidebar');  // Redirect to sidebar if OTP is correct
-    //   return;  // Exit the function if OTP is valid, no need to proceed further
-    // }
-
     //validation Added for OTP
-    if(otp.length < 1 ){
-      showErrorToast('OTP field is empty')
-    }
-    else if(otp.length > 6){
-      showErrorToast('OTP cannot be more than 6 digits')
-    }
-    else if(otp.length < 6){
-      showErrorToast('OTP cannot be less than 6 digits')
+    if (otp.length < 1) {
+      showErrorToast("OTP field is empty");
+    } else if (otp.length > 6) {
+      showErrorToast("OTP cannot be more than 6 digits");
+    } else if (otp.length < 6) {
+      showErrorToast("OTP cannot be less than 6 digits");
     }
 
     const formValues = { emailid: email, otp: otp };
 
     try {
-      const response = await axios.post(`${main_base_url}/Users/verify/otp`, formValues);
+      const response = await axios.post(
+        `${main_base_url}/Users/verify/otp`,
+        formValues,
+      );
       const { isSucess, message } = response.data;
 
       if (isSucess) {
         showErrorToast(message);
-      } else if(!isSucess) {
+      } else if (!isSucess) {
         showSuccessToast(message);
-        navigate("/sidebar");
+        navigate("/panel");
       }
     } catch (error) {
       showErrorToast(error.response.data.message);
@@ -104,11 +101,11 @@ export default function TenantLoginOTP() {
       if (!storedEmail) {
         throw new Error("Email not found");
       }
-      
+
       const response = await axios.post(`${main_base_url}/Users/send/otp`, {
         Email: storedEmail,
       });
-  
+
       if (response.data.status === 200) {
         setResendDisabled(true);
         showSuccessToast("OTP Sent");
@@ -120,8 +117,6 @@ export default function TenantLoginOTP() {
       showErrorToast("Failed to resend OTP: " + error.message);
     }
   };
-  
-
 
   return (
     <>
@@ -156,36 +151,50 @@ export default function TenantLoginOTP() {
           <div className="flex flex-col justify-center mx-10 md:mx-4 px-3 mt-8 bg-white py-3 rounded-2xl">
             <div className="flex text-2xl font-semibold gap-3 items-center">
               <GiDiamonds className="text-3xl hidden md:block " />
-              <h1>
-                Verify OTP 
-              </h1>
+              <h1>Verify OTP</h1>
             </div>
 
             <div className="flex sm:mx-10">
-              <p className=" text-gray-500">2-FA Enabled for your account, please verify </p>
+              <p className=" text-gray-500">
+                2-FA Enabled for your account, please verify{" "}
+              </p>
             </div>
 
             <div className="mt-8 md:mt-16">
               <form onSubmit={handleSubmit} className="flex flex-col mx-10">
-                <label htmlFor="forgetemail" className="text-xs font-medium text-gray-700">
-                  Enter OTP
+                <label
+                  htmlFor="forgetemail"
+                  className="text-xs font-medium text-gray-700"
+                >
+                  <span className="flex gap-1">
+                    Please enter OTP here
+                    <FaStarOfLife size={8} className="text-red-500" />
+                  </span>
                 </label>
                 <input
-                  type="number"
+                  type="text"
+                  maxLength={6}
                   name="otp"
                   value={otp} // Added OTP state binding
                   className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm"
                   onChange={handleChange} // Added onChange handler
                   placeholder="XXX-XXX"
+                  onWheel={(e) => e.target.blur()} // Disable scroll
+                  onInput={(e) => {
+                    e.target.value = e.target.value.replace(
+                      /[a-zA-Z+\-{}\|=\[\]\s]/g,
+                      "",
+                    ); // Removes letters, symbols, and whitespaces
+                  }}
                 />
                 <div className="flex flex-col justify-center items-center gap-2 mt-6">
                   <div className="text-sm">
-                    <p>Code has been sent to your mail address</p>
+                    <p>OTP has been sent to your mail address</p>
                     <p className="text-center text-cyan-500">{email}</p>
                   </div>
                   <div className="mt-6">
                     <span className="text-sm">This code will expire in </span>
-                    <span className="text-red-500">{countdown}{' '}</span>
+                    <span className="text-red-500">{countdown} </span>
                     <span className="text-sm">sec's</span>
                   </div>
                 </div>

@@ -22,7 +22,7 @@ const LeadAssignModal = ({ onClose }) => {
     }
   };
 
-//   --------------------------------------------------SUBMIT-----------------------------------
+  //   --------------------------------------------------SUBMIT-----------------------------------
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -50,20 +50,18 @@ const LeadAssignModal = ({ onClose }) => {
       await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/LeadOpration/leads/multipleAssign`,
         formData_POST,
-        config
+        config,
       );
 
       alert("Leads Allotment successfully!");
       onClose();
-    // window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.error("Error response:", error.response);
     } finally {
       setLoading(false);
     }
   };
-
-  
 
   // ------------------------------------Assigned To Dropdown -----------------------------------
 
@@ -82,7 +80,7 @@ const LeadAssignModal = ({ onClose }) => {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/Alluser`,
-        config
+        config,
       );
       setassigned_ToDropDown(response.data);
     } catch (error) {
@@ -102,7 +100,7 @@ const LeadAssignModal = ({ onClose }) => {
   const handleDropdownassigned_ToDropDown = (assigned_To_Username) => {
     setdefaultTextassigned_ToDropDown(assigned_To_Username);
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
-    setAssignedTo(assigned_To_Username); 
+    setAssignedTo(assigned_To_Username);
   };
 
   return (
@@ -169,14 +167,14 @@ const LeadAssignModal = ({ onClose }) => {
                                     key={key}
                                     onClick={() =>
                                       handleDropdownassigned_ToDropDown(
-                                        userName
+                                        userName,
                                       )
                                     }
                                     className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                                   >
                                     {userName}-({role})
                                   </li>
-                                )
+                                ),
                               )}
                             </ul>
                           </div>

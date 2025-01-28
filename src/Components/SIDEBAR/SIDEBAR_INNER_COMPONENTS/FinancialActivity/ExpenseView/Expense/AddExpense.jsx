@@ -5,7 +5,7 @@ import { FaAngleDown } from "react-icons/fa";
 
 //external Packages
 import axios from "axios";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import "react-quill/dist/quill.snow.css";
 
 import { IoInformationCircle } from "react-icons/io5";
@@ -14,15 +14,17 @@ import { tenant_base_url, protocal_url } from "../../../../../../Config/config";
 import { getHostnamePart } from "../../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 import { ToastContainer } from "react-toastify";
-import { showSuccessToast, showErrorToast } from "../../../../../../utils/toastNotifications";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "../../../../../../utils/toastNotifications";
 
 export default function AddExpense({ setActive, setShowTopSection }) {
-
   //name for url
   const name = getHostnamePart();
-  
+
   //date for passing by default date in an option
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
 
   const [finance, setFinance] = useState({
     headName: "",
@@ -64,12 +66,10 @@ export default function AddExpense({ setActive, setShowTopSection }) {
         lastmodifiedby: null,
       };
 
-     
-
       const response = await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/add`,
         formData_POST,
-        config
+        config,
       );
       if (response.data.isSuccess) {
         showSuccessToast("Expense added successfully!");
@@ -78,7 +78,7 @@ export default function AddExpense({ setActive, setShowTopSection }) {
       // Redirect after a short delay
     } catch (error) {
       console.log(error);
-      showErrorToast('failed');
+      showErrorToast("failed");
     }
   };
 
@@ -98,11 +98,9 @@ export default function AddExpense({ setActive, setShowTopSection }) {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/headsdescriptions/getall`,
-        config
+        config,
       );
       setleadStatus(response.data.data);
-
-      console.log("status:", response.data.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
@@ -111,7 +109,6 @@ export default function AddExpense({ setActive, setShowTopSection }) {
 
   useEffect(() => {
     handleLeadStatus();
-
   }, []);
 
   const [defaultTextLeadStatusDropDown, setdefaultTextLeadStatusDropDown] =
@@ -132,14 +129,11 @@ export default function AddExpense({ setActive, setShowTopSection }) {
     }));
   };
 
-
   //----------------------------------------------------------handleCancel---------------------------------------------
   const handleCancel = () => {
     setActive(true);
     setShowTopSection(true);
   };
-
-
 
   return (
     <>
@@ -172,61 +166,61 @@ export default function AddExpense({ setActive, setShowTopSection }) {
               {/* -------------1------------- */}
               {/* -------------HeadName------------- */}
               <div className="grid gap-2 p-2">
-
-              <div className="flex space-x-4">
-
-                <div className="flex flex-col w-1/2 relative">
-                  <label
-                    htmlFor="leadesStatus"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Head Name
-                  </label>
-                  <div
-                    className="relative"
-                    onClick={toggleDropdownLeadStatus}
-                    onMouseLeave={() => setisDropdownVisibleLeadStatus(false)}
-                  >
-                    <button
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                      id="LeadStatusDropDown"
-                      type="button"
+                <div className="flex space-x-4">
+                  <div className="flex flex-col w-1/2 relative">
+                    <label
+                      htmlFor="leadesStatus"
+                      className="text-sm font-medium text-gray-700"
                     >
-                      {finance.headName != ""
-                        ? finance.headName
-                        : defaultTextLeadStatusDropDown}
-                      <FaAngleDown className="ml-2 text-gray-400" />
-                    </button>
-                    {isDropdownVisibleLeadStatus && (
-                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
-                        <ul className="py-2 text-sm text-gray-700">
-                        {leadStatus.length > 0 ? (
-                          leadStatus.map(({ i, headDescription }) => (
-                            <li
-                              key={i}
-                              onClick={() => handleDropdownLeadStatus(headDescription)}
-                              className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                            >
-                              {headDescription}
-                            </li>
-                            ))
-                          ) : (
-                            <li className="flex items-center px-4 py-2 text-center gap-1">
-                              <IoInformationCircle
-                                size={25}
-                                className="text-cyan-600"
-                              />{" "}
-                              Expense Head is not available. Go to{" "}
-                              <span className="font-bold">
-                                Settings - Expense Head{" "}
-                              </span>
-                            </li>
-                          )}
-                        </ul>
-                      </div>
-                    )}
+                      Head Name
+                    </label>
+                    <div
+                      className="relative"
+                      onClick={toggleDropdownLeadStatus}
+                      onMouseLeave={() => setisDropdownVisibleLeadStatus(false)}
+                    >
+                      <button
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        id="LeadStatusDropDown"
+                        type="button"
+                      >
+                        {finance.headName != ""
+                          ? finance.headName
+                          : defaultTextLeadStatusDropDown}
+                        <FaAngleDown className="ml-2 text-gray-400" />
+                      </button>
+                      {isDropdownVisibleLeadStatus && (
+                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                          <ul className="py-2 text-sm text-gray-700">
+                            {leadStatus.length > 0 ? (
+                              leadStatus.map(({ i, headDescription }) => (
+                                <li
+                                  key={i}
+                                  onClick={() =>
+                                    handleDropdownLeadStatus(headDescription)
+                                  }
+                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                >
+                                  {headDescription}
+                                </li>
+                              ))
+                            ) : (
+                              <li className="flex items-center px-4 py-2 text-center gap-1">
+                                <IoInformationCircle
+                                  size={25}
+                                  className="text-cyan-600"
+                                />{" "}
+                                Expense Head is not available. Go to{" "}
+                                <span className="font-bold">
+                                  Settings - Expense Head{" "}
+                                </span>
+                              </li>
+                            )}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
 
                   <div className="flex flex-col w-1/2">
                     <label
@@ -242,13 +236,10 @@ export default function AddExpense({ setActive, setShowTopSection }) {
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                     />
-
+                  </div>
                 </div>
-              </div>
 
-
-
-              {/* -------------2------------- */}
+                {/* -------------2------------- */}
                 {/* -------------Amount------------- */}
                 <div className="flex space-x-4">
                   <div className="flex flex-col w-1/2">
@@ -256,7 +247,7 @@ export default function AddExpense({ setActive, setShowTopSection }) {
                       htmlFor="amount"
                       className="text-sm font-medium text-gray-700"
                     >
-                    Amount
+                      Amount
                     </label>
                     <input
                       type="number"
@@ -274,7 +265,7 @@ export default function AddExpense({ setActive, setShowTopSection }) {
                       htmlFor="refaranceNo"
                       className="text-sm font-medium text-gray-700"
                     >
-                    Reference Number
+                      Reference Number
                     </label>
                     <input
                       type="text"
@@ -287,47 +278,43 @@ export default function AddExpense({ setActive, setShowTopSection }) {
                   </div>
                 </div>
 
-              {/* -------------3------------- */}
+                {/* -------------3------------- */}
 
                 <div className="flex space-x-4">
-                <div className="flex flex-col w-full">
-                  <label
-                    htmlFor="remarks"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Remark
-                  </label>
-                  <input
-                    type="text"
-                    name="remarks"
-                    value={finance.remarks}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                    onChange={handleChange}
-                    placeholder="Enter Remark"
-                  />
+                  <div className="flex flex-col w-full">
+                    <label
+                      htmlFor="remarks"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Remark
+                    </label>
+                    <input
+                      type="text"
+                      name="remarks"
+                      value={finance.remarks}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Enter Remark"
+                    />
+                  </div>
                 </div>
-                
               </div>
 
-
-            </div>
-
-            {/* -------------Button------------- */}
-            <div className="flex justify-end gap-5 mb-6">
-              <div className="flex justify-end mr-5">
-                <button
-                  type="submit"
-                  className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
-                >
-                  Save
-                </button>
+              {/* -------------Button------------- */}
+              <div className="flex justify-end gap-5 mb-6">
+                <div className="flex justify-end mr-5">
+                  <button
+                    type="submit"
+                    className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                  >
+                    Save
+                  </button>
+                </div>
               </div>
             </div>
-            </div>
-
-          </div >
-        </form >
-      </div >
+          </div>
+        </form>
+      </div>
     </>
   );
 }

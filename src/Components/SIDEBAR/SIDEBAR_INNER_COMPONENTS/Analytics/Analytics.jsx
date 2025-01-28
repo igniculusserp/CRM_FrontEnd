@@ -49,7 +49,7 @@ export default function Analytics() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Analytics/totalsales/byusertoken`,
-        config
+        config,
       );
       if (response.status === 200) {
         const sales = response.data;
@@ -76,7 +76,7 @@ export default function Analytics() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Analytics/todaytotalsales/byusertoken`,
-        config
+        config,
       );
 
       if (response.status === 200) {
@@ -104,7 +104,7 @@ export default function Analytics() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Analytics/todayfollowup/byusertoken`,
-        config
+        config,
       );
 
       if (response.status === 200) {
@@ -131,7 +131,7 @@ export default function Analytics() {
       console.log("Total Sales", totalSales);
       const growthPercentage = calculateGrowthPercentage(
         totalSales.currentMonthSalesAmount,
-        totalSales.previousMonthSalesAmount
+        totalSales.previousMonthSalesAmount,
       );
       console.log("Growth Percentage:", growthPercentage + "%");
       setGrowthPercentage(growthPercentage);
@@ -162,7 +162,7 @@ export default function Analytics() {
       console.log("Total Sales", todaySales);
       const growthPercentage = calculateTodaysGrowthPercentage(
         todaySales.todaySalesAmount,
-        todaySales.previousDaySalesAmount
+        todaySales.previousDaySalesAmount,
       );
       console.log("Growth Percentage:", growthPercentage + "%");
       setTodaysGrowthPercentage(growthPercentage);
@@ -189,7 +189,7 @@ export default function Analytics() {
       console.log("Total Sales", todayFollowup);
       const growthPercentage = calculatefollowUpGrowthPercentage(
         todayFollowup.todayFollowup,
-        todayFollowup.previousDayFollowup
+        todayFollowup.previousDayFollowup,
       );
       console.log("Growth Percentage:", growthPercentage + "%");
       setFollowUpGrowthPercentage(growthPercentage);

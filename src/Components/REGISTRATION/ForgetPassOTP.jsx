@@ -19,12 +19,12 @@ import {
 export default function ForgetPassOTP() {
   const navigate = useNavigate();
   const [otp, setotp] = useState("");
-  
+
   //otp resend state
-  const [resendDisabled, setResendDisabled] = useState(true); 
+  const [resendDisabled, setResendDisabled] = useState(true);
 
   const [countdown, setCountdown] = useState(120);
-  
+
   const [email, setemail] = useState("");
 
   //-----------------Email Read-----------------
@@ -86,15 +86,13 @@ export default function ForgetPassOTP() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-     //validation Added for OTP
-     if(otp.length < 1 ){
-      showErrorToast('OTP field is empty')
-    }
-    else if(otp.length > 6){
-      showErrorToast('OTP cannot be more than 6 digits')
-    }
-    else if(otp.length < 6){
-      showErrorToast('OTP cannot be less than 6 digits')
+    //validation Added for OTP
+    if (otp.length < 1) {
+      showErrorToast("OTP field is empty");
+    } else if (otp.length > 6) {
+      showErrorToast("OTP cannot be more than 6 digits");
+    } else if (otp.length < 6) {
+      showErrorToast("OTP cannot be less than 6 digits");
     }
 
     const formValues = {
@@ -103,8 +101,11 @@ export default function ForgetPassOTP() {
     };
 
     try {
-      const response = await axios.post(`${main_base_url}/Users/verify/otp`, formValues);
-      const {message, isSuccess} = response.data
+      const response = await axios.post(
+        `${main_base_url}/Users/verify/otp`,
+        formValues,
+      );
+      const { message, isSuccess } = response.data;
       if (isSuccess) {
         showSuccessToast(message);
         navigate("/forgetresetpass");
@@ -185,7 +186,7 @@ export default function ForgetPassOTP() {
                   </div>
                   <div className="mt-6">
                     <span className="text-sm">This code will expire in </span>
-                    <span className="text-red-500">{countdown}{' '}</span>
+                    <span className="text-red-500">{countdown} </span>
                     <span className="text-sm">sec's </span>
                   </div>
                 </div>

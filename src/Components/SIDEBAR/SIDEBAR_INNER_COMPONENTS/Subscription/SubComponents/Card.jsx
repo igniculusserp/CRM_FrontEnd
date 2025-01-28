@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { IoMdCheckmark } from 'react-icons/io';
-import { MdCancel } from 'react-icons/md';
+import { useState } from "react";
+import { IoMdCheckmark } from "react-icons/io";
+import { MdCancel } from "react-icons/md";
 
 export default function Card({ plan, price, text, texts }) {
   const [checked, setChecked] = useState(true);

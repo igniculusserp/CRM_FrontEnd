@@ -4,13 +4,13 @@ const ChatWindow = ({ messages }) => {
       {messages?.map((msg, index) => (
         <div
           key={index}
-          className={`flex ${msg.isSender ? 'justify-end' : 'justify-start'}`}
+          className={`flex ${msg.isSender ? "justify-end" : "justify-start"}`}
         >
           <div
             className={`p-3 h-18 rounded-lg flex flex-col justify-end ${
               msg.isSender
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-200 text-gray-800'
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-800"
             }`}
           >
             <p className="text-md font-medium text-start">{msg.text}</p>

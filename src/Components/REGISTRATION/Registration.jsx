@@ -7,22 +7,24 @@ import { main_base_url } from "./../../Config/config";
 import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
 import CRMRegistrationPage from "./../../assets/images/CRMRegistrationPage.png";
 
-
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { GiDiamonds } from "react-icons/gi";
 
 import { ToastContainer } from "react-toastify";
-import { FaChevronDown } from "react-icons/fa";
+import { FaChevronDown, FaStarOfLife } from "react-icons/fa";
 
 import "react-toastify/dist/ReactToastify.css";
-import {showSuccessToast, showErrorToast} from "./../../utils/toastNotifications";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "./../../utils/toastNotifications";
 
 // EXTERNAL CSS
 import "../../ExternalCSS/ExternalCSS_Settings.css";
 
 export default function Registration() {
   const navigate = useNavigate();
-  
+
   //countries
   const [countries, setCountries] = useState([]);
   const [isOpenCountry, setIsOpenCountry] = useState(false);
@@ -34,7 +36,7 @@ export default function Registration() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCode, setSelectedCode] = useState(null);
   const [searchQueryCode, setSearchQueryCode] = useState("");
-  
+
   const [passwordEye, setPasswordEye] = useState(false);
   const [confirmPasswordEye, setConfirmPasswordEye] = useState(false);
 
@@ -47,7 +49,7 @@ export default function Registration() {
     contactNo: "",
     country: "",
     businessType: "",
-    userName: ""
+    userName: "",
   });
 
   //countryCodes--->>toggle
@@ -60,17 +62,16 @@ export default function Registration() {
     setSelectedCode(code);
     setFormValues((prev) => ({
       ...prev,
-      contactNo: prev.contactNo
+      contactNo: prev.contactNo,
     }));
     setIsOpen(false);
   };
-
 
   //countries--->>toggle
   const toggleDropdownCountry = () => {
     setIsOpenCountry(!isOpenCountry);
   };
-  
+
   //Selected countries
   const handleCountrySelect = (country) => {
     setSelectedCountry(country);
@@ -86,7 +87,7 @@ export default function Registration() {
     const fetchCountries = async () => {
       try {
         const response = await axios.get(
-          `${main_base_url}/Users/getCountryNames`
+          `${main_base_url}/Users/getCountryNames`,
         );
         setCountries(response.data);
       } catch (error) {
@@ -96,7 +97,9 @@ export default function Registration() {
 
     const fetchCountryCodes = async () => {
       try {
-        const response = await axios.get(`${main_base_url}/Users/getCountryCode`);
+        const response = await axios.get(
+          `${main_base_url}/Users/getCountryCode`,
+        );
         const countryCodeData = response.data.map((code) => ({
           value: code.mobilePrefix,
           label: code.mobilePrefix,
@@ -104,7 +107,7 @@ export default function Registration() {
           countryName: code.countryName,
         }));
         setCountryCodes(countryCodeData);
-        setCountries(countryCodeData)
+        setCountries(countryCodeData);
       } catch (error) {
         console.error("Error fetching country codes:", error);
       }
@@ -116,12 +119,14 @@ export default function Registration() {
 
   //countryCode
   const filteredCountryCodes = countryCodes.filter((code) =>
-    code.countryName?.toLowerCase()?.includes(searchQueryCode?.toLowerCase())
-);
+    code.countryName?.toLowerCase()?.includes(searchQueryCode?.toLowerCase()),
+  );
 
-//countryName
+  //countryName
   const filteredCountries = countries.filter((country) =>
-    country.countryName?.toLowerCase()?.includes(searchQueryCountry?.toLowerCase())
+    country.countryName
+      ?.toLowerCase()
+      ?.includes(searchQueryCountry?.toLowerCase()),
   );
 
   //Handle <---> Change
@@ -137,7 +142,7 @@ export default function Registration() {
   //Handle <---> Submit
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     const {
       userId,
       firstName,
@@ -149,10 +154,12 @@ export default function Registration() {
       businessType,
       userName,
     } = formValues;
-  
+
     // Check if country code and contact number are available
-    const contactNumberWithCode = selectedCode ? `${selectedCode.value}${contactNo}` : contactNo;
-  
+    const contactNumberWithCode = selectedCode
+      ? `${selectedCode.value}${contactNo}`
+      : contactNo;
+
     const predefinedValues = {
       userId,
       firstName,
@@ -168,49 +175,52 @@ export default function Registration() {
       isActive: true,
       userName: "",
     };
-  
+
     // Validation
     if (!formValues.firstName) {
-      showErrorToast('Please enter first name');
+      showErrorToast("Please enter first name");
       return; // Exit function if validation fails
     }
-  
+
     if (!formValues.lastName) {
-      showErrorToast('Please enter last name');
+      showErrorToast("Please enter last name");
       return; // Exit function if validation fails
     }
 
     if (!formValues.email) {
-      showErrorToast('Please enter email');
+      showErrorToast("Please enter email");
       return; // Exit function if validation fails
     }
 
-    if (!formValues.password ) {
-      showErrorToast('Please enter password');
+    if (!formValues.password) {
+      showErrorToast("Please enter password");
       return; // Exit function if validation fails
     }
 
-    if (!formValues.confirmPassword ) {
-      showErrorToast('Please enter confirm password ');
+    if (!formValues.confirmPassword) {
+      showErrorToast("Please enter confirm password ");
       return; // Exit function if validation fails
     }
 
-    if(formValues.password !== formValues.confirmPassword ){
-      showErrorToast("Password doesn't match ")
+    if (formValues.password !== formValues.confirmPassword) {
+      showErrorToast("Password doesn't match ");
       return;
     }
-  
+
     if (!formValues.businessType) {
-      showErrorToast('Please select business type ');
+      showErrorToast("Please select business type ");
       return; // Exit function if validation fails
     }
-  
+
     // All validations passed, proceed with submission
     try {
-      const response = await axios.post(`${main_base_url}/Users`, predefinedValues);
+      const response = await axios.post(
+        `${main_base_url}/Users`,
+        predefinedValues,
+      );
       localStorage.setItem("myData", response.data.userId);
       localStorage.setItem("registrationdata", JSON.stringify(response));
-  
+
       const { userId } = response.data;
       navigate(`/verifyotp/${userId}`);
     } catch (error) {
@@ -263,7 +273,7 @@ export default function Registration() {
 
           <div className="flex flex-col justify-center mx-10 md:mx-4 px-3 mt-8  bg-white py-3 rounded-2xl">
             <div className="flex text-2xl font-semibold gap-3 items-center">
-              <GiDiamonds className="text-3xl hidden md:block" />
+              <GiDiamonds className="text-3xl hidden md:block hover:skew-x-12 	" />
               <h1 className="">Create your Account</h1>
             </div>
 
@@ -278,7 +288,10 @@ export default function Registration() {
                   htmlFor="firstName"
                   className="text-xs font-medium text-gray-700"
                 >
-                  First Name
+                  <span className="flex gap-1">
+                    First Name
+                    <FaStarOfLife size={7} className="text-red-500" />
+                  </span>
                   <input
                     type="text"
                     name="firstName"
@@ -293,7 +306,10 @@ export default function Registration() {
                   htmlFor="lastName"
                   className="text-xs font-medium text-gray-700"
                 >
-                  Last Name
+                  <span className="flex gap-1">
+                    Last Name
+                    <FaStarOfLife size={7} className="text-red-500" />
+                  </span>
                   <input
                     type="text"
                     name="lastName"
@@ -309,7 +325,10 @@ export default function Registration() {
                   htmlFor="email"
                   className="text-xs font-medium text-gray-700"
                 >
-                  Email
+                  <span className="flex gap-1">
+                    Email
+                    <FaStarOfLife size={7} className="text-red-500" />
+                  </span>
                   <input
                     type="email"
                     name="email"
@@ -325,7 +344,11 @@ export default function Registration() {
                   htmlFor="password"
                   className="text-xs font-medium text-gray-700 relative block"
                 >
-                  Password
+                  <span className="flex gap-1">
+                    Password
+                    <FaStarOfLife size={7} className="text-red-500" />
+                  </span>
+
                   <input
                     type={passwordEye ? "text" : "password"}
                     name="password"
@@ -362,7 +385,11 @@ export default function Registration() {
                   htmlFor="confirmPassword"
                   className="text-xs font-medium text-gray-700  relative block"
                 >
-                  Confirm Password
+                  <span className="flex gap-1">
+                    Confirm Password
+                    <FaStarOfLife size={7} className="text-red-500" />
+                  </span>
+
                   <input
                     type={confirmPasswordEye ? "text" : "password"}
                     name="confirmPassword"
@@ -394,123 +421,143 @@ export default function Registration() {
                   </button>
                 </label>
 
-                   {/*----------> Contact No <---------- */}
-               <label htmlFor="Contact" className="text-xs font-medium text-gray-700">
-               Contact
-               <div className="flex items-center border rounded-md">
-                 <div className=" w-28 text-xs">
-                   <button
-                     type="button"
-                     onClick={toggleDropdown}
-                     className="rounded px-4 py-2 bg-white"
-                   >
-                     {selectedCode ? (
-                       <div className="flex items-center">
-                         <img
-                           src={selectedCode.img}
-                           alt="flag"
-                           className="w-6 h-4 mr-2 "
-                           onError={(e) => e.target.style.display = 'none'} // Hides image if not found
-                         />
-                         {selectedCode.label}
-                       </div>
-                     ) : (
-                  <div className="w-10">Country Code</div>
-                     )}
-                   </button>
-
-                   {isOpen && (
-                     <div className="absolute  w-96 border rounded bg-white shadow-lg z-10 h-48 overflow-y-scroll code">
-                       <input
-                         type="text"
-                         placeholder="Search Country"
-                         value={searchQueryCode}
-                         onChange={(e) => setSearchQueryCode(e.target.value)}
-                         className="w-full px-4 py-2 border-b outline-none"
-                       />
-                       {filteredCountryCodes.map((code, index) => (
-                         <div
-                           key={index}
-                           onClick={() => handleSelect(code)}
-                           className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                         >
-                           <img
-                             src={code.img}
-                             alt="flag"
-                             className="w-6 h-4 mr-2"
-                             onError={(e) => e.target.style.display = 'none'} // Hides image if not found
-                           />
-                           {code.label} - {code.countryName}
-                         </div>
-                       ))}
-                     </div>
-                   )}
-                 </div>
-                 <input
-                   type="text"
-                   name="contactNo"
-                   value={formValues.contactNo}
-                   onChange={handleChange}
-                   className="mt-1 py-2 px-2 rounded-md w-full outline-none text-sm flex justify-between"
-                   placeholder="Alternate Number"
-                 />
-               </div>
-             </label>
-
-              {/*----------> Country Selection <---------- */}
-              <label htmlFor="country" className="text-xs font-medium text-gray-700">
-                Country
-                <div className="flex items-center border rounded-md">
-                  <div className="relative justify-center items-center w-full">
-                    <button
-                      type="button"
-                      onClick={toggleDropdownCountry}
-                      className="rounded px-4 py-2 bg-white w-full"
-                    >
-                      {selectedCountry ? (
-                        <div className="flex">
-                          <img
-                            src={selectedCountry.img}
-                            alt="flag"
-                            className="w-6 h-4 mr-2"
-                            onError={(e) => e.target.style.display = 'none'} // Hides image if not found
-                          />
-                          {selectedCountry.countryName}
-                        </div>
-                      ) : (
-                        <div className="flex justify-between text-gray-400 font-medium text-ms">Select Country <FaChevronDown/> </div>
-                      )}
-                    </button>
-
-                    {isOpenCountry && (
-                      <div className="absolute w-full border rounded bg-white shadow-lg z-10 h-36 overflow-y-scroll ">
-                        <input
-                          type="text"
-                          placeholder="Search Country"
-                          value={searchQueryCountry}
-                          onChange={(e) => setSearchQueryCountry(e.target.value)}
-                          className="w-full px-8 py-2 border-b outline-none "
-                        />
-                        {filteredCountries.map((code, index) => (
-                          <div
-                            key={index}
-                            onClick={() => handleCountrySelect(code)}
-                            className="w-full flex px-4 py-2 hover:bg-gray-100 cursor-pointer "
-                          >
+                {/*----------> Contact No <---------- */}
+                <label
+                  htmlFor="Contact"
+                  className="text-xs font-medium text-gray-700"
+                >
+                  <span className="flex gap-1">
+                    Contact
+                    <FaStarOfLife size={7} className="text-red-500" />
+                  </span>
+                  <div className="flex items-center border rounded-md">
+                    <div className=" w-28 text-xs">
+                      <button
+                        type="button"
+                        onClick={toggleDropdown}
+                        className="rounded px-4 py-2 bg-white"
+                      >
+                        {selectedCode ? (
+                          <div className="flex items-center">
                             <img
-                              src={code.img}
+                              src={selectedCode.img}
+                              alt="flag"
+                              className="w-6 h-4 mr-2 "
+                              onError={(e) => (e.target.style.display = "none")} // Hides image if not found
+                            />
+                            {selectedCode.label}
+                          </div>
+                        ) : (
+                          <div className="w-10">Country Code</div>
+                        )}
+                      </button>
+
+                      {isOpen && (
+                        <div className="absolute  w-96 border rounded bg-white shadow-lg z-10 h-48 overflow-y-scroll code">
+                          <input
+                            type="text"
+                            placeholder="Search Country"
+                            value={searchQueryCode}
+                            onChange={(e) => setSearchQueryCode(e.target.value)}
+                            className="w-full px-4 py-2 border-b outline-none"
+                          />
+                          {filteredCountryCodes.map((code, index) => (
+                            <div
+                              key={index}
+                              onClick={() => handleSelect(code)}
+                              className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                            >
+                              <img
+                                src={code.img}
+                                alt="flag"
+                                className="w-6 h-4 mr-2"
+                                onError={(e) =>
+                                  (e.target.style.display = "none")
+                                } // Hides image if not found
+                              />
+                              {code.label} - {code.countryName}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <input
+                      type="text"
+                      name="contactNo"
+                      value={formValues.contactNo}
+                      onChange={handleChange}
+                      className="mt-1 py-2 px-2 rounded-md w-full outline-none text-sm flex justify-between"
+                      placeholder="Alternate Number"
+                    />
+                  </div>
+                </label>
+
+                {/*----------> Country Selection <---------- */}
+                <label
+                  htmlFor="country"
+                  className="text-xs font-medium text-gray-700"
+                >
+                  <span className="flex gap-1">
+                    Country
+                    <FaStarOfLife size={7} className="text-red-500" />
+                  </span>
+                  <div className="flex items-center border rounded-md">
+                    <div className="relative justify-center items-center w-full">
+                      <button
+                        type="button"
+                        onClick={toggleDropdownCountry}
+                        className="rounded px-4 py-2 bg-white w-full"
+                      >
+                        {selectedCountry ? (
+                          <div className="flex">
+                            <img
+                              src={selectedCountry.img}
                               alt="flag"
                               className="w-6 h-4 mr-2"
-                              onError={(e) => e.target.style.display = 'none'} // Hides image if not found
+                              onError={(e) => (e.target.style.display = "none")} // Hides image if not found
                             />
-                            {code.countryName}
+                            {selectedCountry.countryName}
                           </div>
-                        ))}
-                      </div>
-                    )}
+                        ) : (
+                          <div className="flex justify-between text-gray-400 font-medium text-ms">
+                            Select Country <FaChevronDown />{" "}
+                          </div>
+                        )}
+                      </button>
+
+                      {isOpenCountry && (
+                        <div className="absolute w-full border rounded bg-white shadow-lg z-10 h-36 overflow-y-scroll ">
+                          <input
+                            type="text"
+                            placeholder="Search Country"
+                            value={searchQueryCountry}
+                            onChange={(e) =>
+                              setSearchQueryCountry(e.target.value)
+                            }
+                            className="w-full px-8 py-2 border-b outline-none "
+                          />
+                          {filteredCountries.map((code, index) => (
+                            <div
+                              key={index}
+                              onClick={() => handleCountrySelect(code)}
+                              className="w-full flex px-4 py-2 hover:bg-gray-100 cursor-pointer "
+                            >
+                              <img
+                                src={code.img}
+                                alt="flag"
+                                className="w-6 h-4 mr-2"
+                                onError={(e) =>
+                                  (e.target.style.display = "none")
+                                } // Hides image if not found
+                              />
+                              {code.countryName}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </label>
+                </label>
 
                 {/*----------> Business Selection <---------- */}
 
@@ -518,7 +565,10 @@ export default function Registration() {
                   htmlFor="confirmPassword"
                   className="text-xs font-medium text-gray-700 "
                 >
-                  Select Business
+                  <span className="flex gap-1">
+                    Select Business
+                    <FaStarOfLife size={7} className="text-red-500" />
+                  </span>
                   <select
                     id="businessInput"
                     name="businessType"
@@ -541,10 +591,7 @@ export default function Registration() {
                   Submit
                 </button>
               </form>
-
-              
             </div>
-            
           </div>
         </div>
       </div>

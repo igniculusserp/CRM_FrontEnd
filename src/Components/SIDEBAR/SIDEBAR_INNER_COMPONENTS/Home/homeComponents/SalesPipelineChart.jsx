@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
 import {
   BarChart,
   Bar,
@@ -9,25 +9,25 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from 'recharts';
+} from "recharts";
 
 // Example data
 const data = [
-  { month: 'Jan', prospecting: 200, proposal: 300, negotiation: 100 },
-  { month: 'Feb', prospecting: 250, proposal: 200, negotiation: 150 },
-  { month: 'Mar', prospecting: 150, proposal: 400, negotiation: 200 },
-  { month: 'Apr', prospecting: 280, proposal: 250, negotiation: 180 },
-  { month: 'May', prospecting: 180, proposal: 300, negotiation: 220 },
-  { month: 'Jun', prospecting: 320, proposal: 240, negotiation: 270 },
-  { month: 'Jul', prospecting: 200, proposal: 150, negotiation: 120 },
+  { month: "Jan", prospecting: 200, proposal: 300, negotiation: 100 },
+  { month: "Feb", prospecting: 250, proposal: 200, negotiation: 150 },
+  { month: "Mar", prospecting: 150, proposal: 400, negotiation: 200 },
+  { month: "Apr", prospecting: 280, proposal: 250, negotiation: 180 },
+  { month: "May", prospecting: 180, proposal: 300, negotiation: 220 },
+  { month: "Jun", prospecting: 320, proposal: 240, negotiation: 270 },
+  { month: "Jul", prospecting: 200, proposal: 150, negotiation: 120 },
 ];
 
 const SalesPipelineChart = () => {
   const [text, setText] = useState({
-    filter: '',
+    filter: "",
   });
   const [filterDropdown, setFilterDropdown] = useState(false);
-  const [filterDropdownText, setFilterDropdownText] = useState('6 Months');
+  const [filterDropdownText, setFilterDropdownText] = useState("6 Months");
 
   // TOGGLE FILTER DATE DROPDOWN
   const toggleFilterDropdown = () => {
@@ -44,17 +44,17 @@ const SalesPipelineChart = () => {
   };
 
   const filterData = [
-    { id: 1, name: '3 months' },
-    { id: 1, name: '6 months' },
-    { id: 1, name: '1 years' },
+    { id: 1, name: "3 months" },
+    { id: 1, name: "6 months" },
+    { id: 1, name: "1 years" },
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-thin text-left mb-4">Sales Pipeline</h2>
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1">
+    <div className="w-full sm:max-w-4xl  mx-auto">
+      <div className="flex items-center justify-between ">
+        <h2 className="text-lg font-normal text-left mb-4">Sales Pipeline</h2>
+        <div className="sm:flex sm:gap-2 items-center grid grid-cols-2">
+          <div className="flex items-center gap-1 ">
             <div className="w-3 h-3 rounded-sm bg-[#8884d8]"></div>
             <span>Prospecting</span>
           </div>
@@ -73,7 +73,7 @@ const SalesPipelineChart = () => {
             onMouseLeave={() => setFilterDropdown(false)}
           >
             <button
-              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 max-w-44 truncate"
+              className="py-2 px-2 border rounded-md flex justify-between items-center w-28 truncate text-sm"
               id="filter"
               type="button"
             >

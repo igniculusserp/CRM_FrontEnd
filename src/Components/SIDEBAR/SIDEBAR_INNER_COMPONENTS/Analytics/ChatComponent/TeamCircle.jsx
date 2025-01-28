@@ -1,11 +1,11 @@
-import { PieChart, Pie, Cell } from 'recharts';
+import { PieChart, Pie, Cell } from "recharts";
 
 const data = [
-  { name: 'Group A', value: 50 },
-  { name: 'Group B', value: 50 },
+  { name: "Group A", value: 50 },
+  { name: "Group B", value: 50 },
 ];
 
-const COLORS = ['#CFFAFE', '#06B6D4'];
+const COLORS = ["#CFFAFE", "#06B6D4"];
 
 const TeamCircle = () => {
   return (

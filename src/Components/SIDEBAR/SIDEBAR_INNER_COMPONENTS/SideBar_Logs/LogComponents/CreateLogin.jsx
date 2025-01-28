@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
-import ReactQuill from 'react-quill';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
+import ReactQuill from "react-quill";
+import { Link } from "react-router-dom";
 
 export default function CreateLogin() {
-  const [description, setDescription] = useState('Hello, ');
+  const [description, setDescription] = useState("Hello, ");
   const [isEditMode, setIsEditMode] = useState(false);
   const [editLogs, setEditLogs] = useState({
-    fullName: '',
-    fromLoginDate: '',
-    toLoginDate: '',
+    fullName: "",
+    fromLoginDate: "",
+    toLoginDate: "",
   });
 
   // HANDLE INPUT CHANGE
@@ -31,16 +31,16 @@ export default function CreateLogin() {
   const [
     defaultFromLoginDateDropdownText,
     setDefaultFromLoginDateDropdownText,
-  ] = useState('From Login Date');
+  ] = useState("From Login Date");
   const [toLoginDateDropdown, setToLoginDateDropdown] = useState(false);
   const [defaultToLoginDateDropdownText, setDefaultToLoginDateDropdownText] =
-    useState('To Login Date');
+    useState("To Login Date");
 
   // USERNAME DUMMY DATA
   const fromLoginDate = [
-    { key: 1, name: '09/10/2023' },
-    { key: 2, name: '09/10/2023' },
-    { key: 3, name: '09/10/2023' },
+    { key: 1, name: "09/10/2023" },
+    { key: 2, name: "09/10/2023" },
+    { key: 3, name: "09/10/2023" },
   ];
 
   // TOGGLE USERNAME DROPDOWN
@@ -59,9 +59,9 @@ export default function CreateLogin() {
 
   // USERNAME DUMMY DATA
   const toLoginDate = [
-    { key: 1, name: '09/10/2023' },
-    { key: 2, name: '09/10/2023' },
-    { key: 3, name: '09/10/2023' },
+    { key: 1, name: "09/10/2023" },
+    { key: 2, name: "09/10/2023" },
+    { key: 3, name: "09/10/2023" },
   ];
 
   // TOGGLE USERNAME DROPDOWN
@@ -83,7 +83,7 @@ export default function CreateLogin() {
       <div className="flex py-2 px-3 items-center justify-between bg-white rounded-md shadow-md">
         <h1 className="text-xl">Add Login Logs</h1>
         <Link
-          to="/sidebar/logs"
+          to="/panel/logs"
           className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
         >
           Cancel
@@ -237,7 +237,7 @@ export default function CreateLogin() {
               type="submit"
               className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
             >
-              {isEditMode ? 'Update' : 'Save'}
+              {isEditMode ? "Update" : "Save"}
             </button>
           </div>
         </div>

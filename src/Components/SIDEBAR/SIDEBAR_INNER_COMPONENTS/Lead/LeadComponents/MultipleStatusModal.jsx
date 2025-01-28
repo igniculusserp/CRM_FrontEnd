@@ -12,8 +12,10 @@ const MultipleStatusModal = ({ onClose, multiIds }) => {
   const [loading, setLoading] = useState(false);
   const [leadStatusSelected, setLeadStatusSelected] = useState("");
   const [availableLeadStatuses, setAvailableLeadStatuses] = useState([]);
-  const [isDropdownVisibleLeadStatus, setIsDropdownVisibleLeadStatus] = useState(false);
-  const [defaultTextLeadStatusDropDown, setDefaultTextLeadStatusDropDown] = useState("Select Status");
+  const [isDropdownVisibleLeadStatus, setIsDropdownVisibleLeadStatus] =
+    useState(false);
+  const [defaultTextLeadStatusDropDown, setDefaultTextLeadStatusDropDown] =
+    useState("Select Status");
 
   //----------------------------------------------- Submit function ----------------------------------------------------
   const handleSubmit = async (event) => {
@@ -42,7 +44,7 @@ const MultipleStatusModal = ({ onClose, multiIds }) => {
       await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/Lead/leads/changemultiplestatus`,
         formData_POST,
-        config
+        config,
       );
 
       alert("Status Change successfully!");
@@ -65,7 +67,7 @@ const MultipleStatusModal = ({ onClose, multiIds }) => {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
-        config
+        config,
       );
       setAvailableLeadStatuses(response.data.data);
     } catch (error) {
@@ -94,11 +96,18 @@ const MultipleStatusModal = ({ onClose, multiIds }) => {
         <h2 className="text-xl font-semibold mb-4">Multiple Change Status</h2>
         <form onSubmit={handleSubmit}>
           <div className="shadow-lg">
-            <h1 className="py-2 px-1 rounded-t-lg bg-cyan-500 text-white text-md font-medium">Details</h1>
+            <h1 className="py-2 px-1 rounded-t-lg bg-cyan-500 text-white text-md font-medium">
+              Details
+            </h1>
             <div className="bg-white px-1 rounded-b-xl">
               <div className="grid gap-2 p-2">
                 <div className="flex flex-col w-full relative">
-                  <label htmlFor="leadStatusSelected" className="text-sm font-medium text-gray-700">Lead Status</label>
+                  <label
+                    htmlFor="leadStatusSelected"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Lead Status
+                  </label>
                   <div className="relative" onClick={toggleDropdownLeadStatus}>
                     <button
                       className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"

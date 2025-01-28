@@ -54,7 +54,7 @@ export default function GeneralReportTable({ currentReports }) {
           </th>
           {/* LEAD STATUS */}
           <th className="px-2 py-3 text-left border-r font-medium">
-              <span className="text-nowrap text-sm">Lead Status</span>
+            <span className="text-nowrap text-sm">Lead Status</span>
           </th>
         </tr>
       </thead>
@@ -73,7 +73,7 @@ export default function GeneralReportTable({ currentReports }) {
             {/* CREATED START DATE */}
             <td
               className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-blue-600"
-              onClick={() => navigate(`/sidebar/Client_SO/${report.id}`)}
+              onClick={() => navigate(`/panel/clientso/${report.id}`)}
             >
               {report.createdStartDate}
             </td>

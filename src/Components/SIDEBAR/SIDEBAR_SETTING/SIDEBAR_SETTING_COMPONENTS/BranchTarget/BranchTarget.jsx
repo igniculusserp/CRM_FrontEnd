@@ -29,12 +29,12 @@ export default function BranchTarget() {
   ]);
 
   const [formData, setFormData] = useState({
-      id: "",
-      targetPrior: "",
-      assignTo: "",
-      targetAmount: "",
-      setTarget: "",
-      memberName: "",
+    id: "",
+    targetPrior: "",
+    assignTo: "",
+    targetAmount: "",
+    setTarget: "",
+    memberName: "",
   });
 
   const [editLead, setEditLead] = useState(null);
@@ -42,8 +42,10 @@ export default function BranchTarget() {
 
   // assignTo
   const [assignTo, setassignTo] = useState([]);
-  const [defaultTextassignToDropDown, setDefaultTextassignToDropDown] = useState("Select Assigned");
-  const [isDropdownVisibleassignTo, setIsDropdownVisibleassignTo] =useState(false); 
+  const [defaultTextassignToDropDown, setDefaultTextassignToDropDown] =
+    useState("Select Assigned");
+  const [isDropdownVisibleassignTo, setIsDropdownVisibleassignTo] =
+    useState(false);
 
   const handleActiveState = () => {
     setActive(!active);
@@ -80,7 +82,7 @@ export default function BranchTarget() {
     e.preventDefault();
 
     // Validation check
-    if (!formData.senderEmail || !formData.port ) {
+    if (!formData.senderEmail || !formData.port) {
       alert("Please fill in all fields before submitting.");
       return;
     }
@@ -128,7 +130,7 @@ export default function BranchTarget() {
         `${protocal_url}${
           window.location.hostname.split(".")[0]
         }.${tenant_base_url}/Admin/leadstatus/getall`,
-        config
+        config,
       );
       setplanType(response.data.data);
       console.log("Plan data:", response.data.data);
@@ -146,18 +148,18 @@ export default function BranchTarget() {
       <div className="m-3 min-w-screen">
         {active ? (
           <>
-            <div className="flex min-w-screen justify-between items-center">
+            <div className="flex min-w-screen justify-between items-center flex-wrap gap-5">
               <h1 className="text-3xl font-medium">Branch Target</h1>
               <button
                 onClick={handleActiveState}
                 className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
               >
-             Add Branch Target
+                Add Branch Target
               </button>
             </div>
-            <div className="overflow-x-auto mt-3">
-              <div className="min-w-full overflow-hidden rounded-md">
-                <table className="min-w-full bg-white">
+            <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
+              <div className="min-w-full rounded-md leads_Table_Container">
+                <table className="min-w-full bg-white leads_Table">
                   <thead>
                     <tr className="border-gray-300 border-b-2">
                       <th className="px-1 py-3">
@@ -183,20 +185,20 @@ export default function BranchTarget() {
                       </th>
 
                       <th className="px-2 py-3 text-left border-r font-medium">
-                      <div className="flex justify-between items-center text-sm">
-                        <span>Set Target</span>
-                        <FaBars />
-                      </div>
-                    </th>
+                        <div className="flex justify-between items-center text-sm">
+                          <span>Set Target</span>
+                          <FaBars />
+                        </div>
+                      </th>
 
-                    <th className="px-2 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center text-sm">
-                      <span>Member Name</span>
-                      <FaBars />
-                    </div>
-                  </th>
+                      <th className="px-2 py-3 text-left border-r font-medium">
+                        <div className="flex justify-between items-center text-sm">
+                          <span>Member Name</span>
+                          <FaBars />
+                        </div>
+                      </th>
 
-                    <th className="px-2 py-3 text-left border-r font-medium">
+                      <th className="px-2 py-3 text-left border-r font-medium">
                         <div className="flex justify-between items-center text-sm">
                           <span>Action</span>
                         </div>
@@ -218,7 +220,7 @@ export default function BranchTarget() {
                         <td className="px-2 py-4 text-sm max-w-24 break-words">
                           {user.targetPrior}
                         </td>
-                      
+
                         <td className="px-2 py-4 text-sm max-w-24 break-words">
                           {user.assignTo}
                         </td>
@@ -227,12 +229,12 @@ export default function BranchTarget() {
                         </td>
 
                         <td className="px-2 py-4 text-sm max-w-24 break-words">
-                        {user.setTarget}
-                      </td>
+                          {user.setTarget}
+                        </td>
 
-                      <td className="px-2 py-4 text-sm max-w-24 break-words">
-                      {user.memberName}
-                    </td>
+                        <td className="px-2 py-4 text-sm max-w-24 break-words">
+                          {user.memberName}
+                        </td>
                         <td className="px-2 py-4 flex gap-3 justify-center">
                           <MdEdit
                             size={25}
@@ -263,7 +265,7 @@ export default function BranchTarget() {
               </button>
             </div>
 
-           <form onSubmit={handleSubmit} className="flex">
+            <form onSubmit={handleSubmit} className="flex">
               <div className="w-full">
                 <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
                   <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
@@ -276,7 +278,8 @@ export default function BranchTarget() {
                       <div className="flex flex-col w-1/2">
                         <label
                           htmlFor="targetPrior"
-                          className="text-sm font-medium text-gray-700">
+                          className="text-sm font-medium text-gray-700"
+                        >
                           Target Prior
                         </label>
                         <input
@@ -292,20 +295,23 @@ export default function BranchTarget() {
                       <div className="flex flex-col w-1/2 relative">
                         <label
                           htmlFor="assignTo"
-                          className="text-sm font-medium text-gray-700">
+                          className="text-sm font-medium text-gray-700"
+                        >
                           Assign To
                         </label>
                         <div
                           className="relative"
                           onClick={toggleDropdownAssignToType}
-                          onMouseLeave={() => setIsDropdownVisibleassignTo(false)}
+                          onMouseLeave={() =>
+                            setIsDropdownVisibleassignTo(false)
+                          }
                         >
                           <button
                             className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                             id="DropDown"
                             type="button"
                           >
-                            {formData.assignTo ||defaultTextassignToDropDown }
+                            {formData.assignTo || defaultTextassignToDropDown}
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
 
@@ -330,8 +336,6 @@ export default function BranchTarget() {
                       </div>
                     </div>
 
-
-
                     {/* -------------2------------- */}
                     <div className="flex space-x-4">
                       {/* -------------Target Amount------------- */}
@@ -340,7 +344,7 @@ export default function BranchTarget() {
                           htmlFor="targetAmount"
                           className="text-sm font-medium text-gray-700"
                         >
-                        Target Amount
+                          Target Amount
                         </label>
                         <input
                           type="text"
@@ -357,7 +361,7 @@ export default function BranchTarget() {
                           htmlFor="setTarget"
                           className="text-sm font-medium text-gray-700"
                         >
-                        Set Target
+                          Set Target
                         </label>
                         <input
                           type="text"
@@ -369,7 +373,6 @@ export default function BranchTarget() {
                       </div>
                     </div>
 
-
                     {/* -------------3------------- */}
                     <div className="flex space-x-4">
                       {/* -------------Member Name------------- */}
@@ -378,7 +381,7 @@ export default function BranchTarget() {
                           htmlFor="memberName"
                           className="text-sm font-medium text-gray-700"
                         >
-                        Member Name
+                          Member Name
                         </label>
                         <input
                           type="text"
@@ -388,22 +391,18 @@ export default function BranchTarget() {
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                         />
                       </div>
-
-                     
                     </div>
-
 
                     {/* -------------Button------------- */}
                     <div className="mb-8">
-                    <button
-                      type="submit"
-                      className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md w-max"
-                    >
-                      {isEditMode ? "Edit Plan" : "Add Plan"}
-                    </button>
+                      <button
+                        type="submit"
+                        className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md w-max"
+                      >
+                        {isEditMode ? "Edit Plan" : "Add Plan"}
+                      </button>
                     </div>
                   </div>
-
                 </div>
               </div>
             </form>

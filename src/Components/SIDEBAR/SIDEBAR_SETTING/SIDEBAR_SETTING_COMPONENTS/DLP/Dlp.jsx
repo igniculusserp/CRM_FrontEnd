@@ -1,101 +1,103 @@
-import { useState } from 'react';
-import { FaBars } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { useState } from "react";
+import { FaBars } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 
 export default function Dlp() {
-  const [activeComponent, setActiveComponent] = useState('Table');
-  const [idGet, setIdGet] = useState('');
+  const [activeComponent, setActiveComponent] = useState("Table");
+  const [idGet, setIdGet] = useState("");
 
   const handleAdd = () => {
-    setActiveComponent('Add');
+    setActiveComponent("Add");
   };
 
   const handleCancel = () => {
-    setActiveComponent('Table');
+    setActiveComponent("Table");
   };
 
   const handleEdit = (id) => {
-    setActiveComponent('Update');
+    setActiveComponent("Update");
     setIdGet(id);
   };
 
   const data = [
     {
       id: 1,
-      title: 'Global Hunt',
-      createdBy: '12/03/2023',
-      modifiedOn: '14/03/2023',
+      title: "Global Hunt",
+      createdBy: "12/03/2023",
+      modifiedOn: "14/03/2023",
     },
     {
       id: 2,
-      title: 'Global Hunt',
-      createdBy: '12/03/2023',
-      modifiedOn: '14/03/2023',
+      title: "Global Hunt",
+      createdBy: "12/03/2023",
+      modifiedOn: "14/03/2023",
     },
     {
       id: 3,
-      title: 'Global Hunt',
-      createdBy: '12/03/2023',
-      modifiedOn: '14/03/2023',
+      title: "Global Hunt",
+      createdBy: "12/03/2023",
+      modifiedOn: "14/03/2023",
     },
     {
       id: 4,
-      title: 'Global Hunt',
-      createdBy: '12/03/2023',
-      modifiedOn: '14/03/2023',
+      title: "Global Hunt",
+      createdBy: "12/03/2023",
+      modifiedOn: "14/03/2023",
     },
     {
       id: 5,
-      title: 'Global Hunt',
-      createdBy: '12/03/2023',
-      modifiedOn: '14/03/2023',
+      title: "Global Hunt",
+      createdBy: "12/03/2023",
+      modifiedOn: "14/03/2023",
     },
     {
       id: 6,
-      title: 'Global Hunt',
-      createdBy: '12/03/2023',
-      modifiedOn: '14/03/2023',
+      title: "Global Hunt",
+      createdBy: "12/03/2023",
+      modifiedOn: "14/03/2023",
     },
     {
       id: 7,
-      title: 'Global Hunt',
-      createdBy: '12/03/2023',
-      modifiedOn: '14/03/2023',
+      title: "Global Hunt",
+      createdBy: "12/03/2023",
+      modifiedOn: "14/03/2023",
     },
     {
       id: 8,
-      title: 'Global Hunt',
-      createdBy: '12/03/2023',
-      modifiedOn: '14/03/2023',
+      title: "Global Hunt",
+      createdBy: "12/03/2023",
+      modifiedOn: "14/03/2023",
     },
     {
       id: 9,
-      title: 'Global Hunt',
-      createdBy: '12/03/2023',
-      modifiedOn: '14/03/2023',
+      title: "Global Hunt",
+      createdBy: "12/03/2023",
+      modifiedOn: "14/03/2023",
     },
     {
       id: 10,
-      title: 'Global Hunt',
-      createdBy: '12/03/2023',
-      modifiedOn: '14/03/2023',
+      title: "Global Hunt",
+      createdBy: "12/03/2023",
+      modifiedOn: "14/03/2023",
     },
     {
       id: 11,
-      title: 'Global Hunt',
-      createdBy: '12/03/2023',
-      modifiedOn: '14/03/2023',
+      title: "Global Hunt",
+      createdBy: "12/03/2023",
+      modifiedOn: "14/03/2023",
     },
   ];
 
   const DlpTable = () => {
     return (
       <div className="m-3 min-w-screen">
-        <div className="flex min-w-screen justify-between items-center">
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-screen justify-between items-center flex-wrap gap-5">
+          <div className="flex items-center gap-2">
             <h1 className="text-3xl font-medium">DLP</h1>
-            <h2 className='text-xl font-medium text-red-500 text-center'>(This feature is coming soon...)</h2>
+            <h2 className="text-xl font-medium text-red-500 text-center">
+              (This feature is coming soon...)
+            </h2>
           </div>
           <button
             onClick={handleAdd}
@@ -104,9 +106,9 @@ export default function Dlp() {
             Add Policy
           </button>
         </div>
-        <div className="overflow-x-auto mt-3">
-          <div className="min-w-full overflow-hidden rounded-md">
-            <table className="min-w-full bg-white">
+        <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
+          <div className="min-w-full rounded-md leads_Table_Container">
+            <table className="min-w-full bg-white leads_Table">
               <thead>
                 <tr className="border-gray-300 border-b-2">
                   <th className="px-1 py-3">
@@ -176,13 +178,13 @@ export default function Dlp() {
 
   const AddDlp = () => {
     const [addDlp, setAddDlp] = useState({
-      title: '',
-      description: '',
-      validFrom: '',
-      validTo: '',
-      idleTimeoutIntervalHours: '',
-      sessionDuration: '',
-      minutes: '',
+      title: "",
+      description: "",
+      validFrom: "",
+      validTo: "",
+      idleTimeoutIntervalHours: "",
+      sessionDuration: "",
+      minutes: "",
     });
 
     // Handle input changes
@@ -201,9 +203,9 @@ export default function Dlp() {
     const [selectedId, setSelectedId] = useState(1);
 
     const buttons = [
-      { id: 1, text: 'Session Time out' },
-      { id: 2, text: 'Dropbox' },
-      { id: 3, text: 'G Suite' },
+      { id: 1, text: "Session Time out" },
+      { id: 2, text: "Dropbox" },
+      { id: 3, text: "G Suite" },
     ];
 
     const handleOptionClick = (id) => {
@@ -211,21 +213,21 @@ export default function Dlp() {
     };
 
     const tableData = [
-      'Access Control Browser Violation',
-      'Access Control Geo Violation',
-      'Access Control IP Violation',
-      'Access Control Mobile Geo Violation',
-      'Access Control Mobile IP Violation',
-      'Access Control Mobile Network Violation',
+      "Access Control Browser Violation",
+      "Access Control Geo Violation",
+      "Access Control IP Violation",
+      "Access Control Mobile Geo Violation",
+      "Access Control Mobile IP Violation",
+      "Access Control Mobile Network Violation",
     ];
 
     const gTableData = [
-      'Across OU Sharing',
-      'Clipboard',
-      'Countainerize  Drive',
-      'Containerize Email',
-      'Delete',
-      'Download',
+      "Across OU Sharing",
+      "Clipboard",
+      "Countainerize  Drive",
+      "Containerize Email",
+      "Delete",
+      "Download",
     ];
 
     return (
@@ -393,8 +395,8 @@ export default function Dlp() {
                   className={`px-3 py-2 rounded font-light text-md
                 ${
                   selectedId === id
-                    ? 'bg-cyan-500 text-white'
-                    : 'bg-gray-100 text-gray-700'
+                    ? "bg-cyan-500 text-white"
+                    : "bg-gray-100 text-gray-700"
                 }
               `}
                 >
@@ -648,14 +650,14 @@ export default function Dlp() {
 
   const UpdateDlp = () => {
     const [addDlp, setAddDlp] = useState({
-      id: '',
-      title: '',
-      description: '',
-      validFrom: '',
-      validTo: '',
-      idleTimeoutIntervalHours: '',
-      sessionDuration: '',
-      minutes: '',
+      id: "",
+      title: "",
+      description: "",
+      validFrom: "",
+      validTo: "",
+      idleTimeoutIntervalHours: "",
+      sessionDuration: "",
+      minutes: "",
     });
 
     // Handle input changes
@@ -674,9 +676,9 @@ export default function Dlp() {
     const [selectedId, setSelectedId] = useState(1);
 
     const buttons = [
-      { id: 1, text: 'Session Time out' },
-      { id: 2, text: 'Dropbox' },
-      { id: 3, text: 'G Suite' },
+      { id: 1, text: "Session Time out" },
+      { id: 2, text: "Dropbox" },
+      { id: 3, text: "G Suite" },
     ];
 
     const handleOptionClick = (id) => {
@@ -684,21 +686,21 @@ export default function Dlp() {
     };
 
     const tableData = [
-      'Access Control Browser Violation',
-      'Access Control Geo Violation',
-      'Access Control IP Violation',
-      'Access Control Mobile Geo Violation',
-      'Access Control Mobile IP Violation',
-      'Access Control Mobile Network Violation',
+      "Access Control Browser Violation",
+      "Access Control Geo Violation",
+      "Access Control IP Violation",
+      "Access Control Mobile Geo Violation",
+      "Access Control Mobile IP Violation",
+      "Access Control Mobile Network Violation",
     ];
 
     const gTableData = [
-      'Across OU Sharing',
-      'Clipboard',
-      'Countainerize  Drive',
-      'Containerize Email',
-      'Delete',
-      'Download',
+      "Across OU Sharing",
+      "Clipboard",
+      "Countainerize  Drive",
+      "Containerize Email",
+      "Delete",
+      "Download",
     ];
 
     return (
@@ -866,8 +868,8 @@ export default function Dlp() {
                   className={`px-3 py-2 rounded font-light text-md
               ${
                 selectedId === id
-                  ? 'bg-cyan-500 text-white'
-                  : 'bg-gray-100 text-gray-700'
+                  ? "bg-cyan-500 text-white"
+                  : "bg-gray-100 text-gray-700"
               }
             `}
                 >
@@ -1121,14 +1123,14 @@ export default function Dlp() {
 
   return (
     <>
-      {activeComponent === 'Table' ? (
+      {activeComponent === "Table" ? (
         <DlpTable />
-      ) : activeComponent === 'Add' ? (
+      ) : activeComponent === "Add" ? (
         <AddDlp />
-      ) : activeComponent === 'Update' ? (
+      ) : activeComponent === "Update" ? (
         <UpdateDlp />
       ) : (
-        ''
+        ""
       )}
     </>
   );

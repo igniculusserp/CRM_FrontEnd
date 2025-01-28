@@ -5,7 +5,7 @@ import { FaAngleDown } from "react-icons/fa";
 
 //external Packages
 import axios from "axios";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import "react-quill/dist/quill.snow.css";
 
 import { IoInformationCircle } from "react-icons/io5";
@@ -22,7 +22,7 @@ import {
 export default function AddBrokerage({ setActive, setShowTopSection }) {
   //IMP used as ${name} in an API
   const name = getHostnamePart();
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
 
   const [finance, setFinance] = useState({
     userName: "",
@@ -30,7 +30,7 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
     brokerageAmount: "",
     referenceno: "",
     remarks: "",
-    lastmodifiedby: ""
+    lastmodifiedby: "",
   });
 
   const handleChange = (e) => {
@@ -64,12 +64,10 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
         lastmodifiedby: null,
       };
 
-
-
       const response = await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/brokeragedetail/add`,
         formData_POST,
-        config
+        config,
       );
       if (response.data.isSuccess) {
         showSuccessToast("Expense added successfully!");
@@ -78,19 +76,15 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
       // Redirect after a short delay
     } catch (error) {
       console.log(error);
-      showErrorToast('failed');
+      showErrorToast("failed");
     }
   };
-
-
 
   //----------------------------------------------------------handleCancel---------------------------------------------
   const handleCancel = () => {
     setActive(true);
     setShowTopSection(true);
   };
-
-
 
   return (
     <>
@@ -123,13 +117,7 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
               {/* -------------1------------- */}
               {/* -------------date------------- */}
               <div className="grid gap-2 p-2">
-
                 <div className="flex space-x-4">
-
-
-
-                  
-
                   <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="date"
@@ -144,10 +132,9 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                     />
-
                   </div>
 
-                    {/* -------------brokerageAmount------------- */}
+                  {/* -------------brokerageAmount------------- */}
 
                   <div className="flex flex-col w-1/2">
                     <label
@@ -166,10 +153,7 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
                       placeholder="Enter your Amount"
                     />
                   </div>
-
                 </div>
-
-
 
                 {/* -------------2------------- */}
                 <div className="flex space-x-4">
@@ -211,10 +195,7 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
                       placeholder="Enter Remark"
                     />
                   </div>
-
                 </div>
-
-
               </div>
 
               {/* -------------Button------------- */}
@@ -229,10 +210,9 @@ export default function AddBrokerage({ setActive, setShowTopSection }) {
                 </div>
               </div>
             </div>
-
-          </div >
-        </form >
-      </div >
+          </div>
+        </form>
+      </div>
     </>
   );
 }

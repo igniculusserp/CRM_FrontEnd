@@ -1,9 +1,9 @@
-import { FaBars } from 'react-icons/fa';
+import { FaBars } from "react-icons/fa";
 import PropTypes from "prop-types";
 
-export default function SendSMS({ currentSms }) {
+export default function SendEmail({ currentSms }) {
   return (
-    <table className="min-w-full bg-white">
+    <table className="min-w-full bg-white leads_Table">
       {/* ----------------- TABLE HEAD START ----------------- */}
       <thead>
         <tr className="border-gray-300 border-b-2">
@@ -11,27 +11,31 @@ export default function SendSMS({ currentSms }) {
           <th className="px-3 py-3 w-max">
             <input type="checkbox" />
           </th>
-          {/* CLIENT NAME */}
+          {/* SEGMENT */}
           <th className="px-3 py-3 text-left border-r font-medium">
             <span>Segment</span>
           </th>
-          {/* MOBILE */}
+          {/* SUBJECT */}
+          <th className="px-3 py-3 text-left border-r font-medium">
+            <span>Subject</span>
+          </th>
+          {/* MESSAGE */}
           <th className="px-3 py-3 text-left border-r font-medium">
             <div className="flex items-center justify-between">
               <span>Message</span>
               <FaBars />
             </div>
           </th>
-          {/* SMS */}
+          {/* SENT BY */}
           <th className="px-3 py-3 text-left border-r font-medium">
             <div className="flex items-center justify-between">
               <span>Sent By</span>
               <FaBars />
             </div>
           </th>
-          {/* TYPE */}
+          {/* SENT TIME */}
           <th className="px-3 py-3 text-left border-r font-medium">
-              <span>Sent Time</span>
+            <span>Sent Time</span>
           </th>
         </tr>
       </thead>
@@ -51,21 +55,23 @@ export default function SendSMS({ currentSms }) {
                 // onClick={(e) => handleCheckboxClick(e, sms.id)}
               />
             </td>
-            {/* CLIENT NAME AND IMAGE */}
+            {/* SEGMENT */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              <div className="flex items-center">
-                <span>{sms.products}</span>
-              </div>
+              <span>{sms.products}</span>
             </td>
-            {/* MOBILE */}
+            {/* SUBJECT */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {sms.textMessage}
+              <span>{sms.subject}</span>
             </td>
-            {/* SMS */}
+            {/* MESSAGE */}
+            <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+              {sms.message}
+            </td>
+            {/* SENT BY */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
               {sms.lastModifiedBy}
             </td>
-            {/* TYPE */}
+            {/* SENT TIME */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
               {sms.sentDateTime.replace("T", " ")}
             </td>
@@ -76,6 +82,7 @@ export default function SendSMS({ currentSms }) {
     </table>
   );
 }
-SendSMS.propTypes = {
+
+SendEmail.propTypes = {
   currentSms: PropTypes.array.isRequired,
 };

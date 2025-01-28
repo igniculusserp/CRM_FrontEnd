@@ -20,7 +20,6 @@ const LeadStatusModal = ({ onClose }) => {
     }
   };
 
-
   //----------------------------------------------- Submit function----------------------------------------------------
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -48,7 +47,7 @@ const LeadStatusModal = ({ onClose }) => {
       await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/LeadOpration/leads/multiplechangestatus`,
         formData_POST,
-        config
+        config,
       );
 
       alert("Status Change successfully!");
@@ -61,8 +60,7 @@ const LeadStatusModal = ({ onClose }) => {
     }
   };
 
-
-    //----------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------
   //LeadStatusDropDown GET API Is being used here
   const [leadStatus, setleadStatus] = useState("");
 
@@ -77,10 +75,9 @@ const LeadStatusModal = ({ onClose }) => {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
-        config
+        config,
       );
       setleadStatus(response.data.data);
-      console.log("status:", response.data.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
@@ -91,9 +88,8 @@ const LeadStatusModal = ({ onClose }) => {
     handleLeadStatus();
   }, []);
 
-
   const [defaultTextLeadStatusDropDown, setdefaultTextLeadStatusDropDown] =
-    useState('Select Status');
+    useState("Select Status");
   const [isDropdownVisibleLeadStatus, setisDropdownVisibleLeadStatus] =
     useState(false);
 
@@ -106,15 +102,10 @@ const LeadStatusModal = ({ onClose }) => {
     setisDropdownVisibleLeadStatus(!isDropdownVisibleLeadStatus);
   };
 
-
-
-
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
-        <h2 className="text-xl font-semibold mb-4">
-          Change Status
-        </h2>
+        <h2 className="text-xl font-semibold mb-4">Change Status</h2>
         <form onSubmit={handleSubmit}>
           <div className="shadow-lg">
             <h1 className="py-2 px-1 rounded-t-lg bg-cyan-500 text-white text-md font-medium">
@@ -151,14 +142,16 @@ const LeadStatusModal = ({ onClose }) => {
                     <div
                       className="relative"
                       onClick={toggleDropdownLeadStatus}
-                      onMouseLeave={()=>(setisDropdownVisibleLeadStatus(false ))}
+                      onMouseLeave={() => setisDropdownVisibleLeadStatus(false)}
                     >
                       <button
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
                         id="LeadStatusDropDown"
                         type="button"
                       >
-                        {leadeStatus!="" ? leadeStatus : defaultTextLeadStatusDropDown}
+                        {leadeStatus != ""
+                          ? leadeStatus
+                          : defaultTextLeadStatusDropDown}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLeadStatus && (

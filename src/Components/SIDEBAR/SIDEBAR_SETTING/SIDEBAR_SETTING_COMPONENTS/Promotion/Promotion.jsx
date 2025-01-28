@@ -6,46 +6,44 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 
-export default function Promotion(){
-
-const { id } = useParams();
-const [active, setActive] = useState(true);
-const [users, setUsers] = useState([
+export default function Promotion() {
+  const { id } = useParams();
+  const [active, setActive] = useState(true);
+  const [users, setUsers] = useState([
     {
       id: 1,
       promotionName: 101,
       promotionType: "Group-Tambi",
     },
     {
-        id: 2,
-        promotionName : 102,
-        promotionType : "Group-Lambi",
+      id: 2,
+      promotionName: 102,
+      promotionType: "Group-Lambi",
     },
-]);
+  ]);
   const [formData, setFormData] = useState({
     id: "",
-    promotionName : "",
-    promotionType : "",
+    promotionName: "",
+    promotionType: "",
   });
   const [isEditMode, setIsEditMode] = useState(false);
 
-
   //department
   const [department, setdepartment] = useState([]);
-  const [defaultTextdepartmentDropDown, setDefaultTextdepartmentDropDown] =useState("Select Department Na,e");
-  const [isDropdownVisibledepartment, setIsDropdownVisibledepartment] = useState(false);
-
+  const [defaultTextdepartmentDropDown, setDefaultTextdepartmentDropDown] =
+    useState("Select Department Na,e");
+  const [isDropdownVisibledepartment, setIsDropdownVisibledepartment] =
+    useState(false);
 
   const handleActiveState = () => {
     setActive(!active);
     setIsEditMode(false); // Reset edit mode when switching views
     setFormData({
       id: "",
-      promotionName : "",
-      promotionType : "",
+      promotionName: "",
+      promotionType: "",
     }); // Reset form data
   };
-
 
   const handleClick = (userId) => {
     const userToEdit = users.find((user) => user.id === userId);
@@ -90,48 +88,49 @@ const [users, setUsers] = useState([
     console.log(`Checkbox clicked for user: ${userId}`);
   };
 
-    //---------------Group---------------
-    const toggleDropdownGroup = () => {
-        setIsDropdownVisibleGroup(!isDropdownVisibleGroup);
-      };
-    
-      const handleDropdownGroup = (groupName) => {
-        setFormData((prevData) => ({
-          ...prevData,
-          groupName,
-        }));
-        setDefaultTextGroupDropDown(groupName);
-        setIsDropdownVisibleGroup(false);
-      };
-    
-      async function handleGroup() {
-        const bearer_token = localStorage.getItem("token");
-    
-        try {
-          const config = {
-            headers: {
-              Authorization: `Bearer ${bearer_token}`,
-            },
-          };
-          const response = await axios.get(
-            `${protocal_url}${
-              window.location.hostname.split(".")[0]}.${tenant_base_url}/Admin/leadstatus/getall`,
-            config
-          );
-          setdepartment(response.data.data);
-          console.log("Group data:", response.data.data);
-        } catch (error) {
-          console.error("Error fetching groups:", error);
-        }
-      }
-    
-      useEffect(() => {
-        handleGroup();
-      }, []);
+  //---------------Group---------------
+  const toggleDropdownGroup = () => {
+    setIsDropdownVisibleGroup(!isDropdownVisibleGroup);
+  };
 
-    return(
-        <>
-        <div className="m-3 min-w-screen">
+  const handleDropdownGroup = (groupName) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      groupName,
+    }));
+    setDefaultTextGroupDropDown(groupName);
+    setIsDropdownVisibleGroup(false);
+  };
+
+  async function handleGroup() {
+    const bearer_token = localStorage.getItem("token");
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+        },
+      };
+      const response = await axios.get(
+        `${protocal_url}${
+          window.location.hostname.split(".")[0]
+        }.${tenant_base_url}/Admin/leadstatus/getall`,
+        config,
+      );
+      setdepartment(response.data.data);
+      console.log("Group data:", response.data.data);
+    } catch (error) {
+      console.error("Error fetching groups:", error);
+    }
+  }
+
+  useEffect(() => {
+    handleGroup();
+  }, []);
+
+  return (
+    <>
+      <div className="m-3 min-w-screen">
         {active ? (
           <>
             <div className="flex min-w-screen justify-between items-center">
@@ -151,7 +150,7 @@ const [users, setUsers] = useState([
                       <th className="px-1 py-3">
                         <input type="checkbox" />
                       </th>
-  
+
                       <th className="px-2 py-3 text-left border-r font-medium">
                         <div className="flex justify-between items-center text-sm">
                           <span>Promotion Name</span>
@@ -218,7 +217,7 @@ const [users, setUsers] = useState([
                 Cancel
               </button>
             </div>
-  
+
             <form onSubmit={handleSubmit} className="flex">
               <div className="w-full">
                 <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
@@ -227,7 +226,7 @@ const [users, setUsers] = useState([
                   </h2>
                   {/* -------------1------------- */}
                   <div className="py-2 px-4 min-h-screen relative">
-                  {/* -------------groupID------------- */}
+                    {/* -------------groupID------------- */}
                     <div className="flex space-x-4">
                       <div className="flex flex-col w-1/2">
                         <label
@@ -245,7 +244,7 @@ const [users, setUsers] = useState([
                         />
                       </div>
                       {/* -------------Group------------- */}
-                       {/* -------------Group------------- */}
+                      {/* -------------Group------------- */}
                       <div className="flex flex-col w-1/2 relative">
                         <label
                           htmlFor="group"
@@ -284,9 +283,7 @@ const [users, setUsers] = useState([
                         </div>
                       </div>
                     </div>
-  
-                   
-                    
+
                     {/* -------------Button------------- */}
                     <button
                       type="submit"
@@ -301,7 +298,6 @@ const [users, setUsers] = useState([
           </>
         )}
       </div>
-            
-        </>
-    )    
+    </>
+  );
 }

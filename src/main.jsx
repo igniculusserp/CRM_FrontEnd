@@ -1,8 +1,8 @@
-import { RouterProvider } from 'react-router-dom';
-import { createBrowserRouter } from 'react-router-dom';
-import { createRoot } from 'react-dom/client';
-import App from './App.jsx';
-import './index.css';
+import { RouterProvider } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
+import { createRoot } from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
 
 //-------------------------------------Microsoft Authentication----------------------------------------------------
 import { MsalProvider } from "@azure/msal-react";
@@ -11,205 +11,255 @@ import msalInstance from "./Config/msalConfig.js";
 //-------------------------------------Google Authentication----------------------------------------------------
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import googleConfig from "./Config/googleConfig.js"; // Contains your client ID
-
 
 import ProtectedRoute from "./ProtectedRoute.jsx";
 
+//Login
+import TenantLogin from "./Components/REGISTRATION/TenantLogin.jsx";
+import TenantLoginOTP from "./Components/REGISTRATION/TenantLoginOTP.jsx";
 
 //Registration
-import Registration from './Components/REGISTRATION/Registration.jsx';
-import Verifyotp from './Components/REGISTRATION/Verifyotp.jsx';
-import VerifyTenant from './Components/REGISTRATION/VerifyTenant.jsx';
-import TenantLogin from './Components/REGISTRATION/TenantLogin.jsx';
-import TenantLoginOTP from './Components/REGISTRATION/TenantLoginOTP.jsx';
+import Registration from "./Components/REGISTRATION/Registration.jsx";
+import Verifyotp from "./Components/REGISTRATION/Verifyotp.jsx";
+import VerifyTenant from "./Components/REGISTRATION/VerifyTenant.jsx";
 
 //Forget Password
-import ForgetPass from './Components/REGISTRATION/ForgetPass.jsx';
-import ForgetPassOTP from './Components/REGISTRATION/ForgetPassOTP.jsx';
-import ForgetResetPassword from './Components/REGISTRATION/ForgetResetPassword';
-import ForgetPassSuccess from './Components/REGISTRATION/ForgetPassSuccess.jsx';
+import ForgetPass from "./Components/REGISTRATION/ForgetPass.jsx";
+import ForgetPassOTP from "./Components/REGISTRATION/ForgetPassOTP.jsx";
+import ForgetResetPassword from "./Components/REGISTRATION/ForgetResetPassword";
+import ForgetPassSuccess from "./Components/REGISTRATION/ForgetPassSuccess.jsx";
 
 //SideBar
-import SidebarBase from './Components/SIDEBAR/SidebarBase.jsx';
-import WelcomePage from './Components/REGISTRATION/WelcomePage.jsx';
+import SidebarBase from "./Components/SIDEBAR/SidebarBase.jsx";
+import WelcomePage from "./Components/REGISTRATION/WelcomePage.jsx";
 
-//SiderBar Inner-Components
+//SiderBar Modules
+//Home
+import Home from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Home/Home.jsx";
 
-import Client from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Client/Client.jsx';
-import SalesOrder from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SalesOrder/SalesOrder.jsx';
-import Logs from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/Logs.jsx';
+//Leads ->
+import Lead from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Lead/Leads.jsx";
+import Createlead from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Lead/CreateLead.jsx";
 
-import MailBox from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MailBox.jsx';
-import GroupChat from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/GroupChat.jsx';
+import Client from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Client/Client.jsx";
+import SalesOrder from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SalesOrder/SalesOrder.jsx";
+import Logs from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/Logs.jsx";
 
-//Shivam ---> CreateTrial-->|-->|-->CreateVoice
-import Home from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Home/Home.jsx';
+import MailBox from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MailBox.jsx";
+import GroupChat from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/GroupChat.jsx";
 
-import CreateOrder from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/CreateOrder.jsx';
-import CreateMailBox from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/CreateMailBox.jsx';
+import CreateOrder from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/CreateOrder.jsx";
+import CreateMailBox from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/CreateMailBox.jsx";
 
 // SMS BOX => INNER COMPONENT
-import SmsBox from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SMSBox/SmsBox.jsx';
-import CreateSendSms from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SMSBox/CreateSendSms.jsx';
-import CreateSendEmail from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SMSBox/SMSComponents/CreateSendEmail.jsx';
-
+import ServiceBox from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/ServiceBox/ServiceBox.jsx";
+import CreateSendSms from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/ServiceBox/CreateSendSms.jsx";
+import CreateSendEmail from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/ServiceBox/SMSComponents/CreateSendEmail.jsx";
 
 // Financial Activity => INNER COMPONENT
-import FinancialActivity from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FinancialActivity/FinancialActivity.jsx';
+import FinancialActivity from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FinancialActivity/FinancialActivity.jsx";
 
 // Inner Contact --> FollowUp
-import FollowUp from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FollowUp/FollowUp.jsx';
-import CreateFollowUp from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FollowUp/CreateFollowUp.jsx';
+import FollowUp from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FollowUp/FollowUp.jsx";
+import CreateFollowUp from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FollowUp/CreateFollowUp.jsx";
 
 // Inner Contact --> FreeTrail
-import FreeTrail from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FreeTrial/FreeTrail.jsx';
-import CreateTrial from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FreeTrial/CreateTrial.jsx';
-
-//only for Testing
-import Test from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Test.jsx';
-
-//Inner Lead -> Component
-import Lead from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Lead/Leads.jsx';
-import Createlead from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Lead/CreateLead.jsx';
+import FreeTrail from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FreeTrial/FreeTrail.jsx";
+import CreateTrial from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FreeTrial/CreateTrial.jsx";
 
 // Inner Contact --> Component
-import Contact from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Contact/Contacts.jsx';
-import CreateContact from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Contact/CreateContact.jsx';
+import Contact from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Contact/Contacts.jsx";
+import CreateContact from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Contact/CreateContact.jsx";
 
 //Sidebar-Header button Inner Components -> Setting
-import Setting from './Components/SIDEBAR/SIDEBAR_SETTING/Setting.jsx';
-import CreateSOLead from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Lead/CreateSOLead.jsx';
+import Setting from "./Components/SIDEBAR/SIDEBAR_SETTING/Setting.jsx";
+import CreateSOLead from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Lead/CreateSOLead.jsx";
 
-import CreateSOContact from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Contact/CreateSOContact.jsx';
+import CreateSOContact from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Contact/CreateSOContact.jsx";
 
 // VOICEBOX - INNER VOICEBOX COMPONENTS
-import VoiceBox from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/VoiceBox.jsx';
-import CreateVoice from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/VoiceComponent/CreateVoice.jsx';
-import CreateVoiceReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/VoiceComponent/CreateVoiceReports.jsx';
-import CreateVoiceDetails from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/VoiceComponent/CreateVoiceDetails.jsx';
-import CreateLogs from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateLogs.jsx';
-import CreateChats from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateChats.jsx';
-import CreateExtension from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateExtension.jsx';
-import Reports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/Reports.jsx';
+import VoiceBox from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/VoiceBox.jsx";
+import CreateVoice from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/VoiceComponent/CreateVoice.jsx";
+import CreateVoiceReports from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/VoiceComponent/CreateVoiceReports.jsx";
+import CreateVoiceDetails from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/VoiceBox/VoiceComponent/CreateVoiceDetails.jsx";
+import CreateLogs from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateLogs.jsx";
+import CreateChats from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateChats.jsx";
+import CreateExtension from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateExtension.jsx";
+import Reports from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/Reports.jsx";
 // Edit Client SO
-import EditClientSO from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/RepoComponents/EditClientSO.jsx';
+import EditClientSO from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Report/RepoComponents/EditClientSO.jsx";
 
-import CreateLogin from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateLogin.jsx';
+import CreateLogin from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/SideBar_Logs/LogComponents/CreateLogin.jsx";
 
-import MISReports from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx';
-import GeneralReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/GeneralReport.jsx';
-import FtReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/FtReport.jsx';
-import PaidClientReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/PaidClientReport.jsx';
-import UserReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/UserReport.jsx';
-import CallingReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/CallingReport.jsx';
-import DNDReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/DNDReport.jsx';
-import TrackSheet from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/TrackSheet.jsx';
-import ResearchReport from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/ResearchReport.jsx';
-import FollowUpNotificationProvider from './FollowUpNotificationProvider.jsx';
-import Analytics from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Analytics/Analytics.jsx';
+import MISReports from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MISReports.jsx";
+import GeneralReport from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/GeneralReport.jsx";
+import FtReport from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/FtReport.jsx";
+import PaidClientReport from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/PaidClientReport.jsx";
+import UserReport from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/UserReport.jsx";
+import CallingReport from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/CallingReport.jsx";
+import DNDReport from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/DNDReport.jsx";
+import TrackSheet from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/TrackSheet.jsx";
+import ResearchReport from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MisReports/MisComponents/ResearchReport.jsx";
+import FollowUpNotificationProvider from "./FollowUpNotificationProvider.jsx";
+import Analytics from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Analytics/Analytics.jsx";
 
 // SUBSCRIPTION
-import Subscription from './Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Subscription/Subscription.jsx';
-import Chat from './Components/SIDEBAR/SIDEBAR_SETTING/ChatWindow.jsx';
+import Subscription from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Subscription/Subscription.jsx";
+import Chat from "./Components/SIDEBAR/SIDEBAR_SETTING/ChatWindow.jsx";
+
+//Notification Provider -->--> -->--> #Firebase
+import NotificationProvider from "./NotificationProvider";
+
+//only for Testing
+import Test from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Test.jsx";
+import UserSetting from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/User_Setting/UserSetting.jsx";
+import UserOperation from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/User_Operation/UserOperation.jsx";
+import Department from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/Department/Department.jsx";
+import Designation from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/Designation/Designation.jsx";
+import Qualification from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/Qualification/Qualification.jsx";
+import LeadStatus from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/LeadStatus/LeadStatus.jsx";
+import Pool from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/Pools/Pools.jsx";
+import Segments from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/Segments/Segments.jsx";
+import ExpenseHead from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/ExpenseHead/ExpenseHead.jsx";
+import SMSTemplate from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/SMSTemplate/SMSTemplate.jsx";
+import EmailTemplate from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/EmailTemplate/EmailTemplate.jsx";
+import SMSSetting from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/SMSSetting/SMSSetting.jsx";
+import EmailSetting from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/EmailSetting/EmailSetting.jsx";
+import AccessDevice from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/AccessDevice/AccessDevice.jsx";
+import AccessControl from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/AccessControl/AccessControl.jsx";
+import Permissions from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/Permissions/Permissions.jsx";
+import Group from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/Group/Group.jsx";
 
 const router = createBrowserRouter([
-  { path: '/', element: <App /> },
-  { path: '/VerifyTenant', element: <VerifyTenant /> },
-  { path: '/tenantlogin', element: <TenantLogin /> },
-  { path: '/tenantloginOTP', element: <TenantLoginOTP /> },
-  { path: '/registration', element: <Registration /> },
-  { path: '/verifyotp/:userId', element: <Verifyotp /> },
-  { path: '/welcome/:tenantId', element: <WelcomePage /> },
-  { path: '*', element: <Test /> },
+  //Login
+  { path: "/", element: <App /> },
+  { path: "/VerifyTenant", element: <VerifyTenant /> },
+  { path: "/tenantlogin", element: <TenantLogin /> },
+  { path: "/tenantloginOTP", element: <TenantLoginOTP /> },
 
-  { path: '/forgetpassword', element: <ForgetPass /> },
-  { path: '/forgetpasswordotp', element: <ForgetPassOTP /> },
-  { path: '/forgetresetpass', element: <ForgetResetPassword /> },
-  { path: '/forgetpasssucess', element: <ForgetPassSuccess /> },
-  { path: '/test', element: <Test /> },
+  //Registration
+  { path: "/registration", element: <Registration /> },
+  { path: "/verifyotp/:userId", element: <Verifyotp /> },
+  { path: "/welcome/:tenantId", element: <WelcomePage /> },
+
+  //Forget Password
+  { path: "/forgetpassword", element: <ForgetPass /> },
+  { path: "/forgetpasswordotp", element: <ForgetPassOTP /> },
+  { path: "/forgetresetpass", element: <ForgetResetPassword /> },
+  { path: "/forgetpasssucess", element: <ForgetPassSuccess /> },
+
+  { path: "/test", element: <Test /> },
   {
-    path: "/sidebar",
-    element: ( 
-        <ProtectedRoute>
-          <SidebarBase /> 
+    path: "/panel",
+    element: (
+      <ProtectedRoute>
+        <SidebarBase />
       </ProtectedRoute>
     ),
     children: [
-      { path: '/sidebar', element: <Home /> },
+      { path: "/panel", element: <Home /> },
 
       //Lead->
-      { path: '/sidebar/lead', element: <Lead /> },
-      { path: '/sidebar/editlead/:id', element: <Createlead /> },
-      { path: '/sidebar/createlead', element: <Createlead /> },
-
-      { path: '/sidebar/lead/create/so/:id', element: <CreateSOLead /> },
+      { path: "/panel/dashboard", element: <Home /> },
+      { path: "/panel/lead", element: <Lead /> },
+      { path: "/panel/editlead/:id", element: <Createlead /> },
+      { path: "/panel/createlead", element: <Createlead /> },
+      { path: "/panel/lead/create/so/:id", element: <CreateSOLead /> },
 
       //Contacts->
-      { path: '/sidebar/contact', element: <Contact /> },
-      { path: '/sidebar/createcontact', element: <CreateContact /> },
-      { path: '/sidebar/editContact/:id', element: <CreateContact /> },
-      { path: '/sidebar/contact/create/so/:id', element: <CreateSOContact /> },
+      { path: "/panel/contact", element: <Contact /> },
+      { path: "/panel/createcontact", element: <CreateContact /> },
+      { path: "/panel/editContact/:id", element: <CreateContact /> },
+      { path: "/panel/contact/create/so/:id", element: <CreateSOContact /> },
 
       //FreeTrail ->
-      { path: '/sidebar/freeTrail', element: <FreeTrail /> },
-      { path: '/sidebar/createtrial/:id', element: <CreateTrial /> },
+      { path: "/panel/freeTrail", element: <FreeTrail /> },
+      { path: "/panel/createtrial/:id", element: <CreateTrial /> },
 
       //FollowUp ->
-      { path: '/sidebar/followup', element: <FollowUp /> },
-      { path: '/sidebar/createfollowup/:id', element: <CreateFollowUp /> },
+      { path: "/panel/followup", element: <FollowUp /> },
+      { path: "/panel/createfollowup/:id", element: <CreateFollowUp /> },
 
-      // VoiceBox ->
-      { path: '/sidebar/voicebox', element: <VoiceBox /> },
-      { path: '/sidebar/createvoice', element: <CreateVoice /> },
-      { path: '/sidebar/createvoicedetails', element: <CreateVoiceDetails /> },
-      { path: '/sidebar/createreports', element: <CreateVoiceReports /> },
+      //VoiceBox ->
+      { path: "/panel/voicebox", element: <VoiceBox /> },
+      { path: "/panel/createvoice", element: <CreateVoice /> },
+      { path: "/panel/createvoicedetails", element: <CreateVoiceDetails /> },
+      { path: "/panel/createvoicereports", element: <CreateVoiceReports /> },
 
-      // LOGS
-      { path: '/sidebar/logs', element: <Logs /> },
-      { path: '/sidebar/createlogs', element: <CreateLogs /> },
-      { path: '/sidebar/createchats', element: <CreateChats /> },
-      { path: '/sidebar/createextension', element: <CreateExtension /> },
-      { path: '/sidebar/createlogin', element: <CreateLogin /> },
+      //LOGS
+      { path: "/panel/logs", element: <Logs /> },
+      { path: "/panel/createlogs", element: <CreateLogs /> },
+      { path: "/panel/createchats", element: <CreateChats /> },
+      { path: "/panel/createextension", element: <CreateExtension /> },
+      { path: "/panel/createlogin", element: <CreateLogin /> },
 
-      // CLIENT => INNER COMPONENT
-      { path: '/sidebar/client', element: <Client /> },
+      //CLIENT
+      { path: "/panel/client", element: <Client /> },
 
-      { path: '/sidebar/salesorder', element: <SalesOrder /> },
-      { path: '/sidebar/createorder', element: <CreateOrder /> },
-      { path: '/sidebar/mailBox', element: <MailBox /> },
-      { path: '/sidebar/createmail', element: <CreateMailBox /> },
+      //SALESORDER
+      { path: "/panel/salesorder", element: <SalesOrder /> },
+      { path: "/panel/createorder", element: <CreateOrder /> },
 
-      // SMS BOX => INNER COMPONENT
-      { path: '/sidebar/smsBox', element: <SmsBox /> },
-      { path: '/sidebar/sendsms', element: <CreateSendSms /> },
-      { path: '/sidebar/sendemail', element: <CreateSendEmail /> },
+      //MAILBOX
+      { path: "/panel/mailBox", element: <MailBox /> },
+      { path: "/panel/createmail", element: <CreateMailBox /> },
 
-      // SMS BOX => INNER COMPONENT
-{ path: '/sidebar/FinancialActivity', element: <FinancialActivity /> },
-// Report => INNER COMPONENT
-      { path: '/sidebar/reports', element: <Reports /> },
-      { path: '/sidebar/Client_SO/:id', element: <EditClientSO /> },
-      { path: '/sidebar/analytics', element: <Analytics /> },
+      // SERVICE BOX
+      { path: "/panel/servicebox", element: <ServiceBox /> },
+      { path: "/panel/sendsms", element: <CreateSendSms /> },
+      { path: "/panel/sendemail", element: <CreateSendEmail /> },
 
-      // MIS REPORT => INNER COMPONENT
-      { path: '/sidebar/misreports', element: <MISReports /> },
-      { path: '/sidebar/creategeneral', element: <GeneralReport /> },
-      { path: '/sidebar/createft', element: <FtReport /> },
-      { path: '/sidebar/createpaid', element: <PaidClientReport /> },
-      { path: '/sidebar/createuser', element: <UserReport /> },
-      { path: '/sidebar/createcalling', element: <CallingReport /> },
-      { path: '/sidebar/creatednd', element: <DNDReport /> },
-      { path: '/sidebar/createtrack', element: <TrackSheet /> },
-      { path: '/sidebar/createresearch', element: <ResearchReport /> },
+      // Financial Activity
+      { path: "/panel/FinancialActivity", element: <FinancialActivity /> },
 
-      { path: '/sidebar/groupChat', element: <GroupChat /> },
-      { path: '/sidebar/setting', element: <Setting /> },
+      // Report
+      { path: "/panel/reports", element: <Reports /> },
+      { path: "/panel/clientso/:id", element: <EditClientSO /> },
 
-      { path: '/sidebar/subscription', element: <Subscription /> },
-      { path: '/sidebar/chat', element: <Chat /> },
+      // ANALYTICS
+      { path: "/panel/analytics", element: <Analytics /> },
 
-      { path: '*', element: <Test /> },
+      // MIS REPORT
+      { path: "/panel/misreports", element: <MISReports /> },
+      { path: "/panel/creategeneral", element: <GeneralReport /> },
+      { path: "/panel/createft", element: <FtReport /> },
+      { path: "/panel/createpaid", element: <PaidClientReport /> },
+      { path: "/panel/createuser", element: <UserReport /> },
+      { path: "/panel/createcalling", element: <CallingReport /> },
+      { path: "/panel/creatednd", element: <DNDReport /> },
+      { path: "/panel/createtrack", element: <TrackSheet /> },
+      { path: "/panel/createresearch", element: <ResearchReport /> },
+
+      { path: "/panel/groupChat", element: <GroupChat /> },
+      { path: "/panel/setting", element: <Setting /> },
+
+      { path: "/panel/subscription", element: <Subscription /> },
+
+      { path: "/panel/chat", element: <Chat /> },
+
+      { path: "*", element: <Test /> },
+
+      // --------------------------------  Settings ------------------------------
+      { path: "/panel/settings/user-settings", element: <UserSetting /> },
+      { path: "/panel/settings/user-Operation", element: <UserOperation /> },
+      { path: "/panel/settings/group", element: <Group /> },
+      { path: "/panel/settings/department", element: <Department /> },
+      { path: "/panel/settings/designation", element: <Designation /> },
+      { path: "/panel/settings/qualification", element: <Qualification /> },
+      { path: "/panel/settings/lead_status", element: <LeadStatus /> },
+      { path: "/panel/settings/pools", element: <Pool /> },
+      { path: "/panel/settings/segments", element: <Segments /> },
+      { path: "/panel/settings/expensehead", element: <ExpenseHead /> },
+      { path: "/panel/settings/sms-template", element: <SMSTemplate /> },
+      { path: "/panel/settings/email-template", element: <EmailTemplate /> },
+      { path: "/panel/settings/sms-Settings", element: <SMSSetting /> },
+      { path: "/panel/settings/email-Settings", element: <EmailSetting /> },
+      { path: "/panel/settings/access-device", element: <AccessDevice /> },
+      {
+        path: "/panel/settings/access-control",
+        element: <AccessControl />,
+      },
+      { path: "/panel/settings/roles-permissions", element: <Permissions /> },
     ],
   },
 ]);
@@ -217,10 +267,11 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <MsalProvider instance={msalInstance}>
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-    <FollowUpNotificationProvider>
-      <RouterProvider router={router} />
-    </FollowUpNotificationProvider>
+      <FollowUpNotificationProvider>
+        <NotificationProvider>
+          <RouterProvider router={router} />
+        </NotificationProvider>
+      </FollowUpNotificationProvider>
     </GoogleOAuthProvider>
-    </MsalProvider>
-
+  </MsalProvider>,
 );

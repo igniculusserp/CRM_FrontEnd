@@ -91,9 +91,7 @@ export default function LeadOperations({
               {/* CLIENT NAME */}
               <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
                 <div className="flex items-center">
-                  <span className="ml-2 w-[80px] break-words">
-                    {lead.name}
-                  </span>
+                  <span className="ml-2 w-[80px] break-words">{lead.name}</span>
                 </div>
               </td>
               {/* MOBILE */}
@@ -151,7 +149,7 @@ LeadOperations.propTypes = {
       leadsSource: PropTypes.string,
       segments: PropTypes.arrayOf(PropTypes.string),
       bpName: PropTypes.string,
-    })
+    }),
   ).isRequired,
   selectedIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   handleOnCheckBox: PropTypes.func.isRequired,

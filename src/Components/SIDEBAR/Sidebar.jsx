@@ -1,241 +1,231 @@
-//react
-import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 //external
-import axios from 'axios';
+import axios from "axios";
 
 //reactIcons
-import { RiHome4Line } from 'react-icons/ri';
-import { GrContactInfo } from 'react-icons/gr';
-import { MdOutlineContactPhone } from 'react-icons/md';
-import { BsGraphUpArrow } from 'react-icons/bs';
-import { SiAmazonsimpleemailservice } from 'react-icons/si';
-import { FiUsers } from 'react-icons/fi';
-import { IoDocumentTextOutline } from 'react-icons/io5';
-import { VscGraph } from 'react-icons/vsc';
-import { FaRegHandshake } from 'react-icons/fa6';
-import { MdOutlineEmail } from 'react-icons/md';
-import { MdOutlineKeyboardVoice } from 'react-icons/md';
-import PropTypes from 'prop-types';
+import { RiHome4Line } from "react-icons/ri";
+import { GrContactInfo } from "react-icons/gr";
+import { MdOutlineContactPhone } from "react-icons/md";
+import { BsGraphUpArrow } from "react-icons/bs";
+import { SiAmazonsimpleemailservice } from "react-icons/si";
+import { FiUsers } from "react-icons/fi";
+import { IoDocumentTextOutline } from "react-icons/io5";
+import { VscGraph } from "react-icons/vsc";
+import { FaRegHandshake } from "react-icons/fa6";
+import { MdOutlineEmail } from "react-icons/md";
+import PropTypes from "prop-types";
 import noAvatar from "../../assets/images/noAvatar.png";
 
-import { getHostnamePart } from './SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
+import { getHostnamePart } from "./SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 //file_Imported
-import { main_base_url } from './../../Config/config';
+import { main_base_url } from "./../../Config/config";
 
-
-export default function SidebaBar({ toggle }) {
+export default function SidebaBar({ toggle, setToggle }) {
   const name = getHostnamePart();
   const [welcomedata, setWelcomeData] = useState([]);
 
   //to manage multiple businessTypes
   const businessType = localStorage.getItem("businessType");
   const [business, setBusiness] = useState("");
-  
+
   useEffect(() => {
     setBusiness(businessType);
-    console.log(business)
+    console.log(business);
   }, []);
-
 
   const sideBar = [
     {
       key: 1,
-      data: 'Home',
-      link: '/sidebar',
+      data: "Home",
+      link: "/panel/dashboard",
       icon: <RiHome4Line />,
     },
     {
       key: 2,
-      data: 'Leads',
-      link: '/sidebar/lead',
+      data: "Leads",
+      link: "/panel/lead",
       icon: <GrContactInfo />,
     },
     {
       key: 3,
-      data: 'Contacts',
-      link: '/sidebar/contact',
+      data: "Contacts",
+      link: "/panel/contact",
       icon: <MdOutlineContactPhone />,
     },
     {
       key: 4,
-      data: 'Client',
-      link: '/sidebar/client',
+      data: "Client",
+      link: "/panel/client",
       icon: <FiUsers />,
     },
     {
       key: 5,
-      data: 'Sales order',
-      link: '/sidebar/salesorder',
+      data: "Sales order",
+      link: "/panel/salesorder",
       icon: <BsGraphUpArrow />,
     },
     {
       key: 6,
-      data: 'Free Trail',
-      link: '/sidebar/freeTrail',
+      data: "Free Trail",
+      link: "/panel/freeTrail",
       icon: <FaRegHandshake />,
     },
     {
       key: 7,
-      data: 'Follow up',
-      link: '/sidebar/followUp',
+      data: "Follow up",
+      link: "/panel/followUp",
       icon: <SiAmazonsimpleemailservice />,
     },
-    {
-      key: 8,
-      data: 'Mail Box',
-      link: '/sidebar/mailBox',
-      icon: <MdOutlineEmail />,
-    },
+    // {
+    //   key: 8,
+    //   data: 'Mail Box',
+    //   link: '/panel/mailBox',
+    //   icon: <MdOutlineEmail />,
+    // },
     {
       key: 9,
-      data: 'Sms Box',
-      link: '/sidebar/smsBox',
+      data: "Service Box",
+      link: "/panel/servicebox",
       icon: <MdOutlineEmail />,
     },
-    {
-      key: 10,
-      data: 'Voice Box',
-      link: '/sidebar/voicebox',
-      icon: <MdOutlineKeyboardVoice />,
-    },
+    // {
+    //   key: 10,
+    //   data: 'Voice Box',
+    //   link: '/panel/voicebox',
+    //   icon: <MdOutlineKeyboardVoice />,
+    // },
     {
       key: 11,
-      data: 'Reports',
-      link: '/sidebar/reports',
+      data: "Reports",
+      link: "/panel/reports",
       icon: <IoDocumentTextOutline />,
     },
     {
       key: 12,
-      data: 'Analytics',
-      link: '/sidebar/analytics',
+      data: "Analytics",
+      link: "/panel/analytics",
       icon: <VscGraph />,
     },
-    {
-      key: 13,
-      data: 'Logs',
-      link: '/sidebar/logs',
-      icon: <VscGraph />,
-    },
-    {
-      key: 14,
-      data: 'MIS Reports',
-      link: '/sidebar/misreports',
-      icon: <IoDocumentTextOutline />,
-    },
-    {
-      key: 15,
-      data: 'Subscription',
-      link: '/sidebar/subscription',
-      icon: <IoDocumentTextOutline />,
-    },
+    // {
+    //   key: 13,
+    //   data: 'Logs',
+    //   link: '/panel/logs',
+    //   icon: <VscGraph />,
+    // },
+    // {
+    //   key: 14,
+    //   data: 'MIS Reports',
+    //   link: '/panel/misreports',
+    //   icon: <IoDocumentTextOutline />,
+    // },
+    // {
+    //   key: 15,
+    //   data: 'Subscription',
+    //   link: '/panel/subscription',
+    //   icon: <IoDocumentTextOutline />,
+    // },
   ];
 
   const sideBar_Brokerage = [
     {
       key: 1,
-      data: 'Home',
-      link: '/sidebar',
+      data: "Home",
+      link: "/panel/dashboard",
       icon: <RiHome4Line />,
     },
     {
       key: 2,
-      data: 'Leads',
-      link: '/sidebar/lead',
+      data: "Leads",
+      link: "/panel/lead",
       icon: <GrContactInfo />,
     },
     {
-      key: 12,
-      data: 'Analytics',
-      link: '/sidebar/analytics',
-      icon: <VscGraph />,
-    },
-    {
       key: 3,
-      data: 'Contacts',
-      link: '/sidebar/contact',
+      data: "Contacts",
+      link: "/panel/contact",
       icon: <MdOutlineContactPhone />,
     },
     {
       key: 11,
-      data: 'Reports',
-      link: '/sidebar/reports',
+      data: "Reports",
+      link: "/panel/reports",
       icon: <IoDocumentTextOutline />,
     },
     {
       key: 14, //newLy Added 1st Sept
-      data: 'Financial Activity',
-      link: '/sidebar/FinancialActivity',
+      data: "Finance ",
+      link: "/panel/FinancialActivity",
+      icon: <VscGraph />,
+    },
+    {
+      key: 12,
+      data: "Analytics",
+      link: "/panel/analytics",
       icon: <VscGraph />,
     },
     {
       key: 4,
-      data: 'Client',
-      link: '/sidebar/client',
+      data: "Client",
+      link: "/panel/client",
       icon: <FiUsers />,
     },
     {
       key: 5,
-      data: 'Sales order',
-      link: '/sidebar/salesorder',
+      data: "Sales order",
+      link: "/panel/salesorder",
       icon: <BsGraphUpArrow />,
     },
     {
       key: 6,
-      data: 'Free Trail',
-      link: '/sidebar/freeTrail',
+      data: "Free Trail",
+      link: "/panel/freeTrail",
       icon: <FaRegHandshake />,
     },
     {
       key: 7,
-      data: 'Follow up',
-      link: '/sidebar/followUp',
+      data: "Follow up",
+      link: "/panel/followUp",
       icon: <SiAmazonsimpleemailservice />,
     },
-    {
-      key: 8,
-      data: 'Mail Box',
-      link: '/sidebar/mailBox',
-      icon: <MdOutlineEmail />,
-    },
+    // {
+    //   key: 8,
+    //   data: 'Mail Box',
+    //   link: '/panel/mailBox',
+    //   icon: <MdOutlineEmail />,
+    // },
     {
       key: 9,
-      data: 'Sms Box',
-      link: '/sidebar/smsBox',
+      data: "Service Box",
+      link: "/panel/servicebox",
       icon: <MdOutlineEmail />,
     },
-    {
-      key: 10,
-      data: 'Voice Box',
-      link: '/sidebar/voicebox',
-      icon: <MdOutlineKeyboardVoice />,
-    },
-    {
-      key: 11,
-      data: 'Reports',
-      link: '/sidebar/reports',
-      icon: <IoDocumentTextOutline />,
-    },
-    
-    {
-      key: 13,
-      data: 'Logs',
-      link: '/sidebar/logs',
-      icon: <VscGraph />,
-    },
-    
-    {
-      key: 15,
-      data: 'MIS Reports',
-      link: '/sidebar/misreports',
-      icon: <IoDocumentTextOutline />,
-    },
+    // {
+    //   key: 10,
+    //   data: 'Voice Box',
+    //   link: '/panel/voicebox',
+    //   icon: <MdOutlineKeyboardVoice />,
+    // },
+
+    // {
+    //   key: 13,
+    //   data: 'Logs',
+    //   link: '/panel/logs',
+    //   icon: <VscGraph />,
+    // },
+
+    // {
+    //   key: 15,
+    //   data: 'MIS Reports',
+    //   link: '/panel/misreports',
+    //   icon: <IoDocumentTextOutline />,
+    // },
     {
       key: 16,
-      data: 'Subscription',
-      link: '/sidebar/subscription',
+      data: "Subscription",
+      link: "/panel/subscription",
       icon: <IoDocumentTextOutline />,
     },
   ];
@@ -244,10 +234,12 @@ export default function SidebaBar({ toggle }) {
 
   const handlewelcomedata = async () => {
     try {
-      const response = await axios.get(`${main_base_url}/Tenants/gettenant/${name}`);
+      const response = await axios.get(
+        `${main_base_url}/Tenants/gettenant/${name}`,
+      );
       setWelcomeData(response.data);
     } catch (error) {
-      console.error('Error fetching welcome data:', error);
+      console.error("Error fetching welcome data:", error);
     }
   };
 
@@ -257,49 +249,58 @@ export default function SidebaBar({ toggle }) {
 
   let handleClick = (key) => {
     setactive(key);
+    setToggle(false);
   };
 
-console.log(welcomedata)
-
+  console.log(welcomedata);
   return (
     <>
-      <div className={`flex flex-col  bg-cyan-500 gap-3`}>
-        <div className=' mt-4'>
-          <img
-            id="logoImg"
-            src={welcomedata?.tenentLogo || noAvatar}
-            alt="Company Image"
-            className={`mt-3 ${toggle ? 'w-14 h-14' : 'w-24 h-24'} rounded-full shadow-md shadow-cyan-600 object-cover mx-auto border`}
-          />
+      <div className="flex flex-col bg-cyan-500 gap-3  ">
+        {/* Fixed Image Section */}
+        <div className="relative">
+          <div className="sticky top-0 mt-4">
+            <img
+              id="logoImg"
+              src={welcomedata?.tenentLogo || noAvatar}
+              alt="Company Image"
+              className={`mt-3 ${toggle ? "w-14 h-14" : "w-20 h-20"} rounded-full shadow-md shadow-cyan-600 object-cover mx-auto border`}
+            />
+          </div>
         </div>
-
-        <div className="flex flex-col  my-4">
-        {(business === "Brokerage" ? sideBar_Brokerage : sideBar).map(({ key, data, icon, link }, index) => (
-            <Link to={link} onClick={() => handleClick(key)} key={key}>
-              <li
-                className={`flex ${toggle ? 'justify-center' : 'justify-start'} 
-                  items-center gap-3 text-white text-md font-small py-3 shadow-md 
-                  ${index === 0 ? 'border-b-2 border-t-2' : 'border-b-2'} ${index === sideBar.length - 1 ? 'border-b-2' : ''} 
-                  hover:bg-gradient-to-b from-cyan-300 to-cyan-600`}
-                key={key}
-              >
-                <h1 className={`${toggle ? 'flex items-center gap-2 px-3 flex-col' : 'flex items-center gap-2 px-3'}`}>
-                  <span className={`${toggle ? 'text-2xl' : 'text-xl'}`}>
-                    {icon}
-                  </span>
-                  <span className={`${toggle ? 'text-xs whitespace-nowrap' : ''}`}>
-                  {toggle ? data : data}
-                  </span>
-                </h1>
-              </li>
-            </Link>
-          ))}
+        {/* Scrollable Menu Section */}
+        <div className="flex flex-col h-full mt-10 CustomerTestimonialReview ">
+          {(business === "Brokerage" ? sideBar_Brokerage : sideBar).map(
+            ({ key, data, icon, link }, index) => (
+              <Link to={link} onClick={() => handleClick(key)} key={key}>
+                <li
+                  className={`flex ${toggle ? "justify-center" : "justify-start"} items-center gap-3 text-white text-md font-small py-3 shadow-md ${
+                    index === 0 ? "border-b-2 border-t-2" : "border-b-2"
+                  } ${index === sideBar.length - 1 ? "border-b-2" : ""} hover:bg-gradient-to-b from-cyan-300 to-cyan-700`}
+                >
+                  <h1
+                    className={`${toggle ? "flex items-center gap-1 flex-col px-1" : "flex items-center gap-2 px-2"}`}
+                  >
+                    <span
+                      className={`${toggle ? "sm:text-xl text-sm" : "text-xl"}`}
+                    >
+                      {icon}
+                    </span>
+                    <span
+                      className={`${toggle ? "text-xs whitespace-nowrap " : "text-md"}`}
+                    >
+                      {data}
+                    </span>
+                  </h1>
+                </li>
+              </Link>
+            ),
+          )}
         </div>
-        </div>
-
+      </div>
     </>
   );
 }
 SidebaBar.propTypes = {
   toggle: PropTypes.bool.isRequired,
+  setToggle: PropTypes.bool.isRequired,
 };

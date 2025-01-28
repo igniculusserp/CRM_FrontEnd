@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 //external Packages
 import axios from "axios";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 //React Icons
 import { FaBars } from "react-icons/fa";
 import { ImFilter } from "react-icons/im";
@@ -14,14 +14,15 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
-
 import { ToastContainer } from "react-toastify";
-import { showErrorToast, showSuccessToast } from "../../../../../utils/toastNotifications";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../../../../utils/toastNotifications";
 
 //Components
 import AddBrokerage from "./Brokerage/AddBrokerage";
 import EditBrokerage from "./Brokerage/EditBrokerage";
-
 
 export default function BrokerageView({ setShowTopSection }) {
   //   const bearer_token = localStorage.getItem("token");
@@ -34,10 +35,6 @@ export default function BrokerageView({ setShowTopSection }) {
   const [view, setView] = useState(false);
   const [editId, setEditId] = useState();
 
-
-
-
-
   //-------------------get-------------------get-------------------get-------------------get-------------------
   async function handleLead() {
     const bearer_token = localStorage.getItem("token");
@@ -49,7 +46,7 @@ export default function BrokerageView({ setShowTopSection }) {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/brokeragedetail/getall`,
-        config
+        config,
       );
       setRawData(response.data.data);
       setFilteredLeads(response.data.data);
@@ -90,7 +87,7 @@ export default function BrokerageView({ setShowTopSection }) {
     end.setHours(23, 59, 59, 999); // Set to the end of the day
 
     const filteredFollows = rawData.filter((follow) => {
-      const callbackDate = new Date(follow.call_bck_DateTime);
+      const callbackDate = new Date(follow.date);
       // Log values for debugging
       console.log("Callback Date:", callbackDate, "Start:", start, "End:", end);
       return callbackDate >= start && callbackDate <= end;
@@ -116,13 +113,11 @@ export default function BrokerageView({ setShowTopSection }) {
 
   //----------------------------------------------------Handle Add ----------------------------------------------------------
 
-
   const handleAdd = () => {
     setActive(false);
     setView(true);
     setShowTopSection(false);
   };
-
 
   const handleEdit = (id) => {
     console.log("Editing ID:", id);
@@ -132,13 +127,10 @@ export default function BrokerageView({ setShowTopSection }) {
     setEditId(id);
   };
 
-
-
-
   //--------------------------------------------------------Handle Delete--------------------------------------------
 
   const handleDelete = async (id) => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -147,13 +139,13 @@ export default function BrokerageView({ setShowTopSection }) {
       };
       await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/brokeragedetail/delete/${id}`,
-        config
+        config,
       );
-      showSuccessToast('Deleted successfully');
+      showSuccessToast("Deleted successfully");
       setFilteredLeads((prevData) => prevData.filter((item) => item.id !== id));
       // handleLead();
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -163,65 +155,69 @@ export default function BrokerageView({ setShowTopSection }) {
         {/* -------- PARENT -------- */}
         <div className="min-h-screen flex flex-col my-3 ">
           {/* MIDDLE SECTION */}
-          <div className="my-1 flex py-2 items-center justify-end gap-3 bg-white border-2 border-gray-300 pr-2 rounded-lg">
+          <div className="date_Filter_Main_Container">
             {/* ------------------- Filter by date ----------------- */}
-
-            <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
+            <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
               {/* Filter Icon Button */}
-              <button className="border-r border-gray-500 px-3">
-                <ImFilter />
-              </button>
+              <div className="flex items-center">
+                <button className="border-r border-gray-500 pr-2">
+                  <ImFilter className="filter_Image_Size" />
+                </button>
 
-              {/* Date Range Filter Button */}
-              <button className="border-r border-gray-500 px-3">
-                Filter By
-              </button>
+                {/* Date Range Filter Button */}
+                <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display">
+                  Filter By
+                </button>
 
-              {/* Date Range Inputs */}
-              <div className="px-3 flex items-center gap-2">
-                <label>From:</label>
-                <input
-                  type="date"
-                  value={startDate}
-                  className="border rounded px-2 py-1"
-                  onChange={(e) => setStartDate(e.target.value)}
-                />
+                {/* Date Range Inputs */}
+                <div className="px-2 flex items-center gap-2 filter_Date_Container">
+                  <label className="hide_Filter_Text">From:</label>
+                  <input
+                    type="date"
+                    value={startDate}
+                    className="border rounded px-2 py-2 filter_Date"
+                    onBlur={(e) => setStartDate(e.target.value)}
+                  />
 
-                <label>To:</label>
-                <input
-                  type="date"
-                  value={endDate}
-                  className="border rounded px-2 py-1"
-                  onChange={(e) => setEndDate(e.target.value)}
-                />
+                  <label className="hide_Filter_Text">To:</label>
+                  <input
+                    type="date"
+                    value={endDate}
+                    className="border rounded px-2 py-2 filter_Date"
+                    onBlur={(e) => setEndDate(e.target.value)}
+                  />
+                </div>
               </div>
 
               <div
-                className="p-1 border rounded cursor-pointer"
+                className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center"
                 onClick={handleResetFilter}
               >
-                <TbRefresh size={25} />
+                <label className="hide_Filter_Text ">Reset</label>
+                <TbRefresh className="filter_Reset_Image" />
               </div>
             </div>
           </div>
 
           {/* Add SECTION */}
-          <div className="flex min-w-screen justify-between items-center my-4">
-            <h1 className="text-3xl font-medium">Brokerage View</h1>
+          <div className="flex min-w-screen justify-between items-center my-4 gap-3 flex-wrap">
+            <h1 className="text-3xl font-medium whitespace-nowrap finance_Heading_Text">
+              Brokerage View
+            </h1>
             <button
               onClick={handleAdd}
-              className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
+              className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded whitespace-nowrap"
             >
               Add Brokerage View
             </button>
           </div>
 
           {/* TABLE VIEW */}
-          <div className="overflow-x-auto">
-            <div className="min-w-full rounded-md overflow-hidden">
+          <div className="overflow-x-auto leads_Table_Main_Container">
+            <div className="min-w-full rounded-md leads_Table_Container">
               {/*--------------TABLE HEAD START------------- */}
 
-              <table className="min-w-full bg-white">
+              <table className="min-w-full bg-white leads_Table">
                 <thead>
                   <tr className="border-gray-300 border-b-2">
                     <th className="px-1 py-3">
@@ -323,10 +319,11 @@ export default function BrokerageView({ setShowTopSection }) {
                 {/* /---------------------->Previous Button <----------------------< */}
                 <button
                   onClick={() => paginate(currentPage - 1)}
-                  className={`p-1 shadow-md rounded-full text-white ${currentPage === 1
+                  className={`p-1 shadow-md rounded-full text-white ${
+                    currentPage === 1
                       ? "border-gray-200 border-2"
                       : "bg-cyan-500 border-2 border-gray-100"
-                    }`}
+                  }`}
                   disabled={currentPage === 1}
                 >
                   <GrFormPrevious size={25} />
@@ -345,10 +342,11 @@ export default function BrokerageView({ setShowTopSection }) {
                         <button
                           key={page}
                           onClick={() => paginate(page)}
-                          className={`px-4 py-2 rounded mx-1 ${currentPage === page
+                          className={`px-4 py-2 rounded mx-1 ${
+                            currentPage === page
                               ? "bg-blue-600 text-white"
                               : "bg-white text-gray-700 border"
-                            }`}
+                          }`}
                         >
                           {page}
                         </button>
@@ -364,16 +362,17 @@ export default function BrokerageView({ setShowTopSection }) {
                       );
                     }
                     return null;
-                  }
+                  },
                 )}
 
                 {/* Next Button */}
                 <button
                   onClick={() => paginate(currentPage + 1)}
-                  className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage
+                  className={`p-1 shadow-md rounded-full text-white${
+                    currentPage === totalPage
                       ? " border-gray-200 border-2"
                       : " bg-cyan-500 border-2 border-gray-100"
-                    }`}
+                  }`}
                   disabled={currentPage === totalPage}
                 >
                   <GrFormNext size={25} />
@@ -386,22 +385,23 @@ export default function BrokerageView({ setShowTopSection }) {
     );
   };
 
-
   return (
     <>
       <ToastContainer />
       {active ? (
         <ViewTable />
       ) : view ? (
-        <AddBrokerage setActive={setActive} setShowTopSection={setShowTopSection} />
+        <AddBrokerage
+          setActive={setActive}
+          setShowTopSection={setShowTopSection}
+        />
       ) : (
-
-        <EditBrokerage setActive={setActive} setShowTopSection={setShowTopSection} editBrokerageId={editId} />
-
+        <EditBrokerage
+          setActive={setActive}
+          setShowTopSection={setShowTopSection}
+          editBrokerageId={editId}
+        />
       )}
     </>
   );
 }
-
-
-

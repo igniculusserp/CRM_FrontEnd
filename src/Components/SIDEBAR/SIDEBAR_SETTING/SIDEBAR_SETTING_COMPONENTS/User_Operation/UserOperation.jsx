@@ -116,15 +116,15 @@ export default function UserOperation() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/userOpration/all`,
-        config
+        config,
       );
       if (response.status === 200) {
         const opration = response.data; // Get the user data
         setUsers(opration?.data); // Set the user data for editing
       }
     } catch (error) {
-      console.error("Error fetching user for edit:", error);
-      alert("Error occurred while trying to get data");
+      console.log(error);
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -138,15 +138,14 @@ export default function UserOperation() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/group/all`,
-        config
+        config,
       );
       if (response.status === 200) {
         const opration = response.data; // Get the user data
         setGroupNames(opration?.data); // Set the user data for editing
-      }
+      } else showErrorToast("You are not an authorised user");
     } catch (error) {
-      console.error("Error fetching user for edit:", error);
-      alert("Error occurred while trying to get data");
+      showErrorToast("You are not an authorised user");
     }
   };
 
@@ -214,7 +213,7 @@ export default function UserOperation() {
       const response = await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/Setting/userOpration/add`,
         formData,
-        config
+        config,
       );
       getOprationLists();
       setActive(!active);
@@ -234,7 +233,7 @@ export default function UserOperation() {
       };
       const response = await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/Setting/userOpration/delete/${id}`,
-        config
+        config,
       );
       getOprationLists();
       showSuccessToast("User deleted successfully");
@@ -254,7 +253,7 @@ export default function UserOperation() {
       const response = await axios.put(
         `${protocal_url}${name}.${tenant_base_url}/Setting/userOpration/update/${formData?.id}`,
         formData,
-        config
+        config,
       );
       getOprationLists();
       handleActiveState();
@@ -270,18 +269,18 @@ export default function UserOperation() {
       <div className="m-3 min-w-screen">
         {active ? (
           <>
-            <div className="flex min-w-screen justify-between items-center">
+            <div className="flex min-w-screen justify-between items-center flex-wrap gap-5">
               <h1 className="text-3xl font-medium">User Operation</h1>
               <button
                 onClick={handleActiveState}
                 className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
               >
-                Add User Setting
+                Add User Operation
               </button>
             </div>
-            <div className="overflow-x-auto mt-3">
-              <div className="min-w-full overflow-hidden rounded-md">
-                <table className="min-w-full bg-white">
+            <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
+              <div className="min-w-full rounded-md leads_Table_Container">
+                <table className="min-w-full bg-white leads_Table">
                   <thead>
                     <tr className="border-gray-300 border-b-2">
                       <th className="px-1 py-3">

@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function TrackSheet() {
   const [editReport, setEditReport] = useState({
-    fromDate: '',
-    ToDate: '',
-    callStatus: '',
-    product: '',
+    fromDate: "",
+    ToDate: "",
+    callStatus: "",
+    product: "",
   });
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -18,21 +18,21 @@ export default function TrackSheet() {
 
   // DROPDOWNS
   const [fromDateDropdown, setFromDateDropdown] = useState(false);
-  const [defaultFromDateText, setDefaultFromDateText] = useState('From Date');
+  const [defaultFromDateText, setDefaultFromDateText] = useState("From Date");
   const [toDateDropdown, setToDateDropdown] = useState(false);
-  const [defaultToDateText, setDefaultToDateText] = useState('To Date');
+  const [defaultToDateText, setDefaultToDateText] = useState("To Date");
   const [callStatusDropdown, setCallStatusDropdown] = useState(false);
   const [defaultCallStatusText, setDefaultCallStatusText] =
-    useState('Call Status');
+    useState("Call Status");
   const [productDropdown, setProductDropdown] = useState(false);
-  const [defaultProductText, setDefaultProductText] = useState('Product');
+  const [defaultProductText, setDefaultProductText] = useState("Product");
 
   // FROM DATE DUMMY
   const fromDate = [
-    { id: 1, name: '12/09/2023' },
-    { id: 2, name: '12/09/2023' },
-    { id: 3, name: '12/09/2023' },
-    { id: 4, name: '12/09/2023' },
+    { id: 1, name: "12/09/2023" },
+    { id: 2, name: "12/09/2023" },
+    { id: 3, name: "12/09/2023" },
+    { id: 4, name: "12/09/2023" },
   ];
 
   // TOGGLE FROM DATE
@@ -51,10 +51,10 @@ export default function TrackSheet() {
 
   // TO DATE DUMMY
   const toDate = [
-    { id: 1, name: '12/09/2023' },
-    { id: 2, name: '12/09/2023' },
-    { id: 3, name: '12/09/2023' },
-    { id: 4, name: '12/09/2023' },
+    { id: 1, name: "12/09/2023" },
+    { id: 2, name: "12/09/2023" },
+    { id: 3, name: "12/09/2023" },
+    { id: 4, name: "12/09/2023" },
   ];
 
   // TOGGLE TO DATE
@@ -73,10 +73,10 @@ export default function TrackSheet() {
 
   // CALL STATUS DUMMY
   const callStatus = [
-    { id: 1, name: 'call status' },
-    { id: 2, name: 'call status' },
-    { id: 3, name: 'call status' },
-    { id: 4, name: 'call status' },
+    { id: 1, name: "call status" },
+    { id: 2, name: "call status" },
+    { id: 3, name: "call status" },
+    { id: 4, name: "call status" },
   ];
 
   // TOGGLE TO DATE
@@ -95,10 +95,10 @@ export default function TrackSheet() {
 
   // PRODUCT DUMMY
   const product = [
-    { id: 1, name: 'product' },
-    { id: 2, name: 'product' },
-    { id: 3, name: 'product' },
-    { id: 4, name: 'product' },
+    { id: 1, name: "product" },
+    { id: 2, name: "product" },
+    { id: 3, name: "product" },
+    { id: 4, name: "product" },
   ];
 
   // TOGGLE TO DATE
@@ -117,10 +117,10 @@ export default function TrackSheet() {
 
   return (
     <>
-<div className="flex py-2 px-3 m-3 items-center justify-between bg-white rounded-md shadow-md">
+      <div className="flex py-2 px-3 m-3 items-center justify-between bg-white rounded-md shadow-md">
         <h1 className="text-xl">Add Track Sheet</h1>
         <Link
-          to="/sidebar/misreports"
+          to="/panel/misreports"
           className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
         >
           Cancel
@@ -303,7 +303,7 @@ export default function TrackSheet() {
                 type="submit"
                 className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
               >
-                {isEditMode ? 'Update' : 'Save'}
+                {isEditMode ? "Update" : "Save"}
               </button>
             </div>
           </div>

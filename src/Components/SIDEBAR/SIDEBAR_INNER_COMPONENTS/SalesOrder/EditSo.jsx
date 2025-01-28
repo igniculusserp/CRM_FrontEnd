@@ -19,10 +19,9 @@ import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 export default function CreateSO() {
-  
-    //------- Business Type --------
-    const businessType = localStorage.getItem("businessType");
-    const [business, setBusiness] = useState("");
+  //------- Business Type --------
+  const businessType = localStorage.getItem("businessType");
+  const [business, setBusiness] = useState("");
 
   //to make id unique
   const { id, leadId } = useParams();
@@ -47,10 +46,9 @@ export default function CreateSO() {
       setIsEditMode(true);
     }
 
-      //------- Business Type --------
-      console.log("Bussiness Type Dash Board : " ,businessType);
-      setBusiness(businessType);
-
+    //------- Business Type --------
+    console.log("Bussiness Type Dash Board : ", businessType);
+    setBusiness(businessType);
   }, [id]);
 
   //GET by ID---------------------------//GET---------------------------//GET---------------------------by ID-----------by ID
@@ -64,7 +62,7 @@ export default function CreateSO() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Lead/lead/${id}`,
-        config
+        config,
       );
       const data = response.data.data;
 
@@ -115,7 +113,7 @@ export default function CreateSO() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
-        config
+        config,
       );
       setSegments(response.data.data);
       // console.log("segment:", response.data.data);
@@ -127,10 +125,11 @@ export default function CreateSO() {
   useEffect(() => {
     handleSegment();
     setdefaultTextSegmentDropDown(
-      editLead.segments.length > 0 ? editLead.segments.join(", ") : "Select Segment"
+      editLead.segments.length > 0
+        ? editLead.segments.join(", ")
+        : "Select Segment",
     );
   }, [editLead]);
-
 
   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
     useState("Select Product");
@@ -148,7 +147,7 @@ export default function CreateSO() {
     if (isChecked) {
       // Remove segment if already selected
       updatedSegments = editLead.segments.filter(
-        (selectedSegment) => selectedSegment !== segment.segment
+        (selectedSegment) => selectedSegment !== segment.segment,
       );
     } else {
       // Add segment if not already selected
@@ -160,7 +159,9 @@ export default function CreateSO() {
     }));
 
     setdefaultTextSegmentDropDown(
-      updatedSegments.length > 0 ? updatedSegments.join(", ") : "Select Segment"
+      updatedSegments.length > 0
+        ? updatedSegments.join(", ")
+        : "Select Segment",
     );
 
     console.log("Selected segments:", updatedSegments);
@@ -182,10 +183,9 @@ export default function CreateSO() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
+        config,
       );
       setassigned_ToDropDown(response.data?.data);
-      console.log("status:", response.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
@@ -207,10 +207,10 @@ export default function CreateSO() {
 
   const handleDropdownassigned_ToDropDown = (
     assigned_To_Username,
-    assigned_To_Role
+    assigned_To_Role,
   ) => {
     setdefaultTextassigned_ToDropDown(
-      assigned_To_Username + " " + assigned_To_Role
+      assigned_To_Username + " " + assigned_To_Role,
     );
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     seteditLead((prevTask) => ({
@@ -470,19 +470,19 @@ export default function CreateSO() {
         await axios.put(
           `${protocal_url}${name}.${tenant_base_url}/Lead/lead/update`,
           formData_PUT,
-          config
+          config,
         );
         alert("SO updated successfully!");
-        navigate(`/sidebar/lead`);
+        navigate(`/panel/lead`);
       } else {
         await axios.post(
           `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/add`,
           formData_POST,
-          config
+          config,
         );
         console.log(formData_POST);
         alert("Sales Order created successfully!");
-        navigate(`/sidebar/lead`);
+        navigate(`/panel/lead`);
       }
 
       // Redirect after a short delay
@@ -536,7 +536,7 @@ export default function CreateSO() {
           </div>
           <div>
             <Link
-              to="/sidebar/lead"
+              to="/panel/lead"
               className="px-6 py-1 rounded  border border-blue-500 text-blue-500 "
             >
               Cancel
@@ -600,8 +600,8 @@ export default function CreateSO() {
                         {!isEditMode
                           ? defaultTextLanguageDropDown
                           : editLead.language === ""
-                          ? defaultTextLanguageDropDown
-                          : editLead.language}
+                            ? defaultTextLanguageDropDown
+                            : editLead.language}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLanguage && (
@@ -800,14 +800,14 @@ export default function CreateSO() {
                                   onClick={() =>
                                     handleDropdownassigned_ToDropDown(
                                       userName,
-                                      role
+                                      role,
                                     )
                                   }
                                   className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                                 >
                                   {userName}-({role})
                                 </li>
-                              )
+                              ),
                             )}
                           </ul>
                         </div>
@@ -928,7 +928,7 @@ export default function CreateSO() {
                                 key={key}
                                 onClick={() =>
                                   handleDropdownisDropdownVisiblebusinessType(
-                                    name
+                                    name,
                                   )
                                 }
                                 className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
@@ -1050,24 +1050,27 @@ export default function CreateSO() {
                 {/* -------------XI--1------------- */}
                 {/* -------------Total Amount------------- */}
                 <div className="flex space-x-4">
-                  {business==="Brokerage" ?"":<div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="totalAmount"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                     Total Amount
+                  {business === "Brokerage" ? (
+                    ""
+                  ) : (
+                    <div className="flex flex-col w-1/2">
+                      <label
+                        htmlFor="totalAmount"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Total Amount
+                      </label>
+                      <input
+                        type="number"
+                        name="totalAmount"
+                        value={editLead.totalAmount}
+                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        onChange={handleChange}
+                        placeholder="Total Amount"
+                      />
+                    </div>
+                  )}
 
-                    </label>
-                    <input
-                      type="number"
-                      name="totalAmount"
-                      value={editLead.totalAmount}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
-                      onChange={handleChange}
-                      placeholder="Total Amount"
-                    />
-                  </div>}
-                  
                   {/* -------------XI--2------------- */}
                   {/* -------------  Due Amount------------- */}
                   <div className="flex flex-col w-1/2">
@@ -1075,8 +1078,8 @@ export default function CreateSO() {
                       htmlFor="due_Amount"
                       className="text-sm font-medium text-gray-700"
                     >
-                       {/* Due Amount */}
-                      {business==="Brokerage" ?"Brokerage":"Due Amount"}
+                      {/* Due Amount */}
+                      {business === "Brokerage" ? "Brokerage" : "Due Amount"}
                     </label>
                     <input
                       type="text"
@@ -1091,48 +1094,49 @@ export default function CreateSO() {
                 {/* -------------XII--1------------- */}
                 {/* -------------Amount Paid------------- */}
                 <div className="flex space-x-4">
-                <div className="flex flex-col w-1/2">
-                  <label
-                    htmlFor="amount_paid"
-                    className="text-sm font-medium text-gray-700"
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="amount_paid"
+                      className="text-sm font-medium text-gray-700"
                     >
-                    {/* Amount Paid */}
-                    {business==="Brokerage" ?"Fund":"Amount Paid"}
-                  </label>
-                  <input
-                    type="text"
-                    name="amount_paid"
-                    value={editLead.amount_paid}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                    onChange={handleChange}
-                    placeholder="Amount Paid"
+                      {/* Amount Paid */}
+                      {business === "Brokerage" ? "Fund" : "Amount Paid"}
+                    </label>
+                    <input
+                      type="text"
+                      name="amount_paid"
+                      value={editLead.amount_paid}
+                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      onChange={handleChange}
+                      placeholder="Amount Paid"
                     />
-                  {errors.mobileNo && (
-                    <span className="text-red-500">{errors.amount_paid}</span>
+                    {errors.mobileNo && (
+                      <span className="text-red-500">{errors.amount_paid}</span>
+                    )}
+                  </div>
+                  {/* -------------XII--2------------- */}
+                  {/* -------------Discount------------- */}
+                  {business === "Brokerage" ? (
+                    ""
+                  ) : (
+                    <div className="flex flex-col w-1/2">
+                      <label
+                        htmlFor="discount"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Discount
+                      </label>
+                      <input
+                        type="text"
+                        name="discount"
+                        value={editLead.discount}
+                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        onChange={handleChange}
+                        placeholder="Discount"
+                      />
+                    </div>
                   )}
                 </div>
-                {/* -------------XII--2------------- */}
-                {/* -------------Discount------------- */}
-                  {business==="Brokerage" ?
-                  "":
-                <div className="flex flex-col w-1/2">
-                  <label
-                    htmlFor="discount"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Discount
-                  </label>
-                  <input
-                    type="text"
-                    name="discount"
-                    value={editLead.discount}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                    onChange={handleChange}
-                    placeholder="Discount"
-                  />
-              </div>}
-                </div>
-                
 
                 {/* -------------XIII--1------------- */}
                 {/* -------------Payment Date------------- */}
@@ -1206,7 +1210,7 @@ export default function CreateSO() {
                                 <input
                                   type="checkbox"
                                   checked={editLead.segments.includes(
-                                    segment.segment
+                                    segment.segment,
                                   )}
                                   onChange={() => handleCheckboxChange(segment)}
                                   className="mr-2"
@@ -1250,117 +1254,123 @@ export default function CreateSO() {
                 {/* -------------SALES ORDER INFORMATION FORM STARTS FROM HERE------------- */}
                 {/* -------------XV--1------------- */}
                 {/* -------------period_of_subscription------------- */}
-                {business==="Brokerage" ?
-                "":<div className="flex space-x-4">
-                <div className="flex flex-col w-1/2">
-                  <label
-                    htmlFor="period_of_subscription"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Period of Subscription
-                  </label>
-                  <input
-                    type="text"
-                    name="period_of_Subscription"
-                    value={editLead.period_of_subscription}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                    onChange={handleChange}
-                    placeholder="Period of Subscription"
-                  />
-                </div>
-                {/* -------------Select Term------------- */}
-                {/* -------------XV--2------------- */}
-                <div className="flex flex-col w-1/2 relative">
-                  <label
-                    htmlFor="term"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Term
-                  </label>
-                  <div
-                    className="relative"
-                    onClick={toggleDropdown_Term_}
-                    onMouseLeave={() => setisDropdownVisible_Term_(false)}
-                  >
-                    <button
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
-                      id="termDropDown"
-                      type="button"
-                    >
-                      {isEditMode ? editLead.term : defaultText_Term_DropDown}
-                      <FaAngleDown className="ml-2 text-gray-400" />
-                    </button>
-                    {isDropdownVisible_Term_ && (
-                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
-                        <ul className="py-2 text-sm text-gray-700">
-                          {Term_DropDown.map(({ key, name }) => (
-                            <li
-                              key={key}
-                              onClick={() =>
-                                handleDropdownisDropdown_Term_(name)
-                              }
-                              className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                            >
-                              {name}
-                            </li>
-                          ))}
-                        </ul>
+                {business === "Brokerage" ? (
+                  ""
+                ) : (
+                  <div className="flex space-x-4">
+                    <div className="flex flex-col w-1/2">
+                      <label
+                        htmlFor="period_of_subscription"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Period of Subscription
+                      </label>
+                      <input
+                        type="text"
+                        name="period_of_Subscription"
+                        value={editLead.period_of_subscription}
+                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        onChange={handleChange}
+                        placeholder="Period of Subscription"
+                      />
+                    </div>
+                    {/* -------------Select Term------------- */}
+                    {/* -------------XV--2------------- */}
+                    <div className="flex flex-col w-1/2 relative">
+                      <label
+                        htmlFor="term"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Term
+                      </label>
+                      <div
+                        className="relative"
+                        onClick={toggleDropdown_Term_}
+                        onMouseLeave={() => setisDropdownVisible_Term_(false)}
+                      >
+                        <button
+                          className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                          id="termDropDown"
+                          type="button"
+                        >
+                          {isEditMode
+                            ? editLead.term
+                            : defaultText_Term_DropDown}
+                          <FaAngleDown className="ml-2 text-gray-400" />
+                        </button>
+                        {isDropdownVisible_Term_ && (
+                          <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                            <ul className="py-2 text-sm text-gray-700">
+                              {Term_DropDown.map(({ key, name }) => (
+                                <li
+                                  key={key}
+                                  onClick={() =>
+                                    handleDropdownisDropdown_Term_(name)
+                                  }
+                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                >
+                                  {name}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
                       </div>
-                    )}
+                    </div>
                   </div>
-                </div>
-              </div>}
-                
+                )}
 
                 {/* -------------XVI--1------------- */}
                 {/* -------------Subscription Start Date------------- */}
-                {business==="Brokerage" ?
-                "":
-                <div className="flex space-x-4">
-                <div className="flex flex-col w-1/2">
-                  <label
-                    htmlFor="subscription_start_date"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Subscription Start Date
-                  </label>
-                  <input
-                    type="date"
-                    name="subscription_start_date"
-                    value={editLead.subscription_start_date}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                    onChange={handleChange}
-                  />
-                  {errors.mobileNo && (
-                    <span className="text-red-500">
-                      {errors.subscription_start_date}
-                    </span>
-                  )}
-                </div>
-                {/* -------------XVI--2------------- */}
-                {/* -------------subscription_end_date------------- */}
-                <div className="flex flex-col w-1/2">
-                  <label
-                    htmlFor="subscription_end_date"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Subscription End Date
-                  </label>
-                  <input
-                    type="date"
-                    name="subscription_end_date"
-                    value={editLead.subscription_end_date}
-                    onChange={handleChange}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                  />
-                  {errors.mobileNo && (
-                    <span className="text-red-500">
-                      {errors.subscription_end_date}
-                    </span>
-                  )}
-                </div>
-              </div>}
-                
+                {business === "Brokerage" ? (
+                  ""
+                ) : (
+                  <div className="flex space-x-4">
+                    <div className="flex flex-col w-1/2">
+                      <label
+                        htmlFor="subscription_start_date"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Subscription Start Date
+                      </label>
+                      <input
+                        type="date"
+                        name="subscription_start_date"
+                        value={editLead.subscription_start_date}
+                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        onChange={handleChange}
+                      />
+                      {errors.mobileNo && (
+                        <span className="text-red-500">
+                          {errors.subscription_start_date}
+                        </span>
+                      )}
+                    </div>
+                    {/* -------------XVI--2------------- */}
+                    {/* -------------subscription_end_date------------- */}
+                    <div className="flex flex-col w-1/2">
+                      <label
+                        htmlFor="subscription_end_date"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Subscription End Date
+                      </label>
+                      <input
+                        type="date"
+                        name="subscription_end_date"
+                        value={editLead.subscription_end_date}
+                        onChange={handleChange}
+                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                      />
+                      {errors.mobileNo && (
+                        <span className="text-red-500">
+                          {errors.subscription_end_date}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 {/* -------------XVII--1------------- */}
                 <div className="flex space-x-4">
                   {/* -------------Service------------- */} {/* sms , wp,  */}

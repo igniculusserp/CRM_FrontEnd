@@ -11,7 +11,6 @@ export default function AccessControl() {
   const [activeComponent, setActiveComponent] = useState("Table");
   const [selectedId, setSelectedId] = useState(null); // Add state for selected id
 
-
   // ------------------------------ Access Control Handle Add Button ------------------------
 
   const handleAdd = () => {
@@ -34,11 +33,11 @@ export default function AccessControl() {
   //------------------------------------Access Control Table -----------------------------
   const AccessControlTable = () => {
     const [data, setData] = useState([]);
-    
+
     const fullURL = window.location.href;
     const url = new URL(fullURL);
     const name = url.hostname.split(".")[0];
-    
+
     // ------------------------------ Access Control Get All  ------------------------
     async function handleGetAll() {
       const bearer_token = localStorage.getItem("token");
@@ -50,7 +49,7 @@ export default function AccessControl() {
         };
         const response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Security/accesscontrol/getall`,
-          config
+          config,
         );
         setData(response.data.data);
       } catch (error) {
@@ -74,7 +73,7 @@ export default function AccessControl() {
         };
         await axios.delete(
           `${protocal_url}${name}.${tenant_base_url}/Security/accesscontrol/delete/${id}`,
-          config
+          config,
         );
         setData((prevData) => prevData.filter((item) => item.id !== id));
         alert("Successfully deleted");
@@ -87,8 +86,8 @@ export default function AccessControl() {
 
     return (
       <div className="m-3 min-w-screen">
-        <div className="flex min-w-screen justify-between items-center">
-          <div className="flex items-center gap-2">
+        <div className="flex min-w-screen justify-between items-center flex-wrap gap-5">
+          <div className="flex items-center">
             <h1 className="text-3xl font-medium">Access Control</h1>
           </div>
           <button
@@ -98,9 +97,9 @@ export default function AccessControl() {
             Add Access Control
           </button>
         </div>
-        <div className="overflow-x-auto mt-3">
-          <div className="min-w-full overflow-hidden rounded-md">
-            <table className="min-w-full bg-white">
+        <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
+          <div className="min-w-full rounded-md leads_Table_Container">
+            <table className="min-w-full bg-white leads_Table">
               <thead>
                 <tr className="border-gray-300 border-b-2">
                   <th className="px-1 py-3">

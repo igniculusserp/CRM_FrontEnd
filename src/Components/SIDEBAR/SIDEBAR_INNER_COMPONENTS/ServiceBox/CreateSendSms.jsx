@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaAngleDown } from "react-icons/fa";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { IoInformationCircle } from "react-icons/io5";
 
@@ -11,7 +11,7 @@ import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/Global
 export default function CreateSendSms() {
   const name = getHostnamePart();
   const navigate = useNavigate();
-  
+
   const [editSms, setEditSms] = useState({
     mobilenos: [],
     smsType: "",
@@ -31,30 +31,25 @@ export default function CreateSendSms() {
     });
   };
 
-
   // --------------------------------------------- Check Box Start -------------------------------------------
 
   const [selectedCheckbox, setSelectedCheckbox] = useState("Free Trail");
 
   const handleCheckboxChange = (name) => {
-    setSelectedCheckbox(name === selectedCheckbox ? "" : name); 
-   
+    setSelectedCheckbox(name === selectedCheckbox ? "" : name);
   };
 
-  
   useEffect(() => {
     const currentDate = new Date().toISOString();
     setEditSms((prev) => ({
       ...prev,
       smsType: selectedCheckbox,
-      sentDateTime:currentDate,
+      sentDateTime: currentDate,
     }));
-   }, [selectedCheckbox]);
+  }, [selectedCheckbox]);
 
   // --------------------------------------------- Check Box End -------------------------------------------
 
-
- 
   // ---------------------------------------------  Call Status Start -------------------------------------------
 
   // DUMMY CALL STATUS
@@ -100,7 +95,7 @@ export default function CreateSendSms() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/smstemplates/getall`,
-        config
+        config,
       );
       setTemplates(response.data.data);
     } catch (error) {
@@ -109,7 +104,7 @@ export default function CreateSendSms() {
   }
 
   useEffect(() => {
-    handleLead(); 
+    handleLead();
   }, []);
 
   //--------------------------------------- DropDown Handling -------------------------------------------------
@@ -153,7 +148,7 @@ export default function CreateSendSms() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
-        config
+        config,
       );
       setSegments(response.data.data);
     } catch (error) {
@@ -178,7 +173,7 @@ export default function CreateSendSms() {
     if (isChecked) {
       // Remove segment if already selected
       updatedSegments = selectedSegments.filter(
-        (selectedSegment) => selectedSegment !== segment.segment
+        (selectedSegment) => selectedSegment !== segment.segment,
       );
     } else {
       // Add segment if not already selected
@@ -188,26 +183,22 @@ export default function CreateSendSms() {
     setSelectedSegments(updatedSegments);
 
     setDefaultTextSegmentDropDown(
-      updatedSegments.length > 0 ? updatedSegments.join(", ") : "Select Segment",
+      updatedSegments.length > 0
+        ? updatedSegments.join(", ")
+        : "Select Segment",
     );
-   
-   
   };
 
   useEffect(() => {
-
     setEditSms((prev) => ({
       ...prev,
       products: defaultTextSegmentDropDown,
     }));
-   }, [defaultTextSegmentDropDown]);
-
+  }, [defaultTextSegmentDropDown]);
 
   //--------------------------------------- Segments END-------------------------------------------------
 
   //--------------------------------------- Get Mobile Number by Segment Start-------------------------------------------------
-
-
 
   useEffect(() => {
     fetchMobileNumber();
@@ -242,21 +233,14 @@ export default function CreateSendSms() {
         ...prev,
         mobilenos: response.data.data,
       }));
-
     } catch (error) {
       console.error("Error fetching mobile numbers:", error);
     }
   }
 
+  //--------------------------------------- Get Mobile Number by Segment End-------------------------------------------------
 
-    //--------------------------------------- Get Mobile Number by Segment End-------------------------------------------------
-
-
-
-   
   // ------------------------------  Handle Submit ------------------------
-
-  
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -277,7 +261,7 @@ export default function CreateSendSms() {
         textMessage: editSms.textMessage,
         sentDateTime: editSms.sentDateTime,
         lastModifiedBy: editSms.lastModifiedBy,
-      }
+      },
     };
 
     console.log("Request Body on Submit:", requestBody); // Log final form submission data
@@ -286,16 +270,15 @@ export default function CreateSendSms() {
       await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/SMSBox/send-servicesms`,
         requestBody,
-        config
+        config,
       );
       alert("Successfully Added");
-      navigate(`/sidebar/smsbox`);
+      navigate(`/panel/servicebox`);
     } catch (error) {
       console.error("Error saving pool name", error);
       alert("Failed to save pool. Please try again.");
     }
   };
-
 
   return (
     // TOP SECTION
@@ -303,7 +286,7 @@ export default function CreateSendSms() {
       <div className="flex py-2 px-3 items-center justify-between bg-white rounded-md shadow-md">
         <h1 className="text-xl">Send SMS</h1>
         <Link
-          to="/sidebar/smsbox"
+          to="/panel/servicebox"
           className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
         >
           Cancel
@@ -387,7 +370,7 @@ export default function CreateSendSms() {
                               <input
                                 type="checkbox"
                                 checked={selectedSegments.includes(
-                                  segment.segment
+                                  segment.segment,
                                 )}
                                 onChange={() => handleProductChange(segment)}
                                 className="mr-2"
@@ -497,9 +480,8 @@ export default function CreateSendSms() {
               </div>
             </div>
 
-             {/* Msg FIELD */}
-             <div className="flex space-x-4">
-             
+            {/* Msg FIELD */}
+            <div className="flex space-x-4">
               {/* TEXT MESSAGE DROPDOWN */}
               <div className="flex flex-col w-full">
                 <label

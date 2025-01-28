@@ -1,101 +1,103 @@
-import { useState } from 'react';
-import { FaAngleDown, FaBars } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { useState } from "react";
+import { FaAngleDown, FaBars } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 
 export default function PasswordPolicy() {
-  const [activeComponent, setActiveComponent] = useState('Table');
-  const [idGet, setIdGet] = useState('');
+  const [activeComponent, setActiveComponent] = useState("Table");
+  const [idGet, setIdGet] = useState("");
 
   const handleAdd = () => {
-    setActiveComponent('Add');
+    setActiveComponent("Add");
   };
 
   const handleCancel = () => {
-    setActiveComponent('Table');
+    setActiveComponent("Table");
   };
 
   const PasswordPolicyTable = () => {
     const data = [
       {
         id: 1,
-        title: 'Global Hunt',
-        createdBy: '12/03/2023',
-        modifiedOn: '12/03/2023',
+        title: "Global Hunt",
+        createdBy: "12/03/2023",
+        modifiedOn: "12/03/2023",
       },
       {
         id: 2,
-        title: 'Global Hunt',
-        createdBy: '12/03/2023',
-        modifiedOn: '12/03/2023',
+        title: "Global Hunt",
+        createdBy: "12/03/2023",
+        modifiedOn: "12/03/2023",
       },
       {
         id: 3,
-        title: 'Global Hunt',
-        createdBy: '12/03/2023',
-        modifiedOn: '12/03/2023',
+        title: "Global Hunt",
+        createdBy: "12/03/2023",
+        modifiedOn: "12/03/2023",
       },
       {
         id: 4,
-        title: 'Global Hunt',
-        createdBy: '12/03/2023',
-        modifiedOn: '12/03/2023',
+        title: "Global Hunt",
+        createdBy: "12/03/2023",
+        modifiedOn: "12/03/2023",
       },
       {
         id: 5,
-        title: 'Global Hunt',
-        createdBy: '12/03/2023',
-        modifiedOn: '12/03/2023',
+        title: "Global Hunt",
+        createdBy: "12/03/2023",
+        modifiedOn: "12/03/2023",
       },
       {
         id: 6,
-        title: 'Global Hunt',
-        createdBy: '12/03/2023',
-        modifiedOn: '12/03/2023',
+        title: "Global Hunt",
+        createdBy: "12/03/2023",
+        modifiedOn: "12/03/2023",
       },
       {
         id: 7,
-        title: 'Global Hunt',
-        createdBy: '12/03/2023',
-        modifiedOn: '12/03/2023',
+        title: "Global Hunt",
+        createdBy: "12/03/2023",
+        modifiedOn: "12/03/2023",
       },
       {
         id: 8,
-        title: 'Global Hunt',
-        createdBy: '12/03/2023',
-        modifiedOn: '12/03/2023',
+        title: "Global Hunt",
+        createdBy: "12/03/2023",
+        modifiedOn: "12/03/2023",
       },
       {
         id: 9,
-        title: 'Global Hunt',
-        createdBy: '12/03/2023',
-        modifiedOn: '12/03/2023',
+        title: "Global Hunt",
+        createdBy: "12/03/2023",
+        modifiedOn: "12/03/2023",
       },
       {
         id: 10,
-        title: 'Global Hunt',
-        createdBy: '12/03/2023',
-        modifiedOn: '12/03/2023',
+        title: "Global Hunt",
+        createdBy: "12/03/2023",
+        modifiedOn: "12/03/2023",
       },
       {
         id: 11,
-        title: 'Global Hunt',
-        createdBy: '12/03/2023',
-        modifiedOn: '12/03/2023',
+        title: "Global Hunt",
+        createdBy: "12/03/2023",
+        modifiedOn: "12/03/2023",
       },
     ];
 
     const handleEdit = (id) => {
-      setActiveComponent('Update');
+      setActiveComponent("Update");
       setIdGet(id);
     };
 
     return (
       <div className="m-3 min-w-screen">
-        <div className="flex min-w-screen justify-between items-center">
+        <div className="flex min-w-screen justify-between items-center flex-wrap gap-5">
           <div className="flex items-center gap-2">
             <h1 className="text-3xl font-medium">Password Policy</h1>
-            <h2 className='text-xl font-medium text-red-500 text-center'>(This feature is coming soon...)</h2>
+            <h2 className="text-xl font-medium text-red-500 text-center">
+              (This feature is coming soon...)
+            </h2>
           </div>
           <button
             onClick={handleAdd}
@@ -104,9 +106,9 @@ export default function PasswordPolicy() {
             Add Password Policy
           </button>
         </div>
-        <div className="overflow-x-auto mt-3">
-          <div className="min-w-full overflow-hidden rounded-md">
-            <table className="min-w-full bg-white">
+        <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
+          <div className="min-w-full rounded-md leads_Table_Container">
+            <table className="min-w-full bg-white leads_Table">
               <thead>
                 <tr className="border-gray-300 border-b-2">
                   <th className="px-1 py-3">
@@ -177,18 +179,18 @@ export default function PasswordPolicy() {
   const AddPasswordPolicy = () => {
     const [isEditMode, setIsEditMode] = useState(false);
     const [addPassword, setAddPassword] = useState({
-      title: '',
-      description: '',
-      validFrom: '',
-      validTo: '',
-      maxPassAge: '', // DROPDOWN
-      minPassAge: '',
-      minPassLen: '',
-      minCharClass: '',
-      minUpperChar: '',
-      minLowerChar: '',
-      minNumericChar: '',
-      minSpeChar: '',
+      title: "",
+      description: "",
+      validFrom: "",
+      validTo: "",
+      maxPassAge: "", // DROPDOWN
+      minPassAge: "",
+      minPassLen: "",
+      minCharClass: "",
+      minUpperChar: "",
+      minLowerChar: "",
+      minNumericChar: "",
+      minSpeChar: "",
     });
 
     const handleChange = (e) => {
@@ -206,12 +208,12 @@ export default function PasswordPolicy() {
     const [selectedId, setSelectedId] = useState(1);
 
     const buttons = [
-      { id: 1, text: 'Expiration' },
-      { id: 2, text: 'Compleocity' },
-      { id: 3, text: 'Restriction' },
-      { id: 4, text: 'Historic Password' },
-      { id: 5, text: 'Account Lock' },
-      { id: 6, text: 'Preferences' },
+      { id: 1, text: "Expiration" },
+      { id: 2, text: "Compleocity" },
+      { id: 3, text: "Restriction" },
+      { id: 4, text: "Historic Password" },
+      { id: 5, text: "Account Lock" },
+      { id: 6, text: "Preferences" },
     ];
 
     const handleOptionClick = (id) => {
@@ -221,50 +223,50 @@ export default function PasswordPolicy() {
     // DROPDOWNS
     const [maxPasswordAgeDropdown, setMaxPasswordAgeDropdown] = useState(false);
     const [defaultMaxPasswordText, setDefaultMaxPasswordText] = useState(
-      'Max Password Age(Days)'
+      "Max Password Age(Days)",
     );
     const [minPasswordAgeDropdown, setMinPasswordAgeDropdown] = useState(false);
     const [defaultMinPasswordText, setDefaultMinPasswordText] = useState(
-      'Min Password Age(Days)'
+      "Min Password Age(Days)",
     );
     const [minPasswordLengthDropdown, setMinPasswordLengthDropdown] =
       useState(false);
     const [defaultMinLengthPasswordText, setDefaultMinLengthPasswordText] =
-      useState('Minimum Password Length');
+      useState("Minimum Password Length");
     const [minCharClassDropdown, setMinCharClassDropdown] = useState(false);
     const [defaultMinCharClassText, setDefaultMinCharClassText] = useState(
-      'Minimum Character Classes'
+      "Minimum Character Classes",
     );
     const [minUppCaseCharDropdown, setMinUppCaseCharDropdown] = useState(false);
     const [defaultMinUppCaseText, setDefaultMinUppCaseText] = useState(
-      'Minimum Uppercase Character'
+      "Minimum Uppercase Character",
     );
     const [minLowCaseCharDropdown, setMinLowCaseCharDropdown] = useState(false);
     const [defaultMinLowCaseText, setDefaultMinLowCaseText] = useState(
-      'Minimum Lowercase Character'
+      "Minimum Lowercase Character",
     );
     const [minNumericCharDropdown, setMinNumericCharDropdown] = useState(false);
     const [defaultNumericCharText, setDefaultNumericCharText] = useState(
-      'Minimum Numeric Character'
+      "Minimum Numeric Character",
     );
     const [minSpecialCharDropdown, setMinSpecialCharDropdown] = useState(false);
     const [defaultSpecialCharText, setDefaultSpecialCharText] = useState(
-      'Minimum Special Characters'
+      "Minimum Special Characters",
     );
 
     // DUMMY DATA
     const minPassword = [
-      { id: 1, name: 'Min Password' },
-      { id: 2, name: 'Min Password' },
-      { id: 3, name: 'Min Password' },
-      { id: 4, name: 'Min Password' },
+      { id: 1, name: "Min Password" },
+      { id: 2, name: "Min Password" },
+      { id: 3, name: "Min Password" },
+      { id: 4, name: "Min Password" },
     ];
 
     const maxPassword = [
-      { id: 1, name: 'Max Password' },
-      { id: 2, name: 'Max Password' },
-      { id: 3, name: 'Max Password' },
-      { id: 4, name: 'Max Password' },
+      { id: 1, name: "Max Password" },
+      { id: 2, name: "Max Password" },
+      { id: 3, name: "Max Password" },
+      { id: 4, name: "Max Password" },
     ];
 
     const minPwdLen = [
@@ -578,8 +580,8 @@ export default function PasswordPolicy() {
                   className={`px-3 py-2 rounded font-light text-md
             ${
               selectedId === id
-                ? 'bg-cyan-500 text-white'
-                : 'bg-gray-100 text-gray-700'
+                ? "bg-cyan-500 text-white"
+                : "bg-gray-100 text-gray-700"
             }
           `}
                 >
@@ -1282,19 +1284,19 @@ export default function PasswordPolicy() {
   const UpdatePasswordPolicy = () => {
     const [isEditMode, setIsEditMode] = useState(false);
     const [addPassword, setAddPassword] = useState({
-      id: '',
-      title: '',
-      description: '',
-      validFrom: '',
-      validTo: '',
-      maxPassAge: '', // DROPDOWN
-      minPassAge: '',
-      minPassLen: '',
-      minCharClass: '',
-      minUpperChar: '',
-      minLowerChar: '',
-      minNumericChar: '',
-      minSpeChar: '',
+      id: "",
+      title: "",
+      description: "",
+      validFrom: "",
+      validTo: "",
+      maxPassAge: "", // DROPDOWN
+      minPassAge: "",
+      minPassLen: "",
+      minCharClass: "",
+      minUpperChar: "",
+      minLowerChar: "",
+      minNumericChar: "",
+      minSpeChar: "",
     });
 
     const handleChange = (e) => {
@@ -1312,12 +1314,12 @@ export default function PasswordPolicy() {
     const [selectedId, setSelectedId] = useState(1);
 
     const buttons = [
-      { id: 1, text: 'Expiration' },
-      { id: 2, text: 'Compleocity' },
-      { id: 3, text: 'Restriction' },
-      { id: 4, text: 'Historic Password' },
-      { id: 5, text: 'Account Lock' },
-      { id: 6, text: 'Preferences' },
+      { id: 1, text: "Expiration" },
+      { id: 2, text: "Compleocity" },
+      { id: 3, text: "Restriction" },
+      { id: 4, text: "Historic Password" },
+      { id: 5, text: "Account Lock" },
+      { id: 6, text: "Preferences" },
     ];
 
     const handleOptionClick = (id) => {
@@ -1327,50 +1329,50 @@ export default function PasswordPolicy() {
     // DROPDOWNS
     const [maxPasswordAgeDropdown, setMaxPasswordAgeDropdown] = useState(false);
     const [defaultMaxPasswordText, setDefaultMaxPasswordText] = useState(
-      'Max Password Age(Days)'
+      "Max Password Age(Days)",
     );
     const [minPasswordAgeDropdown, setMinPasswordAgeDropdown] = useState(false);
     const [defaultMinPasswordText, setDefaultMinPasswordText] = useState(
-      'Min Password Age(Days)'
+      "Min Password Age(Days)",
     );
     const [minPasswordLengthDropdown, setMinPasswordLengthDropdown] =
       useState(false);
     const [defaultMinLengthPasswordText, setDefaultMinLengthPasswordText] =
-      useState('Minimum Password Length');
+      useState("Minimum Password Length");
     const [minCharClassDropdown, setMinCharClassDropdown] = useState(false);
     const [defaultMinCharClassText, setDefaultMinCharClassText] = useState(
-      'Minimum Character Classes'
+      "Minimum Character Classes",
     );
     const [minUppCaseCharDropdown, setMinUppCaseCharDropdown] = useState(false);
     const [defaultMinUppCaseText, setDefaultMinUppCaseText] = useState(
-      'Minimum Uppercase Character'
+      "Minimum Uppercase Character",
     );
     const [minLowCaseCharDropdown, setMinLowCaseCharDropdown] = useState(false);
     const [defaultMinLowCaseText, setDefaultMinLowCaseText] = useState(
-      'Minimum Lowercase Character'
+      "Minimum Lowercase Character",
     );
     const [minNumericCharDropdown, setMinNumericCharDropdown] = useState(false);
     const [defaultNumericCharText, setDefaultNumericCharText] = useState(
-      'Minimum Numeric Character'
+      "Minimum Numeric Character",
     );
     const [minSpecialCharDropdown, setMinSpecialCharDropdown] = useState(false);
     const [defaultSpecialCharText, setDefaultSpecialCharText] = useState(
-      'Minimum Special Characters'
+      "Minimum Special Characters",
     );
 
     // DUMMY DATA
     const minPassword = [
-      { id: 1, name: 'Min Password' },
-      { id: 2, name: 'Min Password' },
-      { id: 3, name: 'Min Password' },
-      { id: 4, name: 'Min Password' },
+      { id: 1, name: "Min Password" },
+      { id: 2, name: "Min Password" },
+      { id: 3, name: "Min Password" },
+      { id: 4, name: "Min Password" },
     ];
 
     const maxPassword = [
-      { id: 1, name: 'Max Password' },
-      { id: 2, name: 'Max Password' },
-      { id: 3, name: 'Max Password' },
-      { id: 4, name: 'Max Password' },
+      { id: 1, name: "Max Password" },
+      { id: 2, name: "Max Password" },
+      { id: 3, name: "Max Password" },
+      { id: 4, name: "Max Password" },
     ];
 
     const minPwdLen = [
@@ -1684,8 +1686,8 @@ export default function PasswordPolicy() {
                   className={`px-3 py-2 rounded font-light text-md
             ${
               selectedId === id
-                ? 'bg-cyan-500 text-white'
-                : 'bg-gray-100 text-gray-700'
+                ? "bg-cyan-500 text-white"
+                : "bg-gray-100 text-gray-700"
             }
           `}
                 >
@@ -2387,14 +2389,14 @@ export default function PasswordPolicy() {
 
   return (
     <>
-      {activeComponent === 'Table' ? (
+      {activeComponent === "Table" ? (
         <PasswordPolicyTable />
-      ) : activeComponent === 'Add' ? (
+      ) : activeComponent === "Add" ? (
         <AddPasswordPolicy />
-      ) : activeComponent === 'Update' ? (
+      ) : activeComponent === "Update" ? (
         <UpdatePasswordPolicy />
       ) : (
-        ''
+        ""
       )}
     </>
   );
