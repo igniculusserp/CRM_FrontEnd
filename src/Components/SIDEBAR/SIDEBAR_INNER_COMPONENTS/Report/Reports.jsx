@@ -1,10 +1,6 @@
 // REACT - IN BUILD
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { ImFilter } from "react-icons/im";
-import { TbRefresh } from "react-icons/tb";
-// REACT - ICONS
-import { IoSearchOutline } from "react-icons/io5";
 import EmployeeReport from "./RepoComponents/EmployeeReport";
 import LeadsReport from "./RepoComponents/LeadsReport";
 import ClientReports from "./RepoComponents/ClientReports";
@@ -24,7 +20,6 @@ const name = getHostnamePart();
 export default function Reports() {
   const location = useLocation();
   const [getReports, setGetReports] = useState([]);
-  const [originalReports, setOriginalReports] = useState([]);
 
   //------------------------------------------------------------------------------------------------
   //----------------GET ----------------
@@ -36,7 +31,7 @@ export default function Reports() {
       2: "/Lead/leads/byusertoken",
       3: "/SalesOrder/salesOrder/clientbyusertoken",
       4: "/Report/performance/report/byusertoken",
-      6: `/Report/callingreports/byusertoken`,
+      6: "/Report/callingreports/byusertoken",
     };
 
     try {
@@ -54,13 +49,12 @@ export default function Reports() {
 
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}${endpoint}`,
-        config,
+        config
       );
 
       const data = response.data.data;
       setGetReports(data);
       console.log(getReports);
-      setOriginalReports(data); // Store original unfiltered data
     } catch (error) {
       console.error("Error fetching reports:", error);
       // Optionally, set an error state to display a user-friendly message
@@ -71,16 +65,9 @@ export default function Reports() {
     handleGetReport(); // Initial call on component mount
   }, []);
 
-  // PAGINATION
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // item to be seen in a single page
 
-  const paginate = (page) => setCurrentPage(page);
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
-  const currentReports = getReports.slice(indexOfFirstItem, indexOfLastItem);
+  const currentReports = getReports;
 
   //----------------STRIPE BAR DROPDOWN----------------
 
@@ -95,7 +82,7 @@ export default function Reports() {
   ];
 
   const [selectedId, setSelectedId] = useState(
-    () => parseInt(localStorage.getItem("selectedId")) || 1,
+    () => parseInt(localStorage.getItem("selectedId")) || 1
   );
 
   // Function to handle option click using bracket notation
@@ -116,20 +103,7 @@ export default function Reports() {
     };
   }, [location]);
 
-  //   SEARCH DROPDOWN
-  const [searchDropdown, setSearchDropdown] = useState(false);
-
-  // SEARCH DUMMY DATA
-  const searchData = [
-    { key: 1, name: "Search" },
-    { key: 2, name: "Search" },
-    { key: 3, name: "Search" },
-  ];
-
-  // TOGGLE SEARCH DROPDOWN
-  const toggleDropdownSearch = () => {
-    setSearchDropdown(!searchDropdown);
-  };
+  
 
   // ---------------------BUTTON THAT ARE VISIBLE IN SALES REPORTS ------------------------------------
   const buttons = [
@@ -143,44 +117,7 @@ export default function Reports() {
     setButtonId(id);
   };
 
-  // ----------------------------- Date Filter -----------------------------
-
-  const today = new Date().toISOString().split("T")[0];
-  const [startDate, setStartDate] = useState(today);
-  const [endDate, setEndDate] = useState(today);
-
-  // Function to filter based on date range
-  function handle_DateRange(startDate, endDate) {
-    let filteredFollows = originalReports;
-
-    // Convert startDate to the beginning of the day and endDate to the end of the day
-    const start = new Date(startDate);
-    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
-
-    const end = new Date(endDate);
-    end.setHours(23, 59, 59, 999); // Set time to 23:59:59
-
-    if (startDate && endDate) {
-      filteredFollows = filteredFollows.filter((follow) => {
-        const callbackDate = new Date(follow.date);
-        return callbackDate >= start && callbackDate <= end;
-      });
-    }
-    setGetReports(filteredFollows); // Update the filtered result
-  }
-
-  // UseEffect to trigger handle_DateRange on date change
-  useEffect(() => {
-    if (startDate <= endDate) {
-      handle_DateRange(startDate, endDate);
-    }
-  }, [startDate, endDate]);
-
-  //------------------------------------------------------Filter Reset Settings ---------------------------------------------
-
-  const handleResetFilter = () => {
-    setGetReports(originalReports);
-  };
+  
 
   //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
 
@@ -203,14 +140,14 @@ export default function Reports() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
-        config,
+        config
       );
       console.log("Permission Data : ", response.data.data);
       const permissionsList = response?.data?.data;
 
       if (permissionsList) {
         const serviceBoxPermissions = permissionsList.find(
-          (item) => item.moduleName === "Reports",
+          (item) => item.moduleName === "Reports"
         );
 
         if (serviceBoxPermissions) {
@@ -237,11 +174,11 @@ export default function Reports() {
 
   return (
     <div className="min-h-screen flex flex-col m-3">
-      <div className="py-2 px-3 bg-white gap-3 flex items-center justify-between rounded-md ">
-        <div className="flex gap-3 reports_Buttons_Main_Container">
+      <div className="py-2 px-3 bg-white gap-3 flex items-center justify-between rounded-md " >
+        <div className="flex gap-3 reports_Buttons_Main_Container" >
           {dynamicButtons.map(({ id, name }) => (
             <>
-              {permissions.includes(name) || businessRole === "Admin" ? (
+              {permissions.includes(name) || businessRole==="Admin" ? (
                 <button
                   key={id}
                   onClick={() => handleOptionClick(id)}
@@ -261,6 +198,7 @@ export default function Reports() {
             </>
           ))}
         </div>
+       
       </div>
 
       {/* FILTER BY SECTION */}
@@ -306,117 +244,49 @@ export default function Reports() {
             ))}
           </div>
         )}
-
-        {/* -------------- FILTER SECTION ------------------ */}
-        {selectedId === 6 ? (
-          // <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
-          //   {/* Filter Icon Button */}
-          //   <button className="border-r border-gray-500 px-3">
-          //     <ImFilter className="filter_Image_Size" />
-          //   </button>
-
-          //   {/* Date Range Filter Button */}
-          //   <button className="border-r border-gray-500 px-3">Filter By</button>
-
-          //   {/* Date Range Inputs */}
-          //   <div className="px-3 flex items-center gap-2">
-          //     <label>From:</label>
-          //     <input
-          //       type="date"
-          //       value={startDate}
-          //       className="border rounded px-2 py-1"
-          //       onChange={(e) => setStartDate(e.target.value)}
-          //     />
-
-          //     <label>To:</label>
-          //     <input
-          //       type="date"
-          //       value={endDate}
-          //       className="border rounded px-2 py-1"
-          //       onChange={(e) => setEndDate(e.target.value)}
-          //     />
-          //   </div>
-
-          //   <div
-          //     className="p-2 border rounded cursor-pointer reset_paddings"
-          //     onClick={handleResetFilter}
-          //   >
-          //     <TbRefresh size={25} />
-          //   </div>
-          // </div>
-          <></>
-        ) : (
-          <></>
-        )}
       </div>
 
       {/* ------------TABLE------------ */}
       <div className="overflow-x-auto leads_Table_Main_Container">
         {/* EMPLOYEE REPORT TABLE */}
         <div className="min-w-full leads_Table_Container rounded-md">
-          {selectedId === 1 && (employee || businessRole === "Admin") && (
+          {selectedId === 1 && (employee || businessRole==="Admin") && (
             <EmployeeReport currentReports={currentReports} />
           )}
         </div>
         {/* LEAD REPORTS TABLE */}
         <div className="min-w-full leads_Table_Container rounded-md">
-          {selectedId === 2 && (lead || businessRole === "Admin") && (
+          {selectedId === 2 && (lead|| businessRole==="Admin") && (
             <LeadsReport currentReports={currentReports} />
           )}
         </div>
         {/* CLIENT REPORTS TABLE */}
         <div className="min-w-full leads_Table_Container rounded-md">
-          {selectedId === 3 && (client || businessRole === "Admin") && (
+          {selectedId === 3 && (client|| businessRole==="Admin") && (
             <ClientReports currentReports={currentReports} />
           )}
         </div>
         {/* SALES REPORTS TABLE */}
         <div className="min-w-full leads_Table_Container rounded-md">
-          {selectedId === 4 && (sales || businessRole === "Admin") && (
+          {selectedId === 4 && (sales|| businessRole==="Admin") && (
             <SalesReports currentReports={currentReports} btn={buttonId} />
           )}
         </div>
         {/* DISPOSE REPORTS TABLE */}
         <div className="min-w-full leads_Table_Container rounded-md">
-          {selectedId === 5 && (dispose || businessRole === "Admin") && (
+          {selectedId === 5 && (dispose|| businessRole==="Admin") && (
             <DisposeLeads currentReports={currentReports} />
           )}
         </div>
         {/* Monitoring TABLE */}
         <div className="min-w-full leads_Table_Container rounded-md">
-          {selectedId === 6 && (monitoring || businessRole === "Admin") && (
+          {selectedId === 6 && (monitoring|| businessRole==="Admin") && (
             <Monitoring currentReports={currentReports} />
           )}
         </div>
       </div>
 
-      {/* PAGINATION */}
-
-      <>
-        <div className="flex justify-end m-4">
-          <nav>
-            <ul className="inline-flex items-center">
-              {Array.from(
-                { length: Math.ceil(getReports.length / itemsPerPage) },
-                (_, i) => (
-                  <li key={i + 1}>
-                    <button
-                      onClick={() => paginate(i + 1)}
-                      className={`px-4 py-2 mx-1 ${
-                        currentPage === i + 1
-                          ? "bg-blue-500 text-white"
-                          : "bg-white text-gray-700 border"
-                      }`}
-                    >
-                      {i + 1}
-                    </button>
-                  </li>
-                ),
-              )}
-            </ul>
-          </nav>
-        </div>
-      </>
+    
     </div>
   );
 }
