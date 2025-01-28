@@ -3,10 +3,10 @@ import VerifyTenant from "./Components/REGISTRATION/VerifyTenant";
 
 function App() {
   return (
-    <div>
+    <>
       <VerifyTenant />
       <ToastContainer />
-    </div>
+    </>
   );
 }
 
