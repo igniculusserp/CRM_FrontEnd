@@ -54,13 +54,13 @@ const WelcomePage = () => {
   }, [tenantId]); // Fetch data when tenantId changes
 
   return (
-    <div className="bg-cyan-500 min-h-screen flex justify-center items-center">
-      <div className="bg-white rounded-3xl sm:w-2/3 lg:w-1/3 w-full mx-6 py-10 shadow-lg">
+    <div className="flex min-h-screen items-center justify-center bg-cyan-500">
+      <div className="mx-6 w-full rounded-3xl bg-white py-10 shadow-lg sm:w-2/3 lg:w-1/3">
         <div className="relative w-full">
-          <div className="absolute top-8 left-0 w-16 md:w-24">
+          <div className="absolute left-0 top-8 w-16 md:w-24">
             <img src={welcomePageLeft} alt="Decoration" />
           </div>
-          <div className="absolute top-32 right-0 w-16 md:w-24">
+          <div className="absolute right-0 top-32 w-16 md:w-24">
             <img src={welcomePageRight} alt="Decoration" />
           </div>
 
@@ -69,28 +69,28 @@ const WelcomePage = () => {
               id="logoImg"
               src={welcomedata.tenantUrl}
               alt="Company Logo"
-              className="rounded-full mx-auto w-28 h-28"
+              className="mx-auto h-28 w-28 rounded-full"
             />
           </div>
           <div className="flex justify-center pt-12">
-            <div className="font-extrabold text-cyan-500 text-3xl sm:text-5xl">
+            <div className="text-3xl font-extrabold text-cyan-500 sm:text-5xl">
               Welcome
             </div>
           </div>
           <div className="flex justify-center">
-            <div className="text-center py-2 text-lg text-slate-900">
+            <div className="py-2 text-center text-lg text-slate-900">
               {welcomedata.firstName} {welcomedata.lastName}
             </div>
           </div>
           <div className="flex justify-center">
-            <div className="text-center pt-2 pb-2 text-slate-900">
+            <div className="pb-2 pt-2 text-center text-slate-900">
               {welcomedata.tenantName}
             </div>
           </div>
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-center">
             <button
               onClick={handleClick}
-              className="font-medium bg-cyan-500 text-white rounded-md w-2/3 py-2 mx-10 hover:bg-cyan-"
+              className="hover:bg-cyan- mx-10 w-2/3 rounded-md bg-cyan-500 py-2 font-medium text-white"
             >
               Get Started
             </button>

@@ -358,10 +358,10 @@ const CreateFollowUp = () => {
   return (
     <>
       {/* TOP PART */}
-      <div className="px-3 py-2 bg-white rounded-md flex items-center justify-between m-3">
+      <div className="m-3 flex items-center justify-between rounded-md bg-white px-3 py-2">
         <h1 className="text-xl">Edit Follow Up</h1>
         <Link to="/panel/followup">
-          <button className="px-6 py-2 text-center text-sm border border-blue-600 text-blue-600 rounded-md">
+          <button className="rounded-md border border-blue-600 px-6 py-2 text-center text-sm text-blue-600">
             Cancel
           </button>
         </Link>
@@ -370,15 +370,15 @@ const CreateFollowUp = () => {
       {/* FOLLOW-UP FORM */}
       <form onSubmit={handleSubmit}>
         <div className="m-3 shadow-lg">
-          <h1 className="py-2 px-3 rounded-t-lg bg-cyan-500 text-white text-md font-medium">
+          <h1 className="text-md rounded-t-lg bg-cyan-500 px-3 py-2 font-medium text-white">
             Follow Up Details
           </h1>
-          <div className="bg-white px-1 rounded-b-xl">
+          <div className="rounded-b-xl bg-white px-1">
             <div className="grid gap-2 p-2">
               {/* FIRST ROW */}
               <div className="flex space-x-4">
                 {/* LEAD ID FIELD */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="leadId"
                     className="text-sm font-medium text-gray-700"
@@ -390,13 +390,13 @@ const CreateFollowUp = () => {
                     name="leadId"
                     id="leadId"
                     value={followupsData.leadId}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Enter Lead Id"
                   />
                 </div>
                 {/* CLIENT NAME FIELD */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="name"
                     className="text-sm font-medium text-gray-700"
@@ -408,7 +408,7 @@ const CreateFollowUp = () => {
                     name="name"
                     id="name"
                     value={followupsData.name}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Enter Client Name"
                   />
@@ -417,7 +417,7 @@ const CreateFollowUp = () => {
               {/* SECOND ROW */}
               <div className="flex space-x-4">
                 {/* LANGUAGE FIELD */}
-                <div className="flex flex-col w-1/2 relative">
+                <div className="relative flex w-1/2 flex-col">
                   <label
                     htmlFor="language"
                     className="text-sm font-medium text-gray-700"
@@ -430,7 +430,7 @@ const CreateFollowUp = () => {
                     onMouseLeave={() => setisDropdownVisibleLanguage(false)}
                   >
                     <button
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                      className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                       id="LanguageDropDown"
                       type="button"
                     >
@@ -442,13 +442,13 @@ const CreateFollowUp = () => {
                       <FaAngleDown className="ml-2 text-gray-400" />
                     </button>
                     {isDropdownVisibleLanguage && (
-                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                      <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                         <ul className="py-2 text-sm text-gray-700">
                           {LanguageDropDown.map(({ key, name }) => (
                             <li
                               key={key}
                               onClick={() => handleDropdownLanguage(name)}
-                              className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                             >
                               {name}
                             </li>
@@ -459,7 +459,7 @@ const CreateFollowUp = () => {
                   </div>
                 </div>
                 {/* phoneNo FIELD */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="phoneNo"
                     className="text-sm font-medium text-gray-700"
@@ -471,7 +471,7 @@ const CreateFollowUp = () => {
                     name="phoneNo"
                     id="phoneNo"
                     value={followupsData.phoneNo}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Enter Alternate Number"
                   />
@@ -480,7 +480,7 @@ const CreateFollowUp = () => {
               {/* THIRD ROW */}
               <div className="flex space-x-4">
                 {/* MOBILE NUMBER FIELD */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="mobileNo"
                     className="text-sm font-medium text-gray-700"
@@ -492,7 +492,7 @@ const CreateFollowUp = () => {
                     name="mobileNo"
                     id="mobileNo"
                     value={followupsData.mobileNo}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Enter Mobile Number"
                   />
@@ -501,7 +501,7 @@ const CreateFollowUp = () => {
                   )} */}
                 </div>
                 {/* EMAIL FIELD */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="mobileNo"
                     className="text-sm font-medium text-gray-700"
@@ -513,7 +513,7 @@ const CreateFollowUp = () => {
                     name="mobileNo"
                     id="mobileNo"
                     value={followupsData.email}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Enter E-Mail ID"
                   />
@@ -522,8 +522,8 @@ const CreateFollowUp = () => {
               {/* FOURTH ROW */}
               <div className="flex space-x-4">
                 {/* ASSIGNED TO DROPDOWN */}
-                <div className="flex flex-col w-1/2">
-                  <div className="flex flex-col w-1/1 relative">
+                <div className="flex w-1/2 flex-col">
+                  <div className="w-1/1 relative flex flex-col">
                     <label
                       htmlFor="leadesStatus"
                       className="text-sm font-medium text-gray-700"
@@ -538,7 +538,7 @@ const CreateFollowUp = () => {
                       }
                     >
                       <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadStatusDropDown"
                         type="button"
                       >
@@ -549,7 +549,7 @@ const CreateFollowUp = () => {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownassigned_ToDropDown && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {assigned_ToDropDown.map(
                               ({ key, userName, role }) => (
@@ -561,7 +561,7 @@ const CreateFollowUp = () => {
                                       role,
                                     )
                                   }
-                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                  className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                 >
                                   {userName}-({role})
                                 </li>
@@ -574,7 +574,7 @@ const CreateFollowUp = () => {
                   </div>
                 </div>
                 {/* CALL BACK DATE FIELD */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="call_bck_DateTime"
                     className="text-sm font-medium text-gray-700"
@@ -586,7 +586,7 @@ const CreateFollowUp = () => {
                     name="call_bck_DateTime"
                     id="call_bck_DateTime"
                     value={followupsData.call_bck_DateTime}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     min={new Date().toISOString().slice(0, 16)}
                   />
@@ -595,7 +595,7 @@ const CreateFollowUp = () => {
               {/* FIFTH ROW */}
               <div className="flex space-x-4">
                 {/* LAST MODIFIED BY FIELD */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="lastModifiedBy"
                     className="text-sm font-medium text-gray-700"
@@ -607,14 +607,14 @@ const CreateFollowUp = () => {
                     name="lastModifiedBy"
                     id="lastModifiedBy"
                     value={followupsData.lastModifiedBy}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Who Modify"
                   />
                 </div>
                 {/* -------------Lead Status------------- */}
 
-                <div className="flex flex-col w-1/2 relative">
+                <div className="relative flex w-1/2 flex-col">
                   <label
                     htmlFor="leadesStatus"
                     className="text-sm font-medium text-gray-700"
@@ -627,7 +627,7 @@ const CreateFollowUp = () => {
                     onMouseLeave={() => setisDropdownVisibleLeadStatus(false)}
                   >
                     <button
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                      className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                       id="LeadStatusDropDown"
                       type="button"
                     >
@@ -637,20 +637,20 @@ const CreateFollowUp = () => {
                       <FaAngleDown className="ml-2 text-gray-400" />
                     </button>
                     {isDropdownVisibleLeadStatus && (
-                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                      <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                         <ul className="py-2 text-sm text-gray-700">
                           {leadStatus.length > 0 ? (
                             leadStatus.map(({ key, status }) => (
                               <li
                                 key={key}
                                 onClick={() => handleDropdownLeadStatus(status)}
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 {status}
                               </li>
                             ))
                           ) : (
-                            <li className="flex items-center px-4 py-2 text-center gap-1">
+                            <li className="flex items-center gap-1 px-4 py-2 text-center">
                               <IoInformationCircle
                                 size={25}
                                 className="text-cyan-600"
@@ -670,7 +670,7 @@ const CreateFollowUp = () => {
               </div>
               {/* Sixth ROW */}
               <div className="flex space-x-4">
-                <div className="flex flex-col w-1/2 relative">
+                <div className="relative flex w-1/2 flex-col">
                   <label
                     htmlFor="segment"
                     className="text-sm font-medium text-gray-700"
@@ -683,7 +683,7 @@ const CreateFollowUp = () => {
                     onMouseLeave={() => setisDropdownVisibleSegment(false)}
                   >
                     <button
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                      className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                       id="LeadStatusDropDown"
                       type="button"
                     >
@@ -691,13 +691,13 @@ const CreateFollowUp = () => {
                       <FaAngleDown className="ml-2 text-gray-400" />
                     </button>
                     {isDropdownVisibleSegment && (
-                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                      <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                         <ul className="py-2 text-sm text-gray-700">
                           {segments.length > 0 ? (
                             segments.map((segment) => (
                               <li
                                 key={segment.id}
-                                className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                className="flex cursor-pointer items-center border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 <input
                                   type="checkbox"
@@ -711,7 +711,7 @@ const CreateFollowUp = () => {
                               </li>
                             ))
                           ) : (
-                            <li className="flex items-center px-4 py-2 text-center gap-1">
+                            <li className="flex items-center gap-1 px-4 py-2 text-center">
                               <IoInformationCircle
                                 size={25}
                                 className="text-cyan-600"
@@ -733,22 +733,22 @@ const CreateFollowUp = () => {
           </div>
         </div>
         {/* DESCRIPTION */}
-        <div className="bg-white rounded-xl shadow-lg mx-3 mb-6">
-          <h2 className="py-2 font-medium px-3 rounded-t-xl text-white bg-cyan-500">
+        <div className="mx-3 mb-6 rounded-xl bg-white shadow-lg">
+          <h2 className="rounded-t-xl bg-cyan-500 px-3 py-2 font-medium text-white">
             Description Information
           </h2>
-          <div className="p-2 ">
+          <div className="p-2">
             <div className="flex flex-col">
               <label
                 htmlFor="description"
-                className="text-sm  font-medium text-gray-700"
+                className="text-sm font-medium text-gray-700"
               >
                 Description
               </label>
               <ReactQuill
                 name="description"
                 value={description}
-                className="text-balance hyphens-auto  max-h-full h-60 mt-1"
+                className="mt-1 h-60 max-h-full hyphens-auto text-balance"
                 theme="snow"
                 onChange={setDescription}
                 placeholder="Add Description"
@@ -758,7 +758,7 @@ const CreateFollowUp = () => {
           <div className="flex justify-end px-2">
             <button
               type="submit"
-              className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+              className="mb-3 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
             >
               {isEditMode ? "Update" : "Save"}
             </button>

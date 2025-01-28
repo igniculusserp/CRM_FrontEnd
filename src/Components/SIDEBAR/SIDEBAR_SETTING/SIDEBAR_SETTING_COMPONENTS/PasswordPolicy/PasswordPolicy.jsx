@@ -91,49 +91,49 @@ export default function PasswordPolicy() {
     };
 
     return (
-      <div className="m-3 min-w-screen">
-        <div className="flex min-w-screen justify-between items-center flex-wrap gap-5">
+      <div className="min-w-screen m-3">
+        <div className="min-w-screen flex flex-wrap items-center justify-between gap-5">
           <div className="flex items-center gap-2">
             <h1 className="text-3xl font-medium">Password Policy</h1>
-            <h2 className="text-xl font-medium text-red-500 text-center">
+            <h2 className="text-center text-xl font-medium text-red-500">
               (This feature is coming soon...)
             </h2>
           </div>
           <button
             onClick={handleAdd}
-            className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
+            className="min-w-10 rounded bg-blue-600 p-2 text-sm text-white"
           >
             Add Password Policy
           </button>
         </div>
-        <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
-          <div className="min-w-full rounded-md leads_Table_Container">
-            <table className="min-w-full bg-white leads_Table">
+        <div className="leads_Table_Main_Container mt-3 overflow-x-auto shadow-md">
+          <div className="leads_Table_Container min-w-full rounded-md">
+            <table className="leads_Table min-w-full bg-white">
               <thead>
-                <tr className="border-gray-300 border-b-2">
+                <tr className="border-b-2 border-gray-300">
                   <th className="px-1 py-3">
                     <input type="checkbox" />
                   </th>
-                  <th className="px-2 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center text-sm">
+                  <th className="border-r px-2 py-3 text-left font-medium">
+                    <div className="flex items-center justify-between text-sm">
                       <span>Title</span>
                       <FaBars />
                     </div>
                   </th>
-                  <th className="px-2 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center text-sm">
+                  <th className="border-r px-2 py-3 text-left font-medium">
+                    <div className="flex items-center justify-between text-sm">
                       <span>Created By</span>
                       <FaBars />
                     </div>
                   </th>
-                  <th className="px-2 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center text-sm">
+                  <th className="border-r px-2 py-3 text-left font-medium">
+                    <div className="flex items-center justify-between text-sm">
                       <span>Modified On</span>
                       <FaBars />
                     </div>
                   </th>
-                  <th className="px-2 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center text-sm">
+                  <th className="border-r px-2 py-3 text-left font-medium">
+                    <div className="flex items-center justify-between text-sm">
                       <span>Action</span>
                     </div>
                   </th>
@@ -143,25 +143,25 @@ export default function PasswordPolicy() {
                 {data.map((device) => (
                   <tr
                     key={device.id}
-                    className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                    className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                   >
                     <td className="px-1 py-3 text-center">
                       <input type="checkbox" />
                     </td>
-                    <td className="px-2 py-4 text-sm max-w-24 break-words">
+                    <td className="max-w-24 break-words px-2 py-4 text-sm">
                       {device.title}
                     </td>
-                    <td className="px-2 py-4 text-sm max-w-24 break-words">
+                    <td className="max-w-24 break-words px-2 py-4 text-sm">
                       {device.createdBy}
                     </td>
-                    <td className="px-2 py-4 text-sm max-w-24 break-words">
+                    <td className="max-w-24 break-words px-2 py-4 text-sm">
                       {device.modifiedOn}
                     </td>
-                    <td className="px-2 py-4 flex gap-3 justify-center">
+                    <td className="flex justify-center gap-3 px-2 py-4">
                       <MdEdit
                         size={25}
                         color="white"
-                        className="bg-blue-500 rounded"
+                        className="rounded bg-blue-500"
                         onClick={() => handleEdit(device.id)}
                       />
                       <RiDeleteBin6Fill size={25} color="red" />
@@ -417,28 +417,28 @@ export default function PasswordPolicy() {
     };
 
     return (
-      <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
-        <div className="flex py-2 px-2 items-center justify-between bg-white rounded-md shadow-md">
+      <div className="m-3 flex flex-col overflow-x-auto overflow-y-hidden">
+        <div className="flex items-center justify-between rounded-md bg-white px-2 py-2 shadow-md">
           <h1 className="text-xl">Add Password Policy</h1>
           <div
             onClick={handleCancel}
-            className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
+            className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
           >
             Cancel
           </div>
         </div>
         <div className="overflow-hidden shadow-md">
-          <div className="py-2 px-3 bg-cyan-500 rounded-t-xl mt-3">
+          <div className="mt-3 rounded-t-xl bg-cyan-500 px-3 py-2">
             <h1 className="text-white">Password Policy Details</h1>
           </div>
           {/* CREATE DLP FORM */}
           <form onSubmit={handleSubmit}>
-            <div className="flex flex-col py-2 px-4 bg-white rounded-b-xl">
+            <div className="flex flex-col rounded-b-xl bg-white px-4 py-2">
               <div className="flex gap-4">
-                <div className="grid gap-2 pb-3 w-full">
+                <div className="grid w-full gap-2 pb-3">
                   <div className="flex space-x-4">
                     {/* TITLE */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       <label
                         htmlFor="title"
                         className="text-sm font-medium text-gray-700"
@@ -449,12 +449,12 @@ export default function PasswordPolicy() {
                         type="text"
                         name="title"
                         value={addPassword.title}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter device type"
                       />
                     </div>
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       {/* DESCRIPTION */}
                       <label
                         htmlFor="description"
@@ -466,7 +466,7 @@ export default function PasswordPolicy() {
                         type="text"
                         name="description"
                         value={addPassword.description}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter device type"
                       />
@@ -475,7 +475,7 @@ export default function PasswordPolicy() {
                   {/* SECOND */}
                   <div className="flex space-x-4">
                     {/* Enabled */}
-                    <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                    <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                       <label
                         htmlFor="enabled"
                         className="text-sm font-medium text-gray-700"
@@ -485,11 +485,11 @@ export default function PasswordPolicy() {
                       <input
                         type="checkbox"
                         name="enabled"
-                        className="flex justify-start py-1 px-1 h-5 w-5"
+                        className="flex h-5 w-5 justify-start px-1 py-1"
                       />
                     </div>
                     {/* Valid Always */}
-                    <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                    <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                       <label
                         htmlFor="granted"
                         className="text-sm font-medium text-gray-700"
@@ -499,14 +499,14 @@ export default function PasswordPolicy() {
                       <input
                         type="checkbox"
                         name="granted"
-                        className="flex justify-start py-1 px-1 h-5 w-5"
+                        className="flex h-5 w-5 justify-start px-1 py-1"
                       />
                     </div>
                   </div>
                   {/* THIRD */}
                   <div className="flex space-x-4">
                     {/* Valid Always */}
-                    <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                    <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                       <label
                         htmlFor="validAlways"
                         className="text-sm font-medium text-gray-700"
@@ -516,14 +516,14 @@ export default function PasswordPolicy() {
                       <input
                         type="checkbox"
                         name="validAlways"
-                        className="flex justify-start py-1 px-1 h-5 w-5"
+                        className="flex h-5 w-5 justify-start px-1 py-1"
                       />
                     </div>
                   </div>
                   {/* FOURTH */}
                   <div className="flex space-x-4">
                     {/* VALID FROM */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       <label
                         htmlFor="validFrom"
                         className="text-sm font-medium text-gray-700"
@@ -534,12 +534,12 @@ export default function PasswordPolicy() {
                         type="text"
                         name="validFrom"
                         value={addPassword.validFrom}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter device type"
                       />
                     </div>
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       {/* VALID TO */}
                       <label
                         htmlFor="validTo"
@@ -551,7 +551,7 @@ export default function PasswordPolicy() {
                         type="text"
                         name="validTo"
                         value={addPassword.validTo}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter device type"
                       />
@@ -564,7 +564,7 @@ export default function PasswordPolicy() {
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                    className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                   >
                     Save
                   </button>
@@ -572,18 +572,16 @@ export default function PasswordPolicy() {
               </div>
             </div>
             {/* SECOND SECTION */}
-            <div className="flex gap-3 mt-3">
+            <div className="mt-3 flex gap-3">
               {buttons.map(({ id, text }) => (
                 <button
                   key={id}
                   onClick={() => handleOptionClick(id)}
-                  className={`px-3 py-2 rounded font-light text-md
-            ${
-              selectedId === id
-                ? "bg-cyan-500 text-white"
-                : "bg-gray-100 text-gray-700"
-            }
-          `}
+                  className={`text-md rounded px-3 py-2 font-light ${
+                    selectedId === id
+                      ? "bg-cyan-500 text-white"
+                      : "bg-gray-100 text-gray-700"
+                  } `}
                 >
                   {text}
                 </button>
@@ -592,15 +590,15 @@ export default function PasswordPolicy() {
             {/* EXPIRATION */}
             {selectedId === 1 && (
               <>
-                <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-3 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="rounded-xl bg-white">
+                  <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-3 py-2 text-white">
                     Expiration
                   </h1>
 
-                  <div className="grid gap-2 py-3 px-3">
+                  <div className="grid gap-2 px-3 py-3">
                     {/* FIRST */}
                     <div className="flex space-x-4">
-                      <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                      <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                         <label
                           htmlFor="validAlways"
                           className="text-sm font-medium text-gray-700"
@@ -610,14 +608,14 @@ export default function PasswordPolicy() {
                         <input
                           type="checkbox"
                           name="validAlways"
-                          className="flex justify-start py-1 px-1 h-5 w-5"
+                          className="flex h-5 w-5 justify-start px-1 py-1"
                         />
                       </div>
                     </div>
                     {/* SECOND */}
-                    <div className="flex space-x-4 w-full">
+                    <div className="flex w-full space-x-4">
                       {/* FROM (Hours) DROPDOWN */}
-                      <div className="flex flex-col w-1/2 relative">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="maxPassAge"
                           className="text-sm font-medium text-gray-700"
@@ -630,7 +628,7 @@ export default function PasswordPolicy() {
                           onMouseLeave={() => setMaxPasswordAgeDropdown(false)}
                         >
                           <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="maxPassAge"
                             type="button"
                           >
@@ -640,7 +638,7 @@ export default function PasswordPolicy() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {maxPasswordAgeDropdown && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {maxPassword.map(({ key, name }) => (
                                   <li
@@ -648,7 +646,7 @@ export default function PasswordPolicy() {
                                     onClick={() =>
                                       handleDropdownMaxPassword(name)
                                     }
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {name}
                                   </li>
@@ -659,7 +657,7 @@ export default function PasswordPolicy() {
                         </div>
                       </div>
                       {/* Minutes DROPDOWN */}
-                      <div className="flex flex-col w-1/2 relative">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="minPassAge"
                           className="text-sm font-medium text-gray-700"
@@ -672,7 +670,7 @@ export default function PasswordPolicy() {
                           onMouseLeave={() => setMinPasswordAgeDropdown(false)}
                         >
                           <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="minPassAge"
                             type="button"
                           >
@@ -682,7 +680,7 @@ export default function PasswordPolicy() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {minPasswordAgeDropdown && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {minPassword.map(({ key, name }) => (
                                   <li
@@ -690,7 +688,7 @@ export default function PasswordPolicy() {
                                     onClick={() =>
                                       handleDropdownMinPassword(name)
                                     }
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {name}
                                   </li>
@@ -703,7 +701,7 @@ export default function PasswordPolicy() {
                     </div>
                     {/* THIRD */}
                     <div className="flex space-x-4">
-                      <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                      <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                         <label
                           htmlFor="passwordNeverExp"
                           className="text-sm font-medium text-gray-700"
@@ -713,18 +711,18 @@ export default function PasswordPolicy() {
                         <input
                           type="checkbox"
                           name="passwordNeverExp"
-                          className="flex justify-start py-1 px-1 h-5 w-5"
+                          className="flex h-5 w-5 justify-start px-1 py-1"
                           defaultChecked
                         />
                       </div>
                     </div>
                     {/* FOURTH */}
                     <div className="flex space-x-4">
-                      <div className="flex flex-1 w1/2 gap-2">
+                      <div className="w1/2 flex flex-1 gap-2">
                         <input
                           type="checkbox"
                           name="passwordNeverExp"
-                          className="flex justify-start py-1 px-1 h-5 w-5"
+                          className="flex h-5 w-5 justify-start px-1 py-1"
                         />
                         <label
                           htmlFor="passwordNeverExp"
@@ -740,7 +738,7 @@ export default function PasswordPolicy() {
                     <div className="flex justify-end">
                       <button
                         type="submit"
-                        className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                        className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                       >
                         Save
                       </button>
@@ -753,16 +751,16 @@ export default function PasswordPolicy() {
             {/* COMPLEOCITY */}
             {selectedId === 2 && (
               <>
-                <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="rounded-xl bg-white">
+                  <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-6 py-2 text-white">
                     Compleocity
                   </h1>
 
-                  <div className="grid gap-2 py-3 px-3">
+                  <div className="grid gap-2 px-3 py-3">
                     {/* FIRST */}
-                    <div className="flex space-x-4 w-full">
+                    <div className="flex w-full space-x-4">
                       {/* FROM (Hours) DROPDOWN */}
-                      <div className="flex flex-col w-1/2 relative">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="minPassLen"
                           className="text-sm font-medium text-gray-700"
@@ -777,7 +775,7 @@ export default function PasswordPolicy() {
                           }
                         >
                           <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="minPassLen"
                             type="button"
                           >
@@ -787,7 +785,7 @@ export default function PasswordPolicy() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {minPasswordLengthDropdown && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {minPwdLen.map(({ key, name }) => (
                                   <li
@@ -795,7 +793,7 @@ export default function PasswordPolicy() {
                                     onClick={() =>
                                       handleDropdownMinPassLen(name)
                                     }
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {name}
                                   </li>
@@ -806,7 +804,7 @@ export default function PasswordPolicy() {
                         </div>
                       </div>
                       {/* Minutes DROPDOWN */}
-                      <div className="flex flex-col w-1/2 relative">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="minCharClass"
                           className="text-sm font-medium text-gray-700"
@@ -820,7 +818,7 @@ export default function PasswordPolicy() {
                           onMouseLeave={() => setMinCharClassDropdown(false)}
                         >
                           <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="minCharClass"
                             type="button"
                           >
@@ -830,7 +828,7 @@ export default function PasswordPolicy() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {minCharClassDropdown && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {minCharClass.map(({ key, name }) => (
                                   <li
@@ -838,7 +836,7 @@ export default function PasswordPolicy() {
                                     onClick={() =>
                                       handleDropdownMinCharClass(name)
                                     }
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {name}
                                   </li>
@@ -850,12 +848,12 @@ export default function PasswordPolicy() {
                       </div>
                     </div>
                     {/* SECOND */}
-                    <h1 className="text-md font-medium text-gray-700 mt-2">
+                    <h1 className="text-md mt-2 font-medium text-gray-700">
                       Required Alpha Character
                     </h1>
-                    <div className="flex space-x-4 w-full">
+                    <div className="flex w-full space-x-4">
                       {/* FROM (Hours) DROPDOWN */}
-                      <div className="flex flex-col w-1/2 relative">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="minUpperChar"
                           className="text-sm font-medium text-gray-700"
@@ -868,7 +866,7 @@ export default function PasswordPolicy() {
                           onMouseLeave={() => setMinUppCaseCharDropdown(false)}
                         >
                           <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="minUpperChar"
                             type="button"
                           >
@@ -878,13 +876,13 @@ export default function PasswordPolicy() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {minUppCaseCharDropdown && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {minUpper.map(({ key, name }) => (
                                   <li
                                     key={key}
                                     onClick={() => handleDropdownMinUpper(name)}
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {name}
                                   </li>
@@ -895,7 +893,7 @@ export default function PasswordPolicy() {
                         </div>
                       </div>
                       {/* Minutes DROPDOWN */}
-                      <div className="flex flex-col w-1/2 relative">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="minLowerChar"
                           className="text-sm font-medium text-gray-700"
@@ -908,7 +906,7 @@ export default function PasswordPolicy() {
                           onMouseLeave={() => setMinLowCaseCharDropdown(false)}
                         >
                           <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="minLowerChar"
                             type="button"
                           >
@@ -918,13 +916,13 @@ export default function PasswordPolicy() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {minLowCaseCharDropdown && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {minLower.map(({ key, name }) => (
                                   <li
                                     key={key}
                                     onClick={() => handleDropdownMinLower(name)}
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {name}
                                   </li>
@@ -936,12 +934,12 @@ export default function PasswordPolicy() {
                       </div>
                     </div>
                     {/* THIRD */}
-                    <h1 className="text-md font-medium text-gray-700 mt-2">
+                    <h1 className="text-md mt-2 font-medium text-gray-700">
                       Required Non Alpha Characters
                     </h1>
-                    <div className="flex space-x-4 w-full">
+                    <div className="flex w-full space-x-4">
                       {/* FROM (Hours) DROPDOWN */}
-                      <div className="flex flex-col w-1/2 relative">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="minNumericChar"
                           className="text-sm font-medium text-gray-700"
@@ -954,7 +952,7 @@ export default function PasswordPolicy() {
                           onMouseLeave={() => setMinNumericCharDropdown(false)}
                         >
                           <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="minNumericChar"
                             type="button"
                           >
@@ -964,7 +962,7 @@ export default function PasswordPolicy() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {minNumericCharDropdown && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {minNumeric.map(({ key, name }) => (
                                   <li
@@ -972,7 +970,7 @@ export default function PasswordPolicy() {
                                     onClick={() =>
                                       handleDropdownMinNumeric(name)
                                     }
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {name}
                                   </li>
@@ -983,7 +981,7 @@ export default function PasswordPolicy() {
                         </div>
                       </div>
                       {/* Minimum Special Characters (A-Z) */}
-                      <div className="flex flex-col w-1/2 relative">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="minSpeChar"
                           className="text-sm font-medium text-gray-700"
@@ -996,7 +994,7 @@ export default function PasswordPolicy() {
                           onMouseLeave={() => setMinSpecialCharDropdown(false)}
                         >
                           <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="minSpeChar"
                             type="button"
                           >
@@ -1006,7 +1004,7 @@ export default function PasswordPolicy() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {minSpecialCharDropdown && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {minSpecial.map(({ key, name }) => (
                                   <li
@@ -1014,7 +1012,7 @@ export default function PasswordPolicy() {
                                     onClick={() =>
                                       handleDropdownMinSpecial(name)
                                     }
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {name}
                                   </li>
@@ -1027,14 +1025,14 @@ export default function PasswordPolicy() {
                     </div>
                   </div>
 
-                  <div className="mb-6 py-3 flex flex-col gap-2">
+                  <div className="mb-6 flex flex-col gap-2 py-3">
                     {/* MAIN CART */}
 
-                    <div className="flex justify-end gap-5 mr-3">
+                    <div className="mr-3 flex justify-end gap-5">
                       <div className="flex justify-end">
                         <button
                           type="submit"
-                          className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                          className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                         >
                           Save
                         </button>
@@ -1047,15 +1045,15 @@ export default function PasswordPolicy() {
             {/* RESTRICTION */}
             {selectedId === 3 && (
               <>
-                <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="rounded-xl bg-white">
+                  <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-6 py-2 text-white">
                     Restriction
                   </h1>
 
-                  <div className="grid gap-3 pb-3 w-full px-3 mt-3">
+                  <div className="mt-3 grid w-full gap-3 px-3 pb-3">
                     {/* FIRST */}
                     <div className="flex space-x-4">
-                      <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                      <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                         <label
                           htmlFor="validAlways"
                           className="text-sm font-medium text-gray-700"
@@ -1065,13 +1063,13 @@ export default function PasswordPolicy() {
                         <input
                           type="checkbox"
                           name="validAlways"
-                          className="flex justify-start py-1 px-1 h-5 w-5"
+                          className="flex h-5 w-5 justify-start px-1 py-1"
                         />
                       </div>
                     </div>
                     {/* SECOND */}
                     <div className="flex space-x-4">
-                      <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                      <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                         <label
                           htmlFor="validAlways"
                           className="text-sm font-medium text-gray-700"
@@ -1081,13 +1079,13 @@ export default function PasswordPolicy() {
                         <input
                           type="checkbox"
                           name="validAlways"
-                          className="flex justify-start py-1 px-1 h-5 w-5"
+                          className="flex h-5 w-5 justify-start px-1 py-1"
                         />
                       </div>
                     </div>
                     {/* THIRD */}
                     <div className="flex space-x-4">
-                      <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                      <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                         <label
                           htmlFor="validAlways"
                           className="text-sm font-medium text-gray-700"
@@ -1098,13 +1096,13 @@ export default function PasswordPolicy() {
                         <input
                           type="checkbox"
                           name="validAlways"
-                          className="flex justify-start py-1 px-1 h-5 w-5"
+                          className="flex h-5 w-5 justify-start px-1 py-1"
                         />
                       </div>
                     </div>
                     {/* FOURTH */}
                     <div className="flex space-x-4">
-                      <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                      <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                         <label
                           htmlFor="validAlways"
                           className="text-sm font-medium text-gray-700"
@@ -1114,17 +1112,17 @@ export default function PasswordPolicy() {
                         <input
                           type="checkbox"
                           name="validAlways"
-                          className="flex justify-start py-1 px-1 h-5 w-5"
+                          className="flex h-5 w-5 justify-start px-1 py-1"
                         />
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex justify-end gap-5 mr-3">
+                  <div className="mr-3 flex justify-end gap-5">
                     <div className="flex justify-end">
                       <button
                         type="submit"
-                        className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                        className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                       >
                         Save
                       </button>
@@ -1136,16 +1134,16 @@ export default function PasswordPolicy() {
             {/* HISTORIC PASSWORD */}
             {selectedId === 4 && (
               <>
-                <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="rounded-xl bg-white">
+                  <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-6 py-2 text-white">
                     Historic Password
                   </h1>
-                  <div className="mb-6 py-3 flex flex-col gap-2">
+                  <div className="mb-6 flex flex-col gap-2 py-3">
                     {/* MAIN CART */}
-                    <div className="grid gap-2 pb-3 w-full px-3">
+                    <div className="grid w-full gap-2 px-3 pb-3">
                       <div className="flex space-x-4">
                         {/* ENABLE */}
-                        <div className="flex flex-col w-1/2">
+                        <div className="flex w-1/2 flex-col">
                           <label
                             htmlFor="enable"
                             className="text-sm font-medium text-gray-700"
@@ -1155,17 +1153,17 @@ export default function PasswordPolicy() {
                           <input
                             type="checkbox"
                             name="enable"
-                            className="flex justify-start py-1 px-1 h-5 w-5"
+                            className="flex h-5 w-5 justify-start px-1 py-1"
                           />
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex justify-end gap-5 mr-3">
+                    <div className="mr-3 flex justify-end gap-5">
                       <div className="flex justify-end">
                         <button
                           type="submit"
-                          className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                          className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                         >
                           Save
                         </button>
@@ -1178,16 +1176,16 @@ export default function PasswordPolicy() {
             {/* ACCOUNT LOCK */}
             {selectedId === 5 && (
               <>
-                <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="rounded-xl bg-white">
+                  <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-6 py-2 text-white">
                     Account Lock
                   </h1>
-                  <div className="mb-6 py-3 flex flex-col gap-2">
+                  <div className="mb-6 flex flex-col gap-2 py-3">
                     {/* MAIN CART */}
-                    <div className="grid gap-2 pb-3 w-full px-3">
+                    <div className="grid w-full gap-2 px-3 pb-3">
                       <div className="flex space-x-4">
                         {/* ENABLE */}
-                        <div className="flex flex-col w-1/2">
+                        <div className="flex w-1/2 flex-col">
                           <label
                             htmlFor="enable"
                             className="text-sm font-medium text-gray-700"
@@ -1197,17 +1195,17 @@ export default function PasswordPolicy() {
                           <input
                             type="checkbox"
                             name="enable"
-                            className="flex justify-start py-1 px-1 h-5 w-5"
+                            className="flex h-5 w-5 justify-start px-1 py-1"
                           />
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex justify-end gap-5 mr-3">
+                    <div className="mr-3 flex justify-end gap-5">
                       <div className="flex justify-end">
                         <button
                           type="submit"
-                          className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                          className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                         >
                           Save
                         </button>
@@ -1220,16 +1218,16 @@ export default function PasswordPolicy() {
             {/* PREFERENCES */}
             {selectedId === 6 && (
               <>
-                <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="rounded-xl bg-white">
+                  <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-6 py-2 text-white">
                     Preferences
                   </h1>
-                  <div className="mb-6 py-3 flex flex-col gap-2">
+                  <div className="mb-6 flex flex-col gap-2 py-3">
                     {/* MAIN CART */}
-                    <div className="grid gap-2 pb-3 w-full px-3">
+                    <div className="grid w-full gap-2 px-3 pb-3">
                       <div className="flex space-x-4">
                         {/* ENABLE */}
-                        <div className="flex flex-col w-1/2">
+                        <div className="flex w-1/2 flex-col">
                           <label
                             htmlFor="enable"
                             className="text-sm font-medium text-gray-700"
@@ -1239,13 +1237,13 @@ export default function PasswordPolicy() {
                           <input
                             type="checkbox"
                             name="enable"
-                            className="flex justify-start py-1 px-1 h-5 w-5"
+                            className="flex h-5 w-5 justify-start px-1 py-1"
                           />
                         </div>
                       </div>
                       {/* SECOND */}
-                      <div className="flex flex-col w-1/2">
-                        <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
+                        <div className="flex w-1/2 flex-col">
                           <label
                             htmlFor="enable"
                             className="text-sm font-medium text-gray-700"
@@ -1255,17 +1253,17 @@ export default function PasswordPolicy() {
                           <input
                             type="checkbox"
                             name="enable"
-                            className="flex justify-start py-1 px-1 h-5 w-5"
+                            className="flex h-5 w-5 justify-start px-1 py-1"
                           />
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex justify-end gap-5 mr-3">
+                    <div className="mr-3 flex justify-end gap-5">
                       <div className="flex justify-end">
                         <button
                           type="submit"
-                          className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                          className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                         >
                           Save
                         </button>
@@ -1523,28 +1521,28 @@ export default function PasswordPolicy() {
     };
 
     return (
-      <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
-        <div className="flex py-2 px-2 items-center justify-between bg-white rounded-md shadow-md">
+      <div className="m-3 flex flex-col overflow-x-auto overflow-y-hidden">
+        <div className="flex items-center justify-between rounded-md bg-white px-2 py-2 shadow-md">
           <h1 className="text-xl">Add Password Policy</h1>
           <div
             onClick={handleCancel}
-            className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
+            className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
           >
             Cancel
           </div>
         </div>
         <div className="overflow-hidden shadow-md">
-          <div className="py-2 px-3 bg-cyan-500 rounded-t-xl mt-3">
+          <div className="mt-3 rounded-t-xl bg-cyan-500 px-3 py-2">
             <h1 className="text-white">Password Policy Details</h1>
           </div>
           {/* CREATE DLP FORM */}
           <form onSubmit={handleSubmit}>
-            <div className="flex flex-col py-2 px-4 bg-white rounded-b-xl">
+            <div className="flex flex-col rounded-b-xl bg-white px-4 py-2">
               <div className="flex gap-4">
-                <div className="grid gap-2 pb-3 w-full">
+                <div className="grid w-full gap-2 pb-3">
                   <div className="flex space-x-4">
                     {/* TITLE */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       <label
                         htmlFor="title"
                         className="text-sm font-medium text-gray-700"
@@ -1555,12 +1553,12 @@ export default function PasswordPolicy() {
                         type="text"
                         name="title"
                         value={addPassword.title}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter device type"
                       />
                     </div>
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       {/* DESCRIPTION */}
                       <label
                         htmlFor="description"
@@ -1572,7 +1570,7 @@ export default function PasswordPolicy() {
                         type="text"
                         name="description"
                         value={addPassword.description}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter device type"
                       />
@@ -1581,7 +1579,7 @@ export default function PasswordPolicy() {
                   {/* SECOND */}
                   <div className="flex space-x-4">
                     {/* Enabled */}
-                    <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                    <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                       <label
                         htmlFor="enabled"
                         className="text-sm font-medium text-gray-700"
@@ -1591,11 +1589,11 @@ export default function PasswordPolicy() {
                       <input
                         type="checkbox"
                         name="enabled"
-                        className="flex justify-start py-1 px-1 h-5 w-5"
+                        className="flex h-5 w-5 justify-start px-1 py-1"
                       />
                     </div>
                     {/* Valid Always */}
-                    <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                    <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                       <label
                         htmlFor="granted"
                         className="text-sm font-medium text-gray-700"
@@ -1605,14 +1603,14 @@ export default function PasswordPolicy() {
                       <input
                         type="checkbox"
                         name="granted"
-                        className="flex justify-start py-1 px-1 h-5 w-5"
+                        className="flex h-5 w-5 justify-start px-1 py-1"
                       />
                     </div>
                   </div>
                   {/* THIRD */}
                   <div className="flex space-x-4">
                     {/* Valid Always */}
-                    <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                    <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                       <label
                         htmlFor="validAlways"
                         className="text-sm font-medium text-gray-700"
@@ -1622,14 +1620,14 @@ export default function PasswordPolicy() {
                       <input
                         type="checkbox"
                         name="validAlways"
-                        className="flex justify-start py-1 px-1 h-5 w-5"
+                        className="flex h-5 w-5 justify-start px-1 py-1"
                       />
                     </div>
                   </div>
                   {/* FOURTH */}
                   <div className="flex space-x-4">
                     {/* VALID FROM */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       <label
                         htmlFor="validFrom"
                         className="text-sm font-medium text-gray-700"
@@ -1640,12 +1638,12 @@ export default function PasswordPolicy() {
                         type="text"
                         name="validFrom"
                         value={addPassword.validFrom}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter device type"
                       />
                     </div>
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       {/* VALID TO */}
                       <label
                         htmlFor="validTo"
@@ -1657,7 +1655,7 @@ export default function PasswordPolicy() {
                         type="text"
                         name="validTo"
                         value={addPassword.validTo}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter device type"
                       />
@@ -1670,7 +1668,7 @@ export default function PasswordPolicy() {
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                    className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                   >
                     Save
                   </button>
@@ -1678,18 +1676,16 @@ export default function PasswordPolicy() {
               </div>
             </div>
             {/* SECOND SECTION */}
-            <div className="flex gap-3 mt-3">
+            <div className="mt-3 flex gap-3">
               {buttons.map(({ id, text }) => (
                 <button
                   key={id}
                   onClick={() => handleOptionClick(id)}
-                  className={`px-3 py-2 rounded font-light text-md
-            ${
-              selectedId === id
-                ? "bg-cyan-500 text-white"
-                : "bg-gray-100 text-gray-700"
-            }
-          `}
+                  className={`text-md rounded px-3 py-2 font-light ${
+                    selectedId === id
+                      ? "bg-cyan-500 text-white"
+                      : "bg-gray-100 text-gray-700"
+                  } `}
                 >
                   {text}
                 </button>
@@ -1698,15 +1694,15 @@ export default function PasswordPolicy() {
             {/* EXPIRATION */}
             {selectedId === 1 && (
               <>
-                <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-3 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="rounded-xl bg-white">
+                  <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-3 py-2 text-white">
                     Expiration
                   </h1>
 
-                  <div className="grid gap-2 py-3 px-3">
+                  <div className="grid gap-2 px-3 py-3">
                     {/* FIRST */}
                     <div className="flex space-x-4">
-                      <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                      <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                         <label
                           htmlFor="validAlways"
                           className="text-sm font-medium text-gray-700"
@@ -1716,14 +1712,14 @@ export default function PasswordPolicy() {
                         <input
                           type="checkbox"
                           name="validAlways"
-                          className="flex justify-start py-1 px-1 h-5 w-5"
+                          className="flex h-5 w-5 justify-start px-1 py-1"
                         />
                       </div>
                     </div>
                     {/* SECOND */}
-                    <div className="flex space-x-4 w-full">
+                    <div className="flex w-full space-x-4">
                       {/* FROM (Hours) DROPDOWN */}
-                      <div className="flex flex-col w-1/2 relative">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="maxPassAge"
                           className="text-sm font-medium text-gray-700"
@@ -1736,7 +1732,7 @@ export default function PasswordPolicy() {
                           onMouseLeave={() => setMaxPasswordAgeDropdown(false)}
                         >
                           <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="maxPassAge"
                             type="button"
                           >
@@ -1746,7 +1742,7 @@ export default function PasswordPolicy() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {maxPasswordAgeDropdown && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {maxPassword.map(({ key, name }) => (
                                   <li
@@ -1754,7 +1750,7 @@ export default function PasswordPolicy() {
                                     onClick={() =>
                                       handleDropdownMaxPassword(name)
                                     }
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {name}
                                   </li>
@@ -1765,7 +1761,7 @@ export default function PasswordPolicy() {
                         </div>
                       </div>
                       {/* Minutes DROPDOWN */}
-                      <div className="flex flex-col w-1/2 relative">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="minPassAge"
                           className="text-sm font-medium text-gray-700"
@@ -1778,7 +1774,7 @@ export default function PasswordPolicy() {
                           onMouseLeave={() => setMinPasswordAgeDropdown(false)}
                         >
                           <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="minPassAge"
                             type="button"
                           >
@@ -1788,7 +1784,7 @@ export default function PasswordPolicy() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {minPasswordAgeDropdown && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {minPassword.map(({ key, name }) => (
                                   <li
@@ -1796,7 +1792,7 @@ export default function PasswordPolicy() {
                                     onClick={() =>
                                       handleDropdownMinPassword(name)
                                     }
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {name}
                                   </li>
@@ -1809,7 +1805,7 @@ export default function PasswordPolicy() {
                     </div>
                     {/* THIRD */}
                     <div className="flex space-x-4">
-                      <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                      <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                         <label
                           htmlFor="passwordNeverExp"
                           className="text-sm font-medium text-gray-700"
@@ -1819,18 +1815,18 @@ export default function PasswordPolicy() {
                         <input
                           type="checkbox"
                           name="passwordNeverExp"
-                          className="flex justify-start py-1 px-1 h-5 w-5"
+                          className="flex h-5 w-5 justify-start px-1 py-1"
                           defaultChecked
                         />
                       </div>
                     </div>
                     {/* FOURTH */}
                     <div className="flex space-x-4">
-                      <div className="flex flex-1 w1/2 gap-2">
+                      <div className="w1/2 flex flex-1 gap-2">
                         <input
                           type="checkbox"
                           name="passwordNeverExp"
-                          className="flex justify-start py-1 px-1 h-5 w-5"
+                          className="flex h-5 w-5 justify-start px-1 py-1"
                         />
                         <label
                           htmlFor="passwordNeverExp"
@@ -1846,7 +1842,7 @@ export default function PasswordPolicy() {
                     <div className="flex justify-end">
                       <button
                         type="submit"
-                        className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                        className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                       >
                         Save
                       </button>
@@ -1859,16 +1855,16 @@ export default function PasswordPolicy() {
             {/* COMPLEOCITY */}
             {selectedId === 2 && (
               <>
-                <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="rounded-xl bg-white">
+                  <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-6 py-2 text-white">
                     Compleocity
                   </h1>
 
-                  <div className="grid gap-2 py-3 px-3">
+                  <div className="grid gap-2 px-3 py-3">
                     {/* FIRST */}
-                    <div className="flex space-x-4 w-full">
+                    <div className="flex w-full space-x-4">
                       {/* FROM (Hours) DROPDOWN */}
-                      <div className="flex flex-col w-1/2 relative">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="minPassLen"
                           className="text-sm font-medium text-gray-700"
@@ -1883,7 +1879,7 @@ export default function PasswordPolicy() {
                           }
                         >
                           <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="minPassLen"
                             type="button"
                           >
@@ -1893,7 +1889,7 @@ export default function PasswordPolicy() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {minPasswordLengthDropdown && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {minPwdLen.map(({ key, name }) => (
                                   <li
@@ -1901,7 +1897,7 @@ export default function PasswordPolicy() {
                                     onClick={() =>
                                       handleDropdownMinPassLen(name)
                                     }
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {name}
                                   </li>
@@ -1912,7 +1908,7 @@ export default function PasswordPolicy() {
                         </div>
                       </div>
                       {/* Minutes DROPDOWN */}
-                      <div className="flex flex-col w-1/2 relative">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="minCharClass"
                           className="text-sm font-medium text-gray-700"
@@ -1926,7 +1922,7 @@ export default function PasswordPolicy() {
                           onMouseLeave={() => setMinCharClassDropdown(false)}
                         >
                           <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="minCharClass"
                             type="button"
                           >
@@ -1936,7 +1932,7 @@ export default function PasswordPolicy() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {minCharClassDropdown && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {minCharClass.map(({ key, name }) => (
                                   <li
@@ -1944,7 +1940,7 @@ export default function PasswordPolicy() {
                                     onClick={() =>
                                       handleDropdownMinCharClass(name)
                                     }
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {name}
                                   </li>
@@ -1956,12 +1952,12 @@ export default function PasswordPolicy() {
                       </div>
                     </div>
                     {/* SECOND */}
-                    <h1 className="text-md font-medium text-gray-700 mt-2">
+                    <h1 className="text-md mt-2 font-medium text-gray-700">
                       Required Alpha Character
                     </h1>
-                    <div className="flex space-x-4 w-full">
+                    <div className="flex w-full space-x-4">
                       {/* FROM (Hours) DROPDOWN */}
-                      <div className="flex flex-col w-1/2 relative">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="minUpperChar"
                           className="text-sm font-medium text-gray-700"
@@ -1974,7 +1970,7 @@ export default function PasswordPolicy() {
                           onMouseLeave={() => setMinUppCaseCharDropdown(false)}
                         >
                           <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="minUpperChar"
                             type="button"
                           >
@@ -1984,13 +1980,13 @@ export default function PasswordPolicy() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {minUppCaseCharDropdown && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {minUpper.map(({ key, name }) => (
                                   <li
                                     key={key}
                                     onClick={() => handleDropdownMinUpper(name)}
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {name}
                                   </li>
@@ -2001,7 +1997,7 @@ export default function PasswordPolicy() {
                         </div>
                       </div>
                       {/* Minutes DROPDOWN */}
-                      <div className="flex flex-col w-1/2 relative">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="minLowerChar"
                           className="text-sm font-medium text-gray-700"
@@ -2014,7 +2010,7 @@ export default function PasswordPolicy() {
                           onMouseLeave={() => setMinLowCaseCharDropdown(false)}
                         >
                           <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="minLowerChar"
                             type="button"
                           >
@@ -2024,13 +2020,13 @@ export default function PasswordPolicy() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {minLowCaseCharDropdown && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {minLower.map(({ key, name }) => (
                                   <li
                                     key={key}
                                     onClick={() => handleDropdownMinLower(name)}
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {name}
                                   </li>
@@ -2042,12 +2038,12 @@ export default function PasswordPolicy() {
                       </div>
                     </div>
                     {/* THIRD */}
-                    <h1 className="text-md font-medium text-gray-700 mt-2">
+                    <h1 className="text-md mt-2 font-medium text-gray-700">
                       Required Non Alpha Characters
                     </h1>
-                    <div className="flex space-x-4 w-full">
+                    <div className="flex w-full space-x-4">
                       {/* FROM (Hours) DROPDOWN */}
-                      <div className="flex flex-col w-1/2 relative">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="minNumericChar"
                           className="text-sm font-medium text-gray-700"
@@ -2060,7 +2056,7 @@ export default function PasswordPolicy() {
                           onMouseLeave={() => setMinNumericCharDropdown(false)}
                         >
                           <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="minNumericChar"
                             type="button"
                           >
@@ -2070,7 +2066,7 @@ export default function PasswordPolicy() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {minNumericCharDropdown && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {minNumeric.map(({ key, name }) => (
                                   <li
@@ -2078,7 +2074,7 @@ export default function PasswordPolicy() {
                                     onClick={() =>
                                       handleDropdownMinNumeric(name)
                                     }
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {name}
                                   </li>
@@ -2089,7 +2085,7 @@ export default function PasswordPolicy() {
                         </div>
                       </div>
                       {/* Minimum Special Characters (A-Z) */}
-                      <div className="flex flex-col w-1/2 relative">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="minSpeChar"
                           className="text-sm font-medium text-gray-700"
@@ -2102,7 +2098,7 @@ export default function PasswordPolicy() {
                           onMouseLeave={() => setMinSpecialCharDropdown(false)}
                         >
                           <button
-                            className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="minSpeChar"
                             type="button"
                           >
@@ -2112,7 +2108,7 @@ export default function PasswordPolicy() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {minSpecialCharDropdown && (
-                            <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {minSpecial.map(({ key, name }) => (
                                   <li
@@ -2120,7 +2116,7 @@ export default function PasswordPolicy() {
                                     onClick={() =>
                                       handleDropdownMinSpecial(name)
                                     }
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {name}
                                   </li>
@@ -2133,14 +2129,14 @@ export default function PasswordPolicy() {
                     </div>
                   </div>
 
-                  <div className="mb-6 py-3 flex flex-col gap-2">
+                  <div className="mb-6 flex flex-col gap-2 py-3">
                     {/* MAIN CART */}
 
-                    <div className="flex justify-end gap-5 mr-3">
+                    <div className="mr-3 flex justify-end gap-5">
                       <div className="flex justify-end">
                         <button
                           type="submit"
-                          className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                          className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                         >
                           Save
                         </button>
@@ -2153,15 +2149,15 @@ export default function PasswordPolicy() {
             {/* RESTRICTION */}
             {selectedId === 3 && (
               <>
-                <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="rounded-xl bg-white">
+                  <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-6 py-2 text-white">
                     Restriction
                   </h1>
 
-                  <div className="grid gap-3 pb-3 w-full px-3 mt-3">
+                  <div className="mt-3 grid w-full gap-3 px-3 pb-3">
                     {/* FIRST */}
                     <div className="flex space-x-4">
-                      <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                      <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                         <label
                           htmlFor="validAlways"
                           className="text-sm font-medium text-gray-700"
@@ -2171,13 +2167,13 @@ export default function PasswordPolicy() {
                         <input
                           type="checkbox"
                           name="validAlways"
-                          className="flex justify-start py-1 px-1 h-5 w-5"
+                          className="flex h-5 w-5 justify-start px-1 py-1"
                         />
                       </div>
                     </div>
                     {/* SECOND */}
                     <div className="flex space-x-4">
-                      <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                      <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                         <label
                           htmlFor="validAlways"
                           className="text-sm font-medium text-gray-700"
@@ -2187,13 +2183,13 @@ export default function PasswordPolicy() {
                         <input
                           type="checkbox"
                           name="validAlways"
-                          className="flex justify-start py-1 px-1 h-5 w-5"
+                          className="flex h-5 w-5 justify-start px-1 py-1"
                         />
                       </div>
                     </div>
                     {/* THIRD */}
                     <div className="flex space-x-4">
-                      <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                      <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                         <label
                           htmlFor="validAlways"
                           className="text-sm font-medium text-gray-700"
@@ -2204,13 +2200,13 @@ export default function PasswordPolicy() {
                         <input
                           type="checkbox"
                           name="validAlways"
-                          className="flex justify-start py-1 px-1 h-5 w-5"
+                          className="flex h-5 w-5 justify-start px-1 py-1"
                         />
                       </div>
                     </div>
                     {/* FOURTH */}
                     <div className="flex space-x-4">
-                      <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                      <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                         <label
                           htmlFor="validAlways"
                           className="text-sm font-medium text-gray-700"
@@ -2220,17 +2216,17 @@ export default function PasswordPolicy() {
                         <input
                           type="checkbox"
                           name="validAlways"
-                          className="flex justify-start py-1 px-1 h-5 w-5"
+                          className="flex h-5 w-5 justify-start px-1 py-1"
                         />
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex justify-end gap-5 mr-3">
+                  <div className="mr-3 flex justify-end gap-5">
                     <div className="flex justify-end">
                       <button
                         type="submit"
-                        className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                        className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                       >
                         Save
                       </button>
@@ -2242,16 +2238,16 @@ export default function PasswordPolicy() {
             {/* HISTORIC PASSWORD */}
             {selectedId === 4 && (
               <>
-                <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="rounded-xl bg-white">
+                  <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-6 py-2 text-white">
                     Historic Password
                   </h1>
-                  <div className="mb-6 py-3 flex flex-col gap-2">
+                  <div className="mb-6 flex flex-col gap-2 py-3">
                     {/* MAIN CART */}
-                    <div className="grid gap-2 pb-3 w-full px-3">
+                    <div className="grid w-full gap-2 px-3 pb-3">
                       <div className="flex space-x-4">
                         {/* ENABLE */}
-                        <div className="flex flex-col w-1/2">
+                        <div className="flex w-1/2 flex-col">
                           <label
                             htmlFor="enable"
                             className="text-sm font-medium text-gray-700"
@@ -2261,17 +2257,17 @@ export default function PasswordPolicy() {
                           <input
                             type="checkbox"
                             name="enable"
-                            className="flex justify-start py-1 px-1 h-5 w-5"
+                            className="flex h-5 w-5 justify-start px-1 py-1"
                           />
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex justify-end gap-5 mr-3">
+                    <div className="mr-3 flex justify-end gap-5">
                       <div className="flex justify-end">
                         <button
                           type="submit"
-                          className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                          className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                         >
                           Save
                         </button>
@@ -2284,16 +2280,16 @@ export default function PasswordPolicy() {
             {/* ACCOUNT LOCK */}
             {selectedId === 5 && (
               <>
-                <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="rounded-xl bg-white">
+                  <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-6 py-2 text-white">
                     Account Lock
                   </h1>
-                  <div className="mb-6 py-3 flex flex-col gap-2">
+                  <div className="mb-6 flex flex-col gap-2 py-3">
                     {/* MAIN CART */}
-                    <div className="grid gap-2 pb-3 w-full px-3">
+                    <div className="grid w-full gap-2 px-3 pb-3">
                       <div className="flex space-x-4">
                         {/* ENABLE */}
-                        <div className="flex flex-col w-1/2">
+                        <div className="flex w-1/2 flex-col">
                           <label
                             htmlFor="enable"
                             className="text-sm font-medium text-gray-700"
@@ -2303,17 +2299,17 @@ export default function PasswordPolicy() {
                           <input
                             type="checkbox"
                             name="enable"
-                            className="flex justify-start py-1 px-1 h-5 w-5"
+                            className="flex h-5 w-5 justify-start px-1 py-1"
                           />
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex justify-end gap-5 mr-3">
+                    <div className="mr-3 flex justify-end gap-5">
                       <div className="flex justify-end">
                         <button
                           type="submit"
-                          className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                          className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                         >
                           Save
                         </button>
@@ -2326,16 +2322,16 @@ export default function PasswordPolicy() {
             {/* PREFERENCES */}
             {selectedId === 6 && (
               <>
-                <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="rounded-xl bg-white">
+                  <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-6 py-2 text-white">
                     Preferences
                   </h1>
-                  <div className="mb-6 py-3 flex flex-col gap-2">
+                  <div className="mb-6 flex flex-col gap-2 py-3">
                     {/* MAIN CART */}
-                    <div className="grid gap-2 pb-3 w-full px-3">
+                    <div className="grid w-full gap-2 px-3 pb-3">
                       <div className="flex space-x-4">
                         {/* ENABLE */}
-                        <div className="flex flex-col w-1/2">
+                        <div className="flex w-1/2 flex-col">
                           <label
                             htmlFor="enable"
                             className="text-sm font-medium text-gray-700"
@@ -2345,13 +2341,13 @@ export default function PasswordPolicy() {
                           <input
                             type="checkbox"
                             name="enable"
-                            className="flex justify-start py-1 px-1 h-5 w-5"
+                            className="flex h-5 w-5 justify-start px-1 py-1"
                           />
                         </div>
                       </div>
                       {/* SECOND */}
-                      <div className="flex flex-col w-1/2">
-                        <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
+                        <div className="flex w-1/2 flex-col">
                           <label
                             htmlFor="enable"
                             className="text-sm font-medium text-gray-700"
@@ -2361,17 +2357,17 @@ export default function PasswordPolicy() {
                           <input
                             type="checkbox"
                             name="enable"
-                            className="flex justify-start py-1 px-1 h-5 w-5"
+                            className="flex h-5 w-5 justify-start px-1 py-1"
                           />
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex justify-end gap-5 mr-3">
+                    <div className="mr-3 flex justify-end gap-5">
                       <div className="flex justify-end">
                         <button
                           type="submit"
-                          className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                          className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                         >
                           Save
                         </button>

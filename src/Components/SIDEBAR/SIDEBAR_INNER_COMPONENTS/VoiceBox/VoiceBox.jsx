@@ -388,7 +388,7 @@ export default function VoiceBox() {
   }, [startDate, endDate]);
 
   return (
-    <div className="min-h-screen flex flex-col m-3">
+    <div className="m-3 flex min-h-screen flex-col">
       {/* Render the modal only when `isModalOpen` is true */}
       {isModalOpen && (
         <MassEmail
@@ -396,7 +396,7 @@ export default function VoiceBox() {
           onClose={closeModal} // Pass function to close modal
         />
       )}
-      <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md flex-wrap gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-md bg-white px-3 py-2">
         <div className="flex gap-3">
           {/* TOP */}
           {/* ALL VOICEBOX DROPDOWN */}
@@ -406,7 +406,7 @@ export default function VoiceBox() {
             onMouseLeave={() => setVoiceBoxDropdown(false)}
           >
             <button
-              className="py-2 px-4 border rounded-md  flex justify-between items-center"
+              className="flex items-center justify-between rounded-md border px-4 py-2"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -414,11 +414,11 @@ export default function VoiceBox() {
               <FaAngleDown className="ml-2 text-gray-900" />
             </button>
             {voiceBoxDropdown && (
-              <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+              <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
                 <ul className="py-2 text-sm text-gray-700">
                   {allVoiceDropdown.map(({ key, value }) => (
                     <li
-                      className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                      className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                       key={key}
                       // onClick={() => handleSmsBoxStatusButton(value)}
                     >
@@ -431,11 +431,11 @@ export default function VoiceBox() {
           </div>
           {/* SEARCH DROPDOWN */}
 
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-center">
             <input
               type="text"
               placeholder="Search..."
-              className="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full max-w-sm rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
         </div>
@@ -445,13 +445,11 @@ export default function VoiceBox() {
             <button
               key={key}
               onClick={() => handleOptionClick(key)}
-              className={`px-3 py-1.5 rounded font-light text-md shadow-md
-                ${
-                  selectedButton === key
-                    ? "bg-cyan-500 text-white"
-                    : "bg-gray-100 text-gray-700"
-                }
-              `}
+              className={`text-md rounded px-3 py-1.5 font-light shadow-md ${
+                selectedButton === key
+                  ? "bg-cyan-500 text-white"
+                  : "bg-gray-100 text-gray-700"
+              } `}
             >
               {key}
             </button>
@@ -460,19 +458,19 @@ export default function VoiceBox() {
         {/* BOTTOM */}
         <div className="flex gap-2">
           <Link to={buttonText.href}>
-            <button className="bg-blue-600 text-white px-2 py-2 text-center rounded-md text-md shadow-md w-[150px]">
+            <button className="text-md w-[150px] rounded-md bg-blue-600 px-2 py-2 text-center text-white shadow-md">
               {buttonText.text || "Create Voice Box"}
             </button>
           </Link>
 
           {/* Stripe-BarDropDown */}
           <div
-            className="relative hide_Component"
+            className="hide_Component relative"
             onClick={togglestripeBar}
             onMouseLeave={() => setstripeBardropDown(false)}
           >
             <button
-              className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center"
+              className="flex items-center justify-between gap-2 rounded-md border px-4 py-3"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -480,12 +478,12 @@ export default function VoiceBox() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {stripeBardropDown && (
-              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
+              <div className="absolute top-10 z-10 w-56 rounded-md border border-gray-300 bg-white py-2">
                 <ul className="text-sm text-gray-700">
                   {stripeBar.map(({ key, value }) => (
                     <li
                       key={key}
-                      className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                      className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                       onClick={() => handleStripeButton(value)}
                     >
                       {value}
@@ -502,7 +500,7 @@ export default function VoiceBox() {
             onMouseLeave={() => setActionDropdown(false)}
           >
             <button
-              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
+              className="flex items-center justify-between gap-2 rounded-lg border border-blue-600 px-4 py-2 text-blue-600"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -510,12 +508,12 @@ export default function VoiceBox() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {actionDropdown && (
-              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
-                <ul className="text-sm text-gray-700 ">
+              <div className="absolute top-10 z-10 w-56 rounded-md border border-gray-300 bg-white py-2">
+                <ul className="text-sm text-gray-700">
                   {dropActionsMenu.map(({ key, value }) => (
                     <li
                       key={key}
-                      className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                      className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                     >
                       {value}
                     </li>
@@ -528,17 +526,17 @@ export default function VoiceBox() {
       </div>
 
       {/* FILTER BY SECTION */}
-      <div className="mt-3 mb-3 flex justify-between items-center gap-3">
+      <div className="mb-3 mt-3 flex items-center justify-between gap-3">
         <div className="flex gap-3">
-          <h1 className="text-3xl font-medium ">Voice Box</h1>
-          <h1 className="bg-blue-600 text-white px-2 py-2 min-w-10 text-center rounded-md text-md shadow-md">
+          <h1 className="text-3xl font-medium">Voice Box</h1>
+          <h1 className="text-md min-w-10 rounded-md bg-blue-600 px-2 py-2 text-center text-white shadow-md">
             {voiceMainData.length}
           </h1>
         </div>
 
         {/* ------------------- Filter by date ----------------- */}
 
-        <div className="flex bg-white border-2 border-gray-300 py-2 rounded-lg justify-center items-center">
+        <div className="flex items-center justify-center rounded-lg border-2 border-gray-300 bg-white py-2">
           {/* Filter Icon Button */}
           <button className="border-r border-gray-500 px-3">
             <ImFilter className="filter_Image_Size" />
@@ -553,12 +551,12 @@ export default function VoiceBox() {
           </button>
 
           {/* Date Range Inputs */}
-          <div className="px-3 flex items-center gap-2">
+          <div className="flex items-center gap-2 px-3">
             <label>From:</label>
             <input
               type="date"
               value={startDate}
-              className="border rounded px-2 py-1"
+              className="rounded border px-2 py-1"
               onChange={(e) => setStartDate(e.target.value)}
             />
 
@@ -566,7 +564,7 @@ export default function VoiceBox() {
             <input
               type="date"
               value={endDate}
-              className="border rounded px-2 py-1"
+              className="rounded border px-2 py-1"
               onChange={(e) => setEndDate(e.target.value)}
             />
           </div>
@@ -574,17 +572,17 @@ export default function VoiceBox() {
       </div>
 
       {/* ------------TABLE------------ */}
-      <div className="overflow-x-auto leads_Table_Main_Container">
+      <div className="leads_Table_Main_Container overflow-x-auto">
         {/* MONITORING TABLE */}
-        <div className="min-w-full leads_Table_Container rounded-md">
+        <div className="leads_Table_Container min-w-full rounded-md">
           {selectedViewValue === "Table View" &&
             selectedButton === "Monitoring" && (
-              <table className="min-w-full bg-white leads_Table">
+              <table className="leads_Table min-w-full bg-white">
                 {/* ----------------- TABLE HEAD START ----------------- */}
                 <thead>
-                  <tr className="border-gray-300 border-b-2">
+                  <tr className="border-b-2 border-gray-300">
                     {/* CHECKBOX */}
-                    <th className="px-3 py-3 w-max">
+                    <th className="w-max px-3 py-3">
                       <input
                         type="checkbox"
                         onClick={selectAllCheckbox}
@@ -593,56 +591,56 @@ export default function VoiceBox() {
                     </th>
 
                     {/* NAME */}
-                    <th className="px-2 py-3 text-left border-r font-medium">
+                    <th className="border-r px-2 py-3 text-left font-medium">
                       <div className="flex items-center justify-between">
                         <span className="text-nowrap pr-2">Name</span>
                         <FaBars />
                       </div>
                     </th>
                     {/* DISPOSITION */}
-                    <th className="px-2 py-3 text-left border-r font-medium">
+                    <th className="border-r px-2 py-3 text-left font-medium">
                       <div className="flex items-center justify-between">
                         <span className="text-nowrap pr-2">Disposition</span>
                         <FaBars />
                       </div>
                     </th>
                     {/* EMPLOYEE NAME */}
-                    <th className="px-2 py-3 text-left border-r font-medium">
+                    <th className="border-r px-2 py-3 text-left font-medium">
                       <div className="flex items-center justify-between">
                         <span className="text-nowrap pr-2">Employee Name</span>
                         <FaBars />
                       </div>
                     </th>
                     {/* CALL DATE */}
-                    <th className="px-2 py-3 text-left border-r font-medium">
+                    <th className="border-r px-2 py-3 text-left font-medium">
                       <div className="flex items-center justify-between">
                         <span className="text-nowrap pr-2">Call Date</span>
                         <FaBars />
                       </div>
                     </th>
                     {/* SOURCE */}
-                    <th className="px-2 py-3 text-left border-r font-medium">
+                    <th className="border-r px-2 py-3 text-left font-medium">
                       <div className="flex items-center justify-between">
                         <span className="text-nowrap pr-2">Source</span>
                         <FaBars />
                       </div>
                     </th>
                     {/* DURATION */}
-                    <th className="px-2 py-3 text-left border-r font-medium">
+                    <th className="border-r px-2 py-3 text-left font-medium">
                       <div className="flex items-center justify-between">
                         <span className="text-nowrap pr-2">Duration</span>
                         <FaBars />
                       </div>
                     </th>
                     {/* TYPE */}
-                    <th className="px-2 py-3 text-left border-r font-medium">
+                    <th className="border-r px-2 py-3 text-left font-medium">
                       <div className="flex items-center justify-between">
                         <span className="text-nowrap pr-2">Type</span>
                         <FaBars />
                       </div>
                     </th>
                     {/* STATUS */}
-                    <th className="px-2 py-3 text-left border-r font-medium">
+                    <th className="border-r px-2 py-3 text-left font-medium">
                       <div className="flex items-center justify-between">
                         <span className="text-nowrap pr-2">Status</span>
                         <FaBars />
@@ -657,10 +655,10 @@ export default function VoiceBox() {
                   {currentSms.map((voice, index) => (
                     <tr
                       key={index}
-                      className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                      className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                     >
                       {/* CHECKBOX */}
-                      <td className="px-3 py-4 text-center w-max">
+                      <td className="w-max px-3 py-4 text-center">
                         <input
                           type="checkbox"
                           checked={selectedRows.includes(voice.id)}
@@ -672,7 +670,7 @@ export default function VoiceBox() {
 
                       {/* NAME */}
                       <td
-                        className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600 break-words"
+                        className="break-words border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600"
                         onClick={() => handleMonitorClick(voice.id)}
                       >
                         <div className="flex items-center">
@@ -682,11 +680,11 @@ export default function VoiceBox() {
                         </div>
                       </td>
                       {/* DISPOSITION */}
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
                         {voice.disposition}
                       </td>
                       {/* EMPLOYEE NAME */}
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600 ">
+                      <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
                         <div className="flex items-center">
                           {/* <img
                             className="h-8 w-8 rounded-full"
@@ -699,19 +697,19 @@ export default function VoiceBox() {
                         </div>
                       </td>
                       {/* CALL DATE */}
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
                         {voice.callDateTime.split("T")[0]}
                       </td>
                       {/* SOURCE */}
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
                         <p className="text-blue-600">{voice.source}</p>
                       </td>
                       {/* DURATION */}
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
                         {voice.duration}
                       </td>
                       {/* TYPE */}
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
                         <p
                           className={
                             voice.type === "Incoming"
@@ -723,7 +721,7 @@ export default function VoiceBox() {
                         </p>
                       </td>
                       {/* STATUS */}
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
                         {voice.status}
                       </td>
                     </tr>
@@ -735,25 +733,25 @@ export default function VoiceBox() {
         </div>
 
         {/* REPORTS TABLE */}
-        <div className="min-w-full leads_Table_Container rounded-md">
+        <div className="leads_Table_Container min-w-full rounded-md">
           {selectedViewValue === "Table View" &&
             selectedButton === "Reports" && (
-              <table className="min-w-full bg-white leads_Table">
+              <table className="leads_Table min-w-full bg-white">
                 {/* ----- TABLE HEAD ----- */}
                 <thead>
-                  <tr className="border-gray-300 border-b-2">
+                  <tr className="border-b-2 border-gray-300">
                     {/*   CHECKBOX */}
-                    <th className="px-1 py-3 ">
+                    <th className="px-1 py-3">
                       <input type="checkbox" />
                     </th>
                     {/* EXTENSION */}
-                    <th className="px-1 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="flex">
                         <span className="text-sm">Extension</span>
                       </div>
                     </th>
                     {/* NAME */}
-                    <th className="px-1 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="flex justify-around">
                         <span className="text-sm">Name</span>
                         <span className="flex items-center text-sm">
@@ -762,7 +760,7 @@ export default function VoiceBox() {
                       </div>
                     </th>
                     {/* EMPLOYEE CODE */}
-                    <th className="px-1 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="flex justify-around">
                         <span className="text-sm">Employee Code</span>
                         <span className="flex items-center text-sm">
@@ -771,7 +769,7 @@ export default function VoiceBox() {
                       </div>
                     </th>
                     {/* DESIGNATION */}
-                    <th className="px-1 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="flex justify-around">
                         <span className="text-sm">Designation</span>
                         <span className="flex items-center text-sm">
@@ -780,7 +778,7 @@ export default function VoiceBox() {
                       </div>
                     </th>
                     {/* REPORTING TO */}
-                    <th className="px-1 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="flex justify-around">
                         <span className="text-sm">Reporting To</span>
                         <span className="flex items-center text-sm">
@@ -789,7 +787,7 @@ export default function VoiceBox() {
                       </div>
                     </th>
                     {/* INCOMING CALLS */}
-                    <th className="px-1 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="flex justify-around">
                         <span className="text-sm">Incoming Calls</span>
                         <span className="flex items-center text-sm">
@@ -798,7 +796,7 @@ export default function VoiceBox() {
                       </div>
                     </th>
                     {/* TOATAL INCOMING CALLS */}
-                    <th className="px-1 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="flex justify-around">
                         <span className="text-sm">Total Incoming Calls</span>
                         <span className="flex items-center text-sm">
@@ -807,7 +805,7 @@ export default function VoiceBox() {
                       </div>
                     </th>
                     {/* OUTGOING CALLS */}
-                    <th className="px-1 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="flex justify-around">
                         <span className="text-sm">Outgoing Calls</span>
                         <span className="flex items-center text-sm">
@@ -816,7 +814,7 @@ export default function VoiceBox() {
                       </div>
                     </th>
                     {/* TOTAL TIME */}
-                    <th className="px-1 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <span>Total Time</span>
                     </th>
                   </tr>
@@ -826,7 +824,7 @@ export default function VoiceBox() {
                   {currentSms.map((sms, index) => (
                     <tr
                       key={index}
-                      className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                      className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                       // onClick={() => handleClick(sms)}
                     >
                       {/*   CHECKBOX */}
@@ -837,37 +835,37 @@ export default function VoiceBox() {
                         />
                       </td>
                       {/* EXTENSION */}
-                      <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
                         <div className="flex items-center">
                           <span className="ml-2">{sms.extension}</span>
                         </div>
                       </td>
                       {/* NAME */}
-                      <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
                         <div className="flex items-center">
                           <span className="ml-2">{sms.name}</span>
                         </div>
                       </td>
                       {/* EMPLOYEE CODE */}
-                      <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
                         <div className="flex items-center">
                           <span className="ml-2">{sms.employCode}</span>
                         </div>
                       </td>
                       {/* DESIGNATION */}
-                      <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
                         <div className="flex items-center">
                           <span className="ml-2">{sms.designation}</span>
                         </div>
                       </td>
                       {/* REPORTING TO */}
-                      <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
                         <div className="flex items-center">
                           <span className="ml-2">{sms.reportingTo}</span>
                         </div>
                       </td>
                       {/* INCOMING CALLS */}
-                      <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
                         <div className="flex items-center">
                           <span className="ml-2 text-blue-500">
                             {sms.incomingCalls}
@@ -875,13 +873,13 @@ export default function VoiceBox() {
                         </div>
                       </td>
                       {/* TOTAL INCOMING CALLS */}
-                      <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
                         <div className="flex items-center">
                           <span className="ml-2">{sms.totalIncomingCalls}</span>
                         </div>
                       </td>
                       {/* OUTGOING CALLS */}
-                      <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
                         <div className="flex items-center">
                           <span className="ml-2 text-red-500">
                             {sms.outgoingCalls}
@@ -889,7 +887,7 @@ export default function VoiceBox() {
                         </div>
                       </td>
                       {/* TOTAL TIME OUTGOING CALLS */}
-                      <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
                         <div className="flex items-center">
                           <span className="ml-2">{sms.totalTime}</span>
                         </div>
@@ -902,25 +900,25 @@ export default function VoiceBox() {
         </div>
 
         {/* GATEWAY TABLE */}
-        <div className="min-w-full leads_Table_Container rounded-md">
+        <div className="leads_Table_Container min-w-full rounded-md">
           {selectedViewValue === "Table View" &&
             selectedButton === "SMS via GMS Gateway" && (
-              <table className="min-w-full bg-white leads_Table">
+              <table className="leads_Table min-w-full bg-white">
                 {/* -------- TABLE HEAD -------- */}
                 <thead>
-                  <tr className="border-gray-300 border-b-2">
+                  <tr className="border-b-2 border-gray-300">
                     {/* CHECKBOX */}
                     <th className="px-1 py-3">
                       <input type="checkbox" />
                     </th>
                     {/* CLIENT NAME */}
-                    <th className="px-1 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="flex">
                         <span className="text-sm">Client Name</span>
                       </div>
                     </th>
                     {/* MOBILE */}
-                    <th className="px-1 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="flex justify-between">
                         <span className="text-sm">Mobile</span>
                         <span className="flex items-center text-sm">
@@ -929,7 +927,7 @@ export default function VoiceBox() {
                       </div>
                     </th>
                     {/* MESSAGE */}
-                    <th className="px-1 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="flex justify-between">
                         <span className="text-sm">Message</span>
                         <span className="flex items-center text-sm">
@@ -938,7 +936,7 @@ export default function VoiceBox() {
                       </div>
                     </th>
                     {/* TYPE */}
-                    <th className="px-1 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="flex justify-between">
                         <span className="text-sm">Type</span>
                         <span className="flex items-center text-sm">
@@ -947,7 +945,7 @@ export default function VoiceBox() {
                       </div>
                     </th>
                     {/* MESSAGE TIME */}
-                    <th className="px-1 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="flex">
                         <span className="text-sm">Message Time</span>
                       </div>
@@ -959,7 +957,7 @@ export default function VoiceBox() {
                   {currentSms.map((data, index) => (
                     <tr
                       key={index}
-                      className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                      className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                       // onClick={() => handleClick(data)}
                     >
                       {/*   CHECKBOX */}
@@ -970,7 +968,7 @@ export default function VoiceBox() {
                         />
                       </td>
                       {/*   CLIENT NAME */}
-                      <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
                         <div className="flex items-center">
                           <img
                             className="h-8 w-8 rounded-full"
@@ -983,25 +981,25 @@ export default function VoiceBox() {
                         </div>
                       </td>
                       {/* MOBILE */}
-                      <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
                         <div className="flex items-center">
                           <span className="ml-2">{data.mobile}</span>
                         </div>
                       </td>
                       {/* MESSAGE */}
-                      <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
                         <div className="flex items-center">
                           <span className="ml-2">{data.message}</span>
                         </div>
                       </td>
                       {/* TYPE */}
-                      <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
                         <div className="flex items-center">
                           <span className="ml-2">{data.type}</span>
                         </div>
                       </td>
                       {/* MESSAGE TIME */}
-                      <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
                         <div className="flex items-center">
                           <span className="ml-2">{data.messageTime}</span>
                         </div>
@@ -1022,17 +1020,17 @@ export default function VoiceBox() {
               {/*---------Card starts Here */}
               {currentSms.map((item) => (
                 <div
-                  className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2"
+                  className="flex flex-col gap-2 rounded-lg border-2 bg-white px-2 py-3"
                   key={item.id}
                 >
                   <div className="flex items-center gap-3">
                     <img src={item.img} height={60} width={60} />
-                    <div className="flex flex-col grow">
+                    <div className="flex grow flex-col">
                       <div className="flex justify-between font-medium">
                         <span className="text-indigo-500">{item.name}</span>
                         <BiEdit
                           size={25}
-                          className="bg-white rounded-full shadow-md text-blue-500 p-1"
+                          className="rounded-full bg-white p-1 text-blue-500 shadow-md"
                           // onClick={() => handleClick(item.id)}
                         />
                       </div>
@@ -1041,43 +1039,43 @@ export default function VoiceBox() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                    <div className="w-2/4 text-gray-500 text-sm">
+                  <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
+                    <div className="w-2/4 text-sm text-gray-500">
                       Client Name
                     </div>
-                    <div className="2-2/4 font-medium text-sm">
+                    <div className="2-2/4 text-sm font-medium">
                       {item.clientName}
                     </div>
                   </div>
 
-                  <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                  <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
                     <div className="w-2/4">
                       <IoIosMail className="text-2xl" />
                     </div>
-                    <div className="2-2/4 font-medium  text-sm">
+                    <div className="2-2/4 text-sm font-medium">
                       {item.email}
                     </div>
                   </div>
 
-                  <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                  <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
                     <div className="w-2/4">
                       <FaPhoneAlt className="text-xl" />
                     </div>
-                    <div className="2-2/4 font-medium text-sm">
+                    <div className="2-2/4 text-sm font-medium">
                       {item.phoneNo}
                     </div>
                   </div>
-                  <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                    <div className="w-2/4 text-gray-500 text-sm">
+                  <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
+                    <div className="w-2/4 text-sm text-gray-500">
                       Follow Up Date
                     </div>
-                    <div className="2-2/4 font-medium text-sm">
+                    <div className="2-2/4 text-sm font-medium">
                       {item.call_bck_DateTime.replace("T", " ")}
                     </div>
                   </div>
-                  <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                    <div className="w-2/4 text-gray-500 text-sm">Segment</div>
-                    <div className="2-2/4 font-medium text-sm">
+                  <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
+                    <div className="w-2/4 text-sm text-gray-500">Segment</div>
+                    <div className="2-2/4 text-sm font-medium">
                       {item.segments && (
                         <span className="">
                           {item.segments
@@ -1093,7 +1091,7 @@ export default function VoiceBox() {
           </div>
         </>
       )}
-      <div className="flex justify-end m-4">
+      <div className="m-4 flex justify-end">
         <nav>
           <ul className="inline-flex items-center">
             {Array.from(
@@ -1102,10 +1100,10 @@ export default function VoiceBox() {
                 <li key={i + 1}>
                   <button
                     onClick={() => paginate(i + 1)}
-                    className={`px-4 py-2 mx-1 ${
+                    className={`mx-1 px-4 py-2 ${
                       currentPage === i + 1
                         ? "bg-blue-500 text-white"
-                        : "bg-white text-gray-700 border"
+                        : "border bg-white text-gray-700"
                     }`}
                   >
                     {i + 1}

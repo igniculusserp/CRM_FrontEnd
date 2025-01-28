@@ -78,16 +78,16 @@ const SalesReportChart = ({ businessType, totalBrokerage, targetAchieved }) => {
   const data = businessType === "Brokerage" ? weeklyData : incomeExpenseData;
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="mx-auto w-full max-w-4xl">
       <div className="flex w-full items-center justify-between">
-        <h2 className="text-xl font-normal text-left mb-4">Sales Report</h2>
+        <h2 className="mb-4 text-left text-xl font-normal">Sales Report</h2>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-[#8884d8] rounded-sm"></div>
+            <div className="h-3 w-3 rounded-sm bg-[#8884d8]"></div>
             <span>{businessType === "Brokerage" ? "Target" : "Income"}</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-[#82ca9d] rounded-sm"></div>
+            <div className="h-3 w-3 rounded-sm bg-[#82ca9d]"></div>
             <span>
               {businessType === "Brokerage" ? "Target Achieved" : "Expenses"}
             </span>

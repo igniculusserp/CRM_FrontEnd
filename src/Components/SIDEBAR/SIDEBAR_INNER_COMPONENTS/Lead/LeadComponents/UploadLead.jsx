@@ -247,20 +247,20 @@ export default function UploadLead() {
         {/* CREATE CONTACT FORM */}
         <form className="flex flex-col" onSubmit={handleSubmit}>
           {/* ----- HEADING ----- */}
-          <div className="py-2 px-3 bg-cyan-500 rounded-t-xl shadow-md">
-            <h1 className="font-medium rounded-t-xl text-white bg-cyan-500">
+          <div className="rounded-t-xl bg-cyan-500 px-3 py-2 shadow-md">
+            <h1 className="rounded-t-xl bg-cyan-500 font-medium text-white">
               Upload Leads Information
             </h1>
           </div>
           {/* ----- FIELDS START FROM HERE ------ */}
-          <div className="grid gap-2 p-2 bg-white px-3 py-2 rounded-b-xl">
+          <div className="grid gap-2 rounded-b-xl bg-white p-2 px-3 py-2">
             {/* FIRST */}
             <div className="flex space-x-4">
               {/* FILE UPLOAD FIELD */}
-              <div className="flex flex-col w-full">
+              <div className="flex w-full flex-col">
                 <label
                   htmlFor="file"
-                  className="text-sm font-medium text-gray-700 block"
+                  className="block text-sm font-medium text-gray-700"
                 >
                   Select File
                 </label>
@@ -270,7 +270,7 @@ export default function UploadLead() {
                   id="file"
                   placeholder="Upload"
                   accept=".xls,.xlsx"
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                  className="mt-1 w-full rounded-md border border-gray-300 p-2"
                   onChange={handleFileChange} // File selection is handled here
                 />
               </div>
@@ -278,7 +278,7 @@ export default function UploadLead() {
             {/* SECOND */}
             <div className="flex space-x-4">
               {/* ASSIGNED TO DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="leadesStatus"
                   className="text-sm font-medium text-gray-700"
@@ -291,7 +291,7 @@ export default function UploadLead() {
                   onMouseLeave={() => setisDropdownassigned_ToDropDown(false)}
                 >
                   <button
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                     id="LeadStatusDropDown"
                     type="button"
                   >
@@ -302,7 +302,7 @@ export default function UploadLead() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {isDropdownassigned_ToDropDown && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                    <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                       <ul className="py-2 text-sm text-gray-700">
                         {assigned_ToDropDown.map(({ key, userName, role }) => (
                           <li
@@ -310,7 +310,7 @@ export default function UploadLead() {
                             onClick={() =>
                               handleDropdownassigned_ToDropDown(userName, role)
                             }
-                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                           >
                             {userName}-({role})
                           </li>
@@ -321,7 +321,7 @@ export default function UploadLead() {
                 </div>
               </div>
               {/* POOL DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="Pool"
                   className="text-sm font-medium text-gray-700"
@@ -334,7 +334,7 @@ export default function UploadLead() {
                 >
                   <button
                     onClick={toggleDropdown}
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                     id="LeadPoolDropDown"
                     type="button"
                   >
@@ -342,7 +342,7 @@ export default function UploadLead() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {isPoolDropdownOpen && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                    <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                       {error ? (
                         <div className="py-2 text-red-600">{error}</div>
                       ) : (
@@ -351,7 +351,7 @@ export default function UploadLead() {
                             <li
                               key={id}
                               onClick={() => handleDropdownSelection(poolName)}
-                              className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                             >
                               {poolName}
                             </li>
@@ -365,7 +365,7 @@ export default function UploadLead() {
             </div>
             <div className="flex space-x-4">
               {/* STATUS DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="Pool"
                   className="text-sm font-medium text-gray-700"
@@ -378,7 +378,7 @@ export default function UploadLead() {
                 >
                   <button
                     onClick={toggleStatusDropdown}
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                     id="LeadStatusDropDown"
                     type="button"
                   >
@@ -388,7 +388,7 @@ export default function UploadLead() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {isStatusDropdownOpen && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                    <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                       {errorStatus ? (
                         <div className="py-2 text-red-600">{errorStatus}</div>
                       ) : (
@@ -399,7 +399,7 @@ export default function UploadLead() {
                               onClick={() =>
                                 handleDropdownStatusSelection(status)
                               }
-                              className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                             >
                               {status}
                             </li>
@@ -414,18 +414,18 @@ export default function UploadLead() {
           </div>
 
           {/* COLUMN NUMBER INFORMATION */}
-          <div className="bg-white rounded-xl shadow-md mt-3">
-            <h2 className="font-medium py-2 px-3 shadow-md rounded-t-xl text-white bg-cyan-500">
+          <div className="mt-3 rounded-xl bg-white shadow-md">
+            <h2 className="rounded-t-xl bg-cyan-500 px-3 py-2 font-medium text-white shadow-md">
               Column Number Information
             </h2>
             <div className="grid gap-2 px-3 py-2">
               {/* FIRST SECTION */}
               <div className="flex space-x-4">
                 {/* NAME COLUMN */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="nameColNum"
-                    className="text-sm font-medium text-gray-700 block"
+                    className="block text-sm font-medium text-gray-700"
                   >
                     Name Column Number
                   </label>
@@ -435,15 +435,15 @@ export default function UploadLead() {
                     id="nameColNum"
                     value={editLead.namecolumnno}
                     placeholder="Enter name column"
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                   />
                 </div>
                 {/* MOBILE COLUMN */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="mobColNum"
-                    className="text-sm font-medium text-gray-700 block"
+                    className="block text-sm font-medium text-gray-700"
                   >
                     Mobile Column Number
                   </label>
@@ -453,17 +453,17 @@ export default function UploadLead() {
                     id="mobColNum"
                     value={editLead.mobilecolno}
                     placeholder="Enter mobile column"
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                   />
                 </div>
               </div>
               <div className="flex space-x-4">
                 {/* EMAIL COLUMN */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="emailColNum"
-                    className="text-sm font-medium text-gray-700 block"
+                    className="block text-sm font-medium text-gray-700"
                   >
                     Email Column Number
                   </label>
@@ -473,15 +473,15 @@ export default function UploadLead() {
                     id="emailColNum"
                     value={editLead.emailcolno}
                     placeholder="Enter email column"
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                   />
                 </div>
                 {/* CITY COLUMN */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="cityColNum"
-                    className="text-sm font-medium text-gray-700 block"
+                    className="block text-sm font-medium text-gray-700"
                   >
                     City Column Number
                   </label>
@@ -491,7 +491,7 @@ export default function UploadLead() {
                     id="cityColNum"
                     value={editLead.citycoluno}
                     placeholder="Enter city column"
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                   />
                 </div>
@@ -499,10 +499,10 @@ export default function UploadLead() {
               {/* SECOND SECTION */}
               <div className="flex space-x-4">
                 {/* STATE COLUMN */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="stateColNum"
-                    className="text-sm font-medium text-gray-700 block"
+                    className="block text-sm font-medium text-gray-700"
                   >
                     State Column Number
                   </label>
@@ -512,15 +512,15 @@ export default function UploadLead() {
                     id="stateColNum"
                     value={editLead.statecolno}
                     placeholder="Enter state column"
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                   />
                 </div>
                 {/* OCCUPATION COLUMN */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="occupationColNum"
-                    className="text-sm font-medium text-gray-700 block"
+                    className="block text-sm font-medium text-gray-700"
                   >
                     Occupation Column Number
                   </label>
@@ -530,17 +530,17 @@ export default function UploadLead() {
                     id="occupationColNum"
                     value={editLead.occupationcolno}
                     placeholder="Enter occupation column"
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                   />
                 </div>
               </div>
               <div className="flex space-x-4">
                 {/* DESCRIPTION COLUMN */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="descriptionColNum"
-                    className="text-sm font-medium text-gray-700 block"
+                    className="block text-sm font-medium text-gray-700"
                   >
                     Description Column Number
                   </label>
@@ -550,7 +550,7 @@ export default function UploadLead() {
                     id="descriptionColNum"
                     value={editLead.descolumnno}
                     placeholder="Enter description column"
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                   />
                 </div>
@@ -558,10 +558,10 @@ export default function UploadLead() {
             </div>
             {/* BUTTONS */}
             <div className="flex justify-end gap-5">
-              <div className="flex justify-end mr-5">
+              <div className="mr-5 flex justify-end">
                 <button
                   type="submit"
-                  className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                  className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                 >
                   {isEditMode ? "Update" : "Save"}
                 </button>

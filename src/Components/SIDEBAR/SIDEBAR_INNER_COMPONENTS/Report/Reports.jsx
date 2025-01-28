@@ -168,22 +168,20 @@ export default function Reports() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col m-3">
-      <div className="py-2 px-3 bg-white gap-3 flex items-center justify-between rounded-md ">
-        <div className="flex gap-3 reports_Buttons_Main_Container">
+    <div className="m-3 flex min-h-screen flex-col">
+      <div className="flex items-center justify-between gap-3 rounded-md bg-white px-3 py-2">
+        <div className="reports_Buttons_Main_Container flex gap-3">
           {dynamicButtons.map(({ id, name }) => (
             <>
               {permissions.includes(name) || businessRole === "Admin" ? (
                 <button
                   key={id}
                   onClick={() => handleOptionClick(id)}
-                  className={`px-3 py-1.5 rounded font-light text-md reports_Buttons_Container
-                 ${
-                   selectedId === id
-                     ? "bg-cyan-500 text-white"
-                     : "bg-gray-100 text-gray-700"
-                 }
-               `}
+                  className={`text-md reports_Buttons_Container rounded px-3 py-1.5 font-light ${
+                    selectedId === id
+                      ? "bg-cyan-500 text-white"
+                      : "bg-gray-100 text-gray-700"
+                  } `}
                 >
                   {name}
                 </button>
@@ -196,9 +194,9 @@ export default function Reports() {
       </div>
 
       {/* FILTER BY SECTION */}
-      <div className="mt-3 mb-3 flex justify-between items-center gap-3 flex-wrap">
+      <div className="mb-3 mt-3 flex flex-wrap items-center justify-between gap-3">
         <div className="flex gap-3">
-          <h1 className="text-3xl font-medium reports_Heading_Text">
+          <h1 className="reports_Heading_Text text-3xl font-medium">
             {(() => {
               switch (selectedId) {
                 case 1:
@@ -216,7 +214,7 @@ export default function Reports() {
               }
             })()}
           </h1>
-          <h1 className="bg-blue-600 text-white px-2 py-2 min-w-10 text-center rounded-md text-md shadow-md">
+          <h1 className="text-md min-w-10 rounded-md bg-blue-600 px-2 py-2 text-center text-white shadow-md">
             {getReports.length}
           </h1>
         </div>
@@ -227,7 +225,7 @@ export default function Reports() {
               <button
                 onClick={() => handleButtonClick(id)}
                 key={id}
-                className={`py-2 px-1 text-[12px] ${
+                className={`px-1 py-2 text-[12px] ${
                   buttonId === id
                     ? "bg-cyan-500 text-white"
                     : "bg-gray-100 text-gray-700"
@@ -241,39 +239,39 @@ export default function Reports() {
       </div>
 
       {/* ------------TABLE------------ */}
-      <div className="overflow-x-auto leads_Table_Main_Container">
+      <div className="leads_Table_Main_Container overflow-x-auto">
         {/* EMPLOYEE REPORT TABLE */}
-        <div className="min-w-full leads_Table_Container rounded-md">
+        <div className="leads_Table_Container min-w-full rounded-md">
           {selectedId === 1 && (employee || businessRole === "Admin") && (
             <EmployeeReport currentReports={currentReports} />
           )}
         </div>
         {/* LEAD REPORTS TABLE */}
-        <div className="min-w-full leads_Table_Container rounded-md">
+        <div className="leads_Table_Container min-w-full rounded-md">
           {selectedId === 2 && (lead || businessRole === "Admin") && (
             <LeadsReport currentReports={currentReports} />
           )}
         </div>
         {/* CLIENT REPORTS TABLE */}
-        <div className="min-w-full leads_Table_Container rounded-md">
+        <div className="leads_Table_Container min-w-full rounded-md">
           {selectedId === 3 && (client || businessRole === "Admin") && (
             <ClientReports currentReports={currentReports} />
           )}
         </div>
         {/* SALES REPORTS TABLE */}
-        <div className="min-w-full leads_Table_Container rounded-md">
+        <div className="leads_Table_Container min-w-full rounded-md">
           {selectedId === 4 && (sales || businessRole === "Admin") && (
             <SalesReports currentReports={currentReports} btn={buttonId} />
           )}
         </div>
         {/* DISPOSE REPORTS TABLE */}
-        <div className="min-w-full leads_Table_Container rounded-md">
+        <div className="leads_Table_Container min-w-full rounded-md">
           {selectedId === 5 && (dispose || businessRole === "Admin") && (
             <DisposeLeads currentReports={currentReports} />
           )}
         </div>
         {/* Monitoring TABLE */}
-        <div className="min-w-full leads_Table_Container rounded-md">
+        <div className="leads_Table_Container min-w-full rounded-md">
           {selectedId === 6 && (monitoring || businessRole === "Admin") && (
             <Monitoring currentReports={currentReports} />
           )}

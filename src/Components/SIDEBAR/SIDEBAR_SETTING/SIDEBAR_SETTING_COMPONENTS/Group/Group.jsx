@@ -208,56 +208,56 @@ export default function Group() {
   return (
     <>
       <ToastContainer />
-      <div className="m-3 min-w-screen">
+      <div className="min-w-screen m-3">
         {active ? (
           <>
-            <div className="flex min-w-screen justify-between items-center flex-wrap gap-5">
+            <div className="min-w-screen flex flex-wrap items-center justify-between gap-5">
               <h1 className="text-3xl font-medium">Groups Lists</h1>
               <button
                 onClick={handleActiveState}
-                className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
+                className="min-w-10 rounded bg-blue-600 p-2 text-sm text-white"
               >
                 Add Groups
               </button>
             </div>
-            <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
-              <div className="min-w-full rounded-md leads_Table_Container">
-                <table className="min-w-full bg-white leads_Table">
+            <div className="leads_Table_Main_Container mt-3 overflow-x-auto shadow-md">
+              <div className="leads_Table_Container min-w-full rounded-md">
+                <table className="leads_Table min-w-full bg-white">
                   <thead>
-                    <tr className="border-gray-300 border-b-2">
+                    <tr className="border-b-2 border-gray-300">
                       <th className="px-1 py-3">
                         <input type="checkbox" />
                       </th>
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm max-w-32">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex max-w-32 items-center justify-between text-sm">
                           <span>Group Name</span>
                           <FaBars />
                         </div>
                       </th>
 
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex items-center justify-between text-sm">
                           <span>User Count</span>
                           <FaBars />
                         </div>
                       </th>
 
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex items-center justify-between text-sm">
                           <span>Lead Limit</span>
                           <FaBars />
                         </div>
                       </th>
 
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex items-center justify-between text-sm">
                           <span>Fetch Limit</span>
                           <FaBars />
                         </div>
                       </th>
 
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex items-center justify-between text-sm">
                           <span>Action</span>
                         </div>
                       </th>
@@ -267,7 +267,7 @@ export default function Group() {
                     {group?.map((user) => (
                       <tr
                         key={user.id}
-                        className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                        className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                       >
                         <td className="px-1 py-3 text-center">
                           <input
@@ -275,23 +275,23 @@ export default function Group() {
                             onClick={(e) => handleCheckboxClick(e, user.id)}
                           />
                         </td>
-                        <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           {user.groupName}
                         </td>
-                        <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           {user.userCount}
                         </td>
-                        <td className="px-2 py-4 text-sm  max-w-24 break-words">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           {user.leadLimit}
                         </td>
-                        <td className="px-2 py-4 text-sm  max-w-24 break-words">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           {user.fetchLimit}
                         </td>
-                        <td className="px-2 py-4 flex gap-3 justify-center">
+                        <td className="flex justify-center gap-3 px-2 py-4">
                           <MdEdit
                             size={25}
                             color="white"
-                            className="bg-blue-500 rounded"
+                            className="rounded bg-blue-500"
                             onClick={() => handleClick(user.id)}
                           />
                           <RiDeleteBin6Fill
@@ -311,13 +311,13 @@ export default function Group() {
           </>
         ) : (
           <>
-            <div className="flex min-w-screen justify-between items-center">
+            <div className="min-w-screen flex items-center justify-between">
               <h1 className="text-3xl font-medium">
                 {isEditMode ? "Edit Group" : "Add New Group"}
               </h1>
               <button
                 onClick={handleActiveState}
-                className="border border-blue-600 bg-white text-blue-600 px-4 py-2 min-w-10 text-sm rounded"
+                className="min-w-10 rounded border border-blue-600 bg-white px-4 py-2 text-sm text-blue-600"
               >
                 Cancel
               </button>
@@ -325,15 +325,15 @@ export default function Group() {
 
             <form onSubmit={handleSubmit} className="flex">
               <div className="w-full">
-                <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
-                  <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+                <div className="mt-3 flex-grow rounded-xl bg-white shadow-md">
+                  <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                     Lead Information
                   </h2>
                   {/* -------------1------------- */}
-                  <div className="py-2 px-4 grid gap-2 ">
+                  <div className="grid gap-2 px-4 py-2">
                     {/* -------------groupID------------- */}
                     <div className="flex space-x-4">
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="groupID"
                           className="text-sm font-medium text-gray-700"
@@ -345,7 +345,7 @@ export default function Group() {
                           name="groupName"
                           value={formData.groupName || ""}
                           onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                         />
                         {errors.groupName && (
                           <span style={{ color: "red" }}>
@@ -355,7 +355,7 @@ export default function Group() {
                       </div>
                       {/* -------------Group------------- */}
                       {/* -------------Fetch Limit------------- */}
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="fetchLimit"
                           className="text-sm font-medium text-gray-700"
@@ -367,7 +367,7 @@ export default function Group() {
                           name="fetchLimit"
                           value={formData.fetchLimit || ""}
                           onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                         />
                       </div>
                     </div>
@@ -375,7 +375,7 @@ export default function Group() {
                     {/* -------------2------------- */}
                     <div className="flex space-x-4">
                       {/* -------------UserCount------------- */}
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="userCount"
                           className="text-sm font-medium text-gray-700"
@@ -387,12 +387,12 @@ export default function Group() {
                           name="userCount"
                           value={formData.userCount || ""}
                           onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                         />
                       </div>
 
                       {/* -------------Lead Limit------------- */}
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="leadLimit"
                           className="text-sm font-medium text-gray-700"
@@ -404,7 +404,7 @@ export default function Group() {
                           name="leadLimit"
                           value={formData.leadLimit || ""}
                           onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                         />
                       </div>
                     </div>
@@ -412,10 +412,10 @@ export default function Group() {
 
                     {/* -------------Button------------- */}
 
-                    <div className="grid justify-end mt-56  ">
+                    <div className="mt-56 grid justify-end">
                       <button
                         type="submit"
-                        className="px-32 py-4 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+                        className="rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                       >
                         {isEditMode ? "Update" : "Save"}
                       </button>

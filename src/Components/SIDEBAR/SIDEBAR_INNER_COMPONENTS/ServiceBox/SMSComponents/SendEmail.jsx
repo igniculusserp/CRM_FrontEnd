@@ -3,38 +3,38 @@ import PropTypes from "prop-types";
 
 export default function SendEmail({ currentSms }) {
   return (
-    <table className="min-w-full bg-white leads_Table">
+    <table className="leads_Table min-w-full bg-white">
       {/* ----------------- TABLE HEAD START ----------------- */}
       <thead>
-        <tr className="border-gray-300 border-b-2">
+        <tr className="border-b-2 border-gray-300">
           {/* CHECKBOX */}
-          <th className="px-3 py-3 w-max">
+          <th className="w-max px-3 py-3">
             <input type="checkbox" />
           </th>
           {/* SEGMENT */}
-          <th className="px-3 py-3 text-left border-r font-medium">
+          <th className="border-r px-3 py-3 text-left font-medium">
             <span>Segment</span>
           </th>
           {/* SUBJECT */}
-          <th className="px-3 py-3 text-left border-r font-medium">
+          <th className="border-r px-3 py-3 text-left font-medium">
             <span>Subject</span>
           </th>
           {/* MESSAGE */}
-          <th className="px-3 py-3 text-left border-r font-medium">
+          <th className="border-r px-3 py-3 text-left font-medium">
             <div className="flex items-center justify-between">
               <span>Message</span>
               <FaBars />
             </div>
           </th>
           {/* SENT BY */}
-          <th className="px-3 py-3 text-left border-r font-medium">
+          <th className="border-r px-3 py-3 text-left font-medium">
             <div className="flex items-center justify-between">
               <span>Sent By</span>
               <FaBars />
             </div>
           </th>
           {/* SENT TIME */}
-          <th className="px-3 py-3 text-left border-r font-medium">
+          <th className="border-r px-3 py-3 text-left font-medium">
             <span>Sent Time</span>
           </th>
         </tr>
@@ -46,33 +46,33 @@ export default function SendEmail({ currentSms }) {
           <tr
             key={index}
             // onClick={() => handleClick(sms)}
-            className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+            className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
           >
             {/*   CHECKBOX */}
-            <td className="px-3 py-3 text-center w-max">
+            <td className="w-max px-3 py-3 text-center">
               <input
                 type="checkbox"
                 // onClick={(e) => handleCheckboxClick(e, sms.id)}
               />
             </td>
             {/* SEGMENT */}
-            <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+            <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
               <span>{sms.products}</span>
             </td>
             {/* SUBJECT */}
-            <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+            <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
               <span>{sms.subject}</span>
             </td>
             {/* MESSAGE */}
-            <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+            <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
               {sms.message}
             </td>
             {/* SENT BY */}
-            <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+            <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
               {sms.lastModifiedBy}
             </td>
             {/* SENT TIME */}
-            <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+            <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
               {sms.sentDateTime.replace("T", " ")}
             </td>
           </tr>

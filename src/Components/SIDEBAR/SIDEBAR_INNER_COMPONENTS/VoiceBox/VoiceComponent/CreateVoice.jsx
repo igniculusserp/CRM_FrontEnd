@@ -204,30 +204,30 @@ const CreateVoice = () => {
   };
 
   return (
-    <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
-      <div className="flex py-2 px-2 items-center justify-between bg-white rounded-md shadow-md">
+    <div className="m-3 flex flex-col overflow-x-auto overflow-y-hidden">
+      <div className="flex items-center justify-between rounded-md bg-white px-2 py-2 shadow-md">
         <h1 className="text-xl">
           <h1>Create Voice Box</h1>
         </h1>
         <Link
           to="/panel/voicebox"
-          className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
+          className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
         >
           Cancel
         </Link>
       </div>
       <div className="overflow-hidden shadow-md">
-        <div className="py-2 px-3 bg-cyan-500 rounded-t-xl mt-3">
+        <div className="mt-3 rounded-t-xl bg-cyan-500 px-3 py-2">
           <h1 className="text-white">Voice Box Details</h1>
         </div>
         {/* CREATE VOICE FORM */}
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col py-2 px-3 bg-white rounded-b-xl">
+          <div className="flex flex-col rounded-b-xl bg-white px-3 py-2">
             <div className="grid gap-2 py-2">
               {/* FIRST ROW */}
               <div className="flex space-x-4">
                 {/* LEAD ID FIELD */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="leadNo"
                     className="text-sm font-medium text-gray-700"
@@ -239,7 +239,7 @@ const CreateVoice = () => {
                     name="leadNo"
                     id="leadNo"
                     value={editVoice.leadNo}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Entere verox peron"
                   />
@@ -248,7 +248,7 @@ const CreateVoice = () => {
                   )}
                 </div>
                 {/* CLIENT NAME FIELD */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="clientName"
                     className="text-sm font-medium text-gray-700"
@@ -260,7 +260,7 @@ const CreateVoice = () => {
                     name="clientName"
                     id="clientName"
                     value={editVoice.clientName}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Entere verox peron"
                   />
@@ -269,7 +269,7 @@ const CreateVoice = () => {
               {/* SECOND ROW */}
               <div className="flex space-x-4">
                 {/* Employee FIELD */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="employeeName"
                     className="text-sm font-medium text-gray-700"
@@ -281,7 +281,7 @@ const CreateVoice = () => {
                     name="employeeName"
                     id="employeeName"
                     value={editVoice.employeeName}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Entere verox peron"
                   />
@@ -290,7 +290,7 @@ const CreateVoice = () => {
                   )}
                 </div>
                 {/* phoneNo FIELD */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="disposition"
                     className="text-sm font-medium text-gray-700"
@@ -302,7 +302,7 @@ const CreateVoice = () => {
                     name="disposition"
                     id="disposition"
                     value={editVoice.disposition}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Entere verox peron"
                   />
@@ -311,7 +311,7 @@ const CreateVoice = () => {
               {/* THIRD ROW */}
               <div className="flex space-x-4">
                 {/* SOURCE FIELD */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="source"
                     className="text-sm font-medium text-gray-700"
@@ -323,13 +323,13 @@ const CreateVoice = () => {
                     name="source"
                     id="source"
                     value={editVoice.source}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Entere verox peron"
                   />
                 </div>
                 {/* CALL BACK DATE TIME FIELD */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="callDateTime"
                     className="text-sm font-medium text-gray-700"
@@ -341,7 +341,7 @@ const CreateVoice = () => {
                     name="callDateTime"
                     id="callDateTime"
                     value={editVoice.callDateTime}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Entere verox peron"
                   />
@@ -350,7 +350,7 @@ const CreateVoice = () => {
               {/* FOURTH ROW */}
               <div className="flex space-x-4">
                 {/* UNIQUE ID FIELD */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="uniqueId"
                     className="text-sm font-medium text-gray-700"
@@ -362,7 +362,7 @@ const CreateVoice = () => {
                     name="uniqueId"
                     id="uniqueId"
                     value={editVoice.uniqueId}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Entere verox peron"
                   />
@@ -371,7 +371,7 @@ const CreateVoice = () => {
                   )}
                 </div>
                 {/* DURATION FIELD */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="duration"
                     className="text-sm font-medium text-gray-700"
@@ -383,7 +383,7 @@ const CreateVoice = () => {
                     name="duration"
                     id="duration"
                     value={editVoice.duration}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Entere verox peron"
                   />
@@ -392,8 +392,8 @@ const CreateVoice = () => {
               {/* FIFTH ROW */}
               <div className="flex space-x-4">
                 {/* TYPE DROPDOWN */}
-                <div className="flex flex-col w-1/2">
-                  <div className="flex flex-col w-1/1 relative">
+                <div className="flex w-1/2 flex-col">
+                  <div className="w-1/1 relative flex flex-col">
                     <label
                       htmlFor="type"
                       className="text-sm font-medium text-gray-700"
@@ -406,7 +406,7 @@ const CreateVoice = () => {
                       onMouseLeave={() => setTypeDropdown(false)}
                     >
                       <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="type"
                         type="button"
                       >
@@ -417,7 +417,7 @@ const CreateVoice = () => {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {typeDropdown && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {typeData.map(({ key, userName, role }) => (
                               <li
@@ -425,7 +425,7 @@ const CreateVoice = () => {
                                 onClick={() =>
                                   handleDropdownType(userName, role)
                                 }
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 {userName}-({role})
                               </li>
@@ -440,8 +440,8 @@ const CreateVoice = () => {
                   </div>
                 </div>
                 {/* STATUS TO DROPDOWN */}
-                <div className="flex flex-col w-1/2">
-                  <div className="flex flex-col w-1/1 relative">
+                <div className="flex w-1/2 flex-col">
+                  <div className="w-1/1 relative flex flex-col">
                     <label
                       htmlFor="leadesStatus"
                       className="text-sm font-medium text-gray-700"
@@ -454,7 +454,7 @@ const CreateVoice = () => {
                       onMouseLeave={() => setStatusDropdown(false)}
                     >
                       <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadStatusDropDown"
                         type="button"
                       >
@@ -465,7 +465,7 @@ const CreateVoice = () => {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {statusDropdown && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {statusData.map(({ key, userName, role }) => (
                               <li
@@ -473,7 +473,7 @@ const CreateVoice = () => {
                                 onClick={() =>
                                   handleDropdownStatus(userName, role)
                                 }
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 {userName}-({role})
                               </li>
@@ -490,7 +490,7 @@ const CreateVoice = () => {
             <div className="flex justify-end px-2">
               <button
                 type="submit"
-                className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+                className="mb-3 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
               >
                 {isEditMode ? "Update" : "Save"}
               </button>

@@ -44,24 +44,24 @@ export default function ChatPopup() {
       <div className="absolute bottom-[17px] right-2 h-12 p-3">
         {message && (
           <section
-            className={`fixed right-4 bottom-0 w-[300px] ${
+            className={`fixed bottom-0 right-4 w-[300px] ${
               popupChat
-                ? "border-none rounded-none h-[400px] hidden"
-                : "rounded-t-lg block"
-            } bg-cyan-400 py-1 z-10 shadow-lg text-center opacity-70`}
+                ? "hidden h-[400px] rounded-none border-none"
+                : "block rounded-t-lg"
+            } z-10 bg-cyan-400 py-1 text-center opacity-70 shadow-lg`}
           >
-            <div className="flex items-center px-6 justify-between sticky bottom-0 h-8">
-              <h1 className="text-xl text-cyan-900 font-semibold text-center tracking-wider cursor-pointer">
+            <div className="sticky bottom-0 flex h-8 items-center justify-between px-6">
+              <h1 className="cursor-pointer text-center text-xl font-semibold tracking-wider text-cyan-900">
                 Chat
               </h1>
               {/* BUTTONS */}
               <div className="flex items-center gap-2">
                 <FaPlus
-                  className="text-white cursor-pointer  "
+                  className="cursor-pointer text-white"
                   onClick={() => setPopupChat(true)}
                 ></FaPlus>
                 <FaWindowMinimize
-                  className="text-white cursor-pointer mb-2 "
+                  className="mb-2 cursor-pointer text-white"
                   onClick={() => setPopupChat(false)}
                 />
               </div>
@@ -71,10 +71,10 @@ export default function ChatPopup() {
       </div>
       <div className="absolute bottom-0 right-0">
         {popupChat && (
-          <section className="fixed right-0 bottom-0 w-[300px] h-[200px] bg-slate-50 rounded-t-md border-none overflow-y-scroll chatBar text-justify z-20">
-            <div className="flex items-center justify-between text-justify bg-cyan-400 w-full py-2 px-4">
+          <section className="chatBar fixed bottom-0 right-0 z-20 h-[200px] w-[300px] overflow-y-scroll rounded-t-md border-none bg-slate-50 text-justify">
+            <div className="flex w-full items-center justify-between bg-cyan-400 px-4 py-2 text-justify">
               {/* USERNAME */}
-              <h1 className="text-xl text-white font-semibold text-center tracking-wider cursor-pointer ">
+              <h1 className="cursor-pointer text-center text-xl font-semibold tracking-wider text-white">
                 Chat
               </h1>
               {/* ICONS */}
@@ -82,10 +82,10 @@ export default function ChatPopup() {
                 <FaPlus
                   type="button"
                   onClick={() => setOpenChat(true)}
-                  className="text-white cursor-pointer"
+                  className="cursor-pointer text-white"
                 ></FaPlus>
                 <FaWindowMinimize
-                  className="text-white cursor-pointer mb-2 "
+                  className="mb-2 cursor-pointer text-white"
                   onClick={() => setPopupChat(false)}
                 />
               </div>
@@ -94,11 +94,11 @@ export default function ChatPopup() {
             {users?.map((user) => (
               <div className={`flex items-center gap-2`} key={user.id}>
                 <div
-                  className={`flex items-center gap-2 p-3 border-b border-gray-300 w-full text-gray-600 font-medium cursor-pointer`}
+                  className={`flex w-full cursor-pointer items-center gap-2 border-b border-gray-300 p-3 font-medium text-gray-600`}
                   onClick={() => setOpenChat(true)}
                 >
                   <div
-                    className={`w-2 h-2 rounded-full ${
+                    className={`h-2 w-2 rounded-full ${
                       user.status ? "bg-green-600" : "bg-red-500"
                     }`}
                   ></div>
@@ -113,9 +113,9 @@ export default function ChatPopup() {
       <div className="absolute bottom-0 right-[18.7rem]">
         {openChat && (
           <section className="fixed bottom-0 right-[18.7rem] rounded-t-lg border bg-slate-50">
-            <div className="flex h-full justify-between items-center gap-2 p-3 bg-cyan-400 w-full rounded-t-lg">
+            <div className="flex h-full w-full items-center justify-between gap-2 rounded-t-lg bg-cyan-400 p-3">
               <div className="sticky bottom-0 right-0">
-                <h1 className="text-2xl text-white font-semibold text-center tracking-wider cursor-pointer">
+                <h1 className="cursor-pointer text-center text-2xl font-semibold tracking-wider text-white">
                   Shubh Mishra
                 </h1>
               </div>
@@ -123,12 +123,12 @@ export default function ChatPopup() {
               <div className="flex items-center justify-center gap-2">
                 <button
                   type="button"
-                  className="text-white cursor-pointer text-xl font-medium"
+                  className="cursor-pointer text-xl font-medium text-white"
                 >
                   +
                 </button>
                 <VscChromeMinimize
-                  className="text-white cursor-pointer text-xl font-medium"
+                  className="cursor-pointer text-xl font-medium text-white"
                   onClick={() => setOpenChat(false)}
                 />
               </div>

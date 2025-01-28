@@ -504,22 +504,22 @@ export default function Createlead() {
     <>
       <ToastContainer />
       {/* ------------------------------------------------> Parent <------------------------------------------------ */}
-      <div className=" mt-3">
+      <div className="mt-3">
         {/* ------------------------------------------------> Heading  <------------------------------------------------ */}
-        <div className="flex justify-between mx-3  bg-white border rounded p-3 ">
+        <div className="mx-3 flex justify-between rounded border bg-white p-3">
           {/* ------------------------------------------------> Text and Logo  <------------------------------------------------ */}
-          <div className="flex items-center justify-center gap-3 ">
-            <h1 className=" text-xl">
+          <div className="flex items-center justify-center gap-3">
+            <h1 className="text-xl">
               {isEditMode ? (
                 <>
-                  <div className="flex justify-center items-center gap-2  ">
+                  <div className="flex items-center justify-center gap-2">
                     <GrContactInfo size={25} />
                     <h1>Edit Lead</h1>
                   </div>
                 </>
               ) : (
                 <>
-                  <div className=" flex justify-center items-center  gap-2   ">
+                  <div className="flex items-center justify-center gap-2">
                     <GrContactInfo size={25} />
                     <h1>Create Lead</h1>
                   </div>
@@ -531,7 +531,7 @@ export default function Createlead() {
             {/* ------------------------------------------------> Cancel Button  <------------------------------------------------ */}
             <Link
               to="/panel/lead"
-              className="sm:px-6 py-1 px-4 rounded  border border-blue-500 text-blue-500 "
+              className="rounded border border-blue-500 px-4 py-1 text-blue-500 sm:px-6"
             >
               Cancel
             </Link>
@@ -539,21 +539,21 @@ export default function Createlead() {
         </div>
 
         {/* -------------FORM Starts FROM HERE------------- */}
-        <form onSubmit={handleSubmit} className="flex mb-6">
+        <form onSubmit={handleSubmit} className="mb-6 flex">
           {/* ------------------------------------------------> FORM PARENT includes 4 tabs <------------------------------------------------ */}
           <div className="w-screen">
             {/* ------------------------------------------------>TAB  1 :  Lead Information TAB <------------------------------------------------ */}
-            <div className="m-3 bg-white rounded-xl shadow-md  ">
-              <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+            <div className="m-3 rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Lead Information
               </h2>
               {/* -------------Parent <Lead Information Inputs>------------- */}
-              <div className=" space-y-3 p-2 ">
+              <div className="space-y-3 p-2">
                 {/* ------------------------------------1------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Name && Language>------------- */}
-                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------Name------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="name"
                       className="text-sm font-medium text-gray-700"
@@ -569,11 +569,11 @@ export default function Createlead() {
                       value={editLead.name}
                       onChange={handleChange}
                       placeholder="Enter your Name"
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* -------------Language------------- */}
-                  <div className="flex flex-col relative">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="language"
                       className="text-sm font-medium text-gray-700"
@@ -582,12 +582,12 @@ export default function Createlead() {
                     </label>
 
                     <div
-                      className="relative "
+                      className="relative"
                       onClick={toggleDropdownLanguage}
                       onMouseLeave={() => setisDropdownVisibleLanguage(false)}
                     >
                       <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LanguageDropDown"
                         type="button"
                       >
@@ -599,13 +599,13 @@ export default function Createlead() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLanguage && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                        <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {languageDropDown.map(({ key, name }) => (
                               <li
                                 key={key}
                                 onClick={() => handleDropdownLanguage(name)}
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 {name}
                               </li>
@@ -619,9 +619,9 @@ export default function Createlead() {
 
                 {/* ------------------------------------2------------------------------------- */}
                 {/* -------------SUB -> Parent -> < Company &&  Title >------------- */}
-                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------Company------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="company"
                       className="text-sm font-medium text-gray-700"
@@ -634,11 +634,11 @@ export default function Createlead() {
                       value={editLead.company}
                       onChange={handleChange}
                       placeholder="Enter your Company"
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full "
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* -------------Title------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="title"
                       className="text-sm font-medium text-gray-700"
@@ -651,15 +651,15 @@ export default function Createlead() {
                       value={editLead.title}
                       onChange={handleChange}
                       placeholder="Enter Title"
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full "
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
                 {/* ------------------------------------3------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Lead Source && Lead Status>------------- */}
-                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------Lead Source------------- */}
-                  <div className="flex flex-col relative">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="Pool"
                       className="text-sm font-medium text-gray-700"
@@ -672,7 +672,7 @@ export default function Createlead() {
                     >
                       <button
                         onClick={toggleDropdown}
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadPoolDropDown"
                         type="button"
                       >
@@ -682,7 +682,7 @@ export default function Createlead() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isPoolDropdownOpen && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           {error ? (
                             <div className="py-2 text-red-600">{error}</div>
                           ) : (
@@ -694,13 +694,13 @@ export default function Createlead() {
                                     onClick={() =>
                                       handleDropdownSelection(poolName)
                                     }
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {poolName}
                                   </li>
                                 ))
                               ) : (
-                                <li className="flex items-center px-4 py-2 text-center gap-1">
+                                <li className="flex items-center gap-1 px-4 py-2 text-center">
                                   <IoInformationCircle
                                     size={25}
                                     className="text-cyan-600"
@@ -721,7 +721,7 @@ export default function Createlead() {
 
                   {/* -------------Lead Status------------- */}
 
-                  <div className="flex flex-col relative">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="leadesStatus"
                       className="text-sm font-medium text-gray-700"
@@ -734,7 +734,7 @@ export default function Createlead() {
                       onMouseLeave={() => setisDropdownVisibleLeadStatus(false)}
                     >
                       <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadStatusDropDown"
                         type="button"
                       >
@@ -744,7 +744,7 @@ export default function Createlead() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLeadStatus && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                        <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {leadStatus.length > 0 ? (
                               leadStatus.map(({ key, status }) => (
@@ -753,13 +753,13 @@ export default function Createlead() {
                                   onClick={() =>
                                     handleDropdownLeadStatus(status)
                                   }
-                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                  className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                 >
                                   {status}
                                 </li>
                               ))
                             ) : (
-                              <li className="flex items-center px-4 py-2 text-center gap-1">
+                              <li className="flex items-center gap-1 px-4 py-2 text-center">
                                 <IoInformationCircle
                                   size={25}
                                   className="text-cyan-600"
@@ -780,9 +780,9 @@ export default function Createlead() {
 
                 {/* ------------------------------------4------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Mobile Numbe && Alternate Number>------------- */}
-                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------Mobile Number------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="email"
                       className="text-sm font-medium text-gray-700"
@@ -797,13 +797,13 @@ export default function Createlead() {
                       name="mobNo"
                       maxLength="15"
                       value={editLead.mobNo}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleContactChange}
                       placeholder="Enter your Mobile Number"
                     />
                   </div>
                   {/* -------------Alternate Number------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="phNo"
                       className="text-sm font-medium text-gray-700"
@@ -815,7 +815,7 @@ export default function Createlead() {
                       name="phNo"
                       maxLength="15"
                       value={editLead.phNo}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleContactChange}
                       placeholder="Enter your Alternate Number"
                       onInput={(e) => {
@@ -829,9 +829,9 @@ export default function Createlead() {
                 </div>
                 {/* ------------------------------------5------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Email && Assigned TO>------------- */}
-                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------Email------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="city"
                       className="text-sm font-medium text-gray-700"
@@ -844,11 +844,11 @@ export default function Createlead() {
                       value={editLead.email}
                       onChange={handleChange}
                       placeholder="Enter your Email"
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full "
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* -------------Managed by------------- */}
-                  <div className="flex flex-col relative">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="leadesStatus"
                       className="text-sm font-medium text-gray-700"
@@ -863,7 +863,7 @@ export default function Createlead() {
                       }
                     >
                       <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadStatusDropDown"
                         type="button"
                       >
@@ -873,7 +873,7 @@ export default function Createlead() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownassigned_ToDropDown && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {managedBy.map(({ userName, role }, index) => (
                               <li
@@ -884,7 +884,7 @@ export default function Createlead() {
                                     role,
                                   )
                                 }
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 {userName}-({role})
                               </li>
@@ -899,17 +899,17 @@ export default function Createlead() {
             </div>
 
             {/* ------------------------------------------------>TAB  2 :  Address Information  TAB <------------------------------------------------ */}
-            <div className="m-3 bg-white rounded-xl shadow-md  ">
-              <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+            <div className="m-3 rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Address Information
               </h2>
               {/* -------------Parent <Address Information Inputs>------------- */}
-              <div className=" space-y-3 p-2 ">
+              <div className="space-y-3 p-2">
                 {/* ------------------------------------1------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Street && Pincode>------------- */}
-                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------Street------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="street"
                       className="text-sm font-medium text-gray-700"
@@ -922,11 +922,11 @@ export default function Createlead() {
                       value={editLead.street}
                       onChange={handleChange}
                       placeholder="Enter your Street"
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* -------------Pincode------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="pinCode"
                       className="text-sm font-medium text-gray-700"
@@ -939,15 +939,15 @@ export default function Createlead() {
                       value={editLead.pinCode}
                       onChange={handleChange}
                       placeholder="Enter your pincode"
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
                 {/* ------------------------------------2------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Country && City>------------- */}
-                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------Country------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="country"
                       className="text-sm font-medium text-gray-700"
@@ -960,11 +960,11 @@ export default function Createlead() {
                       value={editLead.country}
                       onChange={handleChange}
                       placeholder="Enter your Country name"
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* -------------City------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="city"
                       className="text-sm font-medium text-gray-700"
@@ -977,16 +977,16 @@ export default function Createlead() {
                       value={editLead.city}
                       onChange={handleChange}
                       placeholder="Enter your City name"
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
                 {/* -------------3------------- */}
                 {/* -------------SUB -> Parent -> <State>------------- */}
 
-                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------State------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="state"
                       className="text-sm font-medium text-gray-700"
@@ -999,24 +999,24 @@ export default function Createlead() {
                       value={editLead.state}
                       onChange={handleChange}
                       placeholder="Enter your State name"
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
               </div>
             </div>
             {/* ------------------------------------------------>TAB  3 :  Trading Information TAB <------------------------------------------------ */}
-            <div className="m-3 bg-white rounded-xl shadow-md  ">
-              <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+            <div className="m-3 rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Trading Information
               </h2>
               {/* -------------Parent <Lead Information Inputs>------------- */}
-              <div className=" space-y-3 p-2 ">
+              <div className="space-y-3 p-2">
                 {/* ------------------------------------1------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Risk Capacity && Trading Time>------------- */}
-                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------Risk Capacity------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="riskCapcity"
                       className="text-sm font-medium text-gray-700"
@@ -1029,11 +1029,11 @@ export default function Createlead() {
                       value={editLead.riskCapcity}
                       onChange={handleChange}
                       placeholder="Enter Risk Capacity"
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* -------------Trading Time------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="tradingTime"
                       className="text-sm font-medium text-gray-700"
@@ -1046,15 +1046,15 @@ export default function Createlead() {
                       value={editLead.tradingTime}
                       onChange={handleChange}
                       placeholder="Enter Trading Time"
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
                 {/* ------------------------------------2------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Trading Type && Investmet>------------- */}
-                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------Trading Type------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="tradingType"
                       className="text-sm font-medium text-gray-700"
@@ -1066,11 +1066,11 @@ export default function Createlead() {
                       name="tradingType"
                       value={editLead.tradingType}
                       onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* -------------Investmet------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="investmet"
                       className="text-sm font-medium text-gray-700"
@@ -1082,15 +1082,15 @@ export default function Createlead() {
                       name="investmet"
                       value={editLead.investmet}
                       onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
                 {/* ------------------------------------2------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Trading Type && Segments>------------- */}
-                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------Trading Type------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="empNadvisoryExpame"
                       className="text-sm font-medium text-gray-700"
@@ -1103,12 +1103,12 @@ export default function Createlead() {
                       value={editLead.advisoryExp}
                       onChange={handleChange}
                       placeholder="Enter your Advisory"
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
 
                   {/* -------------Trading Years------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="tradingYears"
                       className="text-sm font-medium text-gray-700"
@@ -1119,7 +1119,7 @@ export default function Createlead() {
                       type="text"
                       name="tradingYears"
                       value={editLead.tradingYears}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter years"
                     />
@@ -1128,9 +1128,9 @@ export default function Createlead() {
 
                 {/* ------------------------------------3------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Trading Years && CallBack DateTime>------------- */}
-                <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------Segments------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="segment"
                       className="text-sm font-medium text-gray-700"
@@ -1145,19 +1145,19 @@ export default function Createlead() {
                       <button
                         id="LeadStatusDropDown"
                         type="button"
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                       >
                         {defaultTextSegmentDropDown}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleSegment && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {segments?.length > 0 ? (
                               segments.map(({ key, segment }) => (
                                 <li
                                   key={key}
-                                  className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                  className="flex cursor-pointer items-center border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                 >
                                   <input
                                     type="checkbox"
@@ -1173,7 +1173,7 @@ export default function Createlead() {
                                 </li>
                               ))
                             ) : (
-                              <li className="flex items-center px-4 py-2 text-center gap-1">
+                              <li className="flex items-center gap-1 px-4 py-2 text-center">
                                 <IoInformationCircle
                                   size={25}
                                   className="text-cyan-600"
@@ -1191,7 +1191,7 @@ export default function Createlead() {
                     </div>
                   </div>
 
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="callBackDateTime"
                       className="text-sm font-medium text-gray-700"
@@ -1203,15 +1203,15 @@ export default function Createlead() {
                       name="callBackDateTime"
                       value={editLead.callBackDateTime}
                       onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
                 {/* ------------------------------------2------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Trail Start Date && Trail End Date>------------- */}
-                <div className="grid sm:grid-cols-2 grid-cols-2 gap-2 sm:gap-4">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------Trail Start Date------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="trialStartDate"
                       className="text-sm font-medium text-gray-700"
@@ -1222,12 +1222,12 @@ export default function Createlead() {
                       type="date"
                       name="trialStartDate"
                       value={editLead.trialStartDate?.split("T")[0]}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                   </div>
                   {/* -------------Trail End Date------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="trialEndDate"
                       className="text-sm font-medium text-gray-700"
@@ -1239,15 +1239,15 @@ export default function Createlead() {
                       name="trialEndDate"
                       value={editLead.trialEndDate?.split("T")[0]}
                       onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
                 {/* ------------------------------------3------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Trading Years && CallBack DateTime>------------- */}
-                <div className="grid sm:grid-cols-2 grid-cols-2 gap-2 sm:gap-4">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------Trading Years------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="contactId"
                       className="text-sm font-medium text-gray-700"
@@ -1258,13 +1258,13 @@ export default function Createlead() {
                       type="text"
                       name="contactId"
                       value={editLead.contactId}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter ContactID"
                     />
                   </div>
                   {/* -------------lastModifiedBy ------------- */}
-                  <div className="flex flex-col relative ">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="lastModifiedBy"
                       className="text-sm font-medium text-gray-700"
@@ -1275,7 +1275,7 @@ export default function Createlead() {
                       type="text"
                       name="lastModifiedBy"
                       value={editLead.lastModifiedBy}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter details"
                     />
@@ -1283,22 +1283,22 @@ export default function Createlead() {
                 </div>
               </div>
             </div>
-            <div className="mx-3 bg-white rounded-xl shadow-md ">
-              <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+            <div className="mx-3 rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Description Information
               </h2>
-              <div className="p-2 ">
+              <div className="p-2">
                 <div className="flex flex-col">
                   <label
                     htmlFor="description"
-                    className="text-sm  font-medium text-gray-700"
+                    className="text-sm font-medium text-gray-700"
                   >
                     Description
                   </label>
                   <ReactQuill
                     name="description"
                     value={description}
-                    className="text-balance hyphens-auto max-h-full sm:h-60 h-40  mt-1 "
+                    className="mt-1 h-40 max-h-full hyphens-auto text-balance sm:h-60"
                     theme="snow"
                     onChange={setdescription}
                     placeholder="Add Description"
@@ -1308,7 +1308,7 @@ export default function Createlead() {
               <div className="flex justify-end px-2">
                 <button
                   type="submit"
-                  className="px-36 py-4 mt-24 mb-2 sm:me-10 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white w-full sm:w-1/3"
+                  className="mb-2 mt-24 w-full rounded border-2 border-cyan-500 bg-cyan-500 px-36 py-4 text-white hover:bg-white hover:text-cyan-500 sm:me-10 sm:w-1/3"
                 >
                   {isEditMode ? "Update" : "Save"}
                 </button>

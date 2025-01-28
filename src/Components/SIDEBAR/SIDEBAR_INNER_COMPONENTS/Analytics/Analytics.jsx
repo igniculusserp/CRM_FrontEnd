@@ -212,11 +212,11 @@ export default function Analytics() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col my-3 gap-1 mx-1">
+    <main className="mx-1 my-3 flex min-h-screen flex-col gap-1">
       {/* ------------ TOP SECTION ------------ */}
-      <div className="flex items-center px-2 gap-3">
+      <div className="flex items-center gap-3 px-2">
         {/* ------------ CARD ------------ */}
-        <div className="flex flex-col bg-white py-2 px-2 rounded-md shadow-lg w-1/4">
+        <div className="flex w-1/4 flex-col rounded-md bg-white px-2 py-2 shadow-lg">
           {/* ------------ CARD ------------ */}
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-[5px]">
@@ -228,8 +228,8 @@ export default function Analytics() {
               <button
                 className={
                   percentageStatus === "Plus"
-                    ? "flex items-center justify-start gap-1 px-1 py-1 bg-green-100 w-max rounded-md"
-                    : "flex items-center justify-start gap-1 px-1 py-1 bg-red-100 w-max rounded-md"
+                    ? "flex w-max items-center justify-start gap-1 rounded-md bg-green-100 px-1 py-1"
+                    : "flex w-max items-center justify-start gap-1 rounded-md bg-red-100 px-1 py-1"
                 }
               >
                 <FaArrowAltCircleUp
@@ -251,7 +251,7 @@ export default function Analytics() {
           </div>
         </div>
         {/* ------------ CARD ------------ */}
-        <div className="flex flex-col bg-white py-2 px-2 rounded-md shadow-lg w-1/4">
+        <div className="flex w-1/4 flex-col rounded-md bg-white px-2 py-2 shadow-lg">
           {/* ------------ CARD ------------ */}
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-[5px]">
@@ -263,8 +263,8 @@ export default function Analytics() {
               <button
                 className={
                   todaysPercentageStatus === "Plus"
-                    ? "flex items-center justify-start gap-1 px-1 py-1 bg-green-100 w-max rounded-md"
-                    : "flex items-center justify-start gap-1 px-1 py-1 bg-red-100 w-max rounded-md"
+                    ? "flex w-max items-center justify-start gap-1 rounded-md bg-green-100 px-1 py-1"
+                    : "flex w-max items-center justify-start gap-1 rounded-md bg-red-100 px-1 py-1"
                 }
               >
                 <FaArrowAltCircleUp
@@ -286,7 +286,7 @@ export default function Analytics() {
           </div>
         </div>
         {/* ------------ CARD ------------ */}
-        <div className="flex flex-col bg-white py-2 px-2 rounded-md shadow-lg w-1/4">
+        <div className="flex w-1/4 flex-col rounded-md bg-white px-2 py-2 shadow-lg">
           {/* ------------ CARD ------------ */}
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-[5px]">
@@ -295,8 +295,8 @@ export default function Analytics() {
               <button
                 className={
                   followUpPercentageStatus === "Plus"
-                    ? "flex items-center justify-start gap-1 px-1 py-1 bg-green-100 w-max rounded-md"
-                    : "flex items-center justify-start gap-1 px-1 py-1 bg-red-100 w-max rounded-md"
+                    ? "flex w-max items-center justify-start gap-1 rounded-md bg-green-100 px-1 py-1"
+                    : "flex w-max items-center justify-start gap-1 rounded-md bg-red-100 px-1 py-1"
                 }
               >
                 <FaArrowAltCircleUp
@@ -318,13 +318,13 @@ export default function Analytics() {
           </div>
         </div>
         {/* ------------ CARD ------------ */}
-        <div className="flex flex-col bg-white py-2 px-2 rounded-md shadow-lg w-1/4">
+        <div className="flex w-1/4 flex-col rounded-md bg-white px-2 py-2 shadow-lg">
           {/* ------------ CARD ------------ */}
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-[5px]">
               <h1>Team Member</h1>
               <strong>10</strong>
-              <button className="flex items-center justify-start gap-1 px-1 py-1 bg-green-100 w-max rounded-md">
+              <button className="flex w-max items-center justify-start gap-1 rounded-md bg-green-100 px-1 py-1">
                 <FaArrowAltCircleUp />
                 <span>73%</span>
               </button>

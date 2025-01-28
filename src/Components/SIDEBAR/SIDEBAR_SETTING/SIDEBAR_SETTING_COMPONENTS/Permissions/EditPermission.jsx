@@ -110,48 +110,48 @@ export default function EditPermission({ onCancel, permissionId }) {
   };
 
   return (
-    <div className="flex min-h-screen flex-col m-3 overflow-x-auto overflow-y-hidden">
+    <div className="m-3 flex min-h-screen flex-col overflow-x-auto overflow-y-hidden">
       <ToastContainer />
-      <div className="flex py-2 px-2 items-center justify-between bg-white rounded-md shadow-md">
+      <div className="flex items-center justify-between rounded-md bg-white px-2 py-2 shadow-md">
         <h1 className="text-xl">Add Roles & Permissions</h1>
         {/*------------------------------------------------- Cancel Button--------------------------------------------- */}
         <button
           onClick={onCancel}
-          className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
+          className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
         >
           Cancel
         </button>
       </div>
       {/*  */}
       <div className="overflow-hidden shadow-md">
-        <div className="py-2 px-3 bg-cyan-500 rounded-t-xl mt-3">
+        <div className="mt-3 rounded-t-xl bg-cyan-500 px-3 py-2">
           <h1 className="text-white">Roles & Permissions Details</h1>
         </div>
         {/* ----------- FORMS START FROM HERE ----------- */}
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col min-h-screen py-2 px-4 bg-white rounded-b-xl">
+          <div className="flex min-h-screen flex-col rounded-b-xl bg-white px-4 py-2">
             <div className="flex gap-4">
-              <div className="grid gap-2 pb-3 w-full ">
+              <div className="grid w-full gap-2 pb-3">
                 {/* ----------Lead CHECK BOXES ---------- */}
                 {defaultGroupModuleText === "Leads" ? (
-                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
-                    <h1 className="font-normal mb-2 text-xl">Leads</h1>
+                  <div className="mt-2 w-full rounded-sm bg-white p-3 shadow-md">
+                    <h1 className="mb-2 text-xl font-normal">Leads</h1>
                     {/* ---------- LEAD BOXES ---------- */}
-                    <div className="flex gap-12 justify-between">
+                    <div className="flex justify-between gap-12">
                       {/* FIRST */}
                       <div className="flex flex-col gap-3">
                         {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             id="create-lead"
                             checked={permissions.includes("Create Lead")}
                             onChange={() => handleCheckboxChange("Create Lead")}
                           />
-                          <p className="text-sm font-md">Create Lead</p>
+                          <p className="font-md text-sm">Create Lead</p>
                         </div>
                         {/* SECOND ITEM */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Upload Leads")}
@@ -159,10 +159,10 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Upload Leads")
                             }
                           />
-                          <p className="text-sm font-md">Upload Leads</p>
+                          <p className="font-md text-sm">Upload Leads</p>
                         </div>
                         {/* THIRD ITEM */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Lead Operation")}
@@ -170,61 +170,61 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Lead Operation")
                             }
                           />
-                          <p className="text-sm font-md">Lead Operation</p>
+                          <p className="font-md text-sm">Lead Operation</p>
                         </div>
                         {/* FOURTH ITEM */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Lead Action")}
                             onChange={() => handleCheckboxChange("Lead Action")}
                           />
-                          <p className="text-sm font-md">Lead Action</p>
+                          <p className="font-md text-sm">Lead Action</p>
                         </div>
                       </div>
                       {/* SECOND */}
                       <div className="flex flex-col gap-3">
                         {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("View Leads")}
                             onChange={() => handleCheckboxChange("View Leads")}
                           />
-                          <p className="text-sm font-md">View Leads</p>
+                          <p className="font-md text-sm">View Leads</p>
                         </div>
                         {/* SECOND ITEM */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Fetch Leads")}
                             onChange={() => handleCheckboxChange("Fetch Leads")}
                           />
-                          <p className="text-sm font-md">Fetch Leads</p>
+                          <p className="font-md text-sm">Fetch Leads</p>
                         </div>
                         {/* THIRD ITEM */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Edit Lead")}
                             onChange={() => handleCheckboxChange("Edit Lead")}
                           />
-                          <p className="text-sm font-md">Edit Lead</p>
+                          <p className="font-md text-sm">Edit Lead</p>
                         </div>
                         {/* Fourth ITEM */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Mass Delete")}
                             onChange={() => handleCheckboxChange("Mass Delete")}
                           />
-                          <p className="text-sm font-md">Mass Delete</p>
+                          <p className="font-md text-sm">Mass Delete</p>
                         </div>
                       </div>
                       {/* THIRD */}
                       <div className="flex flex-col gap-3">
                         {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Approve Leads")}
@@ -232,10 +232,10 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Approve Leads")
                             }
                           />
-                          <p className="text-sm font-md">Approve Leads</p>
+                          <p className="font-md text-sm">Approve Leads</p>
                         </div>
                         {/* SECOND ITEM */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Export to Excel")}
@@ -243,10 +243,10 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Export to Excel")
                             }
                           />
-                          <p className="text-sm font-md">Export to Excel</p>
+                          <p className="font-md text-sm">Export to Excel</p>
                         </div>
                         {/* THIRD ITEM */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Export to PDF")}
@@ -254,13 +254,13 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Export to PDF")
                             }
                           />
-                          <p className="text-sm font-md">Export to PDF</p>
+                          <p className="font-md text-sm">Export to PDF</p>
                         </div>
                       </div>
                       {/* FOURTH */}
                       <div className="flex flex-col gap-3">
                         {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes(
@@ -270,12 +270,12 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Convert Lead to Contact")
                             }
                           />
-                          <p className="text-sm font-md">
+                          <p className="font-md text-sm">
                             Convert Lead to Contact
                           </p>
                         </div>
                         {/* SECOND ITEM */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Create Sales Order")}
@@ -283,16 +283,16 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Create Sales Order")
                             }
                           />
-                          <p className="text-sm font-md">Create Sales Order</p>
+                          <p className="font-md text-sm">Create Sales Order</p>
                         </div>
                         {/* THIRD ITEM */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Mass E-Mail")}
                             onChange={() => handleCheckboxChange("Mass E-Mail")}
                           />
-                          <p className="text-sm font-md">Mass E-Mail</p>
+                          <p className="font-md text-sm">Mass E-Mail</p>
                         </div>
                       </div>
                     </div>
@@ -302,14 +302,14 @@ export default function EditPermission({ onCancel, permissionId }) {
                 )}
                 {/* --------- CONTACT --------- */}
                 {defaultGroupModuleText === "Contacts" ? (
-                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
-                    <h1 className="font-normal mb-2 text-xl">Contacts</h1>
+                  <div className="mt-2 w-full rounded-sm bg-white p-3 shadow-md">
+                    <h1 className="mb-2 text-xl font-normal">Contacts</h1>
                     {/* ---------- LEAD BOXES ---------- */}
-                    <div className="flex gap-12 justify-between">
+                    <div className="flex justify-between gap-12">
                       {/* FIRST */}
                       <div className="flex flex-col gap-3">
                         {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Create Sales order")}
@@ -317,10 +317,10 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Create Sales order")
                             }
                           />
-                          <p className="text-sm font-md">Create Sales order</p>
+                          <p className="font-md text-sm">Create Sales order</p>
                         </div>
                         {/* SECOND ITEM */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Edit Contact")}
@@ -328,13 +328,13 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Edit Contact")
                             }
                           />
-                          <p className="text-sm font-md">Edit Contact</p>
+                          <p className="font-md text-sm">Edit Contact</p>
                         </div>
                       </div>
                       {/* SECOND */}
                       <div className="flex flex-col gap-3">
                         {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("View Contacts")}
@@ -342,10 +342,10 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("View Contacts")
                             }
                           />
-                          <p className="text-sm font-md">View Contacts</p>
+                          <p className="font-md text-sm">View Contacts</p>
                         </div>
                         {/* SECOND ITEM */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Export to PDF")}
@@ -353,22 +353,22 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Export to PDF")
                             }
                           />
-                          <p className="text-sm font-md">Export to PDF</p>
+                          <p className="font-md text-sm">Export to PDF</p>
                         </div>
                       </div>
                       {/* THIRD */}
                       <div className="flex flex-col gap-3">
                         {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Mass Delete")}
                             onChange={() => handleCheckboxChange("Mass Delete")}
                           />
-                          <p className="text-sm font-md">Mass Delete</p>
+                          <p className="font-md text-sm">Mass Delete</p>
                         </div>
                         {/* SECOND ITEM */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Export to Excel")}
@@ -376,19 +376,19 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Export to Excel")
                             }
                           />
-                          <p className="text-sm font-md">Export to Excel</p>
+                          <p className="font-md text-sm">Export to Excel</p>
                         </div>
                       </div>
                       {/* FOURTH */}
                       <div className="flex flex-col gap-3">
                         {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Mass E-Mail")}
                             onChange={() => handleCheckboxChange("Mass E-Mail")}
                           />
-                          <p className="text-sm font-md">Mass E-Mail</p>
+                          <p className="font-md text-sm">Mass E-Mail</p>
                         </div>
                       </div>
                       {/* FIFTH */}
@@ -403,26 +403,26 @@ export default function EditPermission({ onCancel, permissionId }) {
                 )}
                 {/* --------- Client --------- */}
                 {defaultGroupModuleText === "Client" ? (
-                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
-                    <h1 className="font-normal mb-2 text-xl">Client</h1>
+                  <div className="mt-2 w-full rounded-sm bg-white p-3 shadow-md">
+                    <h1 className="mb-2 text-xl font-normal">Client</h1>
                     {/* ---------- LEAD BOXES ---------- */}
-                    <div className="flex gap-12 justify-between">
+                    <div className="flex justify-between gap-12">
                       {/* FIRST */}
                       <div className="flex flex-col gap-3">
                         {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Mass E-Mail")}
                             onChange={() => handleCheckboxChange("Mass E-Mail")}
                           />
-                          <p className="text-sm font-md">Mass E-Mail</p>
+                          <p className="font-md text-sm">Mass E-Mail</p>
                         </div>
                       </div>
                       {/* SECOND */}
                       <div className="flex flex-col gap-3">
                         {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Export to PDF")}
@@ -430,13 +430,13 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Export to PDF")
                             }
                           />
-                          <p className="text-sm font-md">Export to PDF</p>
+                          <p className="font-md text-sm">Export to PDF</p>
                         </div>
                       </div>
                       {/* THIRD */}
                       <div className="flex flex-col gap-3">
                         {/* FIRST ROW */}
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Export to Excel")}
@@ -444,7 +444,7 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Export to Excel")
                             }
                           />
-                          <p className="text-sm font-md">Export to Excel</p>
+                          <p className="font-md text-sm">Export to Excel</p>
                         </div>
                       </div>
                     </div>
@@ -454,12 +454,12 @@ export default function EditPermission({ onCancel, permissionId }) {
                 )}
                 {/* --------- SO --------- */}
                 {defaultGroupModuleText === "Sales Order" ? (
-                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
-                    <h1 className="font-normal mb-2 text-xl">Sales Order</h1>
+                  <div className="mt-2 w-full rounded-sm bg-white p-3 shadow-md">
+                    <h1 className="mb-2 text-xl font-normal">Sales Order</h1>
                     {/* ---------- LEAD BOXES ---------- */}
-                    <div className="flex gap-12 justify-between">
+                    <div className="flex justify-between gap-12">
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Edit Sales Order")}
@@ -467,9 +467,9 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Edit Sales Order")
                             }
                           />
-                          <p className="text-sm font-md">Edit Sales Order</p>
+                          <p className="font-md text-sm">Edit Sales Order</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Approve Pending")}
@@ -477,19 +477,19 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Approve Pending")
                             }
                           />
-                          <p className="text-sm font-md">Approve Pending</p>
+                          <p className="font-md text-sm">Approve Pending</p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Send SMS")}
                             onChange={() => handleCheckboxChange("Send SMS")}
                           />
-                          <p className="text-sm font-md">Send SMS</p>
+                          <p className="font-md text-sm">Send SMS</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Export to PDF")}
@@ -497,19 +497,19 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Export to PDF")
                             }
                           />
-                          <p className="text-sm font-md">Export to PDF</p>
+                          <p className="font-md text-sm">Export to PDF</p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Mass Delete")}
                             onChange={() => handleCheckboxChange("Mass Delete")}
                           />
-                          <p className="text-sm font-md">Mass Delete</p>
+                          <p className="font-md text-sm">Mass Delete</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Export to Excel")}
@@ -517,17 +517,17 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Export to Excel")
                             }
                           />
-                          <p className="text-sm font-md">Export to Excel</p>
+                          <p className="font-md text-sm">Export to Excel</p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Mass E-Mail")}
                             onChange={() => handleCheckboxChange("Mass E-Mail")}
                           />
-                          <p className="text-sm font-md">Mass E-Mail</p>
+                          <p className="font-md text-sm">Mass E-Mail</p>
                         </div>
                       </div>
                     </div>
@@ -537,11 +537,11 @@ export default function EditPermission({ onCancel, permissionId }) {
                 )}
                 {/* --------- Free Trail --------- */}
                 {defaultGroupModuleText === "Free Trail" ? (
-                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
-                    <h1 className="font-normal mb-2 text-xl">Free Trail</h1>
-                    <div className="flex gap-12 justify-between">
+                  <div className="mt-2 w-full rounded-sm bg-white p-3 shadow-md">
+                    <h1 className="mb-2 text-xl font-normal">Free Trail</h1>
+                    <div className="flex justify-between gap-12">
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Edit Free Trail")}
@@ -549,9 +549,9 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Edit Free Trail")
                             }
                           />
-                          <p className="text-sm font-md">Edit Free Trail</p>
+                          <p className="font-md text-sm">Edit Free Trail</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Export Trail")}
@@ -559,43 +559,43 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Export Trail")
                             }
                           />
-                          <p className="text-sm font-md">Export Trail</p>
+                          <p className="font-md text-sm">Export Trail</p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Print View")}
                             onChange={() => handleCheckboxChange("Print View")}
                           />
-                          <p className="text-sm font-md">Print View</p>
+                          <p className="font-md text-sm">Print View</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Sheet View")}
                             onChange={() => handleCheckboxChange("Sheet View")}
                           />
-                          <p className="text-sm font-md">Sheet View</p>
+                          <p className="font-md text-sm">Sheet View</p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Mass Delete")}
                             onChange={() => handleCheckboxChange("Mass Delete")}
                           />
-                          <p className="text-sm font-md">Mass Delete</p>
+                          <p className="font-md text-sm">Mass Delete</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Mass E-Mail")}
                             onChange={() => handleCheckboxChange("Mass E-Mail")}
                           />
-                          <p className="text-sm font-md">Mass E-Mail</p>
+                          <p className="font-md text-sm">Mass E-Mail</p>
                         </div>
                       </div>
                     </div>
@@ -605,11 +605,11 @@ export default function EditPermission({ onCancel, permissionId }) {
                 )}
                 {/* --------- Follow Up --------- */}
                 {defaultGroupModuleText === "Follow Up" ? (
-                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
-                    <h1 className="font-normal mb-2 text-xl">Follow Up</h1>
-                    <div className="flex gap-12 justify-between">
+                  <div className="mt-2 w-full rounded-sm bg-white p-3 shadow-md">
+                    <h1 className="mb-2 text-xl font-normal">Follow Up</h1>
+                    <div className="flex justify-between gap-12">
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Edit Follow Up")}
@@ -617,9 +617,9 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Edit Follow Up")
                             }
                           />
-                          <p className="text-sm font-md">Edit Follow Up</p>
+                          <p className="font-md text-sm">Edit Follow Up</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Export Follow Up")}
@@ -627,45 +627,45 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Export Follow Up")
                             }
                           />
-                          <p className="text-sm font-md">Export Follow Up</p>
+                          <p className="font-md text-sm">Export Follow Up</p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Print View")}
                             onChange={() => handleCheckboxChange("Print View")}
                           />
-                          <p className="text-sm font-md">Print View</p>
+                          <p className="font-md text-sm">Print View</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Sheet View")}
                             onChange={() => handleCheckboxChange("Sheet View")}
                           />
-                          <p className="text-sm font-md">Sheet View</p>
+                          <p className="font-md text-sm">Sheet View</p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Mass Delete")}
                             onChange={() => handleCheckboxChange("Mass Delete")}
                           />
-                          <p className="text-sm font-md">Mass Delete</p>
+                          <p className="font-md text-sm">Mass Delete</p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Mass E-Mail")}
                             onChange={() => handleCheckboxChange("Mass E-Mail")}
                           />
-                          <p className="text-sm font-md">Mass E-Mail</p>
+                          <p className="font-md text-sm">Mass E-Mail</p>
                         </div>
                       </div>
                     </div>
@@ -675,24 +675,24 @@ export default function EditPermission({ onCancel, permissionId }) {
                 )}
                 {/* --------- SMS Box --------- */}
                 {defaultGroupModuleText === "Service Box" ? (
-                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
-                    <h1 className="font-normal mb-2 text-xl">Service Box</h1>
+                  <div className="mt-2 w-full rounded-sm bg-white p-3 shadow-md">
+                    <h1 className="mb-2 text-xl font-normal">Service Box</h1>
                     <div className="flex items-center gap-12">
-                      <div className="flex gap-3 items-center font-light">
+                      <div className="flex items-center gap-3 font-light">
                         <input
                           type="checkbox"
                           checked={permissions.includes("Send SMS")}
                           onChange={() => handleCheckboxChange("Send SMS")}
                         />
-                        <p className="text-sm font-md">Send SMS</p>
+                        <p className="font-md text-sm">Send SMS</p>
                       </div>
-                      <div className="flex gap-3 items-center font-light">
+                      <div className="flex items-center gap-3 font-light">
                         <input
                           type="checkbox"
                           checked={permissions.includes("Send E-Mail")}
                           onChange={() => handleCheckboxChange("Send E-Mail")}
                         />
-                        <p className="text-sm font-md">Send E-Mail</p>
+                        <p className="font-md text-sm">Send E-Mail</p>
                       </div>
                     </div>
                   </div>
@@ -701,13 +701,13 @@ export default function EditPermission({ onCancel, permissionId }) {
                 )}
                 {/* --------- Reports --------- */}
                 {defaultGroupModuleText === "Reports" ? (
-                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
-                    <h1 className="font-normal mb-2 text-xl">Reports</h1>
+                  <div className="mt-2 w-full rounded-sm bg-white p-3 shadow-md">
+                    <h1 className="mb-2 text-xl font-normal">Reports</h1>
                     {/* ---------- LEAD BOXES ---------- */}
-                    <div className="flex gap-12 justify-between">
+                    <div className="flex justify-between gap-12">
                       {/* FIRST */}
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Employee Report")}
@@ -715,28 +715,28 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Employee Report")
                             }
                           />
-                          <p className="text-sm font-md">Employee Report</p>
+                          <p className="font-md text-sm">Employee Report</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Monitoring")}
                             onChange={() => handleCheckboxChange("Monitoring")}
                           />
-                          <p className="text-sm font-md">Monitoring</p>
+                          <p className="font-md text-sm">Monitoring</p>
                         </div>
                       </div>
                       {/* SECOND */}
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Lead Report")}
                             onChange={() => handleCheckboxChange("Lead Report")}
                           />
-                          <p className="text-sm font-md">Lead Report</p>
+                          <p className="font-md text-sm">Lead Report</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Dispose Leads")}
@@ -744,12 +744,12 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Dispose Leads")
                             }
                           />
-                          <p className="text-sm font-md">Dispose Leads</p>
+                          <p className="font-md text-sm">Dispose Leads</p>
                         </div>
                       </div>
                       {/* THIRD */}
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Client Report")}
@@ -757,12 +757,12 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Client Report")
                             }
                           />
-                          <p className="text-sm font-md">Client Report</p>
+                          <p className="font-md text-sm">Client Report</p>
                         </div>
                       </div>
                       {/* FOURTH */}
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Sales Report")}
@@ -770,7 +770,7 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Sales Report")
                             }
                           />
-                          <p className="text-sm font-md">Sales Report</p>
+                          <p className="font-md text-sm">Sales Report</p>
                         </div>
                       </div>
                     </div>
@@ -781,13 +781,13 @@ export default function EditPermission({ onCancel, permissionId }) {
 
                 {/* ---------  Financial Activity --------- */}
                 {defaultGroupModuleText === "Financial Activity" ? (
-                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2">
-                    <h1 className="font-normal mb-2 text-xl">
+                  <div className="mt-2 w-full rounded-sm bg-white p-3 shadow-md">
+                    <h1 className="mb-2 text-xl font-normal">
                       Financial Activity
                     </h1>
-                    <div className="flex gap-12 justify-between">
+                    <div className="flex justify-between gap-12">
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("View Expenses")}
@@ -795,9 +795,9 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("View Expenses")
                             }
                           />
-                          <p className="text-sm font-md">View Expenses</p>
+                          <p className="font-md text-sm">View Expenses</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("View Brokerage")}
@@ -805,7 +805,7 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("View Brokerage")
                             }
                           />
-                          <p className="text-sm font-md">View Brokerage</p>
+                          <p className="font-md text-sm">View Brokerage</p>
                         </div>
                       </div>
                     </div>
@@ -815,13 +815,13 @@ export default function EditPermission({ onCancel, permissionId }) {
                 )}
                 {/* ----------Settings CHECK BOXES ---------- */}
                 {defaultGroupModuleText === "Settings" ? (
-                  <div className="p-3 bg-white rounded-sm w-full shadow-md mt-2 ">
-                    <h1 className="font-normal mb-2 text-xl">Settings</h1>
+                  <div className="mt-2 w-full rounded-sm bg-white p-3 shadow-md">
+                    <h1 className="mb-2 text-xl font-normal">Settings</h1>
                     {/* ---------- SETTINGS SECTION ---------- */}
-                    <div className="flex gap-12 justify-between">
+                    <div className="flex justify-between gap-12">
                       {/* FIRST COLUMN */}
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("User Setting")}
@@ -829,9 +829,9 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("User Setting")
                             }
                           />
-                          <p className="text-sm font-md">User Setting</p>
+                          <p className="font-md text-sm">User Setting</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("User Operation")}
@@ -839,25 +839,25 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("User Operation")
                             }
                           />
-                          <p className="text-sm font-md">User Operation</p>
+                          <p className="font-md text-sm">User Operation</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Group")}
                             onChange={() => handleCheckboxChange("Group")}
                           />
-                          <p className="text-sm font-md">Group</p>
+                          <p className="font-md text-sm">Group</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Department")}
                             onChange={() => handleCheckboxChange("Department")}
                           />
-                          <p className="text-sm font-md">Department</p>
+                          <p className="font-md text-sm">Department</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes(
@@ -867,20 +867,20 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Roles & Permissions")
                             }
                           />
-                          <p className="text-sm font-md">Roles & Permissions</p>
+                          <p className="font-md text-sm">Roles & Permissions</p>
                         </div>
                       </div>
                       {/* SECOND COLUMN */}
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Designation")}
                             onChange={() => handleCheckboxChange("Designation")}
                           />
-                          <p className="text-sm font-md">Designation</p>
+                          <p className="font-md text-sm">Designation</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Qualification")}
@@ -888,36 +888,36 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Qualification")
                             }
                           />
-                          <p className="text-sm font-md">Qualification</p>
+                          <p className="font-md text-sm">Qualification</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Lead Status")}
                             onChange={() => handleCheckboxChange("Lead Status")}
                           />
-                          <p className="text-sm font-md">Lead Status</p>
+                          <p className="font-md text-sm">Lead Status</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Pools")}
                             onChange={() => handleCheckboxChange("Pools")}
                           />
-                          <p className="text-sm font-md">Pools</p>
+                          <p className="font-md text-sm">Pools</p>
                         </div>
                       </div>
                       {/* THIRD COLUMN */}
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Segments")}
                             onChange={() => handleCheckboxChange("Segments")}
                           />
-                          <p className="text-sm font-md">Segments</p>
+                          <p className="font-md text-sm">Segments</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Expense Head")}
@@ -925,17 +925,17 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Expense Head")
                             }
                           />
-                          <p className="text-sm font-md">Expense Head</p>
+                          <p className="font-md text-sm">Expense Head</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("SMS Setting")}
                             onChange={() => handleCheckboxChange("SMS Setting")}
                           />
-                          <p className="text-sm font-md">SMS Setting</p>
+                          <p className="font-md text-sm">SMS Setting</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("E-Mail Template")}
@@ -943,12 +943,12 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("E-Mail Template")
                             }
                           />
-                          <p className="text-sm font-md">E-Mail Template</p>
+                          <p className="font-md text-sm">E-Mail Template</p>
                         </div>
                       </div>
                       {/* FOURTH COLUMN */}
                       <div className="flex flex-col gap-3">
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("SMS Template")}
@@ -956,9 +956,9 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("SMS Template")
                             }
                           />
-                          <p className="text-sm font-md">SMS Template</p>
+                          <p className="font-md text-sm">SMS Template</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Access Device")}
@@ -966,9 +966,9 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Access Device")
                             }
                           />
-                          <p className="text-sm font-md">Access Device</p>
+                          <p className="font-md text-sm">Access Device</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("Access Control")}
@@ -976,9 +976,9 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("Access Control")
                             }
                           />
-                          <p className="text-sm font-md">Access Control</p>
+                          <p className="font-md text-sm">Access Control</p>
                         </div>
-                        <div className="flex gap-3 items-center font-light">
+                        <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
                             checked={permissions.includes("E-Mail Setting")}
@@ -986,7 +986,7 @@ export default function EditPermission({ onCancel, permissionId }) {
                               handleCheckboxChange("E-Mail Setting")
                             }
                           />
-                          <p className="text-sm font-md">E-Mail Setting</p>
+                          <p className="font-md text-sm">E-Mail Setting</p>
                         </div>
                       </div>
                     </div>
@@ -997,10 +997,10 @@ export default function EditPermission({ onCancel, permissionId }) {
               </div>
             </div>
             {/* BUTTONS */}
-            <div className="flex justify-end px-2 gap-2">
+            <div className="flex justify-end gap-2 px-2">
               <button
                 type="submit"
-                className="px-10 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white w-max "
+                className="mb-3 mt-20 w-max rounded border-2 border-cyan-500 bg-cyan-500 px-10 py-4 text-white hover:bg-white hover:text-cyan-500"
               >
                 Submit
               </button>

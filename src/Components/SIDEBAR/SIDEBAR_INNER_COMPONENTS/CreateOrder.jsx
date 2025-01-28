@@ -140,23 +140,23 @@ const CreateOrder = () => {
   return (
     <div className="">
       {/* TOP PART */}
-      <div className="px-3 py-4 bg-white rounded-md flex items-center justify-between m-3">
+      <div className="m-3 flex items-center justify-between rounded-md bg-white px-3 py-4">
         <h1 className="text-xl font-bold">Create Sales Oreder</h1>
         <Link to="/panel/salesorder">
-          <button className="px-6 py-2 text-center text-sm border border-blue-600 text-blue-600 rounded-md">
+          <button className="rounded-md border border-blue-600 px-6 py-2 text-center text-sm text-blue-600">
             Cancel
           </button>
         </Link>
       </div>
       {/* SECOND PART */}
       <div className="m-3">
-        <h1 className="py-3 px-6 rounded-t-lg bg-cyan-500 text-white text-md font-bold">
+        <h1 className="text-md rounded-t-lg bg-cyan-500 px-6 py-3 font-bold text-white">
           Sales Order Details
         </h1>
         <form className="bg-white px-6 py-6" onSubmit={handleSubmit}>
           <div className="flex gap-4">
             {/* LEFT */}
-            <div className="flex-1 flex flex-col">
+            <div className="flex flex-1 flex-col">
               {/* CLIENT NAME FIELD */}
               <label
                 htmlFor="clentName"
@@ -167,7 +167,7 @@ const CreateOrder = () => {
               <input
                 type="text"
                 placeholder="SMS"
-                className="mt-1 p-2 border border-gray-300 rounded-md"
+                className="mt-1 rounded-md border border-gray-300 p-2"
                 name="clientName"
                 value={FormData.clientName}
                 onChange={handleChange}
@@ -182,7 +182,7 @@ const CreateOrder = () => {
               <input
                 type="number"
                 placeholder="Entrez votre prenom"
-                className="mt-1 p-2 border border-gray-300 rounded-md"
+                className="mt-1 rounded-md border border-gray-300 p-2"
                 name="alternateNumber"
                 value={FormData.alternateNumber}
                 onChange={handleChange}
@@ -200,7 +200,7 @@ const CreateOrder = () => {
                 onMouseLeave={() => setLeadSourceDropdown(false)}
               >
                 <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                  className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                   id="LeadStatusDropDown"
                   type="button"
                 >
@@ -210,13 +210,13 @@ const CreateOrder = () => {
                   <FaAngleDown className="ml-2 text-gray-400" />
                 </button>
                 {leadSourceDropdown && (
-                  <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                  <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
                     <ul className="py-2 text-sm text-gray-700">
                       {leadSource.map((lead) => (
                         <li
                           key={lead.key}
                           onClick={() => handleDropdownLeadSource(lead.name)}
-                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                         >
                           {lead.name}
                         </li>
@@ -235,7 +235,7 @@ const CreateOrder = () => {
               <input
                 type="number"
                 placeholder="Entrez votre prenom"
-                className="mt-1 p-2 border border-gray-300 rounded-md"
+                className="mt-1 rounded-md border border-gray-300 p-2"
                 name="clientId"
                 value={FormData.clientId}
                 onChange={handleChange}
@@ -250,7 +250,7 @@ const CreateOrder = () => {
               <input
                 type="text"
                 placeholder="Entrez votre prenom"
-                className="mt-1 p-2 border border-gray-300 rounded-md"
+                className="mt-1 rounded-md border border-gray-300 p-2"
                 name="managerName"
                 value={FormData.managerName}
                 onChange={handleChange}
@@ -265,7 +265,7 @@ const CreateOrder = () => {
               <input
                 type="text"
                 placeholder="Entrez votre prenom"
-                className="mt-1 p-2 border border-gray-300 rounded-md"
+                className="mt-1 rounded-md border border-gray-300 p-2"
                 name="segment"
                 value={FormData.segment}
                 onChange={handleChange}
@@ -280,7 +280,7 @@ const CreateOrder = () => {
               <input
                 type="text"
                 placeholder="Entrez votre prenom"
-                className="mt-1 p-2 border border-gray-300 rounded-md"
+                className="mt-1 rounded-md border border-gray-300 p-2"
                 name="pan"
                 value={FormData.pan}
                 onChange={handleChange}
@@ -295,14 +295,14 @@ const CreateOrder = () => {
               <input
                 type="text"
                 placeholder="Entrez votre prenom"
-                className="mt-1 p-2 border border-gray-300 rounded-md"
+                className="mt-1 rounded-md border border-gray-300 p-2"
                 name="city"
                 value={FormData.city}
                 onChange={handleChange}
               />
             </div>
             {/* RIGHT */}
-            <div className="flex-1 flex flex-col">
+            <div className="flex flex-1 flex-col">
               {/* NUMBER FIELD */}
               <label
                 htmlFor="clentName"
@@ -313,7 +313,7 @@ const CreateOrder = () => {
               <input
                 type="number"
                 placeholder="Entrez votre prenom"
-                className="mt-1 p-2 border border-gray-300 rounded-md"
+                className="mt-1 rounded-md border border-gray-300 p-2"
                 name="number"
                 value={FormData.number}
                 onChange={handleChange}
@@ -331,7 +331,7 @@ const CreateOrder = () => {
                 onMouseLeave={() => setAssignedToDropdown(false)}
               >
                 <button
-                  className="mt-1 p-2 border border-gray-300 w-full flex items-center justify-between"
+                  className="mt-1 flex w-full items-center justify-between border border-gray-300 p-2"
                   id="LeadStatusDropDown"
                   type="button"
                 >
@@ -339,11 +339,11 @@ const CreateOrder = () => {
                   <FaAngleDown className="ml-2 text-gray-400" />
                 </button>
                 {assignedToDropdown && (
-                  <div className="absolute w-full border bg-white border-gray-300 rounded-md top-10 z-10">
+                  <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
                     <ul className="py-2 text-sm text-gray-700">
                       {assignedData.map((assign) => (
                         <li
-                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                           key={assign.key}
                           onClick={() => handleDropdownAssignedTo(assign)}
                         >
@@ -367,7 +367,7 @@ const CreateOrder = () => {
                 onMouseLeave={() => setInvoiceIdDropdown(false)}
               >
                 <button
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                  className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                   id="LeadStatusDropDown"
                   type="button"
                 >
@@ -375,11 +375,11 @@ const CreateOrder = () => {
                   <FaAngleDown className="ml-2 text-gray-400" />
                 </button>
                 {invoiceIdDropdown && (
-                  <div className="absolute w-full bg-white rounded-md top-10 z-10">
+                  <div className="absolute top-10 z-10 w-full rounded-md bg-white">
                     <ul className="py-2 text-sm text-gray-700">
                       {invoiceData.map((invoice) => (
                         <li
-                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                          className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                           key={invoice.id}
                           onClick={() => handleDropdownInvoiceId(invoice.name)}
                         >
@@ -400,7 +400,7 @@ const CreateOrder = () => {
               <input
                 type="date"
                 placeholder="Entrez votre prenom"
-                className="mt-1 p-2 border border-gray-300 rounded-md"
+                className="mt-1 rounded-md border border-gray-300 p-2"
                 name="createdDate"
                 value={FormData.createdDate}
                 onChange={handleChange}
@@ -415,7 +415,7 @@ const CreateOrder = () => {
               <input
                 type="date"
                 placeholder="Entrez votre prenom"
-                className="mt-1 p-2 border border-gray-300 rounded-md"
+                className="mt-1 rounded-md border border-gray-300 p-2"
                 name="ftCreatedDate"
                 value={FormData.ftCreatedDate}
                 onChange={handleChange}
@@ -430,7 +430,7 @@ const CreateOrder = () => {
               <input
                 type="date"
                 placeholder="Entrez votre prenom"
-                className="mt-1 p-2 border border-gray-300 rounded-md"
+                className="mt-1 rounded-md border border-gray-300 p-2"
                 name="dob"
                 value={FormData.dob}
                 onChange={handleChange}
@@ -445,7 +445,7 @@ const CreateOrder = () => {
               <input
                 type="text"
                 placeholder="Entrez votre prenom"
-                className="mt-1 p-2 border border-gray-300 rounded-md"
+                className="mt-1 rounded-md border border-gray-300 p-2"
                 name="email"
                 value={FormData.email}
                 onChange={handleChange}
@@ -454,11 +454,11 @@ const CreateOrder = () => {
           </div>
           {/* RIGHT END */}
           {/* BUTTONS */}
-          <div className="flex items-center justify-end gap-4 py-10 px-2 mr-20">
-            <button className="px-32 py-4 mt-40 mb-4 bg-white border-2 border-cyan-500 rounded">
+          <div className="mr-20 flex items-center justify-end gap-4 px-2 py-10">
+            <button className="mb-4 mt-40 rounded border-2 border-cyan-500 bg-white px-32 py-4">
               Save and New
             </button>
-            <button className="px-32 py-4 mt-40 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded">
+            <button className="mb-4 mt-40 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500">
               Save
             </button>
           </div>

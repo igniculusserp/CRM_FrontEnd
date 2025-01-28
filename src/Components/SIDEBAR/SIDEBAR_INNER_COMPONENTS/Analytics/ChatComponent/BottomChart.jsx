@@ -42,9 +42,9 @@ const BottomChart = ({ text, color }) => {
   ];
 
   return (
-    <div className="w-full h-60 py-9 px-4 bg-white rounded shadow-lg">
-      <div className="flex items-center justify-between mt-[-.8rem]">
-        <h2 className="text-lg font-semibold mb-[2px]">{text}</h2>
+    <div className="h-60 w-full rounded bg-white px-4 py-9 shadow-lg">
+      <div className="mt-[-.8rem] flex items-center justify-between">
+        <h2 className="mb-[2px] text-lg font-semibold">{text}</h2>
         {/* ------------ FILTER DROPDOWN START -------------- */}
         <div
           className="relative"
@@ -52,7 +52,7 @@ const BottomChart = ({ text, color }) => {
           onMouseLeave={() => setFilterDropdown(false)}
         >
           <button
-            className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 max-w-44 truncate"
+            className="flex min-w-40 max-w-44 items-center justify-between truncate rounded-md border px-4 py-2"
             id="filter"
             type="button"
           >
@@ -60,12 +60,12 @@ const BottomChart = ({ text, color }) => {
             <FaAngleDown className="ml-2 text-gray-900" />
           </button>
           {filterDropdown && (
-            <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+            <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
               <ul className="py-2 text-sm text-gray-700">
                 {filterData.map(({ id, name }) => (
                   <li
                     key={id}
-                    className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                    className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                     onClick={() => handleFilterDropdown(name)}
                   >
                     {name}

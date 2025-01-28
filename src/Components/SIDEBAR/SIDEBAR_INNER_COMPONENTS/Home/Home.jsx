@@ -333,19 +333,9 @@ export default function Home() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col gap-1 ">
+      <div className="flex min-h-screen flex-col gap-1">
         {showSubscription && (
-          <div
-            className="
-            flex items-center justify-between 
-            bg-white 
-            shadow-md 
-            border-t-2 
-            transition transform duration-500 ease-in-out animate-fade-in animate-slide-down 
-            text-white 
-            py-2 px-3
-            "
-          >
+          <div className="animate-fade-in flex transform animate-slide-down items-center justify-between border-t-2 bg-white px-3 py-2 text-white shadow-md transition duration-500 ease-in-out">
             <div className="flex flex-col justify-start">
               {/*Condition if reamining days are less than 5  */}
               <h1
@@ -364,7 +354,7 @@ export default function Home() {
             {/* SECOND */}
             <div className="flex items-center gap-4">
               <Link to="/panel/subscription/">
-                <button className="cursor-pointer py-2 bg-cyan-500 text-white text-sm rounded-md px-2 border-none font-semibold hover:shadow-md">
+                <button className="cursor-pointer rounded-md border-none bg-cyan-500 px-2 py-2 text-sm font-semibold text-white hover:shadow-md">
                   Choose Plan
                 </button>
               </Link>
@@ -375,44 +365,41 @@ export default function Home() {
           </div>
         )}
         {/* FIRST NAME */}
-        <h1 className="text-2xl sm:text-3xl my-2 font-semibold text-gray-700 px-3 pb-1">
+        <h1 className="my-2 px-3 pb-1 text-2xl font-semibold text-gray-700 sm:text-3xl">
           Hello, {firstName || ""}
         </h1>
         {/* ------- TOP CARDS ------- */}
         {/* ------- 4 Card, Charo ki alag alag CSS {Parent}  ------- */}
-        <div className="sm:grid sm:grid-cols-2 items-center px-2 sm:gap-3 gap-2 grid grid-cols-2 lg:flex">
+        <div className="grid grid-cols-2 items-center gap-2 px-2 sm:grid sm:grid-cols-2 sm:gap-3 lg:flex">
           {/* ------- CARD --> CHILD:1------- */}
-          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 md:w-4/4  lg:w-1/4">
+          <div className="md:w-4/4 flex h-44 flex-col justify-between rounded-md bg-white p-2 shadow-lg sm:min-h-52 sm:gap-4 sm:p-4 lg:w-1/4">
             <div className="flex flex-col">
               {}
-              <h1 className="font-light uppercase text-sm font-medium	">
+              <h1 className="text-sm font-light font-medium uppercase">
                 {business === "Brokerage" ? "Leads" : "Lead this month"}
               </h1>
               {/* ------- CARD--> 1 ---> Logo and SideText --> Parent ----------- */}
-              <div className="flex items-center justify-between mt-2  ">
+              <div className="mt-2 flex items-center justify-between">
                 {/* ------- CARD--> 1 ---> Logo --> C1 ----------- */}
-                <div className=" px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-teal-500 text-white flex items-center justify-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-teal-500 px-2 text-white sm:h-20 sm:w-20">
                   {/* ------- CARD--> 1 ---> Logo --> C1 ----------- */}
-                  <GrContactInfo className="text-2xl sm:text-5xl " />
+                  <GrContactInfo className="text-2xl sm:text-5xl" />
                 </div>
                 {/* ------- CARD--> 1 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
-                <div className="flex flex-col items-center justify-center gap-1 ">
+                <div className="flex flex-col items-center justify-center gap-1">
                   <span className="text-lg font-semibold sm:text-xl sm:font-bold">
                     {currentMonthLeads}
                   </span>
 
                   <div
-                    className={`
-                      flex items-center gap-1 p-1 rounded-lg
-                      ${leadStatus == "up" ? "bg-green-200" : "bg-red-200"}
-                    `}
+                    className={`flex items-center gap-1 rounded-lg p-1 ${leadStatus == "up" ? "bg-green-200" : "bg-red-200"} `}
                   >
                     {leadStatus == "up" ? (
                       <FaArrowAltCircleUp className="text-sm" />
                     ) : (
                       <FaArrowAltCircleDown className="text-sm" />
                     )}
-                    <span className="text-sm sm:text-md">
+                    <span className="sm:text-md text-sm">
                       {Math.round(leadsPercentage)}%
                     </span>
                   </div>
@@ -420,7 +407,7 @@ export default function Home() {
               </div>
             </div>
             {/* ------- CARD--> 1 ---> PROGRESS BAR  --> C3 ----------- */}
-            <div className="h-2 w-full bg-transparent border border-gray-500 rounded-lg ">
+            <div className="h-2 w-full rounded-lg border border-gray-500 bg-transparent">
               <div
                 className={`h-full ${
                   leadStatus == "up" ? "bg-blue-600" : "bg-red-500"
@@ -431,42 +418,39 @@ export default function Home() {
               ></div>
             </div>
             {/* ------- CARD--> 1 ---> Last Line{Text}--> C4 ----------- */}
-            <h3 className="font-light text-sm">
+            <h3 className="text-sm font-light">
               Last Month Relative:{" "}
               <span className="text-sm">{leadsDiffrence}</span>
             </h3>
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------- */}
           {/* ------- CARD --> CHILD:2 ------- */}
-          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44  md:w-4/4  lg:w-1/4">
+          <div className="md:w-4/4 flex h-44 flex-col justify-between rounded-md bg-white p-2 shadow-lg sm:min-h-52 sm:gap-4 sm:p-4 lg:w-1/4">
             <div className="flex flex-col">
-              <h1 className="font-light uppercase text-sm font-medium">
+              <h1 className="text-sm font-light font-medium uppercase">
                 {business === "Brokerage" ? "Funds" : "REVENUE THIS MONTH"}
               </h1>
               {/* ------- CARD--> 2 ---> Logo and SideText --> Parent ----------- */}
-              <div className="flex items-center justify-between mt-2">
+              <div className="mt-2 flex items-center justify-between">
                 {/* ------- CARD--> 2 ---> Logo --> C1 ----------- */}
-                <div className="px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-rose-500 text-white flex items-center justify-center">
-                  <LuIndianRupee className="text-2xl sm:text-5xl " />
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-rose-500 px-2 text-white sm:h-20 sm:w-20">
+                  <LuIndianRupee className="text-2xl sm:text-5xl" />
                 </div>
                 {/* ------- CARD--> 2 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
-                <div className="flex flex-col items-center justify-center gap-1 ">
+                <div className="flex flex-col items-center justify-center gap-1">
                   <span className="text-lg font-semibold sm:text-xl sm:font-bold">
                     {currentMonthSales}
                   </span>
 
                   <div
-                    className={`
-                  flex items-center gap-1 p-1 rounded-lg
-                  ${leadStatus == "up" ? "bg-green-200" : "bg-red-200"}
-                `}
+                    className={`flex items-center gap-1 rounded-lg p-1 ${leadStatus == "up" ? "bg-green-200" : "bg-red-200"} `}
                   >
                     {leadStatus == "up" ? (
                       <FaArrowAltCircleUp className="text-sm" />
                     ) : (
                       <FaArrowAltCircleDown className="text-sm" />
                     )}
-                    <span className="text-sm sm:text-md">
+                    <span className="sm:text-md text-sm">
                       {Math.round(leadsPercentage)}%
                     </span>
                   </div>
@@ -474,7 +458,7 @@ export default function Home() {
               </div>
             </div>
             {/* ------- CARD--> 2 ---> PROGRESS BAR  --> C3 ----------- */}
-            <div className="h-2 w-full bg-transparent border border-gray-500 rounded-lg ">
+            <div className="h-2 w-full rounded-lg border border-gray-500 bg-transparent">
               <div
                 className={`h-full ${
                   leadStatus == "up" ? "bg-blue-600" : "bg-red-600"
@@ -485,62 +469,56 @@ export default function Home() {
               ></div>
             </div>
             {/* ------- CARD--> 2 ---> Last Line{Text}--> C4 ----------- */}
-            <h3 className="font-light text-sm">
+            <h3 className="text-sm font-light">
               Last Month Relative:{" "}
               <span className="text-sm">{revenueDiffrence}</span>
             </h3>
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------- */}
           {/* ------- CARD --> CHILD:3------- */}
-          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 md:w-4/4  lg:w-1/4">
+          <div className="md:w-4/4 flex h-44 flex-col justify-between rounded-md bg-white p-2 shadow-lg sm:min-h-52 sm:gap-4 sm:p-4 lg:w-1/4">
             <div className="flex flex-col">
               {}
-              <h1 className="font-light uppercase text-sm font-medium	">
+              <h1 className="text-sm font-light font-medium uppercase">
                 {business === "Brokerage" ? "KYC" : "CLIENT THIS MONTH"}
               </h1>
               {/* ------- CARD--> 3 ---> Logo and SideText --> Parent ----------- */}
-              <div className="flex items-center justify-between mt-2  ">
+              <div className="mt-2 flex items-center justify-between">
                 {/* ------- CARD--> 3 ---> Logo --> C1 ----------- */}
-                <div className=" px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-lime-500 text-white flex items-center justify-center">
-                  <MdOutlineGroups2 className="text-2xl sm:text-5xl " />
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-lime-500 px-2 text-white sm:h-20 sm:w-20">
+                  <MdOutlineGroups2 className="text-2xl sm:text-5xl" />
                 </div>
                 {/* ------- CARD--> 3 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
 
-                <div className="flex flex-col items-center justify-center gap-1 ">
-                  <span className="text-lg font-semibold sm:text-xl sm:font-bold ">
+                <div className="flex flex-col items-center justify-center gap-1">
+                  <span className="text-lg font-semibold sm:text-xl sm:font-bold">
                     {business === "Brokerage"
                       ? currentMonthKYC
                       : currentMonthClientCount}
                   </span>
                   {business === "Brokerage" ? (
                     <div
-                      className={`
-                      flex items-center gap-1 p-1 rounded-lg
-                      ${leadStatus == "up" ? "bg-green-200" : "bg-red-200"}
-                    `}
+                      className={`flex items-center gap-1 rounded-lg p-1 ${leadStatus == "up" ? "bg-green-200" : "bg-red-200"} `}
                     >
                       {kycStatus == "up" ? (
                         <FaArrowAltCircleUp className="text-sm" />
                       ) : (
                         <FaArrowAltCircleDown className="text-sm" />
                       )}
-                      <span className="text-sm sm:text-md">
+                      <span className="sm:text-md text-sm">
                         {Math.round(kycPercentageChange)}%
                       </span>
                     </div>
                   ) : (
                     <div
-                      className={`
-                    flex items-center gap-1 p-1 rounded-lg
-                    ${leadStatus == "up" ? "bg-green-200" : "bg-red-200"}
-                  `}
+                      className={`flex items-center gap-1 rounded-lg p-1 ${leadStatus == "up" ? "bg-green-200" : "bg-red-200"} `}
                     >
                       {clientStatus == "up" ? (
                         <FaArrowAltCircleUp className="text-sm" />
                       ) : (
                         <FaArrowAltCircleDown className="text-sm" />
                       )}
-                      <span className="text-sm sm:text-md">
+                      <span className="sm:text-md text-sm">
                         {Math.round(clientPercentageChange)}%
                       </span>
                     </div>
@@ -549,7 +527,7 @@ export default function Home() {
               </div>
             </div>
             {/* ------- CARD--> 3  --> PROGRESS BAR  --> C3 ----------- */}
-            <div className="h-2 w-full bg-transparent border border-gray-500 rounded-lg ">
+            <div className="h-2 w-full rounded-lg border border-gray-500 bg-transparent">
               {business === "Brokerage" ? (
                 <div
                   className={`h-full ${
@@ -570,7 +548,7 @@ export default function Home() {
                 ></div>
               )}
             </div>
-            <h3 className="font-light text-sm">
+            <h3 className="text-sm font-light">
               Last Month Relative:{" "}
               {business === "Brokerage" ? (
                 <span className="text-sm">{kycDiffrence}</span>
@@ -581,39 +559,36 @@ export default function Home() {
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------- */}
           {/* ------- CARD --> CHILD -> 4 ------- */}
-          <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 md:w-4/4  lg:w-1/4">
+          <div className="md:w-4/4 flex h-44 flex-col justify-between rounded-md bg-white p-2 shadow-lg sm:min-h-52 sm:gap-4 sm:p-4 lg:w-1/4">
             <div className="flex flex-col">
               {}
-              <h1 className="font-light uppercase text-sm font-medium	">
+              <h1 className="text-sm font-light font-medium uppercase">
                 {business === "Brokerage"
                   ? "Interested Clients"
                   : "SALES IN PIPELINE"}
               </h1>
               {/* ------- CARD--> 4 ---> Logo and SideText --> Parent ----------- */}
-              <div className="flex items-center justify-between mt-2  ">
-                <div className=" px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-sky-500 text-white flex items-center justify-center">
+              <div className="mt-2 flex items-center justify-between">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-500 px-2 text-white sm:h-20 sm:w-20">
                   {/* ------- CARD--> 4 ---> Logo --> C1 ----------- */}
-                  <GiHumanPyramid className="text-2xl sm:text-5xl  " />
+                  <GiHumanPyramid className="text-2xl sm:text-5xl" />
                 </div>
                 {/* ------- CARD--> 4 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
 
-                <div className="flex flex-col items-center justify-center gap-1 ">
+                <div className="flex flex-col items-center justify-center gap-1">
                   <span className="text-lg font-semibold sm:text-xl sm:font-bold">
                     {currentMonthInterestedLeads}
                   </span>
 
                   <button
-                    className={`
-                      flex items-center gap-1 p-1 rounded-lg
-                      ${leadStatus == "up" ? "bg-green-200" : "bg-red-200"}
-                    `}
+                    className={`flex items-center gap-1 rounded-lg p-1 ${leadStatus == "up" ? "bg-green-200" : "bg-red-200"} `}
                   >
                     {intrestedLeadStatus == "up" ? (
                       <FaArrowAltCircleUp className="text-sm" />
                     ) : (
                       <FaArrowAltCircleDown className="text-sm" />
                     )}
-                    <span className="text-sm sm:text-md">
+                    <span className="sm:text-md text-sm">
                       {Math.round(intrestedPercentageChange)}%
                     </span>
                   </button>
@@ -622,7 +597,7 @@ export default function Home() {
             </div>
             {/* ------- CARD--> 4 ---> PROGRESS BAR  --> C3 ----------- */}
             {/* ------- CARD--> 4 ---> PROGRESS BAR  --> C3 ----------- */}
-            <div className="h-2 w-full bg-transparent border border-gray-500 rounded-lg ">
+            <div className="h-2 w-full rounded-lg border border-gray-500 bg-transparent">
               <div
                 className={`h-full ${
                   leadStatus == "up" ? "bg-blue-600" : "bg-red-500"
@@ -633,7 +608,7 @@ export default function Home() {
               ></div>
             </div>
             {/* ------- CARD--> 1 ---> Last Line{Text}--> C4 ----------- */}
-            <h3 className="font-light text-sm">
+            <h3 className="text-sm font-light">
               Last Month Relative:{" "}
               <span className="text-sm">{intrestedLeadsDiffrence}</span>
             </h3>
@@ -641,12 +616,12 @@ export default function Home() {
         </div>
         {/* ---------------------------------------------------------------------------------------------------------------- */}
 
-        <div className="sm:flex gap-3 m-2 grid grid-cols-1">
-          <div className="flex-4 flex flex-col bg-white py-4 px-4 rounded-md shadow-md sm:w-96 w-full  justify-between">
-            <h1 className="font-normal text-xl">
+        <div className="m-2 grid grid-cols-1 gap-3 sm:flex">
+          <div className="flex-4 flex w-full flex-col justify-between rounded-md bg-white px-4 py-4 shadow-md sm:w-96">
+            <h1 className="text-xl font-normal">
               {business === "Brokerage" ? "Brokerage" : "Custom Segmentation"}
             </h1>
-            <div className="flex items-center flex-col gap-2">
+            <div className="flex flex-col items-center gap-2">
               <CustomerSegmentationChart
                 totalBrokerage={totalBrokerage}
                 businessType={businessType}
@@ -656,7 +631,7 @@ export default function Home() {
                 <>
                   <div className="flex w-full items-center justify-between">
                     <div className="flex items-center gap-1">
-                      <div className="w-1 h-3 bg-orange-600"></div>
+                      <div className="h-3 w-1 bg-orange-600"></div>
                       <span className="text-sm">Total Target</span>
                     </div>
                     <div className="flex gap-1">
@@ -667,7 +642,7 @@ export default function Home() {
                   </div>
                   <div className="flex w-full items-center justify-between">
                     <div className="flex items-center gap-1">
-                      <div className="w-1 h-3 bg-green-300"></div>
+                      <div className="h-3 w-1 bg-green-300"></div>
                       <span className="text-sm">
                         Traget Achieved (Brokerage)
                       </span>
@@ -683,32 +658,32 @@ export default function Home() {
                 <>
                   <div className="flex w-full items-center justify-between">
                     <div className="flex items-center gap-1">
-                      <div className="w-1 h-3 bg-orange-600"></div>
+                      <div className="h-3 w-1 bg-orange-600"></div>
                       <span className="text-sm">Small Business</span>
                     </div>
                     <div className="flex gap-1">
                       <span className="text-sm text-gray-700">1.650</span>
-                      <span className="text-green-400 text-sm">↑ 424</span>
+                      <span className="text-sm text-green-400">↑ 424</span>
                     </div>
                   </div>
                   <div className="flex w-full items-center justify-between">
                     <div className="flex items-center gap-1">
-                      <div className="w-1 h-3 bg-orange-300"></div>
+                      <div className="h-3 w-1 bg-orange-300"></div>
                       <span className="text-sm">Enterprise</span>
                     </div>
                     <div className="flex gap-1">
                       <span className="text-sm text-gray-700">1.650</span>
-                      <span className="text-green-400 text-sm">↑ 424</span>
+                      <span className="text-sm text-green-400">↑ 424</span>
                     </div>
                   </div>
                   <div className="flex w-full items-center justify-between">
                     <div className="flex items-center gap-1">
-                      <div className="w-1 h-3 bg-blue-600"></div>
+                      <div className="h-3 w-1 bg-blue-600"></div>
                       <span className="text-sm">Company</span>
                     </div>
                     <div className="flex gap-1">
                       <span className="text-sm text-gray-700">1.650</span>
-                      <span className="text-green-400 text-sm">↑ 424</span>
+                      <span className="text-sm text-green-400">↑ 424</span>
                     </div>
                   </div>
                 </>
@@ -725,7 +700,7 @@ export default function Home() {
             </div>
           </div>
           {/* ------- PROGRESS CARD ------- */}
-          <div className="flex-1 flex flex-col bg-white rounded-md shadow-md px-4 py-4 justify-between ">
+          <div className="flex flex-1 flex-col justify-between rounded-md bg-white px-4 py-4 shadow-md">
             <SalesReportChart
               businessType={businessType}
               totalBrokerage={totalBrokerage}
@@ -737,13 +712,13 @@ export default function Home() {
         {business === "Brokerage" ? (
           ""
         ) : (
-          <div className="sm:flex gap-3 mx-2 md:grid md:grid-cols-1 gap-3">
+          <div className="mx-2 gap-3 sm:flex md:grid md:grid-cols-1">
             {/* ------- BOTTOM CARD ------- */}
-            <div className="flex  flex-col bg-white shadow-sm py-6 px-3 rounded-md">
+            <div className="flex flex-col rounded-md bg-white px-3 py-6 shadow-sm">
               <SalesPipelineChart />
             </div>
             {/* ------- BOTTOM CARD ------- */}
-            <div className="flex  py-4 px-4 gap-4  bg-blue-50 rounded-md shadow-md mt-3 h-[400px] mb-4">
+            <div className="mb-4 mt-3 flex h-[400px] gap-4 rounded-md bg-blue-50 px-4 py-4 shadow-md">
               <LeadSourceChart />
             </div>
           </div>

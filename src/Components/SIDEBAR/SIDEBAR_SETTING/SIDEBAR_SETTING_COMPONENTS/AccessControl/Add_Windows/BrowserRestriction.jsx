@@ -53,15 +53,15 @@ export default function BrowserRestriction() {
   };
 
   return (
-    <div className="bg-white rounded-t-xl">
-      <h1 className="text-white py-2 px-3 bg-cyan-500 rounded-t-xl mt-3">
+    <div className="rounded-t-xl bg-white">
+      <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-3 py-2 text-white">
         Browser Restriction
       </h1>
       <form onSubmit={handleFormSubmit}>
-        <div className="grid gap-2 py-2 px-3">
+        <div className="grid gap-2 px-3 py-2">
           {/* Enabled Checkbox */}
           <div className="flex space-x-4">
-            <div className="flex flex-col w-1/2 gap-1">
+            <div className="flex w-1/2 flex-col gap-1">
               <label
                 htmlFor="enabled"
                 className="text-sm font-medium text-gray-700"
@@ -71,7 +71,7 @@ export default function BrowserRestriction() {
               <input
                 type="checkbox"
                 name="enabled"
-                className="py-1 px-1 h-5 w-5"
+                className="h-5 w-5 px-1 py-1"
                 onChange={() =>
                   setControlDetails((prev) => ({
                     ...prev,
@@ -85,24 +85,24 @@ export default function BrowserRestriction() {
 
         <div className="mx-6 py-3">
           {/* Browser Table */}
-          <div className="overflow-x-auto rounded-t-xl rounded-b-md">
+          <div className="overflow-x-auto rounded-b-md rounded-t-xl">
             <table className="min-w-full table-auto">
               <thead>
-                <tr className="bg-cyan-500 rounded-t-xl">
-                  <th className="px-4 py-2 text-white font-light">Browser</th>
-                  <th className="px-4 py-2 text-white font-light">Version</th>
-                  <th className="px-4 py-2 text-white font-light">Enabled</th>
+                <tr className="rounded-t-xl bg-cyan-500">
+                  <th className="px-4 py-2 font-light text-white">Browser</th>
+                  <th className="px-4 py-2 font-light text-white">Version</th>
+                  <th className="px-4 py-2 font-light text-white">Enabled</th>
                 </tr>
               </thead>
               <tbody>
                 {tableData.map((item, idx) => (
-                  <tr key={idx} className="bg-gray-100 border-b">
+                  <tr key={idx} className="border-b bg-gray-100">
                     <td className="px-8 py-2">{item}</td>
                     <td className="px-3 py-2 text-center">
                       <input
                         type="text"
                         value={controlDetails.version}
-                        className="py-1 border border-gray-300 px-6"
+                        className="border border-gray-300 px-6 py-1"
                         placeholder="Enter browser version"
                         onChange={(event) =>
                           setControlDetails((prev) => ({
@@ -131,7 +131,7 @@ export default function BrowserRestriction() {
                     <div className="flex items-center">
                       <label
                         htmlFor="blockAccess"
-                        className="text-sm font-medium text-gray-700 mr-2"
+                        className="mr-2 text-sm font-medium text-gray-700"
                       >
                         Block Access from mobile browser
                       </label>

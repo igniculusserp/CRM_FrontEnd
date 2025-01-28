@@ -50,20 +50,20 @@ const SalesPipelineChart = () => {
   ];
 
   return (
-    <div className="w-full sm:max-w-4xl  mx-auto">
-      <div className="flex items-center justify-between ">
-        <h2 className="text-lg font-normal text-left mb-4">Sales Pipeline</h2>
-        <div className="sm:flex sm:gap-2 items-center grid grid-cols-2">
-          <div className="flex items-center gap-1 ">
-            <div className="w-3 h-3 rounded-sm bg-[#8884d8]"></div>
+    <div className="mx-auto w-full sm:max-w-4xl">
+      <div className="flex items-center justify-between">
+        <h2 className="mb-4 text-left text-lg font-normal">Sales Pipeline</h2>
+        <div className="grid grid-cols-2 items-center sm:flex sm:gap-2">
+          <div className="flex items-center gap-1">
+            <div className="h-3 w-3 rounded-sm bg-[#8884d8]"></div>
             <span>Prospecting</span>
           </div>
           <div className="flex items-center gap-1">
-            <div className="w-3 h-3 rounded-sm bg-[#82ca9d]"></div>
+            <div className="h-3 w-3 rounded-sm bg-[#82ca9d]"></div>
             <span>Proposal</span>
           </div>
           <div className="flex items-center gap-1">
-            <div className="w-3 h-3 rounded-sm bg-blue-500"></div>
+            <div className="h-3 w-3 rounded-sm bg-blue-500"></div>
             <span>Negotiation</span>
           </div>
           {/* ------------- FILTER DROPDOWN */}
@@ -73,7 +73,7 @@ const SalesPipelineChart = () => {
             onMouseLeave={() => setFilterDropdown(false)}
           >
             <button
-              className="py-2 px-2 border rounded-md flex justify-between items-center w-28 truncate text-sm"
+              className="flex w-28 items-center justify-between truncate rounded-md border px-2 py-2 text-sm"
               id="filter"
               type="button"
             >
@@ -81,12 +81,12 @@ const SalesPipelineChart = () => {
               <FaAngleDown className="ml-2 text-gray-900" />
             </button>
             {filterDropdown && (
-              <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+              <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
                 <ul className="py-2 text-sm text-gray-700">
                   {filterData.map(({ id, name }) => (
                     <li
                       key={id}
-                      className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                      className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                       onClick={() => handleFilterDropdown(name)}
                     >
                       {name}

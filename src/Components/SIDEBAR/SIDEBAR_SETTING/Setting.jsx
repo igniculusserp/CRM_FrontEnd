@@ -179,25 +179,25 @@ export default function Setting() {
 
   return (
     <>
-      <div className="flex flex-col m-3 ">
+      <div className="m-3 flex flex-col">
         {/* Header Section */}
-        <div className="flex justify-between px-6 bg-gradient-to-r  from-cyan-500 to-cyan-700 text-white rounded-t-xl py-4 shadow-lg">
+        <div className="flex justify-between rounded-t-xl bg-gradient-to-r from-cyan-500 to-cyan-700 px-6 py-4 text-white shadow-lg">
           <h1 className="text-2xl font-semibold tracking-wide">
             Setting Dashboard
           </h1>
         </div>
 
         {/* Main Section */}
-        <div className="min-h-screen bg-gray-100 flex items-start py-8 px-4 rounded-b-xl">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full">
+        <div className="flex min-h-screen items-start rounded-b-xl bg-gray-100 px-4 py-8">
+          <div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {/* Setting Cards */}
             {Object.keys(groupedData).map((group) => (
               <div
                 key={group}
-                className="bg-white border rounded-lg shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300"
+                className="rounded-lg border bg-white p-6 shadow-lg transition-shadow duration-300 hover:shadow-2xl"
               >
                 {/* Card Header */}
-                <h2 className="text-lg font-bold mb-4 border-b pb-2 py-2 px-4 rounded-t-xl text-white bg-cyan-500 justify-center flex">
+                <h2 className="mb-4 flex justify-center rounded-t-xl border-b bg-cyan-500 px-4 py-2 pb-2 text-lg font-bold text-white">
                   {group}
                 </h2>
                 {/* Buttons */}
@@ -206,7 +206,7 @@ export default function Setting() {
                     <button
                       key={button.key}
                       onClick={() => navigate(button.link)}
-                      className="bg-gradient-to-r from-blue-400 to-blue-500 text-white px-4 py-2 rounded-full hover:from-blue-500 hover:to-blue-600 shadow-md hover:shadow-lg transition-all duration-300 w-full"
+                      className="w-full rounded-full bg-gradient-to-r from-blue-400 to-blue-500 px-4 py-2 text-white shadow-md transition-all duration-300 hover:from-blue-500 hover:to-blue-600 hover:shadow-lg"
                     >
                       {button.value}
                     </button>

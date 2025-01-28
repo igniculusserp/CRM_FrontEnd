@@ -47,7 +47,7 @@ export default function Monitoring({ currentReports }) {
       renderCell: (params) => (
         <div className="flex items-center gap-1">
           <GoDot
-            className={`border rounded-full ${
+            className={`rounded-full border ${
               params.value
                 ? "bg-green-500 text-green-300 shadow-md shadow-green-300"
                 : "bg-red-400 text-red-700 shadow-sm shadow-red-300"

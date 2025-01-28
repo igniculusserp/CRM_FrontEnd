@@ -177,29 +177,27 @@ export default function MISReports() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col m-3">
-        <div className="flex items-center gap-2 px-3 bg-white border rounded py-2">
+      <div className="m-3 flex min-h-screen flex-col">
+        <div className="flex items-center gap-2 rounded border bg-white px-3 py-2">
           <div className="flex gap-4">
             {Object.keys(dynamicButtons).map((key) => (
               <button
                 key={key}
                 onClick={() => handleOptionClick(key)}
-                className={`px-3 py-2 rounded font-light text-md
-                ${
+                className={`text-md rounded px-3 py-2 font-light ${
                   selectedButton === key
                     ? "bg-cyan-500 text-white"
                     : "bg-gray-100 text-gray-700"
-                }
-              `}
+                } `}
               >
                 {key}
               </button>
             ))}
           </div>
         </div>
-        <div className="flex items-center justify-between my-3">
-          <div className="flex gap-2 items-center justify-center">
-            <h1 className="text-3xl px-1">
+        <div className="my-3 flex items-center justify-between">
+          <div className="flex items-center justify-center gap-2">
+            <h1 className="px-1 text-3xl">
               {(() => {
                 switch (selectedButton) {
                   case "General Report":
@@ -221,12 +219,12 @@ export default function MISReports() {
                 }
               })()}
             </h1>
-            <h2 className="text-xl font-medium text-red-500 text-center">
+            <h2 className="text-center text-xl font-medium text-red-500">
               (This feature is coming soon...)
             </h2>
           </div>
           <Link to={buttonText.href}>
-            <button className="px-3 py-2 bg-blue-600 text-center text-md text-white rounded-md">
+            <button className="text-md rounded-md bg-blue-600 px-3 py-2 text-center text-white">
               {buttonText.text || "Add General Report"}
             </button>
           </Link>
@@ -295,7 +293,7 @@ export default function MISReports() {
         {/* PAGINATION */}
         {selectedViewValue === "Table View" && (
           <>
-            <div className="flex justify-end m-4">
+            <div className="m-4 flex justify-end">
               <nav>
                 <ul className="inline-flex items-center">
                   {Array.from(
@@ -304,10 +302,10 @@ export default function MISReports() {
                       <li key={i + 1}>
                         <button
                           onClick={() => paginate(i + 1)}
-                          className={`px-4 py-2 mx-1 ${
+                          className={`mx-1 px-4 py-2 ${
                             currentPage === i + 1
                               ? "bg-blue-500 text-white"
-                              : "bg-white text-gray-700 border"
+                              : "border bg-white text-gray-700"
                           }`}
                         >
                           {i + 1}

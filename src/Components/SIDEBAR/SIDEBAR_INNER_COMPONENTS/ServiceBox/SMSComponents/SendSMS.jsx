@@ -3,34 +3,34 @@ import PropTypes from "prop-types";
 
 export default function SendSMS({ currentSms }) {
   return (
-    <table className="min-w-full bg-white leads_Table ">
+    <table className="leads_Table min-w-full bg-white">
       {/* ----------------- TABLE HEAD START ----------------- */}
       <thead>
-        <tr className="border-gray-300 border-b-2">
+        <tr className="border-b-2 border-gray-300">
           {/* CHECKBOX */}
-          <th className="px-3 py-3 w-max">
+          <th className="w-max px-3 py-3">
             <input type="checkbox" />
           </th>
           {/* CLIENT NAME */}
-          <th className="px-3 py-3 text-left border-r font-medium">
+          <th className="border-r px-3 py-3 text-left font-medium">
             <span>Segment</span>
           </th>
           {/* MOBILE */}
-          <th className="px-3 py-3 text-left border-r font-medium">
+          <th className="border-r px-3 py-3 text-left font-medium">
             <div className="flex items-center justify-between">
               <span>Message</span>
               <FaBars />
             </div>
           </th>
           {/* SMS */}
-          <th className="px-3 py-3 text-left border-r font-medium">
+          <th className="border-r px-3 py-3 text-left font-medium">
             <div className="flex items-center justify-between">
               <span>Sent By</span>
               <FaBars />
             </div>
           </th>
           {/* TYPE */}
-          <th className="px-3 py-3 text-left border-r font-medium">
+          <th className="border-r px-3 py-3 text-left font-medium">
             <span>Sent Time</span>
           </th>
         </tr>
@@ -42,31 +42,31 @@ export default function SendSMS({ currentSms }) {
           <tr
             key={index}
             // onClick={() => handleClick(sms)}
-            className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+            className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
           >
             {/*   CHECKBOX */}
-            <td className="px-3 py-3 text-center w-max">
+            <td className="w-max px-3 py-3 text-center">
               <input
                 type="checkbox"
                 // onClick={(e) => handleCheckboxClick(e, sms.id)}
               />
             </td>
             {/* CLIENT NAME AND IMAGE */}
-            <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+            <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
               <div className="flex items-center">
                 <span>{sms.products}</span>
               </div>
             </td>
             {/* MOBILE */}
-            <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+            <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
               {sms.textMessage}
             </td>
             {/* SMS */}
-            <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+            <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
               {sms.lastModifiedBy}
             </td>
             {/* TYPE */}
-            <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+            <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
               {sms.sentDateTime.replace("T", " ")}
             </td>
           </tr>

@@ -266,23 +266,23 @@ export default function UserOperation() {
   return (
     <>
       <ToastContainer />
-      <div className="m-3 min-w-screen">
+      <div className="min-w-screen m-3">
         {active ? (
           <>
-            <div className="flex min-w-screen justify-between items-center flex-wrap gap-5">
+            <div className="min-w-screen flex flex-wrap items-center justify-between gap-5">
               <h1 className="text-3xl font-medium">User Operation</h1>
               <button
                 onClick={handleActiveState}
-                className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
+                className="min-w-10 rounded bg-blue-600 p-2 text-sm text-white"
               >
                 Add User Operation
               </button>
             </div>
-            <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
-              <div className="min-w-full rounded-md leads_Table_Container">
-                <table className="min-w-full bg-white leads_Table">
+            <div className="leads_Table_Main_Container mt-3 overflow-x-auto shadow-md">
+              <div className="leads_Table_Container min-w-full rounded-md">
+                <table className="leads_Table min-w-full bg-white">
                   <thead>
-                    <tr className="border-gray-300 border-b-2">
+                    <tr className="border-b-2 border-gray-300">
                       <th className="px-1 py-3">
                         <input type="checkbox" />
                       </th>
@@ -293,8 +293,8 @@ export default function UserOperation() {
                         <FaBars />
                       </div>
                     </th> */}
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex items-center justify-between text-sm">
                           <span>User Name</span>
                           <FaBars />
                         </div>
@@ -307,50 +307,50 @@ export default function UserOperation() {
                       </div>
                     </th> */}
 
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex items-center justify-between text-sm">
                           <span>Reported To</span>
                           <FaBars />
                         </div>
                       </th>
 
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex items-center justify-between text-sm">
                           <span>Group</span>
                           <FaBars />
                         </div>
                       </th>
 
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex items-center justify-between text-sm">
                           <span>Target</span>
                           <FaBars />
                         </div>
                       </th>
 
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex items-center justify-between text-sm">
                           <span>Currency Code</span>
                           <FaBars />
                         </div>
                       </th>
 
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex items-center justify-between text-sm">
                           <span>Extension</span>
                           <FaBars />
                         </div>
                       </th>
 
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex items-center justify-between text-sm">
                           <span>DID</span>
                           <FaBars />
                         </div>
                       </th>
 
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex items-center justify-between text-sm">
                           <span>Action</span>
                         </div>
                       </th>
@@ -360,7 +360,7 @@ export default function UserOperation() {
                     {users?.map((user) => (
                       <tr
                         key={user.id}
-                        className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                        className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                       >
                         <td className="px-1 py-3 text-center">
                           <input
@@ -371,33 +371,33 @@ export default function UserOperation() {
                         {/* <td className="px-2 py-4 text-sm max-w-24 break-words">
                         {user.first_name}
                       </td> */}
-                        <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           {user.userName}
                         </td>
 
-                        <td className="px-2 py-4 text-sm  max-w-24 break-words">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           {user.reportedTo}
                         </td>
-                        <td className="px-2 py-4 text-sm  max-w-24 break-words">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           {user.groupName}
                         </td>
-                        <td className="px-2 py-4 text-sm  max-w-24 break-words">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           {user.target}
                         </td>
-                        <td className="px-2 py-4 text-sm  max-w-24 break-words">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           {user.currencyCode}
                         </td>
-                        <td className="px-2 py-4 text-sm  max-w-24 break-words">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           {user.extensions}
                         </td>
-                        <td className="px-2 py-4 text-sm  max-w-24 break-words">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           {user.did}
                         </td>
-                        <td className="px-2 py-4 flex gap-3 justify-center">
+                        <td className="flex justify-center gap-3 px-2 py-4">
                           <MdEdit
                             size={25}
                             color="white"
-                            className="bg-blue-500 rounded"
+                            className="rounded bg-blue-500"
                             onClick={() => handleClick(user)}
                           />
                           <RiDeleteBin6Fill
@@ -417,13 +417,13 @@ export default function UserOperation() {
           </>
         ) : (
           <>
-            <div className="flex min-w-screen justify-between items-center">
+            <div className="min-w-screen flex items-center justify-between">
               <h1 className="text-3xl font-medium">
                 {isEditMode ? "Edit User Operation" : "Add user Operation"}
               </h1>
               <button
                 onClick={handleActiveState}
-                className="border border-blue-600 bg-white text-blue-600 px-4 py-2 min-w-10 text-sm rounded"
+                className="min-w-10 rounded border border-blue-600 bg-white px-4 py-2 text-sm text-blue-600"
               >
                 Cancel
               </button>
@@ -431,15 +431,15 @@ export default function UserOperation() {
 
             <form onSubmit={handleSubmit} className="flex">
               <div className="w-full">
-                <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
-                  <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+                <div className="mt-3 flex-grow rounded-xl bg-white shadow-md">
+                  <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                     Lead Information
                   </h2>
                   {/* -------------1------------- */}
-                  <div className="px-4 grid gap-2 py-2">
+                  <div className="grid gap-2 px-4 py-2">
                     <div className="flex space-x-4">
                       {/* Username field */}
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="username"
                           className="text-sm font-medium text-gray-700"
@@ -455,13 +455,13 @@ export default function UserOperation() {
                             handleSelectUser(e);
                             setSelectedUser(e);
                           }}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                         />
                       </div>
 
                       {/* Conditional Full Name field */}
                       {isShowFields && (
-                        <div className="flex flex-col w-1/2">
+                        <div className="flex w-1/2 flex-col">
                           <label
                             htmlFor="fullName"
                             className="text-sm font-medium text-gray-700"
@@ -473,7 +473,7 @@ export default function UserOperation() {
                             value={formData?.fullName || ""}
                             type="text"
                             name="fullName"
-                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                            className="mt-1 rounded-md border border-gray-300 p-2"
                           />
                         </div>
                       )}
@@ -483,7 +483,7 @@ export default function UserOperation() {
                       <div className="grid gap-2">
                         <div className="flex space-x-4">
                           {/* Team Member */}
-                          <div className="flex flex-col w-1/2">
+                          <div className="flex w-1/2 flex-col">
                             <label
                               htmlFor="teamMember"
                               className="text-sm font-medium text-gray-700"
@@ -495,12 +495,12 @@ export default function UserOperation() {
                               name="currencyCode"
                               value={formData?.currencyCode || ""}
                               onChange={handleChange}
-                              className="mt-1 p-2 border border-gray-300 rounded-md"
+                              className="mt-1 rounded-md border border-gray-300 p-2"
                             />
                           </div>
 
                           {/* reportedTo Dropdown */}
-                          <div className="flex flex-col w-1/2">
+                          <div className="flex w-1/2 flex-col">
                             <label
                               htmlFor="reportedTo"
                               className="text-sm font-medium text-gray-700"
@@ -514,7 +514,7 @@ export default function UserOperation() {
                               setSelectedValue={(value) =>
                                 setFormData({ ...formData, reportedTo: value })
                               }
-                              className="mt-1 p-2 border border-gray-300 rounded-md"
+                              className="mt-1 rounded-md border border-gray-300 p-2"
                             />
                             {errors.reportedTo && <p>{errors.reportedTo}</p>}
                           </div>
@@ -522,7 +522,7 @@ export default function UserOperation() {
 
                         <div className="flex space-x-4">
                           {/* Group Dropdown */}
-                          <div className="flex flex-col w-1/2">
+                          <div className="flex w-1/2 flex-col">
                             <label
                               htmlFor="groupName"
                               className="text-sm font-medium text-gray-700"
@@ -531,7 +531,7 @@ export default function UserOperation() {
                             </label>
                             <select
                               name={"groupName"}
-                              className="mt-1 p-2 border border-gray-300 rounded-md"
+                              className="mt-1 rounded-md border border-gray-300 p-2"
                               value={formData?.groupName}
                               onChange={handleChange}
                             >
@@ -552,7 +552,7 @@ export default function UserOperation() {
                           </div>
 
                           {/* target */}
-                          <div className="flex flex-col w-1/2">
+                          <div className="flex w-1/2 flex-col">
                             <label
                               htmlFor="target"
                               className="text-sm font-medium text-gray-700"
@@ -564,7 +564,7 @@ export default function UserOperation() {
                               name="target"
                               value={formData?.target || ""}
                               onChange={handleChange}
-                              className="mt-1 p-2 border border-gray-300 rounded-md"
+                              className="mt-1 rounded-md border border-gray-300 p-2"
                             />
                             {errors.target && (
                               <span style={{ color: "red" }}>
@@ -576,7 +576,7 @@ export default function UserOperation() {
 
                         <div className="flex space-x-4">
                           {/* extensions */}
-                          <div className="flex flex-col w-1/2">
+                          <div className="flex w-1/2 flex-col">
                             <label
                               htmlFor="extensions"
                               className="text-sm font-medium text-gray-700"
@@ -588,12 +588,12 @@ export default function UserOperation() {
                               name="extensions"
                               value={formData?.extensions || ""}
                               onChange={handleChange}
-                              className="mt-1 p-2 border border-gray-300 rounded-md"
+                              className="mt-1 rounded-md border border-gray-300 p-2"
                             />
                           </div>
 
                           {/* did */}
-                          <div className="flex flex-col w-1/2">
+                          <div className="flex w-1/2 flex-col">
                             <label
                               htmlFor="did"
                               className="text-sm font-medium text-gray-700"
@@ -605,16 +605,16 @@ export default function UserOperation() {
                               name="did"
                               value={formData?.did || ""}
                               onChange={handleChange}
-                              className="mt-1 p-2 border border-gray-300 rounded-md"
+                              className="mt-1 rounded-md border border-gray-300 p-2"
                             />
                           </div>
                         </div>
 
                         {/* -------------Button------------- */}
-                        <div className="mb-3 flex items-center justify-end max-w-full">
+                        <div className="mb-3 flex max-w-full items-center justify-end">
                           <button
                             type="submit"
-                            className="mt-4 w-full hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-6 py-4 rounded-md"
+                            className="mt-4 w-full rounded-md border border-cyan-500 px-6 py-4 text-cyan-500 hover:bg-cyan-500 hover:text-white"
                           >
                             {isEditMode ? "Update User" : "Save User"}
                           </button>

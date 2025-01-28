@@ -152,21 +152,21 @@ export default function CreateChats() {
   };
 
   return (
-    <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
-      <div className="flex py-2 px-3 items-center justify-between bg-white rounded-md shadow-md">
+    <div className="m-3 flex flex-col overflow-x-auto overflow-y-hidden">
+      <div className="flex items-center justify-between rounded-md bg-white px-3 py-2 shadow-md">
         <h1 className="text-xl">Add Chat Logs</h1>
         <Link
           to="/panel/logs"
-          className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
+          className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
         >
           Cancel
         </Link>
       </div>
       {/* -------------FORM Starts FROM HERE------------- */}
-      <form onSubmit={handleSubmit} className="flex flex-col mb-6">
+      <form onSubmit={handleSubmit} className="mb-6 flex flex-col">
         {/* -------------Client Logs Information STARTS FROM HERE------------- */}
-        <div className="my-3 bg-white rounded-xl shadow-md flex-grow ">
-          <h2 className="font-medium py-2 px-3 rounded-t-xl text-white bg-cyan-500">
+        <div className="my-3 flex-grow rounded-xl bg-white shadow-md">
+          <h2 className="rounded-t-xl bg-cyan-500 px-3 py-2 font-medium text-white">
             Chat Logs Information
           </h2>
 
@@ -176,10 +176,10 @@ export default function CreateChats() {
           <div className="grid gap-2 px-2 pb-3">
             <div className="flex space-x-4">
               {/* FROM USERNAME DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="fromUsername"
-                  className="text-sm font-medium text-gray-700 mt-2"
+                  className="mt-2 text-sm font-medium text-gray-700"
                 >
                   From User Name
                 </label>
@@ -189,7 +189,7 @@ export default function CreateChats() {
                   onMouseLeave={() => setFromUsernameDropdown(false)}
                 >
                   <button
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                     id="fromUsername"
                     type="button"
                   >
@@ -199,11 +199,11 @@ export default function CreateChats() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {fromUsernameDropdown && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                    <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
                       <ul className="py-2 text-sm text-gray-700">
                         {fromUsernameData.map(({ key, name }) => (
                           <li
-                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer z-10"
+                            className="z-10 block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                             key={key}
                             onClick={() => handleDropdownFromUsername(name)}
                           >
@@ -216,10 +216,10 @@ export default function CreateChats() {
                 </div>
               </div>
               {/* TO USERNAME DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="toUsername"
-                  className="text-sm font-medium text-gray-700 mt-2"
+                  className="mt-2 text-sm font-medium text-gray-700"
                 >
                   To User Name
                 </label>
@@ -229,7 +229,7 @@ export default function CreateChats() {
                   onMouseLeave={() => setUsernameDropdown(false)}
                 >
                   <button
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                     id="toUsername"
                     type="button"
                   >
@@ -237,11 +237,11 @@ export default function CreateChats() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {usernameDropdown && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                    <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
                       <ul className="py-2 text-sm text-gray-700">
                         {toUsernameData.map(({ key, name }) => (
                           <li
-                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer z-10"
+                            className="z-10 block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                             key={key}
                             onClick={() => handleDropdownToUsername(name)}
                           >
@@ -257,11 +257,11 @@ export default function CreateChats() {
             {/* DROPDOWN */}
             <div className="flex space-x-4">
               {/* FROM CHAT DATE DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 {/* OPERATION FIELD */}
                 <label
                   htmlFor="fromChatDate"
-                  className="text-sm font-medium text-gray-700 mt-2"
+                  className="mt-2 text-sm font-medium text-gray-700"
                 >
                   From Chat Date
                 </label>
@@ -271,7 +271,7 @@ export default function CreateChats() {
                   onMouseLeave={() => setFromChatDateDropdown(false)}
                 >
                   <button
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                     id="fromChatDate"
                     type="button"
                   >
@@ -281,11 +281,11 @@ export default function CreateChats() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {fromChatDateDropdown && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                    <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
                       <ul className="py-2 text-sm text-gray-700">
                         {fromChatDateData.map(({ key, name }) => (
                           <li
-                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer z-10"
+                            className="z-10 block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                             key={key}
                             onClick={() => handleDropdownFromChatDate(name)}
                           >
@@ -298,10 +298,10 @@ export default function CreateChats() {
                 </div>
               </div>
               {/* TO CHAT DATE DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="toChatDate"
-                  className="text-sm font-medium text-gray-700 mt-2"
+                  className="mt-2 text-sm font-medium text-gray-700"
                 >
                   To Chat Date
                 </label>
@@ -311,7 +311,7 @@ export default function CreateChats() {
                   onMouseLeave={() => setToChatDateDropdown(false)}
                 >
                   <button
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                     id="toChatDate"
                     type="button"
                   >
@@ -319,11 +319,11 @@ export default function CreateChats() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {toChatDateDropdown && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                    <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
                       <ul className="py-2 text-sm text-gray-700">
                         {toChatDateData.map(({ key, name }) => (
                           <li
-                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer z-10"
+                            className="z-10 block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                             key={key}
                             onClick={() => handleDropdownToChatDate(name)}
                           >
@@ -339,10 +339,10 @@ export default function CreateChats() {
             {/* DROPDOWN */}
             <div className="flex space-x-4">
               {/* CREATED TIME DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="toChatDate"
-                  className="text-sm font-medium text-gray-700 mt-2"
+                  className="mt-2 text-sm font-medium text-gray-700"
                 >
                   Created Time
                 </label>
@@ -352,7 +352,7 @@ export default function CreateChats() {
                   onMouseLeave={() => setCreatedTimeDropdown(false)}
                 >
                   <button
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                     id="toChatDate"
                     type="button"
                   >
@@ -362,11 +362,11 @@ export default function CreateChats() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {createdTimeDropdown && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                    <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
                       <ul className="py-2 text-sm text-gray-700">
                         {createdTimeData.map(({ key, name }) => (
                           <li
-                            className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer z-10"
+                            className="z-10 block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                             key={key}
                             onClick={() => handleDropdownCreateTime(name)}
                           >
@@ -379,10 +379,10 @@ export default function CreateChats() {
                 </div>
               </div>
               {/* MESSAGE FIELD */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="message"
-                  className="text-sm font-medium text-gray-700 mt-2"
+                  className="mt-2 text-sm font-medium text-gray-700"
                 >
                   Message
                 </label>
@@ -391,7 +391,7 @@ export default function CreateChats() {
                   name="message"
                   id="message"
                   value={editChats.message}
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  className="mt-1 rounded-md border border-gray-300 p-2"
                   onChange={handleChange}
                   placeholder="Entere verox peron"
                 />
@@ -400,22 +400,22 @@ export default function CreateChats() {
           </div>
         </div>
         {/* DESCRIPTION */}
-        <div className="bg-white rounded-xl shadow-md">
-          <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+        <div className="rounded-xl bg-white shadow-md">
+          <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
             Description Information
           </h2>
-          <div className="p-2 ">
+          <div className="p-2">
             <div className="flex flex-col">
               <label
                 htmlFor="description"
-                className="text-sm  font-medium text-gray-700"
+                className="text-sm font-medium text-gray-700"
               >
                 Description
               </label>
               <ReactQuill
                 name="description"
                 value={description}
-                className="text-balance hyphens-auto  max-h-full h-60 mt-1"
+                className="mt-1 h-60 max-h-full hyphens-auto text-balance"
                 theme="snow"
                 onChange={setDescription}
                 placeholder="Add Description"
@@ -425,7 +425,7 @@ export default function CreateChats() {
           <div className="flex justify-end px-2">
             <button
               type="submit"
-              className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+              className="mb-3 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
             >
               {isEditMode ? "Update" : "Save"}
             </button>

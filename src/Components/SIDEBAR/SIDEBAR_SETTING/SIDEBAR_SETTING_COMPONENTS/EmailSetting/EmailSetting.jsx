@@ -185,31 +185,31 @@ export default function EmailSetting() {
     return (
       <>
         <ToastContainer />
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <h1 className="text-3xl font-medium">
             {isEditMode ? "Edit Email Setting" : "Add Email Setting"}
           </h1>
           <button
             onClick={handleCancel}
-            className="border border-blue-600 bg-white text-blue-600 px-4 py-1.5 rounded"
+            className="rounded border border-blue-600 bg-white px-4 py-1.5 text-blue-600"
           >
             Cancel
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex mt-3">
+        <form onSubmit={handleSubmit} className="mt-3 flex">
           <div className="w-full">
-            <div className="bg-white rounded-xl shadow-md pb-6">
+            <div className="rounded-xl bg-white pb-6 shadow-md">
               <div className="">
-                <h1 className="py-2 px-3 rounded-t-lg bg-cyan-500 text-white text-md font-medium">
+                <h1 className="text-md rounded-t-lg bg-cyan-500 px-3 py-2 font-medium text-white">
                   Email Setting
                 </h1>
-                <div className="bg-white px-1 rounded-b-xl">
+                <div className="rounded-b-xl bg-white px-1">
                   <div className="grid gap-2 p-2">
                     {/* FIRST ROW  */}
                     <div className="flex space-x-4">
                       {/*  Sender Email Id FIELD */}
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="senderEmailId"
                           className="text-sm font-medium text-gray-700"
@@ -221,13 +221,13 @@ export default function EmailSetting() {
                           name="senderEmailId"
                           id="senderEmailId"
                           value={formData.senderEmailId}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                           onChange={handleChange}
                           placeholder="Enter API Sender Id"
                         />
                       </div>
                       {/* Relay Server Name FIELD */}
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="relayServerName"
                           className="text-sm font-medium text-gray-700"
@@ -239,7 +239,7 @@ export default function EmailSetting() {
                           name="relayServerName"
                           id="relayServerName"
                           value={formData.relayServerName}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                           onChange={handleChange}
                           placeholder="Enter API Key"
                         />
@@ -249,7 +249,7 @@ export default function EmailSetting() {
                     {/* SECOND ROW  */}
                     <div className="flex space-x-4">
                       {/* Relay Port Number FIELD */}
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="relayPortNo"
                           className="text-sm font-medium text-gray-700"
@@ -261,13 +261,13 @@ export default function EmailSetting() {
                           name="relayPortNo"
                           id="relayPortNo"
                           value={formData.relayPortNo}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                           onChange={handleChange}
                           placeholder="Enter API Sender Id"
                         />
                       </div>
                       {/* server email FIELD */}
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="serveremail"
                           className="text-sm font-medium text-gray-700"
@@ -279,7 +279,7 @@ export default function EmailSetting() {
                           name="serveremail"
                           id="serveremail"
                           value={formData.serveremail}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                           onChange={handleChange}
                           placeholder="Enter Server Email"
                         />
@@ -289,7 +289,7 @@ export default function EmailSetting() {
                     {/* Third ROW   */}
                     <div className="flex space-x-4">
                       {/*   key FIELD */}
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="key"
                           className="text-sm font-medium text-gray-700"
@@ -301,7 +301,7 @@ export default function EmailSetting() {
                           name="key"
                           id="key"
                           value={formData.key}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                           onChange={handleChange}
                           placeholder="Please enter key "
                         />
@@ -311,10 +311,10 @@ export default function EmailSetting() {
                 </div>
               </div>
 
-              <div className="px-4 mb-8">
+              <div className="mb-8 px-4">
                 <button
                   type="submit"
-                  className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md"
+                  className="mt-4 rounded-md border border-cyan-500 px-4 py-4 text-cyan-500 hover:bg-cyan-500 hover:text-white"
                   // onClick={handleLog}
                 >
                   {isEditMode ? "Update" : "Save"}
@@ -331,57 +331,57 @@ export default function EmailSetting() {
     <div className="m-3">
       {active ? (
         <>
-          <div className="flex justify-between items-center flex-wrap gap-5">
+          <div className="flex flex-wrap items-center justify-between gap-5">
             <h1 className="text-3xl font-medium">Email Setting</h1>
             <button
               onClick={handleAdd}
-              className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
+              className="min-w-10 rounded bg-blue-600 p-2 text-sm text-white"
             >
               Add Email Setting
             </button>
           </div>
-          <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
-            <div className="min-w-full rounded-md leads_Table_Container">
-              <table className="min-w-full bg-white rounded-md leads_Table">
+          <div className="leads_Table_Main_Container mt-3 overflow-x-auto shadow-md">
+            <div className="leads_Table_Container min-w-full rounded-md">
+              <table className="leads_Table min-w-full rounded-md bg-white">
                 <thead>
-                  <tr className="border-gray-300 border-b-2">
+                  <tr className="border-b-2 border-gray-300">
                     <th className="px-1 py-3">
                       <input type="checkbox" />
                     </th>
                     <th className="px-2 py-3 text-left font-medium">
-                      <div className="flex justify-between items-center text-sm">
+                      <div className="flex items-center justify-between text-sm">
                         <span>Sender Email</span>
                         <FaBars />
                       </div>
                     </th>
 
                     <th className="px-2 py-3 text-left font-medium">
-                      <div className="flex justify-between items-center text-sm">
+                      <div className="flex items-center justify-between text-sm">
                         <span>Relay Server Name</span>
                         <FaBars />
                       </div>
                     </th>
                     <th className="px-2 py-3 text-left font-medium">
-                      <div className="flex justify-between items-center text-sm">
+                      <div className="flex items-center justify-between text-sm">
                         <span>Relay Port No</span>
                         <FaBars />
                       </div>
                     </th>
                     <th className="px-2 py-3 text-left font-medium">
-                      <div className="flex justify-between items-center text-sm">
+                      <div className="flex items-center justify-between text-sm">
                         <span>Server Email</span>
                         <FaBars />
                       </div>
                     </th>
                     <th className="px-2 py-3 text-left font-medium">
-                      <div className="flex justify-between items-center text-sm">
+                      <div className="flex items-center justify-between text-sm">
                         <span>Key</span>
                         <FaBars />
                       </div>
                     </th>
 
                     <th className="px-2 py-3 text-left font-medium">
-                      <div className="flex justify-between items-center text-sm">
+                      <div className="flex items-center justify-between text-sm">
                         <span>Action</span>
                       </div>
                     </th>
@@ -391,7 +391,7 @@ export default function EmailSetting() {
                   {data.map((item) => (
                     <tr
                       key={item.id}
-                      className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                      className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                     >
                       <td className="px-1 py-3 text-center">
                         <input type="checkbox" />
@@ -405,10 +405,10 @@ export default function EmailSetting() {
                       <td className="px-2 py-3 text-sm">{item.relayPortNo}</td>
                       <td className="px-2 py-3 text-sm">{item.serveremail}</td>
                       <td className="px-2 py-3 text-sm">{item.key}</td>
-                      <td className="px-2 py-4 flex gap-3 justify-center">
+                      <td className="flex justify-center gap-3 px-2 py-4">
                         <MdEdit
                           size={25}
-                          className="bg-blue-500 rounded text-white"
+                          className="rounded bg-blue-500 text-white"
                           onClick={() => handleEdit(item)}
                         />
                         <RiDeleteBin6Fill

@@ -54,7 +54,7 @@ const CustomerSegmentationChart = ({
   const activeData = businessType === "Brokerage" ? data1 : data;
 
   return (
-    <div className="flex flex-col items-center relative">
+    <div className="relative flex flex-col items-center">
       <PieChart width={160} height={160}>
         <Pie
           data={activeData}
@@ -73,7 +73,7 @@ const CustomerSegmentationChart = ({
         </Pie>
       </PieChart>
 
-      <div className="absolute text-center top-14 bottom-8 text-sm">
+      <div className="absolute bottom-8 top-14 text-center text-sm">
         <p>Target Achieved</p>
         <p className="text-lg font-normal">{Percentage} %</p>
       </div>
