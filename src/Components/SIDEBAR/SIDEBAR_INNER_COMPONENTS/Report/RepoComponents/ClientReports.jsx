@@ -1,122 +1,63 @@
-import { FaBars } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import PropTypes from 'prop-types';
+import { DataGrid } from '@mui/x-data-grid';
+import Paper from '@mui/material/Paper';
+
 export default function ClientReports({ currentReports }) {
-  const navigate = useNavigate(); // Add this line
+
+
+  const columns = [
+    { field: 'id', headerName: 'Client ID', minWidth: 120, flex: 1, },
+    { field: 'clientName', headerName: 'Client Name', minWidth: 150, flex: 1 },
+    { field: 'mobileNo', headerName: 'Mobile', minWidth: 150, flex: 1 },
+    { field: 'saleS_ODR_NO', headerName: 'View SO', minWidth: 130, flex: 1 },
+    { field: 'assigned_To', headerName: 'Managed By', minWidth: 150, flex: 1 },
+    { field: 'manager', headerName: 'Manager', minWidth: 150, flex: 1 },
+    { field: 'amount_paid', headerName: 'Total Amount Taken', minWidth: 180, flex: 1 },
+    { field: 'remarks', headerName: 'Last Remarks', minWidth: 200, flex: 1 },
+  ];
+
+  const rows = currentReports.map((report, index) => ({
+    id: index + 1,
+    ...report,
+  }));
+
   return (
-    <table className="min-w-full bg-white leads_Table">
-      {/* ----------------- TABLE HEAD START ----------------- */}
-      <thead>
-        <tr className="border-gray-300 border-b-2">
-          {/* CHECKBOX */}
-          <th className="px-3 py-3 w-max">
-            <input type="checkbox" />
-          </th>
-          {/* CLIENT ID */}
-          <th className="px-2 py-3 text-left border-r font-medium">
-            <div className="flex items-center justify-between">
-              <span className="text-nowrap pr-2">Client ID</span>
-              <FaBars />
-            </div>
-          </th>
-          {/* CLIENT NAME */}
-          <th className="px-2 py-3 text-left border-r font-medium">
-            <div className="flex items-center justify-between">
-              <span className="text-nowrap pr-2">Client Name</span>
-              <FaBars />
-            </div>
-          </th>
-          {/* MOBILE */}
-          <th className="px-2 py-3 text-left border-r font-medium">
-            <div className="flex items-center justify-between">
-              <span className="text-nowrap pr-2">Mobile</span>
-              <FaBars />
-            </div>
-          </th>
-          {/* VIEW SO */}
-          <th className="px-2 py-3 text-left border-r font-medium">
-            <div className="flex items-center justify-between">
-              <span className="text-nowrap pr-2">View So</span>
-              <FaBars />
-            </div>
-          </th>
-          {/* MANAGED BY */}
-          <th className="px-2 py-3 text-left border-r font-medium">
-            <div className="flex items-center justify-between">
-              <span className="text-nowrap pr-2">Managed By</span>
-              <FaBars />
-            </div>
-          </th>
-          {/* MANAGER */}
-          <th className="px-2 py-3 text-left border-r font-medium">
-            <div className="flex items-center justify-between">
-              <span className="text-nowrap pr-2">Manager</span>
-              <FaBars />
-            </div>
-          </th>
-          {/* TOTAL AMOUNT TOKEN */}
-          <th className="px-2 py-3 text-left border-r font-medium">
-            <div className="flex items-center justify-between">
-              <span className="text-nowrap pr-2">Total Amount Taken</span>
-              <FaBars />
-            </div>
-          </th>
-          {/* LAST REMARKS */}
-          <th className="px-2 py-3 text-left border-r font-medium">
-            <span className="text-nowrap pr-2">Last Remarks</span>
-          </th>
-        </tr>
-      </thead>
-      {/* ----------------- TABLE HEAD END ----------------- */}
-      {/* ----------------- TABLE BODY START ----------------- */}
-      <tbody>
-        {currentReports.map((report, i) => (
-          <tr
-            key={i}
-            className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
-          >
-            {/* CHECKBOX */}
-            <td className="px-3 py-4 text-center w-max">
-              <input type="checkbox" />
-            </td>
-            {/* CLIENT ID */}
-            <td
-              className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-blue-600"
-              onClick={() => navigate(`/panel/clientso/${report.id}`)}
-            >
-              {report.id}
-            </td>
-            {/* CLIENT NAME */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.clientName}
-            </td>
-            {/* MOBILE */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.mobileNo}
-            </td>
-            {/* VIEW SO */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.saleS_ODR_NO}
-            </td>
-            {/* ASSIGNED TO */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.assigned_To}
-            </td>
-            {/* MANAGER */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.manager}
-            </td>
-            {/* TOTAL AMOUNT TOKEN */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.amount_paid}
-            </td>
-            {/* LAST REMARKS */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.remarks}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-      {/* ----------------- TABLE BODY END ----------------- */}
-    </table>
+    <Paper sx={{ width: '100%' }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 10,
+            },
+          },
+        }}
+        pageSizeOptions={[10]}
+        checkboxSelection
+        sx={{
+          border: 0,
+          width: '100%',
+          '& .MuiDataGrid-columnHeaderTitle': {
+            fontWeight: 'bold',
+          },
+        }}
+      />
+    </Paper>
   );
 }
+
+ClientReports.propTypes = {
+  currentReports: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      clientName: PropTypes.string.isRequired,
+      mobileNo: PropTypes.string,
+      saleS_ODR_NO: PropTypes.string,
+      assigned_To: PropTypes.string,
+      manager: PropTypes.string,
+      amount_paid: PropTypes.number,
+      remarks: PropTypes.string,
+    })
+  ).isRequired,
+};

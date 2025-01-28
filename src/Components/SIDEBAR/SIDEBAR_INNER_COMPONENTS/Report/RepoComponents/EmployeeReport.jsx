@@ -1,88 +1,69 @@
 import PropTypes from "prop-types";
-import { FaBars } from "react-icons/fa"; // Assuming you are using Font Awesome
+import { DataGrid } from "@mui/x-data-grid";
+import Paper from "@mui/material/Paper";
 
 export default function EmployeeReport({ currentReports }) {
+  const columns = [
+    {
+      field: "fullName",
+      headerName: "Full Name",
+      minWidth: 180,
+      flex: 1,
+    },
+    {
+      field: "userName",
+      headerName: "Username",
+      minWidth: 150,
+      flex: 1,
+    },
+    {
+      field: "target",
+      headerName: "Target",
+      minWidth: 130,
+      flex: 1,
+    },
+    {
+      field: "targetAchieved",
+      headerName: "Target Achieved",
+      minWidth: 160,
+      flex: 1,
+    },
+    {
+      field: "targetRemaining",
+      headerName: "Target Remaining",
+      minWidth: 160,
+      flex: 1,
+    },
+  ];
+
+  const rows = currentReports.map((report, index) => ({
+    id: index + 1,
+    ...report,
+  }));
+
   return (
-    <table className="min-w-full bg-white leads_Table">
-      {/* ----------------- TABLE HEAD START ----------------- */}
-      <thead>
-        <tr className="border-gray-300 border-b-2">
-          {/* CHECKBOX */}
-          <th className="px-3 py-3 w-max">
-            <input type="checkbox" />
-          </th>
-          {/* FULL NAME */}
-          <th className="px-2 py-3 text-left border-r font-medium">
-            <div className="flex items-center justify-between">
-              <span className="text-nowrap pr-2">Full Name</span>
-              <FaBars />
-            </div>
-          </th>
-          {/* USERNAME */}
-          <th className="px-2 py-3 text-left border-r font-medium">
-            <div className="flex items-center justify-between">
-              <span className="text-nowrap pr-2">Username</span>
-              <FaBars />
-            </div>
-          </th>
-          {/* TARGET */}
-          <th className="px-2 py-3 text-left border-r font-medium">
-            <div className="flex items-center justify-between">
-              <span className="text-nowrap pr-2">Target</span>
-              <FaBars />
-            </div>
-          </th>
-          {/* TARGET ACHIEVED */}
-          <th className="px-2 py-3 text-left border-r font-medium">
-            <div className="flex items-center justify-between">
-              <span className="text-nowrap pr-2">Target Achieved</span>
-              <FaBars />
-            </div>
-          </th>
-          {/* TARGET REMAINING */}
-          <th className="px-2 py-3 text-left border-r font-medium">
-            <div className="flex items-center justify-between">
-              <span className="text-nowrap pr-2">Target Remaining</span>
-              <FaBars />
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {currentReports.map((report, i) => (
-          <tr
-            key={i}
-            className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
-          >
-            {/* CHECKBOX */}
-            <td className="px-3 py-4 text-center w-max">
-              <input type="checkbox" />
-            </td>
-            {/* FULL NAME */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.fullName}
-            </td>
-            {/* USER NAME */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.userName}
-            </td>
-            {/* TARGET */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.targetAmount}
-            </td>
-            {/* TARGET ACHIEVED */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.targetAchieved}
-            </td>
-            {/* TARGET REMAINING */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              {report.remainingTarget}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-      {/* ----------------- TABLE HEAD END ----------------- */}
-    </table>
+    <Paper sx={{ width: "100%" }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 10,
+            },
+          },
+        }}
+        pageSizeOptions={[10]}
+        checkboxSelection
+        sx={{
+          border: 0,
+          width: "100%",
+          "& .MuiDataGrid-columnHeaderTitle": {
+            fontWeight: "bold",
+          },
+        }}
+      />
+    </Paper>
   );
 }
 
@@ -94,6 +75,6 @@ EmployeeReport.propTypes = {
       target: PropTypes.number.isRequired,
       targetAchieved: PropTypes.number.isRequired,
       targetRemaining: PropTypes.number.isRequired,
-    }),
+    })
   ).isRequired,
 };
