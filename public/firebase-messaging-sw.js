@@ -1,5 +1,9 @@
-importScripts("https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js");
-importScripts("https://www.gstatic.com/firebasejs/9.21.0/firebase-messaging-compat.js");
+importScripts(
+  "https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js",
+);
+importScripts(
+  "https://www.gstatic.com/firebasejs/9.21.0/firebase-messaging-compat.js",
+);
 
 // Initialize Firebase in the Service Worker
 const firebaseConfig = {
@@ -11,7 +15,6 @@ const firebaseConfig = {
   appId: "1:472834376183:web:f39a443f31f67ccf0faef2",
   measurementId: "G-NBP9WY1XF3",
 };
-
 
 firebase.initializeApp(firebaseConfig);
 

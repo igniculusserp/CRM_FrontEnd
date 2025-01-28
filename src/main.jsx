@@ -240,7 +240,7 @@ const router = createBrowserRouter([
       { path: "*", element: <Test /> },
 
       // --------------------------------  Settings ------------------------------
-      { path: "/panel/settings/user-settings", element: <UserSetting />  },
+      { path: "/panel/settings/user-settings", element: <UserSetting /> },
       { path: "/panel/settings/user-Operation", element: <UserOperation /> },
       { path: "/panel/settings/group", element: <Group /> },
       { path: "/panel/settings/department", element: <Department /> },
@@ -273,5 +273,5 @@ createRoot(document.getElementById("root")).render(
         </NotificationProvider>
       </FollowUpNotificationProvider>
     </GoogleOAuthProvider>
-  </MsalProvider>
+  </MsalProvider>,
 );

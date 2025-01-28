@@ -4,14 +4,14 @@ import { tenant_base_url, protocal_url } from "../../../../../../Config/config";
 import { getHostnamePart } from "../../../ReusableComponents/GlobalHostUrl";
 import PropTypes from "prop-types";
 
-export default function EditAccessControl({ onCancel, id}) {
+export default function EditAccessControl({ onCancel, id }) {
   const name = getHostnamePart();
 
   //----------------------------Access Control Details -----------------------
 
   // ------------------------------ Access Control State ------------------------
   const [controlDetails, setControlDetails] = useState({
-    id:"",
+    id: "",
     title: "",
     description: "",
     enabled: true,
@@ -36,8 +36,8 @@ export default function EditAccessControl({ onCancel, id}) {
               ? "Valid Always"
               : "Custom"
             : type === "checkbox"
-            ? checked
-            : value,
+              ? checked
+              : value,
       };
       console.log("Updated Control Details:", updatedDetails); // Log updated control details
       return updatedDetails;
@@ -62,7 +62,7 @@ export default function EditAccessControl({ onCancel, id}) {
     try {
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Security/accesscontrol/get/${id}`,
-        config
+        config,
       );
 
       if (response.status === 200 && response.data.isSuccess) {
@@ -115,7 +115,7 @@ export default function EditAccessControl({ onCancel, id}) {
       await axios.put(
         `${protocal_url}${name}.${tenant_base_url}/Security/accesscontrol/edit/${id}`,
         requestBody,
-        config
+        config,
       );
       alert("Successfully Updated");
       onCancel();
@@ -377,9 +377,7 @@ export default function EditAccessControl({ onCancel, id}) {
             ))}
           </div>
           {/* BROWSE RESTRICTION */}
-          {selectedId === 1 && (
-            <>{/* <BrowserRestriction />*/}1</>
-          )}
+          {selectedId === 1 && <>{/* <BrowserRestriction />*/}1</>}
 
           {/* IP RESTRICTION */}
           {selectedId === 2 && <>2</>}

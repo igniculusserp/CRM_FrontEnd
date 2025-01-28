@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
 import {
   BarChart,
   Bar,
@@ -9,17 +9,17 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from 'recharts';
+} from "recharts";
 
 const data = [
-  { name: 'Conversation', value: 500 },
-  { name: 'FollowUp', value: 300 },
-  { name: 'Inpipeline', value: 500 },
+  { name: "Conversation", value: 500 },
+  { name: "FollowUp", value: 300 },
+  { name: "Inpipeline", value: 500 },
 ];
 
 const BottomChart = ({ text, color }) => {
   const [filterDropdown, setFilterDropdown] = useState(false);
-  const [filterDropdownText, setFilterDropdownText] = useState('6 Months');
+  const [filterDropdownText, setFilterDropdownText] = useState("6 Months");
 
   // TOGGLE FILTER DATE DROPDOWN
   const toggleFilterDropdown = () => {
@@ -36,9 +36,9 @@ const BottomChart = ({ text, color }) => {
   };
 
   const filterData = [
-    { id: 1, name: '3 months' },
-    { id: 1, name: '6 months' },
-    { id: 1, name: '1 years' },
+    { id: 1, name: "3 months" },
+    { id: 1, name: "6 months" },
+    { id: 1, name: "1 years" },
   ];
 
   return (

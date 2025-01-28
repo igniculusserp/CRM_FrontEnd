@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { FaAngleDown, FaBars } from 'react-icons/fa';
-import { ImFilter } from 'react-icons/im';
-import { IoSearchOutline } from 'react-icons/io5';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { FaAngleDown, FaBars } from "react-icons/fa";
+import { ImFilter } from "react-icons/im";
+import { IoSearchOutline } from "react-icons/io5";
+import { Link, useNavigate } from "react-router-dom";
 
 import { TbRefresh } from "react-icons/tb";
 
@@ -53,215 +53,215 @@ export default function MailBox() {
   const mailBoxMainData = [
     {
       id: 1,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 2,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 3,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 4,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 5,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 6,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 7,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 8,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 9,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 10,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 11,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 12,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 13,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 14,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 15,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 16,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 17,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 18,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 19,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 20,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 21,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 22,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 23,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 24,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
     {
       id: 25,
-      clientName: 'Shubham Mishra',
+      clientName: "Shubham Mishra",
       mobile: 6578903421,
-      mail: 'Hello, dude how are you!',
-      type: 'Calling Person',
-      mailTime: '13/12/2023 16:15',
+      mail: "Hello, dude how are you!",
+      type: "Calling Person",
+      mailTime: "13/12/2023 16:15",
     },
   ];
 
   //   STRIPE BAR
   const stripeBar = [
-    { key: 1, value: 'Table View' },
-    { key: 2, value: 'Grid View' },
+    { key: 1, value: "Table View" },
+    { key: 2, value: "Grid View" },
   ];
 
   //   SELECTED VIEW
   const [selectedViewValue, setSelectedViewValue] = useState(
-    stripeBar[0].value
+    stripeBar[0].value,
   );
 
   const [getMails, setMails] = useState(mailBoxMainData);
@@ -275,12 +275,12 @@ export default function MailBox() {
   //   FOR SAVING VALUES
   function handleMailBoxStatusButton(value) {
     console.log(value);
-    if (value === null || value === 'ALL') {
+    if (value === null || value === "ALL") {
       setFilteredMailBox(getMails);
     } else {
       // Filter leads based on the value
       const filtered = getMails.filter(
-        (getleads) => getleads.leadesStatus === value
+        (getleads) => getleads.leadesStatus === value,
       );
       console.log(filtered);
     }
@@ -288,41 +288,35 @@ export default function MailBox() {
 
   //   Sales Orders Data
   const mailBoxData = [
-    { key: 1, value: 'Man Insited' },
-    { key: 2, value: 'Man Insited' },
-    { key: 3, value: 'Man Insited' },
-    { key: 4, value: 'Man Insited' },
-    { key: 5, value: 'Man Insited' },
-    { key: 6, value: 'Man Insited' },
+    { key: 1, value: "Man Insited" },
+    { key: 2, value: "Man Insited" },
+    { key: 3, value: "Man Insited" },
+    { key: 4, value: "Man Insited" },
+    { key: 5, value: "Man Insited" },
+    { key: 6, value: "Man Insited" },
   ];
-
-
 
   //   FILTER BY DATA
   const filterData = [
-    { key: 1, value: '12/03/2023' },
-    { key: 2, value: '10/09/2023' },
-    { key: 3, value: '10/09/2023' },
-    { key: 4, value: '12/03/2023' },
-    { key: 5, value: '10/09/2023' },
-    { key: 6, value: '12/03/2023' },
+    { key: 1, value: "12/03/2023" },
+    { key: 2, value: "10/09/2023" },
+    { key: 3, value: "10/09/2023" },
+    { key: 4, value: "12/03/2023" },
+    { key: 5, value: "10/09/2023" },
+    { key: 6, value: "12/03/2023" },
   ];
 
   //   ACTION DROPDOWN
   const dropActionsMenu = [
-    { key: 0, value: 'Actions' },
-    { key: 1, value: 'Mass Delete' },
-    { key: 2, value: 'Mass Update' },
-    { key: 3, value: 'Mass Email' },
-    { key: 4, value: 'Approve Leads' },
-    { key: 5, value: 'Export Leads' },
-    { key: 6, value: 'Sheet View' },
-    { key: 7, value: 'Print View' },
+    { key: 0, value: "Actions" },
+    { key: 1, value: "Mass Delete" },
+    { key: 2, value: "Mass Update" },
+    { key: 3, value: "Mass Email" },
+    { key: 4, value: "Approve Leads" },
+    { key: 5, value: "Export Leads" },
+    { key: 6, value: "Sheet View" },
+    { key: 7, value: "Print View" },
   ];
-
-
-
-
 
   return (
     <div className="min-h-screen flex flex-col m-3">
@@ -405,7 +399,11 @@ export default function MailBox() {
             </button>
           </div>
           {/* ACTION DROPDOWN */}
-          <div className="relative" onClick={toggleActionDropdown} onMouseLeave={() => setActionDropdown(false)}>
+          <div
+            className="relative"
+            onClick={toggleActionDropdown}
+            onMouseLeave={() => setActionDropdown(false)}
+          >
             <button
               className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
               id="dropdownDefaultButton"
@@ -416,7 +414,7 @@ export default function MailBox() {
             </button>
             {actionDropdown && (
               <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
-                <ul className="text-sm text-gray-700 " >
+                <ul className="text-sm text-gray-700 ">
                   {dropActionsMenu.map(({ key, value }) => (
                     <li
                       key={key}
@@ -435,9 +433,7 @@ export default function MailBox() {
       {/* FILTER BY */}
       <div className="my-1 flex py-2 items-center justify-between gap-3">
         <div className="flex items-center justify-center gap-3">
-          <h1 className="text-3xl font-medium">
-            Mail Box
-          </h1>
+          <h1 className="text-3xl font-medium">Mail Box</h1>
           <button className="bg-blue-600 text-white px-2 py-2 min-w-10 text-center rounded-md text-md shadow-md">
             {mailBoxMainData.length}
           </button>
@@ -445,44 +441,44 @@ export default function MailBox() {
         {/* ------------------- Filter by date ----------------- */}
 
         <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
-            {/* Filter Icon Button */}
-            <button className="border-r border-gray-500 px-3">
-              <ImFilter className="filter_Image_Size" />
-            </button>
+          {/* Filter Icon Button */}
+          <button className="border-r border-gray-500 px-3">
+            <ImFilter className="filter_Image_Size" />
+          </button>
 
-            {/* Date Range Filter Button */}
-            <button className="border-r border-gray-500 px-3">Filter By</button>
+          {/* Date Range Filter Button */}
+          <button className="border-r border-gray-500 px-3">Filter By</button>
 
-            {/* Date Range Inputs */}
-            <div className="px-3 flex items-center gap-2">
-              <input
-                type="date"
-                // value={startDate}
-                className="border rounded px-2 py-1"
-                // onChange={(e) => setStartDate(e.target.value)}
-              />
+          {/* Date Range Inputs */}
+          <div className="px-3 flex items-center gap-2">
+            <input
+              type="date"
+              // value={startDate}
+              className="border rounded px-2 py-1"
+              // onChange={(e) => setStartDate(e.target.value)}
+            />
 
-              <input
-                type="date"
-                // value={endDate}
-                className="border rounded px-2 py-1"
-                // onChange={(e) => setEndDate(e.target.value)}
-              />
-            </div>
-
-            <div className="p-2 border rounded cursor-pointer reset_paddings  hover:shadow-md" 
-            // onClick={handleResetFilter}
-            >
-              <TbRefresh size={25}/>
-            </div>
-
+            <input
+              type="date"
+              // value={endDate}
+              className="border rounded px-2 py-1"
+              // onChange={(e) => setEndDate(e.target.value)}
+            />
           </div>
+
+          <div
+            className="p-2 border rounded cursor-pointer reset_paddings  hover:shadow-md"
+            // onClick={handleResetFilter}
+          >
+            <TbRefresh size={25} />
+          </div>
+        </div>
       </div>
 
       {/* TABLE VIEW */}
       <div className="overflow-x-auto">
         <div className="min-w-full rounded-md overflow-hidden">
-          {selectedViewValue === 'Table View' && (
+          {selectedViewValue === "Table View" && (
             <table className="min-w-full bg-white">
               {/* TABLE HEAD START */}
               <thead>
@@ -551,7 +547,9 @@ export default function MailBox() {
                           src={map.clientName}
                           alt="DP"
                         />
-                        <span className='ml-2 w-[80px] break-words'>{map.clientName}</span>
+                        <span className="ml-2 w-[80px] break-words">
+                          {map.clientName}
+                        </span>
                       </div>
                     </td>
                     {/* MOBILE */}
@@ -580,7 +578,7 @@ export default function MailBox() {
       </div>
 
       {/* PAGINATION */}
-      {selectedViewValue === 'Table View' && (
+      {selectedViewValue === "Table View" && (
         <>
           <div className="flex justify-end m-4">
             <nav>
@@ -593,14 +591,14 @@ export default function MailBox() {
                         onClick={() => paginate(i + 1)}
                         className={`px-4 py-2 mx-1 ${
                           currentPage === i + 1
-                            ? 'bg-blue-500 text-white'
-                            : 'bg-white text-gray-700 border'
+                            ? "bg-blue-500 text-white"
+                            : "bg-white text-gray-700 border"
                         }`}
                       >
                         {i + 1}
                       </button>
                     </li>
-                  )
+                  ),
                 )}
               </ul>
             </nav>

@@ -1,4 +1,4 @@
-import { FaBars } from 'react-icons/fa';
+import { FaBars } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 export default function ClientReports({ currentReports }) {
   const navigate = useNavigate(); // Add this line
@@ -79,10 +79,9 @@ export default function ClientReports({ currentReports }) {
               <input type="checkbox" />
             </td>
             {/* CLIENT ID */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-blue-600"
-             onClick={() =>
-              navigate(`/panel/clientso/${report.id}`)
-            }
+            <td
+              className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-blue-600"
+              onClick={() => navigate(`/panel/clientso/${report.id}`)}
             >
               {report.id}
             </td>

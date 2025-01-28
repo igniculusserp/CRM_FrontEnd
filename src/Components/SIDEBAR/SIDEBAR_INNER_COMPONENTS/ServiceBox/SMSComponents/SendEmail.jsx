@@ -1,4 +1,4 @@
-import { FaBars } from 'react-icons/fa';
+import { FaBars } from "react-icons/fa";
 import PropTypes from "prop-types";
 
 export default function SendEmail({ currentSms }) {
@@ -73,7 +73,7 @@ export default function SendEmail({ currentSms }) {
             </td>
             {/* SENT TIME */}
             <td className="px-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-            {sms.sentDateTime.replace("T", " ")}
+              {sms.sentDateTime.replace("T", " ")}
             </td>
           </tr>
         ))}

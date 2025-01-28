@@ -54,7 +54,7 @@ export default function FreeTrail() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Trail/alltrail/byusertoken`,
-        config
+        config,
       );
       if (response.status === 200) {
         const followup = response?.data?.data; // Get the user data
@@ -78,8 +78,6 @@ export default function FreeTrail() {
   const toggleMenuAllFreeTrial = () => {
     setAllFreeTrialdropDown(!allFreeTrialdropDown);
   };
-
-
 
   //   ACTION TOGGLE
   const [dropActionsMenudropDown, setdropActionsMenudropDown] = useState(false);
@@ -117,10 +115,8 @@ export default function FreeTrail() {
   };
 
   const [selectedViewValue, setSelectedViewValue] = useState(
-    stripeBar[0].value
+    stripeBar[0].value,
   );
-
-
 
   const freeTrialDropdown = [
     { key: 1, value: "Man Insited" },
@@ -179,7 +175,7 @@ export default function FreeTrail() {
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
     if (value === "Mass Delete") {
       const userConfirmed = confirm(
-        "Are you sure you want to Delete the selected Data?"
+        "Are you sure you want to Delete the selected Data?",
       );
       if (userConfirmed) {
         handleMassDelete(selectedRows);
@@ -189,7 +185,7 @@ export default function FreeTrail() {
     // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
     if (value === "Mass Email") {
       const userConfirmed = confirm(
-        "Are you sure you want to Send E-Mail to the selected Data?"
+        "Are you sure you want to Send E-Mail to the selected Data?",
       );
       if (userConfirmed) {
         openMassEmailModal(selectedEmails);
@@ -199,7 +195,7 @@ export default function FreeTrail() {
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
     if (value === "Sheet View") {
       const userConfirmed = confirm(
-        "Are you sure you want to export the selected data?"
+        "Are you sure you want to export the selected data?",
       );
       if (userConfirmed) {
         exportToExcel(selectedRows);
@@ -209,7 +205,7 @@ export default function FreeTrail() {
     // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
     if (value === "Print View") {
       const userConfirmed = confirm(
-        "Are you sure you want to export the selected Leads?"
+        "Are you sure you want to export the selected Leads?",
       );
       if (userConfirmed) {
         exportToPDF(selectedRows);
@@ -231,8 +227,8 @@ export default function FreeTrail() {
       const deleteRequests = ids.map((id) =>
         axios.delete(
           `${protocal_url}${name}.${tenant_base_url}/Trail/delete/${id}`,
-          config
-        )
+          config,
+        ),
       );
 
       // Wait for all delete requests to finish
@@ -251,7 +247,7 @@ export default function FreeTrail() {
   const exportToExcel = () => {
     // Filter currentLeads based on selectedIds
     const leadsToExport = currentLeads.filter((lead) =>
-      selectedRows.includes(lead.id)
+      selectedRows.includes(lead.id),
     );
     if (leadsToExport?.length === 0) {
       alert("No leads selected to export");
@@ -286,7 +282,7 @@ export default function FreeTrail() {
   //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
   const exportToPDF = () => {
     const leadsToExport = currentLeads.filter((lead) =>
-      selectedRows.includes(lead.id)
+      selectedRows.includes(lead.id),
     );
     if (leadsToExport?.length === 0) {
       alert("No leads selected to export");
@@ -314,7 +310,6 @@ export default function FreeTrail() {
     doc.save("FreeTrail.pdf");
   };
 
-
   // States for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Number of items per page
@@ -333,9 +328,6 @@ export default function FreeTrail() {
       setCurrentPage(pageNumber);
     }
   };
-
-
-
 
   //-----------------------------------------------> ALL-> ASSIGNED_TO <-functionality <-----------------------------------------------
 
@@ -362,7 +354,7 @@ export default function FreeTrail() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
+        config,
       );
       setallAssigned_To_Data(response.data.data);
     } catch (error) {
@@ -377,17 +369,15 @@ export default function FreeTrail() {
 
   // ------------------------------------------Fillters---------------------------------
 
-
   function handle_AssignedTo(assignedToValue) {
     let filteredLeads = freeTrial;
     if (assignedToValue !== null && assignedToValue !== "Assigned to") {
       filteredLeads = filteredLeads.filter(
-        (lead) => lead.assigned_To === assignedToValue
+        (lead) => lead.assigned_To === assignedToValue,
       );
     }
     setFilteredTrails(filteredLeads); // Set the filtered result
   }
-
 
   // Handle selecting an assigned user
   function handleAssignedToSelection(user) {
@@ -403,8 +393,6 @@ export default function FreeTrail() {
 
   // Function to filter based on date range
   function handle_DateRange(startDate, endDate) {
-
-
     const start = new Date(startDate);
     start.setHours(0, 0, 0, 0); // Set to the start of the day
 
@@ -430,9 +418,6 @@ export default function FreeTrail() {
     }
   }, [startDate, endDate]);
 
-
-
-
   // ------------------------------ Search Function ----------------------------------
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
@@ -440,16 +425,16 @@ export default function FreeTrail() {
     // Reset to the first page when search results change
     setCurrentPage(1);
 
-    const filtered = freeTrial.filter((lead) =>
-      lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
-      lead.mobileNo?.includes(searchTerm)
+    const filtered = freeTrial.filter(
+      (lead) =>
+        lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+        lead.mobileNo?.includes(searchTerm),
     );
     setFilteredTrails(filtered);
   }, [searchTerm, freeTrial]);
 
   // Calculate total pages based on filtered data length
   const totalPages = Math.ceil(filteredTrails.length / itemsPerPage);
-
 
   //------------------------------------------------------Filter Reset Settings ---------------------------------------------
 
@@ -475,14 +460,14 @@ export default function FreeTrail() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
-        config
+        config,
       );
       console.log("Permission Data : ", response.data.data);
       const permissionsList = response?.data?.data;
 
       if (permissionsList) {
         const serviceBoxPermissions = permissionsList.find(
-          (item) => item.moduleName === "Free Trail"
+          (item) => item.moduleName === "Free Trail",
         );
 
         if (serviceBoxPermissions) {
@@ -504,9 +489,6 @@ export default function FreeTrail() {
   useEffect(() => {
     handleGetPermission();
   }, []);
-
-
-
 
   return (
     <div className="min-h-screen flex flex-col m-3">
@@ -541,7 +523,7 @@ export default function FreeTrail() {
                     <li
                       key={item.id}
                       className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                    // onClick={() => handleTrialStatusButton(item.status)}
+                      // onClick={() => handleTrialStatusButton(item.status)}
                     >
                       {item.value}
                     </li>
@@ -583,12 +565,13 @@ export default function FreeTrail() {
           </div>
 
           {/* SEARCH DROPDOWN */}
-          <SearchElement value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+          <SearchElement
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
 
         <div className="flex items-center gap-3 justify-start action_Button_Main_Container">
-       
-
           {/* Stripe-BarDropDown */}
           <div
             className="relative hide_Component"
@@ -636,19 +619,19 @@ export default function FreeTrail() {
             </button>
             {dropActionsMenudropDown && (
               <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
-                 <ul className="text-sm text-gray-700">
-                    {dropActionsMenu.map(({ key, value }) =>
-                      permissions.includes(value) || businessRole==="Admin" ? (
-                        <li
-                          key={key}
-                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          onClick={() => handleActionButton(value)}
-                        >
-                          {value}
-                        </li>
-                      ) : null
-                    )}
-                  </ul>
+                <ul className="text-sm text-gray-700">
+                  {dropActionsMenu.map(({ key, value }) =>
+                    permissions.includes(value) || businessRole === "Admin" ? (
+                      <li
+                        key={key}
+                        className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                        onClick={() => handleActionButton(value)}
+                      >
+                        {value}
+                      </li>
+                    ) : null,
+                  )}
+                </ul>
               </div>
             )}
           </div>
@@ -667,47 +650,46 @@ export default function FreeTrail() {
         <div className="date_Filter_Main_Container">
           {/* ------------------- Filter by date ----------------- */}
           <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
-
             {/* Filter Icon Button */}
             <div className="flex items-center">
-            <button className="border-r border-gray-500 pr-2">
-              <ImFilter className="filter_Image_Size" />
-            </button>
+              <button className="border-r border-gray-500 pr-2">
+                <ImFilter className="filter_Image_Size" />
+              </button>
 
-            {/* Date Range Filter Button */}
-            <button
-              className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display"
+              {/* Date Range Filter Button */}
+              <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display">
+                Filter By
+              </button>
+
+              {/* Date Range Inputs */}
+              <div className="px-2 flex items-center gap-2 filter_Date_Container">
+                <label className="hide_Filter_Text">From:</label>
+                <input
+                  type="date"
+                  value={startDate}
+                  className="border rounded px-2 py-2 filter_Date"
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
+
+                <label className="hide_Filter_Text">To:</label>
+                <input
+                  type="date"
+                  value={endDate}
+                  className="border rounded px-2 py-2 filter_Date"
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div
+              className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center"
+              onClick={handleResetFilter}
             >
-              Filter By
-            </button>
-
-            {/* Date Range Inputs */}
-            <div className="px-2 flex items-center gap-2 filter_Date_Container">
-              <label className="hide_Filter_Text">From:</label>
-              <input
-                type="date"
-                value={startDate}
-                className="border rounded px-2 py-2 filter_Date"
-                onChange={(e) => setStartDate(e.target.value)}
-              />
-
-              <label className="hide_Filter_Text">To:</label>
-              <input
-                type="date"
-                value={endDate}
-                className="border rounded px-2 py-2 filter_Date"
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </div>
-            </div>
-            
-            <div className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center" onClick={handleResetFilter}>
-            <label className="hide_Filter_Text ">Reset</label>
-               <TbRefresh className="filter_Reset_Image"/>
+              <label className="hide_Filter_Text ">Reset</label>
+              <TbRefresh className="filter_Reset_Image" />
             </div>
           </div>
         </div>
-
       </div>
       {/* TABLE VIEW */}
       <div className="overflow-x-auto leads_Table_Main_Container">
@@ -796,7 +778,6 @@ export default function FreeTrail() {
               {/*--------------TABLE DATA------------- */}
               <tbody>
                 {currentLeads.map((order, index) => (
-
                   <tr
                     key={index}
                     className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
@@ -817,7 +798,9 @@ export default function FreeTrail() {
                     <td
                       className="px-1 py-4 border-b border-gray-300 text-sm leading-5 "
                       onClick={
-                        edit|| businessRole==="Admin" ? () => handleClick(order.id) : undefined
+                        edit || businessRole === "Admin"
+                          ? () => handleClick(order.id)
+                          : undefined
                       }
                     >
                       <div className="flex items-center">
@@ -835,7 +818,7 @@ export default function FreeTrail() {
                             onClick={(event) => event.stopPropagation()}
                           >
                             {order.mobileNo}
-                          </a>                         
+                          </a>
                         </span>
                         <span className="text-red-400">
                           <MdCall />
@@ -867,10 +850,10 @@ export default function FreeTrail() {
                       <div className="flex items-center break-words">
                         {order.trialStartDate
                           ? order.trialStartDate
-                            .replace("T", " ")
-                            .split(":")
-                            .slice(0, 2)
-                            .join(":")
+                              .replace("T", " ")
+                              .split(":")
+                              .slice(0, 2)
+                              .join(":")
                           : "N/A"}
                       </div>
                     </td>
@@ -879,10 +862,10 @@ export default function FreeTrail() {
                       <div className="flex items-center break-words">
                         {order.trialEndDate
                           ? order.trialEndDate
-                            .replace("T", " ")
-                            .split(":")
-                            .slice(0, 2)
-                            .join(":")
+                              .replace("T", " ")
+                              .split(":")
+                              .slice(0, 2)
+                              .join(":")
                           : "N/A"}
                       </div>
                     </td>
@@ -968,8 +951,7 @@ export default function FreeTrail() {
         </>
       )}
 
-
-      {selectedViewValue === 'Table View' && (
+      {selectedViewValue === "Table View" && (
         <>
           <div className="flex justify-end m-4">
             {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
@@ -977,60 +959,64 @@ export default function FreeTrail() {
               {/* Previous Button */}
               <button
                 onClick={() => paginate(currentPage - 1)}
-                className={`p-1 shadow-md rounded-full text-white ${currentPage === 1
-                    ? 'border-gray-200 border-2 cursor-not-allowed'
-                    : 'bg-cyan-500 border-2 border-gray-100'
-                  }`}
+                className={`p-1 shadow-md rounded-full text-white ${
+                  currentPage === 1
+                    ? "border-gray-200 border-2 cursor-not-allowed"
+                    : "bg-cyan-500 border-2 border-gray-100"
+                }`}
                 disabled={currentPage === 1}
               >
                 <GrFormPrevious size={25} />
               </button>
 
               {/* Dynamic Page Numbers */}
-              {Array.from({ length: totalPage }, (_, i) => i + 1).map((page) => {
-                if (
-                  page === 1 ||
-                  page === totalPage ||
-                  (page >= currentPage - 1 && page <= currentPage + 1)
-                ) {
-                  return (
-                    <button
-                      key={page}
-                      onClick={() => paginate(page)}
-                      className={`px-4 py-2 rounded mx-1 ${currentPage === page
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-white text-gray-700 border'
+              {Array.from({ length: totalPage }, (_, i) => i + 1).map(
+                (page) => {
+                  if (
+                    page === 1 ||
+                    page === totalPage ||
+                    (page >= currentPage - 1 && page <= currentPage + 1)
+                  ) {
+                    return (
+                      <button
+                        key={page}
+                        onClick={() => paginate(page)}
+                        className={`px-4 py-2 rounded mx-1 ${
+                          currentPage === page
+                            ? "bg-blue-600 text-white"
+                            : "bg-white text-gray-700 border"
                         }`}
-                    >
-                      {page}
-                    </button>
-                  );
-                } else if (
-                  (page === currentPage - 2 && page > 1) || // Ellipsis before current
-                  (page === currentPage + 2 && page < totalPage) // Ellipsis after current
-                ) {
-                  return (
-                    <span key={page} className="px-2 text-gray-500">
-                      ...
-                    </span>
-                  );
-                }
-                return null;
-              })}
+                      >
+                        {page}
+                      </button>
+                    );
+                  } else if (
+                    (page === currentPage - 2 && page > 1) || // Ellipsis before current
+                    (page === currentPage + 2 && page < totalPage) // Ellipsis after current
+                  ) {
+                    return (
+                      <span key={page} className="px-2 text-gray-500">
+                        ...
+                      </span>
+                    );
+                  }
+                  return null;
+                },
+              )}
 
               {/* Next Button */}
               <button
                 onClick={() => paginate(currentPage + 1)}
-                className={`p-1 shadow-md rounded-full text-white ${currentPage === totalPage
-                    ? 'border-gray-200 border-2 cursor-not-allowed'
-                    : 'bg-cyan-500 border-2 border-gray-100'
-                  }`}
+                className={`p-1 shadow-md rounded-full text-white ${
+                  currentPage === totalPage
+                    ? "border-gray-200 border-2 cursor-not-allowed"
+                    : "bg-cyan-500 border-2 border-gray-100"
+                }`}
                 disabled={currentPage === totalPage}
               >
                 <GrFormNext size={25} />
               </button>
             </nav>
-
           </div>
         </>
       )}

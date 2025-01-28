@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function ResearchReport() {
   const [editReport, setEditReport] = useState({
-    fromDate: '',
-    ToDate: '',
-    research: '',
-    product: '',
+    fromDate: "",
+    ToDate: "",
+    research: "",
+    product: "",
   });
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -18,20 +18,20 @@ export default function ResearchReport() {
 
   // DROPDOWNS
   const [fromDateDropdown, setFromDateDropdown] = useState(false);
-  const [defaultFromDateText, setDefaultFromDateText] = useState('From Date');
+  const [defaultFromDateText, setDefaultFromDateText] = useState("From Date");
   const [toDateDropdown, setToDateDropdown] = useState(false);
-  const [defaultToDateText, setDefaultToDateText] = useState('To Date');
+  const [defaultToDateText, setDefaultToDateText] = useState("To Date");
   const [researchDropdown, setResearchDropdown] = useState(false);
-  const [defaultResearchText, setDefaultResearchText] = useState('Research');
+  const [defaultResearchText, setDefaultResearchText] = useState("Research");
   const [productDropdown, setProductDropdown] = useState(false);
-  const [defaultProductText, setDefaultProductText] = useState('Product');
+  const [defaultProductText, setDefaultProductText] = useState("Product");
 
   // FROM DATE DUMMY
   const fromDate = [
-    { id: 1, name: '12/09/2023' },
-    { id: 2, name: '12/09/2023' },
-    { id: 3, name: '12/09/2023' },
-    { id: 4, name: '12/09/2023' },
+    { id: 1, name: "12/09/2023" },
+    { id: 2, name: "12/09/2023" },
+    { id: 3, name: "12/09/2023" },
+    { id: 4, name: "12/09/2023" },
   ];
 
   // TOGGLE FROM DATE
@@ -50,10 +50,10 @@ export default function ResearchReport() {
 
   // TO DATE DUMMY
   const toDate = [
-    { id: 1, name: '12/09/2023' },
-    { id: 2, name: '12/09/2023' },
-    { id: 3, name: '12/09/2023' },
-    { id: 4, name: '12/09/2023' },
+    { id: 1, name: "12/09/2023" },
+    { id: 2, name: "12/09/2023" },
+    { id: 3, name: "12/09/2023" },
+    { id: 4, name: "12/09/2023" },
   ];
 
   // TOGGLE TO DATE
@@ -72,10 +72,10 @@ export default function ResearchReport() {
 
   // CALL RESEARCH DUMMY
   const research = [
-    { id: 1, name: 'research' },
-    { id: 2, name: 'research' },
-    { id: 3, name: 'research' },
-    { id: 4, name: 'research' },
+    { id: 1, name: "research" },
+    { id: 2, name: "research" },
+    { id: 3, name: "research" },
+    { id: 4, name: "research" },
   ];
 
   // TOGGLE RESEARCH
@@ -94,10 +94,10 @@ export default function ResearchReport() {
 
   // PRODUCT DUMMY
   const product = [
-    { id: 1, name: 'product' },
-    { id: 2, name: 'product' },
-    { id: 3, name: 'product' },
-    { id: 4, name: 'product' },
+    { id: 1, name: "product" },
+    { id: 2, name: "product" },
+    { id: 3, name: "product" },
+    { id: 4, name: "product" },
   ];
 
   // TOGGLE TO DATE
@@ -302,7 +302,7 @@ export default function ResearchReport() {
                 type="submit"
                 className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
               >
-                {isEditMode ? 'Update' : 'Save'}
+                {isEditMode ? "Update" : "Save"}
               </button>
             </div>
           </div>

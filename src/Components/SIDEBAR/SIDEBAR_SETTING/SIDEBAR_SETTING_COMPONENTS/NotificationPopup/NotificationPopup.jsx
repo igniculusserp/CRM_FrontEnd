@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { FaBars } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import Switch from 'react-switch'; // Import react-switch
-import { tenant_base_url, protocal_url } from './../../../../../Config/config';
+import { useState, useEffect } from "react";
+import { FaBars } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import Switch from "react-switch"; // Import react-switch
+import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 
 export default function BranchTarget() {
   const { id } = useParams();
@@ -15,20 +15,20 @@ export default function BranchTarget() {
 
   const [users, setUsers] = useState([
     {
-      id: '1',
-      jaisonDocument: 'Verify your Account',
+      id: "1",
+      jaisonDocument: "Verify your Account",
       popup: true, // Use true/false for toggle state
     },
     {
-      id: '2',
-      jaisonDocument: 'Verify your Account',
+      id: "2",
+      jaisonDocument: "Verify your Account",
       popup: false, // Another user with toggle off
     },
   ]);
 
   const [formData, setFormData] = useState({
-    id: '',
-    jaisonDocument: '',
+    id: "",
+    jaisonDocument: "",
     popup: false, // Default to false for the toggle
   });
 
@@ -38,8 +38,8 @@ export default function BranchTarget() {
     setActive(!active);
     setIsEditMode(false); // Reset edit mode when switching views
     setFormData({
-      id: '',
-      jaisonDocument: '',
+      id: "",
+      jaisonDocument: "",
       popup: false, // Reset popup to false (disabled)
     });
   };
@@ -75,20 +75,20 @@ export default function BranchTarget() {
     e.preventDefault();
 
     if (!formData.jaisonDocument) {
-      alert('Please fill in all fields before submitting.');
+      alert("Please fill in all fields before submitting.");
       return;
     }
 
     const submittedData = {
       ...formData,
-      popup: formData.popup ? 'enabled' : 'disabled', // Convert boolean to string for submission
+      popup: formData.popup ? "enabled" : "disabled", // Convert boolean to string for submission
     };
 
     if (isEditMode) {
-      console.log('Edit User:', submittedData);
+      console.log("Edit User:", submittedData);
       // Add logic to submit the edited user data
     } else {
-      console.log('Add User:', submittedData);
+      console.log("Add User:", submittedData);
       setActive(true); // Switch back to view mode
       // Add logic to add a new user
     }
@@ -150,7 +150,7 @@ export default function BranchTarget() {
                             type="checkbox"
                             onClick={(e) =>
                               console.log(
-                                `Checkbox clicked for user: ${user.id}`
+                                `Checkbox clicked for user: ${user.id}`,
                               )
                             }
                           />
@@ -195,8 +195,8 @@ export default function BranchTarget() {
             <div className="flex min-w-screen justify-between items-center">
               <h1 className="text-3xl font-medium">
                 {isEditMode
-                  ? 'Edit Push Notification Details'
-                  : 'Add Push Notification Details'}
+                  ? "Edit Push Notification Details"
+                  : "Add Push Notification Details"}
               </h1>
               <button
                 onClick={handleActiveState}
@@ -287,7 +287,7 @@ export default function BranchTarget() {
                           className="react-switch"
                         />
                         <span className="text-sm">
-                          {formData.popup ? 'Enabled' : 'Disabled'}
+                          {formData.popup ? "Enabled" : "Disabled"}
                         </span>
                       </div>
                     </div>
@@ -316,7 +316,7 @@ export default function BranchTarget() {
                         type="submit"
                         className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md w-max"
                       >
-                        {isEditMode ? 'Edit Plan' : 'Add Plan'}
+                        {isEditMode ? "Edit Plan" : "Add Plan"}
                       </button>
                     </div>
                   </div>

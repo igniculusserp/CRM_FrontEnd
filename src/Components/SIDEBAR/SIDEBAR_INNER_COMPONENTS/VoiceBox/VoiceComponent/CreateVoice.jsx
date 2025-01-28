@@ -1,16 +1,16 @@
 // REACT - INBUILD
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 // REACT - ICONS
-import { FaAngleDown } from 'react-icons/fa';
+import { FaAngleDown } from "react-icons/fa";
 // REACT - QUILL
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 //reactPackages
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from "react-router-dom";
 //external Packages
-import axios from 'axios';
+import axios from "axios";
 //file
-import { tenant_base_url, protocal_url } from '../../../../../Config/config';
+import { tenant_base_url, protocal_url } from "../../../../../Config/config";
 
 const CreateVoice = () => {
   //to make id unique
@@ -19,24 +19,24 @@ const CreateVoice = () => {
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [editVoice, setEditVoice] = useState({
-    id: '',
-    leadNo: '',
-    clientName: '',
-    disposition: '',
-    employeeName: '',
-    callDateTime: '',
-    source: '',
-    duration: '',
-    type: '',
-    status: '',
-    uniqueId: '',
+    id: "",
+    leadNo: "",
+    clientName: "",
+    disposition: "",
+    employeeName: "",
+    callDateTime: "",
+    source: "",
+    duration: "",
+    type: "",
+    status: "",
+    uniqueId: "",
   });
 
   //----------------------------------------------------------------------------------------
   //to make code for particluar company
   const fullURL = window.location.href;
   const url = new URL(fullURL);
-  const name = url.hostname.split('.')[0];
+  const name = url.hostname.split(".")[0];
 
   useEffect(() => {
     handleMonitorVoiceBox(); // Fetch lead data for editing
@@ -44,7 +44,7 @@ const CreateVoice = () => {
 
   //GET by ID---------------------------//GET---------------------------//GET---------------------------by ID-----------by ID
   async function handleMonitorVoiceBox() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -53,33 +53,33 @@ const CreateVoice = () => {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/VoiceBox/getbyid/${id}`,
-        config
+        config,
       );
       const data = response.data.data;
-      console.log('@@@@===', response.data.data);
+      console.log("@@@@===", response.data.data);
       setEditVoice({
-        id: data.id || '',
-        leadNo: data.leadNo || '',
-        clientName: data.clientName || '',
-        disposition: data.disposition || '',
-        employeeName: data.employeeName || '',
-        callDateTime: data.callDateTime || '',
-        source: data.source || '',
-        duration: data.duration || '',
-        type: data.type || '',
-        status: data.status || '',
-        uniqueId: data.uniqueId || '',
+        id: data.id || "",
+        leadNo: data.leadNo || "",
+        clientName: data.clientName || "",
+        disposition: data.disposition || "",
+        employeeName: data.employeeName || "",
+        callDateTime: data.callDateTime || "",
+        source: data.source || "",
+        duration: data.duration || "",
+        type: data.type || "",
+        status: data.status || "",
+        uniqueId: data.uniqueId || "",
       });
     } catch (error) {
-      console.error('Error fetching Trail:', error);
+      console.error("Error fetching Trail:", error);
     }
   }
 
   const [typeDropdown, setTypeDropdown] = useState(false);
   const [defaultTypeDropdownText, setDefaultTypeDropdownText] =
-    useState('Type');
+    useState("Type");
   const [statusDropdown, setStatusDropdown] = useState(false);
-  const [defaultStatusText, setDefaultStatusText] = useState('Status');
+  const [defaultStatusText, setDefaultStatusText] = useState("Status");
 
   //   TOGGLE TYPE DORPDOWN
   const toggleTypeDropdown = () => {
@@ -122,15 +122,15 @@ const CreateVoice = () => {
 
   //   TYPE DATA
   const typeData = [
-    { key: 1, value: 'Incoming' },
-    { key: 2, value: 'Outgoing' },
-    { key: 3, value: 'Missed' },
+    { key: 1, value: "Incoming" },
+    { key: 2, value: "Outgoing" },
+    { key: 3, value: "Missed" },
   ];
 
   //   STATUS DATA
   const statusData = [
-    { key: 1, value: 'Not Answer' },
-    { key: 2, value: 'Answer' },
+    { key: 1, value: "Not Answer" },
+    { key: 2, value: "Answer" },
   ];
 
   //---------->handleSubmit<----------
@@ -144,16 +144,16 @@ const CreateVoice = () => {
 
     // VALIDATION
     if (!editVoice.leadNo || isNaN(editVoice.leadNo)) {
-      errors.leadNumber = 'Lead number is required';
+      errors.leadNumber = "Lead number is required";
     } else if (
       !editVoice.employeeName ||
-      editVoice.employeeName.trim() === ''
+      editVoice.employeeName.trim() === ""
     ) {
-      errors.empName = 'Employee Name is required';
+      errors.empName = "Employee Name is required";
     } else if (!editVoice.uniqueId) {
-      errors.uId = 'Enter Unique Id';
-    } else if (editVoice.type || editVoice.type.trim() === '') {
-      errors.typeDropdown = 'Type is required';
+      errors.uId = "Enter Unique Id";
+    } else if (editVoice.type || editVoice.type.trim() === "") {
+      errors.typeDropdown = "Type is required";
     }
 
     if (Object.keys(errors).length > 0) {
@@ -161,13 +161,13 @@ const CreateVoice = () => {
       return;
     }
 
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       };
       const formData_PUT = {
@@ -187,19 +187,19 @@ const CreateVoice = () => {
       await axios.put(
         `${protocal_url}${name}.${tenant_base_url}/VoiceBox/update`,
         formData_PUT,
-        config
+        config,
       );
-      alert('Monitoring Voice Box updated successfully!');
+      alert("Monitoring Voice Box updated successfully!");
       navigate(`/panel/voicebox`);
 
       // Redirect after a short delay
     } catch (error) {
       if (error.response) {
-        console.error('Error data:', error.response.data);
+        console.error("Error data:", error.response.data);
       } else {
-        console.error('Error:', error.message);
+        console.error("Error:", error.message);
       }
-      alert('An error occurred. Please try again.');
+      alert("An error occurred. Please try again.");
     }
   };
 
@@ -244,7 +244,7 @@ const CreateVoice = () => {
                     placeholder="Entere verox peron"
                   />
                   {errors.leadNo && (
-                    <span style={{ color: 'red' }}>{errors.leadNumber}</span>
+                    <span style={{ color: "red" }}>{errors.leadNumber}</span>
                   )}
                 </div>
                 {/* CLIENT NAME FIELD */}
@@ -286,7 +286,7 @@ const CreateVoice = () => {
                     placeholder="Entere verox peron"
                   />
                   {errors.employeeName && (
-                    <span style={{ color: 'red' }}>{errors.empName}</span>
+                    <span style={{ color: "red" }}>{errors.empName}</span>
                   )}
                 </div>
                 {/* phoneNo FIELD */}
@@ -367,7 +367,7 @@ const CreateVoice = () => {
                     placeholder="Entere verox peron"
                   />
                   {errors.uniqueId && (
-                    <span style={{ color: 'red' }}>{errors.uId}</span>
+                    <span style={{ color: "red" }}>{errors.uId}</span>
                   )}
                 </div>
                 {/* DURATION FIELD */}
@@ -410,7 +410,7 @@ const CreateVoice = () => {
                         id="type"
                         type="button"
                       >
-                        {editVoice.type === ''
+                        {editVoice.type === ""
                           ? defaultTypeDropdownText
                           : editVoice.type}
 
@@ -435,8 +435,8 @@ const CreateVoice = () => {
                       )}
                     </div>
                     {errors.type && (
-                    <span style={{ color: 'red' }}>{errors.typeData}</span>
-                  )}
+                      <span style={{ color: "red" }}>{errors.typeData}</span>
+                    )}
                   </div>
                 </div>
                 {/* STATUS TO DROPDOWN */}
@@ -458,7 +458,7 @@ const CreateVoice = () => {
                         id="LeadStatusDropDown"
                         type="button"
                       >
-                        {editVoice.status === ''
+                        {editVoice.status === ""
                           ? defaultStatusText
                           : editVoice.status}
 
@@ -492,7 +492,7 @@ const CreateVoice = () => {
                 type="submit"
                 className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
               >
-                {isEditMode ? 'Update' : 'Save'}
+                {isEditMode ? "Update" : "Save"}
               </button>
             </div>
           </div>

@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
+import { useState } from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
 
 // Folder Imported
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
@@ -10,7 +10,7 @@ const MassEmailModal = ({ emails, onClose }) => {
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
 
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false); // Loading state
 
   const handleSubmit = async (event) => {
@@ -38,7 +38,7 @@ const MassEmailModal = ({ emails, onClose }) => {
 
       console.log(
         "POST URL:",
-        `${protocal_url}${name}.${tenant_base_url}/Lead/lead/massemail`
+        `${protocal_url}${name}.${tenant_base_url}/Lead/lead/massemail`,
       );
       console.log("formData_POST:", formData_POST);
 
@@ -46,7 +46,7 @@ const MassEmailModal = ({ emails, onClose }) => {
       await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/Lead/lead/massemail`,
         formData_POST,
-        config
+        config,
       );
 
       alert("Emails sent successfully!");
@@ -106,11 +106,12 @@ const MassEmailModal = ({ emails, onClose }) => {
         {/* Button Container */}
         <div className="flex justify-end">
           <button
-            className={`px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
             onClick={handleSubmit} // Call handleSubmit to send email
             disabled={loading} // Disable button while loading
           >
-            {loading ? 'Sending...' : 'Send'} {/* Change button text based on loading state */}
+            {loading ? "Sending..." : "Send"}{" "}
+            {/* Change button text based on loading state */}
           </button>
           <button
             className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"

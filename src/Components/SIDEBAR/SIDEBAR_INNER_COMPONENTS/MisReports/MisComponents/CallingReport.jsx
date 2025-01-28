@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function CallingReport() {
   const [editReport, setEditReport] = useState({
-    fromDate: '',
-    ToDate: '',
+    fromDate: "",
+    ToDate: "",
   });
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -16,16 +16,16 @@ export default function CallingReport() {
 
   // DROPDOWNS
   const [fromDateDropdown, setFromDateDropdown] = useState(false);
-  const [defaultFromDateText, setDefaultFromDateText] = useState('From Date');
+  const [defaultFromDateText, setDefaultFromDateText] = useState("From Date");
   const [toDateDropdown, setToDateDropdown] = useState(false);
-  const [defaultToDateText, setDefaultToDateText] = useState('To Date');
+  const [defaultToDateText, setDefaultToDateText] = useState("To Date");
 
   // FROM DATE DUMMY
   const fromDate = [
-    { id: 1, name: '12/09/2023' },
-    { id: 2, name: '12/09/2023' },
-    { id: 3, name: '12/09/2023' },
-    { id: 4, name: '12/09/2023' },
+    { id: 1, name: "12/09/2023" },
+    { id: 2, name: "12/09/2023" },
+    { id: 3, name: "12/09/2023" },
+    { id: 4, name: "12/09/2023" },
   ];
 
   // TOGGLE FROM DATE
@@ -44,10 +44,10 @@ export default function CallingReport() {
 
   // TO DATE DUMMY
   const toDate = [
-    { id: 1, name: '12/09/2023' },
-    { id: 2, name: '12/09/2023' },
-    { id: 3, name: '12/09/2023' },
-    { id: 4, name: '12/09/2023' },
+    { id: 1, name: "12/09/2023" },
+    { id: 2, name: "12/09/2023" },
+    { id: 3, name: "12/09/2023" },
+    { id: 4, name: "12/09/2023" },
   ];
 
   // TOGGLE TO DATE
@@ -172,7 +172,7 @@ export default function CallingReport() {
                 type="submit"
                 className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
               >
-                {isEditMode ? 'Update' : 'Save'}
+                {isEditMode ? "Update" : "Save"}
               </button>
             </div>
           </div>

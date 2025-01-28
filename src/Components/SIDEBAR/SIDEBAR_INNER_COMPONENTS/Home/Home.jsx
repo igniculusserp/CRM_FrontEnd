@@ -7,13 +7,16 @@ import axios from "axios";
 
 //reactIcons
 import { ImCancelCircle } from "react-icons/im";
-import { FaArrowAltCircleDown, FaArrowAltCircleUp, FaUsers } from "react-icons/fa";
+import {
+  FaArrowAltCircleDown,
+  FaArrowAltCircleUp,
+  FaUsers,
+} from "react-icons/fa";
 import { LuIndianRupee } from "react-icons/lu";
 import { MdOutlineGroups2 } from "react-icons/md";
 import { GiHumanPyramid } from "react-icons/gi";
 import { FaUsersRectangle } from "react-icons/fa6";
-import { GrContactInfo } from 'react-icons/gr';
-
+import { GrContactInfo } from "react-icons/gr";
 
 //Chart
 import SalesPipelineChart from "./homeComponents/SalesPipelineChart";
@@ -57,7 +60,7 @@ export default function Home() {
 
       const targetRes = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Report/targetreports/byusertoken`,
-        config
+        config,
       );
 
       const res = targetRes?.data?.data;
@@ -80,7 +83,7 @@ export default function Home() {
 
       const targetAchievedRes = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Report/brokaragetreports/byusertoken`,
-        config
+        config,
       );
 
       const targetAchievedDat = targetAchievedRes?.data?.data;
@@ -99,7 +102,7 @@ export default function Home() {
     fetchTargetAchievedData();
   }, []);
 
-  //ByPass OTP -> CHECK 
+  //ByPass OTP -> CHECK
   const checkStoredOtp = () => {
     const storedOtp = localStorage.getItem("otp"); // Retrieve OTP from localStorage
     if (!storedOtp || storedOtp.length !== 6) {
@@ -129,7 +132,7 @@ export default function Home() {
       // First API call: current month sales report
       const reportRes = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Report/currrentmonthSales/report`,
-        config
+        config,
       );
       const reportData = reportRes.data.data;
       setSalesData(reportData?.salesData); // Set sales data after the first API call is complete
@@ -137,7 +140,7 @@ export default function Home() {
       // Second API call: current month leads report
       const leadRes = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Report/currentmonthLeads/report`,
-        config
+        config,
       );
       const leadData = leadRes.data.data;
       setLeadsData(leadData); // Set leads data after the second API call is complete
@@ -145,7 +148,7 @@ export default function Home() {
       // Third API call: current month leads report
       const kycRes = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Report/currentmonthKYC/report`,
-        config
+        config,
       );
       const Kyc = kycRes.data.data;
       setKycData(Kyc); // Set KYC data after the Third API call is complete
@@ -167,8 +170,8 @@ export default function Home() {
     previousMonthClientCount === 0
       ? currentMonthClientCount * 100
       : ((currentMonthClientCount - previousMonthClientCount) /
-        previousMonthClientCount) *
-      100;
+          previousMonthClientCount) *
+        100;
   //---------------------last month diffrence-------------------------
 
   const clientDiffrence = currentMonthClientCount - previousMonthClientCount;
@@ -177,9 +180,7 @@ export default function Home() {
   const revenuePercentageChange =
     previousMonthSales === 0
       ? currentMonthSales * 100
-      : ((currentMonthSales - previousMonthSales) /
-        previousMonthSales) *
-      100;
+      : ((currentMonthSales - previousMonthSales) / previousMonthSales) * 100;
 
   //---------------------last month diffrence-------------------------
   const revenueDiffrence = currentMonthSales - previousMonthSales;
@@ -201,9 +202,7 @@ export default function Home() {
   const leadsPercentage =
     previousMonthLeads === 0
       ? currentMonthLeads * 100
-      : ((currentMonthLeads - previousMonthLeads) /
-        previousMonthLeads) *
-      100;
+      : ((currentMonthLeads - previousMonthLeads) / previousMonthLeads) * 100;
   //---------------------last month diffrence-------------------------
   const leadsDiffrence = currentMonthLeads - previousMonthLeads;
 
@@ -212,31 +211,25 @@ export default function Home() {
     previousMonthInterestedLeads === 0
       ? currentMonthInterestedLeads * 100 // Multiply current leads directly by 100 if no previous leads.
       : ((currentMonthInterestedLeads - previousMonthInterestedLeads) /
-        previousMonthInterestedLeads) *
-      100;
+          previousMonthInterestedLeads) *
+        100;
   const intrestedLeadsDiffrence =
     currentMonthInterestedLeads - previousMonthInterestedLeads;
   //-------------------------- Determine increase or decrease status for leads and intrested leads--------------------------
 
-
   const leadStatus = leadsPercentage > 0 ? "up" : "down";
   const intrestedLeadStatus = intrestedPercentageChange > 0 ? "up" : "down";
 
-
   //------------ Destructure KYC with fallback values to prevent null or undefined issues-----------------
-
 
   const currentMonthKYC = kycData.currentMonthKYC;
   const previousMonthKYC = kycData.previousMonthKYC;
-
 
   //----------------Calculate percentage increase for clients-----------------
   const kycPercentageChange =
     previousMonthKYC === 0
       ? currentMonthKYC * 100
-      : ((currentMonthKYC - previousMonthKYC) /
-        previousMonthKYC) *
-      100;
+      : ((currentMonthKYC - previousMonthKYC) / previousMonthKYC) * 100;
   //---------------------last month diffrence-------------------------
   const kycDiffrence = currentMonthKYC - previousMonthKYC;
 
@@ -264,7 +257,7 @@ export default function Home() {
         Date.UTC(
           subscriptionEndDate.getFullYear(),
           subscriptionEndDate.getMonth(),
-          subscriptionEndDate.getDate()
+          subscriptionEndDate.getDate(),
         ) - Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
       const days = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
       return days > 0 ? days : 0;
@@ -298,7 +291,7 @@ export default function Home() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Report/brokaragetreports/byusertoken`,
-        config
+        config,
       );
       if (response.status === 200) {
         const Details = response.data.data.totalBrokerage;
@@ -319,7 +312,7 @@ export default function Home() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Report/targetreports/byusertoken`,
-        config
+        config,
       );
       if (response.status === 200) {
         const Details = response.data.data.totalTarget;
@@ -342,7 +335,8 @@ export default function Home() {
     <>
       <div className="min-h-screen flex flex-col gap-1 ">
         {showSubscription && (
-          <div className="
+          <div
+            className="
             flex items-center justify-between 
             bg-white 
             shadow-md 
@@ -355,8 +349,9 @@ export default function Home() {
             <div className="flex flex-col justify-start">
               {/*Condition if reamining days are less than 5  */}
               <h1
-                className={`${remainingDays < 5 ? "text-red-500" : "text-gray-700"
-                  } text-xl font-semibold`}
+                className={`${
+                  remainingDays < 5 ? "text-red-500" : "text-gray-700"
+                } text-xl font-semibold`}
               >
                 Clock is ticking! {remainingDays} day&apos;s are left in your
                 trail.
@@ -389,13 +384,12 @@ export default function Home() {
           {/* ------- CARD --> CHILD:1------- */}
           <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 md:w-4/4  lg:w-1/4">
             <div className="flex flex-col">
-              { }
+              {}
               <h1 className="font-light uppercase text-sm font-medium	">
                 {business === "Brokerage" ? "Leads" : "Lead this month"}
               </h1>
               {/* ------- CARD--> 1 ---> Logo and SideText --> Parent ----------- */}
               <div className="flex items-center justify-between mt-2  ">
-
                 {/* ------- CARD--> 1 ---> Logo --> C1 ----------- */}
                 <div className=" px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-teal-500 text-white flex items-center justify-center">
                   {/* ------- CARD--> 1 ---> Logo --> C1 ----------- */}
@@ -403,7 +397,6 @@ export default function Home() {
                 </div>
                 {/* ------- CARD--> 1 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
                 <div className="flex flex-col items-center justify-center gap-1 ">
-
                   <span className="text-lg font-semibold sm:text-xl sm:font-bold">
                     {currentMonthLeads}
                   </span>
@@ -419,8 +412,9 @@ export default function Home() {
                     ) : (
                       <FaArrowAltCircleDown className="text-sm" />
                     )}
-                    <span className="text-sm sm:text-md">{Math.round(leadsPercentage)}%</span>
-
+                    <span className="text-sm sm:text-md">
+                      {Math.round(leadsPercentage)}%
+                    </span>
                   </div>
                 </div>
               </div>
@@ -428,8 +422,9 @@ export default function Home() {
             {/* ------- CARD--> 1 ---> PROGRESS BAR  --> C3 ----------- */}
             <div className="h-2 w-full bg-transparent border border-gray-500 rounded-lg ">
               <div
-                className={`h-full ${leadStatus == "up" ? "bg-blue-600" : "bg-red-500"
-                  }`}
+                className={`h-full ${
+                  leadStatus == "up" ? "bg-blue-600" : "bg-red-500"
+                }`}
                 style={{
                   maxWidth: `${Math.abs(Math.round(leadsPercentage))}%`,
                 }}
@@ -471,8 +466,9 @@ export default function Home() {
                     ) : (
                       <FaArrowAltCircleDown className="text-sm" />
                     )}
-                    <span className="text-sm sm:text-md">{Math.round(leadsPercentage)}%</span>
-
+                    <span className="text-sm sm:text-md">
+                      {Math.round(leadsPercentage)}%
+                    </span>
                   </div>
                 </div>
               </div>
@@ -480,8 +476,9 @@ export default function Home() {
             {/* ------- CARD--> 2 ---> PROGRESS BAR  --> C3 ----------- */}
             <div className="h-2 w-full bg-transparent border border-gray-500 rounded-lg ">
               <div
-                className={`h-full ${leadStatus == "up" ? "bg-blue-600" : "bg-red-600"
-                  }`}
+                className={`h-full ${
+                  leadStatus == "up" ? "bg-blue-600" : "bg-red-600"
+                }`}
                 style={{
                   maxWidth: `${Math.abs(Math.round(leadsPercentage))}%`,
                 }}
@@ -497,7 +494,7 @@ export default function Home() {
           {/* ------- CARD --> CHILD:3------- */}
           <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 md:w-4/4  lg:w-1/4">
             <div className="flex flex-col">
-              { }
+              {}
               <h1 className="font-light uppercase text-sm font-medium	">
                 {business === "Brokerage" ? "KYC" : "CLIENT THIS MONTH"}
               </h1>
@@ -510,12 +507,12 @@ export default function Home() {
                 {/* ------- CARD--> 3 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
 
                 <div className="flex flex-col items-center justify-center gap-1 ">
-
                   <span className="text-lg font-semibold sm:text-xl sm:font-bold ">
-
-                    {business === "Brokerage" ? currentMonthKYC : currentMonthClientCount}
+                    {business === "Brokerage"
+                      ? currentMonthKYC
+                      : currentMonthClientCount}
                   </span>
-                  {business === "Brokerage" ?
+                  {business === "Brokerage" ? (
                     <div
                       className={`
                       flex items-center gap-1 p-1 rounded-lg
@@ -527,9 +524,11 @@ export default function Home() {
                       ) : (
                         <FaArrowAltCircleDown className="text-sm" />
                       )}
-                      <span className="text-sm sm:text-md">{Math.round(kycPercentageChange)}%</span>
+                      <span className="text-sm sm:text-md">
+                        {Math.round(kycPercentageChange)}%
+                      </span>
                     </div>
-                    :
+                  ) : (
                     <div
                       className={`
                     flex items-center gap-1 p-1 rounded-lg
@@ -541,50 +540,50 @@ export default function Home() {
                       ) : (
                         <FaArrowAltCircleDown className="text-sm" />
                       )}
-                      <span className="text-sm sm:text-md">{Math.round(clientPercentageChange)}%</span>
+                      <span className="text-sm sm:text-md">
+                        {Math.round(clientPercentageChange)}%
+                      </span>
                     </div>
-                  }
-
+                  )}
                 </div>
               </div>
             </div>
             {/* ------- CARD--> 3  --> PROGRESS BAR  --> C3 ----------- */}
             <div className="h-2 w-full bg-transparent border border-gray-500 rounded-lg ">
-              {business === "Brokerage" ?
+              {business === "Brokerage" ? (
                 <div
-                  className={`h-full ${clientStatus == "up" ? "bg-blue-600" : "bg-red-600"
-                    }`}
+                  className={`h-full ${
+                    clientStatus == "up" ? "bg-blue-600" : "bg-red-600"
+                  }`}
                   style={{
                     maxWidth: `${Math.abs(Math.round(kycPercentageChange))}%`,
                   }}
                 ></div>
-                :
+              ) : (
                 <div
-                  className={`h-full ${clientStatus == "up" ? "bg-blue-600" : "bg-red-600"
-                    }`}
+                  className={`h-full ${
+                    clientStatus == "up" ? "bg-blue-600" : "bg-red-600"
+                  }`}
                   style={{
                     maxWidth: `${Math.abs(Math.round(clientPercentageChange))}%`,
                   }}
-                >
-                </div>
-              }
-
+                ></div>
+              )}
             </div>
             <h3 className="font-light text-sm">
               Last Month Relative:{" "}
-              {business === "Brokerage" ?
+              {business === "Brokerage" ? (
                 <span className="text-sm">{kycDiffrence}</span>
-                :
+              ) : (
                 <span className="text-sm">{clientDiffrence}</span>
-              }
-
+              )}
             </h3>
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------- */}
           {/* ------- CARD --> CHILD -> 4 ------- */}
           <div className="flex flex-col justify-between bg-white p-2 sm:p-4 sm:gap-4 rounded-md shadow-lg sm:min-h-52 h-44 md:w-4/4  lg:w-1/4">
             <div className="flex flex-col">
-              { }
+              {}
               <h1 className="font-light uppercase text-sm font-medium	">
                 {business === "Brokerage"
                   ? "Interested Clients"
@@ -593,18 +592,15 @@ export default function Home() {
               {/* ------- CARD--> 4 ---> Logo and SideText --> Parent ----------- */}
               <div className="flex items-center justify-between mt-2  ">
                 <div className=" px-2 h-12 w-12 sm:h-20 sm:w-20 rounded-full bg-sky-500 text-white flex items-center justify-center">
-                {/* ------- CARD--> 4 ---> Logo --> C1 ----------- */}
+                  {/* ------- CARD--> 4 ---> Logo --> C1 ----------- */}
                   <GiHumanPyramid className="text-2xl sm:text-5xl  " />
                 </div>
                 {/* ------- CARD--> 4 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
 
-                
                 <div className="flex flex-col items-center justify-center gap-1 ">
-
-                
-                <span className="text-lg font-semibold sm:text-xl sm:font-bold">
-                {currentMonthInterestedLeads}
-              </span>
+                  <span className="text-lg font-semibold sm:text-xl sm:font-bold">
+                    {currentMonthInterestedLeads}
+                  </span>
 
                   <button
                     className={`
@@ -613,34 +609,37 @@ export default function Home() {
                     `}
                   >
                     {intrestedLeadStatus == "up" ? (
-                      <FaArrowAltCircleUp className="text-sm"  />
+                      <FaArrowAltCircleUp className="text-sm" />
                     ) : (
-                      <FaArrowAltCircleDown className="text-sm"  />
+                      <FaArrowAltCircleDown className="text-sm" />
                     )}
-                    <span className="text-sm sm:text-md">{Math.round(intrestedPercentageChange)}%</span>
+                    <span className="text-sm sm:text-md">
+                      {Math.round(intrestedPercentageChange)}%
+                    </span>
                   </button>
                 </div>
               </div>
             </div>
             {/* ------- CARD--> 4 ---> PROGRESS BAR  --> C3 ----------- */}
-             {/* ------- CARD--> 4 ---> PROGRESS BAR  --> C3 ----------- */}
-             <div className="h-2 w-full bg-transparent border border-gray-500 rounded-lg ">
-             <div
-               className={`h-full ${leadStatus == "up" ? "bg-blue-600" : "bg-red-500"
-                 }`}
-               style={{
-                 maxWidth: `${Math.abs(Math.round(leadsPercentage))}%`,
-               }}
-             ></div>
-           </div>
-           {/* ------- CARD--> 1 ---> Last Line{Text}--> C4 ----------- */}
-           <h3 className="font-light text-sm">
-             Last Month Relative:{" "}
-             <span className="text-sm">{intrestedLeadsDiffrence}</span>
-           </h3>
-         </div>
+            {/* ------- CARD--> 4 ---> PROGRESS BAR  --> C3 ----------- */}
+            <div className="h-2 w-full bg-transparent border border-gray-500 rounded-lg ">
+              <div
+                className={`h-full ${
+                  leadStatus == "up" ? "bg-blue-600" : "bg-red-500"
+                }`}
+                style={{
+                  maxWidth: `${Math.abs(Math.round(leadsPercentage))}%`,
+                }}
+              ></div>
+            </div>
+            {/* ------- CARD--> 1 ---> Last Line{Text}--> C4 ----------- */}
+            <h3 className="font-light text-sm">
+              Last Month Relative:{" "}
+              <span className="text-sm">{intrestedLeadsDiffrence}</span>
+            </h3>
+          </div>
         </div>
-          {/* ---------------------------------------------------------------------------------------------------------------- */}
+        {/* ---------------------------------------------------------------------------------------------------------------- */}
 
         <div className="sm:flex gap-3 m-2 grid grid-cols-1">
           <div className="flex-4 flex flex-col bg-white py-4 px-4 rounded-md shadow-md sm:w-96 w-full  justify-between">
@@ -737,8 +736,7 @@ export default function Home() {
         {/* ------- BOTTOM CARDS ------- */}
         {business === "Brokerage" ? (
           ""
-        ) :
-          (
+        ) : (
           <div className="sm:flex gap-3 mx-2 md:grid md:grid-cols-1 gap-3">
             {/* ------- BOTTOM CARD ------- */}
             <div className="flex  flex-col bg-white shadow-sm py-6 px-3 rounded-md">

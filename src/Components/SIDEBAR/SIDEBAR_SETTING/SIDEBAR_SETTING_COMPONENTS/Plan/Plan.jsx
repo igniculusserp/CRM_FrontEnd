@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { FaAngleDown, FaBars } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { tenant_base_url, protocal_url } from './../../../../../Config/config';
+import { useState, useEffect } from "react";
+import { FaAngleDown, FaBars } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 
 export default function Plan() {
   const { id } = useParams();
@@ -13,22 +13,22 @@ export default function Plan() {
     {
       id: 1,
       planAmount: 101,
-      planType: 'Group-Tambi',
-      description: 'Plan is very Big',
+      planType: "Group-Tambi",
+      description: "Plan is very Big",
     },
     {
       id: 2,
       planAmount: 102,
-      planType: 'Group-Lompi',
-      description: 'Plan is Incredible',
+      planType: "Group-Lompi",
+      description: "Plan is Incredible",
     },
   ]);
 
   const [formData, setFormData] = useState({
-    id: '',
-    planAmount: '',
-    planType: '',
-    description: '',
+    id: "",
+    planAmount: "",
+    planType: "",
+    description: "",
   });
 
   const [editLead, setEditLead] = useState(null);
@@ -37,7 +37,7 @@ export default function Plan() {
   // Plan Type State
   const [planType, setplanType] = useState([]);
   const [defaultTextplanTypeDropDown, setDefaultTextplanTypeDropDown] =
-    useState('Select Plan');
+    useState("Select Plan");
   const [isDropdownVisibleplanType, setIsDropdownVisibleplanType] =
     useState(false);
 
@@ -45,10 +45,10 @@ export default function Plan() {
     setActive(!active);
     setIsEditMode(false); // Reset edit mode when switching views
     setFormData({
-      id: '',
-      planAmount: '',
-      planType: '',
-      description: '',
+      id: "",
+      planAmount: "",
+      planType: "",
+      description: "",
     }); // Reset form data
   };
 
@@ -70,16 +70,14 @@ export default function Plan() {
     }));
   };
 
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (isEditMode) {
-      console.log('Edit User:', formData);
+      console.log("Edit User:", formData);
       // Add logic to submit the edited user data
     } else {
-      console.log('Add User:', formData);
+      console.log("Add User:", formData);
       setActive(true); // Switch to the form view
 
       // Add logic to add a new user
@@ -99,14 +97,14 @@ export default function Plan() {
   const handleDropdownPlanType = (planType) => {
     setFormData((prevData) => ({
       ...prevData,
-      planType: planType, 
+      planType: planType,
     }));
     setDefaultTextplanTypeDropDown(p);
     setIsDropdownVisibleplanType(false);
   };
 
   async function handleGroup() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
@@ -115,12 +113,13 @@ export default function Plan() {
         },
       };
       const response = await axios.get(
-        `${protocal_url}${window.location.hostname.split('.')[0]}.${tenant_base_url}/Admin/leadstatus/getall`, config
+        `${protocal_url}${window.location.hostname.split(".")[0]}.${tenant_base_url}/Admin/leadstatus/getall`,
+        config,
       );
       setplanType(response.data.data);
-      console.log('Plan data:', response.data.data);
+      console.log("Plan data:", response.data.data);
     } catch (error) {
-      console.error('Error fetching plans:', error);
+      console.error("Error fetching plans:", error);
     }
   }
 
@@ -216,7 +215,7 @@ export default function Plan() {
           <>
             <div className="flex min-w-screen justify-between items-center">
               <h1 className="text-3xl font-medium">
-                {isEditMode ? 'Edit Plan Operation' : 'Add Plan Operation'}
+                {isEditMode ? "Edit Plan Operation" : "Add Plan Operation"}
               </h1>
               <button
                 onClick={handleActiveState}
@@ -251,7 +250,6 @@ export default function Plan() {
                           className="mt-1 p-2 border border-gray-300 rounded-md"
                           placeholder="Enter Plan Amount"
                         />
-                        
                       </div>
                       {/* -------------planType------------- */}
                       <div className="flex flex-col w-1/2 relative">
@@ -295,7 +293,6 @@ export default function Plan() {
                             </div>
                           )}
                         </div>
-                      
                       </div>
                     </div>
 
@@ -325,7 +322,7 @@ export default function Plan() {
                         type="submit"
                         className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-6 py-4 rounded-md w-max"
                       >
-                        {isEditMode ? 'Update User' : 'Save User'}
+                        {isEditMode ? "Update User" : "Save User"}
                       </button>
                     </div>
                   </div>

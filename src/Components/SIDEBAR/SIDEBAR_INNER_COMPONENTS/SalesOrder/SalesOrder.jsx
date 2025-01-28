@@ -1,37 +1,34 @@
 //react
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 //external Packages
-import axios from 'axios';
-import * as XLSX from 'xlsx';
-import { jsPDF } from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import axios from "axios";
+import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 
 //React Icons
-import { FaAngleDown, FaPhoneAlt } from 'react-icons/fa';
-import { IoIosMail } from 'react-icons/io';
-import { BiEdit } from 'react-icons/bi';
-import { FaBars } from 'react-icons/fa';
-import { VscSettings } from 'react-icons/vsc';
-import { ImFilter } from 'react-icons/im';
-import { MdCall } from 'react-icons/md';
+import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
+import { IoIosMail } from "react-icons/io";
+import { BiEdit } from "react-icons/bi";
+import { FaBars } from "react-icons/fa";
+import { VscSettings } from "react-icons/vsc";
+import { ImFilter } from "react-icons/im";
+import { MdCall } from "react-icons/md";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { TbRefresh } from "react-icons/tb";
 
-
 //Folder Imported
 
-import { tenant_base_url, protocal_url } from '../../../../Config/config';
-import MassEmail from '../MassEmail/MassEmail';
-import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
-import {SearchElement} from "../SearchElement/SearchElement";
-
+import { tenant_base_url, protocal_url } from "../../../../Config/config";
+import MassEmail from "../MassEmail/MassEmail";
+import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+import { SearchElement } from "../SearchElement/SearchElement";
 
 //-----------------------------ToastContainer-----------------------------
-import { ToastContainer } from 'react-toastify';
-import { showSuccessToast } from './../../../../utils/toastNotifications'
-
+import { ToastContainer } from "react-toastify";
+import { showSuccessToast } from "./../../../../utils/toastNotifications";
 
 const name = getHostnamePart();
 
@@ -57,7 +54,7 @@ export default function SalesOrder() {
   //------------------------------------------------------------------------------------------------
   //----------------GET----------------
   async function handleLead() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -66,7 +63,7 @@ export default function SalesOrder() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/byusertoken`,
-        config
+        config,
       );
 
       const data = response.data.data;
@@ -74,7 +71,7 @@ export default function SalesOrder() {
       setFilteredLeads(data);
       setIsStatusChanged(data.status);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
     }
   }
@@ -82,7 +79,7 @@ export default function SalesOrder() {
   //------------------------------------------------------------------------------------------------
   //----------------Managing Color of Assigned To----------------
   const getAllUsers = async () => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -91,13 +88,13 @@ export default function SalesOrder() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
+        config,
       );
 
       const data = response.data?.data;
       setUsers(data);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
     }
   };
@@ -110,9 +107,9 @@ export default function SalesOrder() {
   //------------------------------------------------------------------------------------------------//------------------------------------------------------------------------------------------------
   //----------------STATUS BAR DROPDOWN----------------
   const status = [
-    { key: 0, value: 'All Sales Order' },
-    { key: 1, value: 'Pending Records' },
-    { key: 2, value: 'Approved Records' },
+    { key: 0, value: "All Sales Order" },
+    { key: 1, value: "Pending Records" },
+    { key: 2, value: "Approved Records" },
   ];
 
   const [salesOrderStatus, setsalesOrderStatus] = useState(status[0].value); // Track the selected lead status
@@ -135,14 +132,14 @@ export default function SalesOrder() {
     setisDropdownVisible_salesOrderStatus(false);
     let filteredLeads = getleads;
 
-    if (value === 'Pending Records') {
+    if (value === "Pending Records") {
       filteredLeads = filteredLeads.filter((item) => item.status === false);
-    } else if (value === 'Approved Records') {
+    } else if (value === "Approved Records") {
       filteredLeads = filteredLeads.filter((item) => item.status === true);
     }
 
     // If "All Sales Order" is selected, show all leads
-    if (value === 'All Sales Order') {
+    if (value === "All Sales Order") {
       filteredLeads = getleads;
     }
 
@@ -150,12 +147,11 @@ export default function SalesOrder() {
     console.log(filteredLeads); // For debugging
   };
 
-
   //------------------------------------------------------------------------------------------------
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
-    { key: 1, value: 'Table View' },
-    { key: 2, value: 'Grid View' },
+    { key: 1, value: "Table View" },
+    { key: 2, value: "Grid View" },
   ];
 
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
@@ -169,20 +165,18 @@ export default function SalesOrder() {
     setstripeBardropDown(!stripeBardropDown);
   };
 
-
-
   const [selectedViewValue, setSelectedViewValue] = useState(
-    stripeBar[0].value
+    stripeBar[0].value,
   );
 
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
   const dropActionsMenu = [
-    { key: 1, value: 'Mass Delete' },
-    { key: 3, value: 'Mass E-Mail' },
-    { key: 4, value: 'Export to Excel' },
-    { key: 5, value: 'Export to PDF' },
-    { key: 6, value: 'Send SMS' },
+    { key: 1, value: "Mass Delete" },
+    { key: 3, value: "Mass E-Mail" },
+    { key: 4, value: "Export to Excel" },
+    { key: 5, value: "Export to PDF" },
+    { key: 6, value: "Send SMS" },
   ];
 
   const [dropActionsMenudropDown, setdropActionsMenudropDown] = useState(false);
@@ -193,9 +187,9 @@ export default function SalesOrder() {
 
   const handleActionButton = async (value) => {
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
-    if (value === 'Mass Delete') {
+    if (value === "Mass Delete") {
       const userConfirmed = confirm(
-        'Are you sure you want to Delete the selected Leads?'
+        "Are you sure you want to Delete the selected Leads?",
       );
       if (userConfirmed) {
         massDelete();
@@ -203,9 +197,9 @@ export default function SalesOrder() {
     }
 
     // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
-    if (value === 'Mass Email') {
+    if (value === "Mass Email") {
       const userConfirmed = confirm(
-        'Are you sure you want to Send E-Mail to the selected Data?'
+        "Are you sure you want to Send E-Mail to the selected Data?",
       );
       if (userConfirmed) {
         openMassEmailModal(selectedEmails);
@@ -213,9 +207,9 @@ export default function SalesOrder() {
     }
 
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
-    if (value === 'Sheet View') {
+    if (value === "Sheet View") {
       const userConfirmed = confirm(
-        'Are you sure you want to export the selected Leads?'
+        "Are you sure you want to export the selected Leads?",
       );
       if (userConfirmed) {
         exportToExcel();
@@ -223,44 +217,42 @@ export default function SalesOrder() {
     }
 
     // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
-    if (value === 'Print View') {
+    if (value === "Print View") {
       const userConfirmed = confirm(
-        'Are you sure you want to export the selected Leads?'
+        "Are you sure you want to export the selected Leads?",
       );
       if (userConfirmed) {
         exportToPDF();
       }
     }
-
-  
   };
   // ---------------------->MASS DELETE FUNCTIONALITY---###API###<----------------------
   const massDelete = async () => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         data: { soIds: selectedIds },
       };
 
       const response = await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/massdelete`,
-        config
+        config,
       );
-      showSuccessToast('Mass Deleted run');
+      showSuccessToast("Mass Deleted run");
       handleLead();
       console.log(response);
 
       setGetleads((prevLeads) =>
-        prevLeads.filter((lead) => !selectedIds.includes(lead.id))
+        prevLeads.filter((lead) => !selectedIds.includes(lead.id)),
       );
       setSelectedIds([]);
     } catch (error) {
-      console.error('Error deleting leads:', error);
+      console.error("Error deleting leads:", error);
     }
   };
 
@@ -270,7 +262,7 @@ export default function SalesOrder() {
     if (selectedEmails.length > 0) {
       setIsModalOpen(true); // Open the modal
     } else {
-      alert('Selected Entity dose not have E-Mail Address.');
+      alert("Selected Entity dose not have E-Mail Address.");
     }
   };
 
@@ -283,10 +275,10 @@ export default function SalesOrder() {
   const exportToExcel = () => {
     // Filter currentLeads based on selectedIds
     const leadsToExport = currentLeads.filter((lead) =>
-      selectedIds.includes(lead.id)
+      selectedIds.includes(lead.id),
     );
     if (leadsToExport?.length === 0) {
-      alert('No leads selected to export');
+      alert("No leads selected to export");
       return;
     }
 
@@ -295,30 +287,30 @@ export default function SalesOrder() {
 
     // Create a new workbook and append the worksheet
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Selected Leads');
+    XLSX.utils.book_append_sheet(wb, ws, "Selected Leads");
 
     // Export the workbook to an Excel file
-    XLSX.writeFile(wb, 'SelectedLeadsData.xlsx');
+    XLSX.writeFile(wb, "SelectedLeadsData.xlsx");
   };
 
   //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
   const exportToPDF = () => {
     const leadsToExport = currentLeads.filter((lead) =>
-      selectedIds.includes(lead.id)
+      selectedIds.includes(lead.id),
     );
     if (leadsToExport?.length === 0) {
-      alert('No leads selected to export');
+      alert("No leads selected to export");
       return;
     }
     const doc = new jsPDF();
     // const role = matchedUser?.role;
     const tableColumn = [
-      'ID',
-      'Name',
-      'Email',
-      'Phone No.',
-      'Lead Source',
-      'Assigned To',
+      "ID",
+      "Name",
+      "Email",
+      "Phone No.",
+      "Lead Source",
+      "Assigned To",
     ];
     // Map the leads data to rows
     const tableRows = leadsToExport?.map((lead) => [
@@ -330,32 +322,32 @@ export default function SalesOrder() {
       lead.assigned_To,
     ]);
     // Add a title to the PDF
-    doc.text('Selected Leads Data', 14, 16);
+    doc.text("Selected Leads Data", 14, 16);
     // Add the table to the PDF
     autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
       startY: 22, // Position the table after the title
     });
-    doc.save('Leads.pdf');
+    doc.save("Leads.pdf");
   };
 
   //---------------------->---------------------->MANAGE_BY/ASSIGNED_TO<----------------------<ARVIND----------------------
   const roleColors = [
     // "#f97316", // Red
-    '#2563eb', // blue
-    '#65a30d', // LimeGreen
-    '#7c3aed', // MediumPurple
-    '#0369a1', //Sky
-    '#e11d48', //Rose
+    "#2563eb", // blue
+    "#65a30d", // LimeGreen
+    "#7c3aed", // MediumPurple
+    "#0369a1", //Sky
+    "#e11d48", //Rose
   ];
 
   // Function to get the color for a role based on its index
   const getRoleColorByIndex = (index) => {
     return roleColors[index % roleColors?.length]; // Use modulo for wrapping
   };
-//---------------------->---------------------->PAGINATION<----------------------<----------------------
-  //controlled from the bottom of the page 
+  //---------------------->---------------------->PAGINATION<----------------------<----------------------
+  //controlled from the bottom of the page
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Define items per page
   const totalPage = Math.ceil(filteredLeads.length / itemsPerPage);
@@ -378,7 +370,7 @@ export default function SalesOrder() {
     setSelectedIds((prevSelected) =>
       prevSelected.includes(item.id)
         ? prevSelected.filter((id) => id !== item.id)
-        : [...prevSelected, item.id]
+        : [...prevSelected, item.id],
     );
 
     // Update selected emails
@@ -388,7 +380,7 @@ export default function SalesOrder() {
         : [...prevSelectedEmails, item.email];
 
       // Log the updated selectedEmails
-      console.log('Updated Selected Emails:', newSelectedEmails);
+      console.log("Updated Selected Emails:", newSelectedEmails);
       return newSelectedEmails;
     });
   };
@@ -412,7 +404,7 @@ export default function SalesOrder() {
       const currentPageIds = currentLeads?.map((lead) => lead.id);
       setSelectedEmails([]);
       setSelectedIds((prevSelected) =>
-        prevSelected.filter((id) => !currentPageIds.includes(id))
+        prevSelected.filter((id) => !currentPageIds.includes(id)),
       );
     }
   };
@@ -428,15 +420,13 @@ export default function SalesOrder() {
 
   // ----------------------------- Date Filter -----------------------------
 
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(today);
 
   // Function to filter based on date range
   function handle_DateRange(startDate, endDate) {
-
     let filteredFollows = getleads;
-
 
     // Convert startDate to the beginning of the day and endDate to the end of the day
     const start = new Date(startDate);
@@ -461,18 +451,15 @@ export default function SalesOrder() {
     }
   }, [startDate, endDate]);
 
-
-  
-
   useEffect(() => {
     handleLead();
   }, [isStatusChanged]); // Fetch data when status changes
 
   const handlePendingStatus = async (id, status) => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     if (status === true) {
-      alert('This order is already approved.');
+      alert("This order is already approved.");
       return;
     }
 
@@ -487,31 +474,28 @@ export default function SalesOrder() {
       const response = await axios.put(
         `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/approve/${id}`,
         {},
-        config
+        config,
       );
       console.log(response);
-      alert('Order has been approved successfully!');
+      alert("Order has been approved successfully!");
 
       // After approval, set state to trigger reload
       setIsStatusChanged(!isStatusChanged); // Toggle the status change state
     } catch (error) {
       console.log(error);
-      alert('There was an error approving the order.');
+      alert("There was an error approving the order.");
     }
   };
 
-
-    
   // ------------------------------ Search Function ----------------------------------
 
-  
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
-
   useEffect(() => {
-    const filtered = getleads.filter((lead) =>
-      lead.clientName?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
-      lead.contactNo?.includes(searchTerm)
+    const filtered = getleads.filter(
+      (lead) =>
+        lead.clientName?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+        lead.contactNo?.includes(searchTerm),
     );
     setFilteredLeads(filtered);
   }, [searchTerm, getleads]);
@@ -520,12 +504,10 @@ export default function SalesOrder() {
 
   const handleResetFilter = () => {
     setFilteredLeads(getleads);
-    setsalesOrderStatus('All Sales Order');
+    setsalesOrderStatus("All Sales Order");
     // setAssignedTo("Managed By");
   };
 
-
-  
   //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
 
   const businessRole = localStorage.getItem("businessRole");
@@ -543,14 +525,14 @@ export default function SalesOrder() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
-        config
+        config,
       );
       console.log("Permission Data : ", response.data.data);
       const permissionsList = response?.data?.data;
 
       if (permissionsList) {
         const serviceBoxPermissions = permissionsList.find(
-          (item) => item.moduleName === "Sales Order"
+          (item) => item.moduleName === "Sales Order",
         );
 
         if (serviceBoxPermissions) {
@@ -563,7 +545,6 @@ export default function SalesOrder() {
 
           setEdit(permissionsArray.includes("Edit Sales Order"));
           setApprove(permissionsArray.includes("Approve Pending"));
-
         }
       }
     } catch (error) {
@@ -574,8 +555,6 @@ export default function SalesOrder() {
   useEffect(() => {
     handleGetPermission();
   }, []);
-
-
 
   return (
     //parent
@@ -628,7 +607,10 @@ export default function SalesOrder() {
 
           {/* PART-I */}
           {/* Search Box */}
-          <SearchElement value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+          <SearchElement
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
 
         {/* PART-II */}
@@ -664,7 +646,6 @@ export default function SalesOrder() {
               </div>
             )}
           </div>
-          
 
           {/* PART-II */}
           {/*-------Action DropDown */}
@@ -684,18 +665,18 @@ export default function SalesOrder() {
             {dropActionsMenudropDown && (
               <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
                 <ul className="text-sm text-gray-700">
-                    {dropActionsMenu.map(({ key, value }) =>
-                      permissions.includes(value) || businessRole==="Admin" ? (
-                        <li
-                          key={key}
-                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          onClick={() => handleActionButton(value)}
-                        >
-                          {value}
-                        </li>
-                      ) : null
-                    )}
-                  </ul>
+                  {dropActionsMenu.map(({ key, value }) =>
+                    permissions.includes(value) || businessRole === "Admin" ? (
+                      <li
+                        key={key}
+                        className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                        onClick={() => handleActionButton(value)}
+                      >
+                        {value}
+                      </li>
+                    ) : null,
+                  )}
+                </ul>
               </div>
             )}
           </div>
@@ -713,52 +694,51 @@ export default function SalesOrder() {
         <div className="date_Filter_Main_Container">
           {/* ------------------- Filter by date ----------------- */}
           <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
-
             {/* Filter Icon Button */}
             <div className="flex items-center">
-            <button className="border-r border-gray-500 pr-2">
-              <ImFilter className="filter_Image_Size" />
-            </button>
+              <button className="border-r border-gray-500 pr-2">
+                <ImFilter className="filter_Image_Size" />
+              </button>
 
-            {/* Date Range Filter Button */}
-            <button
-              className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display"
+              {/* Date Range Filter Button */}
+              <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display">
+                Filter By
+              </button>
+
+              {/* Date Range Inputs */}
+              <div className="px-2 flex items-center gap-2 filter_Date_Container">
+                <label className="hide_Filter_Text">From:</label>
+                <input
+                  type="date"
+                  value={startDate}
+                  className="border rounded px-2 py-2 filter_Date"
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
+
+                <label className="hide_Filter_Text">To:</label>
+                <input
+                  type="date"
+                  value={endDate}
+                  className="border rounded px-2 py-2 filter_Date"
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div
+              className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center"
+              onClick={handleResetFilter}
             >
-              Filter By
-            </button>
-
-            {/* Date Range Inputs */}
-            <div className="px-2 flex items-center gap-2 filter_Date_Container">
-              <label className="hide_Filter_Text">From:</label>
-              <input
-                type="date"
-                value={startDate}
-                className="border rounded px-2 py-2 filter_Date"
-                onChange={(e) => setStartDate(e.target.value)}
-              />
-
-              <label className="hide_Filter_Text">To:</label>
-              <input
-                type="date"
-                value={endDate}
-                className="border rounded px-2 py-2 filter_Date"
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </div>
-            </div>
-            
-            <div className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center" onClick={handleResetFilter}>
-            <label className="hide_Filter_Text ">Reset</label>
-               <TbRefresh className="filter_Reset_Image"/>
+              <label className="hide_Filter_Text ">Reset</label>
+              <TbRefresh className="filter_Reset_Image" />
             </div>
           </div>
         </div>
-
       </div>
       {/*-------Table-------*/}
       <div className="overflow-x-auto mt-3 leads_Table_Main_Container">
         <div className="min-w-full leads_Table_Container rounded-md">
-          {selectedViewValue === 'Table View' && (
+          {selectedViewValue === "Table View" && (
             <table className="min-w-full bg-white leads_Table">
               <thead>
                 <tr className="border-gray-300 border-b-2">
@@ -773,7 +753,6 @@ export default function SalesOrder() {
                   <th className="px-1 py-3 text-left border-r font-medium max-w-40 min-w-36  ">
                     <div className="flex justify-between">
                       <span>Client Name</span>
-                      
                     </div>
                   </th>
                   <th className="px-1 py-3 text-left border-r font-medium">
@@ -825,7 +804,7 @@ export default function SalesOrder() {
                   const matchedUser =
                     users?.length > 0
                       ? users?.find(
-                          (user) => user?.userName === item?.assigned_To
+                          (user) => user?.userName === item?.assigned_To,
                         )
                       : [];
                   const role = matchedUser?.role;
@@ -846,15 +825,15 @@ export default function SalesOrder() {
                       {/* CONTACT NAME */}
                       <td
                         className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600"
-                        onClick={edit || businessRole==="Admin"?() =>
-                          navigate(`/panel/clientso/${item.id}`):undefined
+                        onClick={
+                          edit || businessRole === "Admin"
+                            ? () => navigate(`/panel/clientso/${item.id}`)
+                            : undefined
                         }
-                       
                       >
                         <div className="flex items-center">
                           <span className="">{item.clientName}</span>
                         </div>
-                      
                       </td>
 
                       {/* <------------------------------------Email------------------------------------> */}
@@ -864,22 +843,22 @@ export default function SalesOrder() {
                       {/* <------------------------------------MOB NO.------------------------------------> */}
                       <td className="px-4 py-4 border-b border-gray-300 text-sm">
                         <div className="flex gap-2 items-center">
-                            <a
-                              href={`tel:${item.mobileNo}`}
-                              onClick={(event) => event.stopPropagation()}
-                            >
-                              {item.mobileNo}
-                            </a>                         
+                          <a
+                            href={`tel:${item.mobileNo}`}
+                            onClick={(event) => event.stopPropagation()}
+                          >
+                            {item.mobileNo}
+                          </a>
                           <MdCall className="text-red-600" />
                         </div>
                       </td>
                       {/* <------------------------------------subscription_start_date------------------------------------> */}
                       <td className="px-4 py-4 border-b text- border-gray-300 text-sm  break-all max-w-48 min-w-24">
-                        {item.subscription_start_date?.split('T')[0]}
+                        {item.subscription_start_date?.split("T")[0]}
                       </td>
                       {/* <------------------------------------subscription_end_date------------------------------------> */}
                       <td className="px-4 py-4 border-b text- border-gray-300 text-sm  break-all max-w-48 min-w-24">
-                        {item.subscription_end_date?.split('T')[0]}
+                        {item.subscription_end_date?.split("T")[0]}
                       </td>
                       {/* Segments */}
                       <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
@@ -888,7 +867,7 @@ export default function SalesOrder() {
                             <span className="">
                               {item.segments
                                 .filter((segment) => segment.length > 1)
-                                .join(', ')}
+                                .join(", ")}
                             </span>
                           )}
                         </div>
@@ -899,10 +878,10 @@ export default function SalesOrder() {
                           <div
                             className="text-xs font-semibold text-white px-2 py-2 rounded-full w-[90%]"
                             style={{
-                              backgroundColor: roleColor ? roleColor : '#000',
-                              borderRadius: '8px',
+                              backgroundColor: roleColor ? roleColor : "#000",
+                              borderRadius: "8px",
                               padding: 8,
-                              textAlign: 'center',
+                              textAlign: "center",
                             }}
                           >
                             {item.assigned_To} - ({matchedUser?.role})
@@ -916,8 +895,10 @@ export default function SalesOrder() {
 
                       <td>
                         <button
-                          onClick={approve || businessRole==="Admin"?() =>
-                            handlePendingStatus(item.id, item.status):undefined
+                          onClick={
+                            approve || businessRole === "Admin"
+                              ? () => handlePendingStatus(item.id, item.status)
+                              : undefined
                           }
                           className=" w-[90%]"
                         >
@@ -944,7 +925,7 @@ export default function SalesOrder() {
           {/* ------------GRID------------ */}
           {/* ------------GRID------------ */}
           {/* ------------GRID------------ */}
-          {selectedViewValue === 'Grid View' && (
+          {selectedViewValue === "Grid View" && (
             <>
               <div className="min-w-full">
                 <div className="grid grid-cols-3 gap-3">
@@ -1018,7 +999,7 @@ export default function SalesOrder() {
           )}
         </div>
 
-        {selectedViewValue === 'Table View' && (
+        {selectedViewValue === "Table View" && (
           <>
             <div className="flex justify-end m-4">
               {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
@@ -1026,48 +1007,51 @@ export default function SalesOrder() {
                 {/* /---------------------->Previous Button <----------------------< */}
                 <button
                   onClick={() => paginate(currentPage - 1)}
-                  className={`p-1 shadow-md rounded-full text-white ${currentPage === 1 ? 'border-gray-200 border-2' : 'bg-cyan-500 border-2 border-gray-100'}`}
+                  className={`p-1 shadow-md rounded-full text-white ${currentPage === 1 ? "border-gray-200 border-2" : "bg-cyan-500 border-2 border-gray-100"}`}
                   disabled={currentPage === 1}
                 >
-                <GrFormPrevious size={25}/>
+                  <GrFormPrevious size={25} />
                 </button>
 
                 {/* /---------------------->Dynamic Page Numbers <----------------------< */}
-                {Array.from({ length: totalPage }, (_, i) => i + 1).map((page) => {
-                  // Logic for ellipsis and showing only a subset of pages
-                  if (page === 1 || page === totalPage ||  (page >= currentPage - 1 && page <= currentPage + 1)){
-                    return (
-                      <button
-                        key={page}
-                        onClick={() => paginate(page)}
-                        className={`px-4 py-2 rounded mx-1 ${currentPage === page ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border'}`}
-                      >
-                        {page}
-                      </button>
-                    );
-                  } else if (
-                    (page === currentPage - 2 && page > 1) || // Add ellipsis before current
-                    (page === currentPage + 2 && page < totalPage) // Add ellipsis after current
-                  ) {
-                    return (
-                      <span key={page} className="px-2 text-gray-500">
-                        ...
-                      </span>
-                    );
-                  }
-                  return null;
-                })}
+                {Array.from({ length: totalPage }, (_, i) => i + 1).map(
+                  (page) => {
+                    // Logic for ellipsis and showing only a subset of pages
+                    if (
+                      page === 1 ||
+                      page === totalPage ||
+                      (page >= currentPage - 1 && page <= currentPage + 1)
+                    ) {
+                      return (
+                        <button
+                          key={page}
+                          onClick={() => paginate(page)}
+                          className={`px-4 py-2 rounded mx-1 ${currentPage === page ? "bg-blue-600 text-white" : "bg-white text-gray-700 border"}`}
+                        >
+                          {page}
+                        </button>
+                      );
+                    } else if (
+                      (page === currentPage - 2 && page > 1) || // Add ellipsis before current
+                      (page === currentPage + 2 && page < totalPage) // Add ellipsis after current
+                    ) {
+                      return (
+                        <span key={page} className="px-2 text-gray-500">
+                          ...
+                        </span>
+                      );
+                    }
+                    return null;
+                  },
+                )}
 
                 {/* Next Button */}
                 <button
                   onClick={() => paginate(currentPage + 1)}
-
-                  className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage  ? ' border-gray-200 border-2' : ' bg-cyan-500 border-2 border-gray-100'}`}
-
+                  className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage ? " border-gray-200 border-2" : " bg-cyan-500 border-2 border-gray-100"}`}
                   disabled={currentPage === totalPage}
                 >
-                <GrFormNext size={25} />
-                
+                  <GrFormNext size={25} />
                 </button>
               </nav>
             </div>

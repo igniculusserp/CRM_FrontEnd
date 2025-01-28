@@ -64,6 +64,6 @@ LeadAction.propTypes = {
     PropTypes.shape({
       userName: PropTypes.string,
       totalLeads: PropTypes.number,
-    })
+    }),
   ).isRequired,
 };

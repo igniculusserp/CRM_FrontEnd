@@ -1,38 +1,40 @@
 //react
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 //reactPackages
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 //reactIcon
-import { FaAngleDown, FaStarOfLife } from 'react-icons/fa';
-import { IoInformationCircle } from 'react-icons/io5';
-import { GrContactInfo } from 'react-icons/gr';
+import { FaAngleDown, FaStarOfLife } from "react-icons/fa";
+import { IoInformationCircle } from "react-icons/io5";
+import { GrContactInfo } from "react-icons/gr";
 
 //external Packages
-import axios from 'axios';
-import ReactQuill from 'react-quill';
+import axios from "axios";
+import ReactQuill from "react-quill";
 
 //textBox
-import 'react-quill/dist/quill.snow.css';
+import "react-quill/dist/quill.snow.css";
 
 //API-Keywords
-import { tenant_base_url, protocal_url } from '../../../../Config/config';
-import { getHostnamePart } from '../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
+import { tenant_base_url, protocal_url } from "../../../../Config/config";
+import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 //LanguageDropDown
-import languageDropDown from '../../../../data/dropdown/Languages/languageDropdown'
+import languageDropDown from "../../../../data/dropdown/Languages/languageDropdown";
 
 //-----------------------------ToastContainer-----------------------------
-import { ToastContainer } from 'react-toastify';
-import { showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
-
+import { ToastContainer } from "react-toastify";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "./../../../../utils/toastNotifications";
 
 //dropDown --->>> customHooks
-import useLeadStatus from '../../../../Hooks/LeadStatus/useLeadStatus';
-import useLeadSource from '../../../../Hooks/LeadSource/useLeadSource';
-import useManagedBy from '../../../../Hooks/ManagedBy/useManagedBy';
-import useSegment from '../../../../Hooks/Segment/useSegment';
+import useLeadStatus from "../../../../Hooks/LeadStatus/useLeadStatus";
+import useLeadSource from "../../../../Hooks/LeadSource/useLeadSource";
+import useManagedBy from "../../../../Hooks/ManagedBy/useManagedBy";
+import useSegment from "../../../../Hooks/Segment/useSegment";
 
 export default function Createlead() {
   //to make id unique
@@ -42,50 +44,50 @@ export default function Createlead() {
   //IMP used as ${name} in an API
   const name = getHostnamePart();
 
-  //const bearer_token for API Config  
-  const bearer_token = localStorage.getItem('token');
+  //const bearer_token for API Config
+  const bearer_token = localStorage.getItem("token");
 
   // Custom Hook
   const { leadStatus } = useLeadStatus();
-  const { leadSource } = useLeadSource();  
-  const { managedBy } = useManagedBy()
-  const { segments } = useSegment()
+  const { leadSource } = useLeadSource();
+  const { managedBy } = useManagedBy();
+  const { segments } = useSegment();
 
-    //-->--->createLead/editLead--> Schema<->Model
+  //-->--->createLead/editLead--> Schema<->Model
   const [editLead, seteditLead] = useState({
-      id: '',
-      name: '',
-      language: '',
-      company: '',
-      email: '',
-      title: '',
-      leadSource: '',
-      leadesStatus: '',
-      mobNo: '',
-      phNo: '',
-      assigned_To: '',
-      street: '',
-      pinCode: '',
-      country: '',
-      city: '',
-      state: '',
-      riskCapcity: '',
-      tradingTime: '',
-      tradingType: '',
-      investmet: '',
-      advisoryExp: '',
-      trialStartDate: '',
-      trialEndDate: '',
-      tradingYears: '',
-      callBackDateTime: '',
-      contactId: '',
-      lastModifiedBy: '',
-      segments: [],
+    id: "",
+    name: "",
+    language: "",
+    company: "",
+    email: "",
+    title: "",
+    leadSource: "",
+    leadesStatus: "",
+    mobNo: "",
+    phNo: "",
+    assigned_To: "",
+    street: "",
+    pinCode: "",
+    country: "",
+    city: "",
+    state: "",
+    riskCapcity: "",
+    tradingTime: "",
+    tradingType: "",
+    investmet: "",
+    advisoryExp: "",
+    trialStartDate: "",
+    trialEndDate: "",
+    tradingYears: "",
+    callBackDateTime: "",
+    contactId: "",
+    lastModifiedBy: "",
+    segments: [],
   });
-    
+
   //form description is kept-out
-  const [description, setdescription] = useState('Add Text Here');
-  
+  const [description, setdescription] = useState("Add Text Here");
+
   //imp to identify mode
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -99,7 +101,6 @@ export default function Createlead() {
 
   //GET by ID---------------------------//GET---------------------------//GET---------------------------by ID-----------by ID
   async function handleLead() {
-
     try {
       const config = {
         headers: {
@@ -108,7 +109,7 @@ export default function Createlead() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Lead/lead/${id}`,
-        config
+        config,
       );
       const data = response.data.data;
 
@@ -116,37 +117,37 @@ export default function Createlead() {
       setdescription(data.description);
 
       seteditLead({
-        id: data.id || '',
-        name: data.name || '',
-        language: data.language || '',
-        company: data.company || '',
-        title: data.tital || '',
-        leadSource: data?.leadsSource || 'N/A',
-        leadesStatus: data?.leadesStatus || 'N/A',
-        mobNo: data.mobileNo || '',
-        phNo: data.phoneNo || '',
-        email: data.email || '',
-        assigned_To: data?.assigned_To || 'N/A',
-        street: data.street || '',
-        pinCode: data.postalCode || '',
-        country: data.country || '',
-        city: data.city || '',
-        state: data.state || '',
-        riskCapcity: data.risk_Capacity || '',
-        tradingTime: data.tradingTime || '',
-        tradingType: data.tradingType || '',
-        investmet: data.investment || '',
-        advisoryExp: data.advisaryExp || '',
+        id: data.id || "",
+        name: data.name || "",
+        language: data.language || "",
+        company: data.company || "",
+        title: data.tital || "",
+        leadSource: data?.leadsSource || "N/A",
+        leadesStatus: data?.leadesStatus || "N/A",
+        mobNo: data.mobileNo || "",
+        phNo: data.phoneNo || "",
+        email: data.email || "",
+        assigned_To: data?.assigned_To || "N/A",
+        street: data.street || "",
+        pinCode: data.postalCode || "",
+        country: data.country || "",
+        city: data.city || "",
+        state: data.state || "",
+        riskCapcity: data.risk_Capacity || "",
+        tradingTime: data.tradingTime || "",
+        tradingType: data.tradingType || "",
+        investmet: data.investment || "",
+        advisoryExp: data.advisaryExp || "",
         segments: data.segments || [],
         trialStartDate: data.trialStartDate || null,
         trialEndDate: data.trialEndDate || null,
-        tradingYears: data.trading_yrs || '',
+        tradingYears: data.trading_yrs || "",
         callBackDateTime: data.call_bck_DateTime || null,
-        contactId: data.contactId || '',
-        lastModifiedBy: data.lastModifiedBy || '',
+        contactId: data.contactId || "",
+        lastModifiedBy: data.lastModifiedBy || "",
       });
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      console.error("Error fetching leads:", error);
     }
   }
 
@@ -187,7 +188,6 @@ export default function Createlead() {
   //
   const [poolEdit, setPoolEdit] = useState("");
 
-
   const toggleDropdown = () => {
     setIsPoolDropdownOpen((prev) => !prev);
   };
@@ -204,10 +204,8 @@ export default function Createlead() {
 
   //----------------------------------------------------------------------------------------
 
-  
-
   const [defaultTextLeadStatusDropDown, setdefaultTextLeadStatusDropDown] =
-    useState('Select Status');
+    useState("Select Status");
   const [isDropdownVisibleLeadStatus, setisDropdownVisibleLeadStatus] =
     useState(false);
 
@@ -228,12 +226,14 @@ export default function Createlead() {
 
   useEffect(() => {
     setdefaultTextSegmentDropDown(
-      editLead.segments.length > 0 ? editLead.segments.join(", ") : "Select Segment"
+      editLead.segments.length > 0
+        ? editLead.segments.join(", ")
+        : "Select Segment",
     );
   }, [editLead]);
 
   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
-    useState('Select Segment');
+    useState("Select Segment");
   const [isDropdownVisibleSegment, setisDropdownVisibleSegment] =
     useState(false);
 
@@ -248,7 +248,7 @@ export default function Createlead() {
     if (isChecked) {
       // Remove segment if already selected
       updatedSegments = editLead.segments.filter(
-        (selectedSegment) => selectedSegment !== segment
+        (selectedSegment) => selectedSegment !== segment,
       );
     } else {
       // Add segment if not already selected
@@ -260,11 +260,12 @@ export default function Createlead() {
     }));
 
     setdefaultTextSegmentDropDown(
-      updatedSegments.length > 0 ? updatedSegments.join(", ") : "Select Segment"
+      updatedSegments.length > 0
+        ? updatedSegments.join(", ")
+        : "Select Segment",
     );
 
-
-    console.log('Selected segments:', updatedSegments);
+    console.log("Selected segments:", updatedSegments);
   };
 
   //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -274,9 +275,8 @@ export default function Createlead() {
   //assigned_ToDropDown
   const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
 
-
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
-    useState('Select Assigned');
+    useState("Select Assigned");
   const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
     useState(false);
 
@@ -286,10 +286,10 @@ export default function Createlead() {
 
   const handleDropdownassigned_ToDropDown = (
     assigned_To_Username,
-    assigned_To_Role
+    assigned_To_Role,
   ) => {
     setdefaultTextassigned_ToDropDown(
-      assigned_To_Username + ' ' + assigned_To_Role
+      assigned_To_Username + " " + assigned_To_Role,
     );
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     seteditLead((prevTask) => ({
@@ -306,7 +306,6 @@ export default function Createlead() {
     }));
   };
 
-
   //------------------------------------------Mobile Regex------------------------------------------
   const handleContactChange = (event) => {
     const inputValue = event.target.value.replace(/[^0-9]/g, "");
@@ -318,23 +317,21 @@ export default function Createlead() {
     }));
   };
 
-
   //------------------------------------------Email Regex------------------------------------------
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 
   //---------->handleSubmit<----------
   //two different schemas, one for PUT and one for POST
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${bearer_token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       };
       const formData_PUT = {
@@ -400,60 +397,73 @@ export default function Createlead() {
         description: description,
       };
 
-      console.log(formData_POST)
+      console.log(formData_POST);
 
       //------------------------------------------------------------------------------------> Validations//--> Validations//--> Validations//--> Validations//--> Validations
 
-
       if (!formData_POST.name || !formData_PUT.name) {
-        showErrorToast('Please enter name')
+        showErrorToast("Please enter name");
         return;
       }
 
       if (!formData_POST.mobileNo) {
-        showErrorToast('Please enter mobile number')
+        showErrorToast("Please enter mobile number");
         return;
       }
 
-      if (formData_POST.phoneNo && (formData_POST.phoneNo.length < 9 || formData_PUT.phoneNo.length > 15)) {
-        showErrorToast('Please check phone no')
+      if (
+        formData_POST.phoneNo &&
+        (formData_POST.phoneNo.length < 9 || formData_PUT.phoneNo.length > 15)
+      ) {
+        showErrorToast("Please check phone no");
         return;
       }
 
-      if (formData_POST.mobileNo.length < 9 || formData_PUT.mobileNo.length > 15) {
-        showErrorToast('Invalid mobile number')
+      if (
+        formData_POST.mobileNo.length < 9 ||
+        formData_PUT.mobileNo.length > 15
+      ) {
+        showErrorToast("Invalid mobile number");
         return;
       }
 
-      if ((formData_POST.email && !emailRegex.test(formData_POST.email)) || (formData_PUT.email && !emailRegex.test(formData_PUT.email))) {
-        showErrorToast('Invalid email format');
+      if (
+        (formData_POST.email && !emailRegex.test(formData_POST.email)) ||
+        (formData_PUT.email && !emailRegex.test(formData_PUT.email))
+      ) {
+        showErrorToast("Invalid email format");
         return;
       }
 
       //Date Logic Validation
-      const today = new Date().toISOString().split('T')[0];
+      const today = new Date().toISOString().split("T")[0];
 
       //Previous date cannot be selected
       if (formData_POST.trialStartDate < today) {
-        showErrorToast('Previous date cannot be selected')
+        showErrorToast("Previous date cannot be selected");
         return;
       }
 
       if (formData_POST.trialEndDate < today) {
-        showErrorToast('Previous date cannot be selected')
+        showErrorToast("Previous date cannot be selected");
         return;
       }
 
       //Date should not be more than 1 or less than 1
-      const date = (formData_POST.trialEndDate?.split('-')[2] - formData_POST.trialStartDate?.split('-')[2])
+      const date =
+        formData_POST.trialEndDate?.split("-")[2] -
+        formData_POST.trialStartDate?.split("-")[2];
 
-      if (formData_POST.trialStartDate && formData_POST.trialEndDate && date === 1) {
+      if (
+        formData_POST.trialStartDate &&
+        formData_POST.trialEndDate &&
+        date === 1
+      ) {
         if (formData_POST.segments.length === 0) {
-          showErrorToast('Please Select segments');
+          showErrorToast("Please Select segments");
           return;
         }
       }
-
 
       if (formData_POST.trialStartDate && !formData_POST.trialEndDate) {
         showErrorToast("Please Select trial end date");
@@ -467,29 +477,34 @@ export default function Createlead() {
 
       // Check if isEditMode and handle API calls accordingly
       if (isEditMode) {
-        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Lead/lead/update`, formData_PUT, config);
-        alert('Lead updated successfully!');
-        showSuccessToast('Lead updated successfully!')
+        await axios.put(
+          `${protocal_url}${name}.${tenant_base_url}/Lead/lead/update`,
+          formData_PUT,
+          config,
+        );
+        alert("Lead updated successfully!");
+        showSuccessToast("Lead updated successfully!");
         navigate(`/panel/lead`);
       } else {
-        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Lead/lead/add`, formData_POST, config);
-        alert('Lead created successfully!');
-        showSuccessToast('Lead created successfully')
+        await axios.post(
+          `${protocal_url}${name}.${tenant_base_url}/Lead/lead/add`,
+          formData_POST,
+          config,
+        );
+        alert("Lead created successfully!");
+        showSuccessToast("Lead created successfully");
         navigate(`/panel/lead`);
       }
     } catch (error) {
       showErrorToast(error.response?.data?.message || "An error occurred");
-
-
     }
-  }
+  };
 
   return (
     <>
       <ToastContainer />
       {/* ------------------------------------------------> Parent <------------------------------------------------ */}
       <div className=" mt-3">
-
         {/* ------------------------------------------------> Heading  <------------------------------------------------ */}
         <div className="flex justify-between mx-3  bg-white border rounded p-3 ">
           {/* ------------------------------------------------> Text and Logo  <------------------------------------------------ */}
@@ -497,20 +512,19 @@ export default function Createlead() {
             <h1 className=" text-xl">
               {isEditMode ? (
                 <>
-                  <div className='flex justify-center items-center gap-2  '>
+                  <div className="flex justify-center items-center gap-2  ">
                     <GrContactInfo size={25} />
                     <h1>Edit Lead</h1>
                   </div>
                 </>
-              ) :
-                (<>
-                  <div className=' flex justify-center items-center  gap-2   '>
+              ) : (
+                <>
+                  <div className=" flex justify-center items-center  gap-2   ">
                     <GrContactInfo size={25} />
                     <h1>Create Lead</h1>
                   </div>
                 </>
-                )
-              }
+              )}
             </h1>
           </div>
           <div>
@@ -535,7 +549,6 @@ export default function Createlead() {
               </h2>
               {/* -------------Parent <Lead Information Inputs>------------- */}
               <div className=" space-y-3 p-2 ">
-
                 {/* ------------------------------------1------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Name && Language>------------- */}
                 <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
@@ -578,7 +591,11 @@ export default function Createlead() {
                         id="LanguageDropDown"
                         type="button"
                       >
-                        {!isEditMode ? defaultTextLanguageDropDown : editLead.language === "" ? defaultTextLanguageDropDown : editLead.language}
+                        {!isEditMode
+                          ? defaultTextLanguageDropDown
+                          : editLead.language === ""
+                            ? defaultTextLanguageDropDown
+                            : editLead.language}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLanguage && (
@@ -635,7 +652,6 @@ export default function Createlead() {
                       onChange={handleChange}
                       placeholder="Enter Title"
                       className="mt-1 p-2 border border-gray-300 rounded-md w-full "
-
                     />
                   </div>
                 </div>
@@ -671,32 +687,32 @@ export default function Createlead() {
                             <div className="py-2 text-red-600">{error}</div>
                           ) : (
                             <ul className="py-2 text-sm text-gray-700">
-                            {leadSource.length > 0 ? (
-                              leadSource.map(({ key, poolName }) => (
-                                <li
-                                  key={key}
-                                  onClick={() =>
-                                    handleDropdownSelection(poolName)
-                                  }
-                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                                >
-                                  {poolName}
+                              {leadSource.length > 0 ? (
+                                leadSource.map(({ key, poolName }) => (
+                                  <li
+                                    key={key}
+                                    onClick={() =>
+                                      handleDropdownSelection(poolName)
+                                    }
+                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                  >
+                                    {poolName}
+                                  </li>
+                                ))
+                              ) : (
+                                <li className="flex items-center px-4 py-2 text-center gap-1">
+                                  <IoInformationCircle
+                                    size={25}
+                                    className="text-cyan-600"
+                                  />{" "}
+                                  Lead status not available. Go to{" "}
+                                  <span className="font-bold">
+                                    Settings - Add Pool{" "}
+                                  </span>
+                                  .
                                 </li>
-                              ))
-                            ) : (
-                              <li className="flex items-center px-4 py-2 text-center gap-1">
-                                <IoInformationCircle
-                                  size={25}
-                                  className="text-cyan-600"
-                                />{' '}
-                                Lead status not available. Go to{' '}
-                                <span className="font-bold">
-                                  Settings - Add Pool{' '}
-                                </span>
-                                .
-                              </li>
-                            )}
-                          </ul>
+                              )}
+                            </ul>
                           )}
                         </div>
                       )}
@@ -747,10 +763,10 @@ export default function Createlead() {
                                 <IoInformationCircle
                                   size={25}
                                   className="text-cyan-600"
-                                />{' '}
-                                Lead status not available. Go to{' '}
+                                />{" "}
+                                Lead status not available. Go to{" "}
                                 <span className="font-bold">
-                                  Settings - Add Lead Status{' '}
+                                  Settings - Add Lead Status{" "}
                                 </span>
                                 .
                               </li>
@@ -785,7 +801,6 @@ export default function Createlead() {
                       onChange={handleContactChange}
                       placeholder="Enter your Mobile Number"
                     />
-
                   </div>
                   {/* -------------Alternate Number------------- */}
                   <div className="flex flex-col relative ">
@@ -804,7 +819,10 @@ export default function Createlead() {
                       onChange={handleContactChange}
                       placeholder="Enter your Alternate Number"
                       onInput={(e) => {
-                        e.target.value = e.target.value.replace(/[a-zA-Z]/g, ""); // Removes all letters (a to z and A to Z)
+                        e.target.value = e.target.value.replace(
+                          /[a-zA-Z]/g,
+                          "",
+                        ); // Removes all letters (a to z and A to Z)
                       }}
                     />
                   </div>
@@ -812,7 +830,6 @@ export default function Createlead() {
                 {/* ------------------------------------5------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Email && Assigned TO>------------- */}
                 <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
-
                   {/* -------------Email------------- */}
                   <div className="flex flex-col relative ">
                     <label
@@ -858,28 +875,25 @@ export default function Createlead() {
                       {isDropdownassigned_ToDropDown && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                           <ul className="py-2 text-sm text-gray-700">
-                            {managedBy.map(
-                              ({ userName, role }, index) => (
-                                <li
-                                  key={index}
-                                  onClick={() =>
-                                    handleDropdownassigned_ToDropDown(
-                                      userName,
-                                      role
-                                    )
-                                  }
-                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                                >
-                                  {userName}-({role})
-                                </li>
-                              )
-                            )}
+                            {managedBy.map(({ userName, role }, index) => (
+                              <li
+                                key={index}
+                                onClick={() =>
+                                  handleDropdownassigned_ToDropDown(
+                                    userName,
+                                    role,
+                                  )
+                                }
+                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              >
+                                {userName}-({role})
+                              </li>
+                            ))}
                           </ul>
                         </div>
                       )}
                     </div>
                   </div>
-                  
                 </div>
               </div>
             </div>
@@ -986,7 +1000,6 @@ export default function Createlead() {
                       onChange={handleChange}
                       placeholder="Enter your State name"
                       className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-
                     />
                   </div>
                 </div>
@@ -999,7 +1012,6 @@ export default function Createlead() {
               </h2>
               {/* -------------Parent <Lead Information Inputs>------------- */}
               <div className=" space-y-3 p-2 ">
-
                 {/* ------------------------------------1------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Risk Capacity && Trading Time>------------- */}
                 <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
@@ -1112,15 +1124,11 @@ export default function Createlead() {
                       placeholder="Enter years"
                     />
                   </div>
-
                 </div>
 
                 {/* ------------------------------------3------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Trading Years && CallBack DateTime>------------- */}
                 <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 sm:gap-4">
-
-
-
                   {/* -------------Segments------------- */}
                   <div className="flex flex-col relative ">
                     <label
@@ -1154,7 +1162,7 @@ export default function Createlead() {
                                   <input
                                     type="checkbox"
                                     checked={editLead.segments?.includes(
-                                      segment
+                                      segment,
                                     )}
                                     onChange={() =>
                                       handleCheckboxChange(segment)
@@ -1169,10 +1177,10 @@ export default function Createlead() {
                                 <IoInformationCircle
                                   size={25}
                                   className="text-cyan-600"
-                                />{' '}
-                                Segments not available. Go to{' '}
+                                />{" "}
+                                Segments not available. Go to{" "}
                                 <span className="font-bold">
-                                  Settings - Add Segment{' '}
+                                  Settings - Add Segment{" "}
                                 </span>
                                 .
                               </li>
@@ -1213,7 +1221,7 @@ export default function Createlead() {
                     <input
                       type="date"
                       name="trialStartDate"
-                      value={editLead.trialStartDate?.split('T')[0]}
+                      value={editLead.trialStartDate?.split("T")[0]}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                     />
@@ -1229,7 +1237,7 @@ export default function Createlead() {
                     <input
                       type="date"
                       name="trialEndDate"
-                      value={editLead.trialEndDate?.split('T')[0]}
+                      value={editLead.trialEndDate?.split("T")[0]}
                       onChange={handleChange}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                     />
@@ -1240,7 +1248,6 @@ export default function Createlead() {
                 <div className="grid sm:grid-cols-2 grid-cols-2 gap-2 sm:gap-4">
                   {/* -------------Trading Years------------- */}
                   <div className="flex flex-col relative ">
-
                     <label
                       htmlFor="contactId"
                       className="text-sm font-medium text-gray-700"
@@ -1303,7 +1310,7 @@ export default function Createlead() {
                   type="submit"
                   className="px-36 py-4 mt-24 mb-2 sm:me-10 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white w-full sm:w-1/3"
                 >
-                  {isEditMode ? 'Update' : 'Save'}
+                  {isEditMode ? "Update" : "Save"}
                 </button>
               </div>
             </div>
@@ -1313,4 +1320,3 @@ export default function Createlead() {
     </>
   );
 }
-

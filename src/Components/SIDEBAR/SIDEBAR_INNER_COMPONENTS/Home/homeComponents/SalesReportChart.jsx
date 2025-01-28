@@ -24,7 +24,7 @@ const SalesReportChart = ({ businessType, totalBrokerage, targetAchieved }) => {
     const daysInMonth = new Date(
       today.getFullYear(),
       today.getMonth() + 1,
-      0
+      0,
     ).getDate();
     const weeksInMonth = Math.ceil(daysInMonth / 7);
     const brokeragePerWeek = totalBrokerage / daysInMonth;
@@ -32,33 +32,33 @@ const SalesReportChart = ({ businessType, totalBrokerage, targetAchieved }) => {
     let weeklyProgress = [];
     let weekCount = 1;
     let totalCount = 0;
-    let total=0;
+    let total = 0;
     console.log("Today : ", currentDay);
 
     // Generate data for each day in the month
     for (let day = 1; day <= daysInMonth; day++) {
-
       if (day % 7 === 0) {
         weeklyProgress.push({
           name: `Week ${weekCount}`,
           target: brokeragePerWeek * totalCount,
-          targetAchieved: day<=currentDay? totalTargetAchieved*total:null,
+          targetAchieved:
+            day <= currentDay ? totalTargetAchieved * total : null,
         });
         weekCount++;
         totalCount++;
       } else {
         weeklyProgress.push({
           name: null,
-          target: (brokeragePerWeek * totalCount),
-          targetAchieved:day<=currentDay? totalTargetAchieved*total:null,
+          target: brokeragePerWeek * totalCount,
+          targetAchieved:
+            day <= currentDay ? totalTargetAchieved * total : null,
         });
         totalCount++;
       }
 
-      if(day<=currentDay){
+      if (day <= currentDay) {
         total++;
       }
-      
     }
 
     // Set the generated data to the state
@@ -109,7 +109,8 @@ const SalesReportChart = ({ businessType, totalBrokerage, targetAchieved }) => {
               <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <XAxis dataKey="name" tick={{ fontSize: 6 }} tickLine={false}  /> {/* Show only weeks on X-axis */}
+          <XAxis dataKey="name" tick={{ fontSize: 6 }} tickLine={false} />{" "}
+          {/* Show only weeks on X-axis */}
           <YAxis />
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />

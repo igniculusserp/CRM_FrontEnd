@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function FtReport() {
   const [editReport, setEditReport] = useState({
-    freeTrialStartDate: '',
-    freeTrialEndDate: '',
+    freeTrialStartDate: "",
+    freeTrialEndDate: "",
   });
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -17,19 +17,19 @@ export default function FtReport() {
   // DROPDOWNS
   const [freeTrialStartDropdown, setFreeTrialStartDropdown] = useState(false);
   const [defaultFreeTrialStartText, setDefaultFreeTrialStartText] = useState(
-    'Free Trial Start Date'
+    "Free Trial Start Date",
   );
   const [freeTrialEndDropdown, setFreeTrialEndDropdown] = useState(false);
   const [defaultFreeTrialEndText, setDefaultFreeTrialEndText] = useState(
-    'Free Trial End Date'
+    "Free Trial End Date",
   );
 
   // FREE TRIAL START DUMMY
   const freeTrialStart = [
-    { id: 1, name: '12/09/2023' },
-    { id: 2, name: '12/09/2023' },
-    { id: 3, name: '12/09/2023' },
-    { id: 4, name: '12/09/2023' },
+    { id: 1, name: "12/09/2023" },
+    { id: 2, name: "12/09/2023" },
+    { id: 3, name: "12/09/2023" },
+    { id: 4, name: "12/09/2023" },
   ];
 
   // TOGGLE FREE TRAIL START
@@ -48,10 +48,10 @@ export default function FtReport() {
 
   // FREE TRIAL END DUMMY
   const freeTrialEnd = [
-    { id: 1, name: '12/09/2023' },
-    { id: 2, name: '12/09/2023' },
-    { id: 3, name: '12/09/2023' },
-    { id: 4, name: '12/09/2023' },
+    { id: 1, name: "12/09/2023" },
+    { id: 2, name: "12/09/2023" },
+    { id: 3, name: "12/09/2023" },
+    { id: 4, name: "12/09/2023" },
   ];
 
   // TOGGLE FREE END START
@@ -180,7 +180,7 @@ export default function FtReport() {
                 type="submit"
                 className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
               >
-                {isEditMode ? 'Update' : 'Save'}
+                {isEditMode ? "Update" : "Save"}
               </button>
             </div>
           </div>

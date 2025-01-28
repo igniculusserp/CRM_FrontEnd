@@ -1,39 +1,41 @@
-import Card from './SubComponents/Card';
+import Card from "./SubComponents/Card";
 
 export default function Subscription() {
   const standardText = [
-    'Single User',
-    '2 Projects',
-    '1 GB Storage',
-    'History',
-    'Web Map',
-    'API',
-    'Community Support',
+    "Single User",
+    "2 Projects",
+    "1 GB Storage",
+    "History",
+    "Web Map",
+    "API",
+    "Community Support",
   ];
 
   const premiumText = [
-    'Up to 6 users',
-    'Unlimited Projects',
-    '10 GB Storage',
-    'History (40 GB)',
-    'Web Map',
-    'API',
-    'Email Support',
+    "Up to 6 users",
+    "Unlimited Projects",
+    "10 GB Storage",
+    "History (40 GB)",
+    "Web Map",
+    "API",
+    "Email Support",
   ];
 
   const enterpriseText = [
-    'Unlimited User',
-    'Unlimited Projects',
-    '50 GB Storage',
-    'History (200 GB)',
-    'Web Map',
-    'API',
-    'Email Support',
+    "Unlimited User",
+    "Unlimited Projects",
+    "50 GB Storage",
+    "History (200 GB)",
+    "Web Map",
+    "API",
+    "Email Support",
   ];
 
   return (
     <div className="h-full w-full p-8 flex flex-col justify-center bg-slate-200">
-      <h1 className="text-2xl font-medium tracking-wide">Upgrade Subscription</h1>
+      <h1 className="text-2xl font-medium tracking-wide">
+        Upgrade Subscription
+      </h1>
       <div className="flex mt-3">
         <button className="p-3 w-max border-[0.7px] border-gray-400 uppercase text-gray-400 bg-white hover:bg-gray-200 text-md font-normal">
           Yearly

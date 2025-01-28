@@ -1,6 +1,6 @@
-import { FaBars } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { FaBars } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 
 export default function LoginTable({ currentLogs }) {
   return (
@@ -64,9 +64,7 @@ export default function LoginTable({ currentLogs }) {
             </td>
             {/*   IP ADDRESS */}
             <td className="px-6 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              <div className="flex gap-2 items-center">
-                {log.ipAddress}
-              </div>
+              <div className="flex gap-2 items-center">{log.ipAddress}</div>
             </td>
             {/*   MAC ADDRESS */}
             <td className="px-6 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">

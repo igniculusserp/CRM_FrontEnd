@@ -39,12 +39,12 @@ export default function ServiceBox() {
       if (selectedOption === "Send SMS") {
         response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/SMSBox/sendsmsdetail/byusertoken`,
-          config
+          config,
         );
       } else if (selectedOption === "Send Email") {
         response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/SMSBox/sendemaildetail/byusertoken`,
-          config
+          config,
         );
       }
       console.log("Data", response);
@@ -66,8 +66,6 @@ export default function ServiceBox() {
     console.log("ID:", id); // Replace with your logic to handle checkbox click
   };
 
-
-
   const handleClick = (sms) => {
     navigate(`/panel/${sms.id}`);
   };
@@ -82,8 +80,6 @@ export default function ServiceBox() {
     setActionDropdown(!actionDropdown);
   };
 
-  
-
   //   STRIPE BAR
   const stripeBar = [
     { key: 1, value: "Table View" },
@@ -92,7 +88,7 @@ export default function ServiceBox() {
 
   //   SELECTED VIEW
   const [selectedViewValue, setSelectedViewValue] = useState(
-    stripeBar[0].value
+    stripeBar[0].value,
   );
 
   const [filteredLeads, setFilteredLeads] = useState([]); // Add this line
@@ -101,8 +97,6 @@ export default function ServiceBox() {
     // Initially set filteredLeads to all data from getSmsBox
     setFilteredLeads(getSmsBox);
   }, [getSmsBox]);
-
-  
 
   //---------------------->---------------------->PAGINATION<----------------------<----------------------
   //controlled from the bottom of the page
@@ -117,7 +111,7 @@ export default function ServiceBox() {
   const currentSms = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
- //---------------------------------------------------- Ation and it's Functionality ---------------------------------
+  //---------------------------------------------------- Ation and it's Functionality ---------------------------------
 
   // ACTION DROPDOWN DATA
   const dropActionsMenu = [
@@ -127,11 +121,7 @@ export default function ServiceBox() {
     { key: 6, value: "Export to PDF" },
   ];
 
-
-  
-
-
-  //------------------------------------------------ Buttons ------------------------------------------- 
+  //------------------------------------------------ Buttons -------------------------------------------
   // DYNAMIC BUTTONS
   const dynamicButtons = {
     "Send SMS": { text: "Send SMS", href: "/panel/sendsms" },
@@ -212,14 +202,14 @@ export default function ServiceBox() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
-        config
+        config,
       );
       console.log("Permission Data : ", response.data.data);
       const permissionsList = response?.data?.data;
 
       if (permissionsList) {
         const serviceBoxPermissions = permissionsList.find(
-          (item) => item.moduleName === "Service Box"
+          (item) => item.moduleName === "Service Box",
         );
 
         if (serviceBoxPermissions) {
@@ -239,19 +229,16 @@ export default function ServiceBox() {
     handleGetPermission();
   }, []);
 
-    // ------------------------------ Search Function ----------------------------------
+  // ------------------------------ Search Function ----------------------------------
 
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
-    const [searchTerm, setSearchTerm] = useState(""); // State for search term
-
-
-    useEffect(() => {
-      const filtered = getleads.filter((lead) =>
-        lead.products?.toLowerCase()?.includes(searchTerm?.toLowerCase())
-      
-      );
-      setFilteredLeads(filtered);
-    }, [searchTerm, getleads]);
+  useEffect(() => {
+    const filtered = getleads.filter((lead) =>
+      lead.products?.toLowerCase()?.includes(searchTerm?.toLowerCase()),
+    );
+    setFilteredLeads(filtered);
+  }, [searchTerm, getleads]);
 
   return (
     <div className="min-h-screen flex flex-col m-3">
@@ -259,33 +246,34 @@ export default function ServiceBox() {
         <div className="flex gap-3 items-center justify-start contact_Dropdown_Main_Container flex-wrap">
           {/* SEARCH DROPDOWN */}
           <SearchElement
-           value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
-            />
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
           {/* DYNAMIC BUTTONS */}
           <div className="flex gap-4 whitespace-nowrap service_Button_Main_Container">
-            {Object.keys(dynamicButtons).map((key) => 
-            
-            permissions.includes(key) || businessRole==="Admin" ?(
-              <button
-                key={key}
-                onClick={() => handleOptionClick(key)}
-                className={`px-4 py-1.5 rounded font-light text-md service_Button_Container
+            {Object.keys(dynamicButtons).map((key) =>
+              permissions.includes(key) || businessRole === "Admin" ? (
+                <button
+                  key={key}
+                  onClick={() => handleOptionClick(key)}
+                  className={`px-4 py-1.5 rounded font-light text-md service_Button_Container
                 ${
                   selectedButton === key
                     ? "bg-cyan-500 text-white"
                     : "bg-gray-100 text-gray-700"
                 }
               `}
-              >
-                {key}
-              </button>
-            ):null
+                >
+                  {key}
+                </button>
+              ) : null,
             )}
           </div>
         </div>
         <div className="flex gap-3 flex-wrap service_Action_Main_Container items-center">
           {/* DYNAMIC BUTTONS LINKS */}
-          {(smsPermission || businessRole==="Admin") && buttonText.text === "Send SMS" ? (
+          {(smsPermission || businessRole === "Admin") &&
+          buttonText.text === "Send SMS" ? (
             <Link to={buttonText.href} className="service_Action_Container">
               <button className="px-3 py-2 bg-blue-600 text-center text-md text-white rounded-md w-[150px] service_Action_Button">
                 {buttonText.text}
@@ -294,7 +282,8 @@ export default function ServiceBox() {
           ) : (
             ""
           )}
-          {(emailPermission || businessRole==="Admin") && buttonText.text === "Send Email" ? (
+          {(emailPermission || businessRole === "Admin") &&
+          buttonText.text === "Send Email" ? (
             <Link to={buttonText.href} className="service_Action_Container">
               <button className="px-3 py-2 bg-blue-600 text-center text-md text-white rounded-md w-[150px] service_Action_Button">
                 {buttonText.text}
@@ -377,43 +366,43 @@ export default function ServiceBox() {
         <div className="date_Filter_Main_Container">
           {/* ------------------- Filter by date ----------------- */}
           <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
-
             {/* Filter Icon Button */}
             <div className="flex items-center">
-            <button className="border-r border-gray-500 pr-2">
-              <ImFilter className="filter_Image_Size" />
-            </button>
+              <button className="border-r border-gray-500 pr-2">
+                <ImFilter className="filter_Image_Size" />
+              </button>
 
-            {/* Date Range Filter Button */}
-            <button
-              className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display"
+              {/* Date Range Filter Button */}
+              <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display">
+                Filter By
+              </button>
+
+              {/* Date Range Inputs */}
+              <div className="px-2 flex items-center gap-2 filter_Date_Container">
+                <label className="hide_Filter_Text">From:</label>
+                <input
+                  type="date"
+                  value={startDate}
+                  className="border rounded px-2 py-2 filter_Date"
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
+
+                <label className="hide_Filter_Text">To:</label>
+                <input
+                  type="date"
+                  value={endDate}
+                  className="border rounded px-2 py-2 filter_Date"
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div
+              className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center"
+              onClick={handleResetFilter}
             >
-              Filter By
-            </button>
-
-            {/* Date Range Inputs */}
-            <div className="px-2 flex items-center gap-2 filter_Date_Container">
-              <label className="hide_Filter_Text">From:</label>
-              <input
-                type="date"
-                value={startDate}
-                className="border rounded px-2 py-2 filter_Date"
-                onChange={(e) => setStartDate(e.target.value)}
-              />
-
-              <label className="hide_Filter_Text">To:</label>
-              <input
-                type="date"
-                value={endDate}
-                className="border rounded px-2 py-2 filter_Date"
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </div>
-            </div>
-            
-            <div className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center" onClick={handleResetFilter}>
-            <label className="hide_Filter_Text ">Reset</label>
-               <TbRefresh className="filter_Reset_Image"/>
+              <label className="hide_Filter_Text ">Reset</label>
+              <TbRefresh className="filter_Reset_Image" />
             </div>
           </div>
         </div>
@@ -424,14 +413,16 @@ export default function ServiceBox() {
         {/* SEND SMS TABLE */}
         <div className="min-w-full leads_Table_Container rounded-md">
           {selectedViewValue === "Table View" &&
-            selectedButton === "Send SMS" &&  (emailPermission|| businessRole==="Admin") && (
+            selectedButton === "Send SMS" &&
+            (emailPermission || businessRole === "Admin") && (
               <SendSMS currentSms={currentSms} />
             )}
         </div>
         {/* SEND EMAIL TABLE */}
         <div className="min-w-full leads_Table_Container rounded-md">
           {selectedViewValue === "Table View" &&
-            selectedButton === "Send Email" &&  (smsPermission|| businessRole==="Admin") && (
+            selectedButton === "Send Email" &&
+            (smsPermission || businessRole === "Admin") && (
               <SendEmail
                 currentSms={currentSms}
                 handleCheckboxClick={handleCheckboxClick}
@@ -492,7 +483,7 @@ export default function ServiceBox() {
                     );
                   }
                   return null;
-                }
+                },
               )}
 
               {/* Next Button */}

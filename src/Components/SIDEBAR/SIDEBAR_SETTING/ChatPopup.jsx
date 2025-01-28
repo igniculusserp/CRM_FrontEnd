@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import ChatWindow from './ChatWindow';
-import MessageInput from './SIDEBAR_SETTING_COMPONENTS/MessageInput';
-import { VscChromeMinimize } from 'react-icons/vsc';
-import { FaPlus, FaWindowMinimize } from 'react-icons/fa';
+import { useState } from "react";
+import ChatWindow from "./ChatWindow";
+import MessageInput from "./SIDEBAR_SETTING_COMPONENTS/MessageInput";
+import { VscChromeMinimize } from "react-icons/vsc";
+import { FaPlus, FaWindowMinimize } from "react-icons/fa";
 
 export default function ChatPopup() {
   const [message, setMessage] = useState(true);
@@ -10,10 +10,10 @@ export default function ChatPopup() {
   const [openChat, setOpenChat] = useState(false);
 
   const users = [
-    { id: 1, firstName: 'Shub', lastName: 'Mishra', status: true },
-    { id: 2, firstName: 'Ravi', lastName: 'Mishra', status: false },
-    { id: 3, firstName: 'Ujjwal', lastName: 'Mishra', status: true },
-    { id: 4, firstName: 'Ujjwal', lastName: 'Mishra', status: true },
+    { id: 1, firstName: "Shub", lastName: "Mishra", status: true },
+    { id: 2, firstName: "Ravi", lastName: "Mishra", status: false },
+    { id: 3, firstName: "Ujjwal", lastName: "Mishra", status: true },
+    { id: 4, firstName: "Ujjwal", lastName: "Mishra", status: true },
   ];
 
   // -------------   CHATS   -------------
@@ -25,7 +25,7 @@ export default function ChatPopup() {
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
-        { text: 'This is a reply!', isSender: false },
+        { text: "This is a reply!", isSender: false },
       ]);
     }, 1000);
   };
@@ -46,8 +46,8 @@ export default function ChatPopup() {
           <section
             className={`fixed right-4 bottom-0 w-[300px] ${
               popupChat
-                ? 'border-none rounded-none h-[400px] hidden'
-                : 'rounded-t-lg block'
+                ? "border-none rounded-none h-[400px] hidden"
+                : "rounded-t-lg block"
             } bg-cyan-400 py-1 z-10 shadow-lg text-center opacity-70`}
           >
             <div className="flex items-center px-6 justify-between sticky bottom-0 h-8">
@@ -59,8 +59,7 @@ export default function ChatPopup() {
                 <FaPlus
                   className="text-white cursor-pointer  "
                   onClick={() => setPopupChat(true)}
-                >
-                </FaPlus>
+                ></FaPlus>
                 <FaWindowMinimize
                   className="text-white cursor-pointer mb-2 "
                   onClick={() => setPopupChat(false)}
@@ -84,8 +83,7 @@ export default function ChatPopup() {
                   type="button"
                   onClick={() => setOpenChat(true)}
                   className="text-white cursor-pointer"
-                >
-                </FaPlus>
+                ></FaPlus>
                 <FaWindowMinimize
                   className="text-white cursor-pointer mb-2 "
                   onClick={() => setPopupChat(false)}
@@ -101,7 +99,7 @@ export default function ChatPopup() {
                 >
                   <div
                     className={`w-2 h-2 rounded-full ${
-                      user.status ? 'bg-green-600' : 'bg-red-500'
+                      user.status ? "bg-green-600" : "bg-red-500"
                     }`}
                   ></div>
                   <p className="text-sm">{user.firstName}</p>

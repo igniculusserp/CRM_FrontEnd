@@ -1,11 +1,20 @@
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
-import PropTypes from "prop-types"; 
+import PropTypes from "prop-types";
 
 const FollowCircle = ({ followUpGrowthPercentage, color }) => {
   // Data for the pie chart using the direct followUpGrowthPercentage prop
   const data = [
-    { name: "Growth", value: followUpGrowthPercentage >= 0 ? Math.min(followUpGrowthPercentage, 100) : Math.abs(followUpGrowthPercentage) },
-    { name: "Remaining", value: Math.max(0, 100 - Math.abs(followUpGrowthPercentage)) },
+    {
+      name: "Growth",
+      value:
+        followUpGrowthPercentage >= 0
+          ? Math.min(followUpGrowthPercentage, 100)
+          : Math.abs(followUpGrowthPercentage),
+    },
+    {
+      name: "Remaining",
+      value: Math.max(0, 100 - Math.abs(followUpGrowthPercentage)),
+    },
   ];
 
   const COLORS = color === "green" ? ["green", "#EBF8FF"] : ["red", "#FFCCCC"];
@@ -26,7 +35,8 @@ const FollowCircle = ({ followUpGrowthPercentage, color }) => {
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
-      <Tooltip formatter={(value, name) => `${name}: ${value}%`} /> {/* Optional Tooltip */}
+      <Tooltip formatter={(value, name) => `${name}: ${value}%`} />{" "}
+      {/* Optional Tooltip */}
     </PieChart>
   );
 };

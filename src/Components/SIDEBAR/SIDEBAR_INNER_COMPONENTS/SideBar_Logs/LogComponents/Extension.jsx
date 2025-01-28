@@ -1,6 +1,6 @@
-import { FaBars, FaPen, FaTrash } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { FaBars, FaPen, FaTrash } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 
 export default function Extension({ currentLogs }) {
   return (

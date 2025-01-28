@@ -53,7 +53,7 @@ export default function UserSetting() {
           deviceType: "",
           deviceAddress: "",
         },
-        config
+        config,
       );
 
       // Log the response to verify the status code
@@ -91,7 +91,7 @@ export default function UserSetting() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
+        config,
       );
       console.log(response?.data?.data, "000");
       setData(response?.data?.data);
@@ -117,7 +117,7 @@ export default function UserSetting() {
       };
       await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/Setting/${id}`,
-        config
+        config,
       );
       showSuccessToast("User Deleted Successfully");
       setData((prevData) => prevData.filter((item) => item.id !== id));
@@ -207,44 +207,48 @@ export default function UserSetting() {
         await axios.put(
           `${protocal_url}${name}.${tenant_base_url}/Setting/update`,
           formData_PUT,
-          config
+          config,
         );
       } else {
-        if(!formData_POST.firstName){
-          showErrorToast('Please enter name');
+        if (!formData_POST.firstName) {
+          showErrorToast("Please enter name");
           return;
         }
-      
-        if(!formData_POST.email){
-          showErrorToast('Please enter email');
+
+        if (!formData_POST.email) {
+          showErrorToast("Please enter email");
           return;
         }
-      
-        if(!formData_POST.contactNo){
-          showErrorToast('Please enter contact number');
+
+        if (!formData_POST.contactNo) {
+          showErrorToast("Please enter contact number");
           return;
         }
-      
-        if(!formData_POST.password){
-          showErrorToast('Please enter password');
+
+        if (!formData_POST.password) {
+          showErrorToast("Please enter password");
           return;
         }
-      
-        if(formData_POST.password !== formData_POST.confirmPassword){
-          showErrorToast('Password doesnt match');
+
+        if (formData_POST.password !== formData_POST.confirmPassword) {
+          showErrorToast("Password doesnt match");
           return;
         }
-      
-        if(!formData_POST.reportedTo){
-          showErrorToast('Please selected Reported to');
+
+        if (!formData_POST.reportedTo) {
+          showErrorToast("Please selected Reported to");
           return;
         }
-      
-        if(!formData_POST.role){
-          showErrorToast('Please selected group name');
+
+        if (!formData_POST.role) {
+          showErrorToast("Please selected group name");
           return;
         }
-        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Setting`, formData_POST, config);
+        await axios.post(
+          `${protocal_url}${name}.${tenant_base_url}/Setting`,
+          formData_POST,
+          config,
+        );
       }
 
       handleLead(); // Refresh the list
@@ -299,7 +303,7 @@ export default function UserSetting() {
           createdDate: "",
           deletedDate: "",
           userName: "",
-        }
+        },
       );
     }, [data]);
 
@@ -322,7 +326,7 @@ export default function UserSetting() {
       try {
         const response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Admin/group/all`,
-          config
+          config,
         );
         setROLE(response.data.data);
         // console.log("Role data:", response.data.data);
@@ -493,7 +497,7 @@ export default function UserSetting() {
                   </div>
                   {/*<---------------Confirm Password--------------->*/}
                   {/* Password Input Field */}
-                   <div className="flex flex-col w-1/2">
+                  <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="confirmPassword"
                       className="text-sm font-medium text-gray-700 relative block"
@@ -507,7 +511,6 @@ export default function UserSetting() {
                         onChange={handleChange}
                         placeholder="********"
                       />
-                    
                     </label>
                   </div>
                 </div>
@@ -686,12 +689,12 @@ export default function UserSetting() {
                           {data.email}
                         </td>
                         <td className="px-2 py-4 text-sm max-w-24 break-words">
-  <a
-                              href={`tel:${data.contactNo}`}
-                              onClick={(event) => event.stopPropagation()}
-                            >
-                              {data.contactNo}
-                            </a>              
+                          <a
+                            href={`tel:${data.contactNo}`}
+                            onClick={(event) => event.stopPropagation()}
+                          >
+                            {data.contactNo}
+                          </a>
                         </td>
                         <td className="px-2 py-4 text-sm max-w-24 break-words">
                           {data.country}

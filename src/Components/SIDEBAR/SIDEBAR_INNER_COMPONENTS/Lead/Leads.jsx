@@ -102,7 +102,7 @@ export default function Lead() {
       if (id === 4) {
         const response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/LeadOpration/leads/byusertoken/count`,
-          config
+          config,
         );
 
         const data = response.data.data;
@@ -112,7 +112,7 @@ export default function Lead() {
       } else {
         const response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Lead/leads/byusertoken`,
-          config
+          config,
         );
 
         const data = response.data.data;
@@ -138,7 +138,7 @@ export default function Lead() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
+        config,
       );
 
       const data = response.data?.data;
@@ -172,7 +172,7 @@ export default function Lead() {
       } else {
         // Apply filtering for other statuses
         filteredLeads = getleads.filter(
-          (lead) => lead.leadesStatus === statusValue
+          (lead) => lead.leadesStatus === statusValue,
         );
       }
       setFilteredLeads(filteredLeads);
@@ -185,7 +185,7 @@ export default function Lead() {
       } else {
         // Apply filtering for other statuses
         filteredLeads = getleads.filter(
-          (lead) => lead.leadesStatus === statusValue
+          (lead) => lead.leadesStatus === statusValue,
         );
       }
       setFilteredLeads(filteredLeads);
@@ -197,7 +197,7 @@ export default function Lead() {
       let filtered = getleads;
       if (assignedToValue !== null && assignedToValue !== "Assigned to") {
         filtered = filtered.filter(
-          (lead) => lead.assigned_To === assignedToValue
+          (lead) => lead.assigned_To === assignedToValue,
         );
       }
       setFilteredLeads(filtered); // Set the filtered result
@@ -206,7 +206,7 @@ export default function Lead() {
       let filtered = getleads;
       if (assignedToValue !== null && assignedToValue !== "Assigned to") {
         filtered = filtered.filter(
-          (lead) => lead.assigned_To === assignedToValue
+          (lead) => lead.assigned_To === assignedToValue,
         );
       }
       setFilteredLeads(filtered); // Set the filtered result
@@ -252,7 +252,7 @@ export default function Lead() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
-        config
+        config,
       );
       setallLeadData(response.data.data);
     } catch (error) {
@@ -289,7 +289,7 @@ export default function Lead() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
+        config,
       );
       setallAssigned_To_Data(response.data.data);
     } catch (error) {
@@ -319,7 +319,7 @@ export default function Lead() {
 
   //By Default value - to <TABLE VIEW>
   const [selectedViewValue, setSelectedViewValue] = useState(
-    stripeBar[0].value
+    stripeBar[0].value,
   );
 
   //function to open/close dropdown onMouseLeave
@@ -363,7 +363,7 @@ export default function Lead() {
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
     if (value === "Mass Delete") {
       const userConfirmed = confirm(
-        "Are you sure you want to Delete the selected Leads?"
+        "Are you sure you want to Delete the selected Leads?",
       );
       if (userConfirmed) {
         massDelete();
@@ -373,7 +373,7 @@ export default function Lead() {
     // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
     if (value === "Mass Email") {
       const userConfirmed = confirm(
-        "Are you sure you want to Send E-Mail to the selected Data?"
+        "Are you sure you want to Send E-Mail to the selected Data?",
       );
       if (userConfirmed) {
         openMassEmailModal(selectedEmails);
@@ -383,7 +383,7 @@ export default function Lead() {
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
     if (value === "Sheet View") {
       const userConfirmed = confirm(
-        "Are you sure you want to export the selected Leads?"
+        "Are you sure you want to export the selected Leads?",
       );
       if (userConfirmed) {
         exportToExcel();
@@ -393,7 +393,7 @@ export default function Lead() {
     // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
     if (value === "Print View") {
       const userConfirmed = confirm(
-        "Are you sure you want to export the selected Leads?"
+        "Are you sure you want to export the selected Leads?",
       );
       if (userConfirmed) {
         exportToPDF();
@@ -403,7 +403,7 @@ export default function Lead() {
     // ---------------------->Convert Lead to Contact FUNCTIONALITY*<----------------------
     if (value === "Convert Lead to Contact") {
       const userConfirmed = confirm(
-        "Are you sure you want to convert this lead to a contact?"
+        "Are you sure you want to convert this lead to a contact?",
       );
       if (userConfirmed) {
         convertType();
@@ -425,14 +425,14 @@ export default function Lead() {
 
       const response = await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/Lead/lead/massdelete`,
-        config
+        config,
       );
       alert("Mass Deleted run");
       handleLead();
       console.log(response);
 
       setGetleads((prevLeads) =>
-        prevLeads.filter((lead) => !selectedIds.includes(lead.id))
+        prevLeads.filter((lead) => !selectedIds.includes(lead.id)),
       );
       setSelectedIds([]);
     } catch (error) {
@@ -469,7 +469,7 @@ export default function Lead() {
   const exportToExcel = () => {
     console.log("runned");
     const leadsToExport = currentLeads.filter((lead) =>
-      selectedIds.includes(lead.id)
+      selectedIds.includes(lead.id),
     );
     if (leadsToExport?.length === 0) {
       alert("No leads selected to export");
@@ -490,7 +490,7 @@ export default function Lead() {
   //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
   const exportToPDF = () => {
     const leadsToExport = currentLeads.filter((lead) =>
-      selectedIds.includes(lead.id)
+      selectedIds.includes(lead.id),
     );
     if (leadsToExport?.length === 0) {
       alert("No leads selected to export");
@@ -551,11 +551,11 @@ export default function Lead() {
       const response = await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/Lead/leadtocontact/${selectedIds}`,
         { id: selectedIds }, // Pass data as second parameter
-        config
+        config,
       );
 
       setGetleads((prevLeads) =>
-        prevLeads.filter((lead) => !selectedIds.includes(lead.id))
+        prevLeads.filter((lead) => !selectedIds.includes(lead.id)),
       );
       setSelectedIds([]);
 
@@ -563,12 +563,12 @@ export default function Lead() {
         showSuccessToast("Lead has been successfully converted to a contact.");
       } else {
         showErrorToast(
-          `Failed to convert lead: ${response.data.message || "Unknown error"}`
+          `Failed to convert lead: ${response.data.message || "Unknown error"}`,
         );
       }
     } catch (error) {
       showErrorToast(
-        "An error occurred while converting the lead. Please try again later."
+        "An error occurred while converting the lead. Please try again later.",
       );
     }
   };
@@ -590,7 +590,7 @@ export default function Lead() {
     setSelectedIds((prevSelected) =>
       prevSelected.includes(leadId)
         ? prevSelected.filter((id) => id !== leadId)
-        : [...prevSelected, leadId]
+        : [...prevSelected, leadId],
     );
 
     // Update selected emails
@@ -620,7 +620,7 @@ export default function Lead() {
       const currentPageIds = currentLeads?.map((lead) => lead.id);
       setSelectedEmails([]);
       setSelectedIds((prevSelected) =>
-        prevSelected.filter((id) => !currentPageIds.includes(id))
+        prevSelected.filter((id) => !currentPageIds.includes(id)),
       );
     }
   };
@@ -646,7 +646,7 @@ export default function Lead() {
   // State to keep track of the selected button and button text
 
   const [activeButtonId, setActiveButtonId] = useState(
-    () => parseInt(localStorage.getItem("activeButtonId")) || 1
+    () => parseInt(localStorage.getItem("activeButtonId")) || 1,
   );
 
   const handleDynamicButtonsClick = (id) => {
@@ -758,14 +758,14 @@ export default function Lead() {
       filtered = getleads.filter(
         (lead) =>
           lead.userName &&
-          lead.userName?.toLowerCase()?.includes(searchTerm?.toLowerCase())
+          lead.userName?.toLowerCase()?.includes(searchTerm?.toLowerCase()),
       );
     } else {
       // General filtering for other lead types
       filtered = getleads.filter(
         (lead) =>
           lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
-          lead.mobileNo?.includes(searchTerm)
+          lead.mobileNo?.includes(searchTerm),
       );
     }
 
@@ -800,14 +800,14 @@ export default function Lead() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
-        config
+        config,
       );
       console.log("Permission Data : ", response.data.data);
       const permissionsList = response?.data?.data;
 
       if (permissionsList) {
         const serviceBoxPermissions = permissionsList.find(
-          (item) => item.moduleName === "Leads"
+          (item) => item.moduleName === "Leads",
         );
 
         if (serviceBoxPermissions) {
@@ -1045,7 +1045,7 @@ export default function Lead() {
                         >
                           {value}
                         </li>
-                      ) : null
+                      ) : null,
                     )}
                   </ul>
                 </div>
@@ -1083,58 +1083,58 @@ export default function Lead() {
                   >
                     {name}
                   </button>
-                ) : null
+                ) : null,
               )}
             </div>
           </div>
 
-            {activeButtonId === 1 ? (
-          <div className="date_Filter_Main_Container">
-          {/* ------------------- Filter by date ----------------- */}
-          <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
+          {activeButtonId === 1 ? (
+            <div className="date_Filter_Main_Container">
+              {/* ------------------- Filter by date ----------------- */}
+              <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
+                {/* Filter Icon Button */}
+                <div className="flex items-center">
+                  <button className="border-r border-gray-500 pr-2">
+                    <ImFilter className="filter_Image_Size" />
+                  </button>
 
-            {/* Filter Icon Button */}
-            <div className="flex items-center">
-            <button className="border-r border-gray-500 pr-2">
-              <ImFilter className="filter_Image_Size" />
-            </button>
+                  {/* Date Range Filter Button */}
+                  <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display">
+                    Filter By
+                  </button>
 
-            {/* Date Range Filter Button */}
-            <button
-              className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display"
-            >
-              Filter By
-            </button>
+                  {/* Date Range Inputs */}
+                  <div className="px-2 flex items-center gap-2 filter_Date_Container">
+                    <label className="hide_Filter_Text">From:</label>
+                    <input
+                      type="date"
+                      value={startDate}
+                      className="border rounded px-2 py-2 filter_Date"
+                      onChange={(e) => setStartDate(e.target.value)}
+                    />
 
-            {/* Date Range Inputs */}
-            <div className="px-2 flex items-center gap-2 filter_Date_Container">
-              <label className="hide_Filter_Text">From:</label>
-              <input
-                type="date"
-                value={startDate}
-                className="border rounded px-2 py-2 filter_Date"
-                onChange={(e) => setStartDate(e.target.value)}
-              />
+                    <label className="hide_Filter_Text">To:</label>
+                    <input
+                      type="date"
+                      value={endDate}
+                      className="border rounded px-2 py-2 filter_Date"
+                      onChange={(e) => setEndDate(e.target.value)}
+                    />
+                  </div>
+                </div>
 
-              <label className="hide_Filter_Text">To:</label>
-              <input
-                type="date"
-                value={endDate}
-                className="border rounded px-2 py-2 filter_Date"
-                onChange={(e) => setEndDate(e.target.value)}
-              />
+                <div
+                  className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center"
+                  onClick={handleResetFilter}
+                >
+                  <label className="hide_Filter_Text ">Reset</label>
+                  <TbRefresh className="filter_Reset_Image" />
+                </div>
+              </div>
             </div>
-            </div>
-            
-            <div className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center" onClick={handleResetFilter}>
-            <label className="hide_Filter_Text ">Reset</label>
-               <TbRefresh className="filter_Reset_Image"/>
-            </div>
-          </div>
-        </div>
-            ) : (
-              ""
-            )}
+          ) : (
+            ""
+          )}
         </div>
         {activeButtonId === 3 && (
           <div
@@ -1250,7 +1250,7 @@ export default function Lead() {
                       const matchedUser =
                         users?.length > 0
                           ? users?.find(
-                              (user) => user?.userName === item?.assigned_To
+                              (user) => user?.userName === item?.assigned_To,
                             )
                           : [];
                       const role = matchedUser?.role;
@@ -1581,7 +1581,7 @@ export default function Lead() {
                           );
                         }
                         return null;
-                      }
+                      },
                     )}
 
                     {/* Next Button */}

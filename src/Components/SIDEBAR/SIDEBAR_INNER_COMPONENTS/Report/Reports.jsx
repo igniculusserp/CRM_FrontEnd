@@ -54,7 +54,7 @@ export default function Reports() {
 
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}${endpoint}`,
-        config
+        config,
       );
 
       const data = response.data.data;
@@ -95,7 +95,7 @@ export default function Reports() {
   ];
 
   const [selectedId, setSelectedId] = useState(
-    () => parseInt(localStorage.getItem("selectedId")) || 1
+    () => parseInt(localStorage.getItem("selectedId")) || 1,
   );
 
   // Function to handle option click using bracket notation
@@ -203,14 +203,14 @@ export default function Reports() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
-        config
+        config,
       );
       console.log("Permission Data : ", response.data.data);
       const permissionsList = response?.data?.data;
 
       if (permissionsList) {
         const serviceBoxPermissions = permissionsList.find(
-          (item) => item.moduleName === "Reports"
+          (item) => item.moduleName === "Reports",
         );
 
         if (serviceBoxPermissions) {
@@ -237,11 +237,11 @@ export default function Reports() {
 
   return (
     <div className="min-h-screen flex flex-col m-3">
-      <div className="py-2 px-3 bg-white gap-3 flex items-center justify-between rounded-md " >
-        <div className="flex gap-3 reports_Buttons_Main_Container" >
+      <div className="py-2 px-3 bg-white gap-3 flex items-center justify-between rounded-md ">
+        <div className="flex gap-3 reports_Buttons_Main_Container">
           {dynamicButtons.map(({ id, name }) => (
             <>
-              {permissions.includes(name) || businessRole==="Admin" ? (
+              {permissions.includes(name) || businessRole === "Admin" ? (
                 <button
                   key={id}
                   onClick={() => handleOptionClick(id)}
@@ -261,7 +261,6 @@ export default function Reports() {
             </>
           ))}
         </div>
-       
       </div>
 
       {/* FILTER BY SECTION */}
@@ -355,37 +354,37 @@ export default function Reports() {
       <div className="overflow-x-auto leads_Table_Main_Container">
         {/* EMPLOYEE REPORT TABLE */}
         <div className="min-w-full leads_Table_Container rounded-md">
-          {selectedId === 1 && (employee || businessRole==="Admin") && (
+          {selectedId === 1 && (employee || businessRole === "Admin") && (
             <EmployeeReport currentReports={currentReports} />
           )}
         </div>
         {/* LEAD REPORTS TABLE */}
         <div className="min-w-full leads_Table_Container rounded-md">
-          {selectedId === 2 && (lead|| businessRole==="Admin") && (
+          {selectedId === 2 && (lead || businessRole === "Admin") && (
             <LeadsReport currentReports={currentReports} />
           )}
         </div>
         {/* CLIENT REPORTS TABLE */}
         <div className="min-w-full leads_Table_Container rounded-md">
-          {selectedId === 3 && (client|| businessRole==="Admin") && (
+          {selectedId === 3 && (client || businessRole === "Admin") && (
             <ClientReports currentReports={currentReports} />
           )}
         </div>
         {/* SALES REPORTS TABLE */}
         <div className="min-w-full leads_Table_Container rounded-md">
-          {selectedId === 4 && (sales|| businessRole==="Admin") && (
+          {selectedId === 4 && (sales || businessRole === "Admin") && (
             <SalesReports currentReports={currentReports} btn={buttonId} />
           )}
         </div>
         {/* DISPOSE REPORTS TABLE */}
         <div className="min-w-full leads_Table_Container rounded-md">
-          {selectedId === 5 && (dispose|| businessRole==="Admin") && (
+          {selectedId === 5 && (dispose || businessRole === "Admin") && (
             <DisposeLeads currentReports={currentReports} />
           )}
         </div>
         {/* Monitoring TABLE */}
         <div className="min-w-full leads_Table_Container rounded-md">
-          {selectedId === 6 && (monitoring|| businessRole==="Admin") && (
+          {selectedId === 6 && (monitoring || businessRole === "Admin") && (
             <Monitoring currentReports={currentReports} />
           )}
         </div>
@@ -412,7 +411,7 @@ export default function Reports() {
                       {i + 1}
                     </button>
                   </li>
-                )
+                ),
               )}
             </ul>
           </nav>

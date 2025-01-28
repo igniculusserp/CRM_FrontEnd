@@ -11,7 +11,6 @@ export default function AccessControl() {
   const [activeComponent, setActiveComponent] = useState("Table");
   const [selectedId, setSelectedId] = useState(null); // Add state for selected id
 
-
   // ------------------------------ Access Control Handle Add Button ------------------------
 
   const handleAdd = () => {
@@ -34,11 +33,11 @@ export default function AccessControl() {
   //------------------------------------Access Control Table -----------------------------
   const AccessControlTable = () => {
     const [data, setData] = useState([]);
-    
+
     const fullURL = window.location.href;
     const url = new URL(fullURL);
     const name = url.hostname.split(".")[0];
-    
+
     // ------------------------------ Access Control Get All  ------------------------
     async function handleGetAll() {
       const bearer_token = localStorage.getItem("token");
@@ -50,7 +49,7 @@ export default function AccessControl() {
         };
         const response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Security/accesscontrol/getall`,
-          config
+          config,
         );
         setData(response.data.data);
       } catch (error) {
@@ -74,7 +73,7 @@ export default function AccessControl() {
         };
         await axios.delete(
           `${protocal_url}${name}.${tenant_base_url}/Security/accesscontrol/delete/${id}`,
-          config
+          config,
         );
         setData((prevData) => prevData.filter((item) => item.id !== id));
         alert("Successfully deleted");

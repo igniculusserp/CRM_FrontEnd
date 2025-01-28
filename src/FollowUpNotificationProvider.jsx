@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { tenant_base_url, protocal_url } from "./Config/config";
@@ -25,7 +23,7 @@ export default function FollowUpNotificationProvider({ children }) {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/FollowUp/byusertoken`,
-        config
+        config,
       );
       if (response.status === 200) {
         const followup = response.data;
@@ -44,8 +42,6 @@ export default function FollowUpNotificationProvider({ children }) {
     return () => clearInterval(interval);
   }, []);
 
-
-
   // Notifications
   const openNotification = (id) => {
     if (id) {
@@ -61,39 +57,39 @@ export default function FollowUpNotificationProvider({ children }) {
     setNotificationData("");
   };
 
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       const currentTime = moment(); // Current time using moment.js
-      const oneBeforeCurrent = currentTime.clone().subtract(20, 'minute');
-      const TwoBeforeCurrent = currentTime.clone().subtract(40, 'minute');
-      const ThreeBeforeCurrent = currentTime.clone().subtract(60, 'minute');
-      const FourBeforeCurrent = currentTime.clone().subtract(80, 'minute');
-  
+      const oneBeforeCurrent = currentTime.clone().subtract(20, "minute");
+      const TwoBeforeCurrent = currentTime.clone().subtract(40, "minute");
+      const ThreeBeforeCurrent = currentTime.clone().subtract(60, "minute");
+      const FourBeforeCurrent = currentTime.clone().subtract(80, "minute");
+
       followupList.forEach((item) => {
         const callbackTime = moment(item.call_bck_DateTime);
         if (
-          currentTime.isSame(callbackTime, 'minute') || 
-          oneBeforeCurrent.isSame(callbackTime, 'minute')|| 
-          TwoBeforeCurrent.isSame(callbackTime, 'minute')|| 
-          ThreeBeforeCurrent.isSame(callbackTime, 'minute')|| 
-          FourBeforeCurrent.isSame(callbackTime, 'minute')
+          currentTime.isSame(callbackTime, "minute") ||
+          oneBeforeCurrent.isSame(callbackTime, "minute") ||
+          TwoBeforeCurrent.isSame(callbackTime, "minute") ||
+          ThreeBeforeCurrent.isSame(callbackTime, "minute") ||
+          FourBeforeCurrent.isSame(callbackTime, "minute")
         ) {
           openNotification(item.id);
         }
       });
     }, 35000); // Check every 30 seconds
-  
+
     return () => clearInterval(intervalId);
   }, [followupList]);
-  
-
 
   return (
     <>
       {children}
       {isNotification && (
-        <FollowupNotificationModal id={notificationData} onClose={closeNotification} />
+        <FollowupNotificationModal
+          id={notificationData}
+          onClose={closeNotification}
+        />
       )}
     </>
   );

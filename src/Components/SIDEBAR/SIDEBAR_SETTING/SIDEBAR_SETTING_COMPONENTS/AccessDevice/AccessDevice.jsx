@@ -1,27 +1,28 @@
-import { useState, useEffect } from 'react';
-import { FaBars } from 'react-icons/fa';
-import { FaAngleDown } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
-import axios from 'axios';
-import { tenant_base_url, protocal_url } from './../../../../../Config/config';
+import { useState, useEffect } from "react";
+import { FaBars } from "react-icons/fa";
+import { FaAngleDown } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import axios from "axios";
+import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 
 import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
-import { ToastContainer } from 'react-toastify';
-import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNotifications';
-
-
+import { ToastContainer } from "react-toastify";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../../../../utils/toastNotifications";
 
 export default function AccessDevice() {
   const [data, setData] = useState([]);
-  const [activeComponent, setActiveComponent] = useState('Table');
+  const [activeComponent, setActiveComponent] = useState("Table");
 
   const name = getHostnamePart();
-  const [idGet, setIdGet] = useState('');
+  const [idGet, setIdGet] = useState("");
 
   // -------------------Fetch All Access Devices---------------------
   async function handleLead() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -30,11 +31,11 @@ export default function AccessDevice() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/getAllAccessDevices`,
-        config
+        config,
       );
       setData(response.data.data);
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message);
     }
   }
 
@@ -44,7 +45,7 @@ export default function AccessDevice() {
 
   // ------------------Delete Access Devices By ID---------------------
   const handleDelete = async (id) => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -53,26 +54,26 @@ export default function AccessDevice() {
       };
       await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/Setting/deleteAccessDevice/${id}`,
-        config
+        config,
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
-      showSuccessToast('Deleted Successfully')
+      showSuccessToast("Deleted Successfully");
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message);
     }
   };
 
   // Handle cancel form action
   const handleCancel = () => {
-    setActiveComponent('Table');
+    setActiveComponent("Table");
   };
 
   const handleAdd = () => {
-    setActiveComponent('Add');
+    setActiveComponent("Add");
   };
 
   const handleEdit = (id) => {
-    setActiveComponent('Update');
+    setActiveComponent("Update");
     setIdGet(id);
   };
 
@@ -189,24 +190,24 @@ export default function AccessDevice() {
 
   const AccessDeviceAdd = () => {
     const [addDevice, setAddDevice] = useState({
-      userId: '',
-      userName: '',
-      deviceType: '',
-      deviceToken: '',
-      deviceAddress: '',
+      userId: "",
+      userName: "",
+      deviceType: "",
+      deviceToken: "",
+      deviceAddress: "",
     });
 
     //----------------------------------------------------------------------------------------
     //Status_ToDropDown
     const [statusToDropDown, setStatusToDropDown] = useState([]);
     const [defaultTextStatus, setDefaultTextStatus] = useState(
-      'Select User Name...'
+      "Select User Name...",
     );
     const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
     const [errorStatus, setStatusError] = useState(null); // New error state
 
     const handleStatus = async () => {
-      const bearerToken = localStorage.getItem('token');
+      const bearerToken = localStorage.getItem("token");
       const config = {
         headers: {
           Authorization: `Bearer ${bearerToken}`,
@@ -216,14 +217,14 @@ export default function AccessDevice() {
       try {
         const response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-          config
+          config,
         );
         setStatusToDropDown(response.data.data);
-        console.log('status:', response.data.data);
+        console.log("status:", response.data.data);
       } catch (error) {
-        console.error('Error fetching leads:', errorStatus);
-        console.error('Error fetching leads:', error);
-        setStatusError('Failed to fetch pools.');
+        console.error("Error fetching leads:", errorStatus);
+        console.error("Error fetching leads:", error);
+        setStatusError("Failed to fetch pools.");
       }
     };
 
@@ -257,38 +258,40 @@ export default function AccessDevice() {
     // Handle form submission
     const handleSubmit = async (event) => {
       event.preventDefault();
-      const bearer_token = localStorage.getItem('token');
+      const bearer_token = localStorage.getItem("token");
 
       try {
         const config = {
           headers: {
             Authorization: `Bearer ${bearer_token}`,
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         };
 
         if (!addDevice.userName) {
-          showErrorToast('Please select user')
+          showErrorToast("Please select user");
           return;
         }
         if (!addDevice.deviceType) {
-          showErrorToast('Please enter device type')
+          showErrorToast("Please enter device type");
           return;
         }
         if (!addDevice.deviceToken) {
-          showErrorToast('Please enter device token')
+          showErrorToast("Please enter device token");
           return;
         }
         if (!addDevice.deviceAddress) {
-          showErrorToast('Please enter device address')
+          showErrorToast("Please enter device address");
           return;
         }
 
-
-        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Setting/addAccessDevice`, addDevice, config);
-        showSuccessToast('Access Device Added Sucessfully')
+        await axios.post(
+          `${protocal_url}${name}.${tenant_base_url}/Setting/addAccessDevice`,
+          addDevice,
+          config,
+        );
+        showSuccessToast("Access Device Added Sucessfully");
         window.location.reload();
-
       } catch (error) {
         showErrorToast(error.response.data.message);
       }
@@ -334,7 +337,7 @@ export default function AccessDevice() {
                         id="LeadStatusDropDown"
                         type="button"
                       >
-                        {addDevice.userName === ''
+                        {addDevice.userName === ""
                           ? defaultTextStatus
                           : addDevice.userName}
                         <FaAngleDown className="ml-2 text-gray-400" />
@@ -342,7 +345,9 @@ export default function AccessDevice() {
                       {isStatusDropdownOpen && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10 h-44 overflow-scroll">
                           {errorStatus ? (
-                            <div className="py-2 text-red-600">{errorStatus}</div>
+                            <div className="py-2 text-red-600">
+                              {errorStatus}
+                            </div>
                           ) : (
                             <ul className="py-2 text-sm text-gray-700">
                               {statusToDropDown.map((device) => (
@@ -461,17 +466,17 @@ export default function AccessDevice() {
 
   const AccessDeviceUpdate = () => {
     const [addDevice, setAddDevice] = useState({
-      id: '',
-      userId: '',
-      userName: '',
-      deviceType: '',
-      deviceAddress: '',
-      deviceToken: '',
+      id: "",
+      userId: "",
+      userName: "",
+      deviceType: "",
+      deviceAddress: "",
+      deviceToken: "",
     });
 
     const [statusToDropDown, setStatusToDropDown] = useState([]);
     const [defaultTextStatus, setDefaultTextStatus] = useState(
-      'Select User Name...'
+      "Select User Name...",
     );
     const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
     const [errorStatus, setStatusError] = useState(null);
@@ -484,7 +489,7 @@ export default function AccessDevice() {
     }, [idGet, name, protocal_url, tenant_base_url]);
 
     const handleDeviceId = async () => {
-      const bearer_token = localStorage.getItem('token');
+      const bearer_token = localStorage.getItem("token");
       const config = {
         headers: { Authorization: `Bearer ${bearer_token}` },
       };
@@ -492,19 +497,19 @@ export default function AccessDevice() {
       try {
         const response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Setting/getAccessDeviceById/${idGet}`,
-          config
+          config,
         );
         const data = response.data.data;
         setAddDevice({
-          id: data.id || '',
-          userId: data.userId || '',
-          userName: data.userName || '',
-          deviceType: data.deviceType || '',
-          deviceAddress: data.deviceAddress || '',
-          deviceToken: data.deviceToken || '',
+          id: data.id || "",
+          userId: data.userId || "",
+          userName: data.userName || "",
+          deviceType: data.deviceType || "",
+          deviceAddress: data.deviceAddress || "",
+          deviceToken: data.deviceToken || "",
         });
       } catch (error) {
-        console.error('Error fetching Access Device by ID:', error);
+        console.error("Error fetching Access Device by ID:", error);
       }
     };
 
@@ -514,7 +519,7 @@ export default function AccessDevice() {
     }, [name, protocal_url, tenant_base_url]);
 
     const handleStatus = async () => {
-      const bearerToken = localStorage.getItem('token');
+      const bearerToken = localStorage.getItem("token");
       const config = {
         headers: { Authorization: `Bearer ${bearerToken}` },
       };
@@ -522,12 +527,12 @@ export default function AccessDevice() {
       try {
         const response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-          config
+          config,
         );
         setStatusToDropDown(response.data.data);
       } catch (error) {
-        console.error('Error fetching users:', error);
-        setStatusError('Failed to fetch users.');
+        console.error("Error fetching users:", error);
+        setStatusError("Failed to fetch users.");
       }
     };
 
@@ -555,13 +560,13 @@ export default function AccessDevice() {
 
     const handleSubmit = async (event) => {
       event.preventDefault();
-      const bearer_token = localStorage.getItem('token');
+      const bearer_token = localStorage.getItem("token");
 
       try {
         const config = {
           headers: {
             Authorization: `Bearer ${bearer_token}`,
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         };
         const formData_PUT = {
@@ -575,13 +580,13 @@ export default function AccessDevice() {
         await axios.put(
           `${protocal_url}${name}.${tenant_base_url}/Setting/updateAccessDevice/${idGet}`,
           formData_PUT,
-          config
+          config,
         );
-        showSuccessToast('Access Device updated successfully!');
+        showSuccessToast("Access Device updated successfully!");
         window.location.reload();
       } catch (error) {
-        console.error('Error updating Access Device:', error);
-        alert('An error occurred. Please try again.');
+        console.error("Error updating Access Device:", error);
+        alert("An error occurred. Please try again.");
       }
     };
 
@@ -623,7 +628,7 @@ export default function AccessDevice() {
                         id="LeadStatusDropDown"
                         type="button"
                       >
-                        {addDevice.userName === ''
+                        {addDevice.userName === ""
                           ? defaultTextStatus
                           : addDevice.userName}
                         <FaAngleDown className="ml-2 text-gray-400" />
@@ -631,7 +636,9 @@ export default function AccessDevice() {
                       {isStatusDropdownOpen && (
                         <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
                           {errorStatus ? (
-                            <div className="py-2 text-red-600">{errorStatus}</div>
+                            <div className="py-2 text-red-600">
+                              {errorStatus}
+                            </div>
                           ) : (
                             <ul className="py-2 text-sm text-gray-700">
                               {statusToDropDown.map((device) => (
@@ -735,14 +742,14 @@ export default function AccessDevice() {
 
   return (
     <>
-      {activeComponent === 'Table' ? (
+      {activeComponent === "Table" ? (
         <AccessDeviceTable />
-      ) : activeComponent === 'Add' ? (
+      ) : activeComponent === "Add" ? (
         <AccessDeviceAdd />
-      ) : activeComponent === 'Update' ? (
+      ) : activeComponent === "Update" ? (
         <AccessDeviceUpdate />
       ) : (
-        ''
+        ""
       )}
     </>
   );

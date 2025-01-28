@@ -1,10 +1,10 @@
 // NotificationProvider.jsx
 import { useEffect } from "react";
-import {  getToken, onMessage } from "firebase/messaging";
+import { getToken, onMessage } from "firebase/messaging";
 import { messaging } from "./firebase";
 
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; 
+import "react-toastify/dist/ReactToastify.css";
 
 const NotificationProvider = ({ children }) => {
   useEffect(() => {
@@ -16,7 +16,8 @@ const NotificationProvider = ({ children }) => {
 
         // Get FCM token
         getToken(messaging, {
-          vapidKey: "BNBFBa19ubwQqHWFE179Cr2vT8aJf7CLMREknrpI94A86KdIPUF0VL9hv03noH-AwQWBl3BnKyVMvfmECI_Lb44",
+          vapidKey:
+            "BNBFBa19ubwQqHWFE179Cr2vT8aJf7CLMREknrpI94A86KdIPUF0VL9hv03noH-AwQWBl3BnKyVMvfmECI_Lb44",
           serviceWorkerRegistration: registration,
         })
           .then((currentToken) => {
@@ -59,11 +60,13 @@ const NotificationProvider = ({ children }) => {
       theme: "light", // You can also use 'dark' theme
     });
   });
-  
-  return <>
-  {children}
-   <ToastContainer />
-  </>;
+
+  return (
+    <>
+      {children}
+      <ToastContainer />
+    </>
+  );
 };
 
 export default NotificationProvider;

@@ -48,14 +48,14 @@ export default function FinancialActivity() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
-        config
+        config,
       );
       console.log("Permission Data : ", response.data.data);
       const permissionsList = response?.data?.data;
 
       if (permissionsList) {
         const serviceBoxPermissions = permissionsList.find(
-          (item) => item.moduleName === "Financial Activity"
+          (item) => item.moduleName === "Financial Activity",
         );
 
         if (serviceBoxPermissions) {
@@ -84,7 +84,7 @@ export default function FinancialActivity() {
             {/* DYNAMIC BUTTONS */}
             <div className="flex gap-4">
               {Object.keys(dynamicButtons).map((key) =>
-                permissions.includes(key)|| businessRole==="Admin" ? (
+                permissions.includes(key) || businessRole === "Admin" ? (
                   <button
                     key={key}
                     onClick={() => handleOptionClick(key)}
@@ -96,7 +96,7 @@ export default function FinancialActivity() {
                   >
                     {key}
                   </button>
-                ) : null
+                ) : null,
               )}
             </div>
             {/* ALL Expense DROPDOWN */}
@@ -128,12 +128,12 @@ export default function FinancialActivity() {
         </div>
       )}
       {selectedButton === "View Expenses" ? (
-        permissions.includes("View Expenses")|| businessRole==="Admin" ? (
+        permissions.includes("View Expenses") || businessRole === "Admin" ? (
           <ExpenseView setShowTopSection={setShowTopSection} />
         ) : (
           ""
         )
-      ) : permissions.includes("View Brokerage") || businessRole==="Admin"  ? (
+      ) : permissions.includes("View Brokerage") || businessRole === "Admin" ? (
         <BrokerageView />
       ) : (
         ""

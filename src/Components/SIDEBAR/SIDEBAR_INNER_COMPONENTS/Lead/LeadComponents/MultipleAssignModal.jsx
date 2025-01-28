@@ -43,7 +43,7 @@ const MultipleAssignModal = ({ onClose, multiIds }) => {
       await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/Lead/leads/changemultipleAssignTo`,
         formData_POST,
-        config
+        config,
       );
 
       alert("Assign Leads successfully!");
@@ -65,7 +65,7 @@ const MultipleAssignModal = ({ onClose, multiIds }) => {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/Alluser`,
-        config
+        config,
       );
       setassigned_ToDropDown(response.data);
     } catch (error) {
@@ -139,14 +139,14 @@ const MultipleAssignModal = ({ onClose, multiIds }) => {
                                     role="menuitem"
                                     onClick={() =>
                                       handleDropdownassigned_ToDropDown(
-                                        userName
+                                        userName,
                                       )
                                     }
                                     className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                                   >
                                     {userName}-({role})
                                   </li>
-                                )
+                                ),
                               )}
                             </ul>
                           </div>

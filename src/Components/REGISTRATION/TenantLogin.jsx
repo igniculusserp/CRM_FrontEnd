@@ -34,8 +34,8 @@ import msalInstance, {
 } from "../../Config/msalConfig";
 
 // ---------------------------- Google Import ----------------------------------------
-import {  GoogleLogin } from "@react-oauth/google";
-import {jwtDecode} from "jwt-decode";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 import { FaStarOfLife } from "react-icons/fa";
 
 export default function TenantLogin() {
@@ -54,7 +54,7 @@ export default function TenantLogin() {
 
       msalInstance.setActiveAccount(loginResponse.account);
       setIsAuthenticated(true);
-      console.log('runned')
+      console.log("runned");
       localStorage.setItem("otp", newOtp); // Store OTP in localStorage
 
       // Fetch user and manager details
@@ -103,7 +103,7 @@ export default function TenantLogin() {
       } catch (error) {
         console.warn(
           "Failed to fetch manager profile. Defaulting to null.",
-          error
+          error,
         );
       }
 
@@ -148,7 +148,7 @@ export default function TenantLogin() {
           isActive: true,
           createdDate: null,
           deletedDate: null,
-        }
+        },
       );
 
       const loginDetail = response.data.data;
@@ -227,7 +227,7 @@ export default function TenantLogin() {
             headers: {
               "Content-Type": "application/json",
             },
-          }
+          },
         );
 
         // console.log("API Response:", response);
@@ -295,18 +295,21 @@ export default function TenantLogin() {
           password: password.trim(),
           deviceType: deviceType,
           deviceAddress: deviceAddress,
-        }
+        },
       );
       const logindetail = response.data.data;
       console.log("Login Response: ", response.data);
-      
-      //IMP for handling businessType such as Brokerage, IT, Retail.... etc
-      localStorage.setItem("businessType",response.data.data.userDetail.businessType);
 
-      localStorage.setItem("businessRole",response.data.data.userDetail.role);
+      //IMP for handling businessType such as Brokerage, IT, Retail.... etc
+      localStorage.setItem(
+        "businessType",
+        response.data.data.userDetail.businessType,
+      );
+
+      localStorage.setItem("businessRole", response.data.data.userDetail.role);
 
       localStorage.setItem("token", response.data.data.token);
-      
+
       localStorage.setItem("userDetail", JSON.stringify(logindetail));
 
       localStorage.setItem("myData_forget", userName);
@@ -323,150 +326,143 @@ export default function TenantLogin() {
   }
 
   return (
-      <>
-        <ToastContainer />
-        <div className="bg-cyan-500 sm:bg-cyan-500 min-h-screen flex flex-col md:flex-row">
-          {/*----------> Part-I <---------- */}
-          <div className="hidden md:flex w-2/3 bg-cyan min-h-screen flex-col justify-center items-center">
-            <div className="bg-white flex flex-col justify-center items-center py-8 px-16 gap-2 rounded-md">
-              <img
-                src={IgniculussLogo}
-                alt="Brandlogo"
-                width={80}
-                height={80}
-              />
-              <img src={CRMLoginPage} alt="sample" className="h-2/4" />
-              <div className="flex text-3xl font-semibold">
-                <GiDiamonds className="text-cyan-500" />
-                <h1>Hello, Igniculuss</h1>
-              </div>
-              <div>
-                <p className="text-xs text-gray-400 text-center">
-                  Skip repetitive and manual sales-marketing tasks. Get highly
-                  <br />
-                  productive through automation and save tons of time!
-                </p>
-              </div>
+    <>
+      <ToastContainer />
+      <div className="bg-cyan-500 sm:bg-cyan-500 min-h-screen flex flex-col md:flex-row">
+        {/*----------> Part-I <---------- */}
+        <div className="hidden md:flex w-2/3 bg-cyan min-h-screen flex-col justify-center items-center">
+          <div className="bg-white flex flex-col justify-center items-center py-8 px-16 gap-2 rounded-md">
+            <img src={IgniculussLogo} alt="Brandlogo" width={80} height={80} />
+            <img src={CRMLoginPage} alt="sample" className="h-2/4" />
+            <div className="flex text-3xl font-semibold">
+              <GiDiamonds className="text-cyan-500" />
+              <h1>Hello, Igniculuss</h1>
+            </div>
+            <div>
+              <p className="text-xs text-gray-400 text-center">
+                Skip repetitive and manual sales-marketing tasks. Get highly
+                <br />
+                productive through automation and save tons of time!
+              </p>
             </div>
           </div>
+        </div>
 
-          {/*----------> Part-II <---------- */}
-          <div className="w-full md:w-1/3 bg-cyan-500 md:bg-white flex min-h-screen flex-col justify-center ">
-            {/* Image on Top for Small Screens */}
-            <div className="flex md:hidden justify-center">
-              <img src={IgniculussLogo} alt="sample" width={100} height={50} />
+        {/*----------> Part-II <---------- */}
+        <div className="w-full md:w-1/3 bg-cyan-500 md:bg-white flex min-h-screen flex-col justify-center ">
+          {/* Image on Top for Small Screens */}
+          <div className="flex md:hidden justify-center">
+            <img src={IgniculussLogo} alt="sample" width={100} height={50} />
+          </div>
+
+          <div className="flex flex-col justify-center mx-10 md:mx-4 px-3 mt-8  bg-white py-3 rounded-2xl">
+            <div className="flex text-2xl font-semibold gap-3 items-center">
+              <GiDiamonds className="text-3xl hidden md:block" />
+              <h1 className="">Log In</h1>
             </div>
 
-            <div className="flex flex-col justify-center mx-10 md:mx-4 px-3 mt-8  bg-white py-3 rounded-2xl">
-              <div className="flex text-2xl font-semibold gap-3 items-center">
-                <GiDiamonds className="text-3xl hidden md:block" />
-                <h1 className="">Log In</h1>
-              </div>
-
-              <div className="mt-6">
-                {/*----------> FORM <---------- */}
-                <form
-                  className="flex flex-col gap-2  rounded-md"
-                  onSubmit={handleSubmit}
+            <div className="mt-6">
+              {/*----------> FORM <---------- */}
+              <form
+                className="flex flex-col gap-2  rounded-md"
+                onSubmit={handleSubmit}
+              >
+                {/*----------> Username <---------- */}
+                <label
+                  htmlFor="userName"
+                  className="text-xs font-medium text-gray-700"
                 >
-                  {/*----------> Username <---------- */}
-                  <label
-                    htmlFor="userName"
-                    className="text-xs font-medium text-gray-700"
-                  >
                   <span className="flex gap-1">
                     User Name
-                  <FaStarOfLife size={8} className="text-red-500"/>
+                    <FaStarOfLife size={8} className="text-red-500" />
                   </span>
-                    <input
-                      type="email"
-                      name="userName"
-                      className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm flex justify-between"
-                      value={userName}
-                      onChange={handleusername}
-                      placeholder="specimen@company.com"
-                    />
-                  </label>
-                  {/*----------> Password <---------- */}
-                  <label
-                    htmlFor="password"
-                    className="text-xs font-medium text-gray-700 relative block"
-                  >
+                  <input
+                    type="email"
+                    name="userName"
+                    className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm flex justify-between"
+                    value={userName}
+                    onChange={handleusername}
+                    placeholder="specimen@company.com"
+                  />
+                </label>
+                {/*----------> Password <---------- */}
+                <label
+                  htmlFor="password"
+                  className="text-xs font-medium text-gray-700 relative block"
+                >
                   <span className="flex gap-1">
                     Password
-                  <FaStarOfLife size={8} className="text-red-500"/>
+                    <FaStarOfLife size={8} className="text-red-500" />
                   </span>
-                    <input
-                      type={passwordEye ? "text" : "password"}
-                      name="password"
-                      className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm pr-12" // Add padding to the right to avoid overlapping text
-                      value={password}
-                      onChange={handlepassword}
-                      placeholder="Password"
-                    />
-                    <button
-                      type="button"
-                      onClick={togglePasswordEye}
-                      className="absolute inset-y-0 top-6 right-2 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
-                    >
-                      {passwordEye ? (
-                        <IoIosEye
-                          size={22}
-                          className={`transition-opacity duration-300 ease-in-out ${
-                            passwordEye ? "opacity-100" : "opacity-0"
-                          }`}
-                        />
-                      ) : (
-                        <IoIosEyeOff
-                          size={22}
-                          className={`transition-opacity duration-300 ease-in-out ${
-                            passwordEye ? "opacity-0" : "opacity-100"
-                          }`}
-                        />
-                      )}
-                    </button>
-                  </label>
-
-                  <Link
-                    to="/forgetpassword"
-                    className="text-xs font-medium text-cyan-500 underline"
+                  <input
+                    type={passwordEye ? "text" : "password"}
+                    name="password"
+                    className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm pr-12" // Add padding to the right to avoid overlapping text
+                    value={password}
+                    onChange={handlepassword}
+                    placeholder="Password"
+                  />
+                  <button
+                    type="button"
+                    onClick={togglePasswordEye}
+                    className="absolute inset-y-0 top-6 right-2 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
                   >
-                    Reset Password
-                  </Link>
-
-                  <button className="bg-cyan-500 outline-none text-white py-4 text-xs rounded-md font-bold mt-4 hover:shadow-md">
-                    Submit
+                    {passwordEye ? (
+                      <IoIosEye
+                        size={22}
+                        className={`transition-opacity duration-300 ease-in-out ${
+                          passwordEye ? "opacity-100" : "opacity-0"
+                        }`}
+                      />
+                    ) : (
+                      <IoIosEyeOff
+                        size={22}
+                        className={`transition-opacity duration-300 ease-in-out ${
+                          passwordEye ? "opacity-0" : "opacity-100"
+                        }`}
+                      />
+                    )}
                   </button>
-                </form>
+                </label>
 
-                <div className="relative text-center mt-8">
-                  <div className="absolute inset-2 flex items-center">
-                    <div className="w-full border-t border-gray-300" />
-                  </div>
-                  <div className="relative inline-block px-4 bg-white text-sm">
-                    <span className="font-light">Or Login With</span>
-                  </div>
+                <Link
+                  to="/forgetpassword"
+                  className="text-xs font-medium text-cyan-500 underline"
+                >
+                  Reset Password
+                </Link>
+
+                <button className="bg-cyan-500 outline-none text-white py-4 text-xs rounded-md font-bold mt-4 hover:shadow-md">
+                  Submit
+                </button>
+              </form>
+
+              <div className="relative text-center mt-8">
+                <div className="absolute inset-2 flex items-center">
+                  <div className="w-full border-t border-gray-300" />
+                </div>
+                <div className="relative inline-block px-4 bg-white text-sm">
+                  <span className="font-light">Or Login With</span>
                 </div>
               </div>
-              <button
-                onClick={handleMicrosoftLogin}
-                className="bg-white py-4 text-xs rounded-md font-bold border-2 border-gray-400 mt-8 flex justify-center items-center gap-2 hover:shadow-md"
-              >
-                Login with Microsoft{" "}
-                <img src={Microsoft} className="h-4 w-4 " />
-              </button>
-           
-              {/*//Google Login Commented */}
-              {/*
+            </div>
+            <button
+              onClick={handleMicrosoftLogin}
+              className="bg-white py-4 text-xs rounded-md font-bold border-2 border-gray-400 mt-8 flex justify-center items-center gap-2 hover:shadow-md"
+            >
+              Login with Microsoft <img src={Microsoft} className="h-4 w-4 " />
+            </button>
+
+            {/*//Google Login Commented */}
+            {/*
                 <GoogleLogin
                   onSuccess={handleLoginSuccess}
                   onError={handleLoginError}
                 />
             */}
-            </div>
           </div>
         </div>
-      </>
-   
+      </div>
+    </>
   );
 }

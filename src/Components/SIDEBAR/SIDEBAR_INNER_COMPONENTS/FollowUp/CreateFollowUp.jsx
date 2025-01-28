@@ -49,7 +49,7 @@ const CreateFollowUp = () => {
     try {
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/FollowUp/getbyid/${id}`,
-        config
+        config,
       );
 
       if (response.status === 200 && response.data.isSuccess) {
@@ -120,7 +120,7 @@ const CreateFollowUp = () => {
       // Log the URL and payload for debugging
       console.log(
         "PUT URL:",
-        `${protocal_url}${name}.${tenant_base_url}/FollowUp/update`
+        `${protocal_url}${name}.${tenant_base_url}/FollowUp/update`,
       );
       console.log("formData_PUT:", formData_PUT);
 
@@ -128,7 +128,7 @@ const CreateFollowUp = () => {
       await axios.put(
         `${protocal_url}${name}.${tenant_base_url}/FollowUp/update`,
         formData_PUT,
-        config
+        config,
       );
 
       alert("Follow updated successfully!");
@@ -171,7 +171,7 @@ const CreateFollowUp = () => {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
-        config
+        config,
       );
       setSegments(response.data.data);
       // console.log("segment:", response.data.data);
@@ -185,7 +185,7 @@ const CreateFollowUp = () => {
     setdefaultTextSegmentDropDown(
       followupsData.segments.length > 0
         ? followupsData.segments.join(", ")
-        : "Select Segment"
+        : "Select Segment",
     );
   }, [followupsData]);
 
@@ -205,7 +205,7 @@ const CreateFollowUp = () => {
     if (isChecked) {
       // Remove segment if already selected
       updatedSegments = followupsData.segments.filter(
-        (selectedSegment) => selectedSegment !== segment.segment
+        (selectedSegment) => selectedSegment !== segment.segment,
       );
     } else {
       // Add segment if not already selected
@@ -219,7 +219,9 @@ const CreateFollowUp = () => {
     }));
 
     setdefaultTextSegmentDropDown(
-      updatedSegments.length > 0 ? updatedSegments.join(", ") : "Select Segment"
+      updatedSegments.length > 0
+        ? updatedSegments.join(", ")
+        : "Select Segment",
     );
 
     console.log("Selected segments:", updatedSegments);
@@ -242,7 +244,7 @@ const CreateFollowUp = () => {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/Alluser`,
-        config
+        config,
       );
       setassigned_ToDropDown(response.data);
     } catch (error) {
@@ -266,10 +268,10 @@ const CreateFollowUp = () => {
 
   const handleDropdownassigned_ToDropDown = (
     assigned_To_Username,
-    assigned_To_Role
+    assigned_To_Role,
   ) => {
     setdefaultTextassigned_ToDropDown(
-      assigned_To_Username + " " + assigned_To_Role
+      assigned_To_Username + " " + assigned_To_Role,
     );
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     setFollowupsData((prevTask) => ({
@@ -322,10 +324,9 @@ const CreateFollowUp = () => {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
-        config
+        config,
       );
       setleadStatus(response.data.data);
-
     } catch (error) {
       console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
@@ -436,8 +437,8 @@ const CreateFollowUp = () => {
                       {!isEditMode
                         ? defaultTextLanguageDropDown
                         : followupsData.language === ""
-                        ? defaultTextLanguageDropDown
-                        : followupsData.language}
+                          ? defaultTextLanguageDropDown
+                          : followupsData.language}
                       <FaAngleDown className="ml-2 text-gray-400" />
                     </button>
                     {isDropdownVisibleLanguage && (
@@ -557,14 +558,14 @@ const CreateFollowUp = () => {
                                   onClick={() =>
                                     handleDropdownassigned_ToDropDown(
                                       userName,
-                                      role
+                                      role,
                                     )
                                   }
                                   className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                                 >
                                   {userName}-({role})
                                 </li>
-                              )
+                              ),
                             )}
                           </ul>
                         </div>
@@ -674,7 +675,7 @@ const CreateFollowUp = () => {
                     htmlFor="segment"
                     className="text-sm font-medium text-gray-700"
                   >
-                    Segment 
+                    Segment
                   </label>
                   <div
                     className="relative"
@@ -701,7 +702,7 @@ const CreateFollowUp = () => {
                                 <input
                                   type="checkbox"
                                   checked={followupsData.segments.includes(
-                                    segment.segment
+                                    segment.segment,
                                   )}
                                   onChange={() => handleCheckboxChange(segment)}
                                   className="mr-2"

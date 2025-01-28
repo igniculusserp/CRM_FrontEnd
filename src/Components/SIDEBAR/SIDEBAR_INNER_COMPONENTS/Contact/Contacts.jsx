@@ -1,12 +1,12 @@
-//react 
+//react
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 //external Packages
 import axios from "axios";
-import * as XLSX from 'xlsx';
+import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
-import autoTable from 'jspdf-autotable'
+import autoTable from "jspdf-autotable";
 
 //React Icons
 import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
@@ -19,8 +19,6 @@ import { MdCall } from "react-icons/md";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { TbRefresh } from "react-icons/tb";
 
-
-
 //Objects Imported
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
 
@@ -28,16 +26,16 @@ import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/Global
 
 import { SearchElement } from "../SearchElement/SearchElement";
 
-
-import MassEmail from '../MassEmail/MassEmail';
-
-
+import MassEmail from "../MassEmail/MassEmail";
 
 //-----------------------------ToastContainer-----------------------------
-import { ToastContainer } from 'react-toastify';
-import { showSuccessToast, showErrorToast } from './../../../../utils/toastNotifications'
+import { ToastContainer } from "react-toastify";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "./../../../../utils/toastNotifications";
 
-const name = getHostnamePart()
+const name = getHostnamePart();
 
 export default function Contact() {
   const navigate = useNavigate(); // Add this line
@@ -53,9 +51,8 @@ export default function Contact() {
   const [users, setUsers] = useState([]);
 
   //------- Business Type --------
-const [business, setBusiness] = useState("")
-const businessType = localStorage.getItem("businessType");
-
+  const [business, setBusiness] = useState("");
+  const businessType = localStorage.getItem("businessType");
 
   //created such that to filter leads according to leadStatus
   const [filteredLeads, setFilteredLeads] = useState([]); // Filtered leads
@@ -72,10 +69,10 @@ const businessType = localStorage.getItem("businessType");
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Contact/contacts/byusertoken`,
-        config
+        config,
       );
 
-      const data = response.data.data
+      const data = response.data.data;
       setGetleads(data);
       setFilteredLeads(data); // Initialize filtered leads
 
@@ -98,16 +95,16 @@ const businessType = localStorage.getItem("businessType");
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
+        config,
       );
 
-      const data = response.data?.data
+      const data = response.data?.data;
       setUsers(data);
     } catch (error) {
       console.error("Error fetching leads:", error);
       // Optionally, set an error state to display a user-friendly message
     }
-  }
+  };
 
   useEffect(() => {
     handleLead();
@@ -116,40 +113,43 @@ const businessType = localStorage.getItem("businessType");
     setBusiness(businessType);
   }, []);
 
-
-  const [leadStatus, setLeadStatus] = useState('All Lead');   // Track the selected lead status
-  const [assignedTo, setAssignedTo] = useState('Managed By');   // Track the selected assigned user
+  const [leadStatus, setLeadStatus] = useState("All Lead"); // Track the selected lead status
+  const [assignedTo, setAssignedTo] = useState("Managed By"); // Track the selected assigned user
 
   // Function to handle both filters
   function handle_LeadStatus(statusValue) {
     let filteredLeads = getleads;
 
     // Filter by leadStatus if it's not 'ALL' or null
-    if (statusValue !== null && statusValue !== 'All Leads') {
-      filteredLeads = filteredLeads.filter(lead => lead.leadesStatus === statusValue);
-      console.log(filteredLeads)
+    if (statusValue !== null && statusValue !== "All Leads") {
+      filteredLeads = filteredLeads.filter(
+        (lead) => lead.leadesStatus === statusValue,
+      );
+      console.log(filteredLeads);
     }
-    setFilteredLeads(filteredLeads);  // Set the filtered results
+    setFilteredLeads(filteredLeads); // Set the filtered results
   }
 
   function handle_AssignedTo(assignedToValue) {
     let filteredLeads = getleads;
-    if (assignedToValue !== null && assignedToValue !== 'Assigned to') {
-      filteredLeads = filteredLeads.filter(lead => lead.assigned_To === assignedToValue);
+    if (assignedToValue !== null && assignedToValue !== "Assigned to") {
+      filteredLeads = filteredLeads.filter(
+        (lead) => lead.assigned_To === assignedToValue,
+      );
     }
-    setFilteredLeads(filteredLeads);  // Set the filtered result
+    setFilteredLeads(filteredLeads); // Set the filtered result
   }
 
   // Handle selecting a lead status
   function handleLeadStatusSelection(status) {
-    setLeadStatus(status);  // Update leadStatus state
-    handle_LeadStatus(status);  // Apply both filters
+    setLeadStatus(status); // Update leadStatus state
+    handle_LeadStatus(status); // Apply both filters
   }
 
   // Handle selecting an assigned user
   function handleAssignedToSelection(user) {
-    setAssignedTo(user);  // Update assignedTo state
-    handle_AssignedTo(user);  // Apply both filters
+    setAssignedTo(user); // Update assignedTo state
+    handle_AssignedTo(user); // Apply both filters
   }
 
   //-----------------------------------------------> ALL-> LEADS <-functionality <-----------------------------------------------
@@ -157,7 +157,7 @@ const businessType = localStorage.getItem("businessType");
   const [allLeaddropDown, setAllLeaddropDown] = useState(false);
   const toggleMenuAllLead = () => {
     setAllLeaddropDown(!allLeaddropDown);
-  }
+  };
 
   //-----------------------------------------------> ALL LEADS DATA <-----------------------------------------------
   //----------------STATUS DROPDOWN----------------
@@ -171,8 +171,9 @@ const businessType = localStorage.getItem("businessType");
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
-        config
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
+        config,
       );
       setallLeadData(response.data.data);
     } catch (error) {
@@ -190,7 +191,7 @@ const businessType = localStorage.getItem("businessType");
   const [allAssigned_To_DROPDOWN, setallAssigned_To_DROPDOWN] = useState(false);
   const toggleMenuAssigned_To = () => {
     setallAssigned_To_DROPDOWN(!allAssigned_To_DROPDOWN);
-  }
+  };
 
   //-----------------------------------------------> ALL ASSIGNED_TO DATA <-----------------------------------------------
   //----------------ASSIGNED_TO DROPDOWN----------------
@@ -207,7 +208,7 @@ const businessType = localStorage.getItem("businessType");
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
+        config,
       );
       setallAssigned_To_Data(response.data.data);
     } catch (error) {
@@ -220,9 +221,6 @@ const businessType = localStorage.getItem("businessType");
     handleallAssigned_To();
   }, []);
 
-
-
-
   //------------------------------------------------------------------------------------------------
   //----------------STRIPE BAR DROPDOWN----------------
   const stripeBar = [
@@ -233,26 +231,25 @@ const businessType = localStorage.getItem("businessType");
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
 
   const handleStripeButton = (value) => {
-    console.log(value)
+    console.log(value);
     setSelectedViewValue(value);
-  }
+  };
 
   const togglestripeBar = () => {
     setstripeBardropDown(!stripeBardropDown);
-  }
+  };
 
-
-
-
-  const [selectedViewValue, setSelectedViewValue] = useState(stripeBar[0].value);
+  const [selectedViewValue, setSelectedViewValue] = useState(
+    stripeBar[0].value,
+  );
 
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
   const dropActionsMenu = [
-    { key: 1, value: 'Mass Delete' },
-    { key: 3, value: 'Mass E-Mail' },
-    { key: 4, value: 'Export to Excel' },
-    { key: 5, value: 'Export to PDF' },
+    { key: 1, value: "Mass Delete" },
+    { key: 3, value: "Mass E-Mail" },
+    { key: 4, value: "Export to Excel" },
+    { key: 5, value: "Export to PDF" },
   ];
 
   const [dropActionsMenudropDown, setdropActionsMenudropDown] = useState(false);
@@ -262,10 +259,11 @@ const businessType = localStorage.getItem("businessType");
   };
 
   const handleActionButton = async (value) => {
-
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
     if (value === "Mass Delete") {
-      const userConfirmed = confirm('Are you sure you want to Delete the selected Leads?');
+      const userConfirmed = confirm(
+        "Are you sure you want to Delete the selected Leads?",
+      );
       if (userConfirmed) {
         massDelete();
       }
@@ -274,17 +272,18 @@ const businessType = localStorage.getItem("businessType");
     // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
     if (value === "Mass Email") {
       const userConfirmed = confirm(
-        "Are you sure you want to Send E-Mail to the selected Data?"
+        "Are you sure you want to Send E-Mail to the selected Data?",
       );
       if (userConfirmed) {
         openMassEmailModal(selectedEmails);
       }
     }
 
-
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
     if (value === "Sheet View") {
-      const userConfirmed = confirm('Are you sure you want to export the selected Leads?');
+      const userConfirmed = confirm(
+        "Are you sure you want to export the selected Leads?",
+      );
       if (userConfirmed) {
         exportToExcel();
       }
@@ -292,14 +291,14 @@ const businessType = localStorage.getItem("businessType");
 
     // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
     if (value === "Print View") {
-      const userConfirmed = confirm('Are you sure you want to export the selected Leads?');
+      const userConfirmed = confirm(
+        "Are you sure you want to export the selected Leads?",
+      );
       if (userConfirmed) {
         exportToPDF();
       }
     }
-
-  
-  }
+  };
   // ---------------------->MASS DELETE FUNCTIONALITY---###API###<----------------------
   const massDelete = async () => {
     const bearer_token = localStorage.getItem("token");
@@ -315,14 +314,14 @@ const businessType = localStorage.getItem("businessType");
 
       const response = await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/Contact/contact/massdelete`,
-        config
+        config,
       );
       alert("Mass Deleted run");
       handleLead();
       console.log(response);
 
       setGetleads((prevLeads) =>
-        prevLeads.filter((lead) => !selectedIds.includes(lead.id))
+        prevLeads.filter((lead) => !selectedIds.includes(lead.id)),
       );
       setSelectedIds([]);
     } catch (error) {
@@ -335,15 +334,13 @@ const businessType = localStorage.getItem("businessType");
     navigate(`/panel/editcontact/${item.id}`);
   };
 
-
   // ---------------------->MASS Email FUNCTIONALITY---<----------------------
-
 
   const openMassEmailModal = () => {
     if (selectedEmails.length > 0) {
       setIsModalOpen(true); // Open the modal
     } else {
-      alert('Selected Entity dose not have E-Mail Address.');
+      alert("Selected Entity dose not have E-Mail Address.");
     }
   };
 
@@ -351,15 +348,12 @@ const businessType = localStorage.getItem("businessType");
     setIsModalOpen(false); // Close the modal
   };
 
-
-
-
   //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
   //-------> XLSX used here
   const exportToExcel = () => {
     // Filter currentLeads based on selectedIds
     const leadsToExport = currentLeads.filter((lead) =>
-      selectedIds.includes(lead.id)
+      selectedIds.includes(lead.id),
     );
     if (leadsToExport?.length === 0) {
       alert("No leads selected to export");
@@ -380,15 +374,22 @@ const businessType = localStorage.getItem("businessType");
   //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
   const exportToPDF = () => {
     const leadsToExport = currentLeads.filter((lead) =>
-      selectedIds.includes(lead.id)
+      selectedIds.includes(lead.id),
     );
     if (leadsToExport?.length === 0) {
       alert("No leads selected to export");
       return;
     }
-    const doc = new jsPDF()
+    const doc = new jsPDF();
     // const role = matchedUser?.role;
-    const tableColumn = ['ID', 'Name', 'Email', "Phone No.", "Lead Source", "Assigned To"];
+    const tableColumn = [
+      "ID",
+      "Name",
+      "Email",
+      "Phone No.",
+      "Lead Source",
+      "Assigned To",
+    ];
     // Map the leads data to rows
     const tableRows = leadsToExport?.map((lead) => [
       lead.id,
@@ -406,31 +407,25 @@ const businessType = localStorage.getItem("businessType");
       body: tableRows,
       startY: 22, // Position the table after the title
     });
-    doc.save('Leads.pdf')
+    doc.save("Leads.pdf");
   };
-
-
 
   //---------------------->---------------------->MANAGE_BY/ASSIGNED_TO<----------------------<ARVIND----------------------
   const roleColors = [
     "#2563eb", // blue
     "#65a30d", // LimeGreen
     "#7c3aed", // MediumPurple
-    "#0369a1",  //Sky
-    "#e11d48",  //Rose
+    "#0369a1", //Sky
+    "#e11d48", //Rose
   ];
-
-
 
   // Function to get the color for a role based on its index
   const getRoleColorByIndex = (index) => {
     return roleColors[index % roleColors?.length]; // Use modulo for wrapping
   };
 
-
-
   //---------------------->---------------------->PAGINATION<----------------------<----------------------
-  //controlled from the bottom of the page 
+  //controlled from the bottom of the page
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Define items per page
   const totalPage = Math.ceil(filteredLeads.length / itemsPerPage);
@@ -441,7 +436,6 @@ const businessType = localStorage.getItem("businessType");
   //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
   const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
 
   //---------------------->---------------------->̧CHECKBOX<----------------------<----------------------
 
@@ -454,7 +448,7 @@ const businessType = localStorage.getItem("businessType");
     setSelectedIds((prevSelected) =>
       prevSelected.includes(item.id)
         ? prevSelected.filter((id) => id !== item.id)
-        : [...prevSelected, item.id]
+        : [...prevSelected, item.id],
     );
 
     // Update selected emails
@@ -469,15 +463,10 @@ const businessType = localStorage.getItem("businessType");
     });
   };
 
-
-
-
-
-
   //---------------------->---------------------->̧CHECKBOX -> MULTIPLE<----------------------<----------------------
   const [isSelectAllChecked, setIsSelectAllChecked] = useState(false);
   const handleSelectAllCheckbox = (e) => {
-    e.stopPropagation()
+    e.stopPropagation();
     const isChecked = e.target.checked;
     setIsSelectAllChecked(isChecked);
 
@@ -494,13 +483,10 @@ const businessType = localStorage.getItem("businessType");
       const currentPageIds = currentLeads?.map((lead) => lead.id);
       setSelectedEmails([]);
       setSelectedIds((prevSelected) =>
-        prevSelected.filter((id) => !currentPageIds.includes(id))
+        prevSelected.filter((id) => !currentPageIds.includes(id)),
       );
     }
   };
-
-
-
 
   // Update "Select All" checkbox state when individual checkboxes are clicked
   useEffect(() => {
@@ -511,13 +497,11 @@ const businessType = localStorage.getItem("businessType");
     setIsSelectAllChecked(isAllSelected);
   }, [selectedIds, currentLeads]);
 
-
   // ----------------------------- Date Filter -----------------------------
 
   const today = new Date().toISOString().split("T")[0];
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(today);
-
 
   // Function to filter based on date range
   function handle_DateRange(startDate, endDate) {
@@ -548,29 +532,25 @@ const businessType = localStorage.getItem("businessType");
 
   // ------------------------------ Search Function ----------------------------------
 
-
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
-
   useEffect(() => {
-    const filtered = getleads.filter((lead) =>
-      lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
-      lead.mobileNo?.includes(searchTerm)
+    const filtered = getleads.filter(
+      (lead) =>
+        lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+        lead.mobileNo?.includes(searchTerm),
     );
     setFilteredLeads(filtered);
   }, [searchTerm, getleads]);
 
-  
   //------------------------------------------------------Filter Reset Settings ---------------------------------------------
 
   const handleResetFilter = () => {
     setFilteredLeads(getleads);
-    setLeadStatus('All Lead');
+    setLeadStatus("All Lead");
     setAssignedTo("Managed By");
   };
 
-
-  
   //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
 
   const businessRole = localStorage.getItem("businessRole");
@@ -589,14 +569,14 @@ const businessType = localStorage.getItem("businessType");
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
-        config
+        config,
       );
       console.log("Permission Data : ", response.data.data);
       const permissionsList = response?.data?.data;
 
       if (permissionsList) {
         const serviceBoxPermissions = permissionsList.find(
-          (item) => item.moduleName === "Contacts"
+          (item) => item.moduleName === "Contacts",
         );
 
         if (serviceBoxPermissions) {
@@ -621,8 +601,6 @@ const businessType = localStorage.getItem("businessType");
     handleGetPermission();
   }, []);
 
-
-
   return (
     //parent
     <div className="min-h-screen flex flex-col m-3 ">
@@ -633,14 +611,18 @@ const businessType = localStorage.getItem("businessType");
           onClose={closeModal} // Pass function to close modal
         />
       )}
-
       {/* containerbar*/}
       <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg flex-wrap gap-3">
         {/* PART-I */}
         {/* container- Alleads, search */}
         <div className="flex gap-3 items-center justify-start contact_Dropdown_Main_Container flex-wrap">
-          {/* PART-I */}{/* All Lead DropDown*/}
-          <div className="relative whitespace-nowrap contact_Dropdown_Container" onClick={toggleMenuAllLead} onMouseLeave={() => setAllLeaddropDown(false)}>
+          {/* PART-I */}
+          {/* All Lead DropDown*/}
+          <div
+            className="relative whitespace-nowrap contact_Dropdown_Container"
+            onClick={toggleMenuAllLead}
+            onMouseLeave={() => setAllLeaddropDown(false)}
+          >
             <button
               className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 truncate contact_Dropdown_Button"
               id="dropdownDefaultButton"
@@ -656,7 +638,7 @@ const businessType = localStorage.getItem("businessType");
                     <li
                       key={item.id}
                       className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                      onClick={() => handleLeadStatusSelection(item.status)}  // Correct selection logic
+                      onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
                     >
                       {item.status}
                     </li>
@@ -665,8 +647,13 @@ const businessType = localStorage.getItem("businessType");
               </div>
             )}
           </div>
-          {/* PART-I-ii */}{/* All MANAGED_BY  DropDown*/}
-          <div className="relative whitespace-nowrap contact_Dropdown_Container" onClick={toggleMenuAssigned_To} onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}>
+          {/* PART-I-ii */}
+          {/* All MANAGED_BY  DropDown*/}
+          <div
+            className="relative whitespace-nowrap contact_Dropdown_Container"
+            onClick={toggleMenuAssigned_To}
+            onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
+          >
             <button
               className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 contact_Dropdown_Button"
               id="dropdownDefaultButton"
@@ -682,25 +669,32 @@ const businessType = localStorage.getItem("businessType");
                     <li
                       key={item.id}
                       className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                      onClick={() => handleAssignedToSelection(item.userName)}  // Correct selection logic
+                      onClick={() => handleAssignedToSelection(item.userName)} // Correct selection logic
                     >
                       {item.userName}
                     </li>
                   ))}
                 </ul>
-
-                
               </div>
             )}
           </div>
-          {/* PART-I */}{/* Search Box */}
-          <SearchElement value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+          {/* PART-I */}
+          {/* Search Box */}
+          <SearchElement
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
 
         {/* PART-II */}
         <div className="flex gap-3 items-center justify-start action_Button_Main_Container">
-          {/* PART-II */}{/* Stripe-BarDropDown */}
-          <div className="relative hide_Component" onClick={togglestripeBar} onMouseLeave={() => setstripeBardropDown(false)}>
+          {/* PART-II */}
+          {/* Stripe-BarDropDown */}
+          <div
+            className="relative hide_Component"
+            onClick={togglestripeBar}
+            onMouseLeave={() => setstripeBardropDown(false)}
+          >
             <button
               className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center"
               id="dropdownDefaultButton"
@@ -722,13 +716,17 @@ const businessType = localStorage.getItem("businessType");
                     </li>
                   ))}
                 </ul>
-
               </div>
             )}
           </div>
-        
-          {/* PART-II */}{/*-------Action DropDown */}
-          <div className="relative action_Button_Container" onClick={toggleActionsMenuLogo} onMouseLeave={() => setdropActionsMenudropDown(false)}>
+
+          {/* PART-II */}
+          {/*-------Action DropDown */}
+          <div
+            className="relative action_Button_Container"
+            onClick={toggleActionsMenuLogo}
+            onMouseLeave={() => setdropActionsMenudropDown(false)}
+          >
             <button
               className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600 action_Button"
               id="dropdownDefaultButton"
@@ -739,34 +737,31 @@ const businessType = localStorage.getItem("businessType");
             </button>
             {dropActionsMenudropDown && (
               <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 z-10">
-             
-
                 <ul className="text-sm text-gray-700">
-                    {dropActionsMenu.map(({ key, value }) =>
-                      permissions.includes(value) || businessRole==="Admin" ? (
-                        <li
-                          key={key}
-                          className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
-                          onClick={() => handleActionButton(value)}
-                        >
-                          {value}
-                        </li>
-                      ) : null
-                    )}
-                  </ul>
+                  {dropActionsMenu.map(({ key, value }) =>
+                    permissions.includes(value) || businessRole === "Admin" ? (
+                      <li
+                        key={key}
+                        className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                        onClick={() => handleActionButton(value)}
+                      >
+                        {value}
+                      </li>
+                    ) : null,
+                  )}
+                </ul>
               </div>
             )}
           </div>
         </div>
       </div>
-      {/* 2nd bar Leads and lenghtLeads*/}   {/* 2nd bar Leads and lenghtLeads*/}   {/* 2nd bar Leads and lenghtLeads*/}   {/* 2nd bar Leads and lenghtLeads*/}   {/* 2nd bar Leads and lenghtLeads*/}   {/* 2nd bar Leads and lenghtLeads*/}
+      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{" "}
+      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{" "}
+      {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}
       <div className="mt-3 flex justify-between items-center gap-3 flex-wrap">
         <div className="flex gap-3">
-          <h1 className="text-3xl font-medium ">
-            Contacts
-          </h1>
+          <h1 className="text-3xl font-medium ">Contacts</h1>
           <h1 className="bg-blue-600 text-white p-2 min-w-10 text-center rounded text-sm shadow-md">
-
             {/*  ------------------------------------------------------------------------------------------------*/}
             {/* ------------------- Length ----------------- */}
             {getleads?.length}
@@ -776,373 +771,381 @@ const businessType = localStorage.getItem("businessType");
         <div className="date_Filter_Main_Container">
           {/* ------------------- Filter by date ----------------- */}
           <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
-
             {/* Filter Icon Button */}
             <div className="flex items-center">
-            <button className="border-r border-gray-500 pr-2">
-              <ImFilter className="filter_Image_Size" />
-            </button>
+              <button className="border-r border-gray-500 pr-2">
+                <ImFilter className="filter_Image_Size" />
+              </button>
 
-            {/* Date Range Filter Button */}
-            <button
-              className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display"
+              {/* Date Range Filter Button */}
+              <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display">
+                Filter By
+              </button>
+
+              {/* Date Range Inputs */}
+              <div className="px-2 flex items-center gap-2 filter_Date_Container">
+                <label className="hide_Filter_Text">From:</label>
+                <input
+                  type="date"
+                  value={startDate}
+                  className="border rounded px-2 py-2 filter_Date"
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
+
+                <label className="hide_Filter_Text">To:</label>
+                <input
+                  type="date"
+                  value={endDate}
+                  className="border rounded px-2 py-2 filter_Date"
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div
+              className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center"
+              onClick={handleResetFilter}
             >
-              Filter By
-            </button>
-
-            {/* Date Range Inputs */}
-            <div className="px-2 flex items-center gap-2 filter_Date_Container">
-              <label className="hide_Filter_Text">From:</label>
-              <input
-                type="date"
-                value={startDate}
-                className="border rounded px-2 py-2 filter_Date"
-                onChange={(e) => setStartDate(e.target.value)}
-              />
-
-              <label className="hide_Filter_Text">To:</label>
-              <input
-                type="date"
-                value={endDate}
-                className="border rounded px-2 py-2 filter_Date"
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </div>
-            </div>
-            
-            <div className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center" onClick={handleResetFilter}>
-            <label className="hide_Filter_Text ">Reset</label>
-               <TbRefresh className="filter_Reset_Image"/>
+              <label className="hide_Filter_Text ">Reset</label>
+              <TbRefresh className="filter_Reset_Image" />
             </div>
           </div>
         </div>
       </div>
       {/*-------Table-------*/}
-      {viewContact || businessRole==="Admin"?
-      
-      <div className="overflow-x-auto mt-3 leads_Table_Main_Container">
-        <div className="min-w-full  rounded-md shadow-lg leads_Table_Container">
-          {selectedViewValue === "Table View" && (
-            <table className="min-w-full bg-white leads_Table">
-              <thead>
-                <tr className="border-gray-300 border-b-2">
-                  {/* CHECKBOX */}
-                  <th className=" py-3">
-                    <input
-                      type="checkbox"
-                      checked={isSelectAllChecked}
-                      onChange={handleSelectAllCheckbox}
-                    />
-                  </th>
+      {viewContact || businessRole === "Admin" ? (
+        <div className="overflow-x-auto mt-3 leads_Table_Main_Container">
+          <div className="min-w-full  rounded-md shadow-lg leads_Table_Container">
+            {selectedViewValue === "Table View" && (
+              <table className="min-w-full bg-white leads_Table">
+                <thead>
+                  <tr className="border-gray-300 border-b-2">
+                    {/* CHECKBOX */}
+                    <th className=" py-3">
+                      <input
+                        type="checkbox"
+                        checked={isSelectAllChecked}
+                        onChange={handleSelectAllCheckbox}
+                      />
+                    </th>
 
-                  <th className="px-1 py-3 text-left border-r font-medium">
-                    <div className="">
-                      <span className="whitespace-nowrap">
-                        Client Name
-                      </span>
-                    </div>
-                  </th>
-                  <th className="px-1 py-3 text-left border-r font-medium min-w-16 ">
-                    <div className="text-center">
-                      <span  className="whitespace-nowrap">
-                        Mobile
-                      </span>
-                    </div>
-                  </th>
+                    <th className="px-1 py-3 text-left border-r font-medium">
+                      <div className="">
+                        <span className="whitespace-nowrap">Client Name</span>
+                      </div>
+                    </th>
+                    <th className="px-1 py-3 text-left border-r font-medium min-w-16 ">
+                      <div className="text-center">
+                        <span className="whitespace-nowrap">Mobile</span>
+                      </div>
+                    </th>
 
+                    <th className="px-1 py-3 text-left border-r font-medium min-w-16 ">
+                      <div className="text-center">
+                        <span>Segment</span>
+                      </div>
+                    </th>
+                    <th className="px-1 py-3 text-left border-r font-medium  min-w-20  relative">
+                      <div className="text-center">
+                        <span className="whitespace-nowrap">Free Trail</span>
+                      </div>
+                    </th>
+                    <th className="px-1 py-3 text-left border-r font-medium ">
+                      <div className="text-center">
+                        <span className="whitespace-nowrap">Follow Up</span>
+                      </div>
+                    </th>
+                    <th className="px-1 py-3 text-left border-r font-medium">
+                      <div className="text-center">
+                        <span className="whitespace-nowrap">Managed By</span>
+                      </div>
+                    </th>
+                    <th className="">
+                      <VscSettings
+                        className="mx-auto whitespace-nowrap"
+                        size={20}
+                      />
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentLeads?.map((item) => {
+                    const matchedUser =
+                      users?.length > 0
+                        ? users?.find(
+                            (user) => user?.userName === item?.assigned_To,
+                          )
+                        : [];
+                    const role = matchedUser?.role;
+                    const roleColor = getRoleColorByIndex(role?.length); // Get color for the role
+                    return (
+                      <tr
+                        key={item.id}
+                        className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                      >
+                        {/* CHECKBOX */}
+                        <td className="px-1 py-3 text-center px-2">
+                          <input
+                            type="checkbox"
+                            checked={selectedIds.includes(item.id)}
+                            onClick={(e) => handleOnCheckBox(e, item)}
+                          />
+                        </td>
 
-                  <th className="px-1 py-3 text-left border-r font-medium min-w-16 ">
-                    <div className="text-center">
-                      <span>
-                        Segment
-                      </span>
-                    </div>
-                  </th>
-                  <th className="px-1 py-3 text-left border-r font-medium  min-w-20  relative">
-                    <div className="text-center">
-                      <span  className="whitespace-nowrap">
-                        Free Trail
-                      </span>
-                    </div>
-                  </th>
-                  <th className="px-1 py-3 text-left border-r font-medium ">
-                    <div className="text-center">
-                      <span  className="whitespace-nowrap">
-                        Follow Up
-                      </span>
-                    </div>
-                  </th>
-                  <th className="px-1 py-3 text-left border-r font-medium">
-                    <div className="text-center">
-                      <span className="whitespace-nowrap">
-                        Managed By
-                      </span>
-                    </div>
-                  </th>
-                   <th className="">
-                    <VscSettings className='mx-auto whitespace-nowrap'  size={20}/>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentLeads?.map((item) => {
-                  const matchedUser = users?.length > 0 ? users?.find((user) => user?.userName === item?.assigned_To) : []
-                  const role = matchedUser?.role;
-                  const roleColor = getRoleColorByIndex(role?.length); // Get color for the role
-                  return (
-                    <tr
-                      key={item.id}
-                      className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
-                      
+                        {/* CONTACT NAME */}
+                        <td
+                          className="px-2 py-4 border-b border-gray-300 text-sm"
+                          onClick={
+                            edit || businessRole === "Admin"
+                              ? () => handleClick(item)
+                              : undefined
+                          }
+                        >
+                          <div className="flex items-center">
+                            <span className="whitespace-nowrap">
+                              {item.name}
+                            </span>
+                          </div>
+                        </td>
 
-                    >
-                      {/* CHECKBOX */}
-                      <td className="px-1 py-3 text-center px-2">
-                        <input
-                          type="checkbox"
-                          checked={selectedIds.includes(item.id)}
-                          onClick={(e) => handleOnCheckBox(e, item)}
-                        />
-                      </td>
-
-
-                      {/* CONTACT NAME */}
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm" onClick={edit || businessRole==="Admin" ?() => handleClick(item): undefined}>
-                        <div className="flex items-center">
-                          <span className="whitespace-nowrap">{item.name}</span>
-                        </div>
-                      </td>
-
-                      {/* Mobile No */}
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm min-w-20  ">
-                        <div className="flex gap-2 items-center">
-
-                          <a
+                        {/* Mobile No */}
+                        <td className="px-2 py-4 border-b border-gray-300 text-sm min-w-20  ">
+                          <div className="flex gap-2 items-center">
+                            <a
                               href={`tel:${item.mobileNo}`}
                               onClick={(event) => event.stopPropagation()}
                               className="whitespace-nowrap"
                             >
                               {item.mobileNo}
-                            </a>                         
-                          <MdCall className="text-red-600" />
-                        </div>
-                      </td>
+                            </a>
+                            <MdCall className="text-red-600" />
+                          </div>
+                        </td>
 
-                      {/* Segments */}
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm  ">
-                        <div>
-                          {item.segments && (
-                            <span className="whitespace-nowrap">
-                              {item.segments
-                                .filter((segment) => segment.length > 1)
-                                .join(", ")}
-                            </span>
+                        {/* Segments */}
+                        <td className="px-2 py-4 border-b border-gray-300 text-sm  ">
+                          <div>
+                            {item.segments && (
+                              <span className="whitespace-nowrap">
+                                {item.segments
+                                  .filter((segment) => segment.length > 1)
+                                  .join(", ")}
+                              </span>
+                            )}
+                          </div>
+                        </td>
+
+                        <td className="px-2 py-4 border-b border-gray-300 text-sm text-center whitespace-nowrap">
+                          {item.trialStartDate?.split("T")[0]}
+                        </td>
+
+                        <td className="px-2 py-4 border-b border-gray-300 text-sm text-center whitespace-nowrap">
+                          {item.call_bck_DateTime
+                            ?.replace("T", " ")
+                            ?.split(":")
+                            .slice(0, 2)
+                            .join(":")}
+                        </td>
+
+                        {/* Assigned To and User Role */}
+                        <td className="px-2 py-4 border-b border-gray-300 text-sm  w-[20%] ">
+                          {matchedUser && (
+                            <div
+                              className="text-xs font-semibold text-white py-2 mx-auto rounded-full w-[90%] whitespace-nowrap"
+                              style={{
+                                backgroundColor: roleColor ? roleColor : "#000",
+                                borderRadius: "8px",
+                                padding: 8,
+                                textAlign: "center",
+                              }}
+                            >
+                              {item.assigned_To} - ({matchedUser?.role})
+                            </div>
                           )}
-                        </div>
-                      </td>
+                        </td>
 
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm text-center whitespace-nowrap">
-                        {(item.trialStartDate?.split('T')[0])}
-                      </td>
-
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm text-center whitespace-nowrap">
-                        {(item.call_bck_DateTime?.replace("T", " "))?.split(':').slice(0, 2).join(':')}
-                      </td>
-
-                      {/* Assigned To and User Role */}
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm  w-[20%] ">
-                        {matchedUser && (
-                          <div
-                            className="text-xs font-semibold text-white py-2 mx-auto rounded-full w-[90%] whitespace-nowrap"
-                            style={{
-                              backgroundColor: roleColor ? roleColor : "#000",
-                              borderRadius: "8px",
-                              padding: 8,
-                              textAlign: "center"
-                            }}
-                          >
-                            {item.assigned_To} - ({matchedUser?.role})
-                          </div>
-                        )}
-                      </td>
-
-
-
-
-                      {/*------------------<- Create-SO->------------*/}
-                      {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
-                     {/*------------------<- Create-SO->------------*/}
+                        {/*------------------<- Create-SO->------------*/}
                         {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
-                      {createSO || businessRole==="Admin" ?
-                       <td className="text-center px-2">
-                       <button
-                         className={
-                           business === "Brokerage"
-                             ? ""
-                             : ""
-                         }
-                         onClick={(e) => {
-                           e.stopPropagation();
-                           navigate(`/panel/contact/create/so/${item.id}`);
-                         }}
-                       >
-                         {/* SO */}
-                         {business === "Brokerage" ? (
-                          <span className="text-white text-xs rounded p-2   bg-blue-600 shadow-md whitespace-nowrap hover:bg-blue-500">
-                               Create Client
-                             </span>
-                         ) : (
-                           <>
-                             <span className=" text-white text-xm rounded p-1 bg-blue-600 shadow-md whitespace-nowrap hover:bg-blue-500">
-                               SO
-                             </span>
-                           </>
-                         )}
-                       </button>
-                     </td>
-                    :
-                    <td></td>}
-                       
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          )}
+                        {/*------------------<- Create-SO->------------*/}
+                        {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
+                        {createSO || businessRole === "Admin" ? (
+                          <td className="text-center px-2">
+                            <button
+                              className={business === "Brokerage" ? "" : ""}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/panel/contact/create/so/${item.id}`);
+                              }}
+                            >
+                              {/* SO */}
+                              {business === "Brokerage" ? (
+                                <span className="text-white text-xs rounded p-2   bg-blue-600 shadow-md whitespace-nowrap hover:bg-blue-500">
+                                  Create Client
+                                </span>
+                              ) : (
+                                <>
+                                  <span className=" text-white text-xm rounded p-1 bg-blue-600 shadow-md whitespace-nowrap hover:bg-blue-500">
+                                    SO
+                                  </span>
+                                </>
+                              )}
+                            </button>
+                          </td>
+                        ) : (
+                          <td></td>
+                        )}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
 
-          {/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}{/* ------------GRID------------ */}
-          {selectedViewValue === "Grid View" && (
-            <>
-              <div className="min-w-full">
-                <div className="grid grid-cols-3 gap-3">
-                  {/*---------Card starts Here */}
-                  {getleads.map((item) => (
-                    <div className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2" key={item.id}>
-                      <div className="flex items-center gap-3" >
-                        <img src={item.img} height={60} width={60} />
-                        <div className="flex flex-col grow">
-                          <div className="flex justify-between font-medium">
-                            <span className="text-indigo-500">{item.name}</span>
-                            <BiEdit
-                              size={25}
-                              className="bg-white rounded-full shadow-md text-blue-500 p-1"
-                            />
+            {/* ------------GRID------------ */}
+            {/* ------------GRID------------ */}
+            {/* ------------GRID------------ */}
+            {/* ------------GRID------------ */}
+            {/* ------------GRID------------ */}
+            {selectedViewValue === "Grid View" && (
+              <>
+                <div className="min-w-full">
+                  <div className="grid grid-cols-3 gap-3">
+                    {/*---------Card starts Here */}
+                    {getleads.map((item) => (
+                      <div
+                        className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2"
+                        key={item.id}
+                      >
+                        <div className="flex items-center gap-3">
+                          <img src={item.img} height={60} width={60} />
+                          <div className="flex flex-col grow">
+                            <div className="flex justify-between font-medium">
+                              <span className="text-indigo-500">
+                                {item.name}
+                              </span>
+                              <BiEdit
+                                size={25}
+                                className="bg-white rounded-full shadow-md text-blue-500 p-1"
+                              />
+                            </div>
+                            <div className="flex items-center gap-2 text-sm font-medium">
+                              {item.leadesStatus}
+                            </div>
                           </div>
-                          <div className="flex items-center gap-2 text-sm font-medium">
-                            {item.leadesStatus}
+                        </div>
+                        <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                          <div className="w-2/4 text-gray-500 text-sm">
+                            Company name
+                          </div>
+                          <div className="2-2/4 font-medium text-sm">
+                            {item.company}
+                          </div>
+                        </div>
+
+                        <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                          <div className="w-2/4 text-gray-500 text-sm">
+                            Title
+                          </div>
+                          <div className="2-2/4 font-medium text-sm">
+                            {item.tital}
+                          </div>
+                        </div>
+
+                        <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                          <div className="w-2/4">
+                            <IoIosMail className="text-2xl" />
+                          </div>
+                          <div className="2-2/4 font-medium  text-sm">
+                            {item.email}
+                          </div>
+                        </div>
+
+                        <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                          <div className="w-2/4">
+                            <FaPhoneAlt className="text-xl" />
+                          </div>
+                          <div className="2-2/4 font-medium text-sm">
+                            {item.phoneNo}
+                          </div>
+                        </div>
+                        <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                          <div className="w-2/4 text-gray-500 text-sm">
+                            Lead Source
+                          </div>
+                          <div className="2-2/4 font-medium  text-sm">
+                            {item.leadsSource}
                           </div>
                         </div>
                       </div>
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4 text-gray-500 text-sm">
-                          Company name
-                        </div>
-                        <div className="2-2/4 font-medium text-sm">
-                          {item.company}
-                        </div>
-                      </div>
-
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4 text-gray-500 text-sm">Title</div>
-                        <div className="2-2/4 font-medium text-sm">
-                          {item.tital}
-                        </div>
-                      </div>
-
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4">
-                          <IoIosMail className="text-2xl" />
-                        </div>
-                        <div className="2-2/4 font-medium  text-sm">
-                          {item.email}
-                        </div>
-                      </div>
-
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4">
-                          <FaPhoneAlt className="text-xl" />
-                        </div>
-                        <div className="2-2/4 font-medium text-sm">
-                          {item.phoneNo}
-                        </div>
-                      </div>
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4 text-gray-500 text-sm">
-                          Lead Source
-                        </div>
-                        <div className="2-2/4 font-medium  text-sm">
-                          {item.leadsSource}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
+              </>
+            )}
+          </div>
+
+          {selectedViewValue === "Table View" && (
+            <>
+              <div className="flex justify-end m-4">
+                {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
+                <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
+                  {/* /---------------------->Previous Button <----------------------< */}
+                  <button
+                    onClick={() => paginate(currentPage - 1)}
+                    className={`p-1 shadow-md rounded-full text-white ${currentPage === 1 ? "border-gray-200 border-2" : "bg-cyan-500 border-2 border-gray-100"}`}
+                    disabled={currentPage === 1}
+                  >
+                    <GrFormPrevious size={25} />
+                  </button>
+
+                  {/* /---------------------->Dynamic Page Numbers <----------------------< */}
+                  {Array.from({ length: totalPage }, (_, i) => i + 1).map(
+                    (page) => {
+                      // Logic for ellipsis and showing only a subset of pages
+                      if (
+                        page === 1 ||
+                        page === totalPage ||
+                        (page >= currentPage - 1 && page <= currentPage + 1)
+                      ) {
+                        return (
+                          <button
+                            key={page}
+                            onClick={() => paginate(page)}
+                            className={`px-4 py-2 rounded mx-1 ${currentPage === page ? "bg-blue-600 text-white" : "bg-white text-gray-700 border"}`}
+                          >
+                            {page}
+                          </button>
+                        );
+                      } else if (
+                        (page === currentPage - 2 && page > 1) || // Add ellipsis before current
+                        (page === currentPage + 2 && page < totalPage) // Add ellipsis after current
+                      ) {
+                        return (
+                          <span key={page} className="px-2 text-gray-500">
+                            ...
+                          </span>
+                        );
+                      }
+                      return null;
+                    },
+                  )}
+
+                  {/* Next Button */}
+                  <button
+                    onClick={() => paginate(currentPage + 1)}
+                    className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage ? " border-gray-200 border-2" : " bg-cyan-500 border-2 border-gray-100"}`}
+                    disabled={currentPage === totalPage}
+                  >
+                    <GrFormNext size={25} />
+                  </button>
+                </nav>
               </div>
             </>
           )}
         </div>
-
-        {selectedViewValue === "Table View" && (
-          <>
-            <div className="flex justify-end m-4">
-          
-              {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
-              <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
-                {/* /---------------------->Previous Button <----------------------< */}
-                <button
-                  onClick={() => paginate(currentPage - 1)}
-                  className={`p-1 shadow-md rounded-full text-white ${currentPage === 1 ? 'border-gray-200 border-2' : 'bg-cyan-500 border-2 border-gray-100'}`}
-                  disabled={currentPage === 1}
-                >
-                <GrFormPrevious size={25}/>
-                </button>
-
-                {/* /---------------------->Dynamic Page Numbers <----------------------< */}
-                {Array.from({ length: totalPage }, (_, i) => i + 1).map((page) => {
-                  // Logic for ellipsis and showing only a subset of pages
-                  if (page === 1 || page === totalPage ||  (page >= currentPage - 1 && page <= currentPage + 1)){
-                    return (
-                      <button
-                        key={page}
-                        onClick={() => paginate(page)}
-                        className={`px-4 py-2 rounded mx-1 ${currentPage === page ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border'}`}
-                      >
-                        {page}
-                      </button>
-                    );
-                  } else if (
-                    (page === currentPage - 2 && page > 1) || // Add ellipsis before current
-                    (page === currentPage + 2 && page < totalPage) // Add ellipsis after current
-                  ) {
-                    return (
-                      <span key={page} className="px-2 text-gray-500">
-                        ...
-                      </span>
-                    );
-                  }
-                  return null;
-                })}
-
-                {/* Next Button */}
-                <button
-                  onClick={() => paginate(currentPage + 1)}
-
-                  className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage  ? ' border-gray-200 border-2' : ' bg-cyan-500 border-2 border-gray-100'}`}
-
-                  disabled={currentPage === totalPage}
-                >
-                <GrFormNext size={25} />
-                
-                </button>
-              </nav>
-
-            </div>
-          </>
-        )}
-      </div>
-      :
-      ""
-    }
+      ) : (
+        ""
+      )}
     </div>
   );
 }

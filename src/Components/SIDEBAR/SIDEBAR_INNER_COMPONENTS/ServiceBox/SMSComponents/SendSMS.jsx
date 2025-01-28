@@ -1,4 +1,4 @@
-import { FaBars } from 'react-icons/fa';
+import { FaBars } from "react-icons/fa";
 import PropTypes from "prop-types";
 
 export default function SendSMS({ currentSms }) {
@@ -31,7 +31,7 @@ export default function SendSMS({ currentSms }) {
           </th>
           {/* TYPE */}
           <th className="px-3 py-3 text-left border-r font-medium">
-              <span>Sent Time</span>
+            <span>Sent Time</span>
           </th>
         </tr>
       </thead>

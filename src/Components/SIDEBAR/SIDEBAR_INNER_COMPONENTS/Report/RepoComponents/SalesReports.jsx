@@ -7,18 +7,18 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from 'recharts';
+} from "recharts";
 
 // Example data
 const data = [
-  { time: '00:00', income: 80, expenses: 60 },
-  { time: '01:00', income: 105, expenses: 93 },
-  { time: '02:00', income: 95, expenses: 70 },
-  { time: '03:00', income: 110, expenses: 80 },
-  { time: '04:00', income: 125, expenses: 115 },
-  { time: '05:00', income: 130, expenses: 120 },
-  { time: '06:00', income: 145, expenses: 125 },
-  { time: '07:00', income: 140, expenses: 130 },
+  { time: "00:00", income: 80, expenses: 60 },
+  { time: "01:00", income: 105, expenses: 93 },
+  { time: "02:00", income: 95, expenses: 70 },
+  { time: "03:00", income: 110, expenses: 80 },
+  { time: "04:00", income: 125, expenses: 115 },
+  { time: "05:00", income: 130, expenses: 120 },
+  { time: "06:00", income: 145, expenses: 125 },
+  { time: "07:00", income: 140, expenses: 130 },
 ];
 
 const SalesReportChart = () => {
@@ -69,7 +69,7 @@ const SalesReportChart = () => {
             fillOpacity={1}
             fill="url(#colorIncome)"
             strokeWidth={3}
-            dot={{ stroke: '#8884d8', strokeWidth: 2, fill: '#8884d8' }}
+            dot={{ stroke: "#8884d8", strokeWidth: 2, fill: "#8884d8" }}
             activeDot={{ r: 6 }}
           />
 
@@ -81,7 +81,7 @@ const SalesReportChart = () => {
             fillOpacity={1}
             fill="url(#colorExpenses)"
             strokeWidth={3}
-            dot={{ stroke: '#82ca9d', strokeWidth: 2, fill: '#82ca9d' }}
+            dot={{ stroke: "#82ca9d", strokeWidth: 2, fill: "#82ca9d" }}
             activeDot={{ r: 6 }}
           />
         </AreaChart>

@@ -41,7 +41,9 @@ function LeftDrawer({ isOpen, onClose }) {
                 <ul className="ml-4 mt-2">
                   <li
                     className={`py-1 cursor-pointer ${
-                      selectedSubmenu === "Users" ? "bg-gray-600 text-blue-300" : ""
+                      selectedSubmenu === "Users"
+                        ? "bg-gray-600 text-blue-300"
+                        : ""
                     }`}
                     onClick={() => handleSubmenuClick("Users")}
                   >
@@ -132,7 +134,9 @@ function LeftDrawer({ isOpen, onClose }) {
                 <ul className="ml-4 mt-2">
                   <li
                     className={`py-1 cursor-pointer ${
-                      selectedSubmenu === "EmailTemplate" ? "bg-gray-600 text-blue-300" : ""
+                      selectedSubmenu === "EmailTemplate"
+                        ? "bg-gray-600 text-blue-300"
+                        : ""
                     }`}
                     onClick={() => handleSubmenuClick("EmailTemplate")}
                   >
@@ -140,7 +144,9 @@ function LeftDrawer({ isOpen, onClose }) {
                   </li>
                   <li
                     className={`py-1 cursor-pointer ${
-                      selectedSubmenu === "CallTemplate" ? "bg-gray-600 text-blue-300" : ""
+                      selectedSubmenu === "CallTemplate"
+                        ? "bg-gray-600 text-blue-300"
+                        : ""
                     }`}
                     onClick={() => handleSubmenuClick("CallTemplate")}
                   >
@@ -148,7 +154,9 @@ function LeftDrawer({ isOpen, onClose }) {
                   </li>
                   <li
                     className={`py-1 cursor-pointer ${
-                      selectedSubmenu === "SMSTemplate" ? "bg-gray-600 text-blue-300" : ""
+                      selectedSubmenu === "SMSTemplate"
+                        ? "bg-gray-600 text-blue-300"
+                        : ""
                     }`}
                     onClick={() => handleSubmenuClick("SMSTemplate")}
                   >
@@ -169,7 +177,9 @@ function LeftDrawer({ isOpen, onClose }) {
                 <ul className="ml-4 mt-2">
                   <li
                     className={`py-1 cursor-pointer ${
-                      selectedSubmenu === "NotificationPopups" ? "bg-gray-600 text-blue-300" : ""
+                      selectedSubmenu === "NotificationPopups"
+                        ? "bg-gray-600 text-blue-300"
+                        : ""
                     }`}
                     onClick={() => handleSubmenuClick("NotificationPopups")}
                   >
@@ -177,7 +187,9 @@ function LeftDrawer({ isOpen, onClose }) {
                   </li>
                   <li
                     className={`py-1 cursor-pointer ${
-                      selectedSubmenu === "Alerts" ? "bg-gray-600 text-blue-300" : ""
+                      selectedSubmenu === "Alerts"
+                        ? "bg-gray-600 text-blue-300"
+                        : ""
                     }`}
                     onClick={() => handleSubmenuClick("Alerts")}
                   >
@@ -198,7 +210,9 @@ function LeftDrawer({ isOpen, onClose }) {
                 <ul className="ml-4 mt-2">
                   <li
                     className={`py-1 cursor-pointer ${
-                      selectedSubmenu === "EmailSettings" ? "bg-gray-600 text-blue-300" : ""
+                      selectedSubmenu === "EmailSettings"
+                        ? "bg-gray-600 text-blue-300"
+                        : ""
                     }`}
                     onClick={() => handleSubmenuClick("EmailSettings")}
                   >
@@ -206,7 +220,9 @@ function LeftDrawer({ isOpen, onClose }) {
                   </li>
                   <li
                     className={`py-1 cursor-pointer ${
-                      selectedSubmenu === "CallExtension" ? "bg-gray-600 text-blue-300" : ""
+                      selectedSubmenu === "CallExtension"
+                        ? "bg-gray-600 text-blue-300"
+                        : ""
                     }`}
                     onClick={() => handleSubmenuClick("CallExtension")}
                   >
@@ -214,7 +230,9 @@ function LeftDrawer({ isOpen, onClose }) {
                   </li>
                   <li
                     className={`py-1 cursor-pointer ${
-                      selectedSubmenu === "SMSSettings" ? "bg-gray-600 text-blue-300" : ""
+                      selectedSubmenu === "SMSSettings"
+                        ? "bg-gray-600 text-blue-300"
+                        : ""
                     }`}
                     onClick={() => handleSubmenuClick("SMSSettings")}
                   >

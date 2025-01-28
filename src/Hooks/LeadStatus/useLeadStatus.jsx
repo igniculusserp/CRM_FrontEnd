@@ -4,7 +4,7 @@ import { getHostnamePart } from "../../Components/SIDEBAR/SIDEBAR_SETTING/Reusab
 import { protocal_url, tenant_base_url } from "../../Config/config";
 
 export default function useLeadStatus() {
-  const bearer_token = localStorage.getItem('token');
+  const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
 
   const [leadStatus, setLeadStatus] = useState([]);
@@ -20,7 +20,7 @@ export default function useLeadStatus() {
         };
         const response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
-          config
+          config,
         );
         setLeadStatus(response.data.data);
       } catch (err) {
@@ -32,4 +32,4 @@ export default function useLeadStatus() {
   }, []); // Correct dependency array
 
   return { leadStatus };
-};
+}

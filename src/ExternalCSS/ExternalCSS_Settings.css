@@ -268,7 +268,7 @@ input[type="number"] {
   }
 }
 @media (max-width: 500px) {
-  .hide_Filter_Text{
+  .hide_Filter_Text {
     display: none;
   }
 }
@@ -285,12 +285,10 @@ input[type="number"] {
   .reset_paddings {
     padding: 7px !important;
   }
-  .filter_Image_Size{
+  .filter_Image_Size {
     font-size: 12px;
   }
 }
-
-
 
 /* --------------------------------------------------------- Table CSS --------------------------------------------- */
 .leads_Table_Main_Container {
@@ -303,7 +301,6 @@ input[type="number"] {
 .leads_Table {
   width: max-content;
 }
-
 
 /* ---------------------------------------Leads------------------------------------------ */
 
@@ -319,15 +316,13 @@ input[type="number"] {
   width: 100%;
 }
 
-
 @media (max-width: 898px) {
   .leads_Button_Main_Container {
     flex-wrap: wrap;
   }
 }
 
-
-@media(max-width: 898px){
+@media (max-width: 898px) {
   .button_MaxWidth_first_layer_Container {
     width: 31.9% !important;
     max-width: 31.9% !important;
@@ -349,22 +344,21 @@ input[type="number"] {
     width: 100% !important;
     max-width: 100% !important;
   }
- }
- @media(max-width: 769px){
+}
+@media (max-width: 769px) {
   .button_MaxWidth_Container {
     width: 48.5% !important;
     max-width: 48.5% !important;
   }
- }
- 
- @media(max-width: 648px){
+}
+
+@media (max-width: 648px) {
   .button_MaxWidth_first_layer_Container {
     width: 48.5% !important;
     max-width: 48.5% !important;
     /* min-width: 130px !important; */
   }
- 
- }
+}
 
 @media (max-width: 600px) {
   .leads_Button_Container {
@@ -391,164 +385,157 @@ input[type="number"] {
   }
 }
 
-
-
 /* --------------------------------------------------------- Contacts ---------------------------------------------- */
 
 @media (max-width: 996px) {
- .contact_Dropdown_Main_Container {
-  width: 100%;
- }
- .action_Button_Main_Container{
-  width: 100% !important;
- 
- }
+  .contact_Dropdown_Main_Container {
+    width: 100%;
+  }
+  .action_Button_Main_Container {
+    width: 100% !important;
+  }
 }
 
 @media (max-width: 897px) {
   .contact_Dropdown_Container {
-   width: 48.99%;
+    width: 48.99%;
   }
   .contact_Dropdown_Button {
     width: 100% !important;
-   }
-   .action_Button_Main_Container{
+  }
+  .action_Button_Main_Container {
     justify-content: space-between;
-   }
-   .action_Button_Container{
+  }
+  .action_Button_Container {
     width: 50% !important;
     display: flex;
     justify-content: end !important;
-   }
-  .action_Button{
+  }
+  .action_Button {
     width: 98% !important;
-   }
- }
+  }
+}
 
- @media (max-width: 768px) {
-  .action_Button_Container{
+@media (max-width: 768px) {
+  .action_Button_Container {
     width: 100% !important;
     justify-content: start !important;
-   }
-  .action_Button{
+  }
+  .action_Button {
     width: 49% !important;
-   }
- }
+  }
+}
 
- @media (max-width: 648px) {
+@media (max-width: 648px) {
   .contact_Dropdown_Container {
-   width: 100%;
+    width: 100%;
   }
   .contact_Dropdown_Button {
     width: 100% !important;
-   }
-  
-   .action_Button{
+  }
+
+  .action_Button {
     width: 100% !important;
-   }
- }
+  }
+}
 
 /* ------------------------------------------------------------ Reports -----------------------------------------------*/
 
-.reports_Buttons_Main_Container{
+.reports_Buttons_Main_Container {
   width: 100%;
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.reports_Buttons_Container{
+.reports_Buttons_Container {
   width: 15%;
   white-space: nowrap;
   max-width: 18%;
   min-width: 140px;
 }
 @media (max-width: 1119px) {
-  .reports_Buttons_Container{
+  .reports_Buttons_Container {
     width: 32%;
     max-width: 32%;
   }
 }
 
 @media (max-width: 652px) {
-  .reports_Buttons_Container{
+  .reports_Buttons_Container {
     width: 48%;
     max-width: 49%;
   }
 }
 @media (max-width: 460px) {
-  .reports_Buttons_Container{
+  .reports_Buttons_Container {
     width: 100%;
     max-width: 100%;
   }
-  .reports_Heading_Text{
+  .reports_Heading_Text {
     font-size: 22px;
   }
 }
 
-
 /* ---------------------------------------------------- Finance ----------------------------- */
 
 @media (max-width: 460px) {
-  .finance_Buttons_Text{
+  .finance_Buttons_Text {
     font-size: 14px;
-   
   }
-  .finance_Buttons_Main_Container{
+  .finance_Buttons_Main_Container {
     justify-content: center !important;
   }
-  .finance_Heading_Text{
+  .finance_Heading_Text {
     font-size: 22px;
   }
 }
 
 /* -------------------------------------------------- Sales Order -------------------------------------- */
 
-
 @media (max-width: 897px) {
   .sales_Oreder_Dropdown_Container {
-   width: 100%;
+    width: 100%;
   }
 }
 
 /* ---------------------------------------------- Service Box ------------------------------------------ */
 @media (max-width: 897px) {
-.service_Button_Main_Container{
-  width: 100%;
-}
-.service_Button_Container{
-  width: 48.9%;
-}
-.service_Action_Main_Container{
-  width: 100%;
-  /* border:1px solid red; */
-  justify-content: space-between;
-}
-.service_Action_Container{
-  width: 42%;
-}
-.service_Action_Button{
-  width: 100%;
-}
+  .service_Button_Main_Container {
+    width: 100%;
+  }
+  .service_Button_Container {
+    width: 48.9%;
+  }
+  .service_Action_Main_Container {
+    width: 100%;
+    /* border:1px solid red; */
+    justify-content: space-between;
+  }
+  .service_Action_Container {
+    width: 42%;
+  }
+  .service_Action_Button {
+    width: 100%;
+  }
 }
 @media (max-width: 768px) {
-  .service_Action_Container{
+  .service_Action_Container {
     width: 48.9%;
   }
 }
 @media (max-width: 648px) {
-  .service_Button_Main_Container{
+  .service_Button_Main_Container {
     flex-wrap: wrap;
   }
-  .service_Button_Container{
+  .service_Button_Container {
     width: 100%;
   }
-  .service_Action_Container{
+  .service_Action_Container {
     width: 100%;
   }
 }
 
 /* --------------------------------------------------------- Settings Screen -------------------------------------------- */
 
-.settings_Border{
+.settings_Border {
   border: 1px solid red;
 }
-

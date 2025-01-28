@@ -6,7 +6,6 @@ import axios from "axios";
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 import AddPermission from "./AddPermission";
 
-
 import { ToastContainer } from "react-toastify";
 import {
   showErrorToast,
@@ -16,8 +15,7 @@ import EditPermission from "./EditPermission";
 
 export default function Permissions() {
   const [activeComponent, setActiveComponent] = useState("Table");
-  const [selectedId, setSelectedId] = useState(null); 
-
+  const [selectedId, setSelectedId] = useState(null);
 
   // ------------------------------ Permissions Handle Add Button ------------------------
 
@@ -41,13 +39,13 @@ export default function Permissions() {
   //------------------------------------Permissions Table -----------------------------
   const PermissionsTable = () => {
     const [data, setData] = useState([]);
-    
+
     const fullURL = window.location.href;
     const url = new URL(fullURL);
     const name = url.hostname.split(".")[0];
-    
+
     // ------------------------------ Permissions Get All  ------------------------
-    
+
     async function handleGetAll() {
       const bearer_token = localStorage.getItem("token");
       try {
@@ -58,7 +56,7 @@ export default function Permissions() {
         };
         const response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getall`,
-          config
+          config,
         );
         setData(response.data.data);
       } catch (error) {
@@ -82,7 +80,7 @@ export default function Permissions() {
         };
         await axios.delete(
           `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/delete/${id}`,
-          config
+          config,
         );
         setData((prevData) => prevData.filter((item) => item.id !== id));
         showSuccessToast("Deleted Successfully");
@@ -95,7 +93,7 @@ export default function Permissions() {
 
     return (
       <div className="m-3 min-w-screen">
-         <ToastContainer />
+        <ToastContainer />
         <div className="flex min-w-screen justify-between items-center flex-wrap gap-5">
           <div className="flex items-center gap-2">
             <h1 className="text-3xl font-medium">Permissions</h1>
@@ -145,13 +143,11 @@ export default function Permissions() {
                     </td>
                     <td className="px-2 py-4 text-sm max-w-24 break-words">
                       {permission.groupName}
-                      
                     </td>
                     <td className="px-2 py-4 text-sm max-w-24 break-words">
                       {permission.moduleName}
-                   
                     </td>
-                  
+
                     <td className="px-2 py-4 flex gap-3 justify-center">
                       <MdEdit
                         size={25}
@@ -185,7 +181,6 @@ export default function Permissions() {
       ) : activeComponent === "Update" ? (
         // <EditAccessControl onCancel={handleCancel} id={selectedId} />
         <EditPermission onCancel={handleCancel} permissionId={selectedId} />
-    
       ) : (
         ""
       )}

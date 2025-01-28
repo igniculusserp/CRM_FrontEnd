@@ -1,7 +1,7 @@
 import { FaBars } from "react-icons/fa";
 import PropTypes from "prop-types";
 import { useState } from "react";
-// import 
+// import
 
 export default function LeadsReport({ currentReports }) {
   const [selectedLeads, setSelectedLeads] = useState([]);
@@ -10,7 +10,7 @@ export default function LeadsReport({ currentReports }) {
     setSelectedLeads((prevSelected) =>
       prevSelected.includes(id)
         ? prevSelected.filter((leadId) => leadId !== id)
-        : [...prevSelected, id]
+        : [...prevSelected, id],
     );
   };
 
@@ -118,25 +118,23 @@ export default function LeadsReport({ currentReports }) {
             <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
               {report.leadsSource}
             </td>
-             {/* SEGMENT */}
-             <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
-                          <div className="grid grid-cols-2 gap-1 items-center">
-                            {report.segments &&
-                              report.segments.map(
-                                (segment, index) =>
-                                  segment.length > 1 && (
-                                    <span key={index} className="">
-                                      {segment}
-                                    </span>
-                                  )
-                              )}
-                          </div>
-                        </td>
+            {/* SEGMENT */}
+            <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
+              <div className="grid grid-cols-2 gap-1 items-center">
+                {report.segments &&
+                  report.segments.map(
+                    (segment, index) =>
+                      segment.length > 1 && (
+                        <span key={index} className="">
+                          {segment}
+                        </span>
+                      ),
+                  )}
+              </div>
+            </td>
             {/* LAST REMARKS */}
             <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              <div
-                dangerouslySetInnerHTML={{ __html: report.description }}
-              />
+              <div dangerouslySetInnerHTML={{ __html: report.description }} />
             </td>
           </tr>
         ))}
@@ -157,6 +155,6 @@ LeadsReport.propTypes = {
       leadsSource: PropTypes.string.isRequired,
       contactId: PropTypes.string.isRequired,
       lastRemarks: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
 };

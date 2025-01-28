@@ -11,7 +11,10 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {showSuccessToast, showErrorToast,} from "./../../utils/toastNotifications";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "./../../utils/toastNotifications";
 
 export default function ForgetPass() {
   const [forgetemail, setforgetemail] = useState("");
@@ -25,33 +28,30 @@ export default function ForgetPass() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const emailRegex = /^[A-Za-z0-9](([a-zA-Z0-9,=\.!\-#|\$%\^&\*\+/\?_`\{\}~]+)*)@(?:[0-9a-zA-Z-]+\.)+[a-zA-Z]{2,9}$/;
-  
-    if(forgetemail.length === 0){
-      showErrorToast("Please enter Email");
-    }
+    const emailRegex =
+      /^[A-Za-z0-9](([a-zA-Z0-9,=\.!\-#|\$%\^&\*\+/\?_`\{\}~]+)*)@(?:[0-9a-zA-Z-]+\.)+[a-zA-Z]{2,9}$/;
 
-    else if (!forgetemail.match(emailRegex)) {
+    if (forgetemail.length === 0) {
+      showErrorToast("Please enter Email");
+    } else if (!forgetemail.match(emailRegex)) {
       showErrorToast("Invalid Email");
-    return;
+      return;
     }
 
     try {
       const response = await axios.post(`${main_base_url}/Users/send/otp`, {
         email: forgetemail,
       });
-      const emailFromResponse = response.data.email || response.data.forgetemail || forgetemail;
-      const {message} = response.data;
+      const emailFromResponse =
+        response.data.email || response.data.forgetemail || forgetemail;
+      const { message } = response.data;
       localStorage.setItem("myData_forget", emailFromResponse);
       localStorage.setItem("forgetpass", JSON.stringify(response));
-      showSuccessToast('OTP sent successfully')
+      showSuccessToast("OTP sent successfully");
 
-
-    
       navigate("/forgetpasswordotp");
-    } 
-    catch (error) {
-      showErrorToast(error.response.data.message)
+    } catch (error) {
+      showErrorToast(error.response.data.message);
     }
   };
 

@@ -46,7 +46,7 @@ export default function ExpenseView({ setShowTopSection }) {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/getall`,
-        config
+        config,
       );
       setRawData(response.data.data);
       console.log(rawData);
@@ -140,7 +140,7 @@ export default function ExpenseView({ setShowTopSection }) {
       };
       await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/expensedetail/delete/${id}`,
-        config
+        config,
       );
       showSuccessToast("Deleted successfully");
       setFilteredLeads((prevData) => prevData.filter((item) => item.id !== id));
@@ -353,7 +353,7 @@ export default function ExpenseView({ setShowTopSection }) {
                       );
                     }
                     return null;
-                  }
+                  },
                 )}
 
                 {/* Next Button */}

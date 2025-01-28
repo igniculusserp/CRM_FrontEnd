@@ -12,17 +12,15 @@ const firebaseConfig = {
   measurementId: "G-NBP9WY1XF3",
 };
 
-
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
 // Handle incoming messages
 onMessage(messaging, (payload) => {
-  console.log("Got Fire message",payload);
-  alert(`Notification: ${payload.notification.title} - ${payload.notification.body}`);
+  console.log("Got Fire message", payload);
+  alert(
+    `Notification: ${payload.notification.title} - ${payload.notification.body}`,
+  );
 });
 
 export { messaging };
-
-
-

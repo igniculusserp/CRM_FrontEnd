@@ -1,4 +1,4 @@
-import { FaBars } from 'react-icons/fa';
+import { FaBars } from "react-icons/fa";
 
 export default function DisposeLeads({ currentReports }) {
   return (

@@ -11,7 +11,12 @@ export default function SidebarBase() {
   return (
     <div className="flex reative">
       {/* SidebarBar is fixed in place */}
-      <div className={toggle?"hide_View":"Show_View"} onClick={()=>{setToggle(false)}} />
+      <div
+        className={toggle ? "hide_View" : "Show_View"}
+        onClick={() => {
+          setToggle(false);
+        }}
+      />
       <div
         className={`h-screen sticky top-0 bg-cyan-500 scrollbar-hidden  ${
           toggle ? "Side_Bar_Large" : "Side_Bar_Small"
@@ -20,15 +25,16 @@ export default function SidebarBase() {
         <SidebarBar toggle={toggle} setToggle={setToggle} />
       </div>
       {/* Main content and header */}
-      <div  className={`h-screen flex flex-col ${
+      <div
+        className={`h-screen flex flex-col ${
           toggle ? "Main_Screen_Large" : "Main_Screen_Small"
-        }`}>
+        }`}
+      >
         <Header toggle={toggle} setToggle={setToggle} />
         {/* Main content scrolls independently */}
         <div className="flex-grow overflow-auto bg-gray-300">
           <Outlet />
           {/* CHAT POPUP */}
-
         </div>
       </div>
     </div>

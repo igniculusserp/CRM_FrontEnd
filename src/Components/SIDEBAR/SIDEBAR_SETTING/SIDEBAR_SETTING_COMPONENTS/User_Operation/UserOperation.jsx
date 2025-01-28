@@ -116,16 +116,15 @@ export default function UserOperation() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/userOpration/all`,
-        config
+        config,
       );
       if (response.status === 200) {
         const opration = response.data; // Get the user data
         setUsers(opration?.data); // Set the user data for editing
       }
-      
     } catch (error) {
-      console.log(error)
-      showErrorToast(error.response.data.message)
+      console.log(error);
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -139,17 +138,14 @@ export default function UserOperation() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/group/all`,
-        config
+        config,
       );
       if (response.status === 200) {
         const opration = response.data; // Get the user data
         setGroupNames(opration?.data); // Set the user data for editing
-      }
-      else(
-        showErrorToast("You are not an authorised user")
-      )
+      } else showErrorToast("You are not an authorised user");
     } catch (error) {
-      showErrorToast("You are not an authorised user")
+      showErrorToast("You are not an authorised user");
     }
   };
 
@@ -217,7 +213,7 @@ export default function UserOperation() {
       const response = await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/Setting/userOpration/add`,
         formData,
-        config
+        config,
       );
       getOprationLists();
       setActive(!active);
@@ -237,7 +233,7 @@ export default function UserOperation() {
       };
       const response = await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/Setting/userOpration/delete/${id}`,
-        config
+        config,
       );
       getOprationLists();
       showSuccessToast("User deleted successfully");
@@ -257,7 +253,7 @@ export default function UserOperation() {
       const response = await axios.put(
         `${protocal_url}${name}.${tenant_base_url}/Setting/userOpration/update/${formData?.id}`,
         formData,
-        config
+        config,
       );
       getOprationLists();
       handleActiveState();

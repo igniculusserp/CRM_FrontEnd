@@ -1,54 +1,54 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const CreateOrder = () => {
   const [ordersData, setOrdersData] = useState({
-    clientName: '',
-    alternateNumber: '',
-    leadSource: '',
-    clientId: '',
-    managerName: '',
-    segment: '',
-    pan: '',
-    city: '',
-    number: '',
-    assignedTo: '',
-    invoiceId: '',
-    createdDate: '',
-    ftCreatedDate: '',
-    dob: '',
-    email: '',
+    clientName: "",
+    alternateNumber: "",
+    leadSource: "",
+    clientId: "",
+    managerName: "",
+    segment: "",
+    pan: "",
+    city: "",
+    number: "",
+    assignedTo: "",
+    invoiceId: "",
+    createdDate: "",
+    ftCreatedDate: "",
+    dob: "",
+    email: "",
   });
   const [leadSourceDropdown, setLeadSourceDropdown] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [defaultLeadSourceDropDownText, setDefaultLeadSourceDropDownText] =
-    useState('Lead Source');
+    useState("Lead Source");
   const [assignedToDropdown, setAssignedToDropdown] = useState(false);
   const [defaultAssignedToText, setDefaultAssignedToText] =
-    useState('Assigned To');
+    useState("Assigned To");
   const [defaultInvoiceIdText, setDefaultInvoiceIdText] =
-    useState('Invoice ID');
+    useState("Invoice ID");
   const [invoiceIdDropdown, setInvoiceIdDropdown] = useState(false);
 
   // EDIT CONTACT
   const [editOrder, setEditOrder] = useState({
-    id: '',
-    clientName: '',
-    alternateNumber: '',
-    leadSource: '',
-    clientId: '',
-    managerName: '',
-    segment: '',
-    pan: '',
-    city: '',
-    number: '',
-    assignedTo: '',
-    invoiceId: '',
-    createdDate: '',
-    ftCreatedDate: '',
-    dob: '',
-    email: '',
+    id: "",
+    clientName: "",
+    alternateNumber: "",
+    leadSource: "",
+    clientId: "",
+    managerName: "",
+    segment: "",
+    pan: "",
+    city: "",
+    number: "",
+    assignedTo: "",
+    invoiceId: "",
+    createdDate: "",
+    ftCreatedDate: "",
+    dob: "",
+    email: "",
   });
 
   //   HANDLE INPUT CHANGE
@@ -70,7 +70,7 @@ const CreateOrder = () => {
   //   TOGGLE LEADSOURCE DROPDOWN
   const toggleLeadSourceDropdown = () => {
     setLeadSourceDropdown(!leadSourceDropdown);
-    console.log('Clickg');
+    console.log("Clickg");
   };
 
   // HANDLE DROPDOWN FOR LEAD SOURCE
@@ -115,18 +115,18 @@ const CreateOrder = () => {
 
   // LeadSource DATA
   const leadSource = [
-    { key: 1, name: 'Staff' },
-    { key: 2, name: 'Manager' },
-    { key: 3, name: 'Company' },
-    { key: 4, name: 'Employee' },
+    { key: 1, name: "Staff" },
+    { key: 2, name: "Manager" },
+    { key: 3, name: "Company" },
+    { key: 4, name: "Employee" },
   ];
 
   // assigned_ToDropDown DATA
   const assignedData = [
-    { key: 1, name: 'Staff' },
-    { key: 2, name: 'Manager' },
-    { key: 3, name: 'Company' },
-    { key: 4, name: 'Employee' },
+    { key: 1, name: "Staff" },
+    { key: 2, name: "Manager" },
+    { key: 3, name: "Company" },
+    { key: 4, name: "Employee" },
   ];
 
   // INVOICEID DATA

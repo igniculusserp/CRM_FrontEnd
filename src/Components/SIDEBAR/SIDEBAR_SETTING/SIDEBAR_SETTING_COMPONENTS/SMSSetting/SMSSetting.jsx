@@ -1,18 +1,20 @@
-import { useState, useEffect } from 'react';
-import { FaBars } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
-import axios from 'axios';
-import { tenant_base_url, protocal_url } from './../../../../../Config/config';
-import { getHostnamePart } from '../../ReusableComponents/GlobalHostUrl';
+import { useState, useEffect } from "react";
+import { FaBars } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import axios from "axios";
+import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
+import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
 
-import { ToastContainer } from 'react-toastify';
-import { showErrorToast, showSuccessToast } from '../../../../../utils/toastNotifications';
-
+import { ToastContainer } from "react-toastify";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../../../../utils/toastNotifications";
 
 export default function SMSSetting() {
   const name = getHostnamePart();
-  const bearer_token = localStorage.getItem('token');
+  const bearer_token = localStorage.getItem("token");
 
   const [data, setData] = useState([]);
   const [active, setActive] = useState(true);
@@ -22,7 +24,7 @@ export default function SMSSetting() {
   // Fetch all data
   //-------------------get-------------------get-------------------get-------------------get-------------------
   async function handleLead() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -31,7 +33,7 @@ export default function SMSSetting() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/smssetting/getall`,
-        config
+        config,
       );
       setData(response.data.data);
     } catch (error) {
@@ -46,7 +48,7 @@ export default function SMSSetting() {
   // Delete smssetting by ID
   //-------------------Delete-------------------Delete-------------------Delete-------------------Delete-------------------
   const handleDelete = async (id) => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     try {
       const config = {
         headers: {
@@ -55,12 +57,12 @@ export default function SMSSetting() {
       };
       await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/Admin/smssetting/delete/${id}`,
-        config
+        config,
       );
-      showSuccessToast('Deleted successfully');
+      showSuccessToast("Deleted successfully");
       setData((prevData) => prevData.filter((item) => item.id !== id));
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -73,7 +75,7 @@ export default function SMSSetting() {
 
   const handleAdd = () => {
     setSelectedData({
-      id: '',
+      id: "",
       senderId: "",
       apiKey: "",
     });
@@ -83,7 +85,7 @@ export default function SMSSetting() {
 
   // Handle form submission callback
   const handleFormSubmit = async (formData) => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
@@ -92,32 +94,39 @@ export default function SMSSetting() {
 
     const formData_POST = {
       senderId: formData.senderId,
-      apiKey: formData.apiKey
-    }
+      apiKey: formData.apiKey,
+    };
 
     const formData_PUT = {
       id: formData.id,
       senderId: formData.senderId,
-      apiKey: formData.apiKey
-    }
+      apiKey: formData.apiKey,
+    };
 
     if (!formData_POST.senderId) {
-      showErrorToast('Please enter sender ID')
+      showErrorToast("Please enter sender ID");
       return;
     }
     if (!formData_POST.apiKey) {
-      showErrorToast('Please enter API key')
+      showErrorToast("Please enter API key");
       return;
     }
 
     try {
       if (isEditMode) {
-        await axios.put(`${protocal_url}${name}.${tenant_base_url}/Admin/smssetting/edit/${formData.id}`, formData_PUT, config);
-        showSuccessToast('Updated successfully')
-      } else {
-        await axios.post(`${protocal_url}${name}.${tenant_base_url}/Admin/smssetting/add`, formData_POST, config
+        await axios.put(
+          `${protocal_url}${name}.${tenant_base_url}/Admin/smssetting/edit/${formData.id}`,
+          formData_PUT,
+          config,
         );
-        showSuccessToast('Added successfully');
+        showSuccessToast("Updated successfully");
+      } else {
+        await axios.post(
+          `${protocal_url}${name}.${tenant_base_url}/Admin/smssetting/add`,
+          formData_POST,
+          config,
+        );
+        showSuccessToast("Added successfully");
       }
 
       handleLead(); // Refresh the list
@@ -125,7 +134,7 @@ export default function SMSSetting() {
       setSelectedData(null); // Reset the selected
       setIsEditMode(false); // Reset edit mode
     } catch (error) {
-      showErrorToast(error.response.data.message)
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -139,7 +148,7 @@ export default function SMSSetting() {
   // Form Component for Adding/Updating
   const EditForm = ({ data, isEditMode }) => {
     const [formData, setFormData] = useState({
-      id: '',
+      id: "",
       senderId: "",
       apiKey: "",
     });
@@ -147,10 +156,10 @@ export default function SMSSetting() {
     useEffect(() => {
       setFormData(
         data || {
-          id: '',
+          id: "",
           senderId: "",
           apiKey: "",
-        }
+        },
       );
     }, [data]);
 
@@ -162,19 +171,17 @@ export default function SMSSetting() {
       });
     };
 
-
     const handleSubmit = (e) => {
       e.preventDefault(); // Prevent default form submission
       handleFormSubmit(formData); // Call to submit the form data
     };
-
 
     return (
       <>
         <ToastContainer />
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-medium">
-            {isEditMode ? 'Edit SMS Setting' : 'Add SMS Setting'}
+            {isEditMode ? "Edit SMS Setting" : "Add SMS Setting"}
           </h1>
           <button
             onClick={handleCancel}
@@ -212,7 +219,6 @@ export default function SMSSetting() {
                           onChange={handleChange}
                           placeholder="Enter API Sender Id"
                         />
-
                       </div>
                       {/* CLIENT NAME FIELD */}
 
@@ -233,11 +239,7 @@ export default function SMSSetting() {
                           placeholder="Enter API Key"
                         />
                       </div>
-
-
-
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -246,9 +248,9 @@ export default function SMSSetting() {
                 <button
                   type="submit"
                   className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md"
-                // onClick={handleLog}
+                  // onClick={handleLog}
                 >
-                  {isEditMode ? 'Update' : 'Save'}
+                  {isEditMode ? "Update" : "Save"}
                 </button>
               </div>
             </div>
@@ -273,58 +275,60 @@ export default function SMSSetting() {
           </div>
           <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
             <div className="min-w-full rounded-md leads_Table_Container">
-            <table className="min-w-full bg-white rounded-md leads_Table">
-              <thead>
-                <tr className="border-gray-300 border-b-2">
-                  <th className="px-1 py-3">
-                    <input type="checkbox" />
-                  </th>
-                  <th className="px-2 py-3 text-left font-medium">
-                    <div className="flex justify-between items-center text-sm">
-                      <span>API Sender ID</span>
-                      <FaBars />
-                    </div>
-                  </th>
-
-                  <th className="px-2 py-3 text-left font-medium">
-                    <div className="flex justify-between items-center text-sm">
-                      <span>API Key</span>
-                      <FaBars />
-                    </div>
-                  </th>
-
-                  <th className="px-2 py-3 text-left font-medium">
-                    <div className="flex justify-between items-center text-sm">
-                      <span>Action</span>
-                    </div>
-                  </th>
-
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((item) => (
-                  <tr key={item.id} className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b">
-                    <td className="px-1 py-3 text-center">
+              <table className="min-w-full bg-white rounded-md leads_Table">
+                <thead>
+                  <tr className="border-gray-300 border-b-2">
+                    <th className="px-1 py-3">
                       <input type="checkbox" />
-                    </td>
-                    <td className="px-2 py-3 text-sm">{item.senderId}</td>
-                    <td className="px-2 py-3 text-sm">{item.apiKey}</td>
-                    <td className="px-2 py-4 flex gap-3 justify-center">
-                      <MdEdit
-                        size={25}
-                        className="bg-blue-500 rounded text-white"
-                        onClick={() => handleEdit(item)}
-                      />
-                      <RiDeleteBin6Fill
-                        size={25}
-                        color="red"
-                        onClick={() => handleDelete(item.id)}
-                      />
-                    </td>
+                    </th>
+                    <th className="px-2 py-3 text-left font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>API Sender ID</span>
+                        <FaBars />
+                      </div>
+                    </th>
+
+                    <th className="px-2 py-3 text-left font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>API Key</span>
+                        <FaBars />
+                      </div>
+                    </th>
+
+                    <th className="px-2 py-3 text-left font-medium">
+                      <div className="flex justify-between items-center text-sm">
+                        <span>Action</span>
+                      </div>
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {data.map((item) => (
+                    <tr
+                      key={item.id}
+                      className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                    >
+                      <td className="px-1 py-3 text-center">
+                        <input type="checkbox" />
+                      </td>
+                      <td className="px-2 py-3 text-sm">{item.senderId}</td>
+                      <td className="px-2 py-3 text-sm">{item.apiKey}</td>
+                      <td className="px-2 py-4 flex gap-3 justify-center">
+                        <MdEdit
+                          size={25}
+                          className="bg-blue-500 rounded text-white"
+                          onClick={() => handleEdit(item)}
+                        />
+                        <RiDeleteBin6Fill
+                          size={25}
+                          color="red"
+                          onClick={() => handleDelete(item.id)}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </>

@@ -8,18 +8,18 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from 'recharts';
+} from "recharts";
 
 const data = [
-  { name: 'Revenue', value: 45456 },
-  { name: 'Sales', value: 8550 },
-  { name: 'Views', value: 28550 },
+  { name: "Revenue", value: 45456 },
+  { name: "Sales", value: 8550 },
+  { name: "Views", value: 28550 },
 ];
 
 const LeadSourceChart = () => {
   return (
     <>
-      <div style={{ width: '100%', height: 300 }}>
+      <div style={{ width: "100%", height: 300 }}>
         <h3 className="text-xl font-thin mb-1">Lead Source</h3>
         <div className="flex text-sm items-center justify-between gap-2">
           <div className="flex items-center flex-col">
@@ -38,9 +38,9 @@ const LeadSourceChart = () => {
               <span className="text-sm ">Total Sales</span>
             </div>
             <p className="flex jusitify-center items-center text-xs  my-1">
-            <FaRupeeSign />
-            45,456.00 Rs
-          </p>
+              <FaRupeeSign />
+              45,456.00 Rs
+            </p>
           </div>
           <div className="flex items-center flex-col">
             <div className="flex items-center">

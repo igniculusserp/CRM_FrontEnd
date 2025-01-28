@@ -7,7 +7,6 @@ import { main_base_url } from "./../../Config/config";
 import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
 import CRMRegistrationPage from "./../../assets/images/CRMRegistrationPage.png";
 
-
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { GiDiamonds } from "react-icons/gi";
 
@@ -15,7 +14,10 @@ import { ToastContainer } from "react-toastify";
 import { FaChevronDown, FaStarOfLife } from "react-icons/fa";
 
 import "react-toastify/dist/ReactToastify.css";
-import { showSuccessToast, showErrorToast } from "./../../utils/toastNotifications";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "./../../utils/toastNotifications";
 
 // EXTERNAL CSS
 import "../../ExternalCSS/ExternalCSS_Settings.css";
@@ -47,7 +49,7 @@ export default function Registration() {
     contactNo: "",
     country: "",
     businessType: "",
-    userName: ""
+    userName: "",
   });
 
   //countryCodes--->>toggle
@@ -60,11 +62,10 @@ export default function Registration() {
     setSelectedCode(code);
     setFormValues((prev) => ({
       ...prev,
-      contactNo: prev.contactNo
+      contactNo: prev.contactNo,
     }));
     setIsOpen(false);
   };
-
 
   //countries--->>toggle
   const toggleDropdownCountry = () => {
@@ -86,7 +87,7 @@ export default function Registration() {
     const fetchCountries = async () => {
       try {
         const response = await axios.get(
-          `${main_base_url}/Users/getCountryNames`
+          `${main_base_url}/Users/getCountryNames`,
         );
         setCountries(response.data);
       } catch (error) {
@@ -96,7 +97,9 @@ export default function Registration() {
 
     const fetchCountryCodes = async () => {
       try {
-        const response = await axios.get(`${main_base_url}/Users/getCountryCode`);
+        const response = await axios.get(
+          `${main_base_url}/Users/getCountryCode`,
+        );
         const countryCodeData = response.data.map((code) => ({
           value: code.mobilePrefix,
           label: code.mobilePrefix,
@@ -104,7 +107,7 @@ export default function Registration() {
           countryName: code.countryName,
         }));
         setCountryCodes(countryCodeData);
-        setCountries(countryCodeData)
+        setCountries(countryCodeData);
       } catch (error) {
         console.error("Error fetching country codes:", error);
       }
@@ -116,12 +119,14 @@ export default function Registration() {
 
   //countryCode
   const filteredCountryCodes = countryCodes.filter((code) =>
-    code.countryName?.toLowerCase()?.includes(searchQueryCode?.toLowerCase())
+    code.countryName?.toLowerCase()?.includes(searchQueryCode?.toLowerCase()),
   );
 
   //countryName
   const filteredCountries = countries.filter((country) =>
-    country.countryName?.toLowerCase()?.includes(searchQueryCountry?.toLowerCase())
+    country.countryName
+      ?.toLowerCase()
+      ?.includes(searchQueryCountry?.toLowerCase()),
   );
 
   //Handle <---> Change
@@ -151,7 +156,9 @@ export default function Registration() {
     } = formValues;
 
     // Check if country code and contact number are available
-    const contactNumberWithCode = selectedCode ? `${selectedCode.value}${contactNo}` : contactNo;
+    const contactNumberWithCode = selectedCode
+      ? `${selectedCode.value}${contactNo}`
+      : contactNo;
 
     const predefinedValues = {
       userId,
@@ -171,43 +178,46 @@ export default function Registration() {
 
     // Validation
     if (!formValues.firstName) {
-      showErrorToast('Please enter first name');
+      showErrorToast("Please enter first name");
       return; // Exit function if validation fails
     }
 
     if (!formValues.lastName) {
-      showErrorToast('Please enter last name');
+      showErrorToast("Please enter last name");
       return; // Exit function if validation fails
     }
 
     if (!formValues.email) {
-      showErrorToast('Please enter email');
+      showErrorToast("Please enter email");
       return; // Exit function if validation fails
     }
 
     if (!formValues.password) {
-      showErrorToast('Please enter password');
+      showErrorToast("Please enter password");
       return; // Exit function if validation fails
     }
 
     if (!formValues.confirmPassword) {
-      showErrorToast('Please enter confirm password ');
+      showErrorToast("Please enter confirm password ");
       return; // Exit function if validation fails
     }
 
     if (formValues.password !== formValues.confirmPassword) {
-      showErrorToast("Password doesn't match ")
+      showErrorToast("Password doesn't match ");
       return;
     }
 
     if (!formValues.businessType) {
-      showErrorToast('Please select business type ');
+      showErrorToast("Please select business type ");
       return; // Exit function if validation fails
     }
 
     // All validations passed, proceed with submission
     try {
-      const response = await axios.post(`${main_base_url}/Users`, predefinedValues);
+      const response = await axios.post(
+        `${main_base_url}/Users`,
+        predefinedValues,
+      );
       localStorage.setItem("myData", response.data.userId);
       localStorage.setItem("registrationdata", JSON.stringify(response));
 
@@ -296,10 +306,10 @@ export default function Registration() {
                   htmlFor="lastName"
                   className="text-xs font-medium text-gray-700"
                 >
-                <span className="flex gap-1">
-                Last Name
-                <FaStarOfLife size={7} className="text-red-500" />
-              </span>
+                  <span className="flex gap-1">
+                    Last Name
+                    <FaStarOfLife size={7} className="text-red-500" />
+                  </span>
                   <input
                     type="text"
                     name="lastName"
@@ -316,9 +326,9 @@ export default function Registration() {
                   className="text-xs font-medium text-gray-700"
                 >
                   <span className="flex gap-1">
-                  Email
-                  <FaStarOfLife size={7} className="text-red-500" />
-                </span>
+                    Email
+                    <FaStarOfLife size={7} className="text-red-500" />
+                  </span>
                   <input
                     type="email"
                     name="email"
@@ -335,10 +345,10 @@ export default function Registration() {
                   className="text-xs font-medium text-gray-700 relative block"
                 >
                   <span className="flex gap-1">
-                  Password
-                  <FaStarOfLife size={7} className="text-red-500" />
-                </span>
-                  
+                    Password
+                    <FaStarOfLife size={7} className="text-red-500" />
+                  </span>
+
                   <input
                     type={passwordEye ? "text" : "password"}
                     name="password"
@@ -355,14 +365,16 @@ export default function Registration() {
                     {passwordEye ? (
                       <IoIosEye
                         size={22}
-                        className={`transition-opacity duration-300 ease-in-out ${passwordEye ? "opacity-100" : "opacity-0"
-                          }`}
+                        className={`transition-opacity duration-300 ease-in-out ${
+                          passwordEye ? "opacity-100" : "opacity-0"
+                        }`}
                       />
                     ) : (
                       <IoIosEyeOff
                         size={22}
-                        className={`transition-opacity duration-300 ease-in-out ${passwordEye ? "opacity-0" : "opacity-100"
-                          }`}
+                        className={`transition-opacity duration-300 ease-in-out ${
+                          passwordEye ? "opacity-0" : "opacity-100"
+                        }`}
                       />
                     )}
                   </button>
@@ -374,10 +386,10 @@ export default function Registration() {
                   className="text-xs font-medium text-gray-700  relative block"
                 >
                   <span className="flex gap-1">
-                  Confirm Password
-                  <FaStarOfLife size={7} className="text-red-500" />
+                    Confirm Password
+                    <FaStarOfLife size={7} className="text-red-500" />
                   </span>
-                  
+
                   <input
                     type={confirmPasswordEye ? "text" : "password"}
                     name="confirmPassword"
@@ -394,24 +406,29 @@ export default function Registration() {
                     {confirmPasswordEye ? (
                       <IoIosEye
                         size={22}
-                        className={`transition-opacity duration-300 ease-in-out ${confirmPasswordEye ? "opacity-100" : "opacity-0"
-                          }`}
+                        className={`transition-opacity duration-300 ease-in-out ${
+                          confirmPasswordEye ? "opacity-100" : "opacity-0"
+                        }`}
                       />
                     ) : (
                       <IoIosEyeOff
                         size={22}
-                        className={`transition-opacity duration-300 ease-in-out ${confirmPasswordEye ? "opacity-0" : "opacity-100"
-                          }`}
+                        className={`transition-opacity duration-300 ease-in-out ${
+                          confirmPasswordEye ? "opacity-0" : "opacity-100"
+                        }`}
                       />
                     )}
                   </button>
                 </label>
 
                 {/*----------> Contact No <---------- */}
-                <label htmlFor="Contact" className="text-xs font-medium text-gray-700">
-                <span className="flex gap-1">
-                  Contact
-                  <FaStarOfLife size={7} className="text-red-500" />
+                <label
+                  htmlFor="Contact"
+                  className="text-xs font-medium text-gray-700"
+                >
+                  <span className="flex gap-1">
+                    Contact
+                    <FaStarOfLife size={7} className="text-red-500" />
                   </span>
                   <div className="flex items-center border rounded-md">
                     <div className=" w-28 text-xs">
@@ -426,7 +443,7 @@ export default function Registration() {
                               src={selectedCode.img}
                               alt="flag"
                               className="w-6 h-4 mr-2 "
-                              onError={(e) => e.target.style.display = 'none'} // Hides image if not found
+                              onError={(e) => (e.target.style.display = "none")} // Hides image if not found
                             />
                             {selectedCode.label}
                           </div>
@@ -454,7 +471,9 @@ export default function Registration() {
                                 src={code.img}
                                 alt="flag"
                                 className="w-6 h-4 mr-2"
-                                onError={(e) => e.target.style.display = 'none'} // Hides image if not found
+                                onError={(e) =>
+                                  (e.target.style.display = "none")
+                                } // Hides image if not found
                               />
                               {code.label} - {code.countryName}
                             </div>
@@ -474,11 +493,13 @@ export default function Registration() {
                 </label>
 
                 {/*----------> Country Selection <---------- */}
-                <label htmlFor="country" className="text-xs font-medium text-gray-700">
-                  
+                <label
+                  htmlFor="country"
+                  className="text-xs font-medium text-gray-700"
+                >
                   <span className="flex gap-1">
-                  Country
-                  <FaStarOfLife size={7} className="text-red-500" />
+                    Country
+                    <FaStarOfLife size={7} className="text-red-500" />
                   </span>
                   <div className="flex items-center border rounded-md">
                     <div className="relative justify-center items-center w-full">
@@ -493,12 +514,14 @@ export default function Registration() {
                               src={selectedCountry.img}
                               alt="flag"
                               className="w-6 h-4 mr-2"
-                              onError={(e) => e.target.style.display = 'none'} // Hides image if not found
+                              onError={(e) => (e.target.style.display = "none")} // Hides image if not found
                             />
                             {selectedCountry.countryName}
                           </div>
                         ) : (
-                          <div className="flex justify-between text-gray-400 font-medium text-ms">Select Country <FaChevronDown /> </div>
+                          <div className="flex justify-between text-gray-400 font-medium text-ms">
+                            Select Country <FaChevronDown />{" "}
+                          </div>
                         )}
                       </button>
 
@@ -508,7 +531,9 @@ export default function Registration() {
                             type="text"
                             placeholder="Search Country"
                             value={searchQueryCountry}
-                            onChange={(e) => setSearchQueryCountry(e.target.value)}
+                            onChange={(e) =>
+                              setSearchQueryCountry(e.target.value)
+                            }
                             className="w-full px-8 py-2 border-b outline-none "
                           />
                           {filteredCountries.map((code, index) => (
@@ -521,7 +546,9 @@ export default function Registration() {
                                 src={code.img}
                                 alt="flag"
                                 className="w-6 h-4 mr-2"
-                                onError={(e) => e.target.style.display = 'none'} // Hides image if not found
+                                onError={(e) =>
+                                  (e.target.style.display = "none")
+                                } // Hides image if not found
                               />
                               {code.countryName}
                             </div>
@@ -538,10 +565,10 @@ export default function Registration() {
                   htmlFor="confirmPassword"
                   className="text-xs font-medium text-gray-700 "
                 >
-                <span className="flex gap-1">
-                Select Business
-                <FaStarOfLife size={7} className="text-red-500" />
-                </span>
+                  <span className="flex gap-1">
+                    Select Business
+                    <FaStarOfLife size={7} className="text-red-500" />
+                  </span>
                   <select
                     id="businessInput"
                     name="businessType"
@@ -564,10 +591,7 @@ export default function Registration() {
                   Submit
                 </button>
               </form>
-
-
             </div>
-
           </div>
         </div>
       </div>

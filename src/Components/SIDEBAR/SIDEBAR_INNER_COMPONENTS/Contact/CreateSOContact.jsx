@@ -16,8 +16,11 @@ import "react-quill/dist/quill.snow.css";
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
-import { ToastContainer } from 'react-toastify';
-import { showSuccessToast, showErrorToast } from '../../../../utils/toastNotifications'
+import { ToastContainer } from "react-toastify";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "../../../../utils/toastNotifications";
 
 export default function CreateSOContact() {
   //to make id unique
@@ -50,7 +53,6 @@ export default function CreateSOContact() {
     //------- Business Type --------
     console.log("Company Type :-> ", businessType);
     setBusiness(businessType);
-
   }, [id]);
 
   //GET by ID---------------------------//GET---------------------------//GET---------------------------by ID-----------by ID
@@ -62,7 +64,10 @@ export default function CreateSOContact() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Contact/contact/${id}`, config);
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Contact/contact/${id}`,
+        config,
+      );
       const data = response.data.data;
 
       seteditLead({
@@ -85,9 +90,12 @@ export default function CreateSOContact() {
         segments: data.segments || [],
 
         // Service Details
-        subscription_start_date: data?.trialStartDate ? data.trialStartDate.split("T")[0] : null,
-        subscription_end_date: data?.trialEndDate ? data.trialEndDate.split("T")[0] : null,
-
+        subscription_start_date: data?.trialStartDate
+          ? data.trialStartDate.split("T")[0]
+          : null,
+        subscription_end_date: data?.trialEndDate
+          ? data.trialEndDate.split("T")[0]
+          : null,
       });
       //Description Information
       setdescription(data.description);
@@ -101,7 +109,7 @@ export default function CreateSOContact() {
   // Segment GET API Is being used here
   const [segments, setSegments] = useState([]);
   async function handleSegment() {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
 
     try {
       const config = {
@@ -109,10 +117,13 @@ export default function CreateSOContact() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`, config);
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
+        config,
+      );
       setSegments(response.data.data);
     } catch (error) {
-      console.error('Error fetching segments:', error);
+      console.error("Error fetching segments:", error);
     }
   }
 
@@ -120,8 +131,10 @@ export default function CreateSOContact() {
     handleSegment();
   }, []);
 
-  const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] = useState('Select Segment');
-  const [isDropdownVisibleSegment, setisDropdownVisibleSegment] = useState(false);
+  const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
+    useState("Select Segment");
+  const [isDropdownVisibleSegment, setisDropdownVisibleSegment] =
+    useState(false);
 
   const toggleDropdownSegment = () => {
     setisDropdownVisibleSegment(true);
@@ -134,7 +147,7 @@ export default function CreateSOContact() {
     if (isChecked) {
       // Remove segment if already selected
       updatedSegments = editLead.segments.filter(
-        (selectedSegment) => selectedSegment !== segment.segment
+        (selectedSegment) => selectedSegment !== segment.segment,
       );
     } else {
       // Add segment if not already selected
@@ -160,7 +173,10 @@ export default function CreateSOContact() {
           Authorization: `Bearer ${bearer_token}`,
         },
       };
-      const response = await axios.get(`${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`, config);
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
+        config,
+      );
       setassigned_ToDropDown(response.data.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
@@ -183,10 +199,10 @@ export default function CreateSOContact() {
 
   const handleDropdownassigned_ToDropDown = (
     assigned_To_Username,
-    assigned_To_Role
+    assigned_To_Role,
   ) => {
     setdefaultTextassigned_ToDropDown(
-      assigned_To_Username + " " + assigned_To_Role
+      assigned_To_Username + " " + assigned_To_Role,
     );
     setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
     seteditLead((prevTask) => ({
@@ -305,10 +321,9 @@ export default function CreateSOContact() {
     try {
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
-        config
+        config,
       );
       setPoolToDropDown(response.data.data);
-
     } catch (error) {
       console.error("Error fetching leads:", error);
       setError("Failed to fetch pools."); // Set error message
@@ -363,7 +378,6 @@ export default function CreateSOContact() {
     }));
   };
 
-
   //------------------------------------------Mobile Regex------------------------------------------
   const handleContactChange = (event) => {
     const inputValue = event.target.value.replace(/[^0-9]/g, "");
@@ -375,7 +389,6 @@ export default function CreateSOContact() {
     }));
   };
 
-
   //------------------------------------------Email Regex------------------------------------------
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -384,7 +397,6 @@ export default function CreateSOContact() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const bearer_token = localStorage.getItem("token");
-
 
     try {
       const config = {
@@ -438,121 +450,117 @@ export default function CreateSOContact() {
         description: description,
       };
 
-
       //------------------------------------------------------------------------------------> Validations//--> Validations//--> Validations//--> Validations//--> Validations
       //------------------------------------------------------------------------------------> Validations//--> FOR BROKERAGE
 
       if (business == "Brokerage") {
         if (!formData_POST.clientName) {
-          showErrorToast("Please enter name")
+          showErrorToast("Please enter name");
           return;
         }
 
         if (!formData_POST.mobileNo) {
-          showErrorToast('Please enter mobile number')
+          showErrorToast("Please enter mobile number");
           return;
         }
         if (!formData_POST.assigned_To) {
-          showErrorToast("Please select Managed by")
+          showErrorToast("Please select Managed by");
           return;
         }
         if (!formData_POST.due_Amount) {
-          showErrorToast("Please enter brokerage")
+          showErrorToast("Please enter brokerage");
           return;
         }
         if (!formData_POST.amount_paid) {
-          showErrorToast("Please enter funds")
+          showErrorToast("Please enter funds");
           return;
         }
-
       }
       //------------------------------------------------------------------------------------> Validations//--> FOR OTHERS
       else {
-
         if (!formData_POST.clientName) {
-          showErrorToast("Please enter name")
+          showErrorToast("Please enter name");
           return;
         }
 
         if (!formData_POST.mobileNo) {
-          showErrorToast('Please enter mobile number')
+          showErrorToast("Please enter mobile number");
           return;
         }
 
         if (!formData_POST.uidaI_Id_No) {
-          showErrorToast("Please enter UIDAI Id")
+          showErrorToast("Please enter UIDAI Id");
           return;
         }
 
         if (!formData_POST.panCard_No) {
-          showErrorToast("Please enter pan card number")
+          showErrorToast("Please enter pan card number");
           return;
         }
 
-
-        if ((formData_POST.email && !emailRegex.test(formData_POST.email))) {
-          showErrorToast('Invalid email format');
+        if (formData_POST.email && !emailRegex.test(formData_POST.email)) {
+          showErrorToast("Invalid email format");
           return;
         }
 
         if (!formData_POST.assigned_To) {
-          showErrorToast("Please select Managed by")
+          showErrorToast("Please select Managed by");
           return;
         }
         if (!formData_POST.reference_Number) {
-          showErrorToast("Please enter reference number")
+          showErrorToast("Please enter reference number");
           return;
         }
 
         if (!formData_POST.amount_paid) {
-          showErrorToast("Please enter paid amount")
+          showErrorToast("Please enter paid amount");
           return;
         }
 
         if (!formData_POST.paymentDate) {
-          showErrorToast("Please enter payment date")
+          showErrorToast("Please enter payment date");
           return;
         }
         //Date Logic Validation
-        const today = new Date().toISOString().split('T')[0];
+        const today = new Date().toISOString().split("T")[0];
 
         //Previous date cannot be selected
         if (formData_POST.subscription_start_date < today) {
-          showErrorToast('Previous date cannot be selected')
+          showErrorToast("Previous date cannot be selected");
           return;
         }
 
         if (formData_POST.subscription_end_date < today) {
-          showErrorToast('Previous date cannot be selected')
+          showErrorToast("Previous date cannot be selected");
           return;
         }
 
-
         if (!formData_POST.subscription_start_date) {
-          showErrorToast("Please select subscription start date")
-          return
+          showErrorToast("Please select subscription start date");
+          return;
         }
 
         if (!formData_POST.subscription_end_date) {
-          showErrorToast("Please select subscription end date")
-          return
+          showErrorToast("Please select subscription end date");
+          return;
         }
       }
 
-      const response = await axios.post(`${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/add`, formData_POST, config);
+      const response = await axios.post(
+        `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/add`,
+        formData_POST,
+        config,
+      );
       if (response.data.isSuccess) {
-        showSuccessToast("Sales Order created successfully!")
+        showSuccessToast("Sales Order created successfully!");
         navigate(`/panel/lead`);
       }
       // Redirect after a short delay
     } catch (error) {
-      console.log(error)
+      console.log(error);
       showErrorToast(error.data.message);
-
     }
   };
-
-
 
   return (
     <>
@@ -595,7 +603,7 @@ export default function CreateSOContact() {
               {/* -------------I--1------------- */}
               {/* -------------Client Name------------- */}
 
-              {business === "Brokerage" ?
+              {business === "Brokerage" ? (
                 <div className="py-2 px-4 grid gap-2">
                   <div className="flex space-x-4  ">
                     <div className="flex flex-col w-1/2">
@@ -640,11 +648,7 @@ export default function CreateSOContact() {
                     </div>
                   </div>
 
-
-
                   <div className="flex space-x-4">
-
-
                     {/* -------------Alternate Number------------- */}
                     <div className="flex flex-col w-1/2">
                       <label
@@ -694,7 +698,6 @@ export default function CreateSOContact() {
                   {/* -------------V--1--------------- */}
 
                   <div className="flex space-x-4">
-
                     {/* -------------V--2--------------- */}
                     {/* -------------Managed By------------- */}
                     <div className="flex flex-col w-1/2 relative">
@@ -734,14 +737,14 @@ export default function CreateSOContact() {
                                     onClick={() =>
                                       handleDropdownassigned_ToDropDown(
                                         userName,
-                                        role
+                                        role,
                                       )
                                     }
                                     className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                                   >
                                     {userName}-({role})
                                   </li>
-                                )
+                                ),
                               )}
                             </ul>
                           </div>
@@ -767,8 +770,6 @@ export default function CreateSOContact() {
                       />
                     </div>
                   </div>
-
-
 
                   {/* -------------VI--1--------------- */}
                   {/* -------------State------------- */}
@@ -811,7 +812,6 @@ export default function CreateSOContact() {
 
                   {/* -------------VII--1--------------- */}
                   <div className="flex space-x-4">
-
                     {/* -------------VII--2--------------- */}
                     {/* -------------PinCode------------- */}
                     <div className="flex flex-col w-1/2">
@@ -879,8 +879,7 @@ export default function CreateSOContact() {
                     </div>
                   </div>
                 </div>
-                :
-
+              ) : (
                 <div className="py-2 px-4 grid gap-2">
                   <div className="flex space-x-4  ">
                     <div className="flex flex-col w-1/2">
@@ -1010,7 +1009,6 @@ export default function CreateSOContact() {
                           }
                         }}
                         onWheel={(e) => e.target.blur()} // Disable scroll
-
                       />
                     </div>
                     {/* -------------III--2------------- */}
@@ -1036,7 +1034,6 @@ export default function CreateSOContact() {
                           }
                         }}
                         onWheel={(e) => e.target.blur()} // Disable scroll
-
                       />
                     </div>
                   </div>
@@ -1068,7 +1065,6 @@ export default function CreateSOContact() {
                           }
                         }}
                         onWheel={(e) => e.target.blur()} // Disable scroll
-
                       />
                     </div>
                     {/* -------------IV--2--------------- */}
@@ -1154,14 +1150,14 @@ export default function CreateSOContact() {
                                     onClick={() =>
                                       handleDropdownassigned_ToDropDown(
                                         userName,
-                                        role
+                                        role,
                                       )
                                     }
                                     className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
                                   >
                                     {userName}-({role})
                                   </li>
-                                )
+                                ),
                               )}
                             </ul>
                           </div>
@@ -1321,7 +1317,7 @@ export default function CreateSOContact() {
                                   key={key}
                                   onClick={() =>
                                     handleDropdownisDropdownVisiblebusinessType(
-                                      name
+                                      name,
                                     )
                                   }
                                   className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
@@ -1403,24 +1399,19 @@ export default function CreateSOContact() {
                     </div>
                   </div>
                 </div>
-              }
-
-
+              )}
             </div>
             {/* -------------Payment Details INFORMATION STARTS FROM HERE------------- */}
 
-            {business === "Brokerage" ?
-
+            {business === "Brokerage" ? (
               <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
                 <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                   Payment Details
                 </h2>
                 <div className="py-2 px-4 grid gap-2">
-
                   {/* -------------XI--1------------- */}
                   {/* -------------Total Amount------------- */}
                   <div className="flex space-x-4">
-
                     {/* -------------XI--2------------- */}
                     {/* -------------  Brokerage------------- */}
                     <div className="flex flex-col w-1/2">
@@ -1428,10 +1419,10 @@ export default function CreateSOContact() {
                         htmlFor="due_Amount"
                         className="text-sm font-medium text-gray-700"
                       >
-                      <span className="flex gap-1">
-                      Brokerage
-                      <FaStarOfLife size={8} className="text-red-500" />
-                    </span>
+                        <span className="flex gap-1">
+                          Brokerage
+                          <FaStarOfLife size={8} className="text-red-500" />
+                        </span>
                       </label>
                       <input
                         type="text"
@@ -1444,11 +1435,14 @@ export default function CreateSOContact() {
                     </div>
 
                     <div className="flex flex-col w-1/2">
-                      <label htmlFor="amount_paid" className="text-sm font-medium text-gray-700">
-                      <span className="flex gap-1">
-                      Funds
-                      <FaStarOfLife size={8} className="text-red-500" />
-                    </span>
+                      <label
+                        htmlFor="amount_paid"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        <span className="flex gap-1">
+                          Funds
+                          <FaStarOfLife size={8} className="text-red-500" />
+                        </span>
                       </label>
                       <input
                         type="text"
@@ -1460,11 +1454,7 @@ export default function CreateSOContact() {
                         placeholder="Funds"
                       />
                     </div>
-
                   </div>
-
-
-
 
                   {/* -------------XIII--1------------- */}
                   {/* -------------Payment Date------------- */}
@@ -1516,12 +1506,14 @@ export default function CreateSOContact() {
                                     <input
                                       type="checkbox"
                                       checked={editLead.segments?.includes(
-                                        segment.segment
+                                        segment.segment,
                                       )}
-                                      onChange={() => handleCheckboxChange(segment)}
+                                      onChange={() =>
+                                        handleCheckboxChange(segment)
+                                      }
                                       className="mr-2"
                                     />
-                                    {segment.segment}{' '}
+                                    {segment.segment}{" "}
                                     {/* Assuming segment is the property you want to display */}
                                   </li>
                                 ))
@@ -1530,10 +1522,10 @@ export default function CreateSOContact() {
                                   <IoInformationCircle
                                     size={25}
                                     className="text-cyan-600"
-                                  />{' '}
-                                  Segments not available. Go to{' '}
+                                  />{" "}
+                                  Segments not available. Go to{" "}
                                   <span className="font-bold">
-                                    Settings - Add Segment{' '}
+                                    Settings - Add Segment{" "}
                                   </span>
                                   .
                                 </li>
@@ -1543,13 +1535,10 @@ export default function CreateSOContact() {
                         )}
                       </div>
                     </div>
-
                   </div>
-
-
                 </div>
               </div>
-              :
+            ) : (
               <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
                 <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
                   Payment Details
@@ -1630,11 +1619,9 @@ export default function CreateSOContact() {
                         value={editLead.reference_Number}
                         className="mt-1 p-2 border border-gray-300 rounded-md"
                         onChange={handleChange}
-
                       />
                     </div>
                   </div>
-
 
                   {/* -------------XI--1------------- */}
                   {/* -------------Total Amount------------- */}
@@ -1645,7 +1632,6 @@ export default function CreateSOContact() {
                         className="text-sm font-medium text-gray-700"
                       >
                         Total Amount
-
                       </label>
                       <input
                         type="number"
@@ -1690,9 +1676,11 @@ export default function CreateSOContact() {
                   </div>
                   {/* -------------XII--1------------- */}
                   <div className="flex space-x-4">
-
                     <div className="flex flex-col w-1/2">
-                      <label htmlFor="amount_paid" className="text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="amount_paid"
+                        className="text-sm font-medium text-gray-700"
+                      >
                         <span className="flex gap-1">
                           Amount Paid
                           <FaStarOfLife size={8} className="text-red-500" />
@@ -1714,8 +1702,6 @@ export default function CreateSOContact() {
                         onWheel={(e) => e.target.blur()} // Disable scroll
                       />
                     </div>
-
-
 
                     <div className="flex flex-col w-1/2">
                       <label
@@ -1740,10 +1726,7 @@ export default function CreateSOContact() {
                         onWheel={(e) => e.target.blur()} // Disable scroll
                       />
                     </div>
-
                   </div>
-
-
 
                   {/* -------------XIII--1------------- */}
                   {/* -------------Payment Date------------- */}
@@ -1769,7 +1752,6 @@ export default function CreateSOContact() {
                     {/* -------------XIII--2------------- */}
                     {/* -------------Cheque No Or DD No.------------- */}
 
-
                     <div className="flex flex-col w-1/2">
                       <label
                         htmlFor="chequeOrDD_no"
@@ -1786,7 +1768,6 @@ export default function CreateSOContact() {
                         placeholder="Cheque No Or DD No"
                       />
                     </div>
-
                   </div>
 
                   {/* -------------XIV--1------------- */}
@@ -1824,12 +1805,14 @@ export default function CreateSOContact() {
                                     <input
                                       type="checkbox"
                                       checked={editLead.segments?.includes(
-                                        segment.segment
+                                        segment.segment,
                                       )}
-                                      onChange={() => handleCheckboxChange(segment)}
+                                      onChange={() =>
+                                        handleCheckboxChange(segment)
+                                      }
                                       className="mr-2"
                                     />
-                                    {segment.segment}{' '}
+                                    {segment.segment}{" "}
                                     {/* Assuming segment is the property you want to display */}
                                   </li>
                                 ))
@@ -1838,10 +1821,10 @@ export default function CreateSOContact() {
                                   <IoInformationCircle
                                     size={25}
                                     className="text-cyan-600"
-                                  />{' '}
-                                  Segments not available. Go to{' '}
+                                  />{" "}
+                                  Segments not available. Go to{" "}
                                   <span className="font-bold">
-                                    Settings - Add Segment{' '}
+                                    Settings - Add Segment{" "}
                                   </span>
                                   .
                                 </li>
@@ -1869,11 +1852,10 @@ export default function CreateSOContact() {
                         onChange={handleChange}
                       />
                     </div>
-
                   </div>
                 </div>
               </div>
-            }
+            )}
 
             {/* -------------SALES ORDER INFORMATION STARTS FROM HERE------------- */}
             <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
@@ -1884,8 +1866,9 @@ export default function CreateSOContact() {
                 {/* -------------SALES ORDER INFORMATION FORM STARTS FROM HERE------------- */}
                 {/* -------------XV--1------------- */}
                 {/* -------------period_of_Subscription------------- */}
-                {business === "Brokerage" ?
-                  "" :
+                {business === "Brokerage" ? (
+                  ""
+                ) : (
                   <div className="flex space-x-4">
                     <div className="flex flex-col w-1/2">
                       <label
@@ -1922,7 +1905,9 @@ export default function CreateSOContact() {
                           id="termDropDown"
                           type="button"
                         >
-                          {isEditMode ? editLead.term : defaultText_Term_DropDown}
+                          {isEditMode
+                            ? editLead.term
+                            : defaultText_Term_DropDown}
                           <FaAngleDown className="ml-2 text-gray-400" />
                         </button>
                         {isDropdownVisible_Term_ && (
@@ -1945,13 +1930,13 @@ export default function CreateSOContact() {
                       </div>
                     </div>
                   </div>
-                }
-
+                )}
 
                 {/* -------------XVI--1------------- */}
                 {/* -------------Subscription Start Date------------- */}
-                {business === "Brokerage" ?
-                  "" :
+                {business === "Brokerage" ? (
+                  ""
+                ) : (
                   <div className="flex space-x-4">
                     <div className="flex flex-col w-1/2">
                       <label
@@ -1986,7 +1971,7 @@ export default function CreateSOContact() {
                       />
                     </div>
                   </div>
-                }
+                )}
 
                 {/* -------------XVII--1------------- */}
                 <div className="flex space-x-4">
@@ -2107,8 +2092,8 @@ export default function CreateSOContact() {
               </div>
             </div>
           </div>
-        </form >
-      </div >
+        </form>
+      </div>
     </>
   );
 }

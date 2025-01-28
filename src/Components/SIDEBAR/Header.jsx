@@ -1,31 +1,35 @@
-import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import { protocal_url, tenant_base_url, main_base_url } from './../../Config/config';
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
+import {
+  protocal_url,
+  tenant_base_url,
+  main_base_url,
+} from "./../../Config/config";
 
 // React-Icons
-import { RiAddBoxFill } from 'react-icons/ri';
-import { IoMdNotifications } from 'react-icons/io';
-import { TbCalendarMonth } from 'react-icons/tb';
-import { IoMdSettings } from 'react-icons/io';
-import { FaAngleDown } from 'react-icons/fa';
-import { MdLogout } from 'react-icons/md';
+import { RiAddBoxFill } from "react-icons/ri";
+import { IoMdNotifications } from "react-icons/io";
+import { TbCalendarMonth } from "react-icons/tb";
+import { IoMdSettings } from "react-icons/io";
+import { FaAngleDown } from "react-icons/fa";
+import { MdLogout } from "react-icons/md";
 
 // Toast
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   showSuccessToast,
   showErrorToast,
-} from './../../utils/toastNotifications';
+} from "./../../utils/toastNotifications";
 
 // TOGGLE ICONS
-import { FaBarsStaggered } from 'react-icons/fa6';
-import { FaBars } from 'react-icons/fa6';
-import { FiMessageSquare } from 'react-icons/fi';
-import ChatPopup from './SIDEBAR_SETTING/ChatPopup';
-import { getHostnamePart } from './SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
+import { FaBarsStaggered } from "react-icons/fa6";
+import { FaBars } from "react-icons/fa6";
+import { FiMessageSquare } from "react-icons/fi";
+import ChatPopup from "./SIDEBAR_SETTING/ChatPopup";
+import { getHostnamePart } from "./SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 export default function Header({ toggle, setToggle }) {
   const navigate = useNavigate();
@@ -34,25 +38,25 @@ export default function Header({ toggle, setToggle }) {
   const location = useLocation();
 
   const [welcomedata, setWelcomeData] = useState([]);
-  const [tenantId, setData] = useState('');
+  const [tenantId, setData] = useState("");
   const [activeKey, setActiveKey] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const registrationdata = localStorage.getItem('registrationdata');
-    const userDetail = localStorage.getItem('userDetail');
+    const token = localStorage.getItem("token");
+    const registrationdata = localStorage.getItem("registrationdata");
+    const userDetail = localStorage.getItem("userDetail");
 
     if (token && (userDetail || registrationdata)) {
-      const registrationDataParsed = JSON.parse(registrationdata || '{}');
-      setData(registrationDataParsed.tenantId || '');
+      const registrationDataParsed = JSON.parse(registrationdata || "{}");
+      setData(registrationDataParsed.tenantId || "");
       setWelcomeData(JSON.parse(userDetail));
-      if (window.location.pathname === '/panel') {
-        navigate('/panel/dashboard');
-      } else if (window.location.pathname !== '/panel') {
+      if (window.location.pathname === "/panel") {
+        navigate("/panel/dashboard");
+      } else if (window.location.pathname !== "/panel") {
         navigate(window.location.pathname);
       }
     } else {
-      navigate('/tenantlogin'); // Redirect to login if no data found
+      navigate("/tenantlogin"); // Redirect to login if no data found
     }
   }, [navigate]);
 
@@ -65,44 +69,45 @@ export default function Header({ toggle, setToggle }) {
   const handlewelcomedata = async () => {
     try {
       const response = await axios.get(
-        `${main_base_url}/Tenants/gettenant/${tenantId}`
+        `${main_base_url}/Tenants/gettenant/${tenantId}`,
       );
     } catch (error) {
-      console.error('Error fetching welcome data:', error);
+      console.error("Error fetching welcome data:", error);
     }
   };
 
   const signout = async () => {
-    const bearer_token = localStorage.getItem('token');
+    const bearer_token = localStorage.getItem("token");
     if (!bearer_token) {
       console.log("No token found in localStorage");
       return;
     }
-  
+
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
       },
     };
-  
+
     try {
-  
       const response = await axios.post(
-        `${protocal_url}${name}.${tenant_base_url}/Users/logout`,{}, config
+        `${protocal_url}${name}.${tenant_base_url}/Users/logout`,
+        {},
+        config,
       );
-  
+
       if (response.data.isSuccess) {
         console.log("Logout Success: ", response.data);
         localStorage.clear();
-        showSuccessToast('Logout Successful');
+        showSuccessToast("Logout Successful");
         navigate(`/tenantlogin`);
       } else {
         console.error("Logout failed: ", response.data);
-        showErrorToast('Logout Failed. Try again.');
+        showErrorToast("Logout Failed. Try again.");
       }
     } catch (error) {
       console.error("Error during logout: ", error.response || error.message);
-      showErrorToast('An error occurred while logging out.');
+      showErrorToast("An error occurred while logging out.");
     }
   };
 
@@ -115,7 +120,7 @@ export default function Header({ toggle, setToggle }) {
   const menu = [
     { key: 2, logo: <FiMessageSquare />, functionality: handlePopup },
     { key: 3, logo: <IoMdNotifications /> },
-    { key: 5, logo: <IoMdSettings />, link: '/panel/setting' },
+    { key: 5, logo: <IoMdSettings />, link: "/panel/setting" },
     {
       key: 6,
       logo: <MdLogout />,
@@ -125,7 +130,7 @@ export default function Header({ toggle, setToggle }) {
 
   useEffect(() => {
     const activeMenuItem = menu.find((item) =>
-      location.pathname.includes(item.link)
+      location.pathname.includes(item.link),
     );
     if (activeMenuItem) {
       setActiveKey(activeMenuItem.key);
@@ -145,15 +150,15 @@ export default function Header({ toggle, setToggle }) {
     <>
       <ToastContainer />
       <div className="flex justify-between items-center py-3 mx-3 sm:min-w-screen">
-      <div className="flex justify-center items-center  ">
-        {/*-> Toggle Button <-*/}
+        <div className="flex justify-center items-center  ">
+          {/*-> Toggle Button <-*/}
           <button
             className="flex flex-start bg-cyan-500 text-white shadow rounded-full text-lg p-1 "
             onClick={() => setToggle(!toggle)}
           >
             {toggle ? <FaBarsStaggered /> : <FaBars />}
           </button>
-        {/*-> Igniculuss DropDown Button hidden For mobile <-*/}
+          {/*-> Igniculuss DropDown Button hidden For mobile <-*/}
           <button className="sm:flex items-center gap-2 border rounded-full py-1 px-2 ml-4 hidden ">
             Igniculuss <FaAngleDown />
           </button>
@@ -163,10 +168,11 @@ export default function Header({ toggle, setToggle }) {
           {menu.map(({ key, logo, link, functionality }) => (
             <div
               key={key}
-              className={`cursor-pointer p-1 ${activeKey === key
-                ? 'rounded-full p-1 bg-gray-700 text-cyan-500 shadow-md '
-                : 'text-gray-700 '
-                }`}
+              className={`cursor-pointer p-1 ${
+                activeKey === key
+                  ? "rounded-full p-1 bg-gray-700 text-cyan-500 shadow-md "
+                  : "text-gray-700 "
+              }`}
             >
               <div onClick={() => handleMenuClick(key, functionality)}>
                 {link ? (

@@ -1,11 +1,20 @@
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
-import PropTypes from "prop-types"; 
+import PropTypes from "prop-types";
 
 const SalesCircle = ({ todaysGrowthPercentage, color }) => {
   // Data for the pie chart using the direct todaysGrowthPercentage prop
   const data = [
-    { name: "Growth", value: todaysGrowthPercentage >= 0 ? Math.min(todaysGrowthPercentage, 100) : Math.abs(todaysGrowthPercentage) },
-    { name: "Remaining", value: Math.max(0, 100 - Math.abs(todaysGrowthPercentage)) },
+    {
+      name: "Growth",
+      value:
+        todaysGrowthPercentage >= 0
+          ? Math.min(todaysGrowthPercentage, 100)
+          : Math.abs(todaysGrowthPercentage),
+    },
+    {
+      name: "Remaining",
+      value: Math.max(0, 100 - Math.abs(todaysGrowthPercentage)),
+    },
   ];
 
   const COLORS = color === "green" ? ["green", "#EBF8FF"] : ["red", "#FFCCCC"];
@@ -26,7 +35,8 @@ const SalesCircle = ({ todaysGrowthPercentage, color }) => {
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
-      <Tooltip formatter={(value, name) => `${name}: ${value}%`} /> {/* Optional Tooltip */}
+      <Tooltip formatter={(value, name) => `${name}: ${value}%`} />{" "}
+      {/* Optional Tooltip */}
     </PieChart>
   );
 };

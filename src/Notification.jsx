@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { requestPermission, onMessageListener } from "./firebase";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Notification() {
   const [notification, setNotification] = useState({
     title: "",
-    body: ""
+    body: "",
   });
 
   useEffect(() => {
@@ -15,28 +15,27 @@ export default function Notification() {
 
     const listenForMessages = () => {
       onMessageListener()
-        .then(payload => {
+        .then((payload) => {
           setNotification({
             title: payload?.notification?.title,
-            body: payload?.notification?.body
+            body: payload?.notification?.body,
           });
 
           // Show default toast notification for Firebase messages
           showDefaultToast(payload);
         })
-        .catch(err => console.log("Notification error: ", err));
+        .catch((err) => console.log("Notification error: ", err));
     };
 
     listenForMessages();
 
-    return () => {
-    };
+    return () => {};
   }, []);
 
   const showDefaultToast = (payload) => {
     const title = payload?.notification?.title || "Notification";
     const body = payload?.notification?.body || "You have a new message.";
-    
+
     toast.info(`${title}: ${body}`, {
       position: "top-right",
       autoClose: 3000,

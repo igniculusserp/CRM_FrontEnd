@@ -54,7 +54,7 @@ export default function GeneralReportTable({ currentReports }) {
           </th>
           {/* LEAD STATUS */}
           <th className="px-2 py-3 text-left border-r font-medium">
-              <span className="text-nowrap text-sm">Lead Status</span>
+            <span className="text-nowrap text-sm">Lead Status</span>
           </th>
         </tr>
       </thead>

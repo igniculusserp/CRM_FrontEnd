@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
-import ReactQuill from 'react-quill';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
+import ReactQuill from "react-quill";
+import { Link } from "react-router-dom";
 
 export default function CreateChats() {
-  const [description, setDescription] = useState('HELLO, ');
+  const [description, setDescription] = useState("HELLO, ");
   const [isEditMode, setIsEditMode] = useState(false);
   const [editChats, setEditChats] = useState({
-    fromUsername: '',
-    message: '',
-    fromChatDate: '',
-    toUsername: '',
-    createdTime: '',
-    toChatDate: '',
+    fromUsername: "",
+    message: "",
+    fromChatDate: "",
+    toUsername: "",
+    createdTime: "",
+    toChatDate: "",
   });
 
   // HANDLE INPUT CHANGE
@@ -33,24 +33,24 @@ export default function CreateChats() {
   // DROPDOWNS
   const [fromUsernameDropdown, setFromUsernameDropdown] = useState(false);
   const [defaultTextFromUsername, setDefaultTextFromUsername] =
-    useState('Username');
+    useState("Username");
   const [fromChatDateDropdown, setFromChatDateDropdown] = useState(false);
   const [defaultFromTextChatDate, setDefaultFromTextChatDate] =
-    useState('Chat Date');
+    useState("Chat Date");
   const [usernameDropdown, setUsernameDropdown] = useState(false);
-  const [defaultUsernameText, setDefaultUsernameText] = useState('To Username');
+  const [defaultUsernameText, setDefaultUsernameText] = useState("To Username");
   const [createdTimeDropdown, setCreatedTimeDropdown] = useState(false);
   const [defaultCreatedTimeText, setDefaultCreatedTimeText] =
-    useState('Created Time');
+    useState("Created Time");
   const [toChatDateDropdown, setToChatDateDropdown] = useState(false);
   const [defaultToChatDateText, setDefaultToChatDateText] =
-    useState('To Chat Date');
+    useState("To Chat Date");
 
   // DUMMY DATA FOR FROM USERNAME
   const fromUsernameData = [
-    { key: 1, name: 'Shubham Mishra' },
-    { key: 2, name: 'Shubham Mishra' },
-    { key: 3, name: 'Shubham Mishra' },
+    { key: 1, name: "Shubham Mishra" },
+    { key: 2, name: "Shubham Mishra" },
+    { key: 3, name: "Shubham Mishra" },
   ];
 
   // TOGGLE FROM USERNAME
@@ -69,9 +69,9 @@ export default function CreateChats() {
 
   // DUMMY DATA FOR FROM CHAT DATE
   const fromChatDateData = [
-    { key: 1, name: '09/03/2023' },
-    { key: 2, name: '09/03/2023' },
-    { key: 3, name: '09/03/2023' },
+    { key: 1, name: "09/03/2023" },
+    { key: 2, name: "09/03/2023" },
+    { key: 3, name: "09/03/2023" },
   ];
 
   // TOGGLE FROM CHAT DATE
@@ -90,9 +90,9 @@ export default function CreateChats() {
 
   // DUMMY DATA FOR TO USERNAME
   const toUsernameData = [
-    { key: 1, name: 'Shubham Mishra' },
-    { key: 2, name: 'Shubham Mishra' },
-    { key: 3, name: 'Shubham Mishra' },
+    { key: 1, name: "Shubham Mishra" },
+    { key: 2, name: "Shubham Mishra" },
+    { key: 3, name: "Shubham Mishra" },
   ];
 
   // TOGGLE TO USERNAME
@@ -111,9 +111,9 @@ export default function CreateChats() {
 
   // DUMMY DATA FOR TO USERNAME
   const createdTimeData = [
-    { key: 1, name: '09/03/2023' },
-    { key: 2, name: '09/03/2023' },
-    { key: 3, name: '09/03/2023' },
+    { key: 1, name: "09/03/2023" },
+    { key: 2, name: "09/03/2023" },
+    { key: 3, name: "09/03/2023" },
   ];
 
   // TOGGLE TO USERNAME
@@ -132,9 +132,9 @@ export default function CreateChats() {
 
   // DUMMY DATA FOR TO USERNAME
   const toChatDateData = [
-    { key: 1, name: '09/03/2023' },
-    { key: 2, name: '09/03/2023' },
-    { key: 3, name: '09/03/2023' },
+    { key: 1, name: "09/03/2023" },
+    { key: 2, name: "09/03/2023" },
+    { key: 3, name: "09/03/2023" },
   ];
 
   // TOGGLE TO USERNAME
@@ -427,7 +427,7 @@ export default function CreateChats() {
               type="submit"
               className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
             >
-              {isEditMode ? 'Update' : 'Save'}
+              {isEditMode ? "Update" : "Save"}
             </button>
           </div>
         </div>

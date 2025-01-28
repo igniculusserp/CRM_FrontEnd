@@ -48,7 +48,7 @@ export default function FollowUp() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/FollowUp/byusertoken`,
-        config
+        config,
       );
       if (response.status === 200) {
         const followup = response.data;
@@ -94,7 +94,7 @@ export default function FollowUp() {
   };
 
   const [selectedViewValue, setSelectedViewValue] = useState(
-    stripeBar[0].value
+    stripeBar[0].value,
   );
 
   //   TOGGLE FOLLOWUP DROPDOWN
@@ -130,7 +130,7 @@ export default function FollowUp() {
     // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
     if (value === "Mass Delete") {
       const userConfirmed = confirm(
-        "Are you sure you want to Delete the selected Data?"
+        "Are you sure you want to Delete the selected Data?",
       );
       if (userConfirmed) {
         handleMassTrailDelete(selectedRows);
@@ -139,7 +139,7 @@ export default function FollowUp() {
     // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
     if (value === "Mass Email") {
       const userConfirmed = confirm(
-        "Are you sure you want to Send E-Mail to the selected Data?"
+        "Are you sure you want to Send E-Mail to the selected Data?",
       );
       if (userConfirmed) {
         openMassEmailModal(selectedRows);
@@ -148,7 +148,7 @@ export default function FollowUp() {
     // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
     if (value === "Sheet View") {
       const userConfirmed = confirm(
-        "Are you sure you want to export the selected data?"
+        "Are you sure you want to export the selected data?",
       );
       if (userConfirmed) {
         exportToTrailExcel(selectedRows);
@@ -158,7 +158,7 @@ export default function FollowUp() {
     // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
     if (value === "Print View") {
       const userConfirmed = confirm(
-        "Are you sure you want to export the selected Leads?"
+        "Are you sure you want to export the selected Leads?",
       );
       if (userConfirmed) {
         exportToTrailPDF(selectedRows);
@@ -179,8 +179,8 @@ export default function FollowUp() {
       const deleteRequests = ids.map((id) =>
         axios.delete(
           `${protocal_url}${name}.${tenant_base_url}/FollowUp/delete/${id}`,
-          config
-        )
+          config,
+        ),
       );
 
       // Wait for all delete requests to finish
@@ -213,7 +213,7 @@ export default function FollowUp() {
   const exportToTrailExcel = () => {
     // Filter currentLeads based on selectedIds
     const leadsToExport = currentLeads.filter((lead) =>
-      selectedRows.includes(lead.id)
+      selectedRows.includes(lead.id),
     );
     if (leadsToExport?.length === 0) {
       alert("No leads selected to export");
@@ -234,7 +234,7 @@ export default function FollowUp() {
   //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
   const exportToTrailPDF = () => {
     const leadsToExport = currentLeads.filter((lead) =>
-      selectedRows.includes(lead.id)
+      selectedRows.includes(lead.id),
     );
     if (leadsToExport?.length === 0) {
       alert("No leads selected to export");
@@ -338,7 +338,7 @@ export default function FollowUp() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
+        config,
       );
       setallAssigned_To_Data(response.data.data);
     } catch (error) {
@@ -357,7 +357,7 @@ export default function FollowUp() {
     let filteredLeads = followupList;
     if (assignedToValue !== null && assignedToValue !== "Assigned to") {
       filteredLeads = filteredLeads.filter(
-        (lead) => lead.assigned_To === assignedToValue
+        (lead) => lead.assigned_To === assignedToValue,
       );
     }
     setFilteredLeads(filteredLeads); // Set the filtered result
@@ -410,7 +410,7 @@ export default function FollowUp() {
     const filtered = followupList.filter(
       (lead) =>
         lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
-        lead.mobileNo?.includes(searchTerm)
+        lead.mobileNo?.includes(searchTerm),
     );
     setFilteredLeads(filtered);
   }, [searchTerm, followupList]);
@@ -439,14 +439,14 @@ export default function FollowUp() {
       };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
-        config
+        config,
       );
       console.log("Permission Data : ", response.data.data);
       const permissionsList = response?.data?.data;
 
       if (permissionsList) {
         const serviceBoxPermissions = permissionsList.find(
-          (item) => item.moduleName === "Follow Up"
+          (item) => item.moduleName === "Follow Up",
         );
 
         if (serviceBoxPermissions) {
@@ -612,7 +612,7 @@ export default function FollowUp() {
                         >
                           {value}
                         </li>
-                      ) : null
+                      ) : null,
                     )}
                   </ul>
                 </div>
@@ -631,48 +631,48 @@ export default function FollowUp() {
           </div>
           {/* ------------------- Filter by date ----------------- */}
           <div className="date_Filter_Main_Container">
-          {/* ------------------- Filter by date ----------------- */}
-          <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
+            {/* ------------------- Filter by date ----------------- */}
+            <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
+              {/* Filter Icon Button */}
+              <div className="flex items-center">
+                <button className="border-r border-gray-500 pr-2">
+                  <ImFilter className="filter_Image_Size" />
+                </button>
 
-            {/* Filter Icon Button */}
-            <div className="flex items-center">
-            <button className="border-r border-gray-500 pr-2">
-              <ImFilter className="filter_Image_Size" />
-            </button>
+                {/* Date Range Filter Button */}
+                <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display">
+                  Filter By
+                </button>
 
-            {/* Date Range Filter Button */}
-            <button
-              className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display"
-            >
-              Filter By
-            </button>
+                {/* Date Range Inputs */}
+                <div className="px-2 flex items-center gap-2 filter_Date_Container">
+                  <label className="hide_Filter_Text">From:</label>
+                  <input
+                    type="date"
+                    value={startDate}
+                    className="border rounded px-2 py-2 filter_Date"
+                    onChange={(e) => setStartDate(e.target.value)}
+                  />
 
-            {/* Date Range Inputs */}
-            <div className="px-2 flex items-center gap-2 filter_Date_Container">
-              <label className="hide_Filter_Text">From:</label>
-              <input
-                type="date"
-                value={startDate}
-                className="border rounded px-2 py-2 filter_Date"
-                onChange={(e) => setStartDate(e.target.value)}
-              />
+                  <label className="hide_Filter_Text">To:</label>
+                  <input
+                    type="date"
+                    value={endDate}
+                    className="border rounded px-2 py-2 filter_Date"
+                    onChange={(e) => setEndDate(e.target.value)}
+                  />
+                </div>
+              </div>
 
-              <label className="hide_Filter_Text">To:</label>
-              <input
-                type="date"
-                value={endDate}
-                className="border rounded px-2 py-2 filter_Date"
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </div>
-            </div>
-            
-            <div className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center" onClick={handleResetFilter}>
-            <label className="hide_Filter_Text ">Reset</label>
-               <TbRefresh className="filter_Reset_Image"/>
+              <div
+                className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center"
+                onClick={handleResetFilter}
+              >
+                <label className="hide_Filter_Text ">Reset</label>
+                <TbRefresh className="filter_Reset_Image" />
+              </div>
             </div>
           </div>
-        </div>
         </div>
 
         {/* TABLE VIEW */}
@@ -950,7 +950,7 @@ export default function FollowUp() {
                     );
                   }
                   return null;
-                }
+                },
               )}
 
               {/* Next Button */}

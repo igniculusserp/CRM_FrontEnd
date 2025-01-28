@@ -1,28 +1,27 @@
-import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 //external
-import axios from 'axios';
+import axios from "axios";
 
 //reactIcons
-import { RiHome4Line } from 'react-icons/ri';
-import { GrContactInfo } from 'react-icons/gr';
-import { MdOutlineContactPhone } from 'react-icons/md';
-import { BsGraphUpArrow } from 'react-icons/bs';
-import { SiAmazonsimpleemailservice } from 'react-icons/si';
-import { FiUsers } from 'react-icons/fi';
-import { IoDocumentTextOutline } from 'react-icons/io5';
-import { VscGraph } from 'react-icons/vsc';
-import { FaRegHandshake } from 'react-icons/fa6';
-import { MdOutlineEmail } from 'react-icons/md';
-import PropTypes from 'prop-types';
+import { RiHome4Line } from "react-icons/ri";
+import { GrContactInfo } from "react-icons/gr";
+import { MdOutlineContactPhone } from "react-icons/md";
+import { BsGraphUpArrow } from "react-icons/bs";
+import { SiAmazonsimpleemailservice } from "react-icons/si";
+import { FiUsers } from "react-icons/fi";
+import { IoDocumentTextOutline } from "react-icons/io5";
+import { VscGraph } from "react-icons/vsc";
+import { FaRegHandshake } from "react-icons/fa6";
+import { MdOutlineEmail } from "react-icons/md";
+import PropTypes from "prop-types";
 import noAvatar from "../../assets/images/noAvatar.png";
 
-import { getHostnamePart } from './SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl';
+import { getHostnamePart } from "./SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 //file_Imported
-import { main_base_url } from './../../Config/config';
-
+import { main_base_url } from "./../../Config/config";
 
 export default function SidebaBar({ toggle, setToggle }) {
   const name = getHostnamePart();
@@ -34,51 +33,50 @@ export default function SidebaBar({ toggle, setToggle }) {
 
   useEffect(() => {
     setBusiness(businessType);
-    console.log(business)
+    console.log(business);
   }, []);
-
 
   const sideBar = [
     {
       key: 1,
-      data: 'Home',
-      link: '/panel/dashboard',
+      data: "Home",
+      link: "/panel/dashboard",
       icon: <RiHome4Line />,
     },
     {
       key: 2,
-      data: 'Leads',
-      link: '/panel/lead',
+      data: "Leads",
+      link: "/panel/lead",
       icon: <GrContactInfo />,
     },
     {
       key: 3,
-      data: 'Contacts',
-      link: '/panel/contact',
+      data: "Contacts",
+      link: "/panel/contact",
       icon: <MdOutlineContactPhone />,
     },
     {
       key: 4,
-      data: 'Client',
-      link: '/panel/client',
+      data: "Client",
+      link: "/panel/client",
       icon: <FiUsers />,
     },
     {
       key: 5,
-      data: 'Sales order',
-      link: '/panel/salesorder',
+      data: "Sales order",
+      link: "/panel/salesorder",
       icon: <BsGraphUpArrow />,
     },
     {
       key: 6,
-      data: 'Free Trail',
-      link: '/panel/freeTrail',
+      data: "Free Trail",
+      link: "/panel/freeTrail",
       icon: <FaRegHandshake />,
     },
     {
       key: 7,
-      data: 'Follow up',
-      link: '/panel/followUp',
+      data: "Follow up",
+      link: "/panel/followUp",
       icon: <SiAmazonsimpleemailservice />,
     },
     // {
@@ -89,8 +87,8 @@ export default function SidebaBar({ toggle, setToggle }) {
     // },
     {
       key: 9,
-      data: 'Service Box',
-      link: '/panel/servicebox',
+      data: "Service Box",
+      link: "/panel/servicebox",
       icon: <MdOutlineEmail />,
     },
     // {
@@ -101,14 +99,14 @@ export default function SidebaBar({ toggle, setToggle }) {
     // },
     {
       key: 11,
-      data: 'Reports',
-      link: '/panel/reports',
+      data: "Reports",
+      link: "/panel/reports",
       icon: <IoDocumentTextOutline />,
     },
     {
       key: 12,
-      data: 'Analytics',
-      link: '/panel/analytics',
+      data: "Analytics",
+      link: "/panel/analytics",
       icon: <VscGraph />,
     },
     // {
@@ -134,62 +132,62 @@ export default function SidebaBar({ toggle, setToggle }) {
   const sideBar_Brokerage = [
     {
       key: 1,
-      data: 'Home',
-      link: '/panel/dashboard',
+      data: "Home",
+      link: "/panel/dashboard",
       icon: <RiHome4Line />,
     },
     {
       key: 2,
-      data: 'Leads',
-      link: '/panel/lead',
+      data: "Leads",
+      link: "/panel/lead",
       icon: <GrContactInfo />,
     },
     {
       key: 3,
-      data: 'Contacts',
-      link: '/panel/contact',
+      data: "Contacts",
+      link: "/panel/contact",
       icon: <MdOutlineContactPhone />,
     },
     {
       key: 11,
-      data: 'Reports',
-      link: '/panel/reports',
+      data: "Reports",
+      link: "/panel/reports",
       icon: <IoDocumentTextOutline />,
     },
     {
       key: 14, //newLy Added 1st Sept
-      data: 'Finance ',
-      link: '/panel/FinancialActivity',
+      data: "Finance ",
+      link: "/panel/FinancialActivity",
       icon: <VscGraph />,
     },
     {
       key: 12,
-      data: 'Analytics',
-      link: '/panel/analytics',
+      data: "Analytics",
+      link: "/panel/analytics",
       icon: <VscGraph />,
     },
     {
       key: 4,
-      data: 'Client',
-      link: '/panel/client',
+      data: "Client",
+      link: "/panel/client",
       icon: <FiUsers />,
     },
     {
       key: 5,
-      data: 'Sales order',
-      link: '/panel/salesorder',
+      data: "Sales order",
+      link: "/panel/salesorder",
       icon: <BsGraphUpArrow />,
     },
     {
       key: 6,
-      data: 'Free Trail',
-      link: '/panel/freeTrail',
+      data: "Free Trail",
+      link: "/panel/freeTrail",
       icon: <FaRegHandshake />,
     },
     {
       key: 7,
-      data: 'Follow up',
-      link: '/panel/followUp',
+      data: "Follow up",
+      link: "/panel/followUp",
       icon: <SiAmazonsimpleemailservice />,
     },
     // {
@@ -200,8 +198,8 @@ export default function SidebaBar({ toggle, setToggle }) {
     // },
     {
       key: 9,
-      data: 'Service Box',
-      link: '/panel/servicebox',
+      data: "Service Box",
+      link: "/panel/servicebox",
       icon: <MdOutlineEmail />,
     },
     // {
@@ -210,7 +208,6 @@ export default function SidebaBar({ toggle, setToggle }) {
     //   link: '/panel/voicebox',
     //   icon: <MdOutlineKeyboardVoice />,
     // },
-
 
     // {
     //   key: 13,
@@ -227,8 +224,8 @@ export default function SidebaBar({ toggle, setToggle }) {
     // },
     {
       key: 16,
-      data: 'Subscription',
-      link: '/panel/subscription',
+      data: "Subscription",
+      link: "/panel/subscription",
       icon: <IoDocumentTextOutline />,
     },
   ];
@@ -237,10 +234,12 @@ export default function SidebaBar({ toggle, setToggle }) {
 
   const handlewelcomedata = async () => {
     try {
-      const response = await axios.get(`${main_base_url}/Tenants/gettenant/${name}`);
+      const response = await axios.get(
+        `${main_base_url}/Tenants/gettenant/${name}`,
+      );
       setWelcomeData(response.data);
     } catch (error) {
-      console.error('Error fetching welcome data:', error);
+      console.error("Error fetching welcome data:", error);
     }
   };
 
@@ -253,7 +252,7 @@ export default function SidebaBar({ toggle, setToggle }) {
     setToggle(false);
   };
 
-console.log(welcomedata)
+  console.log(welcomedata);
   return (
     <>
       <div className="flex flex-col bg-cyan-500 gap-3  ">
@@ -264,33 +263,44 @@ console.log(welcomedata)
               id="logoImg"
               src={welcomedata?.tenentLogo || noAvatar}
               alt="Company Image"
-              className={`mt-3 ${toggle ? 'w-14 h-14' : 'w-20 h-20'} rounded-full shadow-md shadow-cyan-600 object-cover mx-auto border`}
+              className={`mt-3 ${toggle ? "w-14 h-14" : "w-20 h-20"} rounded-full shadow-md shadow-cyan-600 object-cover mx-auto border`}
             />
           </div>
         </div>
         {/* Scrollable Menu Section */}
         <div className="flex flex-col h-full mt-10 CustomerTestimonialReview ">
-          {(business === "Brokerage" ? sideBar_Brokerage : sideBar).map(({ key, data, icon, link }, index) => (
-            <Link to={link} onClick={() => handleClick(key)} key={key}>
-              <li
-                className={`flex ${toggle ? 'justify-center' : 'justify-start'} items-center gap-3 text-white text-md font-small py-3 shadow-md ${index === 0 ? 'border-b-2 border-t-2' : 'border-b-2'
-                  } ${index === sideBar.length - 1 ? 'border-b-2' : ''} hover:bg-gradient-to-b from-cyan-300 to-cyan-700`}
-              >
-                <h1 className={`${toggle ? 'flex items-center gap-1 flex-col px-1' : 'flex items-center gap-2 px-2'}`}>
-                  <span className={`${toggle ? 'sm:text-xl text-sm' : 'text-xl'}`}>{icon}</span>
-                  <span className={`${toggle ? 'text-xs whitespace-nowrap ' : 'text-md'}`}>{data}</span>
-                </h1>
-              </li>
-            </Link>
-          ))}
+          {(business === "Brokerage" ? sideBar_Brokerage : sideBar).map(
+            ({ key, data, icon, link }, index) => (
+              <Link to={link} onClick={() => handleClick(key)} key={key}>
+                <li
+                  className={`flex ${toggle ? "justify-center" : "justify-start"} items-center gap-3 text-white text-md font-small py-3 shadow-md ${
+                    index === 0 ? "border-b-2 border-t-2" : "border-b-2"
+                  } ${index === sideBar.length - 1 ? "border-b-2" : ""} hover:bg-gradient-to-b from-cyan-300 to-cyan-700`}
+                >
+                  <h1
+                    className={`${toggle ? "flex items-center gap-1 flex-col px-1" : "flex items-center gap-2 px-2"}`}
+                  >
+                    <span
+                      className={`${toggle ? "sm:text-xl text-sm" : "text-xl"}`}
+                    >
+                      {icon}
+                    </span>
+                    <span
+                      className={`${toggle ? "text-xs whitespace-nowrap " : "text-md"}`}
+                    >
+                      {data}
+                    </span>
+                  </h1>
+                </li>
+              </Link>
+            ),
+          )}
         </div>
       </div>
-
-
     </>
   );
 }
 SidebaBar.propTypes = {
   toggle: PropTypes.bool.isRequired,
   setToggle: PropTypes.bool.isRequired,
-}
+};

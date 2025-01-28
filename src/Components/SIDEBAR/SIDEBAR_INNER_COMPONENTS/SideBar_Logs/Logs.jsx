@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { FaBars } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import Chat from './LogComponents/Chat';
-import Extension from './LogComponents/Extension';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
-import { MdEdit } from 'react-icons/md';
-import LoginTable from './LogComponents/LoginTable';
+import { useState } from "react";
+import { FaBars } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import Chat from "./LogComponents/Chat";
+import Extension from "./LogComponents/Extension";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { MdEdit } from "react-icons/md";
+import LoginTable from "./LogComponents/LoginTable";
 
 export default function Logs() {
   // PAGINATION
@@ -17,272 +17,272 @@ export default function Logs() {
     {
       id: 1,
       mobNo: 9326766137,
-      clientName: 'Shubham Mishra',
-      createdBy: 'Admin',
-      operation: 'Global View',
-      createdTime: '12:03 Time',
+      clientName: "Shubham Mishra",
+      createdBy: "Admin",
+      operation: "Global View",
+      createdTime: "12:03 Time",
       fromUsername: 1234567890,
-      toUsername: 'Rahul Sharma',
-      message: 'Hello dude! how are you',
-      created: '12:03 Am',
-      username: 'Vikas Koli',
+      toUsername: "Rahul Sharma",
+      message: "Hello dude! how are you",
+      created: "12:03 Am",
+      username: "Vikas Koli",
       extensionNumber: 123456,
-      givenTime: '12:03 Am',
-      ipAddress: '45.117.73.26',
-      macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.',
+      givenTime: "12:03 Am",
+      ipAddress: "45.117.73.26",
+      macAddress: "98-43-FA-28-3C-34",
+      loginTime: "1 hr ago.",
     },
     {
       id: 2,
       mobNo: 9326766137,
-      clientName: 'Shubham Mishra',
-      createdBy: 'Admin',
-      operation: 'Global View',
-      createdTime: '12:03 Time',
+      clientName: "Shubham Mishra",
+      createdBy: "Admin",
+      operation: "Global View",
+      createdTime: "12:03 Time",
       fromUsername: 1234567890,
-      toUsername: 'Rahul Sharma',
-      message: 'Hello dude! how are you',
-      created: '12:03 Am',
-      username: 'Vikas Koli',
+      toUsername: "Rahul Sharma",
+      message: "Hello dude! how are you",
+      created: "12:03 Am",
+      username: "Vikas Koli",
       extensionNumber: 123456,
-      givenTime: '12:03 Am',
-      ipAddress: '45.117.73.26',
-      macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.',
+      givenTime: "12:03 Am",
+      ipAddress: "45.117.73.26",
+      macAddress: "98-43-FA-28-3C-34",
+      loginTime: "1 hr ago.",
     },
     {
       id: 3,
       mobNo: 9326766137,
-      clientName: 'Shubham Mishra',
-      createdBy: 'Admin',
-      operation: 'Global View',
-      createdTime: '12:03 Time',
+      clientName: "Shubham Mishra",
+      createdBy: "Admin",
+      operation: "Global View",
+      createdTime: "12:03 Time",
       fromUsername: 1234567890,
-      toUsername: 'Rahul Sharma',
-      message: 'Hello dude! how are you',
-      created: '12:03 Am',
-      username: 'Vikas Koli',
+      toUsername: "Rahul Sharma",
+      message: "Hello dude! how are you",
+      created: "12:03 Am",
+      username: "Vikas Koli",
       extensionNumber: 123456,
-      givenTime: '12:03 Am',
-      ipAddress: '45.117.73.26',
-      macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.',
+      givenTime: "12:03 Am",
+      ipAddress: "45.117.73.26",
+      macAddress: "98-43-FA-28-3C-34",
+      loginTime: "1 hr ago.",
     },
     {
       id: 4,
       mobNo: 9326766137,
-      clientName: 'Shubham Mishra',
-      createdBy: 'Admin',
-      operation: 'Global View',
-      createdTime: '12:03 Time',
+      clientName: "Shubham Mishra",
+      createdBy: "Admin",
+      operation: "Global View",
+      createdTime: "12:03 Time",
       fromUsername: 1234567890,
-      toUsername: 'Rahul Sharma',
-      message: 'Hello dude! how are you',
-      created: '12:03 Am',
-      username: 'Vikas Koli',
+      toUsername: "Rahul Sharma",
+      message: "Hello dude! how are you",
+      created: "12:03 Am",
+      username: "Vikas Koli",
       extensionNumber: 123456,
-      givenTime: '12:03 Am',
-      ipAddress: '45.117.73.26',
-      macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.',
+      givenTime: "12:03 Am",
+      ipAddress: "45.117.73.26",
+      macAddress: "98-43-FA-28-3C-34",
+      loginTime: "1 hr ago.",
     },
     {
       id: 5,
       mobNo: 9326766137,
-      clientName: 'Shubham Mishra',
-      createdBy: 'Admin',
-      operation: 'Global View',
-      createdTime: '12:03 Time',
+      clientName: "Shubham Mishra",
+      createdBy: "Admin",
+      operation: "Global View",
+      createdTime: "12:03 Time",
       fromUsername: 1234567890,
-      toUsername: 'Rahul Sharma',
-      message: 'Hello dude! how are you',
-      created: '12:03 Am',
-      username: 'Vikas Koli',
+      toUsername: "Rahul Sharma",
+      message: "Hello dude! how are you",
+      created: "12:03 Am",
+      username: "Vikas Koli",
       extensionNumber: 123456,
-      givenTime: '12:03 Am',
-      ipAddress: '45.117.73.26',
-      macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.',
+      givenTime: "12:03 Am",
+      ipAddress: "45.117.73.26",
+      macAddress: "98-43-FA-28-3C-34",
+      loginTime: "1 hr ago.",
     },
     {
       id: 6,
       mobNo: 9326766137,
-      clientName: 'Shubham Mishra',
-      createdBy: 'Admin',
-      operation: 'Global View',
-      createdTime: '12:03 Time',
+      clientName: "Shubham Mishra",
+      createdBy: "Admin",
+      operation: "Global View",
+      createdTime: "12:03 Time",
       fromUsername: 1234567890,
-      toUsername: 'Rahul Sharma',
-      message: 'Hello dude! how are you',
-      created: '12:03 Am',
-      username: 'Vikas Koli',
+      toUsername: "Rahul Sharma",
+      message: "Hello dude! how are you",
+      created: "12:03 Am",
+      username: "Vikas Koli",
       extensionNumber: 123456,
-      givenTime: '12:03 Am',
-      ipAddress: '45.117.73.26',
-      macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.',
+      givenTime: "12:03 Am",
+      ipAddress: "45.117.73.26",
+      macAddress: "98-43-FA-28-3C-34",
+      loginTime: "1 hr ago.",
     },
     {
       id: 7,
       mobNo: 9326766137,
-      clientName: 'Shubham Mishra',
-      createdBy: 'Admin',
-      operation: 'Global View',
-      createdTime: '12:03 Time',
+      clientName: "Shubham Mishra",
+      createdBy: "Admin",
+      operation: "Global View",
+      createdTime: "12:03 Time",
       fromUsername: 1234567890,
-      toUsername: 'Rahul Sharma',
-      message: 'Hello dude! how are you',
-      created: '12:03 Am',
-      username: 'Vikas Koli',
+      toUsername: "Rahul Sharma",
+      message: "Hello dude! how are you",
+      created: "12:03 Am",
+      username: "Vikas Koli",
       extensionNumber: 123456,
-      givenTime: '12:03 Am',
-      ipAddress: '45.117.73.26',
-      macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.',
+      givenTime: "12:03 Am",
+      ipAddress: "45.117.73.26",
+      macAddress: "98-43-FA-28-3C-34",
+      loginTime: "1 hr ago.",
     },
     {
       id: 8,
       mobNo: 9326766137,
-      clientName: 'Shubham Mishra',
-      createdBy: 'Admin',
-      operation: 'Global View',
-      createdTime: '12:03 Time',
+      clientName: "Shubham Mishra",
+      createdBy: "Admin",
+      operation: "Global View",
+      createdTime: "12:03 Time",
       fromUsername: 1234567890,
-      toUsername: 'Rahul Sharma',
-      message: 'Hello dude! how are you',
-      created: '12:03 Am',
-      username: 'Vikas Koli',
+      toUsername: "Rahul Sharma",
+      message: "Hello dude! how are you",
+      created: "12:03 Am",
+      username: "Vikas Koli",
       extensionNumber: 123456,
-      givenTime: '12:03 Am',
-      ipAddress: '45.117.73.26',
-      macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.',
+      givenTime: "12:03 Am",
+      ipAddress: "45.117.73.26",
+      macAddress: "98-43-FA-28-3C-34",
+      loginTime: "1 hr ago.",
     },
     {
       id: 9,
       mobNo: 9326766137,
-      clientName: 'Shubham Mishra',
-      createdBy: 'Admin',
-      operation: 'Global View',
-      createdTime: '12:03 Time',
+      clientName: "Shubham Mishra",
+      createdBy: "Admin",
+      operation: "Global View",
+      createdTime: "12:03 Time",
       fromUsername: 1234567890,
-      toUsername: 'Rahul Sharma',
-      message: 'Hello dude! how are you',
-      created: '12:03 Am',
-      username: 'Vikas Koli',
+      toUsername: "Rahul Sharma",
+      message: "Hello dude! how are you",
+      created: "12:03 Am",
+      username: "Vikas Koli",
       extensionNumber: 123456,
-      givenTime: '12:03 Am',
-      ipAddress: '45.117.73.26',
-      macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.',
+      givenTime: "12:03 Am",
+      ipAddress: "45.117.73.26",
+      macAddress: "98-43-FA-28-3C-34",
+      loginTime: "1 hr ago.",
     },
     {
       id: 10,
       mobNo: 9326766137,
-      clientName: 'Shubham Mishra',
-      createdBy: 'Admin',
-      operation: 'Global View',
-      createdTime: '12:03 Time',
+      clientName: "Shubham Mishra",
+      createdBy: "Admin",
+      operation: "Global View",
+      createdTime: "12:03 Time",
       fromUsername: 1234567890,
-      toUsername: 'Rahul Sharma',
-      message: 'Hello dude! how are you',
-      created: '12:03 Am',
-      username: 'Vikas Koli',
+      toUsername: "Rahul Sharma",
+      message: "Hello dude! how are you",
+      created: "12:03 Am",
+      username: "Vikas Koli",
       extensionNumber: 123456,
-      givenTime: '12:03 Am',
-      ipAddress: '45.117.73.26',
-      macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.',
+      givenTime: "12:03 Am",
+      ipAddress: "45.117.73.26",
+      macAddress: "98-43-FA-28-3C-34",
+      loginTime: "1 hr ago.",
     },
     {
       id: 11,
       mobNo: 9326766137,
-      clientName: 'Shubham Mishra',
-      createdBy: 'Admin',
-      operation: 'Global View',
-      createdTime: '12:03 Time',
+      clientName: "Shubham Mishra",
+      createdBy: "Admin",
+      operation: "Global View",
+      createdTime: "12:03 Time",
       fromUsername: 1234567890,
-      toUsername: 'Rahul Sharma',
-      message: 'Hello dude! how are you',
-      created: '12:03 Am',
-      username: 'Vikas Koli',
+      toUsername: "Rahul Sharma",
+      message: "Hello dude! how are you",
+      created: "12:03 Am",
+      username: "Vikas Koli",
       extensionNumber: 123456,
-      givenTime: '12:03 Am',
-      ipAddress: '45.117.73.26',
-      macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.',
+      givenTime: "12:03 Am",
+      ipAddress: "45.117.73.26",
+      macAddress: "98-43-FA-28-3C-34",
+      loginTime: "1 hr ago.",
     },
     {
       id: 12,
       mobNo: 9326766137,
-      clientName: 'Shubham Mishra',
-      createdBy: 'Admin',
-      operation: 'Global View',
-      createdTime: '12:03 Time',
+      clientName: "Shubham Mishra",
+      createdBy: "Admin",
+      operation: "Global View",
+      createdTime: "12:03 Time",
       fromUsername: 1234567890,
-      toUsername: 'Rahul Sharma',
-      message: 'Hello dude! how are you',
-      created: '12:03 Am',
-      username: 'Vikas Koli',
+      toUsername: "Rahul Sharma",
+      message: "Hello dude! how are you",
+      created: "12:03 Am",
+      username: "Vikas Koli",
       extensionNumber: 123456,
-      givenTime: '12:03 Am',
-      ipAddress: '45.117.73.26',
-      macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.',
+      givenTime: "12:03 Am",
+      ipAddress: "45.117.73.26",
+      macAddress: "98-43-FA-28-3C-34",
+      loginTime: "1 hr ago.",
     },
     {
       id: 13,
       mobNo: 9326766137,
-      clientName: 'Shubham Mishra',
-      createdBy: 'Admin',
-      operation: 'Global View',
-      createdTime: '12:03 Time',
+      clientName: "Shubham Mishra",
+      createdBy: "Admin",
+      operation: "Global View",
+      createdTime: "12:03 Time",
       fromUsername: 1234567890,
-      toUsername: 'Rahul Sharma',
-      message: 'Hello dude! how are you',
-      created: '12:03 Am',
-      username: 'Vikas Koli',
+      toUsername: "Rahul Sharma",
+      message: "Hello dude! how are you",
+      created: "12:03 Am",
+      username: "Vikas Koli",
       extensionNumber: 123456,
-      givenTime: '12:03 Am',
-      ipAddress: '45.117.73.26',
-      macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.',
+      givenTime: "12:03 Am",
+      ipAddress: "45.117.73.26",
+      macAddress: "98-43-FA-28-3C-34",
+      loginTime: "1 hr ago.",
     },
     {
       id: 14,
       mobNo: 9326766137,
-      clientName: 'Shubham Mishra',
-      createdBy: 'Admin',
-      operation: 'Global View',
-      createdTime: '12:03 Time',
+      clientName: "Shubham Mishra",
+      createdBy: "Admin",
+      operation: "Global View",
+      createdTime: "12:03 Time",
       fromUsername: 1234567890,
-      toUsername: 'Rahul Sharma',
-      message: 'Hello dude! how are you',
-      created: '12:03 Am',
-      username: 'Vikas Koli',
+      toUsername: "Rahul Sharma",
+      message: "Hello dude! how are you",
+      created: "12:03 Am",
+      username: "Vikas Koli",
       extensionNumber: 123456,
-      givenTime: '12:03 Am',
-      ipAddress: '45.117.73.26',
-      macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.',
+      givenTime: "12:03 Am",
+      ipAddress: "45.117.73.26",
+      macAddress: "98-43-FA-28-3C-34",
+      loginTime: "1 hr ago.",
     },
     {
       id: 15,
       mobNo: 9326766137,
-      clientName: 'Shubham Mishra',
-      createdBy: 'Admin',
-      operation: 'Global View',
-      createdTime: '12:03 Time',
+      clientName: "Shubham Mishra",
+      createdBy: "Admin",
+      operation: "Global View",
+      createdTime: "12:03 Time",
       fromUsername: 1234567890,
-      toUsername: 'Rahul Sharma',
-      message: 'Hello dude! how are you',
-      created: '12:03 Am',
-      username: 'Vikas Koli',
+      toUsername: "Rahul Sharma",
+      message: "Hello dude! how are you",
+      created: "12:03 Am",
+      username: "Vikas Koli",
       extensionNumber: 123456,
-      givenTime: '12:03 Am',
-      ipAddress: '45.117.73.26',
-      macAddress: '98-43-FA-28-3C-34',
-      loginTime: '1 hr ago.',
+      givenTime: "12:03 Am",
+      ipAddress: "45.117.73.26",
+      macAddress: "98-43-FA-28-3C-34",
+      loginTime: "1 hr ago.",
     },
   ];
 
@@ -295,33 +295,33 @@ export default function Logs() {
 
   //   Stripe Bar
   const stripeBar = [
-    { key: 1, value: 'Table View' },
-    { key: 2, value: 'Grid View' },
+    { key: 1, value: "Table View" },
+    { key: 2, value: "Grid View" },
   ];
 
   const [selectedViewValue, setSelectedViewValue] = useState(
-    stripeBar[0].value
+    stripeBar[0].value,
   );
 
   //   THREE BUTTONS
   // Object containing the options
   const dynamicButtons = {
-    Clients: { text: 'Add Client Logs', href: '/panel/createlogs' },
-    'SMS Logs': {},
+    Clients: { text: "Add Client Logs", href: "/panel/createlogs" },
+    "SMS Logs": {},
     Chat: {
-      text: 'Add Chat Logs',
-      href: '/panel/createchats',
+      text: "Add Chat Logs",
+      href: "/panel/createchats",
     },
-    Login: { text: 'Add Login Logs', href: '/panel/createlogin' },
-    Extension: { text: 'Add Extension Logs', href: '/panel/createextension' },
+    Login: { text: "Add Login Logs", href: "/panel/createlogin" },
+    Extension: { text: "Add Extension Logs", href: "/panel/createextension" },
   };
 
-  const [selectedButton, setSelectedButton] = useState('Clients');
+  const [selectedButton, setSelectedButton] = useState("Clients");
 
   // State to manage the button text
   const [buttonText, setButtonText] = useState({
-    text: 'Add Clients Log',
-    href: '/panel/createlogs',
+    text: "Add Clients Log",
+    href: "/panel/createlogs",
   });
 
   const handleClick = (key) => {
@@ -342,8 +342,8 @@ export default function Logs() {
               className={`px-5 py-1.5 rounded font-light text-md
                 ${
                   selectedButton === key
-                    ? 'bg-cyan-500 text-white'
-                    : 'bg-gray-100 text-gray-700'
+                    ? "bg-cyan-500 text-white"
+                    : "bg-gray-100 text-gray-700"
                 }
               `}
             >
@@ -376,8 +376,8 @@ export default function Logs() {
         {/* CLIENTS TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {/*-------Table-------*/}
-          {selectedViewValue === 'Table View' &&
-            selectedButton === 'Clients' && (
+          {selectedViewValue === "Table View" &&
+            selectedButton === "Clients" && (
               <table className="min-w-full bg-white">
                 {/* -------------- TABLE HEAD START -------------- */}
                 <thead>
@@ -493,28 +493,28 @@ export default function Logs() {
         {/* CHAT TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {/*-------Table-------*/}
-          {selectedViewValue === 'Table View' && selectedButton === 'Chat' && (
+          {selectedViewValue === "Table View" && selectedButton === "Chat" && (
             <Chat currentLogs={currentLogs} />
           )}
         </div>
         {/* LOGIN TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {/*-------Table-------*/}
-          {selectedViewValue === 'Table View' && selectedButton === 'Login' && (
+          {selectedViewValue === "Table View" && selectedButton === "Login" && (
             <LoginTable currentLogs={currentLogs} />
           )}
         </div>
         {/* EXTENSION TABLE */}
         <div className="min-w-full overflow-hidden rounded-md">
           {/*-------Table-------*/}
-          {selectedViewValue === 'Table View' &&
-            selectedButton === 'Extension' && (
+          {selectedViewValue === "Table View" &&
+            selectedButton === "Extension" && (
               <Extension currentLogs={currentLogs} />
             )}
         </div>
       </div>
 
-      {selectedViewValue === 'Table View' && (
+      {selectedViewValue === "Table View" && (
         <>
           <div className="flex justify-end m-4">
             <nav>
@@ -527,14 +527,14 @@ export default function Logs() {
                         onClick={() => paginate(i + 1)}
                         className={`px-4 py-2 mx-1 ${
                           currentPage === i + 1
-                            ? 'bg-blue-500 text-white'
-                            : 'bg-white text-gray-700 border'
+                            ? "bg-blue-500 text-white"
+                            : "bg-white text-gray-700 border"
                         }`}
                       >
                         {i + 1}
                       </button>
                     </li>
-                  )
+                  ),
                 )}
               </ul>
             </nav>

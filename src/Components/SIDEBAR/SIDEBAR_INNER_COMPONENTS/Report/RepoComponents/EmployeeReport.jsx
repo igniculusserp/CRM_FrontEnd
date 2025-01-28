@@ -1,6 +1,5 @@
-
-import PropTypes from 'prop-types';
-import { FaBars } from 'react-icons/fa'; // Assuming you are using Font Awesome
+import PropTypes from "prop-types";
+import { FaBars } from "react-icons/fa"; // Assuming you are using Font Awesome
 
 export default function EmployeeReport({ currentReports }) {
   return (
@@ -42,7 +41,7 @@ export default function EmployeeReport({ currentReports }) {
           </th>
           {/* TARGET REMAINING */}
           <th className="px-2 py-3 text-left border-r font-medium">
-          <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between">
               <span className="text-nowrap pr-2">Target Remaining</span>
               <FaBars />
             </div>
@@ -95,6 +94,6 @@ EmployeeReport.propTypes = {
       target: PropTypes.number.isRequired,
       targetAchieved: PropTypes.number.isRequired,
       targetRemaining: PropTypes.number.isRequired,
-    })
+    }),
   ).isRequired,
 };

@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function GeneralReport() {
   const [editReport, setEditReport] = useState({
-    createdStartDate: '',
-    modifiedStartDate: '',
-    callbackStartDate: '',
-    leadStatus: '',
-    leadOwner: '',
-    createdEndDate: '',
-    modifiedEndDate: '',
-    callbackEndDate: '',
-    leadSource: '',
+    createdStartDate: "",
+    modifiedStartDate: "",
+    callbackStartDate: "",
+    leadStatus: "",
+    leadOwner: "",
+    createdEndDate: "",
+    modifiedEndDate: "",
+    callbackEndDate: "",
+    leadSource: "",
   });
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -34,26 +34,26 @@ export default function GeneralReport() {
   const [createdStartDateDropdown, setCreatedStartDateDropdown] =
     useState(false);
   const [defaultCreatedStartDateText, setDefaultCreatedStartDateText] =
-    useState('Created Start Date');
+    useState("Created Start Date");
   const [createdEndDropdown, setCreatedEndDropdown] = useState(false);
   const [defaultCreatedEndText, setDefaultCreatedEndText] =
-    useState('Created End Date');
+    useState("Created End Date");
   const [leadStatusDropdown, setLeadStatusDropdown] = useState(false);
   const [defaultLeadStatusText, setDefaultLeadStatusText] =
-    useState('Lead Status');
+    useState("Lead Status");
   const [leadOwnerDropdown, setLeadOwnerDropdown] = useState(false);
   const [defaultLeadOwnerText, setDefaultLeadOwnerText] =
-    useState('Lead Owner');
+    useState("Lead Owner");
   const [leadSourceDropdown, setLeadSourceDropdown] = useState(false);
   const [defaultLeadSourceText, setDefaultLeadSourceText] =
-    useState('Lead Source');
+    useState("Lead Source");
 
   // CREATED START DATE DUMMY
   const createdStartData = [
-    { id: 1, name: '12/09/2023' },
-    { id: 2, name: '12/09/2023' },
-    { id: 3, name: '12/09/2023' },
-    { id: 4, name: '12/09/2023' },
+    { id: 1, name: "12/09/2023" },
+    { id: 2, name: "12/09/2023" },
+    { id: 3, name: "12/09/2023" },
+    { id: 4, name: "12/09/2023" },
   ];
 
   // TOGGLE CREATED START DATE DROPDOWN
@@ -72,10 +72,10 @@ export default function GeneralReport() {
 
   // CREATED END DATE DUMMY
   const createdEndData = [
-    { id: 1, name: '12/09/2023' },
-    { id: 2, name: '12/09/2023' },
-    { id: 3, name: '12/09/2023' },
-    { id: 4, name: '12/09/2023' },
+    { id: 1, name: "12/09/2023" },
+    { id: 2, name: "12/09/2023" },
+    { id: 3, name: "12/09/2023" },
+    { id: 4, name: "12/09/2023" },
   ];
 
   // TOGGLE CREATED END DATE DROPDOWN
@@ -94,10 +94,10 @@ export default function GeneralReport() {
 
   // LEAD STATUS DUMMY
   const leadStatusData = [
-    { id: 1, name: 'lead status' },
-    { id: 2, name: 'lead status' },
-    { id: 3, name: 'lead status' },
-    { id: 4, name: 'lead status' },
+    { id: 1, name: "lead status" },
+    { id: 2, name: "lead status" },
+    { id: 3, name: "lead status" },
+    { id: 4, name: "lead status" },
   ];
 
   // TOGGLE LEAD STATUS DROPDOWN
@@ -116,10 +116,10 @@ export default function GeneralReport() {
 
   // LEAD OWNER DUMMY
   const leadOwnerData = [
-    { id: 1, name: 'lead owner' },
-    { id: 2, name: 'lead owner' },
-    { id: 3, name: 'lead owner' },
-    { id: 4, name: 'lead owner' },
+    { id: 1, name: "lead owner" },
+    { id: 2, name: "lead owner" },
+    { id: 3, name: "lead owner" },
+    { id: 4, name: "lead owner" },
   ];
 
   // TOGGLE LEAD OWNER DROPDOWN
@@ -138,10 +138,10 @@ export default function GeneralReport() {
 
   // LEAD SOURCE DUMMY
   const leadSourceData = [
-    { id: 1, name: 'lead source' },
-    { id: 2, name: 'lead source' },
-    { id: 3, name: 'lead source' },
-    { id: 4, name: 'lead source' },
+    { id: 1, name: "lead source" },
+    { id: 2, name: "lead source" },
+    { id: 3, name: "lead source" },
+    { id: 4, name: "lead source" },
   ];
 
   // TOGGLE LEAD SOURCE DROPDOWN
@@ -468,7 +468,7 @@ export default function GeneralReport() {
                 type="submit"
                 className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
               >
-                {isEditMode ? 'Update' : 'Save'}
+                {isEditMode ? "Update" : "Save"}
               </button>
             </div>
           </div>

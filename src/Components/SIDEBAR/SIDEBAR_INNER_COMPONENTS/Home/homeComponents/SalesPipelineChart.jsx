@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
 import {
   BarChart,
   Bar,
@@ -9,25 +9,25 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from 'recharts';
+} from "recharts";
 
 // Example data
 const data = [
-  { month: 'Jan', prospecting: 200, proposal: 300, negotiation: 100 },
-  { month: 'Feb', prospecting: 250, proposal: 200, negotiation: 150 },
-  { month: 'Mar', prospecting: 150, proposal: 400, negotiation: 200 },
-  { month: 'Apr', prospecting: 280, proposal: 250, negotiation: 180 },
-  { month: 'May', prospecting: 180, proposal: 300, negotiation: 220 },
-  { month: 'Jun', prospecting: 320, proposal: 240, negotiation: 270 },
-  { month: 'Jul', prospecting: 200, proposal: 150, negotiation: 120 },
+  { month: "Jan", prospecting: 200, proposal: 300, negotiation: 100 },
+  { month: "Feb", prospecting: 250, proposal: 200, negotiation: 150 },
+  { month: "Mar", prospecting: 150, proposal: 400, negotiation: 200 },
+  { month: "Apr", prospecting: 280, proposal: 250, negotiation: 180 },
+  { month: "May", prospecting: 180, proposal: 300, negotiation: 220 },
+  { month: "Jun", prospecting: 320, proposal: 240, negotiation: 270 },
+  { month: "Jul", prospecting: 200, proposal: 150, negotiation: 120 },
 ];
 
 const SalesPipelineChart = () => {
   const [text, setText] = useState({
-    filter: '',
+    filter: "",
   });
   const [filterDropdown, setFilterDropdown] = useState(false);
-  const [filterDropdownText, setFilterDropdownText] = useState('6 Months');
+  const [filterDropdownText, setFilterDropdownText] = useState("6 Months");
 
   // TOGGLE FILTER DATE DROPDOWN
   const toggleFilterDropdown = () => {
@@ -44,9 +44,9 @@ const SalesPipelineChart = () => {
   };
 
   const filterData = [
-    { id: 1, name: '3 months' },
-    { id: 1, name: '6 months' },
-    { id: 1, name: '1 years' },
+    { id: 1, name: "3 months" },
+    { id: 1, name: "6 months" },
+    { id: 1, name: "1 years" },
   ];
 
   return (

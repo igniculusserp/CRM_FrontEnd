@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function DNDReport() {
   const [editReport, setEditReport] = useState({
-    startDate: '',
-    endDate: '',
+    startDate: "",
+    endDate: "",
   });
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -16,16 +16,17 @@ export default function DNDReport() {
 
   // DROPDOWNS
   const [startDateDropdown, setStartDateDropdown] = useState(false);
-  const [defaultStartDateText, setDefaultStartDateText] = useState('Start Date');
+  const [defaultStartDateText, setDefaultStartDateText] =
+    useState("Start Date");
   const [endDateDropdown, setEndDateDropdown] = useState(false);
-  const [defaultEndDateText, setDefaultEndDateText] = useState('End Date');
+  const [defaultEndDateText, setDefaultEndDateText] = useState("End Date");
 
   // FROM DATE DUMMY
   const startDate = [
-    { id: 1, name: '12/09/2023' },
-    { id: 2, name: '12/09/2023' },
-    { id: 3, name: '12/09/2023' },
-    { id: 4, name: '12/09/2023' },
+    { id: 1, name: "12/09/2023" },
+    { id: 2, name: "12/09/2023" },
+    { id: 3, name: "12/09/2023" },
+    { id: 4, name: "12/09/2023" },
   ];
 
   // TOGGLE FROM DATE
@@ -44,10 +45,10 @@ export default function DNDReport() {
 
   // TO DATE DUMMY
   const endDate = [
-    { id: 1, name: '12/09/2023' },
-    { id: 2, name: '12/09/2023' },
-    { id: 3, name: '12/09/2023' },
-    { id: 4, name: '12/09/2023' },
+    { id: 1, name: "12/09/2023" },
+    { id: 2, name: "12/09/2023" },
+    { id: 3, name: "12/09/2023" },
+    { id: 4, name: "12/09/2023" },
   ];
 
   // TOGGLE TO DATE
@@ -66,7 +67,7 @@ export default function DNDReport() {
 
   return (
     <>
-<div className="flex py-2 px-3 m-3 items-center justify-between bg-white rounded-md shadow-md">
+      <div className="flex py-2 px-3 m-3 items-center justify-between bg-white rounded-md shadow-md">
         <h1 className="text-xl">Add DND Report</h1>
         <Link
           to="/panel/misreports"
@@ -172,7 +173,7 @@ export default function DNDReport() {
                 type="submit"
                 className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
               >
-                {isEditMode ? 'Update' : 'Save'}
+                {isEditMode ? "Update" : "Save"}
               </button>
             </div>
           </div>

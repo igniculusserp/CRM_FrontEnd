@@ -14,7 +14,10 @@ import { tenant_base_url, protocal_url } from "../../../../../../Config/config";
 import { getHostnamePart } from "../../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 import { ToastContainer } from "react-toastify";
-import { showSuccessToast, showErrorToast } from "../../../../../../utils/toastNotifications";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "../../../../../../utils/toastNotifications";
 
 export default function EditBrokerage({
   setActive,
@@ -23,7 +26,7 @@ export default function EditBrokerage({
 }) {
   //IMP used as ${name} in an API
   const name = getHostnamePart();
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
 
   const [finance, setFinance] = useState({
     id: "",
@@ -59,7 +62,7 @@ export default function EditBrokerage({
       const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/brokeragedetail/get/${editBrokerageId}`,
-        config
+        config,
       );
 
       if (response.status === 200 && response.data.isSuccess) {
@@ -72,13 +75,9 @@ export default function EditBrokerage({
           referenceno: finance.referenceno,
           remarks: finance.remarks,
           lastmodifiedby: finance.lastmodifiedby,
-
-
-
-
         });
       }
-      console.log(finance)
+      console.log(finance);
     } catch (error) {
       console.error("Error fetching data: ", error);
       showErrorToast("Failed to fetch expense details.");
@@ -104,19 +103,17 @@ export default function EditBrokerage({
       const formData_PUT = {
         id: finance.id,
         userName: finance.userName,
-        date: finance?.date.split('T')[0] || today,
+        date: finance?.date.split("T")[0] || today,
         brokerageAmount: finance?.brokerageAmount,
         referenceno: finance?.referenceno,
         remarks: finance?.remarks,
         lastmodifiedby: finance?.lastmodifiedby,
       };
 
-
-
       const response = await axios.put(
         `${protocal_url}${name}.${tenant_base_url}/FinancialActivity/brokeragedetail/edit/${editBrokerageId}`,
         formData_PUT,
-        config
+        config,
       );
       if (response.data.isSuccess) {
         showSuccessToast("Expense added successfully!");
@@ -128,8 +125,6 @@ export default function EditBrokerage({
       showErrorToast(error.data.message);
     }
   };
-
-
 
   //----------------------------------------------------------handleCancel---------------------------------------------
   const handleCancel = () => {
@@ -168,13 +163,7 @@ export default function EditBrokerage({
               {/* -------------1------------- */}
 
               <div className="grid gap-2 p-2">
-
                 <div className="flex space-x-4">
-
-
-
-                  
-
                   <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="date"
@@ -185,17 +174,12 @@ export default function EditBrokerage({
                     <input
                       type="date"
                       name="date"
-                      value={finance.date.split('T')[0] || today}
+                      value={finance.date.split("T")[0] || today}
                       className="mt-1 p-2 border border-gray-300 rounded-md"
                       onChange={handleChange}
                     />
-
                   </div>
-
                 </div>
-
-
-
 
                 {/* -------------2------------- */}
                 {/* -------------brokerageAmount------------- */}
@@ -255,10 +239,7 @@ export default function EditBrokerage({
                       placeholder="Enter Remark"
                     />
                   </div>
-
                 </div>
-
-
               </div>
 
               {/* -------------Button------------- */}
@@ -273,9 +254,8 @@ export default function EditBrokerage({
                 </div>
               </div>
             </div>
-
-          </div >
-        </form >
+          </div>
+        </form>
       </div>
     </>
   );
