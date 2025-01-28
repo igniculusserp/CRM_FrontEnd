@@ -1,21 +1,23 @@
-import PropTypes from 'prop-types';
-import { DataGrid } from '@mui/x-data-grid';
-import Paper from '@mui/material/Paper';
+import PropTypes from "prop-types";
+import { DataGrid } from "@mui/x-data-grid";
+import Paper from "@mui/material/Paper";
 
 export default function LeadsReport({ currentReports }) {
- 
-
   const columns = [
-   
-    { field: 'id', headerName: 'Lead ID', minWidth: 100, flex: 1 },
-    { field: 'name', headerName: 'Lead Name', minWidth: 150, flex: 1 },
-    { field: 'mobileNo', headerName: 'Mobile', minWidth: 130, flex: 1 },
-    { field: 'assigned_To', headerName: 'Managed By', minWidth: 150, flex: 1 },
-    { field: 'leadesStatus', headerName: 'Lead Status', minWidth: 150, flex: 1 },
-    { field: 'leadsSource', headerName: 'Lead Source', minWidth: 150, flex: 1 },
+    { field: "id", headerName: "Lead ID", minWidth: 100, flex: 1 },
+    { field: "name", headerName: "Lead Name", minWidth: 150, flex: 1 },
+    { field: "mobileNo", headerName: "Mobile", minWidth: 130, flex: 1 },
+    { field: "assigned_To", headerName: "Managed By", minWidth: 150, flex: 1 },
     {
-      field: 'segments',
-      headerName: 'Segments',
+      field: "leadesStatus",
+      headerName: "Lead Status",
+      minWidth: 150,
+      flex: 1,
+    },
+    { field: "leadsSource", headerName: "Lead Source", minWidth: 150, flex: 1 },
+    {
+      field: "segments",
+      headerName: "Segments",
       minWidth: 180,
       flex: 1,
       renderCell: (params) => (
@@ -23,14 +25,14 @@ export default function LeadsReport({ currentReports }) {
           {params.value &&
             params.value.map(
               (segment, index) =>
-                segment.length > 1 && <span key={index}>{segment}</span>
+                segment.length > 1 && <span key={index}>{segment}</span>,
             )}
         </div>
       ),
     },
     {
-      field: 'description',
-      headerName: 'Last Remarks',
+      field: "description",
+      headerName: "Last Remarks",
       minWidth: 200,
       flex: 1,
       renderCell: (params) => (
@@ -39,10 +41,13 @@ export default function LeadsReport({ currentReports }) {
     },
   ];
 
-  const rows = currentReports.map((report, index) => ({ id: index + 1, ...report }));
+  const rows = currentReports.map((report, index) => ({
+    id: index + 1,
+    ...report,
+  }));
 
   return (
-    <Paper sx={{ width: '100%' }}>
+    <Paper sx={{ width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -53,9 +58,9 @@ export default function LeadsReport({ currentReports }) {
         checkboxSelection
         sx={{
           border: 0,
-          width: '100%',
-          '& .MuiDataGrid-columnHeaderTitle': {
-            fontWeight: 'bold',
+          width: "100%",
+          "& .MuiDataGrid-columnHeaderTitle": {
+            fontWeight: "bold",
           },
         }}
       />
@@ -74,6 +79,6 @@ LeadsReport.propTypes = {
       leadsSource: PropTypes.string.isRequired,
       segments: PropTypes.arrayOf(PropTypes.string),
       description: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
 };
