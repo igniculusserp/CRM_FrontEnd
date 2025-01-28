@@ -240,10 +240,10 @@ export default function Registration() {
   return (
     <>
       <ToastContainer />
-      <div className="bg-cyan-500 sm:bg-cyan-500 min-h-screen flex flex-col md:flex-row">
+      <div className="flex min-h-screen flex-col bg-cyan-500 sm:bg-cyan-500 md:flex-row">
         {/*----------> Part-I <---------- */}
-        <div className="hidden md:flex w-2/3 bg-cyan min-h-screen flex-col justify-center items-center">
-          <div className="bg-white flex flex-col justify-center items-center py-16 px-16 gap-2 rounded-md">
+        <div className="bg-cyan hidden min-h-screen w-2/3 flex-col items-center justify-center md:flex">
+          <div className="flex flex-col items-center justify-center gap-2 rounded-md bg-white px-16 py-16">
             <img src={IgniculussLogo} alt="Brandlogo" width={80} height={80} />
             <img
               src={CRMRegistrationPage}
@@ -255,7 +255,7 @@ export default function Registration() {
               <h1>Hello, Igniculuss</h1>
             </div>
             <div>
-              <p className="text-xs text-gray-400 text-center">
+              <p className="text-center text-xs text-gray-400">
                 Skip repetitive and manual sales-marketing tasks. Get highly
                 <br />
                 productive through automation and save tons of time!
@@ -265,22 +265,22 @@ export default function Registration() {
         </div>
 
         {/*----------> Part-II <---------- */}
-        <div className="w-full md:w-1/3 bg-cyan-500 md:bg-white flex min-h-screen flex-col justify-center md:my-0 my-6 overflow-hidden">
+        <div className="my-6 flex min-h-screen w-full flex-col justify-center overflow-hidden bg-cyan-500 md:my-0 md:w-1/3 md:bg-white">
           {/* Image on Top for Small Screens */}
-          <div className="flex md:hidden justify-center">
+          <div className="flex justify-center md:hidden">
             <img src={IgniculussLogo} alt="sample" width={100} height={50} />
           </div>
 
-          <div className="flex flex-col justify-center mx-10 md:mx-4 px-3 mt-8  bg-white py-3 rounded-2xl">
-            <div className="flex text-2xl font-semibold gap-3 items-center">
-              <GiDiamonds className="text-3xl hidden md:block hover:skew-x-12 	" />
+          <div className="mx-10 mt-8 flex flex-col justify-center rounded-2xl bg-white px-3 py-3 md:mx-4">
+            <div className="flex items-center gap-3 text-2xl font-semibold">
+              <GiDiamonds className="hidden text-3xl hover:skew-x-12 md:block" />
               <h1 className="">Create your Account</h1>
             </div>
 
             <div className="mt-6">
               {/*----------> FORM <---------- */}
               <form
-                className="flex flex-col gap-3  rounded-md"
+                className="flex flex-col gap-3 rounded-md"
                 onSubmit={handleSubmit}
               >
                 {/*----------> First-Name <---------- */}
@@ -295,7 +295,7 @@ export default function Registration() {
                   <input
                     type="text"
                     name="firstName"
-                    className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm flex justify-between"
+                    className="mt-1 flex w-full justify-between rounded-md border border-gray-300 px-2 py-2 text-sm outline-none"
                     value={formValues.firstName}
                     onChange={handleChange}
                     placeholder="John"
@@ -313,7 +313,7 @@ export default function Registration() {
                   <input
                     type="text"
                     name="lastName"
-                    className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm flex justify-between"
+                    className="mt-1 flex w-full justify-between rounded-md border border-gray-300 px-2 py-2 text-sm outline-none"
                     value={formValues.lastName}
                     onChange={handleChange}
                     placeholder="Mark"
@@ -332,7 +332,7 @@ export default function Registration() {
                   <input
                     type="email"
                     name="email"
-                    className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm flex justify-between"
+                    className="mt-1 flex w-full justify-between rounded-md border border-gray-300 px-2 py-2 text-sm outline-none"
                     value={formValues.email}
                     onChange={handleChange}
                     placeholder="specimen@company.com"
@@ -342,7 +342,7 @@ export default function Registration() {
                 {/*---------->Password<---------- */}
                 <label
                   htmlFor="password"
-                  className="text-xs font-medium text-gray-700 relative block"
+                  className="relative block text-xs font-medium text-gray-700"
                 >
                   <span className="flex gap-1">
                     Password
@@ -352,7 +352,7 @@ export default function Registration() {
                   <input
                     type={passwordEye ? "text" : "password"}
                     name="password"
-                    className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm flex justify-between"
+                    className="mt-1 flex w-full justify-between rounded-md border border-gray-300 px-2 py-2 text-sm outline-none"
                     value={formValues.password}
                     onChange={handleChange}
                     placeholder="********"
@@ -360,7 +360,7 @@ export default function Registration() {
                   <button
                     type="button"
                     onClick={togglePasswordEye}
-                    className="absolute inset-y-0  top-5 right-2 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
+                    className="absolute inset-y-0 right-2 top-5 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
                   >
                     {passwordEye ? (
                       <IoIosEye
@@ -383,7 +383,7 @@ export default function Registration() {
                 {/*---------->Confirm Password<---------- */}
                 <label
                   htmlFor="confirmPassword"
-                  className="text-xs font-medium text-gray-700  relative block"
+                  className="relative block text-xs font-medium text-gray-700"
                 >
                   <span className="flex gap-1">
                     Confirm Password
@@ -393,7 +393,7 @@ export default function Registration() {
                   <input
                     type={confirmPasswordEye ? "text" : "password"}
                     name="confirmPassword"
-                    className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm "
+                    className="mt-1 w-full rounded-md border border-gray-300 px-2 py-2 text-sm outline-none"
                     value={formValues.confirmPassword}
                     onChange={handleChange}
                     placeholder="********"
@@ -401,7 +401,7 @@ export default function Registration() {
                   <button
                     type="button"
                     onClick={toggleConfirmPasswordEye}
-                    className="absolute inset-y-0 top-5 right-2 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
+                    className="absolute inset-y-0 right-2 top-5 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
                   >
                     {confirmPasswordEye ? (
                       <IoIosEye
@@ -430,19 +430,19 @@ export default function Registration() {
                     Contact
                     <FaStarOfLife size={7} className="text-red-500" />
                   </span>
-                  <div className="flex items-center border rounded-md">
-                    <div className=" w-28 text-xs">
+                  <div className="flex items-center rounded-md border">
+                    <div className="w-28 text-xs">
                       <button
                         type="button"
                         onClick={toggleDropdown}
-                        className="rounded px-4 py-2 bg-white"
+                        className="rounded bg-white px-4 py-2"
                       >
                         {selectedCode ? (
                           <div className="flex items-center">
                             <img
                               src={selectedCode.img}
                               alt="flag"
-                              className="w-6 h-4 mr-2 "
+                              className="mr-2 h-4 w-6"
                               onError={(e) => (e.target.style.display = "none")} // Hides image if not found
                             />
                             {selectedCode.label}
@@ -453,24 +453,24 @@ export default function Registration() {
                       </button>
 
                       {isOpen && (
-                        <div className="absolute  w-96 border rounded bg-white shadow-lg z-10 h-48 overflow-y-scroll code">
+                        <div className="code absolute z-10 h-48 w-96 overflow-y-scroll rounded border bg-white shadow-lg">
                           <input
                             type="text"
                             placeholder="Search Country"
                             value={searchQueryCode}
                             onChange={(e) => setSearchQueryCode(e.target.value)}
-                            className="w-full px-4 py-2 border-b outline-none"
+                            className="w-full border-b px-4 py-2 outline-none"
                           />
                           {filteredCountryCodes.map((code, index) => (
                             <div
                               key={index}
                               onClick={() => handleSelect(code)}
-                              className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                              className="flex cursor-pointer items-center px-4 py-2 hover:bg-gray-100"
                             >
                               <img
                                 src={code.img}
                                 alt="flag"
-                                className="w-6 h-4 mr-2"
+                                className="mr-2 h-4 w-6"
                                 onError={(e) =>
                                   (e.target.style.display = "none")
                                 } // Hides image if not found
@@ -486,7 +486,7 @@ export default function Registration() {
                       name="contactNo"
                       value={formValues.contactNo}
                       onChange={handleChange}
-                      className="mt-1 py-2 px-2 rounded-md w-full outline-none text-sm flex justify-between"
+                      className="mt-1 flex w-full justify-between rounded-md px-2 py-2 text-sm outline-none"
                       placeholder="Alternate Number"
                     />
                   </div>
@@ -501,32 +501,32 @@ export default function Registration() {
                     Country
                     <FaStarOfLife size={7} className="text-red-500" />
                   </span>
-                  <div className="flex items-center border rounded-md">
-                    <div className="relative justify-center items-center w-full">
+                  <div className="flex items-center rounded-md border">
+                    <div className="relative w-full items-center justify-center">
                       <button
                         type="button"
                         onClick={toggleDropdownCountry}
-                        className="rounded px-4 py-2 bg-white w-full"
+                        className="w-full rounded bg-white px-4 py-2"
                       >
                         {selectedCountry ? (
                           <div className="flex">
                             <img
                               src={selectedCountry.img}
                               alt="flag"
-                              className="w-6 h-4 mr-2"
+                              className="mr-2 h-4 w-6"
                               onError={(e) => (e.target.style.display = "none")} // Hides image if not found
                             />
                             {selectedCountry.countryName}
                           </div>
                         ) : (
-                          <div className="flex justify-between text-gray-400 font-medium text-ms">
+                          <div className="text-ms flex justify-between font-medium text-gray-400">
                             Select Country <FaChevronDown />{" "}
                           </div>
                         )}
                       </button>
 
                       {isOpenCountry && (
-                        <div className="absolute w-full border rounded bg-white shadow-lg z-10 h-36 overflow-y-scroll ">
+                        <div className="absolute z-10 h-36 w-full overflow-y-scroll rounded border bg-white shadow-lg">
                           <input
                             type="text"
                             placeholder="Search Country"
@@ -534,18 +534,18 @@ export default function Registration() {
                             onChange={(e) =>
                               setSearchQueryCountry(e.target.value)
                             }
-                            className="w-full px-8 py-2 border-b outline-none "
+                            className="w-full border-b px-8 py-2 outline-none"
                           />
                           {filteredCountries.map((code, index) => (
                             <div
                               key={index}
                               onClick={() => handleCountrySelect(code)}
-                              className="w-full flex px-4 py-2 hover:bg-gray-100 cursor-pointer "
+                              className="flex w-full cursor-pointer px-4 py-2 hover:bg-gray-100"
                             >
                               <img
                                 src={code.img}
                                 alt="flag"
-                                className="w-6 h-4 mr-2"
+                                className="mr-2 h-4 w-6"
                                 onError={(e) =>
                                   (e.target.style.display = "none")
                                 } // Hides image if not found
@@ -563,7 +563,7 @@ export default function Registration() {
 
                 <label
                   htmlFor="confirmPassword"
-                  className="text-xs font-medium text-gray-700 "
+                  className="text-xs font-medium text-gray-700"
                 >
                   <span className="flex gap-1">
                     Select Business
@@ -574,7 +574,7 @@ export default function Registration() {
                     name="businessType"
                     value={formValues.businessType}
                     onChange={handleChange}
-                    className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm flex justify-between"
+                    className="mt-1 flex w-full justify-between rounded-md border border-gray-300 px-2 py-2 text-sm outline-none"
                   >
                     <option value="" disabled>
                       Select Business Type
@@ -587,7 +587,7 @@ export default function Registration() {
                   </select>
                 </label>
 
-                <button className="bg-cyan-500 outline-none text-white py-4 text-xs rounded-md font-bold mt-4">
+                <button className="mt-4 rounded-md bg-cyan-500 py-4 text-xs font-bold text-white outline-none">
                   Submit
                 </button>
               </form>

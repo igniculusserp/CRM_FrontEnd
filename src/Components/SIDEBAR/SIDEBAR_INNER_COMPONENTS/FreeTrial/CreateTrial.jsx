@@ -319,8 +319,8 @@ export default function CreateTrial() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col mt-3">
-        <div className="flex justify-between mx-3 px-3 bg-white border rounded py-3">
+      <div className="mt-3 flex min-h-screen flex-col">
+        <div className="mx-3 flex justify-between rounded border bg-white px-3 py-3">
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-xl">
               <h1>Edit Free Trail</h1>
@@ -329,7 +329,7 @@ export default function CreateTrial() {
           <div>
             <Link
               to="/panel/freeTrail"
-              className="px-6 py-1 rounded  border border-blue-500 text-blue-500 "
+              className="rounded border border-blue-500 px-6 py-1 text-blue-500"
             >
               Cancel
             </Link>
@@ -350,8 +350,8 @@ export default function CreateTrial() {
               <img src={profilepic} className=" max-h-24 max-w-24 p-3" />
             </div> */}
 
-            <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
-              <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+            <div className="mx-3 my-3 flex-grow rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Free Trail Information
               </h2>
 
@@ -360,8 +360,8 @@ export default function CreateTrial() {
               {/* -------------1------------- */}
               {/* -------------Name------------- */}
               <div className="grid gap-2 p-2">
-                <div className="flex space-x-4  ">
-                  <div className="flex flex-col w-1/2">
+                <div className="flex space-x-4">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="leadId"
                       className="text-sm font-medium text-gray-700"
@@ -373,12 +373,12 @@ export default function CreateTrial() {
                       name="leadId"
                       value={editTrail.leadId}
                       onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                     />
                   </div>
 
                   {/* -------------Language------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="name"
                       className="text-sm font-medium text-gray-700"
@@ -390,14 +390,14 @@ export default function CreateTrial() {
                       name="name"
                       value={editTrail.name}
                       onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
                 {/* -------------2------------- */}
                 <div className="flex space-x-4">
                   {/* -------------Language------------- */}
-                  <div className="flex flex-col w-1/2 relative">
+                  <div className="relative flex w-1/2 flex-col">
                     <label
                       htmlFor="language"
                       className="text-sm font-medium text-gray-700"
@@ -410,7 +410,7 @@ export default function CreateTrial() {
                       onMouseLeave={() => setisDropdownVisibleLanguage(false)}
                     >
                       <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LanguageDropDown"
                         type="button"
                       >
@@ -422,13 +422,13 @@ export default function CreateTrial() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLanguage && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                        <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {LanguageDropDown.map(({ key, name }) => (
                               <li
                                 key={key}
                                 onClick={() => handleDropdownLanguage(name)}
-                                className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 {name}
                               </li>
@@ -439,7 +439,7 @@ export default function CreateTrial() {
                     </div>
                   </div>
                   {/* ------------- Mobile Number------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="mobileNo"
                       className="text-sm font-medium text-gray-700"
@@ -450,7 +450,7 @@ export default function CreateTrial() {
                       type="text"
                       name="mobileNo"
                       value={editTrail.mobileNo}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter your Mobile Number"
                     />
@@ -462,7 +462,7 @@ export default function CreateTrial() {
                 {/* -------------3------------- */}
                 {/* -------------Alternate Number------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="phoneNo"
                       className="text-sm font-medium text-gray-700"
@@ -473,14 +473,14 @@ export default function CreateTrial() {
                       type="text"
                       name="phoneNo"
                       value={editTrail.phoneNo}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter your Alternate Number"
                     />
                   </div>
 
                   {/* -------------Email------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="email"
                       className="text-sm font-medium text-gray-700"
@@ -491,7 +491,7 @@ export default function CreateTrial() {
                       type="text"
                       name="email"
                       value={editTrail.email}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter your Email"
                     />
@@ -501,7 +501,7 @@ export default function CreateTrial() {
                 {/* -------------4------------- */}
                 {/* -----------Assigned To------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2 relative">
+                  <div className="relative flex w-1/2 flex-col">
                     <label
                       htmlFor=" AssignedTo"
                       className="text-sm font-medium text-gray-700"
@@ -516,7 +516,7 @@ export default function CreateTrial() {
                       }
                     >
                       <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadStatusDropDown"
                         type="button"
                       >
@@ -526,7 +526,7 @@ export default function CreateTrial() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownassigned_ToDropDown && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {assigned_ToDropDown.map(
                               ({ key, userName, role }) => (
@@ -538,7 +538,7 @@ export default function CreateTrial() {
                                       role,
                                     )
                                   }
-                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                  className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                 >
                                   {userName}-({role})
                                 </li>
@@ -550,7 +550,7 @@ export default function CreateTrial() {
                     </div>
                   </div>
                   {/* -------------Segments------------- */}
-                  <div className="flex flex-col w-1/2 relative">
+                  <div className="relative flex w-1/2 flex-col">
                     <label
                       htmlFor="segment"
                       className="text-sm font-medium text-gray-700"
@@ -563,7 +563,7 @@ export default function CreateTrial() {
                       onMouseLeave={() => setisDropdownVisibleSegment(false)}
                     >
                       <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadStatusDropDown"
                         type="button"
                       >
@@ -571,12 +571,12 @@ export default function CreateTrial() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleSegment && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {segments.map((segment) => (
                               <li
                                 key={segment.id}
-                                className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                className="flex cursor-pointer items-center border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 <input
                                   type="checkbox"
@@ -602,7 +602,7 @@ export default function CreateTrial() {
                 {/* -------------5------------- */}
                 {/* -------------Trail Start Date------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="trialStartDate"
                       className="text-sm font-medium text-gray-700"
@@ -613,7 +613,7 @@ export default function CreateTrial() {
                       type="date"
                       name="trialStartDate"
                       value={editTrail.trialStartDate.split("T")[0]}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                     {errors.trialStartDate && (
@@ -623,7 +623,7 @@ export default function CreateTrial() {
                     )}
                   </div>
                   {/* -------------Trail End Date------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="trialEndDate"
                       className="text-sm font-medium text-gray-700"
@@ -635,7 +635,7 @@ export default function CreateTrial() {
                       name="trialEndDate"
                       value={editTrail.trialEndDate.split("T")[0]}
                       onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                     />
                     {errors.trialEndDate && (
                       <span style={{ color: "red" }}>
@@ -647,7 +647,7 @@ export default function CreateTrial() {
                 {/* -------------6------------- */}
                 {/* -------------CallBack DateTime------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="callBackDateTime"
                       className="text-sm font-medium text-gray-700"
@@ -659,11 +659,11 @@ export default function CreateTrial() {
                       name="callBackDateTime"
                       value={editTrail.call_bck_DateTime.split("T")[0]}
                       onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* ------------Last Modified By------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="lastModifiedBy"
                       className="text-sm font-medium text-gray-700"
@@ -674,7 +674,7 @@ export default function CreateTrial() {
                       type="text"
                       name="lastModifiedBy"
                       value={editTrail.lastModifiedBy}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter details"
                     />
@@ -683,22 +683,22 @@ export default function CreateTrial() {
               </div>
             </div>
             {/* -------------Description Information------------- */}
-            <div className="bg-white rounded-xl shadow-md mx-3 mb-6">
-              <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+            <div className="mx-3 mb-6 rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Description Information
               </h2>
-              <div className="p-2 ">
+              <div className="p-2">
                 <div className="flex flex-col">
                   <label
                     htmlFor="description"
-                    className="text-sm  font-medium text-gray-700"
+                    className="text-sm font-medium text-gray-700"
                   >
                     Description
                   </label>
                   <ReactQuill
                     name="description"
                     value={description}
-                    className="text-balance hyphens-auto  max-h-full h-60 mt-1"
+                    className="mt-1 h-60 max-h-full hyphens-auto text-balance"
                     theme="snow"
                     onChange={setdescription}
                     placeholder="Add Description"
@@ -708,7 +708,7 @@ export default function CreateTrial() {
               <div className="flex justify-end px-2">
                 <button
                   type="submit"
-                  className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+                  className="mb-3 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                 >
                   {isEditMode ? "Update" : "Save"}
                 </button>

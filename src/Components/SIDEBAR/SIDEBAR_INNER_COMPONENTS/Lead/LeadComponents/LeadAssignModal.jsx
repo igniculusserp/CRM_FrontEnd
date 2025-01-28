@@ -104,18 +104,18 @@ const LeadAssignModal = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
-        <h2 className="text-xl font-semibold mb-4">Leads Allotment</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="w-full max-w-lg rounded-lg bg-white p-6 shadow-lg">
+        <h2 className="mb-4 text-xl font-semibold">Leads Allotment</h2>
         <form onSubmit={handleSubmit}>
-          <div className=" shadow-lg">
-            <h1 className="py-2 px-1 rounded-t-lg bg-cyan-500 text-white text-md font-medium">
+          <div className="shadow-lg">
+            <h1 className="text-md rounded-t-lg bg-cyan-500 px-1 py-2 font-medium text-white">
               Details
             </h1>
-            <div className="bg-white px-1 rounded-b-xl">
+            <div className="rounded-b-xl bg-white px-1">
               <div className="grid gap-2 p-2">
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-full">
+                  <div className="flex w-full flex-col">
                     <label
                       htmlFor="leadCount"
                       className="text-sm font-medium text-gray-700"
@@ -128,13 +128,13 @@ const LeadAssignModal = ({ onClose }) => {
                       id="leadCount"
                       value={leadCount}
                       onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-full">
-                    <div className="flex flex-col w-1/1 relative">
+                  <div className="flex w-full flex-col">
+                    <div className="w-1/1 relative flex flex-col">
                       <label
                         htmlFor="assignedTo"
                         className="text-sm font-medium text-gray-700"
@@ -149,7 +149,7 @@ const LeadAssignModal = ({ onClose }) => {
                         }
                       >
                         <button
-                          className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                          className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                           id="LeadStatusDropDown"
                           type="button"
                         >
@@ -159,7 +159,7 @@ const LeadAssignModal = ({ onClose }) => {
                           <FaAngleDown className="ml-2 text-gray-400" />
                         </button>
                         {isDropdownassigned_ToDropDown && (
-                          <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                          <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                             <ul className="py-2 text-sm text-gray-700">
                               {assigned_ToDropDown.map(
                                 ({ key, userName, role }) => (
@@ -170,7 +170,7 @@ const LeadAssignModal = ({ onClose }) => {
                                         userName,
                                       )
                                     }
-                                    className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {userName}-({role})
                                   </li>
@@ -186,17 +186,17 @@ const LeadAssignModal = ({ onClose }) => {
               </div>
             </div>
           </div>
-          <div className="flex justify-end mt-4 gap-5">
+          <div className="mt-4 flex justify-end gap-5">
             <button
               type="submit"
-              className={`shadow-md px-12 py-1 mb-2 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+              className={`mb-2 rounded border-2 border-cyan-500 bg-cyan-500 px-12 py-1 text-white shadow-md hover:bg-white hover:text-cyan-500 ${loading ? "cursor-not-allowed opacity-50" : ""}`}
               disabled={loading}
             >
               {loading ? "Sending..." : "Submit"}
             </button>
             <button
               type="button"
-              className="shadow-md px-12 py-1 bg-gray-300 text-black rounded hover:bg-gray-400 mb-2  border-2 "
+              className="mb-2 rounded border-2 bg-gray-300 px-12 py-1 text-black shadow-md hover:bg-gray-400"
               onClick={onClose}
             >
               Close

@@ -138,8 +138,8 @@ export default function AddExpense({ setActive, setShowTopSection }) {
   return (
     <>
       <ToastContainer />
-      <div className="min-h-screen flex flex-col mt-3">
-        <div className="flex justify-between px-3 bg-white border rounded py-3">
+      <div className="mt-3 flex min-h-screen flex-col">
+        <div className="flex justify-between rounded border bg-white px-3 py-3">
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-xl">
               {/*  {isEditMode? <h1>Edit Lead</h1>: <>Create Lead</> } */}
@@ -149,7 +149,7 @@ export default function AddExpense({ setActive, setShowTopSection }) {
           <div>
             <div
               onClick={handleCancel}
-              className="px-6 py-1 rounded  border border-blue-500 text-blue-500 cursor-pointer "
+              className="cursor-pointer rounded border border-blue-500 px-6 py-1 text-blue-500"
             >
               Cancel
             </div>
@@ -159,15 +159,15 @@ export default function AddExpense({ setActive, setShowTopSection }) {
         {/* -------------FORM Starts FROM HERE------------- */}
         <form onSubmit={handleSubmit} className="flex">
           <div className="w-full">
-            <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
-              <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+            <div className="mt-3 flex-grow rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Lead Information
               </h2>
               {/* -------------1------------- */}
               {/* -------------HeadName------------- */}
               <div className="grid gap-2 p-2">
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2 relative">
+                  <div className="relative flex w-1/2 flex-col">
                     <label
                       htmlFor="leadesStatus"
                       className="text-sm font-medium text-gray-700"
@@ -180,7 +180,7 @@ export default function AddExpense({ setActive, setShowTopSection }) {
                       onMouseLeave={() => setisDropdownVisibleLeadStatus(false)}
                     >
                       <button
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadStatusDropDown"
                         type="button"
                       >
@@ -190,7 +190,7 @@ export default function AddExpense({ setActive, setShowTopSection }) {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLeadStatus && (
-                        <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10.5 z-10">
+                        <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {leadStatus.length > 0 ? (
                               leadStatus.map(({ i, headDescription }) => (
@@ -199,13 +199,13 @@ export default function AddExpense({ setActive, setShowTopSection }) {
                                   onClick={() =>
                                     handleDropdownLeadStatus(headDescription)
                                   }
-                                  className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                                  className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                 >
                                   {headDescription}
                                 </li>
                               ))
                             ) : (
-                              <li className="flex items-center px-4 py-2 text-center gap-1">
+                              <li className="flex items-center gap-1 px-4 py-2 text-center">
                                 <IoInformationCircle
                                   size={25}
                                   className="text-cyan-600"
@@ -222,7 +222,7 @@ export default function AddExpense({ setActive, setShowTopSection }) {
                     </div>
                   </div>
 
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="date"
                       className="text-sm font-medium text-gray-700"
@@ -233,7 +233,7 @@ export default function AddExpense({ setActive, setShowTopSection }) {
                       type="date"
                       name="date"
                       value={finance.date || today}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                   </div>
@@ -242,7 +242,7 @@ export default function AddExpense({ setActive, setShowTopSection }) {
                 {/* -------------2------------- */}
                 {/* -------------Amount------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="amount"
                       className="text-sm font-medium text-gray-700"
@@ -254,13 +254,13 @@ export default function AddExpense({ setActive, setShowTopSection }) {
                       name="amount"
                       value={finance.amount}
                       maxLength="15"
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter your Amount"
                     />
                   </div>
                   {/* -------------Reference Number------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="refaranceNo"
                       className="text-sm font-medium text-gray-700"
@@ -271,7 +271,7 @@ export default function AddExpense({ setActive, setShowTopSection }) {
                       type="text"
                       name="refaranceNo"
                       value={finance.refaranceNo}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter your Reference Number"
                     />
@@ -281,7 +281,7 @@ export default function AddExpense({ setActive, setShowTopSection }) {
                 {/* -------------3------------- */}
 
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-full">
+                  <div className="flex w-full flex-col">
                     <label
                       htmlFor="remarks"
                       className="text-sm font-medium text-gray-700"
@@ -292,7 +292,7 @@ export default function AddExpense({ setActive, setShowTopSection }) {
                       type="text"
                       name="remarks"
                       value={finance.remarks}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter Remark"
                     />
@@ -301,11 +301,11 @@ export default function AddExpense({ setActive, setShowTopSection }) {
               </div>
 
               {/* -------------Button------------- */}
-              <div className="flex justify-end gap-5 mb-6">
-                <div className="flex justify-end mr-5">
+              <div className="mb-6 flex justify-end gap-5">
+                <div className="mr-5 flex justify-end">
                   <button
                     type="submit"
-                    className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                    className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                   >
                     Save
                   </button>

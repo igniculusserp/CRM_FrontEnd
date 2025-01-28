@@ -33,15 +33,15 @@ export default function CreateVoiceDetails() {
   };
 
   return (
-    <div className="flex flex-col mx-3 mt-3 overflow-x-auto overflow-y-hidden">
-      <div className="flex py-2 px-3 items-center justify-between shadow-md bg-white rounded-md">
-        <h1 className="text-xl py-1 font-medium rounded-lg">
+    <div className="mx-3 mt-3 flex flex-col overflow-x-auto overflow-y-hidden">
+      <div className="flex items-center justify-between rounded-md bg-white px-3 py-2 shadow-md">
+        <h1 className="rounded-lg py-1 text-xl font-medium">
           {isEditMode ? <h1>Send Details</h1> : <>Create Details</>}
         </h1>
         <div>
           <Link
             to="/panel/voicebox"
-            className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500 "
+            className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
           >
             Cancel
           </Link>
@@ -51,17 +51,17 @@ export default function CreateVoiceDetails() {
         {/* CREATE CONTACT FORM */}
         <form className="flex flex-col py-3" onSubmit={handleSubmit}>
           {/* ----- HEADING ----- */}
-          <div className="py-2 px-4 bg-cyan-500 rounded-t-xl shadow-md">
-            <h1 className="font-medium rounded-t-xl text-white bg-cyan-500">
+          <div className="rounded-t-xl bg-cyan-500 px-4 py-2 shadow-md">
+            <h1 className="rounded-t-xl bg-cyan-500 font-medium text-white">
               Send
             </h1>
           </div>
           {/* ----- FIELDS START FROM HERE ------ */}
-          <div className="grid gap-2 p-2 bg-white rounded-b-xl shadow-lg">
+          <div className="grid gap-2 rounded-b-xl bg-white p-2 shadow-lg">
             {/* FIRST ROW */}
             <div className="flex space-x-4">
               {/* LEAD ID FIELD */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="sendMode"
                   className="text-sm font-medium text-gray-700"
@@ -73,13 +73,13 @@ export default function CreateVoiceDetails() {
                   name="sendMode"
                   id="sendMode"
                   value={editDetails.sendMode}
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  className="mt-1 rounded-md border border-gray-300 p-2"
                   onChange={handleChange}
                   placeholder="Entere verox peron"
                 />
               </div>
               {/* NUMBER FIELD */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="number"
                   className="text-sm font-medium text-gray-700"
@@ -91,7 +91,7 @@ export default function CreateVoiceDetails() {
                   name="number"
                   id="number"
                   value={editDetails.number}
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  className="mt-1 rounded-md border border-gray-300 p-2"
                   onChange={handleChange}
                   placeholder="Entere verox peron"
                 />
@@ -100,7 +100,7 @@ export default function CreateVoiceDetails() {
             {/* SECOND ROW */}
             <div className="flex space-x-4">
               {/* TEXT MESSAGE FIELD */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="textMsg"
                   className="text-sm font-medium text-gray-700"
@@ -112,7 +112,7 @@ export default function CreateVoiceDetails() {
                   name="textMsg"
                   id="textMsg"
                   value={editDetails.textMsg}
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  className="mt-1 rounded-md border border-gray-300 p-2"
                   onChange={handleChange}
                   placeholder="Entere verox peron"
                 />
@@ -120,22 +120,22 @@ export default function CreateVoiceDetails() {
             </div>
           </div>
           {/* DESCRIPTION */}
-          <div className="bg-white rounded-xl shadow-md mt-3 mb-6">
-            <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+          <div className="mb-6 mt-3 rounded-xl bg-white shadow-md">
+            <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
               Description Information
             </h2>
-            <div className="p-2 ">
+            <div className="p-2">
               <div className="flex flex-col">
                 <label
                   htmlFor="description"
-                  className="text-sm  font-medium text-gray-700"
+                  className="text-sm font-medium text-gray-700"
                 >
                   Description
                 </label>
                 <ReactQuill
                   name="description"
                   value={description}
-                  className="text-balance hyphens-auto  max-h-full h-60 mt-1"
+                  className="mt-1 h-60 max-h-full hyphens-auto text-balance"
                   theme="snow"
                   onChange={setDescription}
                   placeholder="Add Description"
@@ -145,7 +145,7 @@ export default function CreateVoiceDetails() {
             <div className="flex justify-end px-2">
               <button
                 type="submit"
-                className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+                className="mb-3 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
               >
                 {isEditMode ? "Update" : "Save"}
               </button>

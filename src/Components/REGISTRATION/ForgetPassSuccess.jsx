@@ -6,8 +6,8 @@ import { GiDiamonds } from "react-icons/gi";
 export default function ForgetPassSuccess() {
   return (
     <>
-      <div className="bg-cyan-500 min-h-screen min-w-screen flex justify-center items-center">
-        <div className="bg-white w-3/4 sm:w-2/4 flex flex-col justify-center items-center py-6  gap-2 rounded-2xl">
+      <div className="min-w-screen flex min-h-screen items-center justify-center bg-cyan-500">
+        <div className="flex w-3/4 flex-col items-center justify-center gap-2 rounded-2xl bg-white py-6 sm:w-2/4">
           <img
             src={forgetPasswordSuccesfull}
             alt="sample"
@@ -15,7 +15,7 @@ export default function ForgetPassSuccess() {
             height={150}
           />
           <div className="flex gap-1 text-3xl font-semibold">
-            <GiDiamonds className="mt-1 " />
+            <GiDiamonds className="mt-1" />
             <h1 className="text-center">
               Sucessfully reset <br />
               your password
@@ -26,7 +26,7 @@ export default function ForgetPassSuccess() {
             <div className="absolute inset-2 flex items-center">
               <div className="w-full border-t border-gray-400" />
             </div>
-            <div className="relative inline-block px-4 bg-white text-sm">
+            <div className="relative inline-block bg-white px-4 text-sm">
               <span className="font-light">
                 Back to{" "}
                 <Link to="/tenantlogin" className="text-cyan-500">

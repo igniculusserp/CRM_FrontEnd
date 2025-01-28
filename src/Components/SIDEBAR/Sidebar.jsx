@@ -255,7 +255,7 @@ export default function SidebaBar({ toggle, setToggle }) {
   console.log(welcomedata);
   return (
     <>
-      <div className="flex flex-col bg-cyan-500 gap-3  ">
+      <div className="flex flex-col gap-3 bg-cyan-500">
         {/* Fixed Image Section */}
         <div className="relative">
           <div className="sticky top-0 mt-4">
@@ -263,30 +263,30 @@ export default function SidebaBar({ toggle, setToggle }) {
               id="logoImg"
               src={welcomedata?.tenentLogo || noAvatar}
               alt="Company Image"
-              className={`mt-3 ${toggle ? "w-14 h-14" : "w-20 h-20"} rounded-full shadow-md shadow-cyan-600 object-cover mx-auto border`}
+              className={`mt-3 ${toggle ? "h-14 w-14" : "h-20 w-20"} mx-auto rounded-full border object-cover shadow-md shadow-cyan-600`}
             />
           </div>
         </div>
         {/* Scrollable Menu Section */}
-        <div className="flex flex-col h-full mt-10 CustomerTestimonialReview ">
+        <div className="CustomerTestimonialReview mt-10 flex h-full flex-col">
           {(business === "Brokerage" ? sideBar_Brokerage : sideBar).map(
             ({ key, data, icon, link }, index) => (
               <Link to={link} onClick={() => handleClick(key)} key={key}>
                 <li
-                  className={`flex ${toggle ? "justify-center" : "justify-start"} items-center gap-3 text-white text-md font-small py-3 shadow-md ${
+                  className={`flex ${toggle ? "justify-center" : "justify-start"} text-md font-small items-center gap-3 py-3 text-white shadow-md ${
                     index === 0 ? "border-b-2 border-t-2" : "border-b-2"
-                  } ${index === sideBar.length - 1 ? "border-b-2" : ""} hover:bg-gradient-to-b from-cyan-300 to-cyan-700`}
+                  } ${index === sideBar.length - 1 ? "border-b-2" : ""} from-cyan-300 to-cyan-700 hover:bg-gradient-to-b`}
                 >
                   <h1
-                    className={`${toggle ? "flex items-center gap-1 flex-col px-1" : "flex items-center gap-2 px-2"}`}
+                    className={`${toggle ? "flex flex-col items-center gap-1 px-1" : "flex items-center gap-2 px-2"}`}
                   >
                     <span
-                      className={`${toggle ? "sm:text-xl text-sm" : "text-xl"}`}
+                      className={`${toggle ? "text-sm sm:text-xl" : "text-xl"}`}
                     >
                       {icon}
                     </span>
                     <span
-                      className={`${toggle ? "text-xs whitespace-nowrap " : "text-md"}`}
+                      className={`${toggle ? "whitespace-nowrap text-xs" : "text-md"}`}
                     >
                       {data}
                     </span>

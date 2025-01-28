@@ -74,14 +74,14 @@ const MassEmailModal = ({ emails, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
-        <h2 className="text-xl font-semibold mb-4">Mass Email</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="w-full max-w-lg rounded-lg bg-white p-6 shadow-lg">
+        <h2 className="mb-4 text-xl font-semibold">Mass Email</h2>
 
         {/* Display Selected Emails */}
         <div className="mb-4">
           <h4 className="font-medium">Selected Emails:</h4>
-          <div className="p-2 border rounded bg-gray-100 h-24 overflow-y-auto">
+          <div className="h-24 overflow-y-auto rounded border bg-gray-100 p-2">
             {emails.length > 0 ? (
               emails.map((email, index) => (
                 <div key={index} className="text-sm">
@@ -96,7 +96,7 @@ const MassEmailModal = ({ emails, onClose }) => {
 
         {/* Textarea for Mass Email */}
         <textarea
-          className="w-full p-2 border rounded mb-4"
+          className="mb-4 w-full rounded border p-2"
           rows="4"
           placeholder="Write your message here..."
           value={message}
@@ -106,7 +106,7 @@ const MassEmailModal = ({ emails, onClose }) => {
         {/* Button Container */}
         <div className="flex justify-end">
           <button
-            className={`px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+            className={`mr-2 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 ${loading ? "cursor-not-allowed opacity-50" : ""}`}
             onClick={handleSubmit} // Call handleSubmit to send email
             disabled={loading} // Disable button while loading
           >
@@ -114,7 +114,7 @@ const MassEmailModal = ({ emails, onClose }) => {
             {/* Change button text based on loading state */}
           </button>
           <button
-            className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
+            className="rounded bg-gray-300 px-4 py-2 text-black hover:bg-gray-400"
             onClick={onClose}
           >
             Close

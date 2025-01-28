@@ -225,28 +225,28 @@ export default function CreateSendEmail() {
   };
 
   return (
-    <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
-      <div className="flex py-2 px-3 items-center justify-between bg-white rounded-md shadow-md">
+    <div className="m-3 flex flex-col overflow-x-auto overflow-y-hidden">
+      <div className="flex items-center justify-between rounded-md bg-white px-3 py-2 shadow-md">
         <h1 className="text-xl">Send Email</h1>
         <Link
           to="/panel/servicebox"
-          className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
+          className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
         >
           Cancel
         </Link>
       </div>
       {/* -------------FORM Starts FROM HERE------------- */}
-      <form onSubmit={handleSubmit} className="flex flex-col mb-6">
+      <form onSubmit={handleSubmit} className="mb-6 flex flex-col">
         {/* -------------SMS DETAILS STARTS FROM HERE------------- */}
-        <div className="my-3 bg-white rounded-xl shadow-md flex-grow ">
-          <h2 className="font-medium py-2 px-3 rounded-t-xl text-white bg-cyan-500">
+        <div className="my-3 flex-grow rounded-xl bg-white shadow-md">
+          <h2 className="rounded-t-xl bg-cyan-500 px-3 py-2 font-medium text-white">
             Email Details
           </h2>
 
           {/* CHECK BOXES */}
-          <div className="flex bg-white px-3 py-2 max-w-full items-center gap-3">
+          <div className="flex max-w-full items-center gap-3 bg-white px-3 py-2">
             {/* Free Trail */}
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <input
                 type="checkbox"
                 checked={selectedCheckbox === "Free Trail"}
@@ -255,7 +255,7 @@ export default function CreateSendEmail() {
               <p className="text-sm text-gray-700">Free Trail</p>
             </div>
             {/* Paid Client */}
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <input
                 type="checkbox"
                 checked={selectedCheckbox === "Paid Clients"}
@@ -281,7 +281,7 @@ export default function CreateSendEmail() {
           <div className="grid gap-2 p-2">
             <div className="flex space-x-4">
               {/* PRODUCTS DROPDOWN */}
-              <div className="flex flex-col w-1/2 relative">
+              <div className="relative flex w-1/2 flex-col">
                 <label
                   htmlFor="segment"
                   className="text-sm font-medium text-gray-700"
@@ -294,7 +294,7 @@ export default function CreateSendEmail() {
                 >
                   <button
                     onClick={toggleDropdownSegment}
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                     id="LeadStatusDropDown"
                     type="button"
                   >
@@ -302,13 +302,13 @@ export default function CreateSendEmail() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {isDropdownVisibleSegment && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-11 z-10">
+                    <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                       <ul className="py-2 text-sm text-gray-700">
                         {segments.length > 0 ? (
                           segments.map((segment) => (
                             <li
                               key={segment.id}
-                              className="flex items-center px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                              className="flex cursor-pointer items-center border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                             >
                               <input
                                 type="checkbox"
@@ -322,7 +322,7 @@ export default function CreateSendEmail() {
                             </li>
                           ))
                         ) : (
-                          <li className="flex items-center px-4 py-2 text-center gap-1">
+                          <li className="flex items-center gap-1 px-4 py-2 text-center">
                             <IoInformationCircle
                               size={25}
                               className="text-cyan-600"
@@ -340,7 +340,7 @@ export default function CreateSendEmail() {
                 </div>
               </div>
               {/* CALL STATUS DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="subject"
                   className="text-sm font-medium text-gray-700"
@@ -352,7 +352,7 @@ export default function CreateSendEmail() {
                   name="subject"
                   id="subject"
                   value={editEmail.subject}
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  className="mt-1 rounded-md border border-gray-300 p-2"
                   onChange={handleChange}
                   placeholder="Enter Subject"
                 />
@@ -361,7 +361,7 @@ export default function CreateSendEmail() {
             {/* DROPDOWNS FIELD */}
             <div className="flex space-x-4">
               {/* MESSAGE DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="message"
                   className="text-sm font-medium text-gray-700"
@@ -373,13 +373,13 @@ export default function CreateSendEmail() {
                   name="message"
                   id="message"
                   value={editEmail.message}
-                  className="p-2 border border-gray-300 rounded-md"
+                  className="rounded-md border border-gray-300 p-2"
                   onChange={handleChange}
                   placeholder="Enter Message"
                 />
               </div>
               {/* TEXT MESSAGE DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="attachment"
                   className="text-sm font-medium text-gray-700"
@@ -392,7 +392,7 @@ export default function CreateSendEmail() {
                   id="attachment"
                   value={editEmail.attachment}
                   accept=".pdf"
-                  className="p-2 border border-gray-300 rounded-md"
+                  className="rounded-md border border-gray-300 p-2"
                   onChange={handleFileChange}
                   placeholder="Entere verox peron"
                 />
@@ -401,8 +401,8 @@ export default function CreateSendEmail() {
 
             {/* HIDDEN INPUT */}
             <div className="flex space-x-4">
-              <div className="flex flex-col w-full">
-                <input className="mt-1 p-2 border border-gray-300 rounded-md hidden" />
+              <div className="flex w-full flex-col">
+                <input className="mt-1 hidden rounded-md border border-gray-300 p-2" />
               </div>
             </div>
           </div>
@@ -410,7 +410,7 @@ export default function CreateSendEmail() {
           <div className="flex justify-end px-2">
             <button
               type="submit"
-              className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+              className="mb-3 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
             >
               Send
             </button>

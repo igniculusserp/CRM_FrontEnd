@@ -330,22 +330,20 @@ export default function Logs() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col m-3">
+    <div className="m-3 flex min-h-screen flex-col">
       {/* BUTTONS */}
       {/* MIDDLE */}
-      <div className="py-2.5 px-3 bg-white flex items-center justify-between rounded-md">
+      <div className="flex items-center justify-between rounded-md bg-white px-3 py-2.5">
         <div className="flex gap-3">
           {Object.keys(dynamicButtons).map((key) => (
             <button
               key={key}
               onClick={() => handleClick(key)}
-              className={`px-5 py-1.5 rounded font-light text-md
-                ${
-                  selectedButton === key
-                    ? "bg-cyan-500 text-white"
-                    : "bg-gray-100 text-gray-700"
-                }
-              `}
+              className={`text-md rounded px-5 py-1.5 font-light ${
+                selectedButton === key
+                  ? "bg-cyan-500 text-white"
+                  : "bg-gray-100 text-gray-700"
+              } `}
             >
               {key}
             </button>
@@ -354,16 +352,16 @@ export default function Logs() {
       </div>
 
       {/* CREATE CLIENT LOGS */}
-      <div className="flex py-3 px-1 items-center justify-between">
+      <div className="flex items-center justify-between px-1 py-3">
         <div className="flex items-center gap-2">
           <h1 className="text-3xl font-medium">View Client Logs</h1>
-          <h2 className="text-xl font-medium text-red-500 text-center">
+          <h2 className="text-center text-xl font-medium text-red-500">
             (This feature is coming soon...)
           </h2>
         </div>
         <div className="flex gap-2">
           <Link to={buttonText.href}>
-            <button className="px-4 py-2 bg-blue-600 text-center text-md text-white rounded-md">
+            <button className="text-md rounded-md bg-blue-600 px-4 py-2 text-center text-white">
               {buttonText.text}
             </button>
           </Link>
@@ -381,13 +379,13 @@ export default function Logs() {
               <table className="min-w-full bg-white">
                 {/* -------------- TABLE HEAD START -------------- */}
                 <thead>
-                  <tr className="border-gray-300 border-b-2">
+                  <tr className="border-b-2 border-gray-300">
                     {/* CHECKBOX */}
-                    <th className="pl-3 py-3  text-left font-medium ">
+                    <th className="py-3 pl-3 text-left font-medium">
                       <input type="checkbox" />
                     </th>
                     {/* MOBILE NUMBER */}
-                    <th className="px-1 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="flex items-center justify-between">
                         <span className="text-left align-baseline">
                           Mobile Number
@@ -396,35 +394,35 @@ export default function Logs() {
                       </div>
                     </th>
                     {/* CLIENT NAME */}
-                    <th className="px-3 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-3 py-3 text-left font-medium">
                       <div className="flex items-center justify-between">
                         <span>Client Name</span>
                         <FaBars />
                       </div>
                     </th>
                     {/* CREATED BY */}
-                    <th className="px-6 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-6 py-3 text-left font-medium">
                       <div className="flex items-center justify-between">
                         <span>Created By</span>
                         <FaBars />
                       </div>
                     </th>
                     {/* OPERATIONS */}
-                    <th className="px-6 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-6 py-3 text-left font-medium">
                       <div className="flex items-center justify-between">
                         <span>Operation</span>
                         <FaBars />
                       </div>
                     </th>
                     {/* CREATED TIME */}
-                    <th className="px-6 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-6 py-3 text-left font-medium">
                       <div className="flex items-center justify-between">
                         <span>Created Time</span>
                         <FaBars />
                       </div>
                     </th>
                     {/* ACTION */}
-                    <th className="px-6 py-3  text-left  border-r font-medium ">
+                    <th className="border-r px-6 py-3 text-left font-medium">
                       <span>Action</span>
                     </th>
                   </tr>
@@ -436,49 +434,49 @@ export default function Logs() {
                   {currentLogs.map((log, i) => (
                     <tr
                       key={i}
-                      className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                      className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                     >
                       {/*   CHECKBOX */}
-                      <td className="pl-3 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                      <td className="border-b border-gray-300 py-4 pl-3 text-sm leading-5 text-gray-600">
                         <input type="checkbox" />
                       </td>
                       {/*   MOBILE NUMBER */}
-                      <td className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                        <div className="flex gap-2 items-center">
+                      <td className="border-b border-gray-300 px-1 py-4 text-sm leading-5 text-gray-600">
+                        <div className="flex items-center gap-2">
                           {log.mobNo}
                         </div>
                       </td>
                       {/*   CLIENT NAME */}
-                      <td className="px-6 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                        <div className="flex gap-2 items-center">
+                      <td className="border-b border-gray-300 px-6 py-4 text-sm leading-5 text-gray-600">
+                        <div className="flex items-center gap-2">
                           {log.username}
                         </div>
                       </td>
                       {/*   CREATED BY */}
-                      <td className="px-6 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                        <div className="flex gap-2 items-center text-blue-600">
+                      <td className="border-b border-gray-300 px-6 py-4 text-sm leading-5 text-gray-600">
+                        <div className="flex items-center gap-2 text-blue-600">
                           {log.createdBy}
                         </div>
                       </td>
                       {/*   OPERATION */}
-                      <td className="px-6 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                        <div className="flex gap-2 items-center">
+                      <td className="border-b border-gray-300 px-6 py-4 text-sm leading-5 text-gray-600">
+                        <div className="flex items-center gap-2">
                           {log.operation}
                         </div>
                       </td>
                       {/*   CREATED TIME */}
-                      <td className="px-6 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                        <div className="flex gap-2 items-center text-blue-600">
+                      <td className="border-b border-gray-300 px-6 py-4 text-sm leading-5 text-gray-600">
+                        <div className="flex items-center gap-2 text-blue-600">
                           {log.createdTime}
                         </div>
                       </td>
                       {/*   ACTIONS */}
-                      <td className="px-6 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-                        <div className="flex gap-2 items-center text-blue-600">
+                      <td className="border-b border-gray-300 px-6 py-4 text-sm leading-5 text-gray-600">
+                        <div className="flex items-center gap-2 text-blue-600">
                           <MdEdit
                             size={25}
                             color="white"
-                            className="bg-blue-500 rounded"
+                            className="rounded bg-blue-500"
                           />
                           <RiDeleteBin6Fill size={25} color="red" />
                         </div>
@@ -516,7 +514,7 @@ export default function Logs() {
 
       {selectedViewValue === "Table View" && (
         <>
-          <div className="flex justify-end m-4">
+          <div className="m-4 flex justify-end">
             <nav>
               <ul className="inline-flex items-center">
                 {Array.from(
@@ -525,10 +523,10 @@ export default function Logs() {
                     <li key={i + 1}>
                       <button
                         onClick={() => paginate(i + 1)}
-                        className={`px-4 py-2 mx-1 ${
+                        className={`mx-1 px-4 py-2 ${
                           currentPage === i + 1
                             ? "bg-blue-500 text-white"
-                            : "bg-white text-gray-700 border"
+                            : "border bg-white text-gray-700"
                         }`}
                       >
                         {i + 1}

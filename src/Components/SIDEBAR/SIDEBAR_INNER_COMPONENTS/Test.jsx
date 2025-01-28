@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 export default function Test() {
   return (
     <>
-      <div className=" flex justify-center items-center">
-        <div className="text-xl bg-white py-8 px-12 rounded-lg items-center text-center shadow-xl">
+      <div className="flex items-center justify-center">
+        <div className="items-center rounded-lg bg-white px-12 py-8 text-center text-xl shadow-xl">
           <h1>Error! No Route Found </h1>
           <IoIosWarning
-            className="text-red-500 mx-auto shadow-md p-1 rounded-full my-3"
+            className="mx-auto my-3 rounded-full p-1 text-red-500 shadow-md"
             size={35}
           />
           <Link to="/panel/" className="text-cyan-500 underline">

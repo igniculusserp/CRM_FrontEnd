@@ -194,11 +194,11 @@ const VerifyOtp = () => {
         />
       )}
 
-      <div className="bg-cyan-500 min-h-screen flex items-center justify-center">
-        <div className="hidden md:flex w-2/3 items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-cyan-500">
+        <div className="hidden w-2/3 items-center justify-center md:flex">
           <WelcomeSection />
         </div>
-        <div className="w-full md:w-1/3 min-h-screen flex items-center bg-cyan md:bg-white justify-center">
+        <div className="bg-cyan flex min-h-screen w-full items-center justify-center md:w-1/3 md:bg-white">
           <OtpForm
             otp={otp}
             setOtp={setOtp}
@@ -215,9 +215,9 @@ const VerifyOtp = () => {
 };
 
 const WelcomeSection = () => (
-  <div className="bg-cyan-500 flex flex-col md:flex-row">
-    <div className="hidden md:flex bg-cyan flex-col justify-center items-center">
-      <div className="bg-white flex flex-col justify-center  gap-2 rounded-md px-6 py-12">
+  <div className="flex flex-col bg-cyan-500 md:flex-row">
+    <div className="bg-cyan hidden flex-col items-center justify-center md:flex">
+      <div className="flex flex-col justify-center gap-2 rounded-md bg-white px-6 py-12">
         <img
           src={IgniculussLogo}
           alt="Brandlogo"
@@ -225,13 +225,13 @@ const WelcomeSection = () => (
           height={80}
           className="mx-auto"
         />
-        <img src={VerifyOTP} alt="sample" className="h-2/3 w-3/4 mx-auto" />
-        <div className="flex text-3xl font-semibold justify-center">
+        <img src={VerifyOTP} alt="sample" className="mx-auto h-2/3 w-3/4" />
+        <div className="flex justify-center text-3xl font-semibold">
           <GiDiamonds className="place-content-start text-cyan-500" />
           <h1 className="">Hello, Igniculuss</h1>
         </div>
         <div>
-          <p className="text-xs text-gray-400 text-center">
+          <p className="text-center text-xs text-gray-400">
             Skip repetitive and manual sales-marketing tasks. Get highly
             <br />
             productive through automation and save tons of time!
@@ -251,23 +251,23 @@ const OtpForm = ({
   handleSubmit,
   emailreg,
 }) => (
-  <div className="w-full md:w-3/3 bg-cyan-500 md:bg-white flex min-h-screen flex-col justify-center  ">
-    <div className="flex md:hidden justify-center ">
+  <div className="md:w-3/3 flex min-h-screen w-full flex-col justify-center bg-cyan-500 md:bg-white">
+    <div className="flex justify-center md:hidden">
       <img src={IgniculussLogo} alt="sample" width={100} height={50} />
     </div>
-    <div className="flex flex-col justify-center mx-10 md:mx-4 px-3 mt-8  bg-white py-3 rounded-2xl">
-      <div className="flex text-2xl font-semibold gap-3 items-center">
-        <GiDiamonds className="text-3xl hidden md:block" />
+    <div className="mx-10 mt-8 flex flex-col justify-center rounded-2xl bg-white px-3 py-3 md:mx-4">
+      <div className="flex items-center gap-3 text-2xl font-semibold">
+        <GiDiamonds className="hidden text-3xl md:block" />
         <h1 className="">Verify your Sign-up</h1>
       </div>
 
-      <div className="text-slate-900 text-sm ">
+      <div className="text-sm text-slate-900">
         Enter the one-time password sent to your Email ID.
       </div>
 
       <div className="mt-8 md:mt-16">
         <form onSubmit={handleSubmit} className="flex flex-col">
-          <div className="flex justify-between mb-2">
+          <div className="mb-2 flex justify-between">
             <span>{emailreg}</span>
             {/* Change button on email 
             <Link to="/" className="text-sm underline text-cyan-500">
@@ -277,16 +277,16 @@ const OtpForm = ({
           </div>
           <input
             type="number"
-            className="h-10 rounded-md px-3 border text-xs focus:outline-none"
+            className="h-10 rounded-md border px-3 text-xs focus:outline-none"
             placeholder="XXX XXX"
             maxLength={6}
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
           />
-          <div className="flex justify-between items-center mt-3">
+          <div className="mt-3 flex items-center justify-between">
             <div
-              className={`text-left text-sm text-slate-900 cursor-pointer ${
-                resendDisabled ? "opacity-50 cursor-not-allowed" : ""
+              className={`cursor-pointer text-left text-sm text-slate-900 ${
+                resendDisabled ? "cursor-not-allowed opacity-50" : ""
               }`}
               onClick={!resendDisabled ? handleResend : null}
             >
@@ -297,7 +297,7 @@ const OtpForm = ({
           <div className="mt-12">
             <button
               type="submit"
-              className="bg-cyan-500 py-3 rounded-lg text-white text-sm w-full"
+              className="w-full rounded-lg bg-cyan-500 py-3 text-sm text-white"
             >
               Verify
             </button>
@@ -319,19 +319,19 @@ const Modal = ({
 }) => (
   <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
     {/*Change padding form here */}
-    <div className="bg-white p-12 rounded-lg md:w-2/3 lg:w-1/3   w-full mx-10">
-      <div className="text-center text-xl sm:text-2-xl  font-semibold mb-4 flex">
-        <span className="cursor-default	text-gray-400" onClick={toggleModal}>
+    <div className="mx-10 w-full rounded-lg bg-white p-12 md:w-2/3 lg:w-1/3">
+      <div className="sm:text-2-xl mb-4 flex text-center text-xl font-semibold">
+        <span className="cursor-default text-gray-400" onClick={toggleModal}>
           {" "}
           X{" "}
         </span>
-        <span className="mx-auto ">Add Compnay Logo </span>
+        <span className="mx-auto">Add Compnay Logo </span>
       </div>
       <form
         onSubmit={handleUpload}
         className="flex flex-col items-center gap-6"
       >
-        <div className="w-full flex flex-col gap-8">
+        <div className="flex w-full flex-col gap-8">
           <input
             id="imageInput"
             type="file"
@@ -348,7 +348,7 @@ const Modal = ({
             }
             alt="Profile"
             onClick={handleImageClick}
-            className="w-24 h-24 rounded-full cursor-pointer border text-center mx-auto"
+            className="mx-auto h-24 w-24 cursor-pointer rounded-full border text-center"
           />
           <p className="text-center text-xs text-gray-500">
             Supported formates: JPEG, PNG
@@ -363,13 +363,13 @@ const Modal = ({
               placeholder="Company Name"
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
-              className="mb-4 p-2 border rounded-md w-full"
+              className="mb-4 w-full rounded-md border p-2"
             />
           </label>
         </div>
         <button
           type="submit"
-          className="bg-cyan-500 py-4 px-4 rounded-lg text-white w-full"
+          className="w-full rounded-lg bg-cyan-500 px-4 py-4 text-white"
         >
           Submit
         </button>

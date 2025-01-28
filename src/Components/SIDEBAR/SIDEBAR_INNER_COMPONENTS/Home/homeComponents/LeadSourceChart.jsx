@@ -20,34 +20,34 @@ const LeadSourceChart = () => {
   return (
     <>
       <div style={{ width: "100%", height: 300 }}>
-        <h3 className="text-xl font-thin mb-1">Lead Source</h3>
-        <div className="flex text-sm items-center justify-between gap-2">
-          <div className="flex items-center flex-col">
+        <h3 className="mb-1 text-xl font-thin">Lead Source</h3>
+        <div className="flex items-center justify-between gap-2 text-sm">
+          <div className="flex flex-col items-center">
             <div className="flex items-center">
-              <div className="w-3 h-3 bg-cyan-400 rounded-md"></div>
-              <span className="text-md ">Total Revenue</span>
+              <div className="h-3 w-3 rounded-md bg-cyan-400"></div>
+              <span className="text-md">Total Revenue</span>
             </div>
-            <p className="flex jusitify-center items-center text-xs  my-1">
+            <p className="jusitify-center my-1 flex items-center text-xs">
               <FaRupeeSign />
               45,456.00 Rs
             </p>
           </div>
-          <div className="flex items-center flex-col">
+          <div className="flex flex-col items-center">
             <div className="flex items-center">
-              <div className="w-3 h-3 bg-cyan-400 rounded-md"></div>
-              <span className="text-sm ">Total Sales</span>
+              <div className="h-3 w-3 rounded-md bg-cyan-400"></div>
+              <span className="text-sm">Total Sales</span>
             </div>
-            <p className="flex jusitify-center items-center text-xs  my-1">
+            <p className="jusitify-center my-1 flex items-center text-xs">
               <FaRupeeSign />
               45,456.00 Rs
             </p>
           </div>
-          <div className="flex items-center flex-col">
+          <div className="flex flex-col items-center">
             <div className="flex items-center">
-              <div className="w-3 h-3 bg-cyan-400 rounded-md"></div>
-              <span className="text-sm ">Total Views</span>
+              <div className="h-3 w-3 rounded-md bg-cyan-400"></div>
+              <span className="text-sm">Total Views</span>
             </div>
-            <p className="flex jusitify-center items-center text-xs  my-1">
+            <p className="jusitify-center my-1 flex items-center text-xs">
               <FaRupeeSign />
               45,456.00 Rs
             </p>

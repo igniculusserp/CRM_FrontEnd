@@ -100,40 +100,40 @@ export default function BranchTarget() {
 
   return (
     <>
-      <div className="m-3 min-w-screen">
+      <div className="min-w-screen m-3">
         {active ? (
           <>
-            <div className="flex min-w-screen justify-between items-center flex-wrap gap-5">
+            <div className="min-w-screen flex flex-wrap items-center justify-between gap-5">
               <h1 className="text-3xl font-medium">NotificationPopup</h1>
               <button
                 onClick={handleActiveState}
-                className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
+                className="min-w-10 rounded bg-blue-600 p-2 text-sm text-white"
               >
                 Add Notification Popup
               </button>
             </div>
-            <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
-              <div className="min-w-full rounded-md leads_Table_Main_Container">
-                <table className="min-w-full bg-white leads_Table">
+            <div className="leads_Table_Main_Container mt-3 overflow-x-auto shadow-md">
+              <div className="leads_Table_Main_Container min-w-full rounded-md">
+                <table className="leads_Table min-w-full bg-white">
                   <thead>
-                    <tr className="border-gray-300 border-b-2">
+                    <tr className="border-b-2 border-gray-300">
                       <th className="px-1 py-3">
                         <input type="checkbox" />
                       </th>
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex items-center justify-between text-sm">
                           <span>Jaison Document</span>
                           <FaBars />
                         </div>
                       </th>
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex items-center justify-between text-sm">
                           <span>Popup</span>
                           <FaBars />
                         </div>
                       </th>
-                      <th className="px-2 py-3 text-left border-r font-medium">
-                        <div className="flex justify-between items-center text-sm">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex items-center justify-between text-sm">
                           <span>Action</span>
                         </div>
                       </th>
@@ -143,7 +143,7 @@ export default function BranchTarget() {
                     {users.map((user) => (
                       <tr
                         key={user.id}
-                        className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                        className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                       >
                         <td className="px-1 py-3 text-center">
                           <input
@@ -155,10 +155,10 @@ export default function BranchTarget() {
                             }
                           />
                         </td>
-                        <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           {user.jaisonDocument}
                         </td>
-                        <td className="px-2 py-4 text-sm max-w-24 break-words">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           <Switch
                             checked={user.popup}
                             onChange={() =>
@@ -174,11 +174,11 @@ export default function BranchTarget() {
                             className="react-switch"
                           />
                         </td>
-                        <td className="px-2 py-4 flex gap-3 justify-center">
+                        <td className="flex justify-center gap-3 px-2 py-4">
                           <MdEdit
                             size={25}
                             color="white"
-                            className="bg-blue-500 rounded"
+                            className="rounded bg-blue-500"
                             onClick={() => handleClick(user.id)}
                           />
                           <RiDeleteBin6Fill size={25} color="red" />
@@ -192,7 +192,7 @@ export default function BranchTarget() {
           </>
         ) : (
           <>
-            <div className="flex min-w-screen justify-between items-center">
+            <div className="min-w-screen flex items-center justify-between">
               <h1 className="text-3xl font-medium">
                 {isEditMode
                   ? "Edit Push Notification Details"
@@ -200,7 +200,7 @@ export default function BranchTarget() {
               </h1>
               <button
                 onClick={handleActiveState}
-                className="border border-blue-600 bg-white text-blue-600 px-4 py-2 min-w-10 text-sm rounded"
+                className="min-w-10 rounded border border-blue-600 bg-white px-4 py-2 text-sm text-blue-600"
               >
                 Cancel
               </button>
@@ -208,13 +208,13 @@ export default function BranchTarget() {
             {/* Form Starts From Here -------------------------------------------> */}
             <form onSubmit={handleSubmit} className="flex">
               <div className="w-full">
-                <div className="mt-3 bg-white rounded-xl shadow-md flex-grow">
-                  <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
+                <div className="mt-3 flex-grow rounded-xl bg-white shadow-md">
+                  <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                     Notification Details
                   </h2>
-                  <div className="py-2 px-4 grid gap-2">
+                  <div className="grid gap-2 px-4 py-2">
                     <div className="flex space-x-4">
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="Token"
                           className="text-sm font-medium text-gray-700"
@@ -226,12 +226,12 @@ export default function BranchTarget() {
                           name="Token"
                           value={formData.Token}
                           onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                           placeholder="Please paste token here"
                         />
                       </div>
 
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="Title"
                           className="text-sm font-medium text-gray-700"
@@ -243,14 +243,14 @@ export default function BranchTarget() {
                           name="Title"
                           value={formData.Title}
                           onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                           placeholder="Please paste token here"
                         />
                       </div>
                     </div>
 
                     <div className="flex space-x-4">
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="Body"
                           className="text-sm font-medium text-gray-700"
@@ -262,12 +262,12 @@ export default function BranchTarget() {
                           name="Body"
                           value={formData.Body}
                           onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                           placeholder="Please paste token here"
                         />
                       </div>
 
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="popup"
                           className="text-sm font-medium text-gray-700"
@@ -293,7 +293,7 @@ export default function BranchTarget() {
                     </div>
 
                     <div className="flex space-x-4">
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="img"
                           className="text-sm font-medium text-gray-700"
@@ -305,7 +305,7 @@ export default function BranchTarget() {
                           name="Body"
                           value={formData.img}
                           onChange={handleChange}
-                          className="mt-1 p-2 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                           placeholder="Please paste token here"
                         />
                       </div>
@@ -314,7 +314,7 @@ export default function BranchTarget() {
                     <div className="mb-8">
                       <button
                         type="submit"
-                        className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md w-max"
+                        className="mt-4 w-max rounded-md border border-cyan-500 px-4 py-4 text-cyan-500 hover:bg-cyan-500 hover:text-white"
                       >
                         {isEditMode ? "Edit Plan" : "Add Plan"}
                       </button>

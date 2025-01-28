@@ -91,49 +91,49 @@ export default function Dlp() {
 
   const DlpTable = () => {
     return (
-      <div className="m-3 min-w-screen">
-        <div className="flex min-w-screen justify-between items-center flex-wrap gap-5">
+      <div className="min-w-screen m-3">
+        <div className="min-w-screen flex flex-wrap items-center justify-between gap-5">
           <div className="flex items-center gap-2">
             <h1 className="text-3xl font-medium">DLP</h1>
-            <h2 className="text-xl font-medium text-red-500 text-center">
+            <h2 className="text-center text-xl font-medium text-red-500">
               (This feature is coming soon...)
             </h2>
           </div>
           <button
             onClick={handleAdd}
-            className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded"
+            className="min-w-10 rounded bg-blue-600 p-2 text-sm text-white"
           >
             Add Policy
           </button>
         </div>
-        <div className="overflow-x-auto mt-3 shadow-md leads_Table_Main_Container">
-          <div className="min-w-full rounded-md leads_Table_Container">
-            <table className="min-w-full bg-white leads_Table">
+        <div className="leads_Table_Main_Container mt-3 overflow-x-auto shadow-md">
+          <div className="leads_Table_Container min-w-full rounded-md">
+            <table className="leads_Table min-w-full bg-white">
               <thead>
-                <tr className="border-gray-300 border-b-2">
+                <tr className="border-b-2 border-gray-300">
                   <th className="px-1 py-3">
                     <input type="checkbox" />
                   </th>
-                  <th className="px-2 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center text-sm">
+                  <th className="border-r px-2 py-3 text-left font-medium">
+                    <div className="flex items-center justify-between text-sm">
                       <span>Title</span>
                       <FaBars />
                     </div>
                   </th>
-                  <th className="px-2 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center text-sm">
+                  <th className="border-r px-2 py-3 text-left font-medium">
+                    <div className="flex items-center justify-between text-sm">
                       <span>Created By</span>
                       <FaBars />
                     </div>
                   </th>
-                  <th className="px-2 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center text-sm">
+                  <th className="border-r px-2 py-3 text-left font-medium">
+                    <div className="flex items-center justify-between text-sm">
                       <span>Modified On</span>
                       <FaBars />
                     </div>
                   </th>
-                  <th className="px-2 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center text-sm">
+                  <th className="border-r px-2 py-3 text-left font-medium">
+                    <div className="flex items-center justify-between text-sm">
                       <span>Action</span>
                     </div>
                   </th>
@@ -143,25 +143,25 @@ export default function Dlp() {
                 {data.map((device) => (
                   <tr
                     key={device.id}
-                    className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                    className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                   >
                     <td className="px-1 py-3 text-center">
                       <input type="checkbox" />
                     </td>
-                    <td className="px-2 py-4 text-sm max-w-24 break-words">
+                    <td className="max-w-24 break-words px-2 py-4 text-sm">
                       {device.title}
                     </td>
-                    <td className="px-2 py-4 text-sm max-w-24 break-words">
+                    <td className="max-w-24 break-words px-2 py-4 text-sm">
                       {device.createdBy}
                     </td>
-                    <td className="px-2 py-4 text-sm max-w-24 break-words">
+                    <td className="max-w-24 break-words px-2 py-4 text-sm">
                       {device.modifiedOn}
                     </td>
-                    <td className="px-2 py-4 flex gap-3 justify-center">
+                    <td className="flex justify-center gap-3 px-2 py-4">
                       <MdEdit
                         size={25}
                         color="white"
-                        className="bg-blue-500 rounded"
+                        className="rounded bg-blue-500"
                         onClick={() => handleEdit(device.id)}
                       />
                       <RiDeleteBin6Fill size={25} color="red" />
@@ -231,28 +231,28 @@ export default function Dlp() {
     ];
 
     return (
-      <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
-        <div className="flex py-2 px-2 items-center justify-between bg-white rounded-md shadow-md">
+      <div className="m-3 flex flex-col overflow-x-auto overflow-y-hidden">
+        <div className="flex items-center justify-between rounded-md bg-white px-2 py-2 shadow-md">
           <h1 className="text-xl">Add Policy</h1>
           <div
             onClick={handleCancel}
-            className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
+            className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
           >
             Cancel
           </div>
         </div>
         <div className="overflow-hidden shadow-md">
-          <div className="py-2 px-3 bg-cyan-500 rounded-t-xl mt-3">
+          <div className="mt-3 rounded-t-xl bg-cyan-500 px-3 py-2">
             <h1 className="text-white">Access Policy</h1>
           </div>
           {/* CREATE DLP FORM */}
           <form onSubmit={handleSubmit}>
-            <div className="flex flex-col py-2 px-4 bg-white rounded-b-xl">
+            <div className="flex flex-col rounded-b-xl bg-white px-4 py-2">
               <div className="flex gap-4">
-                <div className="grid gap-2 pb-3 w-full">
+                <div className="grid w-full gap-2 pb-3">
                   <div className="flex space-x-4">
                     {/* TITLE */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       <label
                         htmlFor="title"
                         className="text-sm font-medium text-gray-700"
@@ -263,12 +263,12 @@ export default function Dlp() {
                         type="text"
                         name="title"
                         value={addDlp.title}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter device type"
                       />
                     </div>
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       {/* DESCRIPTION */}
                       <label
                         htmlFor="description"
@@ -280,7 +280,7 @@ export default function Dlp() {
                         type="text"
                         name="description"
                         value={addDlp.description}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter device type"
                       />
@@ -289,7 +289,7 @@ export default function Dlp() {
                   {/* SECOND */}
                   <div className="flex space-x-4">
                     {/* TITLE */}
-                    <div className="flex flex-col w-1/2 gap-1">
+                    <div className="flex w-1/2 flex-col gap-1">
                       <label
                         htmlFor="unmanagedDevice"
                         className="text-sm font-medium text-gray-700"
@@ -299,10 +299,10 @@ export default function Dlp() {
                       <input
                         type="checkbox"
                         name="unmanagedDevice"
-                        className="flex justify-start py-1 px-1 h-5 w-5"
+                        className="flex h-5 w-5 justify-start px-1 py-1"
                       />
                     </div>
-                    <div className="flex flex-col w-1/2 gap-1">
+                    <div className="flex w-1/2 flex-col gap-1">
                       {/* DESCRIPTION */}
                       <label
                         htmlFor="enabled"
@@ -313,14 +313,14 @@ export default function Dlp() {
                       <input
                         type="checkbox"
                         name="enabled"
-                        className="flex justify-start py-1 px-1 h-5 w-5"
+                        className="flex h-5 w-5 justify-start px-1 py-1"
                       />
                     </div>
                   </div>
                   {/* THIRD */}
                   <div className="flex space-x-4">
                     {/* TITLE */}
-                    <div className="flex flex-col w1/2 gap-1 justify-start items-start">
+                    <div className="w1/2 flex flex-col items-start justify-start gap-1">
                       <label
                         htmlFor="validAlways"
                         className="text-sm font-medium text-gray-700"
@@ -330,14 +330,14 @@ export default function Dlp() {
                       <input
                         type="checkbox"
                         name="validAlways"
-                        className="flex justify-start py-1 px-1 h-5 w-5"
+                        className="flex h-5 w-5 justify-start px-1 py-1"
                       />
                     </div>
                   </div>
                   {/* FOURTH */}
                   <div className="flex space-x-4">
                     {/* Valid From */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       <label
                         htmlFor="validFrom"
                         className="text-sm font-medium text-gray-700"
@@ -348,12 +348,12 @@ export default function Dlp() {
                         type="text"
                         name="validFrom"
                         value={addDlp.validFrom}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter device type"
                       />
                     </div>
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       {/* Valid To */}
                       <label
                         htmlFor="validTo"
@@ -365,7 +365,7 @@ export default function Dlp() {
                         type="text"
                         name="validTo"
                         value={addDlp.validTo}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter device type"
                       />
@@ -378,7 +378,7 @@ export default function Dlp() {
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                    className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                   >
                     Save
                   </button>
@@ -386,19 +386,17 @@ export default function Dlp() {
               </div>
             </div>
             {/* SECOND SECTION */}
-            <div className="flex gap-3 mt-3">
+            <div className="mt-3 flex gap-3">
               <h1 className="text-2xl font-medium">Agent</h1>
               {buttons.map(({ id, text }) => (
                 <button
                   key={id}
                   onClick={() => handleOptionClick(id)}
-                  className={`px-3 py-2 rounded font-light text-md
-                ${
-                  selectedId === id
-                    ? "bg-cyan-500 text-white"
-                    : "bg-gray-100 text-gray-700"
-                }
-              `}
+                  className={`text-md rounded px-3 py-2 font-light ${
+                    selectedId === id
+                      ? "bg-cyan-500 text-white"
+                      : "bg-gray-100 text-gray-700"
+                  } `}
                 >
                   {text}
                 </button>
@@ -407,15 +405,15 @@ export default function Dlp() {
             {/* SESSION TIMEOUT FIELDS */}
             {selectedId === 1 && (
               <>
-                <div className="py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="mt-3 rounded-t-xl bg-cyan-500 px-6 py-2">
                   <h1 className="text-white">Session Time out</h1>
                 </div>
-                <div className="flex flex-col py-2 px-4 bg-white rounded-b-xl">
+                <div className="flex flex-col rounded-b-xl bg-white px-4 py-2">
                   <div className="flex gap-4">
-                    <div className="grid gap-2 pb-3 w-full">
+                    <div className="grid w-full gap-2 pb-3">
                       <div className="flex space-x-4">
                         {/* UNMANAGED DEVICE */}
-                        <div className="flex flex-col w-1/2">
+                        <div className="flex w-1/2 flex-col">
                           <label
                             htmlFor="unmanagedDevice"
                             className="text-sm font-medium text-gray-700"
@@ -425,14 +423,14 @@ export default function Dlp() {
                           <input
                             type="checkbox"
                             name="unmanagedDevice"
-                            className="flex justify-start py-1 px-1 h-5 w-5"
+                            className="flex h-5 w-5 justify-start px-1 py-1"
                           />
                         </div>
                       </div>
                       {/* SECOND */}
                       <div className="flex space-x-4">
                         {/* Idle Timeout Interval (Hours) */}
-                        <div className="flex flex-col w-1/2">
+                        <div className="flex w-1/2 flex-col">
                           <label
                             htmlFor="idleTimeoutIntervalHours"
                             className="text-sm font-medium text-gray-700"
@@ -443,12 +441,12 @@ export default function Dlp() {
                             type="text"
                             name="idleTimeoutIntervalHours"
                             value={addDlp.idleTimeoutIntervalHours}
-                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                            className="mt-1 rounded-md border border-gray-300 p-2"
                             onChange={handleChange}
                             placeholder="Enter device type"
                           />
                         </div>
-                        <div className="flex flex-col w-1/2">
+                        <div className="flex w-1/2 flex-col">
                           {/* Minutes */}
                           <label
                             htmlFor="minutes"
@@ -460,16 +458,16 @@ export default function Dlp() {
                             type="text"
                             name="minutes"
                             value={addDlp.minutes}
-                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                            className="mt-1 rounded-md border border-gray-300 p-2"
                             onChange={handleChange}
                             placeholder="Enter device type"
                           />
                         </div>
                       </div>
                       {/* THIRD */}
-                      <div className="flex space-x-4 w-full">
+                      <div className="flex w-full space-x-4">
                         {/* Session Duration (Hours) */}
-                        <div className="flex flex-col w1/2 w-full">
+                        <div className="w1/2 flex w-full flex-col">
                           <label
                             htmlFor="sessionDuration"
                             className="text-sm font-medium text-gray-700"
@@ -480,13 +478,13 @@ export default function Dlp() {
                             type="text"
                             name="sessionDuration"
                             value={addDlp.sessionDuration}
-                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                            className="mt-1 rounded-md border border-gray-300 p-2"
                             onChange={handleChange}
                             placeholder="Enter device type"
                           />
                         </div>
                         {/* Minutes */}
-                        <div className="flex flex-col w1/2 w-full">
+                        <div className="w1/2 flex w-full flex-col">
                           <label
                             htmlFor="minutes"
                             className="text-sm font-medium text-gray-700"
@@ -497,7 +495,7 @@ export default function Dlp() {
                             type="text"
                             name="minutes"
                             value={addDlp.minutes}
-                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                            className="mt-1 rounded-md border border-gray-300 p-2"
                             onChange={handleChange}
                             placeholder="Enter device type"
                           />
@@ -510,7 +508,7 @@ export default function Dlp() {
                     <div className="flex justify-end">
                       <button
                         type="submit"
-                        className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                        className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                       >
                         Save
                       </button>
@@ -522,35 +520,35 @@ export default function Dlp() {
             {/* DROPBOX */}
             {selectedId === 2 && (
               <>
-                <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="rounded-xl bg-white">
+                  <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-6 py-2 text-white">
                     Dropbox
                   </h1>
-                  <div className="mx-3 mt-3 mb-6 py-3 flex flex-col gap-2">
+                  <div className="mx-3 mb-6 mt-3 flex flex-col gap-2 py-3">
                     <div className="overflow-x-auto rounded-t-xl">
                       <table className="min-w-full table-auto">
                         <thead>
-                          <tr className="bg-cyan-500 rounded-t-xl">
-                            <th className="px-4 py-2 text-white font-light">
+                          <tr className="rounded-t-xl bg-cyan-500">
+                            <th className="px-4 py-2 font-light text-white">
                               Event name
                             </th>
-                            <th className="px-4 py-2 text-white font-light">
+                            <th className="px-4 py-2 font-light text-white">
                               Red
                             </th>
-                            <th className="px-4 py-2 text-white font-light">
+                            <th className="px-4 py-2 font-light text-white">
                               Green
                             </th>
-                            <th className="px-4 py-2 text-white font-light">
+                            <th className="px-4 py-2 font-light text-white">
                               Amber
                             </th>
-                            <th className="px-4 py-2 text-white font-light">
+                            <th className="px-4 py-2 font-light text-white">
                               None
                             </th>
                           </tr>
                         </thead>
                         <tbody>
                           {tableData.map((item, idx) => (
-                            <tr key={idx} className="bg-gray-100 border-b">
+                            <tr key={idx} className="border-b bg-gray-100">
                               <td className="px-4 py-2">{item}</td>
                               <td className="px-4 py-2 text-center">
                                 <input
@@ -589,30 +587,30 @@ export default function Dlp() {
             {/* G SUITE */}
             {selectedId === 3 && (
               <>
-                <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="rounded-xl bg-white">
+                  <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-6 py-2 text-white">
                     G Suit
                   </h1>
-                  <div className="mx-3 mt-3 mb-6 py-3 flex flex-col gap-2">
+                  <div className="mx-3 mb-6 mt-3 flex flex-col gap-2 py-3">
                     <div className="overflow-x-auto rounded-t-xl">
                       <table className="min-w-full table-auto">
                         <thead>
-                          <tr className="bg-cyan-500 rounded-t-xl">
+                          <tr className="rounded-t-xl bg-cyan-500">
                             <th></th>
-                            <th className="px-4 py-2 text-white font-light">
+                            <th className="px-4 py-2 font-light text-white">
                               None
                             </th>
-                            <th className="px-4 py-2 text-white font-light">
+                            <th className="px-4 py-2 font-light text-white">
                               Track
                             </th>
-                            <th className="px-4 py-2 text-white font-light">
+                            <th className="px-4 py-2 font-light text-white">
                               Block
                             </th>
                           </tr>
                         </thead>
                         <tbody>
                           {gTableData.map((item, idx) => (
-                            <tr key={idx} className="bg-gray-100 border-b">
+                            <tr key={idx} className="border-b bg-gray-100">
                               <td className="px-4 py-2">{item}</td>
                               <td className="px-4 py-2 text-center">
                                 <input
@@ -704,28 +702,28 @@ export default function Dlp() {
     ];
 
     return (
-      <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
-        <div className="flex py-2 px-2 items-center justify-between bg-white rounded-md shadow-md">
+      <div className="m-3 flex flex-col overflow-x-auto overflow-y-hidden">
+        <div className="flex items-center justify-between rounded-md bg-white px-2 py-2 shadow-md">
           <h1 className="text-xl">Add Policy</h1>
           <div
             onClick={handleCancel}
-            className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
+            className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
           >
             Cancel
           </div>
         </div>
         <div className="overflow-hidden shadow-md">
-          <div className="py-2 px-3 bg-cyan-500 rounded-t-xl mt-3">
+          <div className="mt-3 rounded-t-xl bg-cyan-500 px-3 py-2">
             <h1 className="text-white">Access Policy</h1>
           </div>
           {/* CREATE DLP FORM */}
           <form onSubmit={handleSubmit}>
-            <div className="flex flex-col py-2 px-4 bg-white rounded-b-xl">
+            <div className="flex flex-col rounded-b-xl bg-white px-4 py-2">
               <div className="flex gap-4">
-                <div className="grid gap-2 pb-3 w-full">
+                <div className="grid w-full gap-2 pb-3">
                   <div className="flex space-x-4">
                     {/* TITLE */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       <label
                         htmlFor="title"
                         className="text-sm font-medium text-gray-700"
@@ -736,12 +734,12 @@ export default function Dlp() {
                         type="text"
                         name="title"
                         value={addDlp.title}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter device type"
                       />
                     </div>
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       {/* DESCRIPTION */}
                       <label
                         htmlFor="description"
@@ -753,7 +751,7 @@ export default function Dlp() {
                         type="text"
                         name="description"
                         value={addDlp.description}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter device type"
                       />
@@ -762,7 +760,7 @@ export default function Dlp() {
                   {/* SECOND */}
                   <div className="flex space-x-4">
                     {/* TITLE */}
-                    <div className="flex flex-col w-1/2 gap-1">
+                    <div className="flex w-1/2 flex-col gap-1">
                       <label
                         htmlFor="unmanagedDevice"
                         className="text-sm font-medium text-gray-700"
@@ -772,10 +770,10 @@ export default function Dlp() {
                       <input
                         type="checkbox"
                         name="unmanagedDevice"
-                        className="flex justify-start py-1 px-1 h-5 w-5"
+                        className="flex h-5 w-5 justify-start px-1 py-1"
                       />
                     </div>
-                    <div className="flex flex-col w-1/2 gap-1">
+                    <div className="flex w-1/2 flex-col gap-1">
                       {/* DESCRIPTION */}
                       <label
                         htmlFor="enabled"
@@ -786,14 +784,14 @@ export default function Dlp() {
                       <input
                         type="checkbox"
                         name="enabled"
-                        className="flex justify-start py-1 px-1 h-5 w-5"
+                        className="flex h-5 w-5 justify-start px-1 py-1"
                       />
                     </div>
                   </div>
                   {/* THIRD */}
                   <div className="flex space-x-4">
                     {/* TITLE */}
-                    <div className="flex flex-col w1/2 gap-1 justify-start items-start">
+                    <div className="w1/2 flex flex-col items-start justify-start gap-1">
                       <label
                         htmlFor="validAlways"
                         className="text-sm font-medium text-gray-700"
@@ -803,14 +801,14 @@ export default function Dlp() {
                       <input
                         type="checkbox"
                         name="validAlways"
-                        className="flex justify-start py-1 px-1 h-5 w-5"
+                        className="flex h-5 w-5 justify-start px-1 py-1"
                       />
                     </div>
                   </div>
                   {/* FOURTH */}
                   <div className="flex space-x-4">
                     {/* Valid From */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       <label
                         htmlFor="validFrom"
                         className="text-sm font-medium text-gray-700"
@@ -821,12 +819,12 @@ export default function Dlp() {
                         type="text"
                         name="validFrom"
                         value={addDlp.validFrom}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter device type"
                       />
                     </div>
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       {/* Valid To */}
                       <label
                         htmlFor="validTo"
@@ -838,7 +836,7 @@ export default function Dlp() {
                         type="text"
                         name="validTo"
                         value={addDlp.validTo}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter device type"
                       />
@@ -851,7 +849,7 @@ export default function Dlp() {
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                    className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                   >
                     Save
                   </button>
@@ -859,19 +857,17 @@ export default function Dlp() {
               </div>
             </div>
             {/* SECOND SECTION */}
-            <div className="flex gap-3 mt-3">
+            <div className="mt-3 flex gap-3">
               <h1 className="text-2xl font-medium">Agent</h1>
               {buttons.map(({ id, text }) => (
                 <button
                   key={id}
                   onClick={() => handleOptionClick(id)}
-                  className={`px-3 py-2 rounded font-light text-md
-              ${
-                selectedId === id
-                  ? "bg-cyan-500 text-white"
-                  : "bg-gray-100 text-gray-700"
-              }
-            `}
+                  className={`text-md rounded px-3 py-2 font-light ${
+                    selectedId === id
+                      ? "bg-cyan-500 text-white"
+                      : "bg-gray-100 text-gray-700"
+                  } `}
                 >
                   {text}
                 </button>
@@ -880,15 +876,15 @@ export default function Dlp() {
             {/* SESSION TIMEOUT FIELDS */}
             {selectedId === 1 && (
               <>
-                <div className="py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="mt-3 rounded-t-xl bg-cyan-500 px-6 py-2">
                   <h1 className="text-white">Session Time out</h1>
                 </div>
-                <div className="flex flex-col py-2 px-4 bg-white rounded-b-xl">
+                <div className="flex flex-col rounded-b-xl bg-white px-4 py-2">
                   <div className="flex gap-4">
-                    <div className="grid gap-2 pb-3 w-full">
+                    <div className="grid w-full gap-2 pb-3">
                       <div className="flex space-x-4">
                         {/* UNMANAGED DEVICE */}
-                        <div className="flex flex-col w-1/2">
+                        <div className="flex w-1/2 flex-col">
                           <label
                             htmlFor="unmanagedDevice"
                             className="text-sm font-medium text-gray-700"
@@ -898,14 +894,14 @@ export default function Dlp() {
                           <input
                             type="checkbox"
                             name="unmanagedDevice"
-                            className="flex justify-start py-1 px-1 h-5 w-5"
+                            className="flex h-5 w-5 justify-start px-1 py-1"
                           />
                         </div>
                       </div>
                       {/* SECOND */}
                       <div className="flex space-x-4">
                         {/* Idle Timeout Interval (Hours) */}
-                        <div className="flex flex-col w-1/2">
+                        <div className="flex w-1/2 flex-col">
                           <label
                             htmlFor="idleTimeoutIntervalHours"
                             className="text-sm font-medium text-gray-700"
@@ -916,12 +912,12 @@ export default function Dlp() {
                             type="text"
                             name="idleTimeoutIntervalHours"
                             value={addDlp.idleTimeoutIntervalHours}
-                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                            className="mt-1 rounded-md border border-gray-300 p-2"
                             onChange={handleChange}
                             placeholder="Enter device type"
                           />
                         </div>
-                        <div className="flex flex-col w-1/2">
+                        <div className="flex w-1/2 flex-col">
                           {/* Minutes */}
                           <label
                             htmlFor="minutes"
@@ -933,16 +929,16 @@ export default function Dlp() {
                             type="text"
                             name="minutes"
                             value={addDlp.minutes}
-                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                            className="mt-1 rounded-md border border-gray-300 p-2"
                             onChange={handleChange}
                             placeholder="Enter device type"
                           />
                         </div>
                       </div>
                       {/* THIRD */}
-                      <div className="flex space-x-4 w-full">
+                      <div className="flex w-full space-x-4">
                         {/* Session Duration (Hours) */}
-                        <div className="flex flex-col w1/2 w-full">
+                        <div className="w1/2 flex w-full flex-col">
                           <label
                             htmlFor="sessionDuration"
                             className="text-sm font-medium text-gray-700"
@@ -953,13 +949,13 @@ export default function Dlp() {
                             type="text"
                             name="sessionDuration"
                             value={addDlp.sessionDuration}
-                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                            className="mt-1 rounded-md border border-gray-300 p-2"
                             onChange={handleChange}
                             placeholder="Enter device type"
                           />
                         </div>
                         {/* Minutes */}
-                        <div className="flex flex-col w1/2 w-full">
+                        <div className="w1/2 flex w-full flex-col">
                           <label
                             htmlFor="minutes"
                             className="text-sm font-medium text-gray-700"
@@ -970,7 +966,7 @@ export default function Dlp() {
                             type="text"
                             name="minutes"
                             value={addDlp.minutes}
-                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                            className="mt-1 rounded-md border border-gray-300 p-2"
                             onChange={handleChange}
                             placeholder="Enter device type"
                           />
@@ -983,7 +979,7 @@ export default function Dlp() {
                     <div className="flex justify-end">
                       <button
                         type="submit"
-                        className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                        className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                       >
                         Save
                       </button>
@@ -995,35 +991,35 @@ export default function Dlp() {
             {/* DROPBOX */}
             {selectedId === 2 && (
               <>
-                <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="rounded-xl bg-white">
+                  <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-6 py-2 text-white">
                     Dropbox
                   </h1>
-                  <div className="mx-3 mt-3 mb-6 py-3 flex flex-col gap-2">
+                  <div className="mx-3 mb-6 mt-3 flex flex-col gap-2 py-3">
                     <div className="overflow-x-auto rounded-t-xl">
                       <table className="min-w-full table-auto">
                         <thead>
-                          <tr className="bg-cyan-500 rounded-t-xl">
-                            <th className="px-4 py-2 text-white font-light">
+                          <tr className="rounded-t-xl bg-cyan-500">
+                            <th className="px-4 py-2 font-light text-white">
                               Event name
                             </th>
-                            <th className="px-4 py-2 text-white font-light">
+                            <th className="px-4 py-2 font-light text-white">
                               Red
                             </th>
-                            <th className="px-4 py-2 text-white font-light">
+                            <th className="px-4 py-2 font-light text-white">
                               Green
                             </th>
-                            <th className="px-4 py-2 text-white font-light">
+                            <th className="px-4 py-2 font-light text-white">
                               Amber
                             </th>
-                            <th className="px-4 py-2 text-white font-light">
+                            <th className="px-4 py-2 font-light text-white">
                               None
                             </th>
                           </tr>
                         </thead>
                         <tbody>
                           {tableData.map((item, idx) => (
-                            <tr key={idx} className="bg-gray-100 border-b">
+                            <tr key={idx} className="border-b bg-gray-100">
                               <td className="px-4 py-2">{item}</td>
                               <td className="px-4 py-2 text-center">
                                 <input
@@ -1062,30 +1058,30 @@ export default function Dlp() {
             {/* G SUITE */}
             {selectedId === 3 && (
               <>
-                <div className="bg-white rounded-xl">
-                  <h1 className="text-white py-2 px-6 bg-cyan-500 rounded-t-xl mt-3">
+                <div className="rounded-xl bg-white">
+                  <h1 className="mt-3 rounded-t-xl bg-cyan-500 px-6 py-2 text-white">
                     G Suit
                   </h1>
-                  <div className="mx-3 mt-3 mb-6 py-3 flex flex-col gap-2">
+                  <div className="mx-3 mb-6 mt-3 flex flex-col gap-2 py-3">
                     <div className="overflow-x-auto rounded-t-xl">
                       <table className="min-w-full table-auto">
                         <thead>
-                          <tr className="bg-cyan-500 rounded-t-xl">
+                          <tr className="rounded-t-xl bg-cyan-500">
                             <th></th>
-                            <th className="px-4 py-2 text-white font-light">
+                            <th className="px-4 py-2 font-light text-white">
                               None
                             </th>
-                            <th className="px-4 py-2 text-white font-light">
+                            <th className="px-4 py-2 font-light text-white">
                               Track
                             </th>
-                            <th className="px-4 py-2 text-white font-light">
+                            <th className="px-4 py-2 font-light text-white">
                               Block
                             </th>
                           </tr>
                         </thead>
                         <tbody>
                           {gTableData.map((item, idx) => (
-                            <tr key={idx} className="bg-gray-100 border-b">
+                            <tr key={idx} className="border-b bg-gray-100">
                               <td className="px-4 py-2">{item}</td>
                               <td className="px-4 py-2 text-center">
                                 <input

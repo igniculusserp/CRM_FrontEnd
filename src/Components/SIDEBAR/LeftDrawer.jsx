@@ -21,16 +21,16 @@ function LeftDrawer({ isOpen, onClose }) {
     <div className="relative">
       {/* Drawer sadasd*/}
       <div
-        className={`fixed top-0 right-0 h-full bg-gray-800 text-white w-64 transform ${
+        className={`fixed right-0 top-0 h-full w-64 transform bg-gray-800 text-white ${
           isOpen ? "translate-x-0" : "translate-x-full"
-        } transition-transform duration-300 ease-in-out z-50`}
+        } z-50 transition-transform duration-300 ease-in-out`}
       >
         <div className="p-4">
           <h2 className="text-xl font-bold">Setting Menu</h2>
           <ul className="mt-4">
             {/* Main Menu Items */}
             <li
-              className={`py-2 px-4 cursor-pointer ${
+              className={`cursor-pointer px-4 py-2 ${
                 selectedMenu === "menu1" ? "bg-gray-700" : ""
               }`}
               onClick={() => handleMenuClick("menu1")}
@@ -40,7 +40,7 @@ function LeftDrawer({ isOpen, onClose }) {
               {selectedMenu === "menu1" && (
                 <ul className="ml-4 mt-2">
                   <li
-                    className={`py-1 cursor-pointer ${
+                    className={`cursor-pointer py-1 ${
                       selectedSubmenu === "Users"
                         ? "bg-gray-600 text-blue-300"
                         : ""
@@ -50,7 +50,7 @@ function LeftDrawer({ isOpen, onClose }) {
                     Users
                   </li>
                   <li
-                    className={`py-1 cursor-pointer ${
+                    className={`cursor-pointer py-1 ${
                       selectedSubmenu === "UserOperations"
                         ? "bg-gray-600 text-blue-300"
                         : ""
@@ -60,7 +60,7 @@ function LeftDrawer({ isOpen, onClose }) {
                     User Operations
                   </li>
                   <li
-                    className={`py-1 cursor-pointer ${
+                    className={`cursor-pointer py-1 ${
                       selectedSubmenu === "UserQualifications"
                         ? "bg-gray-600 text-blue-300"
                         : ""
@@ -70,7 +70,7 @@ function LeftDrawer({ isOpen, onClose }) {
                     User Qualifications Settings
                   </li>
                   <li
-                    className={`py-1 cursor-pointer ${
+                    className={`cursor-pointer py-1 ${
                       selectedSubmenu === "UserGroups"
                         ? "bg-gray-600 text-blue-300"
                         : ""
@@ -83,7 +83,7 @@ function LeftDrawer({ isOpen, onClose }) {
               )}
             </li>
             <li
-              className={`py-2 px-4 cursor-pointer ${
+              className={`cursor-pointer px-4 py-2 ${
                 selectedMenu === "Department" ? "bg-gray-700" : ""
               }`}
               onClick={() => handleMenuClick("Department")}
@@ -91,7 +91,7 @@ function LeftDrawer({ isOpen, onClose }) {
               Department Settings
             </li>
             <li
-              className={`py-2 px-4 cursor-pointer ${
+              className={`cursor-pointer px-4 py-2 ${
                 selectedMenu === "Designation" ? "bg-gray-700" : ""
               }`}
               onClick={() => handleMenuClick("Designation")}
@@ -99,7 +99,7 @@ function LeftDrawer({ isOpen, onClose }) {
               Designation Settings
             </li>
             <li
-              className={`py-2 px-4 cursor-pointer ${
+              className={`cursor-pointer px-4 py-2 ${
                 selectedMenu === "LeadStatus" ? "bg-gray-700" : ""
               }`}
               onClick={() => handleMenuClick("LeadStatus")}
@@ -107,7 +107,7 @@ function LeftDrawer({ isOpen, onClose }) {
               Lead Status Settings
             </li>
             <li
-              className={`py-2 px-4 cursor-pointer ${
+              className={`cursor-pointer px-4 py-2 ${
                 selectedMenu === "Pool" ? "bg-gray-700" : ""
               }`}
               onClick={() => handleMenuClick("Pool")}
@@ -115,7 +115,7 @@ function LeftDrawer({ isOpen, onClose }) {
               Pool Settings
             </li>
             <li
-              className={`py-2 px-4 cursor-pointer ${
+              className={`cursor-pointer px-4 py-2 ${
                 selectedMenu === "Segments" ? "bg-gray-700" : ""
               }`}
               onClick={() => handleMenuClick("Segments")}
@@ -123,7 +123,7 @@ function LeftDrawer({ isOpen, onClose }) {
               Segments Settings
             </li>
             <li
-              className={`py-2 px-4 cursor-pointer ${
+              className={`cursor-pointer px-4 py-2 ${
                 selectedMenu === "menu2" ? "bg-gray-700" : ""
               }`}
               onClick={() => handleMenuClick("menu2")}
@@ -133,7 +133,7 @@ function LeftDrawer({ isOpen, onClose }) {
               {selectedMenu === "menu2" && (
                 <ul className="ml-4 mt-2">
                   <li
-                    className={`py-1 cursor-pointer ${
+                    className={`cursor-pointer py-1 ${
                       selectedSubmenu === "EmailTemplate"
                         ? "bg-gray-600 text-blue-300"
                         : ""
@@ -143,7 +143,7 @@ function LeftDrawer({ isOpen, onClose }) {
                     E-Mail Template
                   </li>
                   <li
-                    className={`py-1 cursor-pointer ${
+                    className={`cursor-pointer py-1 ${
                       selectedSubmenu === "CallTemplate"
                         ? "bg-gray-600 text-blue-300"
                         : ""
@@ -153,7 +153,7 @@ function LeftDrawer({ isOpen, onClose }) {
                     Call Template
                   </li>
                   <li
-                    className={`py-1 cursor-pointer ${
+                    className={`cursor-pointer py-1 ${
                       selectedSubmenu === "SMSTemplate"
                         ? "bg-gray-600 text-blue-300"
                         : ""
@@ -166,7 +166,7 @@ function LeftDrawer({ isOpen, onClose }) {
               )}
             </li>
             <li
-              className={`py-2 px-4 cursor-pointer ${
+              className={`cursor-pointer px-4 py-2 ${
                 selectedMenu === "menu3" ? "bg-gray-700" : ""
               }`}
               onClick={() => handleMenuClick("menu3")}
@@ -176,7 +176,7 @@ function LeftDrawer({ isOpen, onClose }) {
               {selectedMenu === "menu3" && (
                 <ul className="ml-4 mt-2">
                   <li
-                    className={`py-1 cursor-pointer ${
+                    className={`cursor-pointer py-1 ${
                       selectedSubmenu === "NotificationPopups"
                         ? "bg-gray-600 text-blue-300"
                         : ""
@@ -186,7 +186,7 @@ function LeftDrawer({ isOpen, onClose }) {
                     Notification Pop-Ups
                   </li>
                   <li
-                    className={`py-1 cursor-pointer ${
+                    className={`cursor-pointer py-1 ${
                       selectedSubmenu === "Alerts"
                         ? "bg-gray-600 text-blue-300"
                         : ""
@@ -199,7 +199,7 @@ function LeftDrawer({ isOpen, onClose }) {
               )}
             </li>
             <li
-              className={`py-2 px-4 cursor-pointer ${
+              className={`cursor-pointer px-4 py-2 ${
                 selectedMenu === "menu4" ? "bg-gray-700" : ""
               }`}
               onClick={() => handleMenuClick("menu4")}
@@ -209,7 +209,7 @@ function LeftDrawer({ isOpen, onClose }) {
               {selectedMenu === "menu4" && (
                 <ul className="ml-4 mt-2">
                   <li
-                    className={`py-1 cursor-pointer ${
+                    className={`cursor-pointer py-1 ${
                       selectedSubmenu === "EmailSettings"
                         ? "bg-gray-600 text-blue-300"
                         : ""
@@ -219,7 +219,7 @@ function LeftDrawer({ isOpen, onClose }) {
                     E-Mail Settings
                   </li>
                   <li
-                    className={`py-1 cursor-pointer ${
+                    className={`cursor-pointer py-1 ${
                       selectedSubmenu === "CallExtension"
                         ? "bg-gray-600 text-blue-300"
                         : ""
@@ -229,7 +229,7 @@ function LeftDrawer({ isOpen, onClose }) {
                     Calling Extension
                   </li>
                   <li
-                    className={`py-1 cursor-pointer ${
+                    className={`cursor-pointer py-1 ${
                       selectedSubmenu === "SMSSettings"
                         ? "bg-gray-600 text-blue-300"
                         : ""
@@ -248,7 +248,7 @@ function LeftDrawer({ isOpen, onClose }) {
       {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black opacity-50 z-40"
+          className="fixed inset-0 z-40 bg-black opacity-50"
           onClick={onClose}
         ></div>
       )}

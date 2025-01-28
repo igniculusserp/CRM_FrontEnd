@@ -7,41 +7,41 @@ export default function ResearchReportTable({ currentReports }) {
     <table className="min-w-full bg-white">
       {/* ----------------- TABLE HEAD START ----------------- */}
       <thead>
-        <tr className="border-gray-300 border-b-2">
+        <tr className="border-b-2 border-gray-300">
           {/* CHECKBOX */}
-          <th className="px-3 py-3 w-max">
+          <th className="w-max px-3 py-3">
             <input type="checkbox" />
           </th>
           {/* START DATE */}
-          <th className="px-2 py-3 text-left border-r font-medium">
+          <th className="border-r px-2 py-3 text-left font-medium">
             <div className="flex items-center justify-between">
               <span className="text-nowrap pr-2">Start Date</span>
               <FaBars />
             </div>
           </th>
           {/* END DATE */}
-          <th className="px-2 py-3 text-left border-r font-medium">
+          <th className="border-r px-2 py-3 text-left font-medium">
             <div className="flex items-center justify-between">
               <span className="text-nowrap pr-2">End Date</span>
               <FaBars />
             </div>
           </th>
           {/* CALL STATUS */}
-          <th className="px-2 py-3 text-left border-r font-medium">
+          <th className="border-r px-2 py-3 text-left font-medium">
             <div className="flex items-center justify-between">
               <span className="text-nowrap pr-2">Research</span>
               <FaBars />
             </div>
           </th>
           {/* PRODUCT */}
-          <th className="px-2 py-3 text-left border-r font-medium">
+          <th className="border-r px-2 py-3 text-left font-medium">
             <div className="flex items-center justify-between">
               <span className="text-nowrap pr-2">Product</span>
               <FaBars />
             </div>
           </th>
           {/* ACTIONS BUTTON */}
-          <th className="px-2 py-3 text-left border-r font-medium">
+          <th className="border-r px-2 py-3 text-left font-medium">
             <span className="text-nowrap pr-2">Action</span>
           </th>
         </tr>
@@ -52,35 +52,35 @@ export default function ResearchReportTable({ currentReports }) {
         {currentReports.map((report, i) => (
           <tr
             key={i}
-            className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+            className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
           >
             {/* CHECKBOX */}
-            <td className="px-3 py-4 text-center w-max">
+            <td className="w-max px-3 py-4 text-center">
               <input type="checkbox" />
             </td>
             {/* START DATE */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-blue-600">
+            <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-blue-600">
               {report.startDate}
             </td>
             {/* END DATE */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+            <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
               {report.endDate}
             </td>
             {/* CALL STATUS */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+            <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
               {report.callStatus}
             </td>
             {/* PRODUCT */}
-            <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+            <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
               {report.product}
             </td>
             {/* ACTIONS */}
-            <td className="px-6 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
-              <div className="flex gap-2 items-center text-blue-600">
+            <td className="border-b border-gray-300 px-6 py-4 text-sm leading-5 text-gray-600">
+              <div className="flex items-center gap-2 text-blue-600">
                 <MdEdit
                   size={25}
                   color="white"
-                  className="bg-blue-500 rounded"
+                  className="rounded bg-blue-500"
                 />
                 <RiDeleteBin6Fill size={25} color="red" />
               </div>

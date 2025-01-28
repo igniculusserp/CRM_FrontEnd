@@ -21,7 +21,7 @@ export default function LeadsReport({ currentReports }) {
       minWidth: 180,
       flex: 1,
       renderCell: (params) => (
-        <div className="grid grid-cols-2 gap-1 items-center">
+        <div className="grid grid-cols-2 items-center gap-1">
           {params.value &&
             params.value.map(
               (segment, index) =>

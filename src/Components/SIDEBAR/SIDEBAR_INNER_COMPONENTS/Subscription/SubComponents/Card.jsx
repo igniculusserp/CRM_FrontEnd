@@ -6,27 +6,27 @@ export default function Card({ plan, price, text, texts }) {
   const [checked, setChecked] = useState(true);
 
   return (
-    <div className="p-8 w-1/3 bg-white border border-gray-400 m-3 rounded-lg flex flex-col justify-start gap-8 shadow-md">
+    <div className="m-3 flex w-1/3 flex-col justify-start gap-8 rounded-lg border border-gray-400 bg-white p-8 shadow-md">
       <div className="flex flex-col gap-2">
-        <h1 className="text-2xl capitalize font-medium tracking-wide">
+        <h1 className="text-2xl font-medium capitalize tracking-wide">
           {plan}
         </h1>
         <h1 className="text-4xl font-medium tracking-wide">${price}</h1>
         <p className="text-lg font-normal tracking-tight">{text}</p>
 
-        <button className="p-2 w-full border-none bg-cyan-400 rounded-md text-white text-md font-medium cursor-pointer hover:bg-cyan-500">
+        <button className="text-md w-full cursor-pointer rounded-md border-none bg-cyan-400 p-2 font-medium text-white hover:bg-cyan-500">
           Upgrade
         </button>
       </div>
-      <div className="flex flex-col gap-4 justify-center ml-3">
+      <div className="ml-3 flex flex-col justify-center gap-4">
         {texts?.map((text) => (
           <>
             <div className="flex gap-6">
-              <div className="w-5 h-5 bg-transparent border border-cyan-400 appearance-none rounded-full flex items-center justify-center">
+              <div className="flex h-5 w-5 appearance-none items-center justify-center rounded-full border border-cyan-400 bg-transparent">
                 {checked ? (
-                  <IoMdCheckmark className="text-md text-cyan-400 cursor-pointer" />
+                  <IoMdCheckmark className="text-md cursor-pointer text-cyan-400" />
                 ) : (
-                  <MdCancel className="text-xl text-cyan-400 cursor-not-allowed" />
+                  <MdCancel className="cursor-not-allowed text-xl text-cyan-400" />
                 )}
               </div>
               {checked ? (

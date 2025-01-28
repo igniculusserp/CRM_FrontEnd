@@ -558,7 +558,7 @@ export default function SalesOrder() {
 
   return (
     //parent
-    <div className="min-h-screen flex flex-col m-3 ">
+    <div className="m-3 flex min-h-screen flex-col">
       <ToastContainer />
       {/* Render the modal only when `isModalOpen` is true */}
       {isModalOpen && (
@@ -569,19 +569,19 @@ export default function SalesOrder() {
       )}
 
       {/* containerbar*/}
-      <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg flex-wrap gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-white px-3 py-2">
         {/* PART-I */}
         {/* container- Alleads, search */}
-        <div className="flex gap-3 items-center justify-start contact_Dropdown_Main_Container flex-wrap ">
+        <div className="contact_Dropdown_Main_Container flex flex-wrap items-center justify-start gap-3">
           {/* PART-I */}
           {/* All Lead  DropDown*/}
           <div
-            className="relative whitespace-nowrap sales_Oreder_Dropdown_Container"
+            className="sales_Oreder_Dropdown_Container relative whitespace-nowrap"
             onClick={toggleDropdown_salesOrderStatus}
             onMouseLeave={() => setisDropdownVisible_salesOrderStatus(false)}
           >
             <button
-              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 truncate contact_Dropdown_Button"
+              className="contact_Dropdown_Button flex min-w-40 items-center justify-between truncate rounded-md border px-4 py-2"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -589,12 +589,12 @@ export default function SalesOrder() {
               <FaAngleDown className="ml-2 text-gray-900" />
             </button>
             {isDropdownVisible_salesOrderStatus && (
-              <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+              <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
                 <ul className="py-2 text-sm text-gray-700">
                   {status.map((item, index) => (
                     <li
                       key={index}
-                      className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                      className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                       onClick={() => handleStatus(item.value)} // Correct selection logic
                     >
                       {item.value}
@@ -614,16 +614,16 @@ export default function SalesOrder() {
         </div>
 
         {/* PART-II */}
-        <div className="flex gap-3 items-center justify-start action_Button_Main_Container">
+        <div className="action_Button_Main_Container flex items-center justify-start gap-3">
           {/* PART-II */}
           {/* Stripe-BarDropDown */}
           <div
-            className="relative hide_Component"
+            className="hide_Component relative"
             onClick={togglestripeBar}
             onMouseLeave={() => setstripeBardropDown(false)}
           >
             <button
-              className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center"
+              className="flex items-center justify-between gap-2 rounded-md border px-4 py-3"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -631,12 +631,12 @@ export default function SalesOrder() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {stripeBardropDown && (
-              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
+              <div className="absolute top-10 z-10 w-56 rounded-md border border-gray-300 bg-white py-2">
                 <ul className="text-sm text-gray-700">
                   {stripeBar.map(({ key, value }) => (
                     <li
                       key={key}
-                      className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                      className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                       onClick={() => handleStripeButton(value)}
                     >
                       {value}
@@ -650,12 +650,12 @@ export default function SalesOrder() {
           {/* PART-II */}
           {/*-------Action DropDown */}
           <div
-            className="relative action_Button_Container"
+            className="action_Button_Container relative"
             onClick={toggleActionsMenuLogo}
             onMouseLeave={() => setdropActionsMenudropDown(false)}
           >
             <button
-              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600 action_Button"
+              className="action_Button flex items-center justify-between gap-2 rounded-lg border border-blue-600 px-4 py-2 text-blue-600"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -663,13 +663,13 @@ export default function SalesOrder() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {dropActionsMenudropDown && (
-              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
+              <div className="absolute top-10 z-10 w-56 rounded-md border border-gray-300 bg-white py-2">
                 <ul className="text-sm text-gray-700">
                   {dropActionsMenu.map(({ key, value }) =>
                     permissions.includes(value) || businessRole === "Admin" ? (
                       <li
                         key={key}
-                        className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                        className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                         onClick={() => handleActionButton(value)}
                       >
                         {value}
@@ -683,17 +683,17 @@ export default function SalesOrder() {
         </div>
       </div>
       {/* 2nd bar Leads and lenghtLeads*/}
-      <div className="mt-3 flex justify-between items-center gap-3 flex-wrap">
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
         <div className="flex gap-3">
-          <h1 className="text-3xl font-medium ">Sales Order</h1>
-          <h1 className="bg-blue-600 text-white p-2 min-w-10 text-center rounded text-sm shadow-md">
+          <h1 className="text-3xl font-medium">Sales Order</h1>
+          <h1 className="min-w-10 rounded bg-blue-600 p-2 text-center text-sm text-white shadow-md">
             {getleads?.length}
           </h1>
         </div>
 
         <div className="date_Filter_Main_Container">
           {/* ------------------- Filter by date ----------------- */}
-          <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
+          <div className="date_Filter_Main_Container flex items-center justify-between rounded-lg border-2 border-gray-300 bg-white p-2">
             {/* Filter Icon Button */}
             <div className="flex items-center">
               <button className="border-r border-gray-500 pr-2">
@@ -701,17 +701,17 @@ export default function SalesOrder() {
               </button>
 
               {/* Date Range Filter Button */}
-              <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display">
+              <button className="filter_Image_Display whitespace-nowrap border-r border-gray-500 px-2">
                 Filter By
               </button>
 
               {/* Date Range Inputs */}
-              <div className="px-2 flex items-center gap-2 filter_Date_Container">
+              <div className="filter_Date_Container flex items-center gap-2 px-2">
                 <label className="hide_Filter_Text">From:</label>
                 <input
                   type="date"
                   value={startDate}
-                  className="border rounded px-2 py-2 filter_Date"
+                  className="filter_Date rounded border px-2 py-2"
                   onChange={(e) => setStartDate(e.target.value)}
                 />
 
@@ -719,29 +719,29 @@ export default function SalesOrder() {
                 <input
                   type="date"
                   value={endDate}
-                  className="border rounded px-2 py-2 filter_Date"
+                  className="filter_Date rounded border px-2 py-2"
                   onChange={(e) => setEndDate(e.target.value)}
                 />
               </div>
             </div>
 
             <div
-              className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center"
+              className="reset_paddings flex cursor-pointer items-center gap-2 rounded border p-2"
               onClick={handleResetFilter}
             >
-              <label className="hide_Filter_Text ">Reset</label>
+              <label className="hide_Filter_Text">Reset</label>
               <TbRefresh className="filter_Reset_Image" />
             </div>
           </div>
         </div>
       </div>
       {/*-------Table-------*/}
-      <div className="overflow-x-auto mt-3 leads_Table_Main_Container">
-        <div className="min-w-full leads_Table_Container rounded-md">
+      <div className="leads_Table_Main_Container mt-3 overflow-x-auto">
+        <div className="leads_Table_Container min-w-full rounded-md">
           {selectedViewValue === "Table View" && (
-            <table className="min-w-full bg-white leads_Table">
+            <table className="leads_Table min-w-full bg-white">
               <thead>
-                <tr className="border-gray-300 border-b-2">
+                <tr className="border-b-2 border-gray-300">
                   {/* CHECKBOX */}
                   <th className="px-3 py-3">
                     <input
@@ -750,46 +750,46 @@ export default function SalesOrder() {
                       onChange={handleSelectAllCheckbox}
                     />
                   </th>
-                  <th className="px-1 py-3 text-left border-r font-medium max-w-40 min-w-36  ">
+                  <th className="min-w-36 max-w-40 border-r px-1 py-3 text-left font-medium">
                     <div className="flex justify-between">
                       <span>Client Name</span>
                     </div>
                   </th>
-                  <th className="px-1 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center">
+                  <th className="border-r px-1 py-3 text-left font-medium">
+                    <div className="flex items-center justify-between">
                       <span>Email</span>
                       <FaBars />
                     </div>
                   </th>
-                  <th className="px-1 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center">
+                  <th className="border-r px-1 py-3 text-left font-medium">
+                    <div className="flex items-center justify-between">
                       <span>Phone No</span>
                       <FaBars />
                     </div>
                   </th>
 
-                  <th className="px-1 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center">
+                  <th className="border-r px-1 py-3 text-left font-medium">
+                    <div className="flex items-center justify-between">
                       <span>Start Date</span>
                       <FaBars />
                     </div>
                   </th>
 
-                  <th className="px-1 py-3 text-left border-r font-medium">
-                    <div className="flex justify-between items-center">
+                  <th className="border-r px-1 py-3 text-left font-medium">
+                    <div className="flex items-center justify-between">
                       <span>End Date</span>
                       <FaBars />
                     </div>
                   </th>
 
-                  <th className="px-1 py-3 text-left border-r font-medium max-w-36 min-w-32">
-                    <div className="flex justify-between items-center">
+                  <th className="min-w-32 max-w-36 border-r px-1 py-3 text-left font-medium">
+                    <div className="flex items-center justify-between">
                       <span>Segments</span>
                       <FaBars />
                     </div>
                   </th>
-                  <th className="px-1 py-3 text-left border-r font-medium w-44">
-                    <div className="flex justify-between items-center">
+                  <th className="w-44 border-r px-1 py-3 text-left font-medium">
+                    <div className="flex items-center justify-between">
                       <span>Managed By</span>
                       <FaBars />
                     </div>
@@ -812,7 +812,7 @@ export default function SalesOrder() {
                   return (
                     <tr
                       key={item.id}
-                      className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                      className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                     >
                       {/* CHECKBOX */}
                       <td className="px-1 py-3 text-center">
@@ -824,7 +824,7 @@ export default function SalesOrder() {
                       </td>
                       {/* CONTACT NAME */}
                       <td
-                        className="px-1 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600"
+                        className="border-b border-gray-300 px-1 py-4 text-sm leading-5 text-gray-600"
                         onClick={
                           edit || businessRole === "Admin"
                             ? () => navigate(`/panel/clientso/${item.id}`)
@@ -837,12 +837,12 @@ export default function SalesOrder() {
                       </td>
 
                       {/* <------------------------------------Email------------------------------------> */}
-                      <td className="px-4 py-4 border-b text- border-gray-300 text-sm  break-all max-w-48 min-w-24">
+                      <td className="text- min-w-24 max-w-48 break-all border-b border-gray-300 px-4 py-4 text-sm">
                         {item.email}
                       </td>
                       {/* <------------------------------------MOB NO.------------------------------------> */}
-                      <td className="px-4 py-4 border-b border-gray-300 text-sm">
-                        <div className="flex gap-2 items-center">
+                      <td className="border-b border-gray-300 px-4 py-4 text-sm">
+                        <div className="flex items-center gap-2">
                           <a
                             href={`tel:${item.mobileNo}`}
                             onClick={(event) => event.stopPropagation()}
@@ -853,15 +853,15 @@ export default function SalesOrder() {
                         </div>
                       </td>
                       {/* <------------------------------------subscription_start_date------------------------------------> */}
-                      <td className="px-4 py-4 border-b text- border-gray-300 text-sm  break-all max-w-48 min-w-24">
+                      <td className="text- min-w-24 max-w-48 break-all border-b border-gray-300 px-4 py-4 text-sm">
                         {item.subscription_start_date?.split("T")[0]}
                       </td>
                       {/* <------------------------------------subscription_end_date------------------------------------> */}
-                      <td className="px-4 py-4 border-b text- border-gray-300 text-sm  break-all max-w-48 min-w-24">
+                      <td className="text- min-w-24 max-w-48 break-all border-b border-gray-300 px-4 py-4 text-sm">
                         {item.subscription_end_date?.split("T")[0]}
                       </td>
                       {/* Segments */}
-                      <td className="px-1 py-4 border-b border-gray-300 text-sm max-w-36 min-w-24">
+                      <td className="min-w-24 max-w-36 border-b border-gray-300 px-1 py-4 text-sm">
                         <div>
                           {item.segments && (
                             <span className="">
@@ -873,10 +873,10 @@ export default function SalesOrder() {
                         </div>
                       </td>
                       {/* Assigned To and User Role */}
-                      <td className="px-2 py-4 border-b border-gray-300 text-sm text-center">
+                      <td className="border-b border-gray-300 px-2 py-4 text-center text-sm">
                         {matchedUser && (
                           <div
-                            className="text-xs font-semibold text-white px-2 py-2 rounded-full w-[90%]"
+                            className="w-[90%] rounded-full px-2 py-2 text-xs font-semibold text-white"
                             style={{
                               backgroundColor: roleColor ? roleColor : "#000",
                               borderRadius: "8px",
@@ -900,14 +900,14 @@ export default function SalesOrder() {
                               ? () => handlePendingStatus(item.id, item.status)
                               : undefined
                           }
-                          className=" w-[90%]"
+                          className="w-[90%]"
                         >
                           {item.status === true ? (
-                            <div className="border text-xs pl-2 pr-4 font-medium bg-green-400 text-white rounded-full text-center py-1 hover:bg-green-600 ">
+                            <div className="rounded-full border bg-green-400 py-1 pl-2 pr-4 text-center text-xs font-medium text-white hover:bg-green-600">
                               Approved
                             </div>
                           ) : (
-                            <div className="border bg-red-400 text-center text-xs font-medium text-white  rounded-full w-full px-2 py-1 hover:bg-red-600">
+                            <div className="w-full rounded-full border bg-red-400 px-2 py-1 text-center text-xs font-medium text-white hover:bg-red-600">
                               Pending
                             </div>
                           )}
@@ -932,17 +932,17 @@ export default function SalesOrder() {
                   {/*---------Card starts Here */}
                   {getleads.map((item) => (
                     <div
-                      className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2"
+                      className="flex flex-col gap-2 rounded-lg border-2 bg-white px-2 py-3"
                       key={item.id}
                     >
                       <div className="flex items-center gap-3">
                         <img src={item.img} height={60} width={60} />
-                        <div className="flex flex-col grow">
+                        <div className="flex grow flex-col">
                           <div className="flex justify-between font-medium">
                             <span className="text-indigo-500">{item.name}</span>
                             <BiEdit
                               size={25}
-                              className="bg-white rounded-full shadow-md text-blue-500 p-1"
+                              className="rounded-full bg-white p-1 text-blue-500 shadow-md"
                             />
                           </div>
                           <div className="flex items-center gap-2 text-sm font-medium">
@@ -950,44 +950,44 @@ export default function SalesOrder() {
                           </div>
                         </div>
                       </div>
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4 text-gray-500 text-sm">
+                      <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
+                        <div className="w-2/4 text-sm text-gray-500">
                           Company name
                         </div>
-                        <div className="2-2/4 font-medium text-sm">
+                        <div className="2-2/4 text-sm font-medium">
                           {item.company}
                         </div>
                       </div>
 
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4 text-gray-500 text-sm">Title</div>
-                        <div className="2-2/4 font-medium text-sm">
+                      <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
+                        <div className="w-2/4 text-sm text-gray-500">Title</div>
+                        <div className="2-2/4 text-sm font-medium">
                           {item.tital}
                         </div>
                       </div>
 
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                      <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
                         <div className="w-2/4">
                           <IoIosMail className="text-2xl" />
                         </div>
-                        <div className="2-2/4 font-medium  text-sm">
+                        <div className="2-2/4 text-sm font-medium">
                           {item.email}
                         </div>
                       </div>
 
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                      <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
                         <div className="w-2/4">
                           <FaPhoneAlt className="text-xl" />
                         </div>
-                        <div className="2-2/4 font-medium text-sm">
+                        <div className="2-2/4 text-sm font-medium">
                           {item.phoneNo}
                         </div>
                       </div>
-                      <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                        <div className="w-2/4 text-gray-500 text-sm">
+                      <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
+                        <div className="w-2/4 text-sm text-gray-500">
                           Lead Source
                         </div>
-                        <div className="2-2/4 font-medium  text-sm">
+                        <div className="2-2/4 text-sm font-medium">
                           {item.leadsSource}
                         </div>
                       </div>
@@ -1001,13 +1001,13 @@ export default function SalesOrder() {
 
         {selectedViewValue === "Table View" && (
           <>
-            <div className="flex justify-end m-4">
+            <div className="m-4 flex justify-end">
               {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
-              <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
+              <nav className="mx-auto mt-4 flex items-center justify-center gap-2 text-center">
                 {/* /---------------------->Previous Button <----------------------< */}
                 <button
                   onClick={() => paginate(currentPage - 1)}
-                  className={`p-1 shadow-md rounded-full text-white ${currentPage === 1 ? "border-gray-200 border-2" : "bg-cyan-500 border-2 border-gray-100"}`}
+                  className={`rounded-full p-1 text-white shadow-md ${currentPage === 1 ? "border-2 border-gray-200" : "border-2 border-gray-100 bg-cyan-500"}`}
                   disabled={currentPage === 1}
                 >
                   <GrFormPrevious size={25} />
@@ -1026,7 +1026,7 @@ export default function SalesOrder() {
                         <button
                           key={page}
                           onClick={() => paginate(page)}
-                          className={`px-4 py-2 rounded mx-1 ${currentPage === page ? "bg-blue-600 text-white" : "bg-white text-gray-700 border"}`}
+                          className={`mx-1 rounded px-4 py-2 ${currentPage === page ? "bg-blue-600 text-white" : "border bg-white text-gray-700"}`}
                         >
                           {page}
                         </button>
@@ -1048,7 +1048,7 @@ export default function SalesOrder() {
                 {/* Next Button */}
                 <button
                   onClick={() => paginate(currentPage + 1)}
-                  className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage ? " border-gray-200 border-2" : " bg-cyan-500 border-2 border-gray-100"}`}
+                  className={`rounded-full p-1 shadow-md text-white${currentPage === totalPage ? "border-2 border-gray-200" : "border-2 border-gray-100 bg-cyan-500"}`}
                   disabled={currentPage === totalPage}
                 >
                   <GrFormNext size={25} />

@@ -241,28 +241,26 @@ export default function ServiceBox() {
   }, [searchTerm, getleads]);
 
   return (
-    <div className="min-h-screen flex flex-col m-3">
-      <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md flex-wrap gap-3">
-        <div className="flex gap-3 items-center justify-start contact_Dropdown_Main_Container flex-wrap">
+    <div className="m-3 flex min-h-screen flex-col">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-md bg-white px-3 py-2">
+        <div className="contact_Dropdown_Main_Container flex flex-wrap items-center justify-start gap-3">
           {/* SEARCH DROPDOWN */}
           <SearchElement
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           {/* DYNAMIC BUTTONS */}
-          <div className="flex gap-4 whitespace-nowrap service_Button_Main_Container">
+          <div className="service_Button_Main_Container flex gap-4 whitespace-nowrap">
             {Object.keys(dynamicButtons).map((key) =>
               permissions.includes(key) || businessRole === "Admin" ? (
                 <button
                   key={key}
                   onClick={() => handleOptionClick(key)}
-                  className={`px-4 py-1.5 rounded font-light text-md service_Button_Container
-                ${
-                  selectedButton === key
-                    ? "bg-cyan-500 text-white"
-                    : "bg-gray-100 text-gray-700"
-                }
-              `}
+                  className={`text-md service_Button_Container rounded px-4 py-1.5 font-light ${
+                    selectedButton === key
+                      ? "bg-cyan-500 text-white"
+                      : "bg-gray-100 text-gray-700"
+                  } `}
                 >
                   {key}
                 </button>
@@ -270,12 +268,12 @@ export default function ServiceBox() {
             )}
           </div>
         </div>
-        <div className="flex gap-3 flex-wrap service_Action_Main_Container items-center">
+        <div className="service_Action_Main_Container flex flex-wrap items-center gap-3">
           {/* DYNAMIC BUTTONS LINKS */}
           {(smsPermission || businessRole === "Admin") &&
           buttonText.text === "Send SMS" ? (
             <Link to={buttonText.href} className="service_Action_Container">
-              <button className="px-3 py-2 bg-blue-600 text-center text-md text-white rounded-md w-[150px] service_Action_Button">
+              <button className="text-md service_Action_Button w-[150px] rounded-md bg-blue-600 px-3 py-2 text-center text-white">
                 {buttonText.text}
               </button>
             </Link>
@@ -285,7 +283,7 @@ export default function ServiceBox() {
           {(emailPermission || businessRole === "Admin") &&
           buttonText.text === "Send Email" ? (
             <Link to={buttonText.href} className="service_Action_Container">
-              <button className="px-3 py-2 bg-blue-600 text-center text-md text-white rounded-md w-[150px] service_Action_Button">
+              <button className="text-md service_Action_Button w-[150px] rounded-md bg-blue-600 px-3 py-2 text-center text-white">
                 {buttonText.text}
               </button>
             </Link>
@@ -295,21 +293,21 @@ export default function ServiceBox() {
 
           {/* STRIPEBAR DROPDOWN */}
           <div
-            className="relative hide_Component"
+            className="hide_Component relative"
             onClick={toggleStripeBarDropdown}
             onMouseLeave={() => setStripeBarDropdown(false)}
           >
             <button
-              className="py-3 px-4 border rounded-md  flex justify-between items-center"
+              className="flex items-center justify-between rounded-md border px-4 py-3"
               id="dropdownDefaultButton"
               type="button"
             >
               {stripeBarDropdown && (
-                <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+                <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
                   <ul className="py-2 text-sm text-gray-700">
                     {stripeBar.map(({ key, value }) => (
                       <li
-                        className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                        className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                         key={key}
                       >
                         {value}
@@ -324,12 +322,12 @@ export default function ServiceBox() {
           </div>
           {/* ACTION DROPDOWN */}
           <div
-            className="relative service_Action_Container"
+            className="service_Action_Container relative"
             onClick={toggleActionDropdown}
             onMouseLeave={() => setActionDropdown(false)}
           >
             <button
-              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600 service_Action_Button"
+              className="service_Action_Button flex items-center justify-between gap-2 rounded-lg border border-blue-600 px-4 py-2 text-blue-600"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -337,12 +335,12 @@ export default function ServiceBox() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {actionDropdown && (
-              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
-                <ul className="text-sm text-gray-700 ">
+              <div className="absolute top-10 z-10 w-56 rounded-md border border-gray-300 bg-white py-2">
+                <ul className="text-sm text-gray-700">
                   {dropActionsMenu.map(({ key, value }) => (
                     <li
                       key={key}
-                      className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                      className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                     >
                       {value}
                     </li>
@@ -355,17 +353,17 @@ export default function ServiceBox() {
       </div>
 
       {/* FILTER BY SECTION */}
-      <div className="mt-3 flex justify-between items-center gap-3 flex-wrap">
-        <div className="flex gap-3 items-center">
-          <h1 className="text-3xl font-medium ">SMS Box</h1>
-          <h1 className="bg-blue-600 text-white px-2 py-2 min-w-10 text-center rounded-md text-md shadow-md">
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <h1 className="text-3xl font-medium">SMS Box</h1>
+          <h1 className="text-md min-w-10 rounded-md bg-blue-600 px-2 py-2 text-center text-white shadow-md">
             {getSmsBox.length}
           </h1>
         </div>
 
         <div className="date_Filter_Main_Container">
           {/* ------------------- Filter by date ----------------- */}
-          <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
+          <div className="date_Filter_Main_Container flex items-center justify-between rounded-lg border-2 border-gray-300 bg-white p-2">
             {/* Filter Icon Button */}
             <div className="flex items-center">
               <button className="border-r border-gray-500 pr-2">
@@ -373,17 +371,17 @@ export default function ServiceBox() {
               </button>
 
               {/* Date Range Filter Button */}
-              <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display">
+              <button className="filter_Image_Display whitespace-nowrap border-r border-gray-500 px-2">
                 Filter By
               </button>
 
               {/* Date Range Inputs */}
-              <div className="px-2 flex items-center gap-2 filter_Date_Container">
+              <div className="filter_Date_Container flex items-center gap-2 px-2">
                 <label className="hide_Filter_Text">From:</label>
                 <input
                   type="date"
                   value={startDate}
-                  className="border rounded px-2 py-2 filter_Date"
+                  className="filter_Date rounded border px-2 py-2"
                   onChange={(e) => setStartDate(e.target.value)}
                 />
 
@@ -391,17 +389,17 @@ export default function ServiceBox() {
                 <input
                   type="date"
                   value={endDate}
-                  className="border rounded px-2 py-2 filter_Date"
+                  className="filter_Date rounded border px-2 py-2"
                   onChange={(e) => setEndDate(e.target.value)}
                 />
               </div>
             </div>
 
             <div
-              className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center"
+              className="reset_paddings flex cursor-pointer items-center gap-2 rounded border p-2"
               onClick={handleResetFilter}
             >
-              <label className="hide_Filter_Text ">Reset</label>
+              <label className="hide_Filter_Text">Reset</label>
               <TbRefresh className="filter_Reset_Image" />
             </div>
           </div>
@@ -409,9 +407,9 @@ export default function ServiceBox() {
       </div>
 
       {/* ------------TABLE------------ */}
-      <div className="overflow-x-auto mt-3 leads_Table_Main_Container">
+      <div className="leads_Table_Main_Container mt-3 overflow-x-auto">
         {/* SEND SMS TABLE */}
-        <div className="min-w-full leads_Table_Container rounded-md">
+        <div className="leads_Table_Container min-w-full rounded-md">
           {selectedViewValue === "Table View" &&
             selectedButton === "Send SMS" &&
             (emailPermission || businessRole === "Admin") && (
@@ -419,7 +417,7 @@ export default function ServiceBox() {
             )}
         </div>
         {/* SEND EMAIL TABLE */}
-        <div className="min-w-full leads_Table_Container rounded-md">
+        <div className="leads_Table_Container min-w-full rounded-md">
           {selectedViewValue === "Table View" &&
             selectedButton === "Send Email" &&
             (smsPermission || businessRole === "Admin") && (
@@ -435,16 +433,16 @@ export default function ServiceBox() {
       {/* PAGINATION */}
       {selectedViewValue === "Table View" && (
         <>
-          <div className="flex justify-end m-4">
+          <div className="m-4 flex justify-end">
             {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
-            <nav className="flex items-center justify-center text-center mx-auto gap-2 mt-4">
+            <nav className="mx-auto mt-4 flex items-center justify-center gap-2 text-center">
               {/* Previous Button */}
               <button
                 onClick={() => paginate(currentPage - 1)}
-                className={`p-1 shadow-md rounded-full text-white ${
+                className={`rounded-full p-1 text-white shadow-md ${
                   currentPage === 1
-                    ? "border-gray-200 border-2"
-                    : "bg-cyan-500 border-2 border-gray-100"
+                    ? "border-2 border-gray-200"
+                    : "border-2 border-gray-100 bg-cyan-500"
                 }`}
                 disabled={currentPage === 1}
               >
@@ -463,10 +461,10 @@ export default function ServiceBox() {
                       <button
                         key={page}
                         onClick={() => paginate(page)}
-                        className={`px-4 py-2 rounded mx-1 ${
+                        className={`mx-1 rounded px-4 py-2 ${
                           currentPage === page
                             ? "bg-blue-600 text-white"
-                            : "bg-white text-gray-700 border"
+                            : "border bg-white text-gray-700"
                         }`}
                       >
                         {page}
@@ -489,10 +487,10 @@ export default function ServiceBox() {
               {/* Next Button */}
               <button
                 onClick={() => paginate(currentPage + 1)}
-                className={`p-1 shadow-md rounded-full text-white ${
+                className={`rounded-full p-1 text-white shadow-md ${
                   currentPage === totalPage
-                    ? "border-gray-200 border-2"
-                    : "bg-cyan-500 border-2 border-gray-100"
+                    ? "border-2 border-gray-200"
+                    : "border-2 border-gray-100 bg-cyan-500"
                 }`}
                 disabled={currentPage === totalPage}
               >

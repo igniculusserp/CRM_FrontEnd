@@ -12,18 +12,18 @@ const MessageInput = ({ onSendMessage }) => {
 
   return (
     <>
-      <section className="w-[400px] rounded-t-md bg-white py-4 px-2 z-20">
+      <section className="z-20 w-[400px] rounded-t-md bg-white px-2 py-4">
         {/* INPUT */}
-        <div className="flex h-full mt-auto flex-col w-full justify-end px-2 gap-2">
+        <div className="mt-auto flex h-full w-full flex-col justify-end gap-2 px-2">
           <input
             type="text"
             placeholder="Type a message..."
-            className="py-3 px-4 text-sm ring-1 ring-blue-300 rounded-md w-full font-light"
+            className="w-full rounded-md px-4 py-3 text-sm font-light ring-1 ring-blue-300"
             value={chat}
             onChange={(e) => setChat(e.target.value)}
           />
           <button
-            className="py-2 px-4 text-sm ring-1 ring-blue-300 rounded-md w-full font-medium bg-cyan-400 border-none cursor-pointer"
+            className="w-full cursor-pointer rounded-md border-none bg-cyan-400 px-4 py-2 text-sm font-medium ring-1 ring-blue-300"
             onClick={handleSend}
           >
             Chat

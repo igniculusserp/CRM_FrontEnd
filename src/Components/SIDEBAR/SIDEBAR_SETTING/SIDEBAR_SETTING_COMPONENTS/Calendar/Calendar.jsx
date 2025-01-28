@@ -131,14 +131,14 @@ export default function Department() {
 
   return (
     <>
-      <div className="m-3 min-w-screen">
+      <div className="min-w-screen m-3">
         {active ? (
           <>
-            <div className="flex items-center justify-between min-w-screen">
+            <div className="min-w-screen flex items-center justify-between">
               <h1 className="text-3xl font-medium">Add Group</h1>
               <button
                 onClick={handleActiveState}
-                className="p-2 text-sm text-white bg-blue-600 rounded min-w-10"
+                className="min-w-10 rounded bg-blue-600 p-2 text-sm text-white"
               >
                 Add Groups
               </button>
@@ -151,35 +151,35 @@ export default function Department() {
                       <th className="px-1 py-3">
                         <input type="checkbox" />
                       </th>
-                      <th className="px-2 py-3 font-medium text-left border-r">
-                        <div className="flex items-center justify-between text-sm max-w-32">
+                      <th className="border-r px-2 py-3 text-left font-medium">
+                        <div className="flex max-w-32 items-center justify-between text-sm">
                           <span>Group Name</span>
                           <FaBars />
                         </div>
                       </th>
 
-                      <th className="px-2 py-3 font-medium text-left border-r">
+                      <th className="border-r px-2 py-3 text-left font-medium">
                         <div className="flex items-center justify-between text-sm">
                           <span>User Count</span>
                           <FaBars />
                         </div>
                       </th>
 
-                      <th className="px-2 py-3 font-medium text-left border-r">
+                      <th className="border-r px-2 py-3 text-left font-medium">
                         <div className="flex items-center justify-between text-sm">
                           <span>Lead Limit</span>
                           <FaBars />
                         </div>
                       </th>
 
-                      <th className="px-2 py-3 font-medium text-left border-r">
+                      <th className="border-r px-2 py-3 text-left font-medium">
                         <div className="flex items-center justify-between text-sm">
                           <span>Fetch Limit</span>
                           <FaBars />
                         </div>
                       </th>
 
-                      <th className="px-2 py-3 font-medium text-left border-r">
+                      <th className="border-r px-2 py-3 text-left font-medium">
                         <div className="flex items-center justify-between text-sm">
                           <span>Action</span>
                         </div>
@@ -190,7 +190,7 @@ export default function Department() {
                     {users.map((user) => (
                       <tr
                         key={user.id}
-                        className="border-b border-gray-300 cursor-pointer hover:bg-gray-200"
+                        className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                       >
                         <td className="px-1 py-3 text-center">
                           <input
@@ -198,23 +198,23 @@ export default function Department() {
                             onClick={(e) => handleCheckboxClick(e, user.id)}
                           />
                         </td>
-                        <td className="px-2 py-4 text-sm break-words max-w-24">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           {user.group}
                         </td>
-                        <td className="px-2 py-4 text-sm break-words max-w-24">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           {user.userCount}
                         </td>
-                        <td className="px-2 py-4 text-sm break-words max-w-24">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           {user.leadLimit}
                         </td>
-                        <td className="px-2 py-4 text-sm break-words max-w-24">
+                        <td className="max-w-24 break-words px-2 py-4 text-sm">
                           {user.fetchLimit}
                         </td>
                         <td className="flex justify-center gap-3 px-2 py-4">
                           <MdEdit
                             size={25}
                             color="white"
-                            className="bg-blue-500 rounded"
+                            className="rounded bg-blue-500"
                             onClick={() => handleClick(user.id)}
                           />
                           <RiDeleteBin6Fill size={25} color="red" />
@@ -228,13 +228,13 @@ export default function Department() {
           </>
         ) : (
           <>
-            <div className="flex items-center justify-between min-w-screen">
+            <div className="min-w-screen flex items-center justify-between">
               <h1 className="text-3xl font-medium">
                 {isEditMode ? "Edit User Operation" : "Add user Operation"}
               </h1>
               <button
                 onClick={handleActiveState}
-                className="px-4 py-2 text-sm text-blue-600 bg-white border border-blue-600 rounded min-w-10"
+                className="min-w-10 rounded border border-blue-600 bg-white px-4 py-2 text-sm text-blue-600"
               >
                 Cancel
               </button>
@@ -242,15 +242,15 @@ export default function Department() {
 
             <form onSubmit={handleSubmit} className="flex">
               <div className="w-full">
-                <div className="flex-grow mt-3 bg-white shadow-md rounded-xl">
-                  <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+                <div className="mt-3 flex-grow rounded-xl bg-white shadow-md">
+                  <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                     Lead Information
                   </h2>
                   {/* -------------1------------- */}
                   <div className="relative min-h-screen px-4 py-2">
                     {/* -------------groupID------------- */}
                     <div className="flex space-x-4">
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="groupID"
                           className="text-sm font-medium text-gray-700"
@@ -262,12 +262,12 @@ export default function Department() {
                           name="groupID"
                           value={formData.groupID || ""}
                           onChange={handleChange}
-                          className="p-2 mt-1 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                         />
                       </div>
                       {/* -------------Group------------- */}
                       {/* -------------Group------------- */}
-                      <div className="relative flex flex-col w-1/2">
+                      <div className="relative flex w-1/2 flex-col">
                         <label
                           htmlFor="group"
                           className="text-sm font-medium text-gray-700"
@@ -280,7 +280,7 @@ export default function Department() {
                           onMouseLeave={() => setIsDropdownVisibleGroup(false)}
                         >
                           <button
-                            className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                            className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                             id="GroupDropDown"
                             type="button"
                           >
@@ -288,13 +288,13 @@ export default function Department() {
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {isDropdownVisibleGroup && (
-                            <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                            <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
                                 {group.map(({ key, status }) => (
                                   <li
                                     key={key}
                                     onClick={() => handleDropdownGroup(status)}
-                                    className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {status}
                                   </li>
@@ -309,7 +309,7 @@ export default function Department() {
                     {/* -------------2------------- */}
                     <div className="flex space-x-4">
                       {/* -------------UserCount------------- */}
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="userCount"
                           className="text-sm font-medium text-gray-700"
@@ -321,12 +321,12 @@ export default function Department() {
                           name="userCount"
                           value={formData.userCount || ""}
                           onChange={handleChange}
-                          className="p-2 mt-1 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                         />
                       </div>
 
                       {/* -------------Lead Limit------------- */}
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="leadLimit"
                           className="text-sm font-medium text-gray-700"
@@ -338,14 +338,14 @@ export default function Department() {
                           name="leadLimit"
                           value={formData.leadLimit || ""}
                           onChange={handleChange}
-                          className="p-2 mt-1 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                         />
                       </div>
                     </div>
                     {/* -------------3------------- */}
                     <div className="flex space-x-4">
                       {/* -------------Fetch Limit------------- */}
-                      <div className="flex flex-col w-1/2">
+                      <div className="flex w-1/2 flex-col">
                         <label
                           htmlFor="fetchLimit"
                           className="text-sm font-medium text-gray-700"
@@ -357,7 +357,7 @@ export default function Department() {
                           name="fetchLimit"
                           value={formData.fetchLimit || ""}
                           onChange={handleChange}
-                          className="p-2 mt-1 border border-gray-300 rounded-md"
+                          className="mt-1 rounded-md border border-gray-300 p-2"
                         />
                       </div>
                     </div>
@@ -365,7 +365,7 @@ export default function Department() {
                     {/* -------------Button------------- */}
                     <button
                       type="submit"
-                      className="mt-4 hover:bg-cyan-500 border border-cyan-500 text-cyan-500 hover:text-white px-4 py-4 rounded-md absolute  top-[300px]"
+                      className="absolute top-[300px] mt-4 rounded-md border border-cyan-500 px-4 py-4 text-cyan-500 hover:bg-cyan-500 hover:text-white"
                     >
                       {isEditMode ? "Update User" : "Save User"}
                     </button>

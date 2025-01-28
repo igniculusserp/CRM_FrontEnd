@@ -319,8 +319,8 @@ export default function MailBox() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col m-3">
-      <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md flex-wrap gap-3">
+    <div className="m-3 flex min-h-screen flex-col">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-md bg-white px-3 py-2">
         <div className="flex gap-3">
           {/* ALL MAIN BOX DROPDOWN */}
           <div
@@ -329,7 +329,7 @@ export default function MailBox() {
             onMouseLeave={() => setMailBoxDropdown(false)}
           >
             <button
-              className="py-2 px-4 border rounded-md  flex justify-between items-center"
+              className="flex items-center justify-between rounded-md border px-4 py-2"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -337,11 +337,11 @@ export default function MailBox() {
               <FaAngleDown className="ml-2 text-gray-900" />
             </button>
             {mailBoxDropdown && (
-              <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+              <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
                 <ul className="py-2 text-sm text-gray-700">
                   {mailBoxData.map(({ key, value }) => (
                     <li
-                      className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                      className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                       key={key}
                       onClick={() => handleMailBoxStatusButton(value)}
                     >
@@ -353,11 +353,11 @@ export default function MailBox() {
             )}
           </div>
           {/* SEARCH BAR DROPDOWN */}
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-center">
             <input
               type="text"
               placeholder="Search..."
-              className="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full max-w-sm rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           {/* END SEARCH BAR DROPDOWN */}
@@ -365,7 +365,7 @@ export default function MailBox() {
         <div className="flex items-center gap-3">
           <Link
             to="/panel/createmail"
-            className="py-2 px-4 border rounded-md bg-blue-600 text-white"
+            className="rounded-md border bg-blue-600 px-4 py-2 text-white"
           >
             Create Mail Box
           </Link>
@@ -376,16 +376,16 @@ export default function MailBox() {
             onMouseLeave={() => setStripeBarDropdown(false)}
           >
             <button
-              className="px-4 py-3 rounded-md border flex items-center justify-between gap-2"
+              className="flex items-center justify-between gap-2 rounded-md border px-4 py-3"
               type="button"
               id="defaultDropdown"
             >
               {stripeBarDropdown && (
-                <div className="absolute bg-white border border-gray-300 top-10 z-10">
+                <div className="absolute top-10 z-10 border border-gray-300 bg-white">
                   <ul className="py-2 text-sm text-gray-700">
                     {stripeBar.map(({ key, value }) => (
                       <li
-                        className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                        className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                         key={key}
                       >
                         {value}
@@ -405,7 +405,7 @@ export default function MailBox() {
             onMouseLeave={() => setActionDropdown(false)}
           >
             <button
-              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600"
+              className="flex items-center justify-between gap-2 rounded-lg border border-blue-600 px-4 py-2 text-blue-600"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -413,12 +413,12 @@ export default function MailBox() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {actionDropdown && (
-              <div className="absolute w-56 py-2 bg-white border border-gray-300 rounded-md top-10 z-10">
-                <ul className="text-sm text-gray-700 ">
+              <div className="absolute top-10 z-10 w-56 rounded-md border border-gray-300 bg-white py-2">
+                <ul className="text-sm text-gray-700">
                   {dropActionsMenu.map(({ key, value }) => (
                     <li
                       key={key}
-                      className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                      className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                     >
                       {value}
                     </li>
@@ -431,16 +431,16 @@ export default function MailBox() {
       </div>
 
       {/* FILTER BY */}
-      <div className="my-1 flex py-2 items-center justify-between gap-3">
+      <div className="my-1 flex items-center justify-between gap-3 py-2">
         <div className="flex items-center justify-center gap-3">
           <h1 className="text-3xl font-medium">Mail Box</h1>
-          <button className="bg-blue-600 text-white px-2 py-2 min-w-10 text-center rounded-md text-md shadow-md">
+          <button className="text-md min-w-10 rounded-md bg-blue-600 px-2 py-2 text-center text-white shadow-md">
             {mailBoxMainData.length}
           </button>
         </div>
         {/* ------------------- Filter by date ----------------- */}
 
-        <div className="flex bg-white border-2 border-gray-300 py-2 pr-2 rounded-lg justify-center items-center">
+        <div className="flex items-center justify-center rounded-lg border-2 border-gray-300 bg-white py-2 pr-2">
           {/* Filter Icon Button */}
           <button className="border-r border-gray-500 px-3">
             <ImFilter className="filter_Image_Size" />
@@ -450,24 +450,24 @@ export default function MailBox() {
           <button className="border-r border-gray-500 px-3">Filter By</button>
 
           {/* Date Range Inputs */}
-          <div className="px-3 flex items-center gap-2">
+          <div className="flex items-center gap-2 px-3">
             <input
               type="date"
               // value={startDate}
-              className="border rounded px-2 py-1"
+              className="rounded border px-2 py-1"
               // onChange={(e) => setStartDate(e.target.value)}
             />
 
             <input
               type="date"
               // value={endDate}
-              className="border rounded px-2 py-1"
+              className="rounded border px-2 py-1"
               // onChange={(e) => setEndDate(e.target.value)}
             />
           </div>
 
           <div
-            className="p-2 border rounded cursor-pointer reset_paddings  hover:shadow-md"
+            className="reset_paddings cursor-pointer rounded border p-2 hover:shadow-md"
             // onClick={handleResetFilter}
           >
             <TbRefresh size={25} />
@@ -477,22 +477,22 @@ export default function MailBox() {
 
       {/* TABLE VIEW */}
       <div className="overflow-x-auto">
-        <div className="min-w-full rounded-md overflow-hidden">
+        <div className="min-w-full overflow-hidden rounded-md">
           {selectedViewValue === "Table View" && (
             <table className="min-w-full bg-white">
               {/* TABLE HEAD START */}
               <thead>
-                <tr className="border-gray-300 border-b-2">
+                <tr className="border-b-2 border-gray-300">
                   {/* CHECKBOX */}
-                  <th className="px-1 py-3  text-left font-medium ">
+                  <th className="px-1 py-3 text-left font-medium">
                     <input type="checkbox" />
                   </th>
                   {/* CIENT NAME */}
-                  <th className="px-1 py-3  text-left border-r font-medium ">
+                  <th className="border-r px-1 py-3 text-left font-medium">
                     <span>Client Name</span>
                   </th>
                   {/* MOBILE */}
-                  <th className="px-1 py-3  text-left border-r font-medium ">
+                  <th className="border-r px-1 py-3 text-left font-medium">
                     <div className="flex items-center justify-between">
                       <span>Mobile</span>
                       <span>
@@ -501,7 +501,7 @@ export default function MailBox() {
                     </div>
                   </th>
                   {/* MAIL */}
-                  <th className="px-1 py-3  text-left border-r font-medium ">
+                  <th className="border-r px-1 py-3 text-left font-medium">
                     <div className="flex items-center justify-between">
                       <span>Mail</span>
                       <span>
@@ -510,7 +510,7 @@ export default function MailBox() {
                     </div>
                   </th>
                   {/* TYPE */}
-                  <th className="px-1 py-3  text-left border-r font-medium ">
+                  <th className="border-r px-1 py-3 text-left font-medium">
                     <div className="flex items-center justify-between">
                       <span>Type</span>
                       <span>
@@ -529,18 +529,18 @@ export default function MailBox() {
               <tbody>
                 {currentMail.map((map, index) => (
                   <tr
-                    className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                    className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                     key={index}
                     onClick={() => handleClick()}
                   >
                     {/* CHECKBOX */}
-                    <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                    <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
                       <div className="flex items-center">
                         <input type="checkbox" />
                       </div>
                     </td>
                     {/* CLIENT NAME */}
-                    <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                    <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
                       <div className="flex items-center">
                         <img
                           className="h-8 w-8 rounded-full"
@@ -553,19 +553,19 @@ export default function MailBox() {
                       </div>
                     </td>
                     {/* MOBILE */}
-                    <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                    <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
                       <div className="flex items-center">{map.mobile}</div>
                     </td>
                     {/* MAIL */}
-                    <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                    <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
                       <div className="flex items-center">{map.mail}</div>
                     </td>
                     {/* TYPE */}
-                    <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                    <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
                       <div className="flex items-center">{map.type}</div>
                     </td>
                     {/* MAIL TIME */}
-                    <td className="px-2 py-4 border-b border-gray-300 text-sm leading-5 text-gray-600">
+                    <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
                       <div className="flex items-center">{map.mailTime}</div>
                     </td>
                   </tr>
@@ -580,7 +580,7 @@ export default function MailBox() {
       {/* PAGINATION */}
       {selectedViewValue === "Table View" && (
         <>
-          <div className="flex justify-end m-4">
+          <div className="m-4 flex justify-end">
             <nav>
               <ul className="inline-flex items-center">
                 {Array.from(
@@ -589,10 +589,10 @@ export default function MailBox() {
                     <li key={i + 1}>
                       <button
                         onClick={() => paginate(i + 1)}
-                        className={`px-4 py-2 mx-1 ${
+                        className={`mx-1 px-4 py-2 ${
                           currentPage === i + 1
                             ? "bg-blue-500 text-white"
-                            : "bg-white text-gray-700 border"
+                            : "border bg-white text-gray-700"
                         }`}
                       >
                         {i + 1}

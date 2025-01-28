@@ -149,29 +149,29 @@ export default function Header({ toggle, setToggle }) {
   return (
     <>
       <ToastContainer />
-      <div className="flex justify-between items-center py-3 mx-3 sm:min-w-screen">
-        <div className="flex justify-center items-center  ">
+      <div className="sm:min-w-screen mx-3 flex items-center justify-between py-3">
+        <div className="flex items-center justify-center">
           {/*-> Toggle Button <-*/}
           <button
-            className="flex flex-start bg-cyan-500 text-white shadow rounded-full text-lg p-1 "
+            className="flex-start flex rounded-full bg-cyan-500 p-1 text-lg text-white shadow"
             onClick={() => setToggle(!toggle)}
           >
             {toggle ? <FaBarsStaggered /> : <FaBars />}
           </button>
           {/*-> Igniculuss DropDown Button hidden For mobile <-*/}
-          <button className="sm:flex items-center gap-2 border rounded-full py-1 px-2 ml-4 hidden ">
+          <button className="ml-4 hidden items-center gap-2 rounded-full border px-2 py-1 sm:flex">
             Igniculuss <FaAngleDown />
           </button>
         </div>
 
-        <div className="flex gap-1 justify-start sm:justify-end  items-center shadow rounded-full px-2">
+        <div className="flex items-center justify-start gap-1 rounded-full px-2 shadow sm:justify-end">
           {menu.map(({ key, logo, link, functionality }) => (
             <div
               key={key}
               className={`cursor-pointer p-1 ${
                 activeKey === key
-                  ? "rounded-full p-1 bg-gray-700 text-cyan-500 shadow-md "
-                  : "text-gray-700 "
+                  ? "rounded-full bg-gray-700 p-1 text-cyan-500 shadow-md"
+                  : "text-gray-700"
               }`}
             >
               <div onClick={() => handleMenuClick(key, functionality)}>

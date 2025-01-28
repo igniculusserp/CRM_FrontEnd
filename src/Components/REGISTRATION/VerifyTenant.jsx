@@ -120,10 +120,10 @@ export default function VerifyTenant() {
   return (
     <>
       <ToastContainer />
-      <div className="bg-cyan-500 sm:bg-cyan-500 min-h-screen flex flex-col md:flex-row">
+      <div className="flex min-h-screen flex-col bg-cyan-500 sm:bg-cyan-500 md:flex-row">
         {/*----------> Part-I <---------- */}
-        <div className="hidden md:flex w-2/3 bg-cyan min-h-screen flex-col justify-center items-center">
-          <div className="bg-white flex flex-col justify-center items-center py-8 px-16 gap-2 rounded-md">
+        <div className="bg-cyan hidden min-h-screen w-2/3 flex-col items-center justify-center md:flex">
+          <div className="flex flex-col items-center justify-center gap-2 rounded-md bg-white px-16 py-8">
             <img src={IgniculussLogo} alt="Brandlogo" width={80} height={80} />
             <img src={CRMLoginPage} alt="sample" className="h-2/4" />
             <div className="flex text-3xl font-semibold">
@@ -131,7 +131,7 @@ export default function VerifyTenant() {
               <h1>Hello, Igniculuss</h1>
             </div>
             <div>
-              <p className="text-xs text-gray-400 text-center">
+              <p className="text-center text-xs text-gray-400">
                 Skip repetitive and manual sales-marketing tasks. Get highly
                 <br />
                 productive through automation and save tons of time!
@@ -141,22 +141,22 @@ export default function VerifyTenant() {
         </div>
 
         {/*----------> Part-II <---------- */}
-        <div className="w-full md:w-1/3 bg-cyan-500 md:bg-white flex min-h-screen flex-col justify-center ">
+        <div className="flex min-h-screen w-full flex-col justify-center bg-cyan-500 md:w-1/3 md:bg-white">
           {/* Image on Top for Small Screens */}
-          <div className="flex md:hidden justify-center">
+          <div className="flex justify-center md:hidden">
             <img src={IgniculussLogo} alt="sample" width={100} height={50} />
           </div>
 
-          <div className="flex flex-col justify-center mx-10 md:mx-4 px-3 mt-8  bg-white py-3 rounded-2xl">
-            <div className="flex text-2xl font-semibold gap-3 items-center">
-              <GiDiamonds className="text-3xl hidden md:block" />
+          <div className="mx-10 mt-8 flex flex-col justify-center rounded-2xl bg-white px-3 py-3 md:mx-4">
+            <div className="flex items-center gap-3 text-2xl font-semibold">
+              <GiDiamonds className="hidden text-3xl md:block" />
               <h1 className="">Check Tenant</h1>
             </div>
 
             <div className="mt-6">
               {/*----------> FORM <---------- */}
               <form
-                className="flex flex-col gap-2  rounded-md"
+                className="flex flex-col gap-2 rounded-md"
                 onSubmit={handleSubmit}
               >
                 {/*----------> Username <---------- */}
@@ -171,33 +171,33 @@ export default function VerifyTenant() {
                   <input
                     type="email"
                     name="userName"
-                    className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm flex justify-between"
+                    className="mt-1 flex w-full justify-between rounded-md border border-gray-300 px-2 py-2 text-sm outline-none"
                     value={userName}
                     onChange={handleusername}
                     placeholder="specimen@company.com"
                   />
                 </label>
 
-                <button className="bg-cyan-500 outline-none text-white py-4 text-xs rounded-md font-bold mt-4 hover:shadow-md">
+                <button className="mt-4 rounded-md bg-cyan-500 py-4 text-xs font-bold text-white outline-none hover:shadow-md">
                   Submit
                 </button>
               </form>
 
-              <div className="relative text-center mt-8">
+              <div className="relative mt-8 text-center">
                 <div className="absolute inset-2 flex items-center">
                   <div className="w-full border-t border-gray-300" />
                 </div>
-                <div className="relative inline-block px-4 bg-white text-sm">
+                <div className="relative inline-block bg-white px-4 text-sm">
                   <span className="font-light">Or Join Us</span>
                 </div>
               </div>
             </div>
 
-            <div className="mx-auto text-sm mt-8">
+            <div className="mx-auto mt-8 text-sm">
               <span className="font-light">
                 Don’t have an Account ?
                 <Link to="/registration">
-                  <span className="text-cyan-500 font-semibold block text-center underline md:inline-block md:font-normal ms-1 underline underline-offset-2 hover:scale-110	">
+                  <span className="ms-1 block text-center font-semibold text-cyan-500 underline underline-offset-2 hover:scale-110 md:inline-block md:font-normal">
                     Join Us
                   </span>
                 </Link>

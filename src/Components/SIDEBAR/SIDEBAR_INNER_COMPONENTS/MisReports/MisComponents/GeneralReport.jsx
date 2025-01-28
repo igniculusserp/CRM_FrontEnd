@@ -159,11 +159,11 @@ export default function GeneralReport() {
   };
   return (
     <>
-      <div className="flex py-2 px-3 m-3 items-center justify-between bg-white rounded-md shadow-md">
+      <div className="m-3 flex items-center justify-between rounded-md bg-white px-3 py-2 shadow-md">
         <h1 className="text-xl">Add General Report</h1>
         <Link
           to="/panel/misreports"
-          className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
+          className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
         >
           Cancel
         </Link>
@@ -171,18 +171,18 @@ export default function GeneralReport() {
 
       {/* FORM SECTION */}
       <div className="px-3">
-        <h1 className="py-2 px-3 font-medium rounded-t-xl bg-cyan-500 text-white text-md shadow-md">
+        <h1 className="text-md rounded-t-xl bg-cyan-500 px-3 py-2 font-medium text-white shadow-md">
           General Report Detail
         </h1>
         <form
           onSubmit={handleSubmit}
-          className="flex gap-3 bg-white px-2 py-2 pb-4 rounded-b-xl shadow-md flex-col"
+          className="flex flex-col gap-3 rounded-b-xl bg-white px-2 py-2 pb-4 shadow-md"
         >
           <div className="grid gap-2 px-2 pb-3">
             {/* FIRST ROW */}
             <div className="flex space-x-4">
               {/* CREATED START DATE DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="createdStartDate"
                   className="text-sm font-medium text-gray-700"
@@ -195,7 +195,7 @@ export default function GeneralReport() {
                   onMouseLeave={() => setCreatedStartDateDropdown(false)}
                 >
                   <button
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                     id="createdStartDate"
                     type="button"
                   >
@@ -205,11 +205,11 @@ export default function GeneralReport() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {createdStartDateDropdown && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                    <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
                       <ul className="py-2 text-sm text-gray-700">
                         {createdStartData.map(({ key, name }) => (
                           <li
-                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            className="block cursor-pointer border-b px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white"
                             key={key}
                             onClick={() => handleDropdownCreatedStart(name)}
                           >
@@ -221,7 +221,7 @@ export default function GeneralReport() {
                   )}
                 </div>
               </div>
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 {/* MODIFIED START DATE FIELD */}
                 <label
                   htmlFor="modifiedStartDate"
@@ -234,7 +234,7 @@ export default function GeneralReport() {
                   name="modifiedStartDate"
                   id="modifiedStartDate"
                   value={editReport.modifiedStartDate}
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  className="mt-1 rounded-md border border-gray-300 p-2"
                   onChange={handleChange}
                   placeholder="Entere verox peron"
                 />
@@ -243,7 +243,7 @@ export default function GeneralReport() {
             {/* SECOND ROW */}
             <div className="flex space-x-4">
               {/* CREATED END DATE DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="createdEndDate"
                   className="text-sm font-medium text-gray-700"
@@ -256,7 +256,7 @@ export default function GeneralReport() {
                   onMouseLeave={() => setCreatedEndDropdown(false)}
                 >
                   <button
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                     id="createdEndDate"
                     type="button"
                   >
@@ -266,11 +266,11 @@ export default function GeneralReport() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {createdEndDropdown && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                    <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
                       <ul className="py-2 text-sm text-gray-700">
                         {createdEndData.map(({ key, name }) => (
                           <li
-                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            className="block cursor-pointer border-b px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white"
                             key={key}
                             onClick={() => handleDropdownCreatedEnd(name)}
                           >
@@ -282,7 +282,7 @@ export default function GeneralReport() {
                   )}
                 </div>
               </div>
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 {/* MODIFIED END DATE FIELD */}
                 <label
                   htmlFor="modifiedEndDate"
@@ -295,7 +295,7 @@ export default function GeneralReport() {
                   name="modifiedEndDate"
                   id="modifiedEndDate"
                   value={editReport.modifiedEndDate}
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  className="mt-1 rounded-md border border-gray-300 p-2"
                   onChange={handleChange}
                   placeholder="Entere verox peron"
                 />
@@ -304,7 +304,7 @@ export default function GeneralReport() {
             {/* THIRD ROW */}
             <div className="flex space-x-4">
               {/* LEAD STATUS DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="leadStatus"
                   className="text-sm font-medium text-gray-700"
@@ -317,7 +317,7 @@ export default function GeneralReport() {
                   onMouseLeave={() => setLeadStatusDropdown(false)}
                 >
                   <button
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                     id="leadStatus"
                     type="button"
                   >
@@ -325,11 +325,11 @@ export default function GeneralReport() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {leadStatusDropdown && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                    <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
                       <ul className="py-2 text-sm text-gray-700">
                         {leadStatusData.map(({ key, name }) => (
                           <li
-                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            className="block cursor-pointer border-b px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white"
                             key={key}
                             onClick={() => handleDropdownLeadStatus(name)}
                           >
@@ -341,7 +341,7 @@ export default function GeneralReport() {
                   )}
                 </div>
               </div>
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 {/* CALL BACK START DATE FIELD */}
                 <label
                   htmlFor="callbackStartDate"
@@ -354,7 +354,7 @@ export default function GeneralReport() {
                   name="callbackStartDate"
                   id="callbackStartDate"
                   value={editReport.callbackStartDate}
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  className="mt-1 rounded-md border border-gray-300 p-2"
                   onChange={handleChange}
                   placeholder="Entere verox peron"
                 />
@@ -363,7 +363,7 @@ export default function GeneralReport() {
             {/* FOURTH ROW */}
             <div className="flex space-x-4">
               {/* LEAD OWNER DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="leadStatus"
                   className="text-sm font-medium text-gray-700"
@@ -376,7 +376,7 @@ export default function GeneralReport() {
                   onMouseLeave={() => setLeadOwnerDropdown(false)}
                 >
                   <button
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                     id="leadStatus"
                     type="button"
                   >
@@ -384,11 +384,11 @@ export default function GeneralReport() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {leadOwnerDropdown && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                    <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
                       <ul className="py-2 text-sm text-gray-700">
                         {leadOwnerData.map(({ key, name }) => (
                           <li
-                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            className="block cursor-pointer border-b px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white"
                             key={key}
                             onClick={() => handleDropdownLeadOwner(name)}
                           >
@@ -400,7 +400,7 @@ export default function GeneralReport() {
                   )}
                 </div>
               </div>
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 {/* CALL BACK END DATE FIELD */}
                 <label
                   htmlFor="callbackEndDate"
@@ -413,7 +413,7 @@ export default function GeneralReport() {
                   name="callbackEndDate"
                   id="callbackEndDate"
                   value={editReport.callbackEndDate}
-                  className="mt-1 p-2 border border-gray-300 rounded-md"
+                  className="mt-1 rounded-md border border-gray-300 p-2"
                   onChange={handleChange}
                   placeholder="Entere verox peron"
                 />
@@ -422,7 +422,7 @@ export default function GeneralReport() {
             {/* FIFTH ROW */}
             <div className="flex space-x-4">
               {/* LEAD SOURCE DROPDOWN */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="leadSource"
                   className="text-sm font-medium text-gray-700"
@@ -435,7 +435,7 @@ export default function GeneralReport() {
                   onMouseLeave={() => setLeadSourceDropdown(false)}
                 >
                   <button
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                     id="leadSource"
                     type="button"
                   >
@@ -443,11 +443,11 @@ export default function GeneralReport() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {leadSourceDropdown && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                    <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
                       <ul className="py-2 text-sm text-gray-700">
                         {leadSourceData.map(({ key, name }) => (
                           <li
-                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            className="block cursor-pointer border-b px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white"
                             key={key}
                             onClick={() => handleDropdownLeadSource(name)}
                           >
@@ -466,7 +466,7 @@ export default function GeneralReport() {
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
               >
                 {isEditMode ? "Update" : "Save"}
               </button>

@@ -77,10 +77,10 @@ export default function FinancialActivity() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col m-3 ">
+    <div className="m-3 flex min-h-screen flex-col">
       {showTopSection && (
-        <div className="py-2 px-3 bg-white flex items-center justify-between rounded-md flex-wrap gap-3 finance_Buttons_Text finance_Buttons_Main_Container">
-          <div className="flex ">
+        <div className="finance_Buttons_Text finance_Buttons_Main_Container flex flex-wrap items-center justify-between gap-3 rounded-md bg-white px-3 py-2">
+          <div className="flex">
             {/* DYNAMIC BUTTONS */}
             <div className="flex gap-4">
               {Object.keys(dynamicButtons).map((key) =>
@@ -88,7 +88,7 @@ export default function FinancialActivity() {
                   <button
                     key={key}
                     onClick={() => handleOptionClick(key)}
-                    className={`px-4 py-1.5 rounded font-light text-md whitespace-nowrap ${
+                    className={`text-md whitespace-nowrap rounded px-4 py-1.5 font-light ${
                       selectedButton === key
                         ? "bg-cyan-500 text-white"
                         : "bg-gray-100 text-gray-700"
@@ -107,11 +107,11 @@ export default function FinancialActivity() {
                 onMouseLeave={() => setSmsBoxDropdown(false)}
               >
                 {smsBoxDropdown && (
-                  <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
+                  <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
                     <ul className="py-2 text-sm text-gray-700">
                       {smsDropdown.map(({ key, value }) => (
                         <li
-                          className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer "
+                          className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                           key={key}
                         >
                           {value}

@@ -32,15 +32,15 @@ export default function Subscription() {
   ];
 
   return (
-    <div className="h-full w-full p-8 flex flex-col justify-center bg-slate-200">
+    <div className="flex h-full w-full flex-col justify-center bg-slate-200 p-8">
       <h1 className="text-2xl font-medium tracking-wide">
         Upgrade Subscription
       </h1>
-      <div className="flex mt-3">
-        <button className="p-3 w-max border-[0.7px] border-gray-400 uppercase text-gray-400 bg-white hover:bg-gray-200 text-md font-normal">
+      <div className="mt-3 flex">
+        <button className="text-md w-max border-[0.7px] border-gray-400 bg-white p-3 font-normal uppercase text-gray-400 hover:bg-gray-200">
           Yearly
         </button>
-        <button className="p-3 w-max border-[0.7px] border-gray-400 uppercase text-gray-400 bg-white hover:bg-gray-200 text-md font-normal">
+        <button className="text-md w-max border-[0.7px] border-gray-400 bg-white p-3 font-normal uppercase text-gray-400 hover:bg-gray-200">
           Monthly
         </button>
       </div>

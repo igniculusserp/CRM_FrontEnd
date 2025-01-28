@@ -9,7 +9,7 @@ export default function SidebarBase() {
   const [toggle, setToggle] = useState(false);
 
   return (
-    <div className="flex reative">
+    <div className="reative flex">
       {/* SidebarBar is fixed in place */}
       <div
         className={toggle ? "hide_View" : "Show_View"}
@@ -18,7 +18,7 @@ export default function SidebarBase() {
         }}
       />
       <div
-        className={`h-screen sticky top-0 bg-cyan-500 scrollbar-hidden  ${
+        className={`scrollbar-hidden sticky top-0 h-screen bg-cyan-500 ${
           toggle ? "Side_Bar_Large" : "Side_Bar_Small"
         }`}
       >
@@ -26,7 +26,7 @@ export default function SidebarBase() {
       </div>
       {/* Main content and header */}
       <div
-        className={`h-screen flex flex-col ${
+        className={`flex h-screen flex-col ${
           toggle ? "Main_Screen_Large" : "Main_Screen_Small"
         }`}
       >

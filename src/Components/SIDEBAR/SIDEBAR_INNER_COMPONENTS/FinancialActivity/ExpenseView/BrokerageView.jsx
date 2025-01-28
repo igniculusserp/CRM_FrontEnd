@@ -153,11 +153,11 @@ export default function BrokerageView({ setShowTopSection }) {
     return (
       <>
         {/* -------- PARENT -------- */}
-        <div className="min-h-screen flex flex-col my-3 ">
+        <div className="my-3 flex min-h-screen flex-col">
           {/* MIDDLE SECTION */}
           <div className="date_Filter_Main_Container">
             {/* ------------------- Filter by date ----------------- */}
-            <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
+            <div className="date_Filter_Main_Container flex items-center justify-between rounded-lg border-2 border-gray-300 bg-white p-2">
               {/* Filter Icon Button */}
               <div className="flex items-center">
                 <button className="border-r border-gray-500 pr-2">
@@ -165,17 +165,17 @@ export default function BrokerageView({ setShowTopSection }) {
                 </button>
 
                 {/* Date Range Filter Button */}
-                <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display">
+                <button className="filter_Image_Display whitespace-nowrap border-r border-gray-500 px-2">
                   Filter By
                 </button>
 
                 {/* Date Range Inputs */}
-                <div className="px-2 flex items-center gap-2 filter_Date_Container">
+                <div className="filter_Date_Container flex items-center gap-2 px-2">
                   <label className="hide_Filter_Text">From:</label>
                   <input
                     type="date"
                     value={startDate}
-                    className="border rounded px-2 py-2 filter_Date"
+                    className="filter_Date rounded border px-2 py-2"
                     onBlur={(e) => setStartDate(e.target.value)}
                   />
 
@@ -183,84 +183,84 @@ export default function BrokerageView({ setShowTopSection }) {
                   <input
                     type="date"
                     value={endDate}
-                    className="border rounded px-2 py-2 filter_Date"
+                    className="filter_Date rounded border px-2 py-2"
                     onBlur={(e) => setEndDate(e.target.value)}
                   />
                 </div>
               </div>
 
               <div
-                className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center"
+                className="reset_paddings flex cursor-pointer items-center gap-2 rounded border p-2"
                 onClick={handleResetFilter}
               >
-                <label className="hide_Filter_Text ">Reset</label>
+                <label className="hide_Filter_Text">Reset</label>
                 <TbRefresh className="filter_Reset_Image" />
               </div>
             </div>
           </div>
 
           {/* Add SECTION */}
-          <div className="flex min-w-screen justify-between items-center my-4 gap-3 flex-wrap">
-            <h1 className="text-3xl font-medium whitespace-nowrap finance_Heading_Text">
+          <div className="min-w-screen my-4 flex flex-wrap items-center justify-between gap-3">
+            <h1 className="finance_Heading_Text whitespace-nowrap text-3xl font-medium">
               Brokerage View
             </h1>
             <button
               onClick={handleAdd}
-              className="bg-blue-600 text-white p-2 min-w-10 text-sm rounded whitespace-nowrap"
+              className="min-w-10 whitespace-nowrap rounded bg-blue-600 p-2 text-sm text-white"
             >
               Add Brokerage View
             </button>
           </div>
 
           {/* TABLE VIEW */}
-          <div className="overflow-x-auto leads_Table_Main_Container">
-            <div className="min-w-full rounded-md leads_Table_Container">
+          <div className="leads_Table_Main_Container overflow-x-auto">
+            <div className="leads_Table_Container min-w-full rounded-md">
               {/*--------------TABLE HEAD START------------- */}
 
-              <table className="min-w-full bg-white leads_Table">
+              <table className="leads_Table min-w-full bg-white">
                 <thead>
-                  <tr className="border-gray-300 border-b-2">
+                  <tr className="border-b-2 border-gray-300">
                     <th className="px-1 py-3">
                       <input type="checkbox" />
                     </th>
-                    <th className="px-2 py-3 text-left border-r font-medium">
-                      <div className="flex justify-between items-center text-sm">
+                    <th className="border-r px-2 py-3 text-left font-medium">
+                      <div className="flex items-center justify-between text-sm">
                         <span>Username</span>
                         <FaBars />
                       </div>
                     </th>
-                    <th className="px-2 py-3 text-left border-r font-medium">
-                      <div className="flex justify-between items-center text-sm">
+                    <th className="border-r px-2 py-3 text-left font-medium">
+                      <div className="flex items-center justify-between text-sm">
                         <span>Brokerage Amount</span>
                         <FaBars />
                       </div>
                     </th>
-                    <th className="px-2 py-3 text-left border-r font-medium">
-                      <div className="flex justify-between items-center text-sm">
+                    <th className="border-r px-2 py-3 text-left font-medium">
+                      <div className="flex items-center justify-between text-sm">
                         <span>Date</span>
                         <FaBars />
                       </div>
                     </th>
-                    <th className="px-2 py-3 text-left border-r font-medium">
-                      <div className="flex justify-between items-center text-sm">
+                    <th className="border-r px-2 py-3 text-left font-medium">
+                      <div className="flex items-center justify-between text-sm">
                         <span>Reference No</span>
                         <FaBars />
                       </div>
                     </th>
-                    <th className="px-2 py-3 text-left border-r font-medium">
-                      <div className="flex justify-between items-center text-sm">
+                    <th className="border-r px-2 py-3 text-left font-medium">
+                      <div className="flex items-center justify-between text-sm">
                         <span>Remark</span>
                         <FaBars />
                       </div>
                     </th>
-                    <th className="px-2 py-3 text-left border-r font-medium">
-                      <div className="flex justify-between items-center text-sm">
+                    <th className="border-r px-2 py-3 text-left font-medium">
+                      <div className="flex items-center justify-between text-sm">
                         <span>Last Modified By</span>
                         <FaBars />
                       </div>
                     </th>
-                    <th className="px-2 py-3 text-left border-r font-medium">
-                      <div className="flex justify-between items-center text-sm">
+                    <th className="border-r px-2 py-3 text-left font-medium">
+                      <div className="flex items-center justify-between text-sm">
                         <span>Action</span>
                       </div>
                     </th>
@@ -270,35 +270,35 @@ export default function BrokerageView({ setShowTopSection }) {
                   {currentLeads.map((data) => (
                     <tr
                       key={data.id}
-                      className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                      className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                     >
                       <td className="px-1 py-3 text-center">
                         <input type="checkbox" />
                       </td>
-                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                      <td className="max-w-24 break-words px-2 py-4 text-sm">
                         {data.userName}
                       </td>
-                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                      <td className="max-w-24 break-words px-2 py-4 text-sm">
                         {data.brokerageAmount}
                       </td>
-                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                      <td className="max-w-24 break-words px-2 py-4 text-sm">
                         {data?.date?.split("T")[0]}
                       </td>
-                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                      <td className="max-w-24 break-words px-2 py-4 text-sm">
                         {data.referenceno}
                       </td>
 
-                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                      <td className="max-w-24 break-words px-2 py-4 text-sm">
                         {data?.remarks}
                       </td>
-                      <td className="px-2 py-4 text-sm max-w-24 break-words">
+                      <td className="max-w-24 break-words px-2 py-4 text-sm">
                         {data.lastmodifiedby}
                       </td>
-                      <td className="px-2 py-4 flex gap-3">
+                      <td className="flex gap-3 px-2 py-4">
                         <MdEdit
                           size={25}
                           color="white"
-                          className="bg-blue-500 rounded"
+                          className="rounded bg-blue-500"
                           onClick={() => handleEdit(data.id)}
                         />
                         <RiDeleteBin6Fill
@@ -313,16 +313,16 @@ export default function BrokerageView({ setShowTopSection }) {
               </table>
             </div>
 
-            <div className="flex justify-end my-4">
+            <div className="my-4 flex justify-end">
               {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
-              <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
+              <nav className="mx-auto mt-4 flex items-center justify-center gap-2 text-center">
                 {/* /---------------------->Previous Button <----------------------< */}
                 <button
                   onClick={() => paginate(currentPage - 1)}
-                  className={`p-1 shadow-md rounded-full text-white ${
+                  className={`rounded-full p-1 text-white shadow-md ${
                     currentPage === 1
-                      ? "border-gray-200 border-2"
-                      : "bg-cyan-500 border-2 border-gray-100"
+                      ? "border-2 border-gray-200"
+                      : "border-2 border-gray-100 bg-cyan-500"
                   }`}
                   disabled={currentPage === 1}
                 >
@@ -342,10 +342,10 @@ export default function BrokerageView({ setShowTopSection }) {
                         <button
                           key={page}
                           onClick={() => paginate(page)}
-                          className={`px-4 py-2 rounded mx-1 ${
+                          className={`mx-1 rounded px-4 py-2 ${
                             currentPage === page
                               ? "bg-blue-600 text-white"
-                              : "bg-white text-gray-700 border"
+                              : "border bg-white text-gray-700"
                           }`}
                         >
                           {page}
@@ -368,10 +368,10 @@ export default function BrokerageView({ setShowTopSection }) {
                 {/* Next Button */}
                 <button
                   onClick={() => paginate(currentPage + 1)}
-                  className={`p-1 shadow-md rounded-full text-white${
+                  className={`rounded-full p-1 shadow-md text-white${
                     currentPage === totalPage
-                      ? " border-gray-200 border-2"
-                      : " bg-cyan-500 border-2 border-gray-100"
+                      ? "border-2 border-gray-200"
+                      : "border-2 border-gray-100 bg-cyan-500"
                   }`}
                   disabled={currentPage === totalPage}
                 >

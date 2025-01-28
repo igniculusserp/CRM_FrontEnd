@@ -603,7 +603,7 @@ export default function Contact() {
 
   return (
     //parent
-    <div className="min-h-screen flex flex-col m-3 ">
+    <div className="m-3 flex min-h-screen flex-col">
       {/* Render the modal only when `isModalOpen` is true */}
       {isModalOpen && (
         <MassEmail
@@ -612,19 +612,19 @@ export default function Contact() {
         />
       )}
       {/* containerbar*/}
-      <div className="flex justify-between px-3 py-2 items-center bg-white  rounded-lg flex-wrap gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-white px-3 py-2">
         {/* PART-I */}
         {/* container- Alleads, search */}
-        <div className="flex gap-3 items-center justify-start contact_Dropdown_Main_Container flex-wrap">
+        <div className="contact_Dropdown_Main_Container flex flex-wrap items-center justify-start gap-3">
           {/* PART-I */}
           {/* All Lead DropDown*/}
           <div
-            className="relative whitespace-nowrap contact_Dropdown_Container"
+            className="contact_Dropdown_Container relative whitespace-nowrap"
             onClick={toggleMenuAllLead}
             onMouseLeave={() => setAllLeaddropDown(false)}
           >
             <button
-              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-40 truncate contact_Dropdown_Button"
+              className="contact_Dropdown_Button flex min-w-40 items-center justify-between truncate rounded-md border px-4 py-2"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -632,12 +632,12 @@ export default function Contact() {
               <FaAngleDown className="ml-2 text-gray-900" />
             </button>
             {allLeaddropDown && (
-              <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10 ">
-                <ul className=" text-sm text-gray-700">
+              <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
+                <ul className="text-sm text-gray-700">
                   {allLeadData.map((item) => (
                     <li
                       key={item.id}
-                      className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                      className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                       onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
                     >
                       {item.status}
@@ -650,12 +650,12 @@ export default function Contact() {
           {/* PART-I-ii */}
           {/* All MANAGED_BY  DropDown*/}
           <div
-            className="relative whitespace-nowrap contact_Dropdown_Container"
+            className="contact_Dropdown_Container relative whitespace-nowrap"
             onClick={toggleMenuAssigned_To}
             onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
           >
             <button
-              className="py-2 px-4 border rounded-md  flex justify-between items-center min-w-36 contact_Dropdown_Button"
+              className="contact_Dropdown_Button flex min-w-36 items-center justify-between rounded-md border px-4 py-2"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -663,12 +663,12 @@ export default function Contact() {
               <FaAngleDown className="ml-2 text-gray-900" />
             </button>
             {allAssigned_To_DROPDOWN && (
-              <div className="absolute bg-white border border-gray-300 rounded-md top-10 z-10">
-                <ul className=" text-sm text-gray-700">
+              <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
+                <ul className="text-sm text-gray-700">
                   {allAssigned_To_Data.map((item) => (
                     <li
                       key={item.id}
-                      className="block w-56 px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                      className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                       onClick={() => handleAssignedToSelection(item.userName)} // Correct selection logic
                     >
                       {item.userName}
@@ -687,16 +687,16 @@ export default function Contact() {
         </div>
 
         {/* PART-II */}
-        <div className="flex gap-3 items-center justify-start action_Button_Main_Container">
+        <div className="action_Button_Main_Container flex items-center justify-start gap-3">
           {/* PART-II */}
           {/* Stripe-BarDropDown */}
           <div
-            className="relative hide_Component"
+            className="hide_Component relative"
             onClick={togglestripeBar}
             onMouseLeave={() => setstripeBardropDown(false)}
           >
             <button
-              className="py-3 px-4 border rounded-md gap-2 flex justify-between items-center"
+              className="flex items-center justify-between gap-2 rounded-md border px-4 py-3"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -704,12 +704,12 @@ export default function Contact() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {stripeBardropDown && (
-              <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 z-10">
+              <div className="absolute top-10 z-10 w-56 rounded-md border border-gray-300 bg-white">
                 <ul className="text-sm text-gray-700">
                   {stripeBar.map(({ key, value }) => (
                     <li
                       key={key}
-                      className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                      className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                       onClick={() => handleStripeButton(value)}
                     >
                       {value}
@@ -723,12 +723,12 @@ export default function Contact() {
           {/* PART-II */}
           {/*-------Action DropDown */}
           <div
-            className="relative action_Button_Container"
+            className="action_Button_Container relative"
             onClick={toggleActionsMenuLogo}
             onMouseLeave={() => setdropActionsMenudropDown(false)}
           >
             <button
-              className="py-2 px-4 border rounded-lg gap-2 flex justify-between items-center text-blue-600  border-blue-600 action_Button"
+              className="action_Button flex items-center justify-between gap-2 rounded-lg border border-blue-600 px-4 py-2 text-blue-600"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -736,13 +736,13 @@ export default function Contact() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {dropActionsMenudropDown && (
-              <div className="absolute w-56  bg-white border border-gray-300 rounded-md top-10 z-10">
+              <div className="absolute top-10 z-10 w-56 rounded-md border border-gray-300 bg-white">
                 <ul className="text-sm text-gray-700">
                   {dropActionsMenu.map(({ key, value }) =>
                     permissions.includes(value) || businessRole === "Admin" ? (
                       <li
                         key={key}
-                        className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                        className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                         onClick={() => handleActionButton(value)}
                       >
                         {value}
@@ -758,10 +758,10 @@ export default function Contact() {
       {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{" "}
       {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{" "}
       {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}
-      <div className="mt-3 flex justify-between items-center gap-3 flex-wrap">
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
         <div className="flex gap-3">
-          <h1 className="text-3xl font-medium ">Contacts</h1>
-          <h1 className="bg-blue-600 text-white p-2 min-w-10 text-center rounded text-sm shadow-md">
+          <h1 className="text-3xl font-medium">Contacts</h1>
+          <h1 className="min-w-10 rounded bg-blue-600 p-2 text-center text-sm text-white shadow-md">
             {/*  ------------------------------------------------------------------------------------------------*/}
             {/* ------------------- Length ----------------- */}
             {getleads?.length}
@@ -770,7 +770,7 @@ export default function Contact() {
 
         <div className="date_Filter_Main_Container">
           {/* ------------------- Filter by date ----------------- */}
-          <div className="flex bg-white border-2 border-gray-300 p-2 rounded-lg justify-between items-center date_Filter_Main_Container">
+          <div className="date_Filter_Main_Container flex items-center justify-between rounded-lg border-2 border-gray-300 bg-white p-2">
             {/* Filter Icon Button */}
             <div className="flex items-center">
               <button className="border-r border-gray-500 pr-2">
@@ -778,17 +778,17 @@ export default function Contact() {
               </button>
 
               {/* Date Range Filter Button */}
-              <button className="border-r border-gray-500 px-2 whitespace-nowrap filter_Image_Display">
+              <button className="filter_Image_Display whitespace-nowrap border-r border-gray-500 px-2">
                 Filter By
               </button>
 
               {/* Date Range Inputs */}
-              <div className="px-2 flex items-center gap-2 filter_Date_Container">
+              <div className="filter_Date_Container flex items-center gap-2 px-2">
                 <label className="hide_Filter_Text">From:</label>
                 <input
                   type="date"
                   value={startDate}
-                  className="border rounded px-2 py-2 filter_Date"
+                  className="filter_Date rounded border px-2 py-2"
                   onChange={(e) => setStartDate(e.target.value)}
                 />
 
@@ -796,17 +796,17 @@ export default function Contact() {
                 <input
                   type="date"
                   value={endDate}
-                  className="border rounded px-2 py-2 filter_Date"
+                  className="filter_Date rounded border px-2 py-2"
                   onChange={(e) => setEndDate(e.target.value)}
                 />
               </div>
             </div>
 
             <div
-              className="p-2 border rounded cursor-pointer reset_paddings flex gap-2 items-center"
+              className="reset_paddings flex cursor-pointer items-center gap-2 rounded border p-2"
               onClick={handleResetFilter}
             >
-              <label className="hide_Filter_Text ">Reset</label>
+              <label className="hide_Filter_Text">Reset</label>
               <TbRefresh className="filter_Reset_Image" />
             </div>
           </div>
@@ -814,14 +814,14 @@ export default function Contact() {
       </div>
       {/*-------Table-------*/}
       {viewContact || businessRole === "Admin" ? (
-        <div className="overflow-x-auto mt-3 leads_Table_Main_Container">
-          <div className="min-w-full  rounded-md shadow-lg leads_Table_Container">
+        <div className="leads_Table_Main_Container mt-3 overflow-x-auto">
+          <div className="leads_Table_Container min-w-full rounded-md shadow-lg">
             {selectedViewValue === "Table View" && (
-              <table className="min-w-full bg-white leads_Table">
+              <table className="leads_Table min-w-full bg-white">
                 <thead>
-                  <tr className="border-gray-300 border-b-2">
+                  <tr className="border-b-2 border-gray-300">
                     {/* CHECKBOX */}
-                    <th className=" py-3">
+                    <th className="py-3">
                       <input
                         type="checkbox"
                         checked={isSelectAllChecked}
@@ -829,33 +829,33 @@ export default function Contact() {
                       />
                     </th>
 
-                    <th className="px-1 py-3 text-left border-r font-medium">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="">
                         <span className="whitespace-nowrap">Client Name</span>
                       </div>
                     </th>
-                    <th className="px-1 py-3 text-left border-r font-medium min-w-16 ">
+                    <th className="min-w-16 border-r px-1 py-3 text-left font-medium">
                       <div className="text-center">
                         <span className="whitespace-nowrap">Mobile</span>
                       </div>
                     </th>
 
-                    <th className="px-1 py-3 text-left border-r font-medium min-w-16 ">
+                    <th className="min-w-16 border-r px-1 py-3 text-left font-medium">
                       <div className="text-center">
                         <span>Segment</span>
                       </div>
                     </th>
-                    <th className="px-1 py-3 text-left border-r font-medium  min-w-20  relative">
+                    <th className="relative min-w-20 border-r px-1 py-3 text-left font-medium">
                       <div className="text-center">
                         <span className="whitespace-nowrap">Free Trail</span>
                       </div>
                     </th>
-                    <th className="px-1 py-3 text-left border-r font-medium ">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="text-center">
                         <span className="whitespace-nowrap">Follow Up</span>
                       </div>
                     </th>
-                    <th className="px-1 py-3 text-left border-r font-medium">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="text-center">
                         <span className="whitespace-nowrap">Managed By</span>
                       </div>
@@ -881,10 +881,10 @@ export default function Contact() {
                     return (
                       <tr
                         key={item.id}
-                        className="cursor-pointer hover:bg-gray-200 border-gray-300 border-b"
+                        className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                       >
                         {/* CHECKBOX */}
-                        <td className="px-1 py-3 text-center px-2">
+                        <td className="px-1 px-2 py-3 text-center">
                           <input
                             type="checkbox"
                             checked={selectedIds.includes(item.id)}
@@ -894,7 +894,7 @@ export default function Contact() {
 
                         {/* CONTACT NAME */}
                         <td
-                          className="px-2 py-4 border-b border-gray-300 text-sm"
+                          className="border-b border-gray-300 px-2 py-4 text-sm"
                           onClick={
                             edit || businessRole === "Admin"
                               ? () => handleClick(item)
@@ -909,8 +909,8 @@ export default function Contact() {
                         </td>
 
                         {/* Mobile No */}
-                        <td className="px-2 py-4 border-b border-gray-300 text-sm min-w-20  ">
-                          <div className="flex gap-2 items-center">
+                        <td className="min-w-20 border-b border-gray-300 px-2 py-4 text-sm">
+                          <div className="flex items-center gap-2">
                             <a
                               href={`tel:${item.mobileNo}`}
                               onClick={(event) => event.stopPropagation()}
@@ -923,7 +923,7 @@ export default function Contact() {
                         </td>
 
                         {/* Segments */}
-                        <td className="px-2 py-4 border-b border-gray-300 text-sm  ">
+                        <td className="border-b border-gray-300 px-2 py-4 text-sm">
                           <div>
                             {item.segments && (
                               <span className="whitespace-nowrap">
@@ -935,11 +935,11 @@ export default function Contact() {
                           </div>
                         </td>
 
-                        <td className="px-2 py-4 border-b border-gray-300 text-sm text-center whitespace-nowrap">
+                        <td className="whitespace-nowrap border-b border-gray-300 px-2 py-4 text-center text-sm">
                           {item.trialStartDate?.split("T")[0]}
                         </td>
 
-                        <td className="px-2 py-4 border-b border-gray-300 text-sm text-center whitespace-nowrap">
+                        <td className="whitespace-nowrap border-b border-gray-300 px-2 py-4 text-center text-sm">
                           {item.call_bck_DateTime
                             ?.replace("T", " ")
                             ?.split(":")
@@ -948,10 +948,10 @@ export default function Contact() {
                         </td>
 
                         {/* Assigned To and User Role */}
-                        <td className="px-2 py-4 border-b border-gray-300 text-sm  w-[20%] ">
+                        <td className="w-[20%] border-b border-gray-300 px-2 py-4 text-sm">
                           {matchedUser && (
                             <div
-                              className="text-xs font-semibold text-white py-2 mx-auto rounded-full w-[90%] whitespace-nowrap"
+                              className="mx-auto w-[90%] whitespace-nowrap rounded-full py-2 text-xs font-semibold text-white"
                               style={{
                                 backgroundColor: roleColor ? roleColor : "#000",
                                 borderRadius: "8px",
@@ -969,7 +969,7 @@ export default function Contact() {
                         {/*------------------<- Create-SO->------------*/}
                         {/*------------------------------------------------------------------------------------------------------------------------------------------------*/}
                         {createSO || businessRole === "Admin" ? (
-                          <td className="text-center px-2">
+                          <td className="px-2 text-center">
                             <button
                               className={business === "Brokerage" ? "" : ""}
                               onClick={(e) => {
@@ -979,12 +979,12 @@ export default function Contact() {
                             >
                               {/* SO */}
                               {business === "Brokerage" ? (
-                                <span className="text-white text-xs rounded p-2   bg-blue-600 shadow-md whitespace-nowrap hover:bg-blue-500">
+                                <span className="whitespace-nowrap rounded bg-blue-600 p-2 text-xs text-white shadow-md hover:bg-blue-500">
                                   Create Client
                                 </span>
                               ) : (
                                 <>
-                                  <span className=" text-white text-xm rounded p-1 bg-blue-600 shadow-md whitespace-nowrap hover:bg-blue-500">
+                                  <span className="text-xm whitespace-nowrap rounded bg-blue-600 p-1 text-white shadow-md hover:bg-blue-500">
                                     SO
                                   </span>
                                 </>
@@ -1013,19 +1013,19 @@ export default function Contact() {
                     {/*---------Card starts Here */}
                     {getleads.map((item) => (
                       <div
-                        className="flex flex-col gap-2 bg-white px-2 py-3 rounded-lg border-2"
+                        className="flex flex-col gap-2 rounded-lg border-2 bg-white px-2 py-3"
                         key={item.id}
                       >
                         <div className="flex items-center gap-3">
                           <img src={item.img} height={60} width={60} />
-                          <div className="flex flex-col grow">
+                          <div className="flex grow flex-col">
                             <div className="flex justify-between font-medium">
                               <span className="text-indigo-500">
                                 {item.name}
                               </span>
                               <BiEdit
                                 size={25}
-                                className="bg-white rounded-full shadow-md text-blue-500 p-1"
+                                className="rounded-full bg-white p-1 text-blue-500 shadow-md"
                               />
                             </div>
                             <div className="flex items-center gap-2 text-sm font-medium">
@@ -1033,46 +1033,46 @@ export default function Contact() {
                             </div>
                           </div>
                         </div>
-                        <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                          <div className="w-2/4 text-gray-500 text-sm">
+                        <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
+                          <div className="w-2/4 text-sm text-gray-500">
                             Company name
                           </div>
-                          <div className="2-2/4 font-medium text-sm">
+                          <div className="2-2/4 text-sm font-medium">
                             {item.company}
                           </div>
                         </div>
 
-                        <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                          <div className="w-2/4 text-gray-500 text-sm">
+                        <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
+                          <div className="w-2/4 text-sm text-gray-500">
                             Title
                           </div>
-                          <div className="2-2/4 font-medium text-sm">
+                          <div className="2-2/4 text-sm font-medium">
                             {item.tital}
                           </div>
                         </div>
 
-                        <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                        <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
                           <div className="w-2/4">
                             <IoIosMail className="text-2xl" />
                           </div>
-                          <div className="2-2/4 font-medium  text-sm">
+                          <div className="2-2/4 text-sm font-medium">
                             {item.email}
                           </div>
                         </div>
 
-                        <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
+                        <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
                           <div className="w-2/4">
                             <FaPhoneAlt className="text-xl" />
                           </div>
-                          <div className="2-2/4 font-medium text-sm">
+                          <div className="2-2/4 text-sm font-medium">
                             {item.phoneNo}
                           </div>
                         </div>
-                        <div className="flex px-2 py-1 bg-gray-100 border-2 items-center rounded-lg">
-                          <div className="w-2/4 text-gray-500 text-sm">
+                        <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
+                          <div className="w-2/4 text-sm text-gray-500">
                             Lead Source
                           </div>
-                          <div className="2-2/4 font-medium  text-sm">
+                          <div className="2-2/4 text-sm font-medium">
                             {item.leadsSource}
                           </div>
                         </div>
@@ -1086,13 +1086,13 @@ export default function Contact() {
 
           {selectedViewValue === "Table View" && (
             <>
-              <div className="flex justify-end m-4">
+              <div className="m-4 flex justify-end">
                 {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
-                <nav className="flex items-center justify-center text-center  mx-auto gap-2 mt-4">
+                <nav className="mx-auto mt-4 flex items-center justify-center gap-2 text-center">
                   {/* /---------------------->Previous Button <----------------------< */}
                   <button
                     onClick={() => paginate(currentPage - 1)}
-                    className={`p-1 shadow-md rounded-full text-white ${currentPage === 1 ? "border-gray-200 border-2" : "bg-cyan-500 border-2 border-gray-100"}`}
+                    className={`rounded-full p-1 text-white shadow-md ${currentPage === 1 ? "border-2 border-gray-200" : "border-2 border-gray-100 bg-cyan-500"}`}
                     disabled={currentPage === 1}
                   >
                     <GrFormPrevious size={25} />
@@ -1111,7 +1111,7 @@ export default function Contact() {
                           <button
                             key={page}
                             onClick={() => paginate(page)}
-                            className={`px-4 py-2 rounded mx-1 ${currentPage === page ? "bg-blue-600 text-white" : "bg-white text-gray-700 border"}`}
+                            className={`mx-1 rounded px-4 py-2 ${currentPage === page ? "bg-blue-600 text-white" : "border bg-white text-gray-700"}`}
                           >
                             {page}
                           </button>
@@ -1133,7 +1133,7 @@ export default function Contact() {
                   {/* Next Button */}
                   <button
                     onClick={() => paginate(currentPage + 1)}
-                    className={`p-1 shadow-md rounded-full text-white${currentPage === totalPage ? " border-gray-200 border-2" : " bg-cyan-500 border-2 border-gray-100"}`}
+                    className={`rounded-full p-1 shadow-md text-white${currentPage === totalPage ? "border-2 border-gray-200" : "border-2 border-gray-100 bg-cyan-500"}`}
                     disabled={currentPage === totalPage}
                   >
                     <GrFormNext size={25} />

@@ -81,21 +81,21 @@ const CreateMailBox = () => {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col mt-3">
+      <div className="mt-3 flex min-h-screen flex-col">
         {/* TOP SECTION */}
-        <div className="px-3 py-4 bg-white rounded-md flex items-center justify-between m-3">
+        <div className="m-3 flex items-center justify-between rounded-md bg-white px-3 py-4">
           <h1 className="text-xl font-bold">Create Mail Box</h1>
           <Link to="/panel/mailBox">
-            <button className="px-6 py-2 text-center text-sm border border-blue-600 text-blue-600 rounded-md">
+            <button className="rounded-md border border-blue-600 px-6 py-2 text-center text-sm text-blue-600">
               Cancel
             </button>
           </Link>
         </div>
         {/* -------------FORM Starts FROM HERE------------- */}
-        <form onSubmit={handleSubmit} className="flex flex-col mb-6">
+        <form onSubmit={handleSubmit} className="mb-6 flex flex-col">
           {/* -------------MAIL BOX INFORMATION STARTS FROM HERE------------- */}
-          <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow ">
-            <h2 className="font-medium py-2 px-3 rounded-t-xl text-white bg-cyan-500">
+          <div className="mx-3 my-3 flex-grow rounded-xl bg-white shadow-md">
+            <h2 className="rounded-t-xl bg-cyan-500 px-3 py-2 font-medium text-white">
               Mail Box Details
             </h2>
 
@@ -105,7 +105,7 @@ const CreateMailBox = () => {
             <div className="grid gap-2 p-2">
               <div className="flex space-x-4">
                 {/* CLIENT NAME FILED */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="clientName"
                     className="text-sm font-medium text-gray-700"
@@ -116,13 +116,13 @@ const CreateMailBox = () => {
                     type="text"
                     name="clientName"
                     value={editMail.clientName}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Enter your Street"
                   />
                 </div>
                 {/* NUMBER FILED */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="number"
                     className="text-sm font-medium text-gray-700"
@@ -133,7 +133,7 @@ const CreateMailBox = () => {
                     type="number"
                     name="number"
                     value={editMail.number}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Enter your Street"
                   />
@@ -142,7 +142,7 @@ const CreateMailBox = () => {
               {/* ALTERNATE NUMBER AND MAIL FIELD */}
               <div className="flex space-x-4">
                 {/* ALTERNATE NUMBER FILED */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="alternateNumber"
                     className="text-sm font-medium text-gray-700"
@@ -153,13 +153,13 @@ const CreateMailBox = () => {
                     type="text"
                     name="alternateNumber"
                     value={editMail.alternateNumber}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Enter your Street"
                   />
                 </div>
                 {/* NUMBER FILED */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="mail"
                     className="text-sm font-medium text-gray-700"
@@ -170,7 +170,7 @@ const CreateMailBox = () => {
                     type="text"
                     name="mail"
                     value={editMail.mail}
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
+                    className="mt-1 rounded-md border border-gray-300 p-2"
                     onChange={handleChange}
                     placeholder="Enter your Street"
                   />
@@ -179,7 +179,7 @@ const CreateMailBox = () => {
               {/* DROPDOWNS FIELD */}
               <div className="flex space-x-4">
                 {/* MAIL TYPE DROPDOWN */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="mailType"
                     className="text-sm font-medium text-gray-700"
@@ -192,7 +192,7 @@ const CreateMailBox = () => {
                     onMouseLeave={() => setMailTimeDropdown(false)}
                   >
                     <button
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                      className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                       id="mailType"
                       type="button"
                     >
@@ -200,11 +200,11 @@ const CreateMailBox = () => {
                       <FaAngleDown className="ml-2 text-gray-400" />
                     </button>
                     {mailTimeDropdown && (
-                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
                         <ul className="py-2 text-sm text-gray-700">
                           {mailTypeData.map(({ key, name }) => (
                             <li
-                              className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer z-10"
+                              className="z-10 block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               key={key}
                               onClick={() => handleDropdownMailType(name)}
                             >
@@ -217,7 +217,7 @@ const CreateMailBox = () => {
                   </div>
                 </div>
                 {/* TYPE DROPDOWN */}
-                <div className="flex flex-col w-1/2">
+                <div className="flex w-1/2 flex-col">
                   <label
                     htmlFor="type"
                     className="text-sm font-medium text-gray-700"
@@ -230,7 +230,7 @@ const CreateMailBox = () => {
                     onMouseLeave={() => setTypeDropdown(false)}
                   >
                     <button
-                      className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                      className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                       id="type"
                       type="button"
                     >
@@ -238,11 +238,11 @@ const CreateMailBox = () => {
                       <FaAngleDown className="ml-2 text-gray-400" />
                     </button>
                     {typeDropdown && (
-                      <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                      <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
                         <ul className="py-2 text-sm text-gray-700">
                           {typeData.map(({ key, name }) => (
                             <li
-                              className="block px-4 py-2 hover:bg-cyan-500 hover:text-white border-b cursor-pointer z-10"
+                              className="z-10 block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               key={key}
                               onClick={() => handleDropdownType(name)}
                             >
@@ -260,7 +260,7 @@ const CreateMailBox = () => {
             <div className="flex justify-end px-2">
               <button
                 type="submit"
-                className="px-32 py-4 mt-20 mb-3 bg-cyan-500 text-white border-2 border-cyan-500 rounded hover:text-cyan-500 hover:bg-white"
+                className="mb-3 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
               >
                 {isEditMode ? "Update" : "Save"}
               </button>

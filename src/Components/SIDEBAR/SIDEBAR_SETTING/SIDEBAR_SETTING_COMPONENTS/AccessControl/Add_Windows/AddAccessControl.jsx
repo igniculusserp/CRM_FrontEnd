@@ -118,28 +118,28 @@ export default function AddAccessControl({ onCancel }) {
   ];
 
   return (
-    <div className="flex flex-col m-3 overflow-x-auto overflow-y-hidden">
+    <div className="m-3 flex flex-col overflow-x-auto overflow-y-hidden">
       <form onSubmit={handleFormSubmit}>
-        <div className="flex py-2 px-2 items-center justify-between bg-white rounded-md shadow-md">
+        <div className="flex items-center justify-between rounded-md bg-white px-2 py-2 shadow-md">
           <h1 className="text-xl">Access Control</h1>
           {/*------------------------------------------------- Cancel Button--------------------------------------------- */}
           <button
             onClick={onCancel}
-            className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
+            className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
           >
             Cancel
           </button>
         </div>
         {/* ------------------------------------------ Top Section -------------------------------------------- */}
         <div className="overflow-hidden shadow-md">
-          <div className="py-2 px-3 bg-cyan-500 rounded-t-xl mt-3">
+          <div className="mt-3 rounded-t-xl bg-cyan-500 px-3 py-2">
             <h1 className="text-white">Access Control Details</h1>
           </div>
-          <div className="flex flex-col py-2 px-4 bg-white rounded-b-xl">
+          <div className="flex flex-col rounded-b-xl bg-white px-4 py-2">
             <div className="flex gap-4">
-              <div className="grid gap-2 pb-3 w-full">
+              <div className="grid w-full gap-2 pb-3">
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="title"
                       className="text-sm font-medium text-gray-700"
@@ -150,12 +150,12 @@ export default function AddAccessControl({ onCancel }) {
                       type="text"
                       name="title"
                       value={controlDetails.title}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter device type"
                     />
                   </div>
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="description"
                       className="text-sm font-medium text-gray-700"
@@ -166,14 +166,14 @@ export default function AddAccessControl({ onCancel }) {
                       type="text"
                       name="description"
                       value={controlDetails.description}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter device type"
                     />
                   </div>
                 </div>
                 <div className="flex space-x-4">
-                  <div className="flex flex-col flex-1 w1/2 gap-1 justify-start items-start">
+                  <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                     <label
                       htmlFor="enabled"
                       className="text-sm font-medium text-gray-700"
@@ -184,11 +184,11 @@ export default function AddAccessControl({ onCancel }) {
                       type="checkbox"
                       name="enabled"
                       checked={controlDetails.enabled}
-                      className="flex justify-start py-1 px-1 h-5 w-5"
+                      className="flex h-5 w-5 justify-start px-1 py-1"
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="flex flex-1 flex-col w1/2 gap-1 justify-start items-start">
+                  <div className="w1/2 flex flex-1 flex-col items-start justify-start gap-1">
                     <label
                       htmlFor="validDuration"
                       className="text-sm font-medium text-gray-700"
@@ -199,13 +199,13 @@ export default function AddAccessControl({ onCancel }) {
                       type="checkbox"
                       name="validDuration"
                       checked={controlDetails.validDuration === "Valid Always"}
-                      className="flex justify-start py-1 px-1 h-5 w-5"
+                      className="flex h-5 w-5 justify-start px-1 py-1"
                       onChange={handleChange}
                     />
                   </div>
                 </div>
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="validFrom"
                       className="text-sm font-medium text-gray-700"
@@ -217,12 +217,12 @@ export default function AddAccessControl({ onCancel }) {
                       type="date"
                       name="validFrom"
                       value={controlDetails.validFrom}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter date"
                     />
                   </div>
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="validTo"
                       className="text-sm font-medium text-gray-700"
@@ -234,7 +234,7 @@ export default function AddAccessControl({ onCancel }) {
                       type="date"
                       name="validTo"
                       value={controlDetails.validTo}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter date"
                     />
@@ -242,7 +242,7 @@ export default function AddAccessControl({ onCancel }) {
                 </div>
 
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="risk"
                       className="text-sm font-medium text-gray-700"
@@ -253,7 +253,7 @@ export default function AddAccessControl({ onCancel }) {
                       type="text"
                       name="risk"
                       value={controlDetails.risk}
-                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter risk level"
                     />
@@ -261,7 +261,7 @@ export default function AddAccessControl({ onCancel }) {
                 </div>
                 <h2 className="text-md font-medium">Category</h2>
                 <div className="flex space-x-4">
-                  <div className="flex flex-1 w1/2 gap-10 justify-start items-start">
+                  <div className="w1/2 flex flex-1 items-start justify-start gap-10">
                     <div>
                       <label
                         htmlFor="default"
@@ -273,7 +273,7 @@ export default function AddAccessControl({ onCancel }) {
                         type="checkbox"
                         name="default"
                         checked={controlDetails.category === "default"}
-                        className="flex justify-start py-1 px-1 h-5 w-5"
+                        className="flex h-5 w-5 justify-start px-1 py-1"
                         onChange={() =>
                           setControlDetails((prev) => ({
                             ...prev,
@@ -293,7 +293,7 @@ export default function AddAccessControl({ onCancel }) {
                         type="checkbox"
                         name="apps"
                         checked={controlDetails.category === "apps"}
-                        className="flex justify-start py-1 px-1 h-5 w-5"
+                        className="flex h-5 w-5 justify-start px-1 py-1"
                         onChange={() =>
                           setControlDetails((prev) => ({
                             ...prev,
@@ -312,18 +312,16 @@ export default function AddAccessControl({ onCancel }) {
         <div className="flex flex-col overflow-x-auto overflow-y-hidden">
           <div className="overflow-hidden shadow-md">
             {/*------------------------------------------------- Button Section--------------------------------------------- */}
-            <div className="flex gap-3 my-3 items-center">
+            <div className="my-3 flex items-center gap-3">
               {buttons.map(({ id, text }) => (
                 <button
                   key={id}
                   onClick={() => handleOptionClick(id, text)}
-                  className={`px-3 py-2 rounded font-light text-md
-                ${
-                  selectedId === id
-                    ? "bg-cyan-500 text-white"
-                    : "bg-gray-100 text-gray-700"
-                }
-              `}
+                  className={`text-md rounded px-3 py-2 font-light ${
+                    selectedId === id
+                      ? "bg-cyan-500 text-white"
+                      : "bg-gray-100 text-gray-700"
+                  } `}
                 >
                   {text}
                 </button>
@@ -348,11 +346,11 @@ export default function AddAccessControl({ onCancel }) {
             {selectedId === 5 && <>5</>}
 
             {/*------------------------------------------------- Save Button Section--------------------------------------------- */}
-            <div className="flex justify-end px-4 bg-white">
+            <div className="flex justify-end bg-white px-4">
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="px-32 py-4 mt-16 mb-8 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                  className="mb-8 mt-16 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                 >
                   Save
                 </button>

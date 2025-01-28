@@ -70,11 +70,11 @@ export default function FtReport() {
 
   return (
     <>
-      <div className="flex py-2 px-3 m-3 items-center justify-between bg-white rounded-md shadow-md">
+      <div className="m-3 flex items-center justify-between rounded-md bg-white px-3 py-2 shadow-md">
         <h1 className="text-xl">Add Ft Report</h1>
         <Link
           to="/panel/misreports"
-          className="px-4 py-1 rounded mx-3 border border-blue-500 text-blue-500"
+          className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
         >
           Cancel
         </Link>
@@ -82,17 +82,17 @@ export default function FtReport() {
 
       {/* FORM SECTION */}
       <div className="px-3">
-        <h1 className="py-2 px-3 font-medium rounded-t-xl bg-cyan-500 text-white text-md shadow-md">
+        <h1 className="text-md rounded-t-xl bg-cyan-500 px-3 py-2 font-medium text-white shadow-md">
           General Report Detail
         </h1>
         <form
           onSubmit={handleSubmit}
-          className="flex gap-3 bg-white px-4 py-2 pb-4 rounded-b-xl shadow-md flex-col"
+          className="flex flex-col gap-3 rounded-b-xl bg-white px-4 py-2 pb-4 shadow-md"
         >
           <div className="grid gap-2 pb-3">
             <div className="flex space-x-4">
               {/* FREE TRIAL START DATE */}
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <label
                   htmlFor="freeTrialStartDate"
                   className="text-sm font-medium text-gray-700"
@@ -105,7 +105,7 @@ export default function FtReport() {
                   onMouseLeave={() => setFreeTrialStartDropdown(false)}
                 >
                   <button
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                     id="freeTrialStartDate"
                     type="button"
                   >
@@ -115,11 +115,11 @@ export default function FtReport() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {freeTrialStartDropdown && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                    <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
                       <ul className="py-2 text-sm text-gray-700">
                         {freeTrialStart.map(({ key, name }) => (
                           <li
-                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            className="block cursor-pointer border-b px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white"
                             key={key}
                             onClick={() => handleDropdownFreeTrialStart(name)}
                           >
@@ -131,7 +131,7 @@ export default function FtReport() {
                   )}
                 </div>
               </div>
-              <div className="flex flex-col w-1/2">
+              <div className="flex w-1/2 flex-col">
                 {/* FREE TRIAL START DATE */}
                 <label
                   htmlFor="freeTrialEndDate"
@@ -145,7 +145,7 @@ export default function FtReport() {
                   onMouseLeave={() => setFreeTrialEndDropdown(false)}
                 >
                   <button
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full flex justify-between items-center"
+                    className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                     id="freeTrialEndDate"
                     type="button"
                   >
@@ -155,11 +155,11 @@ export default function FtReport() {
                     <FaAngleDown className="ml-2 text-gray-400" />
                   </button>
                   {freeTrialEndDropdown && (
-                    <div className="absolute w-full bg-white border border-gray-300 rounded-md top-10 z-10">
+                    <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
                       <ul className="py-2 text-sm text-gray-700">
                         {freeTrialEnd.map(({ key, name }) => (
                           <li
-                            className="block px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white border-b cursor-pointer"
+                            className="block cursor-pointer border-b px-4 py-2 text-sm hover:bg-cyan-500 hover:text-white"
                             key={key}
                             onClick={() => handleDropdownFreeTrialEnd(name)}
                           >
@@ -178,7 +178,7 @@ export default function FtReport() {
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="px-32 py-4 mt-20 mb-4 bg-cyan-500 text-white hover:text-cyan-500 hover:bg-white border-2 border-cyan-500 rounded"
+                className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
               >
                 {isEditMode ? "Update" : "Save"}
               </button>

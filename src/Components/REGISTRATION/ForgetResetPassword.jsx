@@ -120,10 +120,10 @@ export default function ForgetResetPassword() {
   return (
     <>
       <ToastContainer />
-      <div className="bg-cyan-500 min-h-screen flex flex-col md:flex-row">
+      <div className="flex min-h-screen flex-col bg-cyan-500 md:flex-row">
         {/*----------> Part-I <---------- */}
-        <div className="hidden md:flex w-2/3 bg-cyan min-h-screen flex-col justify-center items-center">
-          <div className="bg-white flex flex-col justify-center items-center py-10 px-16 gap-2 rounded-md">
+        <div className="bg-cyan hidden min-h-screen w-2/3 flex-col items-center justify-center md:flex">
+          <div className="flex flex-col items-center justify-center gap-2 rounded-md bg-white px-16 py-10">
             <img src={IgniculussLogo} alt="Brandlogo" width={80} height={80} />
             <img src={forgetPassword} alt="sample" width={300} height={150} />
             <div className="flex text-3xl font-semibold">
@@ -134,7 +134,7 @@ export default function ForgetResetPassword() {
               </h1>
             </div>
             <div>
-              <p className="text-xs text-gray-400 text-center">
+              <p className="text-center text-xs text-gray-400">
                 Skip repetitive and manual sales-marketing tasks. Get highly
                 <br />
                 productive through automation and save tons of time!
@@ -144,14 +144,14 @@ export default function ForgetResetPassword() {
         </div>
 
         {/* Part-II */}
-        <div className="w-full md:w-1/3 bg-cyan-500 md:bg-white flex min-h-screen flex-col justify-center">
-          <div className="flex md:hidden justify-center">
+        <div className="flex min-h-screen w-full flex-col justify-center bg-cyan-500 md:w-1/3 md:bg-white">
+          <div className="flex justify-center md:hidden">
             <img src={IgniculussLogo} alt="sample" width={100} height={50} />
           </div>
 
-          <div className="flex flex-col justify-center mx-10 md:mx-4 px-3 mt-8 bg-white py-3 rounded-2xl">
-            <div className="flex text-2xl font-semibold gap-3 items-center">
-              <GiDiamonds className="text-3xl hidden md:block mb-6" />
+          <div className="mx-10 mt-8 flex flex-col justify-center rounded-2xl bg-white px-3 py-3 md:mx-4">
+            <div className="flex items-center gap-3 text-2xl font-semibold">
+              <GiDiamonds className="mb-6 hidden text-3xl md:block" />
               <h1 className="">
                 Forgot your <br />
                 Password
@@ -166,18 +166,18 @@ export default function ForgetResetPassword() {
             </div>
 
             <div className="mt-8 md:mt-8">
-              <form onSubmit={handleSubmit} className="flex flex-col mx-10">
+              <form onSubmit={handleSubmit} className="mx-10 flex flex-col">
                 {/* Password */}
                 <div className="flex flex-col gap-4">
                   <label
                     htmlFor="password"
-                    className="text-xs font-medium text-gray-700 relative block"
+                    className="relative block text-xs font-medium text-gray-700"
                   >
                     Set New Password
                     <input
                       type={passwordEye ? "text" : "password"}
                       name="password"
-                      className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm pr-12"
+                      className="mt-1 w-full rounded-md border border-gray-300 px-2 py-2 pr-12 text-sm outline-none"
                       value={password}
                       onChange={handlepassword}
                       placeholder="Password"
@@ -185,7 +185,7 @@ export default function ForgetResetPassword() {
                     <button
                       type="button"
                       onClick={togglePasswordEye}
-                      className="absolute inset-y-0 top-6 right-2 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
+                      className="absolute inset-y-0 right-2 top-6 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
                     >
                       {passwordEye ? (
                         <IoIosEye size={22} />
@@ -198,13 +198,13 @@ export default function ForgetResetPassword() {
                   {/* Confirm Password */}
                   <label
                     htmlFor="confirmPassword"
-                    className="text-xs font-medium text-gray-700 relative block"
+                    className="relative block text-xs font-medium text-gray-700"
                   >
                     Re-Enter Password
                     <input
                       type={passwordEye ? "text" : "password"}
                       name="password"
-                      className="mt-1 py-2 px-2 border border-gray-300 rounded-md w-full outline-none text-sm pr-12"
+                      className="mt-1 w-full rounded-md border border-gray-300 px-2 py-2 pr-12 text-sm outline-none"
                       value={confirmPassword}
                       onChange={handleConfirmPassword}
                       placeholder="Confirm Password"
@@ -212,7 +212,7 @@ export default function ForgetResetPassword() {
                     <button
                       type="button"
                       onClick={togglePasswordEye}
-                      className="absolute inset-y-0 top-6 right-2 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
+                      className="absolute inset-y-0 right-2 top-6 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
                     >
                       {passwordEye ? (
                         <IoIosEye size={22} />
@@ -223,13 +223,13 @@ export default function ForgetResetPassword() {
                   </label>
                 </div>
 
-                <button className="bg-cyan-500 outline-none text-white py-4 text-xs mt-16 rounded-md font-bold">
+                <button className="mt-16 rounded-md bg-cyan-500 py-4 text-xs font-bold text-white outline-none">
                   Reset Password
                 </button>
               </form>
             </div>
-            <div className="mx-auto text-sm mt-8">
-              <span className="text-cyan-500 font-medium"></span>
+            <div className="mx-auto mt-8 text-sm">
+              <span className="font-medium text-cyan-500"></span>
             </div>
           </div>
         </div>
