@@ -182,6 +182,14 @@ export default function Createlead() {
   //dropDown State
   const [isPoolDropdownOpen, setIsPoolDropdownOpen] = useState(false);
 
+  useEffect(() => {
+    if (editLead?.leadSource) {
+      setDefaultTextPool(editLead.leadSource);
+    } else {
+      setDefaultTextPool("Select Lead Source");
+    }
+  }, [editLead?.leadSource]);
+
   //error
   const [error, setError] = useState(null); // New error state
 

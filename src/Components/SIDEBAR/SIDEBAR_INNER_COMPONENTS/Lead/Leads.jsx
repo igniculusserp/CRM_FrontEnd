@@ -89,7 +89,7 @@ export default function Lead() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   //------------------------------------------------------------------------------------------------
-  //----------------GET--->API<-------------------
+  //----------------GET($id)--->API<-------------------
   async function handleLead(id) {
     const bearer_token = localStorage.getItem("token");
     try {

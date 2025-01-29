@@ -67,7 +67,7 @@ export default function CreateSOLead() {
   //form description is kept-out
   const [description, setdescription] = useState("Add Text Here");
 
-  const [editLead, seteditLead] = useState({});
+  const [editLead, seteditLead] = useState([]);
 
   //imp to identify mode
   const [isEditMode, setIsEditMode] = useState(false);
@@ -99,6 +99,7 @@ export default function CreateSOLead() {
         config,
       );
       const data = response.data.data;
+      console.log(data);
 
       seteditLead({
         //Personal Details
@@ -108,6 +109,7 @@ export default function CreateSOLead() {
         mobileNo: data?.mobileNo || "",
         phoneNo: data?.phoneNo || "",
         email: data?.email || "",
+        leadSource: data?.leadsSource || "N/A",
         assigned_To: data?.assigned_To || "N/A",
         street: data?.street || "",
         postalCode: data?.postalCode || "",
@@ -274,6 +276,14 @@ export default function CreateSOLead() {
   //default text for Lead Source
   const [defaultTextPool, setDefaultTextPool] = useState("Select Lead Source");
 
+  useEffect(() => {
+    if (editLead?.leadSource) {
+      setDefaultTextPool(editLead.leadSource);
+    } else {
+      setDefaultTextPool("Select Lead Source");
+    }
+  }, [editLead?.leadSource]);
+
   //dropDown State
   const [isPoolDropdownOpen, setIsPoolDropdownOpen] = useState(false);
 
@@ -298,11 +308,19 @@ export default function CreateSOLead() {
   };
 
   //----------------------------------------------------------------------------------------
-  //LanguageDropDown
+
   const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] =
     useState("Select Language");
 
-  //dropDown State
+  // Update default language when editLead.language changes
+  useEffect(() => {
+    if (editLead?.language) {
+      setDefaultTextLanguageDropDown(editLead.language);
+    } else {
+      setDefaultTextLanguageDropDown("Select Language");
+    }
+  }, [editLead?.language]);
+
   const [isDropdownVisibleLanguage, setisDropdownVisibleLanguage] =
     useState(false);
 
@@ -312,7 +330,7 @@ export default function CreateSOLead() {
 
   const handleDropdownLanguage = (language) => {
     setDefaultTextLanguageDropDown(language);
-    setisDropdownVisibleLanguage(false);
+    setisDropdownVisibleLanguage(!isDropdownVisibleLanguage);
     seteditLead((prevTask) => ({
       ...prevTask,
       language: language,
@@ -361,7 +379,7 @@ export default function CreateSOLead() {
         leadId: editLead.leadId,
         leadSource: editLead.leadSource || null,
         clientName: editLead.clientName,
-        language: editLead.language,
+        language: editLead?.language,
         fatherName: editLead.fatherName,
         motherName: editLead.motherName,
         mobileNo: editLead.mobileNo,
@@ -797,7 +815,7 @@ export default function CreateSOLead() {
                           >
                             {poolEdit === ""
                               ? defaultTextPool
-                              : editLead.leadSource}
+                              : editLead?.leadSource}
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {isPoolDropdownOpen && (
@@ -859,6 +877,7 @@ export default function CreateSOLead() {
                         >
                           Language
                         </label>
+
                         <div
                           className="relative"
                           onClick={toggleDropdownLanguage}
@@ -873,15 +892,14 @@ export default function CreateSOLead() {
                           >
                             {!isEditMode
                               ? defaultTextLanguageDropDown
-                              : editLead.language === ""
-                                ? defaultTextLanguageDropDown
-                                : editLead.language}
+                              : editLead.language ||
+                                defaultTextLanguageDropDown}
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {isDropdownVisibleLanguage && (
                             <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                               <ul className="py-2 text-sm text-gray-700">
-                                {languageDropDown?.map(({ key, name }) => (
+                                {languageDropDown.map(({ key, name }) => (
                                   <li
                                     key={key}
                                     onClick={() => handleDropdownLanguage(name)}
