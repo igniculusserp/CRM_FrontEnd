@@ -109,6 +109,7 @@ export default function CreateSOLead() {
         mobileNo: data?.mobileNo || "",
         phoneNo: data?.phoneNo || "",
         email: data?.email || "",
+        leadSource: data?.leadsSource || "N/A",
         assigned_To: data?.assigned_To || "N/A",
         street: data?.street || "",
         postalCode: data?.postalCode || "",
@@ -274,6 +275,14 @@ export default function CreateSOLead() {
   //---------------------------> Lead Source <---------------------------
   //default text for Lead Source
   const [defaultTextPool, setDefaultTextPool] = useState("Select Lead Source");
+
+  useEffect(() => {
+    if (editLead?.leadSource) {
+      setDefaultTextPool(editLead.leadSource);
+    } else {
+      setDefaultTextPool("Select Lead Source");
+    }
+  }, [editLead?.leadSource]);
 
   //dropDown State
   const [isPoolDropdownOpen, setIsPoolDropdownOpen] = useState(false);
@@ -806,7 +815,7 @@ export default function CreateSOLead() {
                           >
                             {poolEdit === ""
                               ? defaultTextPool
-                              : editLead.leadSource}
+                              : editLead?.leadSource}
                             <FaAngleDown className="ml-2 text-gray-400" />
                           </button>
                           {isPoolDropdownOpen && (

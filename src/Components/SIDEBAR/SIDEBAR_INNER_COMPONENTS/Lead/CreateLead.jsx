@@ -188,7 +188,7 @@ export default function Createlead() {
     } else {
       setDefaultTextPool("Select Lead Source");
     }
-  }, [editLead?.language]);
+  }, [editLead?.leadSource]);
 
   //error
   const [error, setError] = useState(null); // New error state
