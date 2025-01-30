@@ -174,7 +174,6 @@ export default function Createlead() {
   };
 
   //----------------------------------------------------------------------------------------
-
   //---------------------------> Lead Source <---------------------------
   //default text for Lead Source
   const [defaultTextPool, setDefaultTextPool] = useState("Select Lead Source");
@@ -211,6 +210,7 @@ export default function Createlead() {
   };
 
   //----------------------------------------------------------------------------------------
+  //---------------------------> Lead Status <---------------------------
 
   const [defaultTextLeadStatusDropDown, setdefaultTextLeadStatusDropDown] =
     useState("Select Status");
@@ -278,10 +278,6 @@ export default function Createlead() {
 
   //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //---------------------------> Assigned To <---------------------------
-
-  //assigned_ToDropDown
-  const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
-
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
   useState("Select Managed By");
   const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =

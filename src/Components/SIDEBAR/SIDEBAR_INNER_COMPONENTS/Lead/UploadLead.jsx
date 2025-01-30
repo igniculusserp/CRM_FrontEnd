@@ -60,16 +60,9 @@ export default function UploadLead() {
   
   const [defaultAssignedToText, setDefaultAssignedToText] =
     useState("Select Managed By");
-  
-    const [poolDropdown, setPoolDropdown] = useState(false);
-  const [defaultPoolText, setDefaultPoolText] = useState("pool");
-  
-  const [statusDropdown, setStatusDropdown] = useState(false);
-  const [defaultStatusText, setDefaultStatusText] = useState("status");
 
 
-
-  //   TOGGLE ASSIGNED TO DROPDOWN
+      //   TOGGLE ASSIGNED TO DROPDOWN
   const toggleAssignedToDropdown = () => {
     setAssignedToDropdown(!assignedToDropdown);
   };
@@ -84,22 +77,35 @@ export default function UploadLead() {
     }));
   };
 
+    
+  //----------------------------------------------------------------------------------------
+  //---------------------------> Lead Source <---------------------------
+  //default text for Lead Source
+  const [poolDropdown, setPoolDropdown] = useState(false);
+  const [defaultPoolText, setDefaultPoolText] = useState("Select Lead Source");
+  
 
+    //   TOGGLE ASSIGNED TO DROPDOWN
+    const togglePoolDropdown = () => {
+      setPoolDropdown(!poolDropdown);
+    };
+  
+    // HANDLE DROPDOWN FOR TYPE
+    const handleDropdownPool = (pool) => {
+      setDefaultPoolText(pool);
+      setPoolDropdown(!poolDropdown);
+      setEditLead((prevTask) => ({
+        ...prevTask,
+        pool: pool,
+      }));
+    };
+ 
+ 
+ //----------------------------------------------------------------------------------------
+  //---------------------------> Lead Status <---------------------------
+  const [statusDropdown, setStatusDropdown] = useState(false);
+  const [defaultStatusText, setDefaultStatusText] = useState("status");
 
-  //   TOGGLE ASSIGNED TO DROPDOWN
-  const togglePoolDropdown = () => {
-    setPoolDropdown(!poolDropdown);
-  };
-
-  // HANDLE DROPDOWN FOR TYPE
-  const handleDropdownPool = (pool) => {
-    setDefaultPoolText(pool);
-    setPoolDropdown(!poolDropdown);
-    setEditLead((prevTask) => ({
-      ...prevTask,
-      pool: pool,
-    }));
-  };
 
   // TOGGLE FLUSH
   const toggleStatusDropdown = () => {
