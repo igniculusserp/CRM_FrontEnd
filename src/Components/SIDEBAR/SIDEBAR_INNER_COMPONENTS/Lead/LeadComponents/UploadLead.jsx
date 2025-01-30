@@ -12,10 +12,12 @@ import { RiFileUploadLine } from "react-icons/ri";
 import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 
-
 //-----------------------------ToastContainer-----------------------------
 import { ToastContainer } from "react-toastify";
-import { showErrorToast, showSuccessToast } from "../../../../../utils/toastNotifications";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../../../../utils/toastNotifications";
 
 //dropDown --->>> customHooks
 import useManagedBy from "../../../../../Hooks/ManagedBy/useManagedBy";
@@ -23,7 +25,6 @@ import useLeadSource from "../../../../../Hooks/LeadSource/useLeadSource";
 import useLeadStatus from "../../../../../Hooks/LeadStatus/useLeadStatus";
 
 export default function UploadLead() {
-
   //IMP used as ${name} in an API
   const name = getHostnamePart();
 
@@ -83,7 +84,6 @@ export default function UploadLead() {
     assigned_To_Username,
     assigned_To_Role,
   ) => {
-
     setdefaultTextassigned_ToDropDown(
       assigned_To_Username + " " + assigned_To_Role,
     );
@@ -120,7 +120,6 @@ export default function UploadLead() {
   const [defaultTextStatus, setDefaultTextStatus] = useState("Select Status");
   const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
   const [errorStatus, setStatusError] = useState(null); // New error state
-
 
   const toggleStatusDropdown = () => {
     setIsStatusDropdownOpen((prev) => !prev);
@@ -190,24 +189,22 @@ export default function UploadLead() {
       {/* ------------------------------------------------> Parent <------------------------------------------------ */}
       <div className="mt-3">
         {/* ------------------------------------------------> Heading  <------------------------------------------------ */}
-        <div className="flex justify-between p-3 mx-3 bg-white border rounded">
+        <div className="mx-3 flex justify-between rounded border bg-white p-3">
           {/* ------------------------------------------------> Text   <------------------------------------------------ */}
           <div className="flex items-center justify-center gap-3">
-          <RiFileUploadLine size={25}/>
-            <h1 className="text-xl">
-              Upload Leads Information
-            </h1>
+            <RiFileUploadLine size={25} />
+            <h1 className="text-xl">Upload Leads Information</h1>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex mb-6">
+        <form onSubmit={handleSubmit} className="mb-6 flex">
           {/* ----- FIELDS START FROM HERE ------ */}
           <div className="w-screen">
-            <div className="m-3 bg-white shadow-md rounded-xl">
-              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+            <div className="m-3 rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Lead Information
               </h2>
-              <div className="p-2 space-y-3">
+              <div className="space-y-3 p-2">
                 {/* ------------------------------------1------------------------------------- */}
                 {/* -------------SUB -> Parent -> <FILE UPLOAD FIELD >------------- */}
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-1 sm:gap-4">
@@ -225,7 +222,7 @@ export default function UploadLead() {
                       id="file"
                       placeholder="Upload"
                       accept=".xls,.xlsx"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                       onChange={handleFileChange} // File selection is handled here
                     />
                   </div>
@@ -246,10 +243,12 @@ export default function UploadLead() {
                     <div
                       className="relative"
                       onClick={toggleDropdownassigned_ToDropDown}
-                      onMouseLeave={() => setisDropdownassigned_ToDropDown(false)}
+                      onMouseLeave={() =>
+                        setisDropdownassigned_ToDropDown(false)
+                      }
                     >
                       <button
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadStatusDropDown"
                         type="button"
                       >
@@ -260,16 +259,19 @@ export default function UploadLead() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownassigned_ToDropDown && (
-                        <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-10">
-                        <ul className="py-2 text-sm text-gray-700">
+                        <div className="absolute top-10 z-10 w-full rounded-md border border-gray-300 bg-white">
+                          <ul className="py-2 text-sm text-gray-700">
                             {managedBy.map(({ userName, role }, index) => (
                               <li
                                 key={index}
                                 onClick={() =>
-                                  handleDropdownassigned_ToDropDown(userName, role)
+                                  handleDropdownassigned_ToDropDown(
+                                    userName,
+                                    role,
+                                  )
                                 }
-                                className="flex items-center px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
-                                >
+                                className="flex cursor-pointer items-center border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                              >
                                 {userName}-({role})
                               </li>
                             ))}
@@ -278,25 +280,22 @@ export default function UploadLead() {
                       )}
                     </div>
                   </div>
-                  
-                  
+
                   {/* POOL DROPDOWN */}
                   <div className="relative flex flex-col">
                     <label
                       htmlFor="Pool"
                       className="text-sm font-medium text-gray-700"
-
                     >
                       Pool
                     </label>
                     <div
-                    className="relative"
-                    onMouseLeave={() => setIsPoolDropdownOpen(false)}
+                      className="relative"
+                      onMouseLeave={() => setIsPoolDropdownOpen(false)}
                     >
                       <button
                         onClick={toggleDropdown}
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadPoolDropDown"
                         type="button"
                       >
@@ -304,7 +303,7 @@ export default function UploadLead() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isPoolDropdownOpen && (
-                        <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           {error ? (
                             <div className="py-2 text-red-600">{error}</div>
                           ) : (
@@ -312,8 +311,10 @@ export default function UploadLead() {
                               {leadSource.map(({ key, poolName }) => (
                                 <li
                                   key={key}
-                                  onClick={() => handleDropdownSelection(poolName)}
-                                  className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                  onClick={() =>
+                                    handleDropdownSelection(poolName)
+                                  }
+                                  className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                 >
                                   {poolName}
                                 </li>
@@ -325,15 +326,15 @@ export default function UploadLead() {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* -------------Lead Status------------- */}
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-                <div className="relative flex flex-col">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="Pool"
                       className="text-sm font-medium text-gray-700"
                     >
-                     Lead Status
+                      Lead Status
                     </label>
                     <div
                       className="relative"
@@ -341,21 +342,21 @@ export default function UploadLead() {
                     >
                       <button
                         onClick={toggleStatusDropdown}
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadStatusDropDown"
                         type="button"
                       >
                         {editLead.status === ""
                           ? defaultTextStatus
                           : editLead.status}
-                          <FaAngleDown className="ml-2 text-gray-400" />
+                        <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isStatusDropdownOpen && (
-                        <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
-
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           {errorStatus ? (
-                            <div className="py-2 text-red-600">{errorStatus}</div>
+                            <div className="py-2 text-red-600">
+                              {errorStatus}
+                            </div>
                           ) : (
                             <ul className="py-2 text-sm text-gray-700">
                               {leadStatus.map(({ id, status }) => (
@@ -364,8 +365,8 @@ export default function UploadLead() {
                                   onClick={() =>
                                     handleDropdownStatusSelection(status)
                                   }
-                                  className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
-                                  >
+                                  className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                                >
                                   {status}
                                 </li>
                               ))}
@@ -379,20 +380,21 @@ export default function UploadLead() {
               </div>
             </div>
 
-
-            {/* COLUMN NUMBER INFORMATION */}
-            <div className="m-3 bg-white shadow-md rounded-xl">
-              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+            {/* ------------------------------------------------>TAB  2 : COLUMN NUMBER INFORMATION  TAB <------------------------------------------------ */}
+            <div className="m-3 rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Column Information
               </h2>
-              <div className="grid gap-2 px-3 py-2">
-                {/* FIRST SECTION */}
-                <div className="flex space-x-4">
-                  {/* NAME COLUMN */}
-                  <div className="flex flex-col w-1/2">
+              {/* -------------Parent <COLUMN NUMBER INFORMATIONs>------------- */}
+              <div className="space-y-3 p-2">
+                {/* ------------------------------------1------------------------------------- */}
+                {/* -------------SUB -> Parent -> <Name Column Number && Mobile Column Number>------------- */}
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                  {/* -------------Name Column Number------------- */}
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="nameColNum"
-                      className="block text-sm font-medium text-gray-700"
+                      className="text-sm font-medium text-gray-700"
                     >
                       Name Column Number
                     </label>
@@ -402,15 +404,16 @@ export default function UploadLead() {
                       id="nameColNum"
                       value={editLead.namecolumnno}
                       placeholder="Enter name column"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                   </div>
-                  {/* MOBILE COLUMN */}
-                  <div className="flex flex-col w-1/2">
+
+                  {/* -------------MOBILE Column Number------------- */}
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="mobColNum"
-                      className="block text-sm font-medium text-gray-700"
+                      className="text-sm font-medium text-gray-700"
                     >
                       Mobile Column Number
                     </label>
@@ -420,17 +423,20 @@ export default function UploadLead() {
                       id="mobColNum"
                       value={editLead.mobilecolno}
                       placeholder="Enter mobile column"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                   </div>
                 </div>
-                <div className="flex space-x-4">
-                  {/* EMAIL COLUMN */}
-                  <div className="flex flex-col w-1/2">
+
+                {/* ------------------------------------2------------------------------------- */}
+                {/* -------------SUB -> Parent -> <Email Column Number && City Column Number>------------- */}
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                  {/* -------------Email Column Number------------- */}
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="emailColNum"
-                      className="block text-sm font-medium text-gray-700"
+                      className="text-sm font-medium text-gray-700"
                     >
                       Email Column Number
                     </label>
@@ -440,36 +446,38 @@ export default function UploadLead() {
                       id="emailColNum"
                       value={editLead.emailcolno}
                       placeholder="Enter email column"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                   </div>
-                  {/* CITY COLUMN */}
-                  <div className="flex flex-col w-1/2">
+                  {/* -------------CITY Column Number------------- */}
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="cityColNum"
-                      className="block text-sm font-medium text-gray-700"
+                      className="text-sm font-medium text-gray-700"
                     >
                       City Column Number
                     </label>
                     <input
                       type="number"
-                      name="citycoluno" // Use state property name directly
+                      name="citycoluno"
                       id="cityColNum"
                       value={editLead.citycoluno}
                       placeholder="Enter city column"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                   </div>
                 </div>
-                {/* SECOND SECTION */}
-                <div className="flex space-x-4">
-                  {/* STATE COLUMN */}
-                  <div className="flex flex-col w-1/2">
+
+                {/* ------------------------------------3------------------------------------- */}
+                {/* -------------SUB -> Parent -> <State Column Number && Occupation Column Number>------------- */}
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                  {/* -------------State Column Number------------- */}
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="stateColNum"
-                      className="block text-sm font-medium text-gray-700"
+                      className="text-sm font-medium text-gray-700"
                     >
                       State Column Number
                     </label>
@@ -479,15 +487,15 @@ export default function UploadLead() {
                       id="stateColNum"
                       value={editLead.statecolno}
                       placeholder="Enter state column"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                   </div>
                   {/* OCCUPATION COLUMN */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="occupationColNum"
-                      className="block text-sm font-medium text-gray-700"
+                      className="text-sm font-medium text-gray-700"
                     >
                       Occupation Column Number
                     </label>
@@ -497,42 +505,45 @@ export default function UploadLead() {
                       id="occupationColNum"
                       value={editLead.occupationcolno}
                       placeholder="Enter occupation column"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                   </div>
                 </div>
-                <div className="flex space-x-4">
-                  {/* DESCRIPTION COLUMN */}
-                  <div className="flex flex-col w-1/2">
+
+                {/* ------------------------------------4------------------------------------- */}
+                {/* -------------SUB -> Parent -> <Description Column Number>------------- */}
+
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                  {/* -------------Description Column Number------------- */}
+                  <div className="relative flex flex-col">
                     <label
-                      htmlFor="descriptionColNum"
-                      className="block text-sm font-medium text-gray-700"
+                      htmlFor="riskCapcity"
+                      className="text-sm font-medium text-gray-700"
                     >
                       Description Column Number
                     </label>
                     <input
                       type="number"
-                      name="descolumnno" // Use state property name directly
+                      name="descolumnno"
                       id="descriptionColNum"
                       value={editLead.descolumnno}
                       placeholder="Enter description column"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                   </div>
                 </div>
               </div>
               {/* BUTTONS */}
-              <div className="flex justify-end gap-5">
-                <div className="flex justify-end mr-5">
-                  <button
-                    type="submit"
-                    className="px-32 py-4 mt-20 mb-4 text-white border-2 rounded border-cyan-500 bg-cyan-500 hover:bg-white hover:text-cyan-500"
-                  >
-                    {isEditMode ? "Update" : "Save"}
-                  </button>
-                </div>
+
+              <div className="flex justify-end px-2">
+                <button
+                  type="submit"
+                  className="mb-2 mt-24 w-full rounded border-2 border-cyan-500 bg-cyan-500 px-36 py-4 text-white hover:bg-white hover:text-cyan-500 sm:me-10 sm:w-1/3"
+                >
+                  {isEditMode ? "Update" : "Save"}
+                </button>
               </div>
             </div>
           </div>

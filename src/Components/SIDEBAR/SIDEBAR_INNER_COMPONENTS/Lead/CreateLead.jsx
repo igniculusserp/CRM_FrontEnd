@@ -279,7 +279,7 @@ export default function Createlead() {
   //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //---------------------------> Assigned To <---------------------------
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
-  useState("Select Managed By");
+    useState("Select Managed By");
   const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
     useState(false);
 
@@ -509,7 +509,7 @@ export default function Createlead() {
       {/* ------------------------------------------------> Parent <------------------------------------------------ */}
       <div className="mt-3">
         {/* ------------------------------------------------> Heading  <------------------------------------------------ */}
-        <div className="flex justify-between p-3 mx-3 bg-white border rounded">
+        <div className="mx-3 flex justify-between rounded border bg-white p-3">
           {/* ------------------------------------------------> Text and Logo  <------------------------------------------------ */}
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-xl">
@@ -534,7 +534,7 @@ export default function Createlead() {
             {/* ------------------------------------------------> Cancel Button  <------------------------------------------------ */}
             <Link
               to="/panel/lead"
-              className="px-4 py-1 text-blue-500 border border-blue-500 rounded sm:px-6"
+              className="rounded border border-blue-500 px-4 py-1 text-blue-500 sm:px-6"
             >
               Cancel
             </Link>
@@ -542,16 +542,16 @@ export default function Createlead() {
         </div>
 
         {/* -------------FORM Starts FROM HERE------------- */}
-        <form onSubmit={handleSubmit} className="flex mb-6">
+        <form onSubmit={handleSubmit} className="mb-6 flex">
           {/* ------------------------------------------------> FORM PARENT includes 4 tabs <------------------------------------------------ */}
           <div className="w-screen">
             {/* ------------------------------------------------>TAB  1 :  Lead Information TAB <------------------------------------------------ */}
-            <div className="m-3 bg-white shadow-md rounded-xl">
-              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+            <div className="m-3 rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Lead Information
               </h2>
               {/* -------------Parent <Lead Information Inputs>------------- */}
-              <div className="p-2 space-y-3">
+              <div className="space-y-3 p-2">
                 {/* ------------------------------------1------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Name && Language>------------- */}
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
@@ -572,7 +572,7 @@ export default function Createlead() {
                       value={editLead.name}
                       onChange={handleChange}
                       placeholder="Enter your Name"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* -------------Language------------- */}
@@ -590,7 +590,7 @@ export default function Createlead() {
                       onMouseLeave={() => setisDropdownVisibleLanguage(false)}
                     >
                       <button
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LanguageDropDown"
                         type="button"
                       >
@@ -608,7 +608,7 @@ export default function Createlead() {
                               <li
                                 key={key}
                                 onClick={() => handleDropdownLanguage(name)}
-                                className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 {name}
                               </li>
@@ -637,7 +637,7 @@ export default function Createlead() {
                       value={editLead.company}
                       onChange={handleChange}
                       placeholder="Enter your Company"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* -------------Title------------- */}
@@ -654,7 +654,7 @@ export default function Createlead() {
                       value={editLead.title}
                       onChange={handleChange}
                       placeholder="Enter Title"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
@@ -675,7 +675,7 @@ export default function Createlead() {
                     >
                       <button
                         onClick={toggleDropdown}
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadPoolDropDown"
                         type="button"
                       >
@@ -685,7 +685,7 @@ export default function Createlead() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isPoolDropdownOpen && (
-                        <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           {error ? (
                             <div className="py-2 text-red-600">{error}</div>
                           ) : (
@@ -697,7 +697,7 @@ export default function Createlead() {
                                     onClick={() =>
                                       handleDropdownSelection(poolName)
                                     }
-                                    className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {poolName}
                                   </li>
@@ -737,7 +737,7 @@ export default function Createlead() {
                       onMouseLeave={() => setisDropdownVisibleLeadStatus(false)}
                     >
                       <button
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadStatusDropDown"
                         type="button"
                       >
@@ -756,7 +756,7 @@ export default function Createlead() {
                                   onClick={() =>
                                     handleDropdownLeadStatus(status)
                                   }
-                                  className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                  className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                 >
                                   {status}
                                 </li>
@@ -800,7 +800,7 @@ export default function Createlead() {
                       name="mobNo"
                       maxLength="15"
                       value={editLead.mobNo}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleContactChange}
                       placeholder="Enter your Mobile Number"
                     />
@@ -818,7 +818,7 @@ export default function Createlead() {
                       name="phNo"
                       maxLength="15"
                       value={editLead.phNo}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleContactChange}
                       placeholder="Enter your Alternate Number"
                       onInput={(e) => {
@@ -847,7 +847,7 @@ export default function Createlead() {
                       value={editLead.email}
                       onChange={handleChange}
                       placeholder="Enter your Email"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* -------------Managed by------------- */}
@@ -866,7 +866,7 @@ export default function Createlead() {
                       }
                     >
                       <button
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadStatusDropDown"
                         type="button"
                       >
@@ -876,7 +876,7 @@ export default function Createlead() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownassigned_ToDropDown && (
-                        <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {managedBy.map(({ userName, role }, index) => (
                               <li
@@ -887,7 +887,7 @@ export default function Createlead() {
                                     role,
                                   )
                                 }
-                                className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 {userName}-({role})
                               </li>
@@ -902,12 +902,12 @@ export default function Createlead() {
             </div>
 
             {/* ------------------------------------------------>TAB  2 :  Address Information  TAB <------------------------------------------------ */}
-            <div className="m-3 bg-white shadow-md rounded-xl">
-              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+            <div className="m-3 rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Address Information
               </h2>
               {/* -------------Parent <Address Information Inputs>------------- */}
-              <div className="p-2 space-y-3">
+              <div className="space-y-3 p-2">
                 {/* ------------------------------------1------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Street && Pincode>------------- */}
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
@@ -925,7 +925,7 @@ export default function Createlead() {
                       value={editLead.street}
                       onChange={handleChange}
                       placeholder="Enter your Street"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* -------------Pincode------------- */}
@@ -942,7 +942,7 @@ export default function Createlead() {
                       value={editLead.pinCode}
                       onChange={handleChange}
                       placeholder="Enter your pincode"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
@@ -963,7 +963,7 @@ export default function Createlead() {
                       value={editLead.country}
                       onChange={handleChange}
                       placeholder="Enter your Country name"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* -------------City------------- */}
@@ -980,7 +980,7 @@ export default function Createlead() {
                       value={editLead.city}
                       onChange={handleChange}
                       placeholder="Enter your City name"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
@@ -1002,19 +1002,19 @@ export default function Createlead() {
                       value={editLead.state}
                       onChange={handleChange}
                       placeholder="Enter your State name"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
               </div>
             </div>
             {/* ------------------------------------------------>TAB  3 :  Trading Information TAB <------------------------------------------------ */}
-            <div className="m-3 bg-white shadow-md rounded-xl">
-              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+            <div className="m-3 rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Trading Information
               </h2>
               {/* -------------Parent <Lead Information Inputs>------------- */}
-              <div className="p-2 space-y-3">
+              <div className="space-y-3 p-2">
                 {/* ------------------------------------1------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Risk Capacity && Trading Time>------------- */}
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
@@ -1032,7 +1032,7 @@ export default function Createlead() {
                       value={editLead.riskCapcity}
                       onChange={handleChange}
                       placeholder="Enter Risk Capacity"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* -------------Trading Time------------- */}
@@ -1049,7 +1049,7 @@ export default function Createlead() {
                       value={editLead.tradingTime}
                       onChange={handleChange}
                       placeholder="Enter Trading Time"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
@@ -1069,7 +1069,7 @@ export default function Createlead() {
                       name="tradingType"
                       value={editLead.tradingType}
                       onChange={handleChange}
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* -------------Investmet------------- */}
@@ -1085,7 +1085,7 @@ export default function Createlead() {
                       name="investmet"
                       value={editLead.investmet}
                       onChange={handleChange}
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
@@ -1106,7 +1106,7 @@ export default function Createlead() {
                       value={editLead.advisoryExp}
                       onChange={handleChange}
                       placeholder="Enter your Advisory"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
 
@@ -1122,7 +1122,7 @@ export default function Createlead() {
                       type="text"
                       name="tradingYears"
                       value={editLead.tradingYears}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter years"
                     />
@@ -1148,19 +1148,19 @@ export default function Createlead() {
                       <button
                         id="LeadStatusDropDown"
                         type="button"
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                       >
                         {defaultTextSegmentDropDown}
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleSegment && (
-                        <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {segments?.length > 0 ? (
                               segments.map(({ key, segment }) => (
                                 <li
                                   key={key}
-                                  className="flex items-center px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                  className="flex cursor-pointer items-center border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                 >
                                   <input
                                     type="checkbox"
@@ -1206,7 +1206,7 @@ export default function Createlead() {
                       name="callBackDateTime"
                       value={editLead.callBackDateTime}
                       onChange={handleChange}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
@@ -1225,7 +1225,7 @@ export default function Createlead() {
                       type="date"
                       name="trialStartDate"
                       value={editLead.trialStartDate?.split("T")[0]}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                   </div>
@@ -1242,7 +1242,7 @@ export default function Createlead() {
                       name="trialEndDate"
                       value={editLead.trialEndDate?.split("T")[0]}
                       onChange={handleChange}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
@@ -1261,7 +1261,7 @@ export default function Createlead() {
                       type="text"
                       name="contactId"
                       value={editLead.contactId}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter ContactID"
                     />
@@ -1278,7 +1278,7 @@ export default function Createlead() {
                       type="text"
                       name="lastModifiedBy"
                       value={editLead.lastModifiedBy}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter details"
                     />
@@ -1286,8 +1286,8 @@ export default function Createlead() {
                 </div>
               </div>
             </div>
-            <div className="mx-3 bg-white shadow-md rounded-xl">
-              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+            <div className="mx-3 rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Description Information
               </h2>
               <div className="p-2">
@@ -1301,7 +1301,7 @@ export default function Createlead() {
                   <ReactQuill
                     name="description"
                     value={description}
-                    className="h-40 max-h-full mt-1 hyphens-auto text-balance sm:h-60"
+                    className="mt-1 h-40 max-h-full hyphens-auto text-balance sm:h-60"
                     theme="snow"
                     onChange={setdescription}
                     placeholder="Add Description"
@@ -1311,7 +1311,7 @@ export default function Createlead() {
               <div className="flex justify-end px-2">
                 <button
                   type="submit"
-                  className="w-full py-4 mt-24 mb-2 text-white border-2 rounded border-cyan-500 bg-cyan-500 px-36 hover:bg-white hover:text-cyan-500 sm:me-10 sm:w-1/3"
+                  className="mb-2 mt-24 w-full rounded border-2 border-cyan-500 bg-cyan-500 px-36 py-4 text-white hover:bg-white hover:text-cyan-500 sm:me-10 sm:w-1/3"
                 >
                   {isEditMode ? "Update" : "Save"}
                 </button>
