@@ -1,9 +1,26 @@
+//react
 import { useState } from "react";
+
+//reactIcon
 import { FaAngleDown } from "react-icons/fa";
+
+//reactRoute
 import { Link } from "react-router-dom";
 
+//dropDown --->>> customHooks
+import useManagedBy from "../../../../Hooks/ManagedBy/useManagedBy";
+import useLeadSource from "../../../../Hooks/LeadSource/useLeadSource";
+import useLeadStatus from "../../../../Hooks/LeadStatus/useLeadStatus";
+
 export default function UploadLead() {
+  // Custom Hook
+  const { leadStatus } = useLeadStatus();
+  const { leadSource } = useLeadSource();
+  const { managedBy } = useManagedBy();
+
   const [isEditMode, setIsEditMode] = useState(false);
+
+  //-->--->uploadLead/editLead--> Schema<->Model
   const [editLead, setEditLead] = useState({
     file: "",
     nameColNum: "",
@@ -33,22 +50,14 @@ export default function UploadLead() {
     e.preventDefault();
   };
 
-  //   DROPDOWNS STATE AND THEIR OTHER FUNCTIONALITY
-  const [assignedToDropdown, setAssignedToDropdown] = useState(false);
-  const [defaultAssignedToText, setDefaultAssignedToText] =
-    useState("Assigned To");
-  const [poolDropdown, setPoolDropdown] = useState(false);
-  const [defaultPoolText, setDefaultPoolText] = useState("pool");
-  const [statusDropdown, setStatusDropdown] = useState(false);
-  const [defaultStatusText, setDefaultStatusText] = useState("status");
+  //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  //---------------------------> Assigned To <---------------------------
+  //assigned_ToDropDown
 
-  // ASSIGNED TO DATA
-  const assignedToData = [
-    { key: 1, name: "Assigned To" },
-    { key: 2, name: "Assigned To" },
-    { key: 3, name: "Assigned To" },
-    { key: 4, name: "Assigned To" },
-  ];
+  const [assignedToDropdown, setAssignedToDropdown] = useState(false);
+
+  const [defaultAssignedToText, setDefaultAssignedToText] =
+    useState("Select Managed By");
 
   //   TOGGLE ASSIGNED TO DROPDOWN
   const toggleAssignedToDropdown = () => {
@@ -65,13 +74,11 @@ export default function UploadLead() {
     }));
   };
 
-  // LEAD VENDER DUMMY DATA
-  const poolData = [
-    { key: 1, name: "pool" },
-    { key: 1, name: "pool" },
-    { key: 1, name: "pool" },
-    { key: 1, name: "pool" },
-  ];
+  //----------------------------------------------------------------------------------------
+  //---------------------------> Lead Source <---------------------------
+  //default text for Lead Source
+  const [poolDropdown, setPoolDropdown] = useState(false);
+  const [defaultPoolText, setDefaultPoolText] = useState("Select Lead Source");
 
   //   TOGGLE ASSIGNED TO DROPDOWN
   const togglePoolDropdown = () => {
@@ -88,13 +95,10 @@ export default function UploadLead() {
     }));
   };
 
-  // FLUSH DUMMY DATA
-  const statusData = [
-    { key: 1, name: "Status" },
-    { key: 2, name: "Status" },
-    { key: 3, name: "Status" },
-    { key: 4, name: "Status" },
-  ];
+  //----------------------------------------------------------------------------------------
+  //---------------------------> Lead Status <---------------------------
+  const [statusDropdown, setStatusDropdown] = useState(false);
+  const [defaultStatusText, setDefaultStatusText] = useState("status");
 
   // TOGGLE FLUSH
   const toggleStatusDropdown = () => {

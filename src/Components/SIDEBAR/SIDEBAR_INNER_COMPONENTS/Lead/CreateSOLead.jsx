@@ -187,6 +187,15 @@ export default function CreateSOLead() {
   //assigned_ToDropDown
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
     useState("Selected Managed By");
+
+  useEffect(() => {
+    if (editLead?.assigned_To) {
+      setdefaultTextassigned_ToDropDown(editLead.assigned_To);
+    } else {
+      setdefaultTextassigned_ToDropDown("Select Lead Source");
+    }
+  }, [editLead?.assigned_To]);
+
   const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
     useState(false);
 
@@ -2074,15 +2083,13 @@ export default function CreateSOLead() {
                   />
                 </div>
               </div>
-              <div className="mb-6 flex justify-end gap-5">
-                <div className="mr-5 flex justify-end">
-                  <button
-                    type="submit"
-                    className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
-                  >
-                    Save
-                  </button>
-                </div>
+              <div className="flex justify-end px-2">
+                <button
+                  type="submit"
+                  className="mb-2 mt-24 w-full rounded border-2 border-cyan-500 bg-cyan-500 px-36 py-4 text-white hover:bg-white hover:text-cyan-500 sm:me-10 sm:w-1/3"
+                >
+                  Save
+                </button>
               </div>
             </div>
           </div>
