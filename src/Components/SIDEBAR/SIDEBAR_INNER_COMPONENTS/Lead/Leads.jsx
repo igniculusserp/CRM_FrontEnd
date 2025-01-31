@@ -845,7 +845,7 @@ export default function Lead() {
     //parent
     <>
       <ToastContainer />
-      <div className="flex flex-col min-h-screen m-3">
+      <div className="m-3 flex min-h-screen flex-col">
         {/* -----------------------------------Mass Email Modal------------------------------ */}
         {isModalOpen && (
           <MassEmail emails={selectedEmails} onClose={closeModal} />
@@ -865,19 +865,19 @@ export default function Lead() {
         {/* -------------------------------- Fetch modal -------------------------------------------- */}
         {isFeatchModalOpen && <LeadFeatchModal onClose={closeModal} />}
         {/* containerbar*/}
-        <div className="flex flex-wrap items-center justify-between gap-3 px-3 py-2 bg-white rounded-lg">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-white px-3 py-2">
           {/* PART-I */}
           {/* container- Alleads, search */}
           <div className="flex flex-wrap items-start justify-between gap-3">
             {/* PART-I */}
             {/* All Lead  DropDown*/}
             <div
-              className="relative button_MaxWidth_first_layer_Container"
+              className="button_MaxWidth_first_layer_Container relative"
               onClick={toggleMenuAllLead}
               onMouseLeave={() => setAllLeaddropDown(false)}
             >
               <button
-                className="flex items-center justify-between px-4 py-2 truncate border rounded-md button_MaxWidth_first_layer min-w-40 max-w-44"
+                className="button_MaxWidth_first_layer flex min-w-40 max-w-44 items-center justify-between truncate rounded-md border px-4 py-2"
                 id="dropdownDefaultButton"
                 type="button"
               >
@@ -885,12 +885,12 @@ export default function Lead() {
                 <FaAngleDown className="ml-2 text-gray-900" />
               </button>
               {allLeaddropDown && (
-                <div className="absolute z-10 bg-white border border-gray-300 rounded-md top-10">
+                <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
                   <ul className="text-sm text-gray-700">
                     {allLeadData.map((item) => (
                       <li
                         key={item.id}
-                        className="block w-56 px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                        className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                         onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
                       >
                         {item.status}
@@ -905,12 +905,12 @@ export default function Lead() {
             {/* All ASSIGNED_TO  DropDown*/}
 
             <div
-              className="relative button_MaxWidth_first_layer_Container"
+              className="button_MaxWidth_first_layer_Container relative"
               onClick={toggleMenuAssigned_To}
               onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
             >
               <button
-                className="flex items-center justify-between px-4 py-2 border rounded-md button_MaxWidth_first_layer min-w-36 max-w-44"
+                className="button_MaxWidth_first_layer flex min-w-36 max-w-44 items-center justify-between rounded-md border px-4 py-2"
                 id="dropdownDefaultButton"
                 type="button"
               >
@@ -918,12 +918,12 @@ export default function Lead() {
                 <FaAngleDown className="ml-2 text-gray-900" />
               </button>
               {allAssigned_To_DROPDOWN && (
-                <div className="absolute z-10 bg-white border border-gray-300 rounded-md top-10">
+                <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
                   <ul className="text-sm text-gray-700">
                     {allAssigned_To_Data.map((item) => (
                       <li
                         key={item.id}
-                        className="block w-56 px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                        className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                         onClick={() => handleAssignedToSelection(item.userName)} // Correct selection logic
                       >
                         {item.userName}
@@ -943,9 +943,9 @@ export default function Lead() {
 
             {/* Fetch Box */}
             {fetchLead || businessRole === "Admin" ? (
-              <div className="flex gap-1 button_MaxWidth_first_layer_Container">
+              <div className="button_MaxWidth_first_layer_Container flex gap-1">
                 <button
-                  className="flex items-center justify-center gap-2 px-4 py-2 text-white bg-blue-600 border rounded-lg button_MaxWidth_first_layer"
+                  className="button_MaxWidth_first_layer flex items-center justify-center gap-2 rounded-lg border bg-blue-600 px-4 py-2 text-white"
                   onClick={() => setIsFetchModalOpen(true)}
                 >
                   Fetch Leads
@@ -957,19 +957,19 @@ export default function Lead() {
           </div>
 
           {/* PART-II */}
-          <div className="flex flex-wrap items-center gap-3 button_MaxWidth_Main_Container">
+          <div className="button_MaxWidth_Main_Container flex flex-wrap items-center gap-3">
             {/* PART-II */}
             {/* Stripe-BarDropDown */}
             {activeButtonId === 2 || activeButtonId === 4 ? (
               ""
             ) : (
               <div
-                className="relative hide_Component button_MaxWidth_Container"
+                className="hide_Component button_MaxWidth_Container relative"
                 onClick={togglestripeBar}
                 onMouseLeave={() => setstripeBardropDown(false)}
               >
                 <button
-                  className="flex items-center justify-between gap-2 px-4 py-3 border rounded-md button_MaxWidth"
+                  className="button_MaxWidth flex items-center justify-between gap-2 rounded-md border px-4 py-3"
                   id="dropdownDefaultButton"
                   type="button"
                 >
@@ -977,12 +977,12 @@ export default function Lead() {
                   <FaAngleDown className="text-gray-900" />
                 </button>
                 {stripeBardropDown && (
-                  <div className="absolute z-10 w-56 bg-white border border-gray-300 rounded-md top-10">
+                  <div className="absolute top-10 z-10 w-56 rounded-md border border-gray-300 bg-white">
                     <ul className="text-sm text-gray-700">
                       {stripeBar.map(({ key, value }) => (
                         <li
                           key={key}
-                          className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                          className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                           onClick={() => handleStripeButton(value)}
                         >
                           {value}
@@ -996,10 +996,10 @@ export default function Lead() {
             {/* PART-II */}
             {/*  Create Lead */}
             {createLead || businessRole === "Admin" ? (
-              <div className="flex button_MaxWidth_Container">
+              <div className="button_MaxWidth_Container flex">
                 <Link to="/panel/createlead" className="button_MaxWidth">
                   <button
-                    className="flex items-center justify-center gap-2 px-4 py-2 text-white bg-blue-600 border rounded-lg button_MaxWidth"
+                    className="button_MaxWidth flex items-center justify-center gap-2 rounded-lg border bg-blue-600 px-4 py-2 text-white"
                     id="dropdownDefaultButton"
                     type="button"
                   >
@@ -1020,12 +1020,12 @@ export default function Lead() {
             {/* PART-II */}
             {/*-------Action DropDown */}
             <div
-              className="relative button_MaxWidth_Container"
+              className="button_MaxWidth_Container relative"
               onClick={toggleActionsMenuLogo}
               onMouseLeave={() => setdropActionsMenudropDown(false)}
             >
               <button
-                className="flex items-center justify-between gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg button_MaxWidth"
+                className="button_MaxWidth flex items-center justify-between gap-2 rounded-lg border border-blue-600 px-4 py-2 text-blue-600"
                 id="dropdownDefaultButton"
                 type="button"
               >
@@ -1033,14 +1033,14 @@ export default function Lead() {
                 <FaAngleDown className="text-gray-900" />
               </button>
               {dropActionsMenudropDown && (
-                <div className="absolute right-0 z-10 w-56 bg-white border border-gray-300 rounded-md top-10">
+                <div className="absolute right-0 top-10 z-10 w-56 rounded-md border border-gray-300 bg-white">
                   <ul className="text-sm text-gray-700">
                     {dropActionsMenu.map(({ key, value }) =>
                       permissions.includes(value) ||
                       businessRole === "Admin" ? (
                         <li
                           key={key}
-                          className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                          className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                           onClick={() => handleActionButton(value)}
                         >
                           {value}
@@ -1059,15 +1059,15 @@ export default function Lead() {
         {/* 2nd bar Leads and lenghtLeads*/}{" "}
         {/* 2nd bar Leads and lenghtLeads*/}{" "}
         {/* 2nd bar Leads and lenghtLeads*/}
-        <div className="flex flex-wrap items-center justify-between gap-3 mt-3 leads_Button_Main_Container">
-          <div className="flex items-center justify-start gap-3 leads_Button_Main_Container">
+        <div className="leads_Button_Main_Container mt-3 flex flex-wrap items-center justify-between gap-3">
+          <div className="leads_Button_Main_Container flex items-center justify-start gap-3">
             <h1 className="text-3xl font-medium">Leads</h1>
-            <h1 className="px-2 py-2 text-center text-white bg-blue-600 rounded-md shadow-md text-md min-w-10">
+            <h1 className="text-md min-w-10 rounded-md bg-blue-600 px-2 py-2 text-center text-white shadow-md">
               {getleads?.length}
             </h1>
 
             {/* BUTTONS */}
-            <div className="flex gap-2 leads_Button_Container">
+            <div className="leads_Button_Container flex gap-2">
               {dynamicButtons.map(({ id, name }) =>
                 permissions.includes(name) ||
                 name === viewName ||
@@ -1091,25 +1091,25 @@ export default function Lead() {
           {activeButtonId === 1 ? (
             <div className="date_Filter_Main_Container">
               {/* ------------------- Filter by date ----------------- */}
-              <div className="flex items-center justify-between p-2 bg-white border-2 border-gray-300 rounded-lg date_Filter_Main_Container">
+              <div className="date_Filter_Main_Container flex items-center justify-between rounded-lg border-2 border-gray-300 bg-white p-2">
                 {/* Filter Icon Button */}
                 <div className="flex items-center">
-                  <button className="pr-2 border-r border-gray-500">
+                  <button className="border-r border-gray-500 pr-2">
                     <ImFilter className="filter_Image_Size" />
                   </button>
 
                   {/* Date Range Filter Button */}
-                  <button className="px-2 border-r border-gray-500 filter_Image_Display whitespace-nowrap">
+                  <button className="filter_Image_Display whitespace-nowrap border-r border-gray-500 px-2">
                     Filter By
                   </button>
 
                   {/* Date Range Inputs */}
-                  <div className="flex items-center gap-2 px-2 filter_Date_Container">
+                  <div className="filter_Date_Container flex items-center gap-2 px-2">
                     <label className="hide_Filter_Text">From:</label>
                     <input
                       type="date"
                       value={startDate}
-                      className="px-2 py-2 border rounded filter_Date"
+                      className="filter_Date rounded border px-2 py-2"
                       onChange={(e) => setStartDate(e.target.value)}
                     />
 
@@ -1117,14 +1117,14 @@ export default function Lead() {
                     <input
                       type="date"
                       value={endDate}
-                      className="px-2 py-2 border rounded filter_Date"
+                      className="filter_Date rounded border px-2 py-2"
                       onChange={(e) => setEndDate(e.target.value)}
                     />
                   </div>
                 </div>
 
                 <div
-                  className="flex items-center gap-2 p-2 border rounded cursor-pointer reset_paddings"
+                  className="reset_paddings flex cursor-pointer items-center gap-2 rounded border p-2"
                   onClick={handleResetFilter}
                 >
                   <label className="hide_Filter_Text">Reset</label>
@@ -1143,7 +1143,7 @@ export default function Lead() {
             onMouseLeave={() => setSelectOperationDropdown(false)}
           >
             <button
-              className="flex items-center justify-between gap-2 px-4 py-2 mt-2 text-gray-600 bg-white border rounded-lg"
+              className="mt-2 flex items-center justify-between gap-2 rounded-lg border bg-white px-4 py-2 text-gray-600"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -1151,13 +1151,13 @@ export default function Lead() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {selectOperationDropdown && (
-              <div className="absolute z-10 w-64 bg-white border border-gray-300 rounded-md top-13">
-                <ul className="text-sm text-gray-700 rounded-md">
+              <div className="top-13 absolute z-10 w-64 rounded-md border border-gray-300 bg-white">
+                <ul className="rounded-md text-sm text-gray-700">
                   {leadOperations.map(({ key, value }) => (
                     <li
                       key={key}
                       onClick={() => handleSelect(value)}
-                      className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                      className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                     >
                       {value}
                     </li>
@@ -1169,10 +1169,10 @@ export default function Lead() {
         )}
         {/*-------Table-------*/}
         {viewLeads || businessRole === "Admin" ? (
-          <div className="mt-3 overflow-x-auto leads_Table_Main_Container">
-            <div className="min-w-full rounded-md shadow-lg leads_Table_Container">
+          <div className="leads_Table_Main_Container mt-3 overflow-x-auto">
+            <div className="leads_Table_Container min-w-full rounded-md shadow-lg">
               {selectedViewValue === "Table View" && activeButtonId === 1 && (
-                <table className="min-w-full bg-white leads_Table">
+                <table className="leads_Table min-w-full bg-white">
                   <thead>
                     <tr className="border-b-2 border-gray-300">
                       {/* CHECKBOX */}
@@ -1183,7 +1183,7 @@ export default function Lead() {
                           onChange={handleSelectAllCheckbox}
                         />
                       </th>
-                      <th className="px-1 py-3 font-medium text-left border-r max-w-56">
+                      <th className="max-w-56 border-r px-1 py-3 text-left font-medium">
                         <div className="flex justify-between">
                           <span>Lead Name</span>
                           <span className="flex items-center">
@@ -1194,13 +1194,13 @@ export default function Lead() {
                       {business === "Brokerage" ? (
                         ""
                       ) : (
-                        <th className="px-1 py-3 font-medium text-left border-r">
-                          <div className="flex items-center justify-between max-w-56">
+                        <th className="border-r px-1 py-3 text-left font-medium">
+                          <div className="flex max-w-56 items-center justify-between">
                             <span>Email</span>
                           </div>
                         </th>
                       )}
-                      <th className="px-1 py-3 font-medium text-left border-r">
+                      <th className="border-r px-1 py-3 text-left font-medium">
                         <div className="flex items-center justify-between">
                           <span>Phone No</span>
                         </div>
@@ -1208,13 +1208,13 @@ export default function Lead() {
                       {business === "Brokerage" ? (
                         ""
                       ) : (
-                        <th className="px-1 py-3 font-medium text-left border-r">
+                        <th className="border-r px-1 py-3 text-left font-medium">
                           <div className="flex items-center justify-between">
                             <span>Follow Up</span>
                           </div>
                         </th>
                       )}
-                      <th className="px-1 py-3 font-medium text-left border-r min-w-32 max-w-36">
+                      <th className="min-w-32 max-w-36 border-r px-1 py-3 text-left font-medium">
                         <div className="flex items-center justify-between">
                           <span>Segments</span>
                         </div>
@@ -1223,7 +1223,7 @@ export default function Lead() {
                       {business === "Brokerage" ? (
                         <>
                           {adminRole === "Admin" ? (
-                            <th className="w-48 px-1 py-3 font-medium text-left border-r">
+                            <th className="w-48 border-r px-1 py-3 text-left font-medium">
                               <div className="flex items-center justify-between">
                                 <span>Managed By</span>
                               </div>
@@ -1233,7 +1233,7 @@ export default function Lead() {
                           )}
                         </>
                       ) : (
-                        <th className="w-48 px-1 py-3 font-medium text-left border-r">
+                        <th className="w-48 border-r px-1 py-3 text-left font-medium">
                           <div className="flex items-center justify-between">
                             <span>Managed By</span>
                           </div>
@@ -1258,7 +1258,7 @@ export default function Lead() {
                       return (
                         <tr
                           key={item.id}
-                          className="border-b border-gray-300 cursor-pointer hover:bg-gray-100"
+                          className="cursor-pointer border-b border-gray-300 hover:bg-gray-100"
                           // onClick={() => handleClick(item)}
                         >
                           {/* CHECKBOX */}
@@ -1276,7 +1276,7 @@ export default function Lead() {
                                 ? () => handleClick(item)
                                 : undefined
                             }
-                            className="px-1 py-4 text-sm leading-5 text-gray-600 border-b border-gray-300"
+                            className="border-b border-gray-300 px-1 py-4 text-sm leading-5 text-gray-600"
                           >
                             <div className="text-center">
                               <span className="text-md hover:font-semibold hover:text-blue-500 hover:underline">
@@ -1284,7 +1284,7 @@ export default function Lead() {
                               </span>
                             </div>
                             <div className="mx-auto flex w-[80%] justify-start text-center">
-                              <div className="w-full px-1 py-1 text-xs text-center text-white rounded-full bg-cyan-500">
+                              <div className="w-full rounded-full bg-cyan-500 px-1 py-1 text-center text-xs text-white">
                                 {item.leadesStatus}
                               </div>
                             </div>
@@ -1295,7 +1295,7 @@ export default function Lead() {
                           {business === "Brokerage" ? (
                             ""
                           ) : (
-                            <td className="px-1 py-4 text-sm break-all border-b border-gray-300 text- min-w-24 max-w-48">
+                            <td className="text- min-w-24 max-w-48 break-all border-b border-gray-300 px-1 py-4 text-sm">
                               <a
                                 href={`mailto:${item.email}`}
                                 onClick={(event) => event.stopPropagation()}
@@ -1304,7 +1304,7 @@ export default function Lead() {
                               </a>
                             </td>
                           )}
-                          <td className="px-1 py-4 text-sm border-b border-gray-300">
+                          <td className="border-b border-gray-300 px-1 py-4 text-sm">
                             <div className="flex items-center gap-2">
                               <a
                                 href={`tel:${item.mobileNo}`}
@@ -1319,7 +1319,7 @@ export default function Lead() {
                           {business === "Brokerage" ? (
                             ""
                           ) : (
-                            <td className="px-1 py-4 text-sm border-b border-gray-300">
+                            <td className="border-b border-gray-300 px-1 py-4 text-sm">
                               {
                                 item.call_bck_DateTime
                                   ?.replace("T", " ")
@@ -1328,7 +1328,7 @@ export default function Lead() {
                             </td>
                           )}
                           {/* Segments */}
-                          <td className="px-1 py-4 text-sm border-b border-gray-300 min-w-24 max-w-36">
+                          <td className="min-w-24 max-w-36 border-b border-gray-300 px-1 py-4 text-sm">
                             <div>
                               {item.segments && (
                                 <span>
@@ -1344,7 +1344,7 @@ export default function Lead() {
                           {business === "Brokerage" ? (
                             <>
                               {adminRole === "Admin" ? (
-                                <td className="px-2 py-4 text-sm text-center border-b border-gray-300">
+                                <td className="border-b border-gray-300 px-2 py-4 text-center text-sm">
                                   {matchedUser && (
                                     <div
                                       className="w-[100%] rounded-full bg-cyan-500 px-2 py-2 text-xs font-semibold text-white"
@@ -1366,7 +1366,7 @@ export default function Lead() {
                               )}
                             </>
                           ) : (
-                            <td className="px-2 py-4 text-sm text-center border-b border-gray-300">
+                            <td className="border-b border-gray-300 px-2 py-4 text-center text-sm">
                               {matchedUser && (
                                 <div
                                   className="w-[100%] rounded-full bg-cyan-500 px-2 py-2 text-xs font-semibold text-white"
@@ -1395,12 +1395,12 @@ export default function Lead() {
                               >
                                 {/* SO */}
                                 {business === "Brokerage" ? (
-                                  <span className="p-2 text-xs text-white bg-blue-600 rounded shadow-md hover:bg-blue-500">
+                                  <span className="rounded bg-blue-600 p-2 text-xs text-white shadow-md hover:bg-blue-500">
                                     Create Client
                                   </span>
                                 ) : (
                                   <>
-                                    <span className="p-1 text-white bg-blue-600 rounded shadow-md text-xm hover:bg-blue-500">
+                                    <span className="text-xm rounded bg-blue-600 p-1 text-white shadow-md hover:bg-blue-500">
                                       SO
                                     </span>
                                   </>
@@ -1429,18 +1429,18 @@ export default function Lead() {
                       {/*---------Card starts Here */}
                       {currentLeads.map((item) => (
                         <div
-                          className="flex flex-col gap-2 px-2 py-3 bg-white border-2 rounded-lg"
+                          className="flex flex-col gap-2 rounded-lg border-2 bg-white px-2 py-3"
                           key={item.id}
                         >
                           <div className="flex items-center gap-3">
-                            <div className="flex flex-col grow">
+                            <div className="flex grow flex-col">
                               <div className="flex justify-between font-medium">
                                 <span className="text-indigo-500">
                                   {item.name}
                                 </span>
                                 <BiEdit
                                   size={25}
-                                  className="p-1 text-blue-500 bg-white rounded-full shadow-md"
+                                  className="rounded-full bg-white p-1 text-blue-500 shadow-md"
                                   onClick={() => handleClick(item)}
                                 />
                               </div>
@@ -1449,46 +1449,46 @@ export default function Lead() {
                               </div>
                             </div>
                           </div>
-                          <div className="flex items-center px-2 py-1 bg-gray-100 border-2 rounded-lg">
+                          <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
                             <div className="w-2/4 text-sm text-gray-500">
                               Company name
                             </div>
-                            <div className="text-sm font-medium 2-2/4">
+                            <div className="2-2/4 text-sm font-medium">
                               {item.company}
                             </div>
                           </div>
 
-                          <div className="flex items-center px-2 py-1 bg-gray-100 border-2 rounded-lg">
+                          <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
                             <div className="w-2/4 text-sm text-gray-500">
                               Title
                             </div>
-                            <div className="text-sm font-medium 2-2/4">
+                            <div className="2-2/4 text-sm font-medium">
                               {item.tital}
                             </div>
                           </div>
 
-                          <div className="flex items-center px-2 py-1 bg-gray-100 border-2 rounded-lg">
+                          <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
                             <div className="w-2/4">
                               <IoIosMail className="text-2xl" />
                             </div>
-                            <div className="text-sm font-medium truncate 2-2/4 text-wrap text-balance text-pretty">
+                            <div className="2-2/4 truncate text-wrap text-balance text-pretty text-sm font-medium">
                               {item.email}
                             </div>
                           </div>
 
-                          <div className="flex items-center px-2 py-1 bg-gray-100 border-2 rounded-lg">
+                          <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
                             <div className="w-2/4">
                               <FaPhoneAlt className="text-xl" />
                             </div>
-                            <div className="text-sm font-medium 2-2/4">
+                            <div className="2-2/4 text-sm font-medium">
                               {item.phoneNo}
                             </div>
                           </div>
-                          <div className="flex items-center px-2 py-1 bg-gray-100 border-2 rounded-lg">
+                          <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
                             <div className="w-2/4 text-sm text-gray-500">
                               Lead Source
                             </div>
-                            <div className="text-sm font-medium 2-2/4">
+                            <div className="2-2/4 text-sm font-medium">
                               {item.leadsSource}
                             </div>
                           </div>
@@ -1534,7 +1534,7 @@ export default function Lead() {
                   }`}
                 >
                   {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
-                  <nav className="flex items-center justify-center gap-2 mx-auto mt-4 text-center">
+                  <nav className="mx-auto mt-4 flex items-center justify-center gap-2 text-center">
                     {/* /---------------------->Previous Button <----------------------< */}
                     <button
                       onClick={() => paginate(currentPage - 1)}
