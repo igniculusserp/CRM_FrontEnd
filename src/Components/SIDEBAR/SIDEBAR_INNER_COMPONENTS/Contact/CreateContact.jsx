@@ -21,6 +21,9 @@ import {
 } from "../../../../utils/toastNotifications";
 import { ToastContainer } from "react-toastify";
 
+//LanguageDropDown
+import languageDropDown from "../../../../data/dropdown/Languages/languageDropdown";
+
 //dropDown --->>> customHooks
 import useLeadStatus from "../../../../Hooks/LeadStatus/useLeadStatus";
 import useLeadSource from "../../../../Hooks/LeadSource/useLeadSource";
@@ -149,29 +152,6 @@ export default function CreateContact() {
 
   const [poolEdit, setPoolEdit] = useState("");
 
-  // const handlePool = async () => {
-  //   const bearerToken = localStorage.getItem("token");
-  //   const config = {
-  //     headers: {
-  //       Authorization: `Bearer ${bearerToken}`,
-  //     },
-  //   };
-
-  //   try {
-  //     const response = await axios.get(
-  //       `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
-  //       config,
-  //     );
-  //     setPoolToDropDown(response.data.data);
-  //   } catch (error) {
-  //     console.error("Error fetching leads:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   handlePool();
-  // }, []);
-
   const toggleDropdown = () => {
     setIsPoolDropdownOpen((prev) => !prev);
   };
@@ -187,32 +167,8 @@ export default function CreateContact() {
   };
 
   //----------------------------------------------------------------------------------------
-  //LeadStatusDropDown GET API Is being used here
- // const [leadStatus, setleadStatus] = useState("");
-
-  // async function handleLeadStatus() {
-  //   const bearer_token = localStorage.getItem("token");
-
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         Authorization: `Bearer ${bearer_token}`,
-  //       },
-  //     };
-  //     const response = await axios.get(
-  //       `${protocal_url}${name}.${tenant_base_url}/Admin/leadstatus/getall`,
-  //       config,
-  //     );
-  //     setleadStatus(response.data.data);
-  //   } catch (error) {
-  //     console.error("Error fetching leads:", error);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   handleLeadStatus();
-  // }, []);
-
+  //Lead Status ToDropDown
+  
   const [defaultTextLeadStatusDropDown, setdefaultTextLeadStatusDropDown] =
     useState("Select Status");
   const [isDropdownVisibleLeadStatus, setisDropdownVisibleLeadStatus] =
@@ -231,30 +187,8 @@ export default function CreateContact() {
     }));
   };
 
-  // const [segments, setSegments] = useState([]);
-
-  // Segment GET API Is being used here
-  //async function handleSegment() {
-  //   const bearer_token = localStorage.getItem("token");
-
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         Authorization: `Bearer ${bearer_token}`,
-  //       },
-  //     };
-  //     const response = await axios.get(
-  //       `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
-  //       config,
-  //     );
-  //     setSegments(response.data.data);
-  //   } catch (error) {
-  //     console.error("Error fetching segments:", error);
-  //   }
-  // }
-
+  
   useEffect(() => {
-    //handleSegment();
     setdefaultTextSegmentDropDown(
       editLead.segments.length > 0
         ? editLead.segments.join(", ")
@@ -295,35 +229,7 @@ export default function CreateContact() {
     );
     console.log("Selected segments:", updatedSegments);
   };
-  // Segment GET API Is being used here
-
-  //----------------------------------------------------------------------------------------
-  //assigned_ToDropDown
-  // const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
-
-  // async function handleAssigned_To() {
-  //   const bearer_token = localStorage.getItem("token");
-
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         Authorization: `Bearer ${bearer_token}`,
-  //       },
-  //     };
-  //     const response = await axios.get(
-  //       `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-  //       config,
-  //     );
-  //     setassigned_ToDropDown(response.data?.data);
-  //     console.log("status:", response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching leads:", error);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   handleAssigned_To();
-  // }, []);
+  
 
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
     useState("Select Assigned");
@@ -474,14 +380,20 @@ export default function CreateContact() {
   return (
     <>
       <ToastContainer />
-      <div className="flex flex-col min-h-screen mt-3">
-        <div className="flex justify-between px-3 py-3 mx-3 bg-white border rounded">
-          <div className="flex items-center justify-center gap-3">
+    {/* ------------------------------------------------> Parent <------------------------------------------------ */}
+    <div className="mt-3">
+    {/* ------------------------------------------------> Heading  <------------------------------------------------ */}
+    <div className="flex justify-between p-3 mx-3 bg-white border rounded">
+      {/* ------------------------------------------------> Text and Logo  <------------------------------------------------ */}
+      <div className="flex items-center justify-center gap-3">
+  
           <MdOutlineContactPhone size={25}/>
             <h1 className="text-xl">
               <h1>Edit Contact</h1>
             </h1>
           </div>
+          
+          {/* ------------------------------------------------> Cancel Button  <------------------------------------------------ */}
           <div>
             <Link
               to="/panel/contact"
@@ -493,28 +405,30 @@ export default function CreateContact() {
         </div>
 
         {/* -------------FORM Starts FROM HERE------------- */}
-        {/* Lead Image */}
-        <form onSubmit={handleSubmit} className="flex">
-          {/*-FORM- */}
+        <form onSubmit={handleSubmit} className="flex mb-6">
+        {/* ------------------------------------------------> FORM PARENT includes 3 tabs <------------------------------------------------ */}
+
           {/*Parent Div */}
-          <div className="w-full">
+          <div className="w-screen">
             {/*CHILD Div------ Image Input */}
 
-            <div className="flex-grow m-3 bg-white shadow-md rounded-xl">
-              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+            <div className="m-3 bg-white shadow-md rounded-xl">
+            <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
                 Contact Details
               </h2>
 
               {/* -------------CONTACT INFORMATION STARTS FROM HERE------------- */}
+              <div className="p-2 space-y-3">
               {/*CHILD Div------ Image Input */}
               {/* -------------1------------- */}
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
               {/* -------------Name------------- */}
-              <div className="grid gap-2 p-2">
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+              <div className="relative flex flex-col">
+
                     <label
                       htmlFor="name"
                       className="text-sm font-medium text-gray-700"
+
                     >
                       Name
                     </label>
@@ -523,11 +437,12 @@ export default function CreateContact() {
                       name="name"
                       value={editLead.name}
                       onChange={handleChange}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                     />
                   </div>
                   {/* -------------Language------------- */}
-                  <div className="relative flex flex-col w-1/2">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="language"
                       className="text-sm font-medium text-gray-700"
@@ -552,13 +467,14 @@ export default function CreateContact() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLanguage && (
-                        <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
+                                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
+
                           <ul className="py-2 text-sm text-gray-700">
                             {languageDropDown.map(({ key, name }) => (
                               <li
                                 key={key}
                                 onClick={() => handleDropdownLanguage(name)}
-                                className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                               className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                               >
                                 {name}
                               </li>
@@ -571,8 +487,8 @@ export default function CreateContact() {
                 </div>
                 {/* -------------2------------- */}
                 {/* -------------Company------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="company"
                       className="text-sm font-medium text-gray-700"
@@ -583,13 +499,14 @@ export default function CreateContact() {
                       type="text"
                       name="company"
                       value={editLead.company}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                       placeholder="Enter your Company"
                     />
                   </div>
                   {/* -------------Title------------- */}
-                  <div className="flex flex-col w-1/2">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="title"
                       className="text-sm font-medium text-gray-700"
@@ -600,7 +517,8 @@ export default function CreateContact() {
                       type="text"
                       name="title"
                       value={editLead.title}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                       placeholder="Enter Title"
                     />
@@ -608,8 +526,8 @@ export default function CreateContact() {
                 </div>
                 {/* -------------3------------- */}
                 {/* -------------Lead Source------------- */}
-                <div className="flex space-x-4">
-                  <div className="relative flex flex-col w-1/2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="Pool"
                       className="text-sm font-medium text-gray-700"
@@ -640,7 +558,7 @@ export default function CreateContact() {
                                 onClick={() =>
                                   handleDropdownSelection(poolName)
                                 }
-                                className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                               className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                               >
                                 {poolName}
                               </li>
@@ -652,7 +570,7 @@ export default function CreateContact() {
                   </div>
 
                   {/* -------------Lead Status------------- */}
-                  <div className="relative flex flex-col w-1/2">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="leadesStatus"
                       className="text-sm font-medium text-gray-700"
@@ -675,13 +593,14 @@ export default function CreateContact() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleLeadStatus && (
-                        <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
+                                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
+
                           <ul className="py-2 text-sm text-gray-700">
                             {leadStatus.map(({ key, status }) => (
                               <li
                                 key={key}
                                 onClick={() => handleDropdownLeadStatus(status)}
-                                className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                               className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                               >
                                 {status}
                               </li>
@@ -695,8 +614,8 @@ export default function CreateContact() {
 
                 {/* -------------4------------- */}
                 {/* -------------Mobile Number------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="mobNo"
                       className="text-sm font-medium text-gray-700"
@@ -708,13 +627,14 @@ export default function CreateContact() {
                       name="mobNo"
                       value={editLead.mobNo}
                       maxLength="15"
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleContactChange}
                       placeholder="Enter your Mobile Number"
                     />
                   </div>
                   {/* -------------Alternate Number------------- */}
-                  <div className="flex flex-col w-1/2">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="phNo"
                       className="text-sm font-medium text-gray-700"
@@ -726,7 +646,8 @@ export default function CreateContact() {
                       name="phNo"
                       value={editLead.phNo}
                       maxLength="15"
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleContactChange}
                       placeholder="Enter your Alternate Number"
                     />
@@ -734,8 +655,8 @@ export default function CreateContact() {
                 </div>
                 {/* -------------5------------- */}
                 {/* -------------Email------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="email"
                       className="text-sm font-medium text-gray-700"
@@ -746,13 +667,14 @@ export default function CreateContact() {
                       type="email"
                       name="email"
                       value={editLead.email}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                       placeholder="Enter your Email"
                     />
                   </div>
                   {/* -------------Assigned to------------- */}
-                  <div className="relative flex flex-col w-1/2">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="leadesStatus"
                       className="text-sm font-medium text-gray-700"
@@ -789,7 +711,7 @@ export default function CreateContact() {
                                       role,
                                     )
                                   }
-                                  className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                 className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                                 >
                                   {userName}-({role})
                                 </li>
@@ -813,8 +735,8 @@ export default function CreateContact() {
               {/* -------------6------------- */}
               {/* -------------Street------------- */}
               <div className="grid gap-2 p-2">
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="street"
                       className="text-sm font-medium text-gray-700"
@@ -825,13 +747,14 @@ export default function CreateContact() {
                       type="text"
                       name="street"
                       value={editLead.street}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                       placeholder="Enter your Street"
                     />
                   </div>
                   {/* -------------PinCode------------- */}
-                  <div className="flex flex-col w-1/2">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="pinCode"
                       className="text-sm font-medium text-gray-700"
@@ -842,7 +765,8 @@ export default function CreateContact() {
                       type="text"
                       name="pinCode"
                       value={editLead.pinCode}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                       placeholder="Enter your pincode"
                     />
@@ -850,8 +774,8 @@ export default function CreateContact() {
                 </div>
                 {/* -------------7------------- */}
                 {/* -------------Country------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="country"
                       className="text-sm font-medium text-gray-700"
@@ -862,13 +786,14 @@ export default function CreateContact() {
                       type="text"
                       name="country"
                       value={editLead.country}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                       placeholder="Enter your Country Name"
                     />
                   </div>
                   {/* -------------City------------- */}
-                  <div className="flex flex-col w-1/2">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="city"
                       className="text-sm font-medium text-gray-700"
@@ -879,7 +804,8 @@ export default function CreateContact() {
                       type="text"
                       name="city"
                       value={editLead.city}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                       placeholder="Enter your City name"
                     />
@@ -887,8 +813,8 @@ export default function CreateContact() {
                 </div>
                 {/* -------------8------------- */}
                 {/* -------------State------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="state"
                       className="text-sm font-medium text-gray-700"
@@ -899,7 +825,8 @@ export default function CreateContact() {
                       type="text"
                       name="state"
                       value={editLead.state}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                       placeholder="Enter your State name"
                     />
@@ -908,8 +835,8 @@ export default function CreateContact() {
                 </div>{" "}
                 {/* -------------9------------- */}
                 {/* -------------Risk Capcity------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="riskCapcity"
                       className="text-sm font-medium text-gray-700"
@@ -920,13 +847,14 @@ export default function CreateContact() {
                       type="text"
                       name="riskCapcity"
                       value={editLead.riskCapcity}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                       placeholder="Enter Risk Capacity"
                     />
                   </div>
                   {/* -------------Trading Time------------- */}
-                  <div className="flex flex-col w-1/2">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="tradingTime"
                       className="text-sm font-medium text-gray-700"
@@ -937,7 +865,8 @@ export default function CreateContact() {
                       type="text"
                       name="tradingTime"
                       value={editLead.tradingTime}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                       placeholder="Enter Trading Time"
                     />
@@ -945,8 +874,8 @@ export default function CreateContact() {
                 </div>
                 {/* -------------10------------- */}
                 {/* -------------Trading Type------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="tradingType"
                       className="text-sm font-medium text-gray-700"
@@ -957,12 +886,13 @@ export default function CreateContact() {
                       type="text"
                       name="tradingType"
                       value={editLead.tradingType}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                     />
                   </div>
                   {/* -------------investmet------------- */}
-                  <div className="flex flex-col w-1/2">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="investmet"
                       className="text-sm font-medium text-gray-700"
@@ -973,15 +903,16 @@ export default function CreateContact() {
                       type="text"
                       name="investmet"
                       value={editLead.investmet}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                     />
                   </div>
                 </div>
                 {/* -------------11------------- */}
                 {/* -------------Advisory Exp------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="empNadvisoryExpame"
                       className="text-sm font-medium text-gray-700"
@@ -992,13 +923,14 @@ export default function CreateContact() {
                       type="text"
                       name="advisoryExp"
                       value={editLead.advisoryExp}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                       placeholder="Enter your Advisory"
                     />
                   </div>
                   {/* -------------Segments------------- */}
-                  <div className="relative flex flex-col w-1/2">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="segment"
                       className="text-sm font-medium text-gray-700"
@@ -1046,8 +978,8 @@ export default function CreateContact() {
                 </div>
                 {/* -------------11------------- */}
                 {/* -------------Trail Start Date------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="trialStartDate"
                       className="text-sm font-medium text-gray-700"
@@ -1058,12 +990,13 @@ export default function CreateContact() {
                       type="date"
                       name="trialStartDate"
                       value={editLead.trialStartDate?.split("T")[0]}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                     />
                   </div>
                   {/* -------------Trail End Date------------- */}
-                  <div className="flex flex-col w-1/2">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="trialEndDate"
                       className="text-sm font-medium text-gray-700"
@@ -1075,14 +1008,15 @@ export default function CreateContact() {
                       name="trialEndDate"
                       value={editLead.trialEndDate?.split("T")[0]}
                       onChange={handleChange}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                     />
                   </div>
                 </div>
                 {/* -------------12------------- */}
                 {/* -------------Trading Years------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="tradingYears"
                       className="text-sm font-medium text-gray-700"
@@ -1093,13 +1027,14 @@ export default function CreateContact() {
                       type="text"
                       name="tradingYears"
                       value={editLead.tradingYears}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                       placeholder="Enter years"
                     />
                     {/* -------------callBackDateTime ------------- */}
                   </div>
-                  <div className="flex flex-col w-1/2">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="callBackDateTime"
                       className="text-sm font-medium text-gray-700"
@@ -1111,14 +1046,15 @@ export default function CreateContact() {
                       name="callBackDateTime"
                       value={editLead.callBackDateTime}
                       onChange={handleChange}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                     />
                   </div>
                 </div>
                 {/* -------------13------------- */}
                 {/* -------------contactID ------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="contactId"
                       className="text-sm font-medium text-gray-700"
@@ -1129,13 +1065,14 @@ export default function CreateContact() {
                       type="text"
                       name="contactId"
                       value={editLead.contactId}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                       placeholder="Enter ContactID"
                     />
                   </div>
                   {/* -------------lastModifiedBy ------------- */}
-                  <div className="flex flex-col w-1/2">
+                   <div className="relative flex flex-col">
                     <label
                       htmlFor="lastModifiedBy"
                       className="text-sm font-medium text-gray-700"
@@ -1146,7 +1083,8 @@ export default function CreateContact() {
                       type="text"
                       name="lastModifiedBy"
                       value={editLead.lastModifiedBy}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+
                       onChange={handleChange}
                       placeholder="Enter details"
                     />
@@ -1178,13 +1116,13 @@ export default function CreateContact() {
                 </div>
               </div>
               <div className="flex justify-end px-2">
-                <button
-                  type="submit"
-                  className="px-32 py-4 mt-20 mb-3 text-white border-2 rounded border-cyan-500 bg-cyan-500 hover:bg-white hover:text-cyan-500"
-                >
-                  {isEditMode ? "Update" : "Save"}
-                </button>
-              </div>
+              <button
+                type="submit"
+                className="w-full py-4 mt-24 mb-2 text-white border-2 rounded border-cyan-500 bg-cyan-500 px-36 hover:bg-white hover:text-cyan-500 sm:me-10 sm:w-1/3"
+              >
+                {isEditMode ? "Update" : "Save"}
+              </button>
+            </div>
             </div>
           </div>
         </form>
