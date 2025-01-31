@@ -1,6 +1,8 @@
+//react icons
 import { FaBars, FaPhone } from "react-icons/fa";
-import PropTypes from "prop-types";
 
+//prop
+import PropTypes from "prop-types";
 export default function LeadOperations({
   currentLeads,
   selectedIds,
