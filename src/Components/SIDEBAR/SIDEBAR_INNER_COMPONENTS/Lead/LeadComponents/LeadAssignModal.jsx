@@ -1,3 +1,4 @@
+//<-----------------------------------  2nd Option  ----------------------------------->
 //react
 import { useState } from "react";
 //prop
@@ -13,6 +14,13 @@ import useManagedBy from "../../../../../Hooks/ManagedBy/useManagedBy";
 //icons
 import { ImCancelCircle } from "react-icons/im";
 import { FaAngleDown } from "react-icons/fa";
+
+//toast
+import { ToastContainer } from "react-toastify";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../../../../utils/toastNotifications";
 
 const LeadAssignModal = ({ onClose }) => {
   const bearer_token = localStorage.getItem("token");
@@ -33,13 +41,29 @@ const LeadAssignModal = ({ onClose }) => {
     }
   };
 
+  // ------------------------------------Assigned To Dropdown -----------------------------------
+  const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
+    useState("Select Managed by");
+  const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
+    useState(false);
+
+  const toggleDropdownassigned_ToDropDown = () => {
+    setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
+  };
+
+  const handleDropdownassigned_ToDropDown = (assigned_To_Username) => {
+    setdefaultTextassigned_ToDropDown(assigned_To_Username);
+    setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
+    setAssignedTo(assigned_To_Username);
+  };
+
   //   --------------------------------------------------SUBMIT-----------------------------------
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!bearer_token) {
-      alert("No token found, please log in again.");
+      showErrorToast("No token found, please log in again.");
       return;
     }
 
@@ -64,7 +88,7 @@ const LeadAssignModal = ({ onClose }) => {
         config,
       );
 
-      alert("Leads Allotment successfully!");
+      showSuccessToast("Leads Allotment successfully!");
       onClose();
       // window.location.reload();
     } catch (error) {
@@ -74,24 +98,9 @@ const LeadAssignModal = ({ onClose }) => {
     }
   };
 
-  // ------------------------------------Assigned To Dropdown -----------------------------------
-  const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
-    useState("Select Managed by");
-  const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
-    useState(false);
-
-  const toggleDropdownassigned_ToDropDown = () => {
-    setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
-  };
-
-  const handleDropdownassigned_ToDropDown = (assigned_To_Username) => {
-    setdefaultTextassigned_ToDropDown(assigned_To_Username);
-    setisDropdownassigned_ToDropDown(!isDropdownassigned_ToDropDown);
-    setAssignedTo(assigned_To_Username);
-  };
-
   return (
     <>
+      <ToastContainer />
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
         <div className="w-10/12 rounded-lg bg-white sm:w-4/12">
           <div className="flex items-center justify-center rounded-t-lg bg-cyan-500 px-2 py-2 text-xl font-medium text-white">
