@@ -513,7 +513,7 @@ export default function UploadLead() {
 
                 {/* ------------------------------------4------------------------------------- */}
                 {/* -------------SUB -> Parent -> <Description Column Number>------------- */}
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------Description Column Number------------- */}
                   <div className="relative flex flex-col">
                     <label

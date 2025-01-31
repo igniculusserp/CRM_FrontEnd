@@ -95,7 +95,7 @@ const LeadAssignModal = ({ onClose }) => {
   return (
     <>
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
-      <div className="bg-white rounded-lg w-96 sm:w-full">
+      <div className="w-10/12 bg-white rounded-lg sm:w-4/12">
       <div className="flex items-center justify-center px-2 py-2 text-xl font-medium text-white rounded-t-lg bg-cyan-500">
         <h2 className="mx-auto">Leads Allotment</h2>
       <ImCancelCircle onClick={onClose} size={22} />
