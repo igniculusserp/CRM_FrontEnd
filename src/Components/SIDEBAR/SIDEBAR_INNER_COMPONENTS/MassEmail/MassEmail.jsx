@@ -6,7 +6,7 @@ import axios from "axios";
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
-const MassEmailModal = ({ emails, onClose }) => {
+const MassEmail = ({ emails, onClose }) => {
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
 
@@ -126,9 +126,9 @@ const MassEmailModal = ({ emails, onClose }) => {
 };
 
 // Define prop types
-MassEmailModal.propTypes = {
+MassEmail.propTypes = {
   emails: PropTypes.arrayOf(PropTypes.string).isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
-export default MassEmailModal;
+export default MassEmail;
