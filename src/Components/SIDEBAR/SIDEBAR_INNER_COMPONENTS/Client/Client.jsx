@@ -8,13 +8,17 @@ import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
 //React Icons
-import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
+import { FaAngleDown, FaPhoneAlt, FaRegUser } from "react-icons/fa";
 import { FaBars } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
+import { FaUserTie } from "react-icons/fa";
 import { ImFilter } from "react-icons/im";
 import { MdCall } from "react-icons/md";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { BiCalendar } from "react-icons/bi";
+import { PiLineSegmentsBold } from "react-icons/pi";
+import { RiShieldUserLine } from "react-icons/ri";
 
 //Folder Imported
 
@@ -33,6 +37,8 @@ import {
   showErrorToast,
 } from "./../../../../utils/toastNotifications";
 import { TbRefresh } from "react-icons/tb";
+import { FaTableList } from "react-icons/fa6";
+import { IoGrid } from "react-icons/io5";
 
 export default function Client() {
   const name = getHostnamePart();
@@ -66,6 +72,7 @@ export default function Client() {
       );
 
       const data = response.data.data;
+      console.log(data);
       setGetleads(data);
       setFilteredLeads(data); // Initialize filtered leads
     } catch (error) {
@@ -206,27 +213,37 @@ export default function Client() {
     handleallAssigned_To();
   }, []);
 
-  //------------------------------------------------------------------------------------------------
-  //----------------STRIPE BAR DROPDOWN----------------
+  //-------------------------------->WIZARD DROPDOWN<--------------------------------
   const stripeBar = [
-    { key: 1, value: "Table View" },
-    { key: 2, value: "Grid View" },
+    { key: 1, value: "Table View", icon: <FaTableList /> },
+    { key: 2, value: "Grid View", icon: <IoGrid /> },
   ];
 
+  //state to manage dropDown onMouseLeave
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
 
-  const handleStripeButton = (value) => {
-    console.log(value);
-    setSelectedViewValue(value);
-  };
+  //By Default value - to <TABLE VIEW>
+  const [selectedViewValue, setSelectedViewValue] = useState(
+    stripeBar[0].value,
+  );
 
+  //function to open/close dropdown onMouseLeave
   const togglestripeBar = () => {
     setstripeBardropDown(!stripeBardropDown);
   };
 
-  const [selectedViewValue, setSelectedViewValue] = useState(
-    stripeBar[0].value,
-  );
+  //function to select value from dropDown
+  const handleStripeButton = (value) => {
+    setSelectedViewValue(value);
+  };
+
+  //dropDown --> state OnClick
+  const [dropLogodropDown, setdropLogodropDown] = useState(false);
+
+  //dropDown --> function OnClick
+  const togglesdropLogo = () => {
+    setdropLogodropDown(!dropLogodropDown);
+  };
 
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
@@ -636,15 +653,18 @@ export default function Client() {
                 <FaAngleDown className="text-gray-900" />
               </button>
               {stripeBardropDown && (
-                <div className="absolute top-10 z-10 w-56 rounded-md border border-gray-300 bg-white py-2">
+                <div className="absolute right-0 top-10 z-10 w-32 rounded-md border border-gray-300 bg-white">
                   <ul className="text-sm text-gray-700">
-                    {stripeBar.map(({ key, value }) => (
+                    {stripeBar.map(({ key, value, icon }) => (
                       <li
                         key={key}
-                        className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                        className="flex cursor-pointer items-center gap-2 border-b py-2 hover:bg-cyan-500 hover:text-white"
                         onClick={() => handleStripeButton(value)}
                       >
-                        {value}
+                        <div className="mx-1 flex h-6 w-6 items-center justify-center text-lg">
+                          {icon}
+                        </div>
+                        <div className="flex-1 text-left">{value}</div>
                       </li>
                     ))}
                   </ul>
@@ -887,71 +907,87 @@ export default function Client() {
             {selectedViewValue === "Grid View" && (
               <>
                 <div className="min-w-full">
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
                     {/*---------Card starts Here */}
                     {getleads.map((item) => (
                       <div
-                        className="flex flex-col gap-2 rounded-lg border-2 bg-white px-2 py-3"
+                        className="grid grid-cols-1 gap-1 rounded-lg bg-cyan-500 p-1"
                         key={item.id}
                       >
-                        <div className="flex items-center gap-3">
-                          <img src={item.img} height={60} width={60} />
-                          <div className="flex grow flex-col">
-                            <div className="flex justify-between font-medium">
-                              <span className="text-indigo-500">
-                                {item.name}
+                        <div className="">
+                          <div className="flex items-center justify-center gap-2 rounded border border-cyan-500 bg-white py-2 text-center">
+                            <FaUserTie />
+                            <span className="">{item?.clientName}</span>
+                          </div>
+                        </div>
+
+                        <div className="rounded border-2 border-cyan-500 bg-white py-2">
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <IoIosMail size={22} className="w-6" />
+                              <span className="hidden sm:block">Email</span>
+                            </div>
+                            <div className="truncate text-sm font-medium">
+                              {item?.email}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <FaPhoneAlt size={14} className="w-6" />
+                              <span className="hidden sm:block">Phone</span>
+                            </div>
+                            <div className="truncate text-sm font-medium">
+                              {item?.phoneNo}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <PiLineSegmentsBold size={16} className="w-6" />
+                              <span className="hidden sm:block">Segments</span>
+                            </div>
+                            <div className="truncate text-sm font-medium">
+                              {item?.segments?.length
+                                ? item.segments?.join(", ")
+                                : ""}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <RiShieldUserLine size={18} className="w-6" />
+                              <span className="hidden sm:block">
+                                Managed By
                               </span>
-                              <BiEdit
-                                size={25}
-                                className="rounded-full bg-white p-1 text-blue-500 shadow-md"
-                              />
                             </div>
-                            <div className="flex items-center gap-2 text-sm font-medium">
-                              {item.leadesStatus}
+                            <div className="text-sm font-medium">
+                              {item?.assigned_To}
                             </div>
                           </div>
-                        </div>
-                        <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
-                          <div className="w-2/4 text-sm text-gray-500">
-                            Company name
-                          </div>
-                          <div className="2-2/4 text-sm font-medium">
-                            {item.company}
-                          </div>
-                        </div>
 
-                        <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
-                          <div className="w-2/4 text-sm text-gray-500">
-                            Title
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <BiCalendar size={18} className="w-6" />
+                              <span className="hidden sm:block">
+                                Sub Start Date
+                              </span>
+                            </div>
+                            <div className="text-sm font-medium">
+                              {item?.subscription_start_date.split("T")[0]}
+                            </div>
                           </div>
-                          <div className="2-2/4 text-sm font-medium">
-                            {item.tital}
-                          </div>
-                        </div>
 
-                        <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
-                          <div className="w-2/4">
-                            <IoIosMail className="text-2xl" />
-                          </div>
-                          <div className="2-2/4 text-sm font-medium">
-                            {item.email}
-                          </div>
-                        </div>
-
-                        <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
-                          <div className="w-2/4">
-                            <FaPhoneAlt className="text-xl" />
-                          </div>
-                          <div className="2-2/4 text-sm font-medium">
-                            {item.phoneNo}
-                          </div>
-                        </div>
-                        <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
-                          <div className="w-2/4 text-sm text-gray-500">
-                            Lead Source
-                          </div>
-                          <div className="2-2/4 text-sm font-medium">
-                            {item.leadsSource}
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <BiCalendar size={18} className="w-6" />
+                              <span className="hidden sm:block">
+                                Sub End Date
+                              </span>
+                            </div>
+                            <div className="text-sm font-medium">
+                              {item?.subscription_end_date.split("T")[0]}
+                            </div>
                           </div>
                         </div>
                       </div>
