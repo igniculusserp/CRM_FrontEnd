@@ -24,7 +24,7 @@ import {
 
 export default function CreateSOContact() {
   //to make id unique
-  const { id, leadId } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
 
   //------- Business Type --------
@@ -105,32 +105,7 @@ export default function CreateSOContact() {
   }
 
   //----------------------------------------------------------------------------------------
-
-  // Segment GET API Is being used here
-  const [segments, setSegments] = useState([]);
-  async function handleSegment() {
-    const bearer_token = localStorage.getItem("token");
-
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${bearer_token}`,
-        },
-      };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
-        config,
-      );
-      setSegments(response.data.data);
-    } catch (error) {
-      console.error("Error fetching segments:", error);
-    }
-  }
-
-  useEffect(() => {
-    handleSegment();
-  }, []);
-
+  //Segment
   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
     useState("Select Segment");
   const [isDropdownVisibleSegment, setisDropdownVisibleSegment] =
@@ -158,36 +133,10 @@ export default function CreateSOContact() {
       segments: updatedSegments,
     }));
   };
-  // Segment GET API Is being used here
+
 
   //----------------------------------------------------------------------------------------
-  //assigned_ToDropDown  Is being used here
-  const [assigned_ToDropDown, setassigned_ToDropDown] = useState({});
-
-  async function handleAssigned_To() {
-    const bearer_token = localStorage.getItem("token");
-
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${bearer_token}`,
-        },
-      };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config,
-      );
-      setassigned_ToDropDown(response.data.data);
-    } catch (error) {
-      console.error("Error fetching leads:", error);
-      // Optionally, set an error state to display a user-friendly message
-    }
-  }
-
-  useEffect(() => {
-    handleAssigned_To();
-  }, []);
-
+  //Assigned  Is being used here
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
     useState();
   const [isDropdownassigned_ToDropDown, setisDropdownassigned_ToDropDown] =
@@ -303,36 +252,13 @@ export default function CreateSOContact() {
   };
 
   //----------------------------------------------------------------------------------------
-  //PooL_ToDropDown
-  const [poolToDropDown, setPoolToDropDown] = useState([]);
+  //PooL LeadStatus
+
   const [defaultTextPool, setDefaultTextPool] = useState("Select Lead Source");
   const [isPoolDropdownOpen, setIsPoolDropdownOpen] = useState(false);
   const [error, setError] = useState(null); // New error state
   const [poolEdit, setPoolEdit] = useState("");
 
-  const handlePool = async () => {
-    const bearerToken = localStorage.getItem("token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${bearerToken}`,
-      },
-    };
-
-    try {
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/pool/getall`,
-        config,
-      );
-      setPoolToDropDown(response.data.data);
-    } catch (error) {
-      console.error("Error fetching leads:", error);
-      setError("Failed to fetch pools."); // Set error message
-    }
-  };
-
-  useEffect(() => {
-    handlePool();
-  }, []);
 
   const toggleDropdown = () => {
     setIsPoolDropdownOpen((prev) => !prev);
@@ -351,14 +277,6 @@ export default function CreateSOContact() {
 
   //----------------------------------------------------------------------------------------
   //LanguageDropDown
-
-  const LanguageDropDown = [
-    { key: 1, name: "English" },
-    { key: 2, name: "Portuguese" },
-    { key: 3, name: "Hindi" },
-    { key: 4, name: "Arabic" },
-    { key: 5, name: "Japanese" },
-  ];
 
   const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] =
     useState("Select Language");
