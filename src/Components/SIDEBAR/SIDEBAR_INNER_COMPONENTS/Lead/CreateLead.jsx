@@ -1146,7 +1146,7 @@ export default function Createlead() {
                       onMouseLeave={() => setisDropdownVisibleSegment(false)}
                     >
                       <button
-                        id="LeadStatusDropDown"
+                        id="segemntDropDown"
                         type="button"
                         className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                       >

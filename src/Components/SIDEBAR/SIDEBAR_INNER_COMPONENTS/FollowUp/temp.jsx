@@ -27,7 +27,7 @@ export default function FollowUp() {
   const [selectAll, setSelectAll] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   // Mass Email
- 
+
   const [selectedEmails, setSelectedEmails] = useState([]);
   const [followupList, setFollowupList] = useState([]);
   const [followupDropdown, setFollowupDropdown] = useState(false);
@@ -99,8 +99,6 @@ export default function FollowUp() {
     setFollowupDropdown(!followupDropdown);
   };
 
- 
-
   //   TOGGLE STRIPEBAR DROPDOWN
 
   //   FOLLOW UP DROPDOWN DATA
@@ -118,8 +116,6 @@ export default function FollowUp() {
     { key: 6, value: "Sheet View" },
     { key: 7, value: "Print View" },
   ];
-
-
 
   // Function to toggle all checkboxes
   const selectAllCheckbox = () => {
@@ -172,7 +168,6 @@ export default function FollowUp() {
     navigate(`/panel/createfollowup/${id}`);
   };
 
-
   // ------------------------------------------Managed By Fillters---------------------------------
 
   function handleAssignedToSelection(assignedToValue) {
@@ -181,12 +176,11 @@ export default function FollowUp() {
     let filteredLeads = followupList;
     if (assignedToValue !== "Managed By") {
       filteredLeads = filteredLeads.filter(
-        (lead) => lead.assigned_To === assignedToValue
+        (lead) => lead.assigned_To === assignedToValue,
       );
     }
     setFilteredLeads(filteredLeads);
   }
-
 
   // ----------------------------- Date Filter -----------------------------
 
@@ -325,10 +319,13 @@ export default function FollowUp() {
                   </ul>
                 </div>
               )}
-            </div>  
+            </div>
             {/* PART-I-ii */}
             {/* All ASSIGNED_TO  DropDown*/}
-            <ManagedByFilter assignedTo={assignedTo} onAssignedToSelect={handleAssignedToSelection} />
+            <ManagedByFilter
+              assignedTo={assignedTo}
+              onAssignedToSelect={handleAssignedToSelection}
+            />
             {/* SEARCH DROPDOWN */}
             <SearchElement
               value={searchTerm}
@@ -369,14 +366,14 @@ export default function FollowUp() {
               )}
             </div>
             {/* ACTIONS DROPDWON */}
-            <UseAction 
-             followupList={followupList} 
-             getFollowupLists={getFollowupLists} 
-             screenName="FollowUpScreen" 
-             selectedRows={selectedRows}
-             selectedEmails={selectedEmails}
-             actions={actions}
-           />
+            <UseAction
+              followupList={followupList}
+              getFollowupLists={getFollowupLists}
+              screenName="FollowUpScreen"
+              selectedRows={selectedRows}
+              selectedEmails={selectedEmails}
+              actions={actions}
+            />
             {/* END ACTIONS DROPDWON */}
           </div>
         </div>
