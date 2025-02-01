@@ -142,7 +142,7 @@ export default function VoiceBox() {
       }
     }
     // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
-    if (value === "Mass Email") {
+    if (value === "Mass E-Mail") {
       const userConfirmed = confirm(
         "Are you sure you want to Send E-Mail to the selected Data?",
       );
