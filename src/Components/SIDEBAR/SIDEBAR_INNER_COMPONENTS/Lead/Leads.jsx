@@ -1033,7 +1033,7 @@ export default function Lead() {
                 <FaAngleDown className="text-gray-900" />
               </button>
               {dropActionsMenudropDown && (
-                <div className="absolute top-10 z-10 w-56 rounded-md border border-gray-300 bg-white">
+                <div className="absolute right-0 top-10 z-10 w-56 rounded-md border border-gray-300 bg-white">
                   <ul className="text-sm text-gray-700">
                     {dropActionsMenu.map(({ key, value }) =>
                       permissions.includes(value) ||
@@ -1425,7 +1425,7 @@ export default function Lead() {
               {selectedViewValue === "Grid View" && (
                 <>
                   <div className="min-w-full">
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                       {/*---------Card starts Here */}
                       {currentLeads.map((item) => (
                         <div
@@ -1471,7 +1471,7 @@ export default function Lead() {
                             <div className="w-2/4">
                               <IoIosMail className="text-2xl" />
                             </div>
-                            <div className="2-2/4 text-sm font-medium">
+                            <div className="2-2/4 truncate text-wrap text-balance text-pretty text-sm font-medium">
                               {item.email}
                             </div>
                           </div>

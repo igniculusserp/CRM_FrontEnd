@@ -187,9 +187,9 @@ export default function UploadLead() {
     <>
       <ToastContainer />
       {/* ------------------------------------------------> Parent <------------------------------------------------ */}
-      <div className="mt-3">
+      <div className="">
         {/* ------------------------------------------------> Heading  <------------------------------------------------ */}
-        <div className="mx-3 flex justify-between rounded border bg-white p-3">
+        <div className="flex justify-between rounded border bg-white p-3">
           {/* ------------------------------------------------> Text   <------------------------------------------------ */}
           <div className="flex items-center justify-center gap-3">
             <RiFileUploadLine size={25} />
@@ -200,7 +200,7 @@ export default function UploadLead() {
         <form onSubmit={handleSubmit} className="mb-6 flex">
           {/* ----- FIELDS START FROM HERE ------ */}
           <div className="w-screen">
-            <div className="m-3 rounded-xl bg-white shadow-md">
+            <div className="my-3 rounded-xl bg-white shadow-md">
               <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Lead Information
               </h2>
@@ -381,7 +381,7 @@ export default function UploadLead() {
             </div>
 
             {/* ------------------------------------------------>TAB  2 : COLUMN NUMBER INFORMATION  TAB <------------------------------------------------ */}
-            <div className="m-3 rounded-xl bg-white shadow-md">
+            <div className="my-3 rounded-xl bg-white shadow-md">
               <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Column Information
               </h2>
