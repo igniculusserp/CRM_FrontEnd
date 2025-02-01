@@ -1,7 +1,6 @@
 //NOTE-->>
 //BROKERAGE + ADVISARY
 
-
 //react
 import { useState, useEffect } from "react";
 //reactIcon
@@ -26,11 +25,9 @@ import {
   showErrorToast,
 } from "../../../../utils/toastNotifications";
 
-
 //dropDown --->>> Data
 //LanguageDropDown
 import languageDropDown from "../../../../data/dropdown/Languages/languageDropdown";
-
 
 //dropDown --->>> customHooks
 import useLeadStatus from "../../../../Hooks/LeadStatus/useLeadStatus";
@@ -135,8 +132,6 @@ export default function CreateSOContact() {
     );
   }, [editLead]);
 
-
-
   //----------------------------------------------------------------------------------------
   //Segment
   const [defaultTextSegmentDropDown, setdefaultTextSegmentDropDown] =
@@ -174,7 +169,6 @@ export default function CreateSOContact() {
 
     console.log("Selected segments:", updatedSegments);
   };
-
 
   //----------------------------------------------------------------------------------------
   //ManagedBy
@@ -329,7 +323,6 @@ export default function CreateSOContact() {
     setPoolEdit(poolName);
   };
 
-
   //----------------------------------------------------------------------------------------
   //LanguageDropDown
 
@@ -382,7 +375,6 @@ export default function CreateSOContact() {
       [name]: value,
     }));
   };
-
 
   //---------->handleSubmit<----------
   //two different models one for PUT and one for POST
@@ -560,18 +552,16 @@ export default function CreateSOContact() {
       {/* ------------------------------------------------> Parent <------------------------------------------------ */}
       <div className="mt-3">
         {/* ------------------------------------------------> Heading  <------------------------------------------------ */}
-        <div className="flex justify-between p-3 mx-3 bg-white border rounded">
+        <div className="mx-3 flex justify-between rounded border bg-white p-3">
           {/* ------------------------------------------------> Text and Logo  <------------------------------------------------ */}
           <div className="flex items-center justify-center gap-3">
-            <h1 className="text-xl">
-              Create Sales Order
-            </h1>
+            <h1 className="text-xl">Create Sales Order</h1>
           </div>
           {/* ------------------------------------------------> Cancel Button  <------------------------------------------------ */}
           <div>
             <Link
               to="/panel/contact"
-              className="px-4 py-1 text-blue-500 border border-blue-500 rounded sm:px-6"
+              className="rounded border border-blue-500 px-4 py-1 text-blue-500 sm:px-6"
             >
               Cancel
             </Link>
@@ -580,13 +570,13 @@ export default function CreateSOContact() {
 
         {/* -------------FORM Starts FROM HERE------------- */}
         {/* Lead Image */}
-        <form onSubmit={handleSubmit} className="flex mb-6">
+        <form onSubmit={handleSubmit} className="mb-6 flex">
           {/* ------------------------------------------------> FORM PARENT includes 4 tabs <------------------------------------------------ */}
           <div className="w-screen">
             {/* ------------------------------------------------>TAB  1 :  Personal Details TAB <------------------------------------------------ */}
 
-            <div className="m-3 bg-white shadow-md rounded-xl">
-              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+            <div className="m-3 rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Personal Details
               </h2>
 
@@ -594,8 +584,7 @@ export default function CreateSOContact() {
               {/* ------------------------------------< business === "Brokerage" >------------------------------------- */}
 
               {business === "Brokerage" ? (
-
-                <div className="p-2 space-y-3">
+                <div className="space-y-3 p-2">
                   {/* -------------I--1------------- */}
                   {/* -------------SUB -> Parent -> <Name && Mobile>------------- */}
 
@@ -605,7 +594,6 @@ export default function CreateSOContact() {
                       <label
                         htmlFor="clientName"
                         className="text-sm font-medium text-gray-700"
-
                       >
                         <span className="flex gap-1">
                           Client Name
@@ -618,8 +606,7 @@ export default function CreateSOContact() {
                         value={editLead.clientName}
                         placeholder="Enter Client's Name"
                         onChange={handleChange}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                       />
                     </div>
                     {/* -------------Mobile Number------------- */}
@@ -638,8 +625,7 @@ export default function CreateSOContact() {
                         name="mobileNo"
                         value={editLead.mobileNo}
                         maxLength="15"
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleContactChange}
                         placeholder="Enter your Mobile Number"
                       />
@@ -660,8 +646,7 @@ export default function CreateSOContact() {
                         name="phoneNo"
                         maxLength="15"
                         value={editLead.phoneNo}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleContactChange}
                         placeholder="Enter your Alternate Number"
                         onKeyDown={(e) => {
@@ -687,8 +672,7 @@ export default function CreateSOContact() {
                         type="email"
                         name="email"
                         value={editLead.email}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter your Email"
                       />
@@ -714,7 +698,7 @@ export default function CreateSOContact() {
                         }
                       >
                         <button
-                          className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                          className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                           id="LeadStatusDropDown"
                           type="button"
                         >
@@ -724,7 +708,7 @@ export default function CreateSOContact() {
                           <FaAngleDown className="ml-2 text-gray-400" />
                         </button>
                         {isDropdownassigned_ToDropDown && (
-                          <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                          <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                             <ul className="py-2 text-sm text-gray-700">
                               {managedBy.map(({ userName, role }, index) => (
                                 <li
@@ -735,7 +719,7 @@ export default function CreateSOContact() {
                                       role,
                                     )
                                   }
-                                  className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                  className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                 >
                                   {userName}-({role})
                                 </li>
@@ -758,8 +742,7 @@ export default function CreateSOContact() {
                         type="text"
                         name="city"
                         value={editLead.country}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter your Country"
                       />
@@ -769,7 +752,6 @@ export default function CreateSOContact() {
                   {/* -------------VI--1--------------- */}
                   {/* -------------State------------- */}
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
                     <div className="relative flex flex-col">
                       <label
                         htmlFor="state"
@@ -781,8 +763,7 @@ export default function CreateSOContact() {
                         type="text"
                         name="state"
                         value={editLead.state}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter your State"
                       />
@@ -800,8 +781,7 @@ export default function CreateSOContact() {
                         type="text"
                         name="city"
                         value={editLead.city}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter your City"
                       />
@@ -810,7 +790,6 @@ export default function CreateSOContact() {
 
                   {/* -------------VII--1--------------- */}
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
                     {/* -------------VII--2--------------- */}
                     {/* -------------PinCode------------- */}
                     <div className="relative flex flex-col">
@@ -824,8 +803,7 @@ export default function CreateSOContact() {
                         type="text"
                         name="pinCode"
                         value={editLead.postalCode}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Enter your pincode"
                       />
@@ -846,7 +824,7 @@ export default function CreateSOContact() {
                       >
                         <button
                           onClick={toggleDropdown}
-                          className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                          className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                           id="LeadPoolDropDown"
                           type="button"
                         >
@@ -856,7 +834,7 @@ export default function CreateSOContact() {
                           <FaAngleDown className="ml-2 text-gray-400" />
                         </button>
                         {isPoolDropdownOpen && (
-                          <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                          <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                             {error ? (
                               <div className="py-2 text-red-600">{error}</div>
                             ) : (
@@ -867,7 +845,7 @@ export default function CreateSOContact() {
                                     onClick={() =>
                                       handleDropdownSelection(poolName)
                                     }
-                                    className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {poolName}
                                   </li>
@@ -880,510 +858,481 @@ export default function CreateSOContact() {
                     </div>
                   </div>
                 </div>
-              )
-
+              ) : (
                 // {/* ------------------------------------2------------------------------------- */}
                 // {/* ------------------------------------2------------------------------------- */}
 
-                :
-
                 // {/* ------------------------------------2------------------------------------- */}
                 // {/* ------------------------------------2------------------------------------- */}
-                (
-                  <div className="grid gap-2 px-4 py-2">
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                <div className="grid gap-2 px-4 py-2">
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="clientName"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        <span className="flex gap-1">
+                          Client Name
+                          <FaStarOfLife size={8} className="text-red-500" />
+                        </span>
+                      </label>
+                      <input
+                        type="text"
+                        name="clientName"
+                        value={editLead.clientName}
+                        placeholder="Enter Client's Name"
+                        onChange={handleChange}
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
+                      />
+                    </div>
+                    {/* -------------I--2------------- */}
+                    {/* -------------Language------------- */}
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="language"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Language
+                      </label>
 
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="clientName"
-                          className="text-sm font-medium text-gray-700"
+                      <div
+                        className="relative"
+                        onClick={toggleDropdownLanguage}
+                        onMouseLeave={() => setisDropdownVisibleLanguage(false)}
+                      >
+                        <button
+                          className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
+                          id="LanguageDropDown"
+                          type="button"
                         >
-                          <span className="flex gap-1">
-                            Client Name
-                            <FaStarOfLife size={8} className="text-red-500" />
-                          </span>
-                        </label>
-                        <input
-                          type="text"
-                          name="clientName"
-                          value={editLead.clientName}
-                          placeholder="Enter Client's Name"
-                          onChange={handleChange}
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
-                        />
-                      </div>
-                      {/* -------------I--2------------- */}
-                      {/* -------------Language------------- */}
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="language"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Language
-                        </label>
-
-                        <div
-                          className="relative"
-                          onClick={toggleDropdownLanguage}
-                          onMouseLeave={() => setisDropdownVisibleLanguage(false)}
-                        >
-                          <button
-                            className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
-                            id="LanguageDropDown"
-                            type="button"
-                          >
-                            {!isEditMode
+                          {!isEditMode
+                            ? defaultTextLanguageDropDown
+                            : editLead.language === ""
                               ? defaultTextLanguageDropDown
-                              : editLead.language === ""
-                                ? defaultTextLanguageDropDown
-                                : editLead.language}
-                            <FaAngleDown className="ml-2 text-gray-400" />
-                          </button>
-                          {isDropdownVisibleLanguage && (
-                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
-                              <ul className="py-2 text-sm text-gray-700">
-                                {languageDropDown.map(({ key, name }) => (
-                                  <li
-                                    key={key}
-                                    onClick={() => handleDropdownLanguage(name)}
-                                    className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
-                                  >
-                                    {name}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-                        </div>
+                              : editLead.language}
+                          <FaAngleDown className="ml-2 text-gray-400" />
+                        </button>
+                        {isDropdownVisibleLanguage && (
+                          <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
+                            <ul className="py-2 text-sm text-gray-700">
+                              {languageDropDown.map(({ key, name }) => (
+                                <li
+                                  key={key}
+                                  onClick={() => handleDropdownLanguage(name)}
+                                  className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                                >
+                                  {name}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
                       </div>
                     </div>
-                    {/* -------------II--1------------- */}
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
-                      {/* -------------Father's Name------------- */}
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="fathesName"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Father's Name
-                        </label>
-                        <input
-                          type="text"
-                          name="fatherName"
-                          value={editLead.fatherName}
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
-                          onChange={handleChange}
-                          placeholder="Enter Father's Name"
-                        />
-                      </div>
-                      {/* -------------Mother's Name------------- */}
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="motherName"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Mother's Name
-                        </label>
-                        <input
-                          type="text"
-                          name="motherName"
-                          value={editLead.motherName}
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
-                          onChange={handleChange}
-                          placeholder="Enter Mother's Name"
-                        />
-                      </div>
+                  </div>
+                  {/* -------------II--1------------- */}
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                    {/* -------------Father's Name------------- */}
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="fathesName"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Father's Name
+                      </label>
+                      <input
+                        type="text"
+                        name="fatherName"
+                        value={editLead.fatherName}
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
+                        onChange={handleChange}
+                        placeholder="Enter Father's Name"
+                      />
                     </div>
-                    {/* -------------III--1------------- */}
-                    {/* -------------Mobile Number------------- */}
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="mobileNo"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          <span className="flex gap-1">
-                            Mobile Number
-                            <FaStarOfLife size={8} className="text-red-500" />
-                          </span>
-                        </label>
-                        <input
-                          type="number"
-                          name="mobileNo"
-                          value={editLead.mobileNo}
-                          maxLength="15"
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
-                          onChange={handleContactChange}
-                          placeholder="Enter your Mobile Number"
-                          onKeyDown={(e) => {
-                            if (e.key === "e" || e.key === "E") {
-                              e.preventDefault(); // Block 'e' and 'E'
-                            }
-                          }}
-                          onWheel={(e) => e.target.blur()} // Disable scroll
-                        />
-                      </div>
-                      {/* -------------III--2------------- */}
-                      {/* -------------Alternate Number------------- */}
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="phoneNo"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Alternate Number
-                        </label>
-                        <input
-                          type="text"
-                          name="phoneNo"
-                          maxLength="15"
-                          value={editLead.phoneNo}
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
-                          onChange={handleContactChange}
-                          placeholder="Enter your Alternate Number"
-                          onKeyDown={(e) => {
-                            if (e.key === "e" || e.key === "E") {
-                              e.preventDefault(); // Block 'e' and 'E'
-                            }
-                          }}
-                          onWheel={(e) => e.target.blur()} // Disable scroll
-                        />
-                      </div>
+                    {/* -------------Mother's Name------------- */}
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="motherName"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Mother's Name
+                      </label>
+                      <input
+                        type="text"
+                        name="motherName"
+                        value={editLead.motherName}
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
+                        onChange={handleChange}
+                        placeholder="Enter Mother's Name"
+                      />
                     </div>
-
-                    {/* -------------IV--1--------------- */}
-                    {/* -------------UIDAI Id------------- */}
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="uidaI_Id_No"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          <span className="flex gap-1">
-                            Enter UIDAI Id
-                            <FaStarOfLife size={8} className="text-red-500" />
-                          </span>
-                        </label>
-                        <input
-                          type="number"
-                          name="uidaI_Id_No"
-                          maxLength="12"
-                          value={editLead.uidaI_Id_No}
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
-                          onChange={handleChange}
-                          placeholder="9009 9009 9009"
-                          onKeyDown={(e) => {
-                            if (e.key === "e" || e.key === "E") {
-                              e.preventDefault(); // Block 'e' and 'E'
-                            }
-                          }}
-                          onWheel={(e) => e.target.blur()} // Disable scroll
-                        />
-                      </div>
-                      {/* -------------IV--2--------------- */}
-                      {/* -------------Pan Card No.------------- */}
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="panCard_No"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          <span className="flex gap-1">
-                            Pan Card No.
-                            <FaStarOfLife size={8} className="text-red-500" />
-                          </span>
-                        </label>
-                        <input
-                          type="text"
-                          name="panCard_No"
-                          value={editLead.panCard_No}
-                          className="p-2 mt-1 uppercase border border-gray-300 rounded-md"
-                          onChange={handleChange}
-                          placeholder="Enter your Pan Card Details"
-                        />
-                      </div>
-                    </div>
-                    {/* -------------V--1--------------- */}
-                    {/* -------------Email------------- */}
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="email"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          <span className="flex gap-1">
-                            Email
-                            <FaStarOfLife size={8} className="text-red-500" />
-                          </span>
-                        </label>
-                        <input
-                          type="email"
-                          name="email"
-                          value={editLead.email}
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
-                          onChange={handleChange}
-                          placeholder="Enter your Email"
-                        />
-                      </div>
-                      {/* -------------V--2--------------- */}
-                      {/* -------------Managed By------------- */}
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="managedBy"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Managed By
-                        </label>
-                        <div
-                          className="relative"
-                          onClick={toggleDropdownassigned_ToDropDown}
-                          onMouseLeave={() =>
-                            setisDropdownassigned_ToDropDown(false)
+                  </div>
+                  {/* -------------III--1------------- */}
+                  {/* -------------Mobile Number------------- */}
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="mobileNo"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        <span className="flex gap-1">
+                          Mobile Number
+                          <FaStarOfLife size={8} className="text-red-500" />
+                        </span>
+                      </label>
+                      <input
+                        type="number"
+                        name="mobileNo"
+                        value={editLead.mobileNo}
+                        maxLength="15"
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
+                        onChange={handleContactChange}
+                        placeholder="Enter your Mobile Number"
+                        onKeyDown={(e) => {
+                          if (e.key === "e" || e.key === "E") {
+                            e.preventDefault(); // Block 'e' and 'E'
                           }
-                        >
-                          <button
-                            className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
-                            id="LeadStatusDropDown"
-                            type="button"
-                          >
-                            {isEditMode
-                              ? editLead.assigned_To
-                              : defaultTextassigned_ToDropDown}
-                            <FaAngleDown className="ml-2 text-gray-400" />
-                          </button>
-                          {isDropdownassigned_ToDropDown && (
-                            <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
-                              <ul className="py-2 text-sm text-gray-700">
-                                {managedBy.map(({ userName, role }, index) => (
-                                  <li
-                                    key={index}
-                                    onClick={() =>
-                                      handleDropdownassigned_ToDropDown(
-                                        userName,
-                                        role,
-                                      )
-                                    }
-                                    className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
-                                  >
-                                    {userName}-({role})
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-                        </div>
-                      </div>
+                        }}
+                        onWheel={(e) => e.target.blur()} // Disable scroll
+                      />
                     </div>
-
-                    {/* -------------0--1--------------- */}
-                    {/* -------------DOB------------- */}
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="dob"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          DOB
-                        </label>
-                        <input
-                          type="date"
-                          name="state"
-                          value={editLead.dob}
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
-                          onChange={handleChange}
-                        />
-                      </div>
-                      {/* -------------0--2--------------- */}
-                      {/* -------------Country------------- */}
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="country"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Country
-                        </label>
-                        <input
-                          type="text"
-                          name="city"
-                          value={editLead.country}
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
-                          onChange={handleChange}
-                          placeholder="Enter your Country"
-                        />
-                      </div>
-                    </div>
-
-                    {/* -------------VI--1--------------- */}
-                    {/* -------------State------------- */}
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="state"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          State
-                        </label>
-                        <input
-                          type="text"
-                          name="state"
-                          value={editLead.state}
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
-                          onChange={handleChange}
-                          placeholder="Enter your State"
-                        />
-                      </div>
-                      {/* -------------VI--2--------------- */}
-                      {/* -------------City------------- */}
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="city"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          City
-                        </label>
-                        <input
-                          type="text"
-                          name="city"
-                          value={editLead.city}
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
-                          onChange={handleChange}
-                          placeholder="Enter your City"
-                        />
-                      </div>
-                    </div>
-
-                    {/* -------------VII--1--------------- */}
-                    {/* -------------Street------------- */}
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="street"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Street
-                        </label>
-                        <input
-                          type="text"
-                          name="street"
-                          value={editLead.street}
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
-                          onChange={handleChange}
-                          placeholder="Enter your Street"
-                        />
-                      </div>
-                      {/* -------------VII--2--------------- */}
-                      {/* -------------PinCode------------- */}
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="postalCode"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Pincode
-                        </label>
-                        <input
-                          type="text"
-                          name="pinCode"
-                          value={editLead.postalCode}
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
-                          onChange={handleChange}
-                          placeholder="Enter your pincode"
-                        />
-                      </div>
-                    </div>
-
-                    {/* -------------VIII--1--------------- */}
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
-                      {/* -------------Business Type------------- */}
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="businessType"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Business Type
-                        </label>
-                        <div
-                          className="relative"
-                          onClick={toggleDropdownbusinessType}
-                          onMouseLeave={() =>
-                            setisDropdownVisiblebusinessType(false)
+                    {/* -------------III--2------------- */}
+                    {/* -------------Alternate Number------------- */}
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="phoneNo"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Alternate Number
+                      </label>
+                      <input
+                        type="text"
+                        name="phoneNo"
+                        maxLength="15"
+                        value={editLead.phoneNo}
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
+                        onChange={handleContactChange}
+                        placeholder="Enter your Alternate Number"
+                        onKeyDown={(e) => {
+                          if (e.key === "e" || e.key === "E") {
+                            e.preventDefault(); // Block 'e' and 'E'
                           }
+                        }}
+                        onWheel={(e) => e.target.blur()} // Disable scroll
+                      />
+                    </div>
+                  </div>
+
+                  {/* -------------IV--1--------------- */}
+                  {/* -------------UIDAI Id------------- */}
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="uidaI_Id_No"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        <span className="flex gap-1">
+                          Enter UIDAI Id
+                          <FaStarOfLife size={8} className="text-red-500" />
+                        </span>
+                      </label>
+                      <input
+                        type="number"
+                        name="uidaI_Id_No"
+                        maxLength="12"
+                        value={editLead.uidaI_Id_No}
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
+                        onChange={handleChange}
+                        placeholder="9009 9009 9009"
+                        onKeyDown={(e) => {
+                          if (e.key === "e" || e.key === "E") {
+                            e.preventDefault(); // Block 'e' and 'E'
+                          }
+                        }}
+                        onWheel={(e) => e.target.blur()} // Disable scroll
+                      />
+                    </div>
+                    {/* -------------IV--2--------------- */}
+                    {/* -------------Pan Card No.------------- */}
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="panCard_No"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        <span className="flex gap-1">
+                          Pan Card No.
+                          <FaStarOfLife size={8} className="text-red-500" />
+                        </span>
+                      </label>
+                      <input
+                        type="text"
+                        name="panCard_No"
+                        value={editLead.panCard_No}
+                        className="mt-1 rounded-md border border-gray-300 p-2 uppercase"
+                        onChange={handleChange}
+                        placeholder="Enter your Pan Card Details"
+                      />
+                    </div>
+                  </div>
+                  {/* -------------V--1--------------- */}
+                  {/* -------------Email------------- */}
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="email"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        <span className="flex gap-1">
+                          Email
+                          <FaStarOfLife size={8} className="text-red-500" />
+                        </span>
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={editLead.email}
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
+                        onChange={handleChange}
+                        placeholder="Enter your Email"
+                      />
+                    </div>
+                    {/* -------------V--2--------------- */}
+                    {/* -------------Managed By------------- */}
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="managedBy"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Managed By
+                      </label>
+                      <div
+                        className="relative"
+                        onClick={toggleDropdownassigned_ToDropDown}
+                        onMouseLeave={() =>
+                          setisDropdownassigned_ToDropDown(false)
+                        }
+                      >
+                        <button
+                          className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
+                          id="LeadStatusDropDown"
+                          type="button"
                         >
-                          <button
-                            className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
-
-                            id="businessTypeDropDown"
-                            type="button"
-                          >
-                            {isEditMode
-                              ? editLead.businessType
-                              : defaultTextbusinessTypeDropDown}
-                            <FaAngleDown className="ml-2 text-gray-400" />
-                          </button>
-                          {isDropdownVisiblebusinessType && (
-                            <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
-
-                              <ul className="py-2 text-sm text-gray-700">
-                                {BusinessTypeDropDown.map(({ key, name }) => (
-                                  <li
-                                    key={key}
-                                    onClick={() =>
-                                      handleDropdownisDropdownVisiblebusinessType(
-                                        name,
-                                      )
-                                    }
-                                    className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
-                                  >
-                                    {name}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      {/* -------------VIII--2--------------- */}
-                      {/* -------------Advisory Experience------------- */}
-                      <div className="relative flex flex-col">
-                        <label
-                          htmlFor="advisaryExp"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Advisory Experience
-                        </label>
-                        <input
-                          type="text"
-                          name="advisaryExp"
-                          value={editLead.advisaryExp}
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
-                          onChange={handleChange}
-                          placeholder="Enter years"
-                        />
+                          {isEditMode
+                            ? editLead.assigned_To
+                            : defaultTextassigned_ToDropDown}
+                          <FaAngleDown className="ml-2 text-gray-400" />
+                        </button>
+                        {isDropdownassigned_ToDropDown && (
+                          <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
+                            <ul className="py-2 text-sm text-gray-700">
+                              {managedBy.map(({ userName, role }, index) => (
+                                <li
+                                  key={index}
+                                  onClick={() =>
+                                    handleDropdownassigned_ToDropDown(
+                                      userName,
+                                      role,
+                                    )
+                                  }
+                                  className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                                >
+                                  {userName}-({role})
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
                       </div>
                     </div>
-                    {/* -------------IX--1--------------- */}
-                    {/* -------------Lead Source------------- */}
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
- <div className="relative flex flex-col">
+                  </div>
+
+                  {/* -------------0--1--------------- */}
+                  {/* -------------DOB------------- */}
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="dob"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        DOB
+                      </label>
+                      <input
+                        type="date"
+                        name="state"
+                        value={editLead.dob}
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
+                        onChange={handleChange}
+                      />
+                    </div>
+                    {/* -------------0--2--------------- */}
+                    {/* -------------Country------------- */}
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="country"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Country
+                      </label>
+                      <input
+                        type="text"
+                        name="city"
+                        value={editLead.country}
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
+                        onChange={handleChange}
+                        placeholder="Enter your Country"
+                      />
+                    </div>
+                  </div>
+
+                  {/* -------------VI--1--------------- */}
+                  {/* -------------State------------- */}
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="state"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        State
+                      </label>
+                      <input
+                        type="text"
+                        name="state"
+                        value={editLead.state}
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
+                        onChange={handleChange}
+                        placeholder="Enter your State"
+                      />
+                    </div>
+                    {/* -------------VI--2--------------- */}
+                    {/* -------------City------------- */}
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="city"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        City
+                      </label>
+                      <input
+                        type="text"
+                        name="city"
+                        value={editLead.city}
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
+                        onChange={handleChange}
+                        placeholder="Enter your City"
+                      />
+                    </div>
+                  </div>
+
+                  {/* -------------VII--1--------------- */}
+                  {/* -------------Street------------- */}
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="street"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Street
+                      </label>
+                      <input
+                        type="text"
+                        name="street"
+                        value={editLead.street}
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
+                        onChange={handleChange}
+                        placeholder="Enter your Street"
+                      />
+                    </div>
+                    {/* -------------VII--2--------------- */}
+                    {/* -------------PinCode------------- */}
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="postalCode"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Pincode
+                      </label>
+                      <input
+                        type="text"
+                        name="pinCode"
+                        value={editLead.postalCode}
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
+                        onChange={handleChange}
+                        placeholder="Enter your pincode"
+                      />
+                    </div>
+                  </div>
+
+                  {/* -------------VIII--1--------------- */}
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                    {/* -------------Business Type------------- */}
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="businessType"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Business Type
+                      </label>
+                      <div
+                        className="relative"
+                        onClick={toggleDropdownbusinessType}
+                        onMouseLeave={() =>
+                          setisDropdownVisiblebusinessType(false)
+                        }
+                      >
+                        <button
+                          className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
+                          id="businessTypeDropDown"
+                          type="button"
+                        >
+                          {isEditMode
+                            ? editLead.businessType
+                            : defaultTextbusinessTypeDropDown}
+                          <FaAngleDown className="ml-2 text-gray-400" />
+                        </button>
+                        {isDropdownVisiblebusinessType && (
+                          <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
+                            <ul className="py-2 text-sm text-gray-700">
+                              {BusinessTypeDropDown.map(({ key, name }) => (
+                                <li
+                                  key={key}
+                                  onClick={() =>
+                                    handleDropdownisDropdownVisiblebusinessType(
+                                      name,
+                                    )
+                                  }
+                                  className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                                >
+                                  {name}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    {/* -------------VIII--2--------------- */}
+                    {/* -------------Advisory Experience------------- */}
+                    <div className="relative flex flex-col">
+                      <label
+                        htmlFor="advisaryExp"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Advisory Experience
+                      </label>
+                      <input
+                        type="text"
+                        name="advisaryExp"
+                        value={editLead.advisaryExp}
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
+                        onChange={handleChange}
+                        placeholder="Enter years"
+                      />
+                    </div>
+                  </div>
+                  {/* -------------IX--1--------------- */}
+                  {/* -------------Lead Source------------- */}
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                    <div className="relative flex flex-col">
                       {/* -------------Lead Source------------- */}
                       <label
                         htmlFor="Pool"
@@ -1397,7 +1346,7 @@ export default function CreateSOContact() {
                       >
                         <button
                           onClick={toggleDropdown}
-                          className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                          className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                           id="LeadPoolDropDown"
                           type="button"
                         >
@@ -1407,7 +1356,7 @@ export default function CreateSOContact() {
                           <FaAngleDown className="ml-2 text-gray-400" />
                         </button>
                         {isPoolDropdownOpen && (
-                          <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                          <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                             {error ? (
                               <div className="py-2 text-red-600">{error}</div>
                             ) : (
@@ -1418,7 +1367,7 @@ export default function CreateSOContact() {
                                     onClick={() =>
                                       handleDropdownSelection(poolName)
                                     }
-                                    className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     {poolName}
                                   </li>
@@ -1430,23 +1379,22 @@ export default function CreateSOContact() {
                       </div>
                     </div>
                   </div>
-                  </div>
-                )}
+                </div>
+              )}
             </div>
             {/* -------------Payment Details INFORMATION STARTS FROM HERE------------- */}
-              
+
             {/* ------------------------------------< businessType === "Other" >------------------------------------- */}
             {/* ------------------------------------< Client Name, Language, Father's Name, Mother's Name , Mobile Number, Alternate Number, UIDAI Id, Pan Card, Email, Managed By, DOB, Country, State, City, Street, Pin-Code >------------------------------------- */}
             {business === "Brokerage" ? (
-              <div className="flex-grow mx-3 my-3 bg-white shadow-md rounded-xl">
-                <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+              <div className="mx-3 my-3 flex-grow rounded-xl bg-white shadow-md">
+                <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                   Payment Details
                 </h2>
                 <div className="grid gap-2 px-4 py-2">
                   {/* -------------XI--1------------- */}
                   {/* -------------Total Amount------------- */}
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
                     {/* -------------XI--2------------- */}
                     {/* -------------  Brokerage------------- */}
                     <div className="relative flex flex-col">
@@ -1463,8 +1411,7 @@ export default function CreateSOContact() {
                         type="text"
                         name="due_Amount"
                         value={editLead.due_Amount}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Brokerage"
                       />
@@ -1485,8 +1432,7 @@ export default function CreateSOContact() {
                         name="amount_paid"
                         id="amount_paid"
                         value={editLead.amount_paid}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Funds"
                       />
@@ -1496,7 +1442,6 @@ export default function CreateSOContact() {
                   {/* -------------XIII--1------------- */}
                   {/* -------------Payment Date------------- */}
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
                     <div className="relative flex flex-col">
                       <label
                         htmlFor="paymentDate"
@@ -1508,8 +1453,7 @@ export default function CreateSOContact() {
                         type="date"
                         name="paymentDate"
                         value={editLead.paymentDate}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                       />
                     </div>
@@ -1523,12 +1467,10 @@ export default function CreateSOContact() {
                       <div
                         className="relative"
                         onClick={toggleDropdownSegment}
-                        onMouseLeave={() =>
-                          setisDropdownVisibleSegment(false)
-                        }
+                        onMouseLeave={() => setisDropdownVisibleSegment(false)}
                       >
                         <button
-                          className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                          className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                           id="LeadStatusDropDown"
                           type="button"
                         >
@@ -1536,13 +1478,13 @@ export default function CreateSOContact() {
                           <FaAngleDown className="ml-2 text-gray-400" />
                         </button>
                         {isDropdownVisibleSegment && (
-                          <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                          <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                             <ul className="py-2 text-sm text-gray-700">
                               {segments?.length > 0 ? (
                                 segments?.map(({ key, segment }) => (
                                   <li
                                     key={key}
-                                    className="flex items-center px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                    className="flex cursor-pointer items-center border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     <input
                                       type="checkbox"
@@ -1580,8 +1522,8 @@ export default function CreateSOContact() {
                 </div>
               </div>
             ) : (
-              <div className="flex-grow mx-3 my-3 bg-white shadow-md rounded-xl">
-                <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+              <div className="mx-3 my-3 flex-grow rounded-xl bg-white shadow-md">
+                <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                   Payment Details
                 </h2>
                 <div className="grid gap-2 px-4 py-2">
@@ -1589,7 +1531,6 @@ export default function CreateSOContact() {
                   {/* -------------Bank Name------------- */}
 
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
                     <div className="relative flex flex-col">
                       <label
                         htmlFor="bank_name"
@@ -1601,8 +1542,7 @@ export default function CreateSOContact() {
                         type="text"
                         name="bank_name"
                         value={editLead.bank_name}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Bank Name"
                       />
@@ -1620,8 +1560,7 @@ export default function CreateSOContact() {
                         type="text"
                         name="branch_name"
                         value={editLead.branch_name}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Branch Name"
                       />
@@ -1630,7 +1569,6 @@ export default function CreateSOContact() {
                   {/* -------------X--1----------------- */}
                   {/* -------------Payment Mode------------- */}
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
                     <div className="relative flex flex-col">
                       <label
                         htmlFor="paymenT_MODE"
@@ -1642,8 +1580,7 @@ export default function CreateSOContact() {
                         type="text"
                         name="paymenT_MODE"
                         value={editLead.paymenT_MODE}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                       />
                     </div>
@@ -1663,8 +1600,7 @@ export default function CreateSOContact() {
                         type="text"
                         name="reference_Number"
                         value={editLead.reference_Number}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                       />
                     </div>
@@ -1673,7 +1609,6 @@ export default function CreateSOContact() {
                   {/* -------------XI--1------------- */}
                   {/* -------------Total Amount------------- */}
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
                     <div className="relative flex flex-col">
                       <label
                         htmlFor="totalAmount"
@@ -1685,8 +1620,7 @@ export default function CreateSOContact() {
                         type="number"
                         name="totalAmount"
                         value={editLead.totalAmount}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Total Amount"
                         onKeyDown={(e) => {
@@ -1711,8 +1645,7 @@ export default function CreateSOContact() {
                         type="number"
                         name="due_Amount"
                         value={editLead.due_Amount}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Due Amount"
                         onKeyDown={(e) => {
@@ -1726,7 +1659,6 @@ export default function CreateSOContact() {
                   </div>
                   {/* -------------XII--1------------- */}
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
                     <div className="relative flex flex-col">
                       <label
                         htmlFor="amount_paid"
@@ -1742,8 +1674,7 @@ export default function CreateSOContact() {
                         name="amount_paid"
                         id="amount_paid"
                         value={editLead.amount_paid}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Amount Paid"
                         onKeyDown={(e) => {
@@ -1767,8 +1698,7 @@ export default function CreateSOContact() {
                         name="discount"
                         id="discount"
                         value={editLead.discount}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Discount"
                         onKeyDown={(e) => {
@@ -1784,7 +1714,6 @@ export default function CreateSOContact() {
                   {/* -------------XIII--1------------- */}
                   {/* -------------Payment Date------------- */}
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
                     <div className="relative flex flex-col">
                       <label
                         htmlFor="paymentDate"
@@ -1799,8 +1728,7 @@ export default function CreateSOContact() {
                         type="date"
                         name="paymentDate"
                         value={editLead.paymentDate}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                       />
                     </div>
@@ -1818,8 +1746,7 @@ export default function CreateSOContact() {
                         type="text"
                         name="chequeOrDD_no"
                         value={editLead.chequeOrDD_no}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Cheque No Or DD No"
                       />
@@ -1828,7 +1755,6 @@ export default function CreateSOContact() {
 
                   {/* -------------XIV--1------------- */}
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
                     {/* -------------Product-------------> Means Segments */}
                     <div className="relative flex flex-col">
                       <label
@@ -1840,12 +1766,10 @@ export default function CreateSOContact() {
                       <div
                         className="relative"
                         onClick={toggleDropdownSegment}
-                        onMouseLeave={() =>
-                          setisDropdownVisibleSegment(false)
-                        }
+                        onMouseLeave={() => setisDropdownVisibleSegment(false)}
                       >
                         <button
-                          className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                          className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                           id="LeadStatusDropDown"
                           type="button"
                         >
@@ -1853,13 +1777,13 @@ export default function CreateSOContact() {
                           <FaAngleDown className="ml-2 text-gray-400" />
                         </button>
                         {isDropdownVisibleSegment && (
-                          <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                          <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                             <ul className="py-2 text-sm text-gray-700">
                               {segments?.length > 0 ? (
                                 segments?.map(({ key, segment }) => (
                                   <li
                                     key={key}
-                                    className="flex items-center px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                    className="flex cursor-pointer items-center border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                   >
                                     <input
                                       type="checkbox"
@@ -1907,8 +1831,7 @@ export default function CreateSOContact() {
                         type="text"
                         name="saleS_ODR_NO"
                         value={editLead.saleS_ODR_NO}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                       />
                     </div>
@@ -1918,8 +1841,8 @@ export default function CreateSOContact() {
             )}
 
             {/* -------------SALES ORDER INFORMATION STARTS FROM HERE------------- */}
-            <div className="flex-grow mx-3 my-3 bg-white shadow-md rounded-xl">
-              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+            <div className="mx-3 my-3 flex-grow rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Service Details
               </h2>
               <div className="grid gap-2 px-4 py-2">
@@ -1930,7 +1853,6 @@ export default function CreateSOContact() {
                   ""
                 ) : (
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
                     <div className="relative flex flex-col">
                       <label
                         htmlFor="period_of_Subscription"
@@ -1942,8 +1864,7 @@ export default function CreateSOContact() {
                         type="text"
                         name="period_of_Subscription"
                         value={editLead.period_of_Subscription}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Period of Subscription"
                       />
@@ -1963,8 +1884,7 @@ export default function CreateSOContact() {
                         onMouseLeave={() => setisDropdownVisible_Term_(false)}
                       >
                         <button
-                          className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                          className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                           id="termDropDown"
                           type="button"
                         >
@@ -1975,7 +1895,6 @@ export default function CreateSOContact() {
                         </button>
                         {isDropdownVisible_Term_ && (
                           <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
-
                             <ul className="py-2 text-sm text-gray-700">
                               {Term_DropDown.map(({ key, name }) => (
                                 <li
@@ -1983,7 +1902,7 @@ export default function CreateSOContact() {
                                   onClick={() =>
                                     handleDropdownisDropdown_Term_(name)
                                   }
-                                  className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                  className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                 >
                                   {name}
                                 </li>
@@ -2002,7 +1921,6 @@ export default function CreateSOContact() {
                   ""
                 ) : (
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
                     <div className="relative flex flex-col">
                       <label
                         htmlFor="subscription_start_date"
@@ -2014,8 +1932,7 @@ export default function CreateSOContact() {
                         type="date"
                         name="subscription_start_date"
                         value={editLead.subscription_start_date}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                       />
                     </div>
@@ -2033,8 +1950,7 @@ export default function CreateSOContact() {
                         name="subscription_end_date"
                         value={editLead.subscription_end_date}
                         onChange={handleChange}
-                        className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                        className="mt-1 w-full rounded-md border border-gray-300 p-2"
                       />
                     </div>
                   </div>
@@ -2042,7 +1958,6 @@ export default function CreateSOContact() {
 
                 {/* -------------XVII--1------------- */}
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
                   {/* -------------Service------------- */} {/* sms , wp,  */}
                   <div className="relative flex flex-col">
                     <label
@@ -2057,7 +1972,7 @@ export default function CreateSOContact() {
                       onMouseLeave={() => setisDropdownVisible_Service_(false)}
                     >
                       <button
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="serviceDropDown"
                         type="button"
                       >
@@ -2068,7 +1983,6 @@ export default function CreateSOContact() {
                       </button>
                       {isDropdownVisible_Service_ && (
                         <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
-
                           <ul className="py-2 text-sm text-gray-700">
                             {Service_DropDown.map(({ key, name }) => (
                               <li
@@ -2076,7 +1990,7 @@ export default function CreateSOContact() {
                                 onClick={() =>
                                   handleDropdownisDropdown_Service_(name)
                                 }
-                                className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 {name}
                               </li>
@@ -2100,16 +2014,14 @@ export default function CreateSOContact() {
                       type="text"
                       name="status"
                       value="Pending"
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-
                   {/* -------------Service------------- */} {/* sms , wp,  */}
                   {/* -------------Remark------------- */}
-                  <div className="flex flex-col w-full">
+                  <div className="flex w-full flex-col">
                     <label
                       htmlFor="remarks"
                       className="text-sm font-medium text-gray-700"
@@ -2120,8 +2032,7 @@ export default function CreateSOContact() {
                       type="text"
                       name="remarks"
                       value={editLead.remarks}
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                   </div>
@@ -2130,8 +2041,8 @@ export default function CreateSOContact() {
             </div>
 
             {/*--------------------------Description Box-------------------------- */}
-            <div className="mx-3 bg-white shadow-md rounded-xl">
-              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+            <div className="mx-3 rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Description Information
               </h2>
               <div className="grid gap-2 px-2 py-4">
@@ -2156,16 +2067,15 @@ export default function CreateSOContact() {
               <div className="flex justify-end px-2">
                 <button
                   type="submit"
-                  className="w-full py-4 mt-24 mb-2 text-white border-2 rounded border-cyan-500 bg-cyan-500 px-36 hover:bg-white hover:text-cyan-500 sm:me-10 sm:w-1/3"
+                  className="mb-2 mt-24 w-full rounded border-2 border-cyan-500 bg-cyan-500 px-36 py-4 text-white hover:bg-white hover:text-cyan-500 sm:me-10 sm:w-1/3"
                 >
                   Save
                 </button>
               </div>
             </div>
           </div>
-
-        </form >
-      </div >
+        </form>
+      </div>
     </>
   );
 }

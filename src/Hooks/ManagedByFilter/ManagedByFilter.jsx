@@ -21,7 +21,7 @@ export default function ManagedByFilter({ assignedTo, onAssignedToSelect }) {
       const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config
+        config,
       );
       setallAssigned_To_Data(response.data.data);
     } catch (error) {
