@@ -6,10 +6,8 @@ import axios from "axios";
 import { FaAngleDown, FaBars, FaPhoneAlt } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
-import { ImFilter } from "react-icons/im";
 import { MdCall } from "react-icons/md";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
-import { TbRefresh } from "react-icons/tb";
 
 //Folder Imported
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
@@ -17,6 +15,7 @@ import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/Global
 import { SearchElement } from "../SearchElement/SearchElement";
 import ManagedByFilter from "../../../../Hooks/ManagedByFilter/ManagedByFilter";
 import UseAction from "../../../../Hooks/Action/useAction";
+import UseDateFilter from "../../../../Hooks/DateFilter/UseDateFilter";
 
 export default function FollowUp() {
   const navigate = useNavigate();
@@ -232,8 +231,9 @@ export default function FollowUp() {
   const [assignedTo, setAssignedTo] = useState("Managed By");
 
   const handleResetFilter = () => {
+    setStartDate(today);
+    setEndDate(today);
     setFilteredLeads(followupList);
-    // setLeadStatus('All Lead');
     setAssignedTo("Managed By");
   };
 
@@ -280,6 +280,12 @@ export default function FollowUp() {
   useEffect(() => {
     handleGetPermission();
   }, []);
+
+  // -------------------------------------- Function to update date states ---------------------------------------
+  const handleDateChange = (field, value) => {
+    if (field === "startDate") setStartDate(value);
+    else setEndDate(value);
+  };
 
   return (
     <>
@@ -386,51 +392,15 @@ export default function FollowUp() {
             </h1>
           </div>
           {/* ------------------- Filter by date ----------------- */}
-          <div className="date_Filter_Main_Container">
-            {/* ------------------- Filter by date ----------------- */}
-            <div className="date_Filter_Main_Container flex items-center justify-between rounded-lg border-2 border-gray-300 bg-white p-2">
-              {/* Filter Icon Button */}
-              <div className="flex items-center">
-                <button className="border-r border-gray-500 pr-2">
-                  <ImFilter className="filter_Image_Size" />
-                </button>
-
-                {/* Date Range Filter Button */}
-                <button className="filter_Image_Display whitespace-nowrap border-r border-gray-500 px-2">
-                  Filter By
-                </button>
-
-                {/* Date Range Inputs */}
-                <div className="filter_Date_Container flex items-center gap-2 px-2">
-                  <label className="hide_Filter_Text">From:</label>
-                  <input
-                    type="date"
-                    value={startDate}
-                    className="filter_Date rounded border px-2 py-2"
-                    onChange={(e) => setStartDate(e.target.value)}
-                  />
-
-                  <label className="hide_Filter_Text">To:</label>
-                  <input
-                    type="date"
-                    value={endDate}
-                    className="filter_Date rounded border px-2 py-2"
-                    onChange={(e) => setEndDate(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <div
-                className="reset_paddings flex cursor-pointer items-center gap-2 rounded border p-2"
-                onClick={handleResetFilter}
-              >
-                <label className="hide_Filter_Text">Reset</label>
-                <TbRefresh className="filter_Reset_Image" />
-              </div>
-            </div>
-          </div>
+          <UseDateFilter
+            startDate={startDate}
+            endDate={endDate}
+            onDateChange={handleDateChange}
+            onReset={handleResetFilter}
+            followupList={followupList}
+            setFilteredLeads={setFilteredLeads}
+          />
         </div>
-
         {/* TABLE VIEW */}
         <div className="leads_Table_Main_Container overflow-x-auto">
           <div className="leads_Table_Container min-w-full rounded-md">
