@@ -17,6 +17,8 @@ import { FaRegHandshake } from "react-icons/fa6";
 import { MdOutlineEmail } from "react-icons/md";
 import PropTypes from "prop-types";
 import noAvatar from "../../assets/images/noAvatar.png";
+import { GiProgression } from "react-icons/gi";
+
 
 import { getHostnamePart } from "./SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
@@ -56,18 +58,6 @@ export default function SidebaBar({ toggle, setToggle }) {
       icon: <MdOutlineContactPhone />,
     },
     {
-      key: 4,
-      data: "Client",
-      link: "/panel/client",
-      icon: <FiUsers />,
-    },
-    {
-      key: 5,
-      data: "Sales order",
-      link: "/panel/salesorder",
-      icon: <BsGraphUpArrow />,
-    },
-    {
       key: 6,
       data: "Free Trail",
       link: "/panel/freeTrail",
@@ -79,6 +69,20 @@ export default function SidebaBar({ toggle, setToggle }) {
       link: "/panel/followUp",
       icon: <SiAmazonsimpleemailservice />,
     },
+ 
+    {
+      key: 5,
+      data: "Sales order",
+      link: "/panel/salesorder",
+      icon: <BsGraphUpArrow />,
+    },
+    {
+      key: 4,
+      data: "Client",
+      link: "/panel/client",
+      icon: <FiUsers />,
+    },
+   
     // {
     //   key: 8,
     //   data: 'Mail Box',
@@ -164,7 +168,7 @@ export default function SidebaBar({ toggle, setToggle }) {
       key: 12,
       data: "Analytics",
       link: "/panel/analytics",
-      icon: <VscGraph />,
+      icon: <GiProgression />,
     },
     {
       key: 4,
@@ -268,7 +272,7 @@ export default function SidebaBar({ toggle, setToggle }) {
           </div>
         </div>
         {/* Scrollable Menu Section */}
-        <div className="CustomerTestimonialReview mt-10 flex h-full flex-col">
+        <div className="flex flex-col h-full mt-10 CustomerTestimonialReview">
           {(business === "Brokerage" ? sideBar_Brokerage : sideBar).map(
             ({ key, data, icon, link }, index) => (
               <Link to={link} onClick={() => handleClick(key)} key={key}>

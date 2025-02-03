@@ -224,7 +224,7 @@ export default function Contact() {
   }, []);
 
   //------------------------------------------------------------------------------------------------
-  //----------------STRIPE BAR DROPDOWN----------------
+  //-------------------------------->WIZARD DROPDOWN<--------------------------------
   const stripeBar = [
     { key: 1, value: "Table View", icon: <FaTableList /> },
     { key: 2, value: "Grid View", icon: <IoGrid /> },
