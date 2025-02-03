@@ -19,7 +19,6 @@ import PropTypes from "prop-types";
 import noAvatar from "../../assets/images/noAvatar.png";
 import { GiProgression } from "react-icons/gi";
 
-
 import { getHostnamePart } from "./SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 //file_Imported
@@ -69,7 +68,7 @@ export default function SidebaBar({ toggle, setToggle }) {
       link: "/panel/followUp",
       icon: <SiAmazonsimpleemailservice />,
     },
- 
+
     {
       key: 5,
       data: "Sales order",
@@ -82,7 +81,7 @@ export default function SidebaBar({ toggle, setToggle }) {
       link: "/panel/client",
       icon: <FiUsers />,
     },
-   
+
     // {
     //   key: 8,
     //   data: 'Mail Box',
@@ -272,7 +271,7 @@ export default function SidebaBar({ toggle, setToggle }) {
           </div>
         </div>
         {/* Scrollable Menu Section */}
-        <div className="flex flex-col h-full mt-10 CustomerTestimonialReview">
+        <div className="CustomerTestimonialReview mt-10 flex h-full flex-col">
           {(business === "Brokerage" ? sideBar_Brokerage : sideBar).map(
             ({ key, data, icon, link }, index) => (
               <Link to={link} onClick={() => handleClick(key)} key={key}>
