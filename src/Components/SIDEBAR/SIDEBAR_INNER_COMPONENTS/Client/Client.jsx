@@ -8,13 +8,19 @@ import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
 //React Icons
-import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
+import { FaAngleDown, FaEdit, FaPhoneAlt, FaRegUser } from "react-icons/fa";
 import { FaBars } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
+import { FaUserTie } from "react-icons/fa";
 import { ImFilter } from "react-icons/im";
 import { MdCall } from "react-icons/md";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { BiCalendar } from "react-icons/bi";
+import { PiLineSegmentsBold } from "react-icons/pi";
+import { RiShieldUserLine } from "react-icons/ri";
+import { AiOutlineEdit } from "react-icons/ai";
+
 
 //Folder Imported
 
@@ -33,6 +39,8 @@ import {
   showErrorToast,
 } from "./../../../../utils/toastNotifications";
 import { TbRefresh } from "react-icons/tb";
+import { FaTableList } from "react-icons/fa6";
+import { IoGrid } from "react-icons/io5";
 
 export default function Client() {
   const name = getHostnamePart();
@@ -66,6 +74,7 @@ export default function Client() {
       );
 
       const data = response.data.data;
+      console.log(data);
       setGetleads(data);
       setFilteredLeads(data); // Initialize filtered leads
     } catch (error) {
@@ -206,27 +215,37 @@ export default function Client() {
     handleallAssigned_To();
   }, []);
 
-  //------------------------------------------------------------------------------------------------
-  //----------------STRIPE BAR DROPDOWN----------------
+  //-------------------------------->WIZARD DROPDOWN<--------------------------------
   const stripeBar = [
-    { key: 1, value: "Table View" },
-    { key: 2, value: "Grid View" },
+    { key: 1, value: "Table View", icon: <FaTableList /> },
+    { key: 2, value: "Grid View", icon: <IoGrid /> },
   ];
 
+  //state to manage dropDown onMouseLeave
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
 
-  const handleStripeButton = (value) => {
-    console.log(value);
-    setSelectedViewValue(value);
-  };
+  //By Default value - to <TABLE VIEW>
+  const [selectedViewValue, setSelectedViewValue] = useState(
+    stripeBar[0].value,
+  );
 
+  //function to open/close dropdown onMouseLeave
   const togglestripeBar = () => {
     setstripeBardropDown(!stripeBardropDown);
   };
 
-  const [selectedViewValue, setSelectedViewValue] = useState(
-    stripeBar[0].value,
-  );
+  //function to select value from dropDown
+  const handleStripeButton = (value) => {
+    setSelectedViewValue(value);
+  };
+
+  //dropDown --> state OnClick
+  const [dropLogodropDown, setdropLogodropDown] = useState(false);
+
+  //dropDown --> function OnClick
+  const togglesdropLogo = () => {
+    setdropLogodropDown(!dropLogodropDown);
+  };
 
   //------------------------------------------------------------------------------------------------
   //----------------ACTION BAR DROPDOWN----------------
@@ -535,7 +554,7 @@ export default function Client() {
     //parent
     <>
       <ToastContainer />
-      <div className="m-3 flex min-h-screen flex-col">
+      <div className="flex flex-col min-h-screen m-3">
         {isModalOpen && (
           <MassEmail
             emails={selectedEmails}
@@ -543,19 +562,19 @@ export default function Client() {
           />
         )}
         {/* containerbar*/}
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-white px-3 py-2">
+        <div className="flex flex-wrap items-center justify-between gap-3 px-3 py-2 bg-white rounded-lg">
           {/* PART-I */}
           {/* container- Alleads, search */}
-          <div className="contact_Dropdown_Main_Container flex flex-wrap items-center justify-start gap-3">
+          <div className="flex flex-wrap items-center justify-start gap-3 contact_Dropdown_Main_Container">
             {/* PART-I */}
             {/* All Lead  DropDown*/}
             <div
-              className="contact_Dropdown_Container relative whitespace-nowrap"
+              className="relative contact_Dropdown_Container whitespace-nowrap"
               onClick={toggleMenuAllLead}
               onMouseLeave={() => setAllLeaddropDown(false)}
             >
               <button
-                className="contact_Dropdown_Button flex min-w-40 items-center justify-between truncate rounded-md border px-4 py-2"
+                className="flex items-center justify-between px-4 py-2 truncate border rounded-md contact_Dropdown_Button min-w-40"
                 id="dropdownDefaultButton"
                 type="button"
               >
@@ -563,12 +582,12 @@ export default function Client() {
                 <FaAngleDown className="ml-2 text-gray-900" />
               </button>
               {allLeaddropDown && (
-                <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
+                <div className="absolute z-10 bg-white border border-gray-300 rounded-md top-10">
                   <ul className="py-2 text-sm text-gray-700">
                     {allLeadData.map((item) => (
                       <li
                         key={item.id}
-                        className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                        className="block w-56 px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                         onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
                       >
                         {item.status}
@@ -581,12 +600,12 @@ export default function Client() {
             {/* PART-I-ii */}
             {/* All ASSIGNED_TO  DropDown*/}
             <div
-              className="contact_Dropdown_Container relative whitespace-nowrap"
+              className="relative contact_Dropdown_Container whitespace-nowrap"
               onClick={toggleMenuAssigned_To}
               onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
             >
               <button
-                className="contact_Dropdown_Button flex min-w-36 items-center justify-between rounded-md border px-4 py-2"
+                className="flex items-center justify-between px-4 py-2 border rounded-md contact_Dropdown_Button min-w-36"
                 id="dropdownDefaultButton"
                 type="button"
               >
@@ -594,12 +613,12 @@ export default function Client() {
                 <FaAngleDown className="ml-2 text-gray-900" />
               </button>
               {allAssigned_To_DROPDOWN && (
-                <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
+                <div className="absolute z-10 bg-white border border-gray-300 rounded-md top-10">
                   <ul className="py-2 text-sm text-gray-700">
                     {allAssigned_To_Data.map((item) => (
                       <li
                         key={item.id}
-                        className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                        className="block w-56 px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                         onClick={() => handleAssignedToSelection(item.userName)} // Correct selection logic
                       >
                         {item.userName}
@@ -619,16 +638,16 @@ export default function Client() {
           </div>
 
           {/* PART-II */}
-          <div className="action_Button_Main_Container flex items-center justify-start gap-3">
+          <div className="flex items-center justify-start gap-3 action_Button_Main_Container">
             {/* PART-II */}
             {/* Stripe-BarDropDown */}
             <div
-              className="hide_Component relative"
+              className="relative hide_Component"
               onClick={togglestripeBar}
               onMouseLeave={() => setstripeBardropDown(false)}
             >
               <button
-                className="flex items-center justify-between gap-2 rounded-md border px-4 py-3"
+                className="flex items-center justify-between gap-2 px-4 py-3 border rounded-md"
                 id="dropdownDefaultButton"
                 type="button"
               >
@@ -636,15 +655,18 @@ export default function Client() {
                 <FaAngleDown className="text-gray-900" />
               </button>
               {stripeBardropDown && (
-                <div className="absolute top-10 z-10 w-56 rounded-md border border-gray-300 bg-white py-2">
+                <div className="absolute right-0 z-10 w-32 bg-white border border-gray-300 rounded-md top-10">
                   <ul className="text-sm text-gray-700">
-                    {stripeBar.map(({ key, value }) => (
+                    {stripeBar.map(({ key, value, icon }) => (
                       <li
                         key={key}
-                        className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                        className="flex items-center gap-2 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                         onClick={() => handleStripeButton(value)}
                       >
-                        {value}
+                        <div className="flex items-center justify-center w-6 h-6 mx-1 text-lg">
+                          {icon}
+                        </div>
+                        <div className="flex-1 text-left">{value}</div>
                       </li>
                     ))}
                   </ul>
@@ -655,12 +677,12 @@ export default function Client() {
             {/* PART-II */}
             {/*-------Action DropDown */}
             <div
-              className="action_Button_Container relative"
+              className="relative action_Button_Container"
               onClick={toggleActionsMenuLogo}
               onMouseLeave={() => setdropActionsMenudropDown(false)}
             >
               <button
-                className="action_Button flex items-center justify-between gap-2 rounded-lg border border-blue-600 px-4 py-2 text-blue-600"
+                className="flex items-center justify-between gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg action_Button"
                 id="dropdownDefaultButton"
                 type="button"
               >
@@ -668,14 +690,14 @@ export default function Client() {
                 <FaAngleDown className="text-gray-900" />
               </button>
               {dropActionsMenudropDown && (
-                <div className="absolute top-10 z-10 w-56 rounded-md border border-gray-300 bg-white py-2">
+                <div className="absolute z-10 w-56 py-2 bg-white border border-gray-300 rounded-md top-10">
                   <ul className="text-sm text-gray-700">
                     {dropActionsMenu.map(({ key, value }) =>
                       permissions.includes(value) ||
                       businessRole === "Admin" ? (
                         <li
                           key={key}
-                          className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                          className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                           onClick={() => handleActionButton(value)}
                         >
                           {value}
@@ -688,35 +710,35 @@ export default function Client() {
             </div>
           </div>
         </div>
-        <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center justify-between gap-3 mt-3">
           <div className="flex gap-3">
             <h1 className="text-3xl font-medium">Client</h1>
-            <h1 className="min-w-10 rounded bg-blue-600 p-2 text-center text-sm text-white shadow-md">
+            <h1 className="p-2 text-sm text-center text-white bg-blue-600 rounded shadow-md min-w-10">
               {getleads?.length}
             </h1>
           </div>
 
           <div className="date_Filter_Main_Container">
             {/* ------------------- Filter by date ----------------- */}
-            <div className="date_Filter_Main_Container flex items-center justify-between rounded-lg border-2 border-gray-300 bg-white p-2">
+            <div className="flex items-center justify-between p-2 bg-white border-2 border-gray-300 rounded-lg date_Filter_Main_Container">
               {/* Filter Icon Button */}
               <div className="flex items-center">
-                <button className="border-r border-gray-500 pr-2">
+                <button className="pr-2 border-r border-gray-500">
                   <ImFilter className="filter_Image_Size" />
                 </button>
 
                 {/* Date Range Filter Button */}
-                <button className="filter_Image_Display whitespace-nowrap border-r border-gray-500 px-2">
+                <button className="px-2 border-r border-gray-500 filter_Image_Display whitespace-nowrap">
                   Filter By
                 </button>
 
                 {/* Date Range Inputs */}
-                <div className="filter_Date_Container flex items-center gap-2 px-2">
+                <div className="flex items-center gap-2 px-2 filter_Date_Container">
                   <label className="hide_Filter_Text">From:</label>
                   <input
                     type="date"
                     value={startDate}
-                    className="filter_Date rounded border px-2 py-2"
+                    className="px-2 py-2 border rounded filter_Date"
                     onChange={(e) => setStartDate(e.target.value)}
                   />
 
@@ -724,14 +746,14 @@ export default function Client() {
                   <input
                     type="date"
                     value={endDate}
-                    className="filter_Date rounded border px-2 py-2"
+                    className="px-2 py-2 border rounded filter_Date"
                     onChange={(e) => setEndDate(e.target.value)}
                   />
                 </div>
               </div>
 
               <div
-                className="reset_paddings flex cursor-pointer items-center gap-2 rounded border p-2"
+                className="flex items-center gap-2 p-2 border rounded cursor-pointer reset_paddings"
                 onClick={handleResetFilter}
               >
                 <label className="hide_Filter_Text">Reset</label>
@@ -741,10 +763,10 @@ export default function Client() {
           </div>
         </div>
         {/*-------Table-------*/}
-        <div className="leads_Table_Main_Container mt-3 overflow-x-auto">
-          <div className="leads_Table_Container min-w-full rounded-md">
+        <div className="mt-3 overflow-x-auto leads_Table_Main_Container">
+          <div className="min-w-full rounded-md leads_Table_Container">
             {selectedViewValue === "Table View" && (
-              <table className="leads_Table min-w-full bg-white">
+              <table className="min-w-full bg-white leads_Table">
                 <thead>
                   <tr className="border-b-2 border-gray-300">
                     {/* CHECKBOX */}
@@ -756,33 +778,33 @@ export default function Client() {
                       />
                     </th>
 
-                    <th className="max-w-56 border-r px-1 py-3 text-left font-medium">
+                    <th className="px-1 py-3 font-medium text-left border-r max-w-56">
                       <div className="flex items-center justify-between whitespace-nowrap">
                         <span>Client Name</span>
                       </div>
                     </th>
-                    <th className="border-r px-1 py-3 text-left font-medium">
+                    <th className="px-1 py-3 font-medium text-left border-r">
                       <div className="flex items-center justify-between">
                         <span>Mobile</span>
                       </div>
                     </th>
 
-                    <th className="w-48 border-r px-1 py-3 text-left font-medium">
+                    <th className="w-48 px-1 py-3 font-medium text-left border-r">
                       <div className="flex items-center justify-between">
                         <span>Segment</span>
                       </div>
                     </th>
-                    <th className="w-48 border-r px-1 py-3 text-left font-medium">
+                    <th className="w-48 px-1 py-3 font-medium text-left border-r">
                       <div className="flex items-center justify-between">
                         <span>Service Start Date</span>
                       </div>
                     </th>
-                    <th className="w-48 border-r px-1 py-3 text-left font-medium">
+                    <th className="w-48 px-1 py-3 font-medium text-left border-r">
                       <div className="flex items-center justify-between">
                         <span>Service End Date</span>
                       </div>
                     </th>
-                    <th className="border-r px-1 py-3 text-left font-medium">
+                    <th className="px-1 py-3 font-medium text-left border-r">
                       <div className="flex items-center justify-between">
                         <span>Managed By</span>
                       </div>
@@ -802,7 +824,7 @@ export default function Client() {
                     return (
                       <tr
                         key={item.id}
-                        className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
+                        className="border-b border-gray-300 cursor-pointer hover:bg-gray-200"
                       >
                         {/* CHECKBOX */}
                         <td className="px-1 text-center">
@@ -814,7 +836,7 @@ export default function Client() {
                         </td>
 
                         {/* CONTACT NAME */}
-                        <td className="border-b border-gray-300 px-2 py-4 text-sm">
+                        <td className="px-2 py-4 text-sm border-b border-gray-300">
                           <div className="flex items-center">
                             <span className="">{item.clientName}</span>
                           </div>
@@ -833,8 +855,8 @@ export default function Client() {
                         </td>
 
                         {/* Segments */}
-                        <td className="min-w-24 max-w-36 border-b border-gray-300 px-1 py-4 text-sm">
-                          <div className="grid grid-cols-2 items-center gap-1">
+                        <td className="px-1 py-4 text-sm border-b border-gray-300 min-w-24 max-w-36">
+                          <div className="grid items-center grid-cols-2 gap-1">
                             {item.segments && (
                               <span className="">
                                 {item.segments
@@ -845,11 +867,11 @@ export default function Client() {
                           </div>
                         </td>
 
-                        <td className="border-b border-gray-300 px-1 py-4 text-center text-sm">
+                        <td className="px-1 py-4 text-sm text-center border-b border-gray-300">
                           {item.subscription_start_date?.split("T")[0]}
                         </td>
 
-                        <td className="border-b border-gray-300 px-1 py-4 text-center text-sm">
+                        <td className="px-1 py-4 text-sm text-center border-b border-gray-300">
                           {item.subscription_end_date?.split("T")[0]}
                         </td>
 
@@ -887,71 +909,92 @@ export default function Client() {
             {selectedViewValue === "Grid View" && (
               <>
                 <div className="min-w-full">
-                  <div className="grid grid-cols-3 gap-3">
+                {/* ------------Parent------------ */}
+                  <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
                     {/*---------Card starts Here */}
                     {getleads.map((item) => (
+                      // {/* ------------sub-Parent->Container ------------ */}
                       <div
-                        className="flex flex-col gap-2 rounded-lg border-2 bg-white px-2 py-3"
+                        className="grid grid-cols-1 gap-1 p-2 rounded-lg shadow-md bg-sky-100"
                         key={item.id}
                       >
-                        <div className="flex items-center gap-3">
-                          <img src={item.img} height={60} width={60} />
-                          <div className="flex grow flex-col">
-                            <div className="flex justify-between font-medium">
-                              <span className="text-indigo-500">
-                                {item.name}
+                        <div className="">
+                          <div className="flex items-center py-2 text-center bg-white border-2 rounded border-cyan-500 ">
+                          <div className ="flex items-center justify-center gap-2 mx-auto">
+                            <FaUserTie />
+                            <span className="">{item?.clientName}</span>
+                          </div>
+                            <AiOutlineEdit className= "p-1 mr-3 text-white rounded-full bg-cyan-400 hover:bg-cyan-500" size ={25} />
+                          </div>
+                        </div>
+
+                        <div className="py-2 bg-white border-2 rounded border-cyan-500">
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <IoIosMail size={22} className="w-6" />
+                              <span className="hidden sm:block">Email</span>
+                            </div>
+                            <div className="text-sm font-medium truncate">
+                              {item?.email}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <FaPhoneAlt size={14} className="w-6" />
+                              <span className="hidden sm:block">Phone</span>
+                            </div>
+                            <div className="text-sm font-medium truncate">
+                              {item?.phoneNo}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <PiLineSegmentsBold size={16} className="w-6" />
+                              <span className="hidden sm:block">Segments</span>
+                            </div>
+                            <div className="text-sm font-medium truncate">
+                              {item?.segments?.length
+                                ? item.segments?.join(", ")
+                                : ""}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <RiShieldUserLine size={18} className="w-6" />
+                              <span className="hidden sm:block">
+                                Managed By
                               </span>
-                              <BiEdit
-                                size={25}
-                                className="rounded-full bg-white p-1 text-blue-500 shadow-md"
-                              />
                             </div>
-                            <div className="flex items-center gap-2 text-sm font-medium">
-                              {item.leadesStatus}
+                            <div className="text-sm font-medium">
+                              {item?.assigned_To}
                             </div>
                           </div>
-                        </div>
-                        <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
-                          <div className="w-2/4 text-sm text-gray-500">
-                            Company name
-                          </div>
-                          <div className="2-2/4 text-sm font-medium">
-                            {item.company}
-                          </div>
-                        </div>
 
-                        <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
-                          <div className="w-2/4 text-sm text-gray-500">
-                            Title
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <BiCalendar size={18} className="w-6" />
+                              <span className="hidden sm:block">
+                                Sub Start Date
+                              </span>
+                            </div>
+                            <div className="text-sm font-medium">
+                              {item?.subscription_start_date.split("T")[0]}
+                            </div>
                           </div>
-                          <div className="2-2/4 text-sm font-medium">
-                            {item.tital}
-                          </div>
-                        </div>
 
-                        <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
-                          <div className="w-2/4">
-                            <IoIosMail className="text-2xl" />
-                          </div>
-                          <div className="2-2/4 text-sm font-medium">
-                            {item.email}
-                          </div>
-                        </div>
-
-                        <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
-                          <div className="w-2/4">
-                            <FaPhoneAlt className="text-xl" />
-                          </div>
-                          <div className="2-2/4 text-sm font-medium">
-                            {item.phoneNo}
-                          </div>
-                        </div>
-                        <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
-                          <div className="w-2/4 text-sm text-gray-500">
-                            Lead Source
-                          </div>
-                          <div className="2-2/4 text-sm font-medium">
-                            {item.leadsSource}
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <BiCalendar size={18} className="w-6" />
+                              <span className="hidden sm:block">
+                                Sub End Date
+                              </span>
+                            </div>
+                            <div className="text-sm font-medium">
+                              {item?.subscription_end_date.split("T")[0]}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -964,9 +1007,9 @@ export default function Client() {
 
           {selectedViewValue === "Table View" && (
             <>
-              <div className="m-4 flex justify-end">
+              <div className="flex justify-end m-4">
                 {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
-                <nav className="mx-auto mt-4 flex items-center justify-center gap-2 text-center">
+                <nav className="flex items-center justify-center gap-2 mx-auto mt-4 text-center">
                   {/* /---------------------->Previous Button <----------------------< */}
                   <button
                     onClick={() => paginate(currentPage - 1)}

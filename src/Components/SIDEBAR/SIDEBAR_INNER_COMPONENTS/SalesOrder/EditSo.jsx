@@ -525,21 +525,21 @@ export default function CreateSO() {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen mt-3">
-        <div className="flex justify-between px-3 py-3 mx-3 bg-white border rounded">
+      <div className="mt-3 flex min-h-screen flex-col">
+        <div className="mx-3 flex justify-between rounded border bg-white px-3 py-3">
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-xl">
               {/*  {isEditMode? <h1>Edit Lead</h1>: <>Create Lead</> } */}
               Create Sales Order
             </h1>
-            <h1 className="px-4 py-1 text-xs font-medium text-white bg-blue-500 rounded-lg">
+            <h1 className="rounded-lg bg-blue-500 px-4 py-1 text-xs font-medium text-white">
               Edit Page Layout
             </h1>
           </div>
           <div>
             <Link
               to="/panel/lead"
-              className="px-6 py-1 text-blue-500 border border-blue-500 rounded"
+              className="rounded border border-blue-500 px-6 py-1 text-blue-500"
             >
               Cancel
             </Link>
@@ -554,8 +554,8 @@ export default function CreateSO() {
           <div className="w-full">
             {/*CHILD Div------ Image Input */}
 
-            <div className="flex-grow mx-3 my-3 bg-white shadow-md rounded-xl">
-              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+            <div className="mx-3 my-3 flex-grow rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Personal Details
               </h2>
 
@@ -564,7 +564,7 @@ export default function CreateSO() {
               {/* -------------Client Name------------- */}
               <div className="px-4 py-2">
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="clientName"
                       className="text-sm font-medium text-gray-700"
@@ -577,12 +577,12 @@ export default function CreateSO() {
                       value={editLead.clientName}
                       placeholder="Enter Client's Name"
                       onChange={handleChange}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* -------------I--2------------- */}
                   {/* -------------Language------------- */}
-                  <div className="relative flex flex-col w-1/2">
+                  <div className="relative flex w-1/2 flex-col">
                     <label
                       htmlFor="language"
                       className="text-sm font-medium text-gray-700"
@@ -595,7 +595,7 @@ export default function CreateSO() {
                       onMouseLeave={() => setisDropdownVisibleLanguage(false)}
                     >
                       <button
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LanguageDropDown"
                         type="button"
                       >
@@ -613,7 +613,7 @@ export default function CreateSO() {
                               <li
                                 key={key}
                                 onClick={() => handleDropdownLanguage(name)}
-                                className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 {name}
                               </li>
@@ -627,7 +627,7 @@ export default function CreateSO() {
                 {/* -------------II--1------------- */}
                 <div className="flex space-x-4">
                   {/* -------------Father's Name------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="fathesName"
                       className="text-sm font-medium text-gray-700"
@@ -638,13 +638,13 @@ export default function CreateSO() {
                       type="text"
                       name="fatherName"
                       value={editLead.fatherName}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter Father's Name"
                     />
                   </div>
                   {/* -------------Mother's Name------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="motherName"
                       className="text-sm font-medium text-gray-700"
@@ -655,7 +655,7 @@ export default function CreateSO() {
                       type="text"
                       name="motherName"
                       value={editLead.motherName}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter Mother's Name"
                     />
@@ -664,7 +664,7 @@ export default function CreateSO() {
                 {/* -------------III--1------------- */}
                 {/* -------------Mobile Number------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="mobileNo"
                       className="text-sm font-medium text-gray-700"
@@ -675,7 +675,7 @@ export default function CreateSO() {
                       type="text"
                       name="mobileNo"
                       value={editLead.mobileNo}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter your Mobile Number"
                     />
@@ -685,7 +685,7 @@ export default function CreateSO() {
                   </div>
                   {/* -------------III--2------------- */}
                   {/* -------------Alternate Number------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="phoneNo"
                       className="text-sm font-medium text-gray-700"
@@ -696,7 +696,7 @@ export default function CreateSO() {
                       type="text"
                       name="phoneNo"
                       value={editLead.phoneNo}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter your Alternate Number"
                     />
@@ -706,7 +706,7 @@ export default function CreateSO() {
                 {/* -------------IV--1--------------- */}
                 {/* -------------UIDAI Id------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="uidaI_Id_No"
                       className="text-sm font-medium text-gray-700"
@@ -717,7 +717,7 @@ export default function CreateSO() {
                       type="number"
                       name="uidaI_Id_No"
                       value={editLead.uidaI_Id_No}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="9009 9009 9009"
                     />
@@ -727,7 +727,7 @@ export default function CreateSO() {
                   </div>
                   {/* -------------IV--2--------------- */}
                   {/* -------------Pan Card No.------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="panCard_No"
                       className="text-sm font-medium text-gray-700"
@@ -738,7 +738,7 @@ export default function CreateSO() {
                       type="text"
                       name="panCard_No"
                       value={editLead.panCard_No}
-                      className="p-2 mt-1 uppercase border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2 uppercase"
                       onChange={handleChange}
                       placeholder="Enter your Pan Card Details"
                     />
@@ -750,7 +750,7 @@ export default function CreateSO() {
                 {/* -------------V--1--------------- */}
                 {/* -------------Email------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="email"
                       className="text-sm font-medium text-gray-700"
@@ -761,14 +761,14 @@ export default function CreateSO() {
                       type="text"
                       name="email"
                       value={editLead.email}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter your Email"
                     />
                   </div>
                   {/* -------------V--2--------------- */}
                   {/* -------------Assigned to------------- */}
-                  <div className="relative flex flex-col w-1/2">
+                  <div className="relative flex w-1/2 flex-col">
                     <label
                       htmlFor="leadesStatus"
                       className="text-sm font-medium text-gray-700"
@@ -783,7 +783,7 @@ export default function CreateSO() {
                       }
                     >
                       <button
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadStatusDropDown"
                         type="button"
                       >
@@ -793,7 +793,7 @@ export default function CreateSO() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownassigned_ToDropDown && (
-                        <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {assigned_ToDropDown.map(
                               ({ key, userName, role }) => (
@@ -805,7 +805,7 @@ export default function CreateSO() {
                                       role,
                                     )
                                   }
-                                  className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                  className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                 >
                                   {userName}-({role})
                                 </li>
@@ -820,7 +820,7 @@ export default function CreateSO() {
                 {/* -------------VI--1--------------- */}
                 {/* -------------State------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="state"
                       className="text-sm font-medium text-gray-700"
@@ -831,14 +831,14 @@ export default function CreateSO() {
                       type="text"
                       name="state"
                       value={editLead.state}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter your State"
                     />
                   </div>
                   {/* -------------VI--2--------------- */}
                   {/* -------------City------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="city"
                       className="text-sm font-medium text-gray-700"
@@ -849,7 +849,7 @@ export default function CreateSO() {
                       type="text"
                       name="city"
                       value={editLead.city}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter your City"
                     />
@@ -859,7 +859,7 @@ export default function CreateSO() {
                 {/* -------------VII--1--------------- */}
                 {/* -------------Street------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="street"
                       className="text-sm font-medium text-gray-700"
@@ -870,14 +870,14 @@ export default function CreateSO() {
                       type="text"
                       name="street"
                       value={editLead.street}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter your Street"
                     />
                   </div>
                   {/* -------------VII--2--------------- */}
                   {/* -------------PinCode------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="pinCode"
                       className="text-sm font-medium text-gray-700"
@@ -888,7 +888,7 @@ export default function CreateSO() {
                       type="text"
                       name="pinCode"
                       value={editLead.postalCode}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter your pincode"
                     />
@@ -898,7 +898,7 @@ export default function CreateSO() {
                 {/* -------------VIII--1--------------- */}
                 <div className="flex space-x-4">
                   {/* -------------Business Type------------- */}
-                  <div className="relative flex flex-col w-1/2">
+                  <div className="relative flex w-1/2 flex-col">
                     <label
                       htmlFor="businessType"
                       className="text-sm font-medium text-gray-700"
@@ -913,7 +913,7 @@ export default function CreateSO() {
                       }
                     >
                       <button
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="businessTypeDropDown"
                         type="button"
                       >
@@ -923,7 +923,7 @@ export default function CreateSO() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisiblebusinessType && (
-                        <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {BusinessTypeDropDown.map(({ key, name }) => (
                               <li
@@ -933,7 +933,7 @@ export default function CreateSO() {
                                     name,
                                   )
                                 }
-                                className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 {name}
                               </li>
@@ -945,7 +945,7 @@ export default function CreateSO() {
                   </div>
                   {/* -------------VIII--2--------------- */}
                   {/* -------------Advisory Experience------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="advisaryExp"
                       className="text-sm font-medium text-gray-700"
@@ -956,7 +956,7 @@ export default function CreateSO() {
                       type="text"
                       name="advisaryExp"
                       value={editLead.advisaryExp}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter years"
                     />
@@ -965,15 +965,15 @@ export default function CreateSO() {
               </div>
             </div>
             {/* -------------Payment Details INFORMATION STARTS FROM HERE------------- */}
-            <div className="flex-grow mx-3 my-3 bg-white shadow-md rounded-xl">
-              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+            <div className="mx-3 my-3 flex-grow rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Payment Details
               </h2>
               <div className="px-4 py-2">
                 {/* -------------IX--1----------------- */}
                 {/* -------------Bank Name------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="bank_name"
                       className="text-sm font-medium text-gray-700"
@@ -984,14 +984,14 @@ export default function CreateSO() {
                       type="text"
                       name="bank_name"
                       value={editLead.bank_name}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Bank Name"
                     />
                   </div>
                   {/* -------------IX--2----------------- */}
                   {/* -------------Branch Name------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="branch_name"
                       className="text-sm font-medium text-gray-700"
@@ -1002,7 +1002,7 @@ export default function CreateSO() {
                       type="text"
                       name="branch_name"
                       value={editLead.branch_name}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Branch Name"
                     />
@@ -1011,7 +1011,7 @@ export default function CreateSO() {
                 {/* -------------X--1----------------- */}
                 {/* -------------Payment Mode------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="paymenT_MODE"
                       className="text-sm font-medium text-gray-700"
@@ -1022,13 +1022,13 @@ export default function CreateSO() {
                       type="text"
                       name="paymenT_MODE"
                       value={editLead.paymenT_MODE}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                   </div>
                   {/* -------------X--2----------------- */}
                   {/* -------------Ref No------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="reference_Number"
                       className="text-sm font-medium text-gray-700"
@@ -1039,7 +1039,7 @@ export default function CreateSO() {
                       type="text"
                       name="reference_Number"
                       value={editLead.reference_Number}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                     {errors.mobileNo && (
@@ -1055,7 +1055,7 @@ export default function CreateSO() {
                   {business === "Brokerage" ? (
                     ""
                   ) : (
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       <label
                         htmlFor="totalAmount"
                         className="text-sm font-medium text-gray-700"
@@ -1066,7 +1066,7 @@ export default function CreateSO() {
                         type="number"
                         name="totalAmount"
                         value={editLead.totalAmount}
-                        className="p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Total Amount"
                       />
@@ -1075,7 +1075,7 @@ export default function CreateSO() {
 
                   {/* -------------XI--2------------- */}
                   {/* -------------  Due Amount------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="due_Amount"
                       className="text-sm font-medium text-gray-700"
@@ -1087,7 +1087,7 @@ export default function CreateSO() {
                       type="text"
                       name="due_Amount"
                       value={editLead.due_Amount}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Due Amount"
                     />
@@ -1096,7 +1096,7 @@ export default function CreateSO() {
                 {/* -------------XII--1------------- */}
                 {/* -------------Amount Paid------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="amount_paid"
                       className="text-sm font-medium text-gray-700"
@@ -1108,7 +1108,7 @@ export default function CreateSO() {
                       type="text"
                       name="amount_paid"
                       value={editLead.amount_paid}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Amount Paid"
                     />
@@ -1121,7 +1121,7 @@ export default function CreateSO() {
                   {business === "Brokerage" ? (
                     ""
                   ) : (
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       <label
                         htmlFor="discount"
                         className="text-sm font-medium text-gray-700"
@@ -1132,7 +1132,7 @@ export default function CreateSO() {
                         type="text"
                         name="discount"
                         value={editLead.discount}
-                        className="p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Discount"
                       />
@@ -1143,7 +1143,7 @@ export default function CreateSO() {
                 {/* -------------XIII--1------------- */}
                 {/* -------------Payment Date------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="paymentDate"
                       className="text-sm font-medium text-gray-700"
@@ -1154,13 +1154,13 @@ export default function CreateSO() {
                       type="date"
                       name="paymentDate"
                       value={editLead.paymentDate}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                   </div>
                   {/* -------------XIII--2------------- */}
                   {/* -------------Cheque No Or DD No.------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="chequeOrDD_no"
                       className="text-sm font-medium text-gray-700"
@@ -1171,7 +1171,7 @@ export default function CreateSO() {
                       type="text"
                       name="chequeOrDD_no"
                       value={editLead.chequeOrDD_no}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Cheque No Or DD No"
                     />
@@ -1181,7 +1181,7 @@ export default function CreateSO() {
                 {/* -------------XIV--1------------- */}
                 <div className="flex space-x-4">
                   {/* -------------Product-------------> Means Segments */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="segment"
                       className="text-sm font-medium text-gray-700"
@@ -1194,7 +1194,7 @@ export default function CreateSO() {
                       onMouseLeave={() => setisDropdownVisibleSegment(false)}
                     >
                       <button
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadStatusDropDown"
                         type="button"
                       >
@@ -1202,12 +1202,12 @@ export default function CreateSO() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisibleSegment && (
-                        <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {segments.map((segment) => (
                               <li
                                 key={segment.id}
-                                className="flex items-center px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                className="flex cursor-pointer items-center border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 <input
                                   type="checkbox"
@@ -1228,7 +1228,7 @@ export default function CreateSO() {
                   </div>
                   {/* -------------XIV--2------------- */}
                   {/* -------------Sales Order No------------- */}
-                  <div className="flex flex-col w-1/2">
+                  <div className="flex w-1/2 flex-col">
                     <label
                       htmlFor="saleS_ODR_NO"
                       className="text-sm font-medium text-gray-700"
@@ -1239,7 +1239,7 @@ export default function CreateSO() {
                       type="number"
                       name="saleS_ODR_NO"
                       value={editLead.saleS_ODR_NO}
-                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                   </div>
@@ -1248,8 +1248,8 @@ export default function CreateSO() {
             </div>
 
             {/* -------------SALES ORDER INFORMATION STARTS FROM HERE------------- */}
-            <div className="flex-grow mx-3 my-3 bg-white shadow-md rounded-xl">
-              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+            <div className="mx-3 my-3 flex-grow rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Service Details
               </h2>
               <div className="px-4 py-2">
@@ -1260,7 +1260,7 @@ export default function CreateSO() {
                   ""
                 ) : (
                   <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       <label
                         htmlFor="period_of_subscription"
                         className="text-sm font-medium text-gray-700"
@@ -1271,14 +1271,14 @@ export default function CreateSO() {
                         type="text"
                         name="period_of_Subscription"
                         value={editLead.period_of_subscription}
-                        className="p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                         placeholder="Period of Subscription"
                       />
                     </div>
                     {/* -------------Select Term------------- */}
                     {/* -------------XV--2------------- */}
-                    <div className="relative flex flex-col w-1/2">
+                    <div className="relative flex w-1/2 flex-col">
                       <label
                         htmlFor="term"
                         className="text-sm font-medium text-gray-700"
@@ -1291,7 +1291,7 @@ export default function CreateSO() {
                         onMouseLeave={() => setisDropdownVisible_Term_(false)}
                       >
                         <button
-                          className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                          className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                           id="termDropDown"
                           type="button"
                         >
@@ -1301,7 +1301,7 @@ export default function CreateSO() {
                           <FaAngleDown className="ml-2 text-gray-400" />
                         </button>
                         {isDropdownVisible_Term_ && (
-                          <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                          <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                             <ul className="py-2 text-sm text-gray-700">
                               {Term_DropDown.map(({ key, name }) => (
                                 <li
@@ -1309,7 +1309,7 @@ export default function CreateSO() {
                                   onClick={() =>
                                     handleDropdownisDropdown_Term_(name)
                                   }
-                                  className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                  className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                                 >
                                   {name}
                                 </li>
@@ -1328,7 +1328,7 @@ export default function CreateSO() {
                   ""
                 ) : (
                   <div className="flex space-x-4">
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       <label
                         htmlFor="subscription_start_date"
                         className="text-sm font-medium text-gray-700"
@@ -1339,7 +1339,7 @@ export default function CreateSO() {
                         type="date"
                         name="subscription_start_date"
                         value={editLead.subscription_start_date}
-                        className="p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                         onChange={handleChange}
                       />
                       {errors.mobileNo && (
@@ -1350,7 +1350,7 @@ export default function CreateSO() {
                     </div>
                     {/* -------------XVI--2------------- */}
                     {/* -------------subscription_end_date------------- */}
-                    <div className="flex flex-col w-1/2">
+                    <div className="flex w-1/2 flex-col">
                       <label
                         htmlFor="subscription_end_date"
                         className="text-sm font-medium text-gray-700"
@@ -1362,7 +1362,7 @@ export default function CreateSO() {
                         name="subscription_end_date"
                         value={editLead.subscription_end_date}
                         onChange={handleChange}
-                        className="p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                       />
                       {errors.mobileNo && (
                         <span className="text-red-500">
@@ -1376,7 +1376,7 @@ export default function CreateSO() {
                 {/* -------------XVII--1------------- */}
                 <div className="flex space-x-4">
                   {/* -------------Service------------- */} {/* sms , wp,  */}
-                  <div className="relative flex flex-col w-1/2">
+                  <div className="relative flex w-1/2 flex-col">
                     <label
                       htmlFor="service"
                       className="text-sm font-medium text-gray-700"
@@ -1389,7 +1389,7 @@ export default function CreateSO() {
                       onMouseLeave={() => setisDropdownVisible_Service_(false)}
                     >
                       <button
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="serviceDropDown"
                         type="button"
                       >
@@ -1399,7 +1399,7 @@ export default function CreateSO() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisible_Service_ && (
-                        <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {Service_DropDown.map(({ key, name }) => (
                               <li
@@ -1407,7 +1407,7 @@ export default function CreateSO() {
                                 onClick={() =>
                                   handleDropdownisDropdown_Service_(name)
                                 }
-                                className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 {name}
                               </li>
@@ -1419,7 +1419,7 @@ export default function CreateSO() {
                   </div>
                   {/* -------------XVII--2------------- */}
                   {/* -------------Status------------- */}
-                  <div className="relative flex flex-col w-1/2">
+                  <div className="relative flex w-1/2 flex-col">
                     <label
                       htmlFor="status"
                       className="text-sm font-medium text-gray-700"
@@ -1432,7 +1432,7 @@ export default function CreateSO() {
                       onMouseLeave={() => setisDropdownVisible_Status_(false)}
                     >
                       <button
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="Status_TypeDropDown"
                         type="button"
                       >
@@ -1442,7 +1442,7 @@ export default function CreateSO() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownVisible_Status_ && (
-                        <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
                             {Status_DropDown.map(({ key, name }) => (
                               <li
@@ -1450,7 +1450,7 @@ export default function CreateSO() {
                                 onClick={() =>
                                   handleDropdownisDropdown_Status_(key, name)
                                 }
-                                className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 {name}
                               </li>
@@ -1465,8 +1465,8 @@ export default function CreateSO() {
             </div>
 
             {/*--------------------------Description Box-------------------------- */}
-            <div className="mx-3 bg-white shadow-md rounded-xl">
-              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+            <div className="mx-3 rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Description Information
               </h2>
               <div className="px-2 py-4">
@@ -1480,18 +1480,18 @@ export default function CreateSO() {
                   <ReactQuill
                     name="remarks"
                     value={description}
-                    className="max-w-5xl h-60 max-h-60 hyphens-auto text-balance"
+                    className="h-60 max-h-60 max-w-5xl hyphens-auto text-balance"
                     theme="snow"
                     onChange={setdescription}
                     placeholder="Add Description"
                   />
                 </div>
               </div>
-              <div className="flex justify-end gap-5 mr-10">
-                <div className="flex justify-end mr-20">
+              <div className="mr-10 flex justify-end gap-5">
+                <div className="mr-20 flex justify-end">
                   <button
                     type="submit"
-                    className="px-32 py-4 mt-40 mb-4 text-white border-2 rounded border-cyan-500 bg-cyan-500 hover:bg-white hover:text-cyan-500"
+                    className="mb-4 mt-40 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                   >
                     {isEditMode ? "Update" : "Save"}
                   </button>

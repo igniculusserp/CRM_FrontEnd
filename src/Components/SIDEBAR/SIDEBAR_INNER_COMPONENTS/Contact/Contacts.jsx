@@ -34,6 +34,8 @@ import {
   showSuccessToast,
   showErrorToast,
 } from "./../../../../utils/toastNotifications";
+import { FaTableList } from "react-icons/fa6";
+import { IoGrid, IoGridSharp } from "react-icons/io5";
 
 const name = getHostnamePart();
 
@@ -222,10 +224,10 @@ export default function Contact() {
   }, []);
 
   //------------------------------------------------------------------------------------------------
-  //----------------STRIPE BAR DROPDOWN----------------
+  //-------------------------------->WIZARD DROPDOWN<--------------------------------
   const stripeBar = [
-    { key: 1, value: "Table View" },
-    { key: 2, value: "Grid View" },
+    { key: 1, value: "Table View", icon: <FaTableList /> },
+    { key: 2, value: "Grid View", icon: <IoGrid /> },
   ];
 
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
@@ -704,15 +706,18 @@ export default function Contact() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {stripeBardropDown && (
-              <div className="absolute top-10 z-10 w-56 rounded-md border border-gray-300 bg-white">
+              <div className="absolute right-0 top-10 z-10 w-32 rounded-md border border-gray-300 bg-white">
                 <ul className="text-sm text-gray-700">
-                  {stripeBar.map(({ key, value }) => (
+                  {stripeBar.map(({ key, value, icon }) => (
                     <li
                       key={key}
-                      className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                      className="flex cursor-pointer items-center gap-2 border-b py-2 hover:bg-cyan-500 hover:text-white"
                       onClick={() => handleStripeButton(value)}
                     >
-                      {value}
+                      <div className="mx-1 flex h-6 w-6 items-center justify-center text-lg">
+                        {icon}
+                      </div>
+                      <div className="flex-1 text-left">{value}</div>
                     </li>
                   ))}
                 </ul>
@@ -736,7 +741,7 @@ export default function Contact() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {dropActionsMenudropDown && (
-              <div className="absolute top-10 z-10 w-56 rounded-md border border-gray-300 bg-white">
+              <div className="absolute right-0 top-10 z-10 w-56 rounded-md border border-gray-300 bg-white">
                 <ul className="text-sm text-gray-700">
                   {dropActionsMenu.map(({ key, value }) =>
                     permissions.includes(value) || businessRole === "Admin" ? (
