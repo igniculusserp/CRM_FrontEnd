@@ -12,11 +12,11 @@ import { protocal_url, tenant_base_url } from "../../Config/config";
 import MassEmail from "../../Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MassEmail/MassEmail";
 
 export default function UseAction({
-  followupList,
-  getFollowupLists,
+  originalData,
+  getApiData,
   screenName,
-  selectedRows,
-  selectedEmails,
+  selectedRowsId,
+  selectedRowEmails,
   actions,
 }) {
   const bearer_token = localStorage.getItem("token");
@@ -30,7 +30,7 @@ export default function UseAction({
 
   // ------------------- Handle Action Click -------------------
   const handleActionButton = async (value) => {
-    if (!selectedRows.length) {
+    if (!selectedRowsId.length) {
       alert("No records selected.");
       return;
     }
@@ -38,7 +38,7 @@ export default function UseAction({
     switch (value) {
       case "Mass Delete":
         if (confirm("Are you sure you want to delete the selected data?")) {
-          handleMassTrailDelete(selectedRows);
+          handleMassTrailDelete(selectedRowsId);
         }
         break;
 
@@ -77,7 +77,7 @@ export default function UseAction({
       );
 
       await Promise.all(deleteRequests);
-      getFollowupLists();
+      getApiData();
       alert(`${ids.length} items successfully deleted.`);
     } catch (error) {
       console.error("Error deleting follow-ups:", error);
@@ -86,7 +86,7 @@ export default function UseAction({
 
   // ------------------- Mass Email Modal -------------------
   const openMassEmailModal = () => {
-    if (selectedEmails.length > 0) {
+    if (selectedRowEmails.length > 0) {
       setIsModalOpen(true); // Open the modal
     } else {
       alert("Selected Entity dose not have E-Mail Address.");
@@ -99,8 +99,8 @@ export default function UseAction({
 
   // ------------------- Export to Excel -------------------
   const exportToTrailExcel = () => {
-    const leadsToExport = followupList.filter((lead) =>
-      selectedRows.includes(lead.id),
+    const leadsToExport = originalData.filter((lead) =>
+      selectedRowsId.includes(lead.id),
     );
     if (!leadsToExport.length) {
       alert("No leads selected to export.");
@@ -115,8 +115,8 @@ export default function UseAction({
 
   // ------------------- Export to PDF -------------------
   const exportToTrailPDF = () => {
-    const leadsToExport = followupList.filter((lead) =>
-      selectedRows.includes(lead.id),
+    const leadsToExport = originalData.filter((lead) =>
+      selectedRowsId.includes(lead.id),
     );
     if (!leadsToExport.length) {
       alert("No leads selected to export.");
@@ -168,7 +168,7 @@ export default function UseAction({
     <>
       {isModalOpen && (
         <MassEmail
-          emails={selectedEmails}
+          emails={selectedRowEmails}
           onClose={closeModal} // Pass function to close modal
         />
       )}
@@ -208,7 +208,7 @@ export default function UseAction({
 }
 
 UseAction.propTypes = {
-  followupList: PropTypes.arrayOf(
+  originalData: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
@@ -217,12 +217,12 @@ UseAction.propTypes = {
       assigned_To: PropTypes.string,
     }),
   ).isRequired,
-  getFollowupLists: PropTypes.func.isRequired,
+  getApiData: PropTypes.func.isRequired,
   screenName: PropTypes.string.isRequired,
-  selectedRows: PropTypes.arrayOf(
+  selectedRowsId: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   ).isRequired,
-  selectedEmails: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedRowEmails: PropTypes.arrayOf(PropTypes.string).isRequired,
   actions: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.number.isRequired,

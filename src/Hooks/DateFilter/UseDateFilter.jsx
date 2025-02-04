@@ -8,8 +8,8 @@ export default function UseDateFilter({
   endDate,
   onDateChange,
   onReset,
-  followupList,
-  setFilteredLeads,
+  originalData,
+  setFilteredData,
 }) {
   // Function to filter leads based on date range
   const filterByDateRange = () => {
@@ -18,12 +18,12 @@ export default function UseDateFilter({
     const end = new Date(endDate);
     end.setHours(23, 59, 59, 999);
 
-    const filtered = followupList.filter((follow) => {
+    const filtered = originalData.filter((follow) => {
       const callbackDate = new Date(follow.call_bck_DateTime);
       return callbackDate >= start && callbackDate <= end;
     });
 
-    setFilteredLeads(filtered);
+    setFilteredData(filtered);
   };
 
   // Apply filter on date change
@@ -82,6 +82,6 @@ UseDateFilter.propTypes = {
   endDate: PropTypes.string.isRequired,
   onDateChange: PropTypes.func.isRequired,
   onReset: PropTypes.func.isRequired,
-  followupList: PropTypes.array.isRequired,
-  setFilteredLeads: PropTypes.func.isRequired,
+  originalData: PropTypes.array.isRequired,
+  setFilteredData: PropTypes.func.isRequired,
 };
