@@ -1,35 +1,62 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { ImFilter } from "react-icons/im";
 import { TbRefresh } from "react-icons/tb";
 
 export default function UseDateFilter({
-  startDate,
-  endDate,
-  onDateChange,
   onReset,
   originalData,
   setFilteredData,
 }) {
-  // Function to filter leads based on date range
-  const filterByDateRange = () => {
-    const start = new Date(startDate);
-    start.setHours(0, 0, 0, 0);
-    const end = new Date(endDate);
-    end.setHours(23, 59, 59, 999);
+  
+  // ----------------------------- Date Filter -----------------------------
+  const today = new Date().toISOString().split("T")[0];
+  const [startDate, setStartDate] = useState(today);
+  const [endDate, setEndDate] = useState(today);
+  
+  // -------------------------------------- Function to update date states ---------------------------------------
+  const onDateChange = (field, value) => {
+    let newStartDate = startDate;
+    let newEndDate = endDate;
+
+    if (field === "startDate") {
+      newStartDate = value;
+    } else {
+      newEndDate = value;
+    }
+
+    // Update state first
+    setStartDate(newStartDate);
+    setEndDate(newEndDate);
+    
+    // Now filter with the updated values
+    filterByDateRange(newStartDate, newEndDate);
+  };
+
+  //------------------------------------------------Reset Function --------------------------------------------------
+  const handleResetClick = () => {
+    setStartDate(today);
+    setEndDate(today);
+    setFilteredData(originalData);
+    onReset();
+  };
+
+  //--------------------------------------------- Function to filter leads based on date range-----------------------------------
+  const filterByDateRange = (start, end) => {
+    if (!originalData || originalData.length === 0) return;
+
+    const startDateObj = new Date(start);
+    startDateObj.setHours(0, 0, 0, 0);
+    const endDateObj = new Date(end);
+    endDateObj.setHours(23, 59, 59, 999);
 
     const filtered = originalData.filter((follow) => {
       const callbackDate = new Date(follow.call_bck_DateTime);
-      return callbackDate >= start && callbackDate <= end;
+      return callbackDate >= startDateObj && callbackDate <= endDateObj;
     });
 
     setFilteredData(filtered);
   };
-
-  // Apply filter on date change
-  useEffect(() => {
-    filterByDateRange();
-  }, [startDate, endDate]);
 
   return (
     <div className="date_Filter_Main_Container">
@@ -67,7 +94,7 @@ export default function UseDateFilter({
         {/* Reset Button */}
         <div
           className="reset_paddings flex cursor-pointer items-center gap-2 rounded border p-2"
-          onClick={onReset}
+          onClick={() => handleResetClick()}
         >
           <label className="hide_Filter_Text">Reset</label>
           <TbRefresh className="filter_Reset_Image" />
@@ -78,9 +105,6 @@ export default function UseDateFilter({
 }
 
 UseDateFilter.propTypes = {
-  startDate: PropTypes.string.isRequired,
-  endDate: PropTypes.string.isRequired,
-  onDateChange: PropTypes.func.isRequired,
   onReset: PropTypes.func.isRequired,
   originalData: PropTypes.array.isRequired,
   setFilteredData: PropTypes.func.isRequired,

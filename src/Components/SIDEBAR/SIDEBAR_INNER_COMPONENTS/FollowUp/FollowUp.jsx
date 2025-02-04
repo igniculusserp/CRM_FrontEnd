@@ -9,6 +9,8 @@ import { BiEdit } from "react-icons/bi";
 //Folder Imported
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import { SearchElement } from "../SearchElement/SearchElement";
@@ -51,51 +53,64 @@ export default function FollowUp() {
   useEffect(() => {
     getApiData();
   }, []);
-  
-  //---------------------->----------------------> Data Transfer <----------------------<----------------------
-  const currentData = filteredData;
+
+  //---------------------------------------------> Grid Pagination <-----------------------------------------------
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
   //------------------------------------------------------ Table Heading And Table Data ------------------------------------------
   const columns = [
-    { field: "id", headerName: "ID", minWidth: 70 ,flex: 1,},
-    { field: "name", headerName: "Client Name", minWidth: 200 ,flex: 1,
+    { field: "id", headerName: "ID", minWidth: 70, flex: 1 },
+    {
+      field: "name",
+      headerName: "Client Name",
+      minWidth: 200,
+      flex: 1,
       renderCell: (params) => (
         <span
           onClick={() => handleClick(params.row.id)}
-          style={{ cursor: "pointer", color: "blue", fontWeight:500 }}
+          style={{ cursor: "pointer", color: "blue", fontWeight: 500 }}
         >
           {params.value}
         </span>
       ),
     },
-    { field: "mobileNo", headerName: "Mobile", minWidth: 150 ,flex: 1,},
-    { field: "email", headerName: "Email", minWidth: 200 ,flex: 1,},
-    { 
-      field: "segments", 
-      headerName: "Segment", 
-      minWidth: 200,flex: 1,
-      renderCell: (params) => params.row.segments.join(", ")
+    { field: "mobileNo", headerName: "Mobile", minWidth: 150, flex: 1 },
+    { field: "email", headerName: "Email", minWidth: 200, flex: 1 },
+    {
+      field: "segments",
+      headerName: "Segment",
+      minWidth: 200,
+      flex: 1,
+      renderCell: (params) => params.row.segments.join(", "),
     },
-    { 
-      field: "call_bck_DateTime", 
-      headerName: "Follow Up", 
-      minWidth: 200,flex: 1, 
+    {
+      field: "call_bck_DateTime",
+      headerName: "Follow Up",
+      minWidth: 200,
+      flex: 1,
       renderCell: (params) => params.value?.replace("T", " ") || "",
-    }
+    },
   ];
-
   //------------------------------------------------------ Check Box Data ------------------------------------------
   const handleSelectionChange = (selectionModel) => {
     const selectedRows = currentData.filter((row) =>
-      selectionModel.includes(row.id)
+      selectionModel.includes(row.id),
     );
     const selectedIDs = selectedRows.map((row) => row.id);
     const selectedEmails = selectedRows.map((row) => row.email);
     setSelectedRowsId(selectedIDs);
     setSelectedRowEmails(selectedEmails);
   };
-   // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
-   const handleClick = (id) => {
-    if(edit || businessRole === "Admin"){
+  // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
+  const handleClick = (id) => {
+    if (edit || businessRole === "Admin") {
       navigate(`/panel/createfollowup/${id}`);
     }
   };
@@ -129,15 +144,6 @@ export default function FollowUp() {
     }
     setFilteredData(filtered);
   }
-  // ----------------------------- Date Filter -----------------------------
-  const today = new Date().toISOString().split("T")[0];
-  const [startDate, setStartDate] = useState(today);
-  const [endDate, setEndDate] = useState(today);
-  // -------------------------------------- Function to update date states ---------------------------------------
-  const handleDateChange = (field, value) => {
-    if (field === "startDate") setStartDate(value);
-    else setEndDate(value);
-  };
   // ------------------------------ Search Function ----------------------------------
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
   useEffect(() => {
@@ -151,11 +157,10 @@ export default function FollowUp() {
   //------------------------------------------------------Filter Reset Settings ---------------------------------------------
   const [assignedTo, setAssignedTo] = useState("Managed By");
   const handleResetFilter = () => {
-    setStartDate(today);
-    setEndDate(today);
-    setFilteredData(originalData);
     setAssignedTo("Managed By");
+    setSearchTerm("");
   };
+ 
   //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
   const businessRole = localStorage.getItem("businessRole");
   const [edit, setEdit] = useState(false);
@@ -193,7 +198,6 @@ export default function FollowUp() {
   useEffect(() => {
     handleGetPermission();
   }, []);
-
 
   return (
     <>
@@ -244,10 +248,10 @@ export default function FollowUp() {
           </div>
           <div className="action_Button_Main_Container flex items-center justify-start gap-3">
             {/* Stripe-BarDropDown */}
-          <UseGridFilter 
-            selectedViewValue={selectedViewValue}
-            setSelectedViewValue={setSelectedViewValue}
-          />
+            <UseGridFilter
+              selectedViewValue={selectedViewValue}
+              setSelectedViewValue={setSelectedViewValue}
+            />
             {/* ACTIONS DROPDWON */}
             <UseAction
               originalData={originalData}
@@ -265,17 +269,14 @@ export default function FollowUp() {
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-3xl font-medium">Follow Up</h1>
             <h1 className="min-w-10 rounded-md bg-blue-600 p-2 text-center text-sm text-white shadow-md">
-              {currentData.length}{" "}
+              {filteredData.length}{" "}
             </h1>
           </div>
           {/* ------------------- Filter by date ----------------- */}
           <UseDateFilter
-            startDate={startDate}
-            endDate={endDate}
-            onDateChange={handleDateChange}
-            onReset={handleResetFilter}
-            originalData={originalData}
-            setFilteredData={setFilteredData}
+              onReset={handleResetFilter}
+              originalData={originalData}
+              setFilteredData={setFilteredData}
           />
         </div>
         {/* TABLE VIEW */}
@@ -284,30 +285,26 @@ export default function FollowUp() {
             {/*--------------TABLE HEAD START------------- */}
             {selectedViewValue === "Table View" && (
               <Paper sx={{ width: "100%" }}>
-              <DataGrid
-                rows={currentData}
-                columns={columns}
-                initialState={{
-                  pagination: {
-                    paginationModel: {
-                      pageSize: 10,
+                <DataGrid
+                  rows={currentData}
+                  columns={columns}
+                  pagination={false}
+                  checkboxSelection
+                  onRowSelectionModelChange={(newSelection) =>
+                    handleSelectionChange(newSelection)
+                  }
+                  sx={{
+                    border: 0,
+                    width: "100%",
+                    "& .MuiDataGrid-columnHeaderTitle": {
+                      fontWeight: "bold",
                     },
-                  },
-                }}
-                pageSizeOptions={[10]}
-                checkboxSelection
-                onRowSelectionModelChange={(newSelection) =>
-                  handleSelectionChange(newSelection)
-                }
-                sx={{
-                  border: 0,
-                  width: "100%", 
-                  "& .MuiDataGrid-columnHeaderTitle": {
-                    fontWeight: "bold",
-                  },
-                }}
-              />
-            </Paper>
+                    "& .MuiDataGrid-footerContainer": {
+                      display: "none",
+                    },
+                  }}
+                />
+              </Paper>
             )}
           </div>
           {/* Grid View */}
@@ -391,7 +388,25 @@ export default function FollowUp() {
               </div>
             </>
           )}
-       
+          {/* --------------------------------------- Pagination ------------------------------------------ */}
+          <Stack spacing={2} className="mt-4 mb-1">
+            <Pagination
+              count={Math.ceil(filteredData.length / itemsPerPage)}
+              page={currentPage}
+              onChange={handlePageChange}
+              sx={{
+                display:"flex", 
+                justifyContent:"center", 
+                "& .MuiPaginationItem-root": {
+                  fontSize: "1.3 rem",
+                },
+                "& .MuiPaginationItem-root.Mui-selected": {
+                  backgroundColor: "rgba(6, 182, 212, 1)",
+                  color: "#fff",
+                },
+              }}
+            />
+          </Stack>
         </div>
       </div>
     </>
