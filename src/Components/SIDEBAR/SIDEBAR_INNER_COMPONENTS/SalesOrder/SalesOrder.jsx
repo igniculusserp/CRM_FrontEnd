@@ -18,12 +18,9 @@ import { MdCall } from "react-icons/md";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { TbRefresh } from "react-icons/tb";
 
-
-
 //Wizard->
 import { FaTableList } from "react-icons/fa6";
 import { IoGrid } from "react-icons/io5";
-
 
 //grid->
 import { BiCalendar } from "react-icons/bi";
@@ -34,7 +31,6 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { PiLineSegmentsBold } from "react-icons/pi";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsHourglassSplit } from "react-icons/bs";
-
 
 //Folder Imported
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
@@ -164,11 +160,11 @@ export default function SalesOrder() {
   };
 
   //------------------------------------------------------------------------------------------------
- //-------------------------------->WIZARD DROPDOWN<--------------------------------
- const stripeBar = [
-  { key: 1, value: "Table View", icon: <FaTableList /> },
-  { key: 2, value: "Grid View", icon: <IoGrid /> },
-];
+  //-------------------------------->WIZARD DROPDOWN<--------------------------------
+  const stripeBar = [
+    { key: 1, value: "Table View", icon: <FaTableList /> },
+    { key: 2, value: "Grid View", icon: <IoGrid /> },
+  ];
 
   const [stripeBardropDown, setstripeBardropDown] = useState(false);
 
@@ -574,7 +570,7 @@ export default function SalesOrder() {
 
   return (
     //parent
-    <div className="flex flex-col min-h-screen m-3">
+    <div className="m-3 flex min-h-screen flex-col">
       <ToastContainer />
       {/* Render the modal only when `isModalOpen` is true */}
       {isModalOpen && (
@@ -585,19 +581,19 @@ export default function SalesOrder() {
       )}
 
       {/* containerbar*/}
-      <div className="flex flex-wrap items-center justify-between gap-3 px-3 py-2 bg-white rounded-lg">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-white px-3 py-2">
         {/* PART-I */}
         {/* container- Alleads, search */}
-        <div className="flex flex-wrap items-center justify-start gap-3 contact_Dropdown_Main_Container">
+        <div className="contact_Dropdown_Main_Container flex flex-wrap items-center justify-start gap-3">
           {/* PART-I */}
           {/* All Lead  DropDown*/}
           <div
-            className="relative sales_Oreder_Dropdown_Container whitespace-nowrap"
+            className="sales_Oreder_Dropdown_Container relative whitespace-nowrap"
             onClick={toggleDropdown_salesOrderStatus}
             onMouseLeave={() => setisDropdownVisible_salesOrderStatus(false)}
           >
             <button
-              className="flex items-center justify-between px-4 py-2 truncate border rounded-md contact_Dropdown_Button min-w-40"
+              className="contact_Dropdown_Button flex min-w-40 items-center justify-between truncate rounded-md border px-4 py-2"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -605,12 +601,12 @@ export default function SalesOrder() {
               <FaAngleDown className="ml-2 text-gray-900" />
             </button>
             {isDropdownVisible_salesOrderStatus && (
-              <div className="absolute z-10 bg-white border border-gray-300 rounded-md top-10">
+              <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
                 <ul className="py-2 text-sm text-gray-700">
                   {status.map((item, index) => (
                     <li
                       key={index}
-                      className="block w-56 px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                      className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                       onClick={() => handleStatus(item.value)} // Correct selection logic
                     >
                       {item.value}
@@ -630,16 +626,16 @@ export default function SalesOrder() {
         </div>
 
         {/* PART-II */}
-        <div className="flex items-center justify-start gap-3 action_Button_Main_Container">
+        <div className="action_Button_Main_Container flex items-center justify-start gap-3">
           {/* PART-II */}
           {/* Stripe-BarDropDown */}
           <div
-            className="relative hide_Component"
+            className="hide_Component relative"
             onClick={togglestripeBar}
             onMouseLeave={() => setstripeBardropDown(false)}
           >
             <button
-              className="flex items-center justify-between gap-2 px-4 py-3 border rounded-md"
+              className="flex items-center justify-between gap-2 rounded-md border px-4 py-3"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -647,20 +643,20 @@ export default function SalesOrder() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {stripeBardropDown && (
-              <div className="absolute right-0 z-10 w-32 bg-white border border-gray-300 rounded-md top-10">
+              <div className="absolute right-0 top-10 z-10 w-32 rounded-md border border-gray-300 bg-white">
                 <ul className="text-sm text-gray-700">
-                {stripeBar.map(({ key, value, icon }) => (
-                  <li
-                    key={key}
-                    className="flex items-center gap-2 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
-                    onClick={() => handleStripeButton(value)}
-                  >
-                    <div className="flex items-center justify-center w-6 h-6 mx-1 text-lg">
-                      {icon}
-                    </div>
-                    <div className="flex-1 text-left">{value}</div>
-                  </li>
-                ))}
+                  {stripeBar.map(({ key, value, icon }) => (
+                    <li
+                      key={key}
+                      className="flex cursor-pointer items-center gap-2 border-b py-2 hover:bg-cyan-500 hover:text-white"
+                      onClick={() => handleStripeButton(value)}
+                    >
+                      <div className="mx-1 flex h-6 w-6 items-center justify-center text-lg">
+                        {icon}
+                      </div>
+                      <div className="flex-1 text-left">{value}</div>
+                    </li>
+                  ))}
                 </ul>
               </div>
             )}
@@ -669,12 +665,12 @@ export default function SalesOrder() {
           {/* PART-II */}
           {/*-------Action DropDown */}
           <div
-            className="relative action_Button_Container"
+            className="action_Button_Container relative"
             onClick={toggleActionsMenuLogo}
             onMouseLeave={() => setdropActionsMenudropDown(false)}
           >
             <button
-              className="flex items-center justify-between gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg action_Button"
+              className="action_Button flex items-center justify-between gap-2 rounded-lg border border-blue-600 px-4 py-2 text-blue-600"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -682,13 +678,13 @@ export default function SalesOrder() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {dropActionsMenudropDown && (
-              <div className="absolute right-0 z-10 w-56 py-2 bg-white border border-gray-300 rounded-md top-10">
+              <div className="absolute right-0 top-10 z-10 w-56 rounded-md border border-gray-300 bg-white py-2">
                 <ul className="text-sm text-gray-700">
                   {dropActionsMenu.map(({ key, value }) =>
                     permissions.includes(value) || businessRole === "Admin" ? (
                       <li
                         key={key}
-                        className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                        className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                         onClick={() => handleActionButton(value)}
                       >
                         {value}
@@ -702,35 +698,35 @@ export default function SalesOrder() {
         </div>
       </div>
       {/* 2nd bar Leads and lenghtLeads*/}
-      <div className="flex flex-wrap items-center justify-between gap-3 mt-3">
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
         <div className="flex gap-3">
           <h1 className="text-3xl font-medium">Sales Order</h1>
-          <h1 className="p-2 text-sm text-center text-white bg-blue-600 rounded shadow-md min-w-10">
+          <h1 className="min-w-10 rounded bg-blue-600 p-2 text-center text-sm text-white shadow-md">
             {getleads?.length}
           </h1>
         </div>
 
         <div className="date_Filter_Main_Container">
           {/* ------------------- Filter by date ----------------- */}
-          <div className="flex items-center justify-between p-2 bg-white border-2 border-gray-300 rounded-lg date_Filter_Main_Container">
+          <div className="date_Filter_Main_Container flex items-center justify-between rounded-lg border-2 border-gray-300 bg-white p-2">
             {/* Filter Icon Button */}
             <div className="flex items-center">
-              <button className="pr-2 border-r border-gray-500">
+              <button className="border-r border-gray-500 pr-2">
                 <ImFilter className="filter_Image_Size" />
               </button>
 
               {/* Date Range Filter Button */}
-              <button className="px-2 border-r border-gray-500 filter_Image_Display whitespace-nowrap">
+              <button className="filter_Image_Display whitespace-nowrap border-r border-gray-500 px-2">
                 Filter By
               </button>
 
               {/* Date Range Inputs */}
-              <div className="flex items-center gap-2 px-2 filter_Date_Container">
+              <div className="filter_Date_Container flex items-center gap-2 px-2">
                 <label className="hide_Filter_Text">From:</label>
                 <input
                   type="date"
                   value={startDate}
-                  className="px-2 py-2 border rounded filter_Date"
+                  className="filter_Date rounded border px-2 py-2"
                   onChange={(e) => setStartDate(e.target.value)}
                 />
 
@@ -738,14 +734,14 @@ export default function SalesOrder() {
                 <input
                   type="date"
                   value={endDate}
-                  className="px-2 py-2 border rounded filter_Date"
+                  className="filter_Date rounded border px-2 py-2"
                   onChange={(e) => setEndDate(e.target.value)}
                 />
               </div>
             </div>
 
             <div
-              className="flex items-center gap-2 p-2 border rounded cursor-pointer reset_paddings"
+              className="reset_paddings flex cursor-pointer items-center gap-2 rounded border p-2"
               onClick={handleResetFilter}
             >
               <label className="hide_Filter_Text">Reset</label>
@@ -755,10 +751,10 @@ export default function SalesOrder() {
         </div>
       </div>
       {/*-------Table-------*/}
-      <div className="mt-3 overflow-x-auto leads_Table_Main_Container">
-        <div className="min-w-full rounded-md leads_Table_Container">
+      <div className="leads_Table_Main_Container mt-3 overflow-x-auto">
+        <div className="leads_Table_Container min-w-full rounded-md">
           {selectedViewValue === "Table View" && (
-            <table className="min-w-full bg-white leads_Table">
+            <table className="leads_Table min-w-full bg-white">
               <thead>
                 <tr className="border-b-2 border-gray-300">
                   {/* CHECKBOX */}
@@ -769,45 +765,45 @@ export default function SalesOrder() {
                       onChange={handleSelectAllCheckbox}
                     />
                   </th>
-                  <th className="px-1 py-3 font-medium text-left border-r min-w-36 max-w-40">
+                  <th className="min-w-36 max-w-40 border-r px-1 py-3 text-left font-medium">
                     <div className="flex justify-between">
                       <span>Client Name</span>
                     </div>
                   </th>
-                  <th className="px-1 py-3 font-medium text-left border-r">
+                  <th className="border-r px-1 py-3 text-left font-medium">
                     <div className="flex items-center justify-between">
                       <span>Email</span>
                       <FaBars />
                     </div>
                   </th>
-                  <th className="px-1 py-3 font-medium text-left border-r">
+                  <th className="border-r px-1 py-3 text-left font-medium">
                     <div className="flex items-center justify-between">
                       <span>Phone No</span>
                       <FaBars />
                     </div>
                   </th>
 
-                  <th className="px-1 py-3 font-medium text-left border-r">
+                  <th className="border-r px-1 py-3 text-left font-medium">
                     <div className="flex items-center justify-between">
                       <span>Start Date</span>
                       <FaBars />
                     </div>
                   </th>
 
-                  <th className="px-1 py-3 font-medium text-left border-r">
+                  <th className="border-r px-1 py-3 text-left font-medium">
                     <div className="flex items-center justify-between">
                       <span>End Date</span>
                       <FaBars />
                     </div>
                   </th>
 
-                  <th className="px-1 py-3 font-medium text-left border-r min-w-32 max-w-36">
+                  <th className="min-w-32 max-w-36 border-r px-1 py-3 text-left font-medium">
                     <div className="flex items-center justify-between">
                       <span>Segments</span>
                       <FaBars />
                     </div>
                   </th>
-                  <th className="px-1 py-3 font-medium text-left border-r w-44">
+                  <th className="w-44 border-r px-1 py-3 text-left font-medium">
                     <div className="flex items-center justify-between">
                       <span>Managed By</span>
                       <FaBars />
@@ -831,7 +827,7 @@ export default function SalesOrder() {
                   return (
                     <tr
                       key={item.id}
-                      className="border-b border-gray-300 cursor-pointer hover:bg-gray-200"
+                      className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                     >
                       {/* CHECKBOX */}
                       <td className="px-1 py-3 text-center">
@@ -843,7 +839,7 @@ export default function SalesOrder() {
                       </td>
                       {/* CONTACT NAME */}
                       <td
-                        className="px-1 py-4 text-sm leading-5 text-gray-600 border-b border-gray-300"
+                        className="border-b border-gray-300 px-1 py-4 text-sm leading-5 text-gray-600"
                         onClick={
                           edit || businessRole === "Admin"
                             ? () => navigate(`/panel/clientso/${item.id}`)
@@ -856,11 +852,11 @@ export default function SalesOrder() {
                       </td>
 
                       {/* <------------------------------------Email------------------------------------> */}
-                      <td className="px-4 py-4 text-sm break-all border-b border-gray-300 text- min-w-24 max-w-48">
+                      <td className="text- min-w-24 max-w-48 break-all border-b border-gray-300 px-4 py-4 text-sm">
                         {item.email}
                       </td>
                       {/* <------------------------------------MOB NO.------------------------------------> */}
-                      <td className="px-4 py-4 text-sm border-b border-gray-300">
+                      <td className="border-b border-gray-300 px-4 py-4 text-sm">
                         <div className="flex items-center gap-2">
                           <a
                             href={`tel:${item.mobileNo}`}
@@ -872,15 +868,15 @@ export default function SalesOrder() {
                         </div>
                       </td>
                       {/* <------------------------------------subscription_start_date------------------------------------> */}
-                      <td className="px-4 py-4 text-sm break-all border-b border-gray-300 text- min-w-24 max-w-48">
+                      <td className="text- min-w-24 max-w-48 break-all border-b border-gray-300 px-4 py-4 text-sm">
                         {item.subscription_start_date?.split("T")[0]}
                       </td>
                       {/* <------------------------------------subscription_end_date------------------------------------> */}
-                      <td className="px-4 py-4 text-sm break-all border-b border-gray-300 text- min-w-24 max-w-48">
+                      <td className="text- min-w-24 max-w-48 break-all border-b border-gray-300 px-4 py-4 text-sm">
                         {item.subscription_end_date?.split("T")[0]}
                       </td>
                       {/* Segments */}
-                      <td className="px-1 py-4 text-sm border-b border-gray-300 min-w-24 max-w-36">
+                      <td className="min-w-24 max-w-36 border-b border-gray-300 px-1 py-4 text-sm">
                         <div>
                           {item.segments && (
                             <span className="">
@@ -892,7 +888,7 @@ export default function SalesOrder() {
                         </div>
                       </td>
                       {/* Assigned To and User Role */}
-                      <td className="px-2 py-4 text-sm text-center border-b border-gray-300">
+                      <td className="border-b border-gray-300 px-2 py-4 text-center text-sm">
                         {matchedUser && (
                           <div
                             className="w-[90%] rounded-full px-2 py-2 text-xs font-semibold text-white"
@@ -922,11 +918,11 @@ export default function SalesOrder() {
                           className="w-[90%]"
                         >
                           {item.status === true ? (
-                            <div className="py-1 pl-2 pr-4 text-xs font-medium text-center text-white bg-green-400 border rounded-full hover:bg-green-600">
+                            <div className="rounded-full border bg-green-400 py-1 pl-2 pr-4 text-center text-xs font-medium text-white hover:bg-green-600">
                               Approved
                             </div>
                           ) : (
-                            <div className="w-full px-2 py-1 text-xs font-medium text-center text-white bg-red-400 border rounded-full hover:bg-red-600">
+                            <div className="w-full rounded-full border bg-red-400 px-2 py-1 text-center text-xs font-medium text-white hover:bg-red-600">
                               Pending
                             </div>
                           )}
@@ -939,174 +935,169 @@ export default function SalesOrder() {
             </table>
           )}
 
-              {/* ------------GRID------------ */}
-              {/* ------------GRID------------ */}
-              {/* ------------GRID------------ */}
-              {/* ------------GRID------------ */}
-              {/* ------------GRID------------ */}
-              {selectedViewValue === "Grid View" && (
-                <>
-                  <div className="min-w-full">
-                    {/* ------------Parent------------ */}
-                    <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
-                      {/*---------Card starts Here */}
-                      {currentLeads.map((item) => (
-                        // {/* ------------sub-Parent->Container ------------ */}
-                        <div
-                          className="grid grid-cols-1 gap-1 p-2 rounded-lg shadow-md bg-sky-100"
-                          key={item.id}
-                        >
-                        
-
-                          <div className="">
-                            <div className="flex items-center py-2 text-center bg-white border-2 rounded border-cyan-500">
-                            <div className= "ml-1">
-
-
-                             <div>
-                        <button
-                          onClick={
-                            approve || businessRole === "Admin"
-                              ? () => handlePendingStatus(item.id, item.status)
-                              : undefined
-                          }
-                          className="w-[90%]"
-                        >
-                          {item.status === true ? (
-                            <div className="py-1 pl-2 pr-4 text-xs font-medium text-center text-white bg-green-500 border rounded shadow-sm shadow-green-400 hover:bg-green-500">
-                              Approved
-                            </div>
-                          ) : (
-                            <div className="w-full py-1 pl-2 pr-4 text-xs font-medium text-center text-white bg-red-500 border rounded shadow-sm shadow-red-400 hover:bg-red-600">
-                              Pending
-                            </div>
-                          )}
-                        </button>
-                      </div>
-                      
-                            </div>
-                              <div className="flex items-center justify-center gap-2 mx-auto">
-                                <FaUserTie />
-                                <span className="">
-                                  {item?.clientName[0].toUpperCase() +
-                                    item?.clientName?.substr(1)}
-                                </span>
-                              </div>
-                              <AiOutlineEdit
-                                className="p-1 mr-3 text-white rounded-full bg-cyan-400 hover:bg-cyan-500"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  navigate(`/panel/clientso/${item.id}`);
-                                }}
-                                size={25}
-                              />
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {/* ------------GRID------------ */}
+          {selectedViewValue === "Grid View" && (
+            <>
+              <div className="min-w-full">
+                {/* ------------Parent------------ */}
+                <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
+                  {/*---------Card starts Here */}
+                  {currentLeads.map((item) => (
+                    // {/* ------------sub-Parent->Container ------------ */}
+                    <div
+                      className="grid grid-cols-1 gap-1 rounded-lg bg-sky-100 p-2 shadow-md"
+                      key={item.id}
+                    >
+                      <div className="">
+                        <div className="flex items-center rounded border-2 border-cyan-500 bg-white py-2 text-center">
+                          <div className="ml-1">
+                            <div>
+                              <button
+                                onClick={
+                                  approve || businessRole === "Admin"
+                                    ? () =>
+                                        handlePendingStatus(
+                                          item.id,
+                                          item.status,
+                                        )
+                                    : undefined
+                                }
+                                className="w-[90%]"
+                              >
+                                {item.status === true ? (
+                                  <div className="rounded border bg-green-500 py-1 pl-2 pr-4 text-center text-xs font-medium text-white shadow-sm shadow-green-400 hover:bg-green-500">
+                                    Approved
+                                  </div>
+                                ) : (
+                                  <div className="w-full rounded border bg-red-500 py-1 pl-2 pr-4 text-center text-xs font-medium text-white shadow-sm shadow-red-400 hover:bg-red-600">
+                                    Pending
+                                  </div>
+                                )}
+                              </button>
                             </div>
                           </div>
+                          <div className="mx-auto flex items-center justify-center gap-2">
+                            <FaUserTie />
+                            <span className="">
+                              {item?.clientName[0].toUpperCase() +
+                                item?.clientName?.substr(1)}
+                            </span>
+                          </div>
+                          <AiOutlineEdit
+                            className="mr-3 rounded-full bg-cyan-400 p-1 text-white hover:bg-cyan-500"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/panel/clientso/${item.id}`);
+                            }}
+                            size={25}
+                          />
+                        </div>
+                      </div>
 
-                          <div className="py-2 bg-white border-2 rounded border-cyan-500">
-                            <div className="flex items-center justify-between px-3 py-1">
-                              <div className="flex items-center justify-between py-1">
-                                <IoIosMail size={22} className="w-6" />
-                                <span className="hidden sm:block">Email</span>
-                              </div>
-                              <div className="text-sm font-medium truncate">
-                                <a
-                                  href={`mailto:${item.email}`}
-                                  onClick={(event) => event.stopPropagation()}
-                                >
-                                  {item.email}
-                                </a>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center justify-between px-3 py-1">
-                              <div className="flex items-center justify-between py-1">
-                                <FaPhoneAlt size={14} className="w-6" />
-                                <span className="hidden sm:block">Phone</span>
-                              </div>
-                              <div className="text-sm font-medium truncate">
-                                <a
-                                  href={`tel:${item.mobileNo}`}
-                                  onClick={(event) => event.stopPropagation()}
-                                >
-                                  {item?.mobileNo}
-                                </a>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center justify-between px-3 py-1">
-                              <div className="flex items-center justify-between py-1">
-                                <PiLineSegmentsBold size={16} className="w-6" />
-                                <span className="hidden sm:block">
-                                  Segments
-                                </span>
-                              </div>
-                              <div className="text-sm font-medium truncate">
-                                {item?.segments?.length
-                                  ? item.segments?.join(", ")
-                                  : ""}
-                              </div>
-                            </div>
-
-                            <div className="flex items-center justify-between px-3 py-1">
-                              <div className="flex items-center justify-between py-1">
-                                <RiShieldUserLine size={18} className="w-6" />
-                                <span className="hidden sm:block">
-                                  Managed By
-                                </span>
-                              </div>
-                              <div className="text-sm font-medium">
-                                {item?.assigned_To}
-                              </div>
-                            </div>
-
-                            <div className="flex items-center justify-between px-3 py-1">
-                              <div className="flex items-center justify-between py-1">
-                                <BsHourglassSplit size={18} className="w-6" />
-                                <span className="hidden sm:block">Source</span>
-                              </div>
-                              <div className="text-sm font-medium">
-                                {item?.leadSource}
-                              </div>
-                            </div>
-
-                            <div className="flex items-center justify-between px-3 py-1">
-                              <div className="flex items-center justify-between py-1">
-                                <BiCalendar size={18} className="w-6" />
-                                <span className="hidden sm:block">
-                                  Trail Start Date
-                                </span>
-                              </div>
-                              <div className="text-sm font-medium">
-                                {item?.subscription_start_date?.split("T")[0]}
-                              </div>
-                            </div>
-
-                            <div className="flex items-center justify-between px-3 py-1">
-                              <div className="flex items-center justify-between py-1">
-                                <BiCalendar size={18} className="w-6" />
-                                <span className="hidden sm:block">
-                                  Trail End Date
-                                </span>
-                              </div>
-                              <div className="text-sm font-medium">
-                                {item?.subscription_end_date?.split("T")[0]}
-                              </div>
-                            </div>
+                      <div className="rounded border-2 border-cyan-500 bg-white py-2">
+                        <div className="flex items-center justify-between px-3 py-1">
+                          <div className="flex items-center justify-between py-1">
+                            <IoIosMail size={22} className="w-6" />
+                            <span className="hidden sm:block">Email</span>
+                          </div>
+                          <div className="truncate text-sm font-medium">
+                            <a
+                              href={`mailto:${item.email}`}
+                              onClick={(event) => event.stopPropagation()}
+                            >
+                              {item.email}
+                            </a>
                           </div>
                         </div>
-                      ))}
+
+                        <div className="flex items-center justify-between px-3 py-1">
+                          <div className="flex items-center justify-between py-1">
+                            <FaPhoneAlt size={14} className="w-6" />
+                            <span className="hidden sm:block">Phone</span>
+                          </div>
+                          <div className="truncate text-sm font-medium">
+                            <a
+                              href={`tel:${item.mobileNo}`}
+                              onClick={(event) => event.stopPropagation()}
+                            >
+                              {item?.mobileNo}
+                            </a>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between px-3 py-1">
+                          <div className="flex items-center justify-between py-1">
+                            <PiLineSegmentsBold size={16} className="w-6" />
+                            <span className="hidden sm:block">Segments</span>
+                          </div>
+                          <div className="truncate text-sm font-medium">
+                            {item?.segments?.length
+                              ? item.segments?.join(", ")
+                              : ""}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between px-3 py-1">
+                          <div className="flex items-center justify-between py-1">
+                            <RiShieldUserLine size={18} className="w-6" />
+                            <span className="hidden sm:block">Managed By</span>
+                          </div>
+                          <div className="text-sm font-medium">
+                            {item?.assigned_To}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between px-3 py-1">
+                          <div className="flex items-center justify-between py-1">
+                            <BsHourglassSplit size={18} className="w-6" />
+                            <span className="hidden sm:block">Source</span>
+                          </div>
+                          <div className="text-sm font-medium">
+                            {item?.leadSource}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between px-3 py-1">
+                          <div className="flex items-center justify-between py-1">
+                            <BiCalendar size={18} className="w-6" />
+                            <span className="hidden sm:block">
+                              Trail Start Date
+                            </span>
+                          </div>
+                          <div className="text-sm font-medium">
+                            {item?.subscription_start_date?.split("T")[0]}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between px-3 py-1">
+                          <div className="flex items-center justify-between py-1">
+                            <BiCalendar size={18} className="w-6" />
+                            <span className="hidden sm:block">
+                              Trail End Date
+                            </span>
+                          </div>
+                          <div className="text-sm font-medium">
+                            {item?.subscription_end_date?.split("T")[0]}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </>
-              )}
-            </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
 
         {selectedViewValue === "Table View" && (
           <>
-            <div className="flex justify-end m-4">
+            <div className="m-4 flex justify-end">
               {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
-              <nav className="flex items-center justify-center gap-2 mx-auto mt-4 text-center">
+              <nav className="mx-auto mt-4 flex items-center justify-center gap-2 text-center">
                 {/* /---------------------->Previous Button <----------------------< */}
                 <button
                   onClick={() => paginate(currentPage - 1)}

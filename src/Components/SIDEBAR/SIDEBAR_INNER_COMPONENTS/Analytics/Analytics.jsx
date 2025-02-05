@@ -152,7 +152,7 @@ export default function Analytics() {
       setGrowthPercentage(growthPercentage);
       if (
         totalSales.currentMonthSalesAmount -
-        totalSales.previousMonthSalesAmount >
+          totalSales.previousMonthSalesAmount >
         0
       ) {
         setPercentageStatus("Plus");
@@ -227,33 +227,34 @@ export default function Analytics() {
   };
 
   return (
-    <main className="grid min-h-screen gap-1 mx-1 my-3">
+    <main className="mx-1 my-3 grid min-h-screen gap-1">
       {/* ------------ TOP SECTION ------------ */}
       {/* ------------ CARD ->>>Parent : 4 Childs<<<- ------------ */}
-      <div className="grid items-center grid-cols-4 gap-3 px-2 ">
-        
-      {/* ------------ CARD ->>> Child : 1 <<<- ------------ */}
-        <div className="px-2 py-2 bg-white rounded-md shadow-md ">
+      <div className="grid grid-cols-4 items-center gap-3 px-2">
+        {/* ------------ CARD ->>> Child : 1 <<<- ------------ */}
+        <div className="rounded-md bg-white px-2 py-2 shadow-md">
           {/* ------------ Inner ------------ */}
-          <div className="grid items-center justify-between grid-cols-2">
+          <div className="grid grid-cols-2 items-center justify-between">
             {/* ------------ Textual Data ------------ */}
-            <div className="grid grid-flow-row-dense gap-2 ">
+            <div className="grid grid-flow-row-dense gap-2">
               {/* ------------ Heading ------------ */}
-              <h1 className="text-sm ">
+              <h1 className="text-sm">
                 {/* Total Sales */}
                 {business === "Brokerage" ? "TOTAL FUNDS" : "TOTAL SALES"}
               </h1>
               {/* ------------ Button ------------ */}
-              <div className="flex items-center ">
+              <div className="flex items-center">
                 <LuIndianRupee />
-                <span className="font-semibold">{totalSales.currentMonthSalesAmount}</span>
+                <span className="font-semibold">
+                  {totalSales.currentMonthSalesAmount}
+                </span>
               </div>
               {/* ------------ Circle-Bar ------------ */}
               <div
                 className={
                   percentageStatus === "Plus"
-                    ? "flex items-center justify-center gap-1 rounded-md bg-green-500 shadow-sm shadow-green-700 px-1 py-1 min-w-20 max-w-24"
-                    : "flex items-center justify-center gap-1 rounded-md bg-red-500 shadow-sm shadow-red-700 px-1 py-1 min-w-20 max-w-24"
+                    ? "flex min-w-20 max-w-24 items-center justify-center gap-1 rounded-md bg-green-500 px-1 py-1 shadow-sm shadow-green-700"
+                    : "flex min-w-20 max-w-24 items-center justify-center gap-1 rounded-md bg-red-500 px-1 py-1 shadow-sm shadow-red-700"
                 }
               >
                 <FaArrowAltCircleUp
@@ -261,7 +262,8 @@ export default function Analytics() {
                   style={{
                     transform:
                       percentageStatus === "Minus"
-                        ? "rotate(180deg)" : "rotate(0deg)",
+                        ? "rotate(180deg)"
+                        : "rotate(0deg)",
                   }}
                 />
                 <span className="text-white">{growthPercentage}%</span>
@@ -277,34 +279,36 @@ export default function Analytics() {
           </div>
         </div>
         {/* ------------------------------------------------------------------------------------------------ */}
-        
+
         {/* ------------ CARD ->>> Child :2 <<<- ------------ */}
-        <div className="px-2 py-2 bg-white rounded-md shadow-md ">
+        <div className="rounded-md bg-white px-2 py-2 shadow-md">
           {/* ------------ CARD ------------ */}
-           {/* ------------ Inner ------------ */}
-           <div className="grid items-center justify-between grid-cols-2">
-           {/* ------------ Textual Data ------------ */}
-           <div className="grid grid-flow-row-dense gap-2 ">
-             {/* ------------ Heading ------------ */}
-             <h1 className="text-sm ">
+          {/* ------------ Inner ------------ */}
+          <div className="grid grid-cols-2 items-center justify-between">
+            {/* ------------ Textual Data ------------ */}
+            <div className="grid grid-flow-row-dense gap-2">
+              {/* ------------ Heading ------------ */}
+              <h1 className="text-sm">
                 {business === "Brokerage" ? "TODAY'S FUND" : "TODAY'S SALE"}
               </h1>
 
-                {/* ------------ Amount ------------ */}
-                <div className="flex items-center ">
+              {/* ------------ Amount ------------ */}
+              <div className="flex items-center">
                 <LuIndianRupee />
-                <span className="font-semibold">{todaySales.todaySalesAmount}</span>
+                <span className="font-semibold">
+                  {todaySales.todaySalesAmount}
+                </span>
               </div>
-              
+
               <button
                 className={
                   todaysPercentageStatus === "Plus"
-                     ? "flex items-center justify-center gap-1 rounded-md bg-green-500 shadow-sm shadow-green-700 px-1 py-1 min-w-20 max-w-24"
-                    : "flex items-center justify-center gap-1 rounded-md bg-red-500 shadow-sm shadow-red-700 px-1 py-1 min-w-20 max-w-24"
+                    ? "flex min-w-20 max-w-24 items-center justify-center gap-1 rounded-md bg-green-500 px-1 py-1 shadow-sm shadow-green-700"
+                    : "flex min-w-20 max-w-24 items-center justify-center gap-1 rounded-md bg-red-500 px-1 py-1 shadow-sm shadow-red-700"
                 }
               >
                 <FaArrowAltCircleUp
-                className="text-white"
+                  className="text-white"
                   style={{
                     transform:
                       todaysPercentageStatus === "Minus"
@@ -317,37 +321,37 @@ export default function Analytics() {
             </div>
             {/* ------------ CIRCLE ------------ */}
             <div className="flex items-center justify-end">
-            <SalesCircle
-              todaysGrowthPercentage={todaysGrowthPercentage}
-              color={todaysPercentageStatus === "Plus" ? "green" : "red"} // Color based on growth status
-            />
-          </div>
+              <SalesCircle
+                todaysGrowthPercentage={todaysGrowthPercentage}
+                color={todaysPercentageStatus === "Plus" ? "green" : "red"} // Color based on growth status
+              />
+            </div>
           </div>
         </div>
 
-         {/* ------------------------------------------------------------------------------------------------ */}
-        
-         {/* ------------ CARD ->>> Child :3 <<<- ------------ */}
-         <div className="px-2 py-2 bg-white rounded-md shadow-md ">
-         {/* ------------ CARD ------------ */}
+        {/* ------------------------------------------------------------------------------------------------ */}
+
+        {/* ------------ CARD ->>> Child :3 <<<- ------------ */}
+        <div className="rounded-md bg-white px-2 py-2 shadow-md">
+          {/* ------------ CARD ------------ */}
           {/* ------------ Inner ------------ */}
-          <div className="grid items-center justify-between grid-cols-2">
-          {/* ------------ Textual Data ------------ */}
-          <div className="grid grid-flow-row-dense gap-2 ">
-            {/* ------------ Heading ------------ */}
-            <h1 className="text-sm ">FOLLOW UP</h1>
-            <span>{todayFollowup.todayFollowup}</span>
-            
-            {/* ------------ Button ------------ */}
+          <div className="grid grid-cols-2 items-center justify-between">
+            {/* ------------ Textual Data ------------ */}
+            <div className="grid grid-flow-row-dense gap-2">
+              {/* ------------ Heading ------------ */}
+              <h1 className="text-sm">FOLLOW UP</h1>
+              <span>{todayFollowup.todayFollowup}</span>
+
+              {/* ------------ Button ------------ */}
               <div
                 className={
                   followUpPercentageStatus === "Plus"
-                  ? "flex items-center justify-center gap-1 rounded-md bg-green-500 shadow-sm shadow-green-700 px-1 py-1 min-w-20 max-w-24"
-                  : "flex items-center justify-center gap-1 rounded-md bg-red-500 shadow-sm shadow-red-700 px-1 py-1 min-w-20 max-w-24"
-              }
+                    ? "flex min-w-20 max-w-24 items-center justify-center gap-1 rounded-md bg-green-500 px-1 py-1 shadow-sm shadow-green-700"
+                    : "flex min-w-20 max-w-24 items-center justify-center gap-1 rounded-md bg-red-500 px-1 py-1 shadow-sm shadow-red-700"
+                }
               >
                 <FaArrowAltCircleUp
-                className="text-white"
+                  className="text-white"
                   style={{
                     transform:
                       followUpPercentageStatus === "Minus"
@@ -361,47 +365,43 @@ export default function Analytics() {
             </div>
             {/* ------------ Graph ------------ */}
             <div className="flex items-center justify-end">
-            <FollowCircle
-              followUpGrowthPercentage={followUpGrowthPercentage}
-              color={followUpPercentageStatus === "Plus" ? "green" : "red"} // Color based on growth status
-            />
+              <FollowCircle
+                followUpGrowthPercentage={followUpGrowthPercentage}
+                color={followUpPercentageStatus === "Plus" ? "green" : "red"} // Color based on growth status
+              />
             </div>
           </div>
         </div>
-          {/* ------------------------------------------------------------------------------------------------ */}
-          
-        {/* ------------ CARD ->>> Child :3 <<<- ------------ */}
-        <div className="px-2 py-2 bg-white rounded-md shadow-md ">
-         {/* ------------ Inner ------------ */}
-         <div className="grid items-center justify-between grid-cols-2">
-         {/* ------------ Textual Data ------------ */}
-         <div className="grid grid-flow-row-dense gap-2 ">
-           {/* ------------ Heading ------------ */}
-           <h1 className="text-sm ">TEAM MEMBER</h1>
-           
-           {/* ------------ COUNT ------------ */}
-           <strong>10</strong>
+        {/* ------------------------------------------------------------------------------------------------ */}
 
-           {/* ------------ Button ------------ */}
-              <button className="flex items-center justify-center gap-1 px-1 py-1 bg-green-500 rounded-md shadow-sm shadow-green-700 min-w-20 max-w-24">
+        {/* ------------ CARD ->>> Child :3 <<<- ------------ */}
+        <div className="rounded-md bg-white px-2 py-2 shadow-md">
+          {/* ------------ Inner ------------ */}
+          <div className="grid grid-cols-2 items-center justify-between">
+            {/* ------------ Textual Data ------------ */}
+            <div className="grid grid-flow-row-dense gap-2">
+              {/* ------------ Heading ------------ */}
+              <h1 className="text-sm">TEAM MEMBER</h1>
+
+              {/* ------------ COUNT ------------ */}
+              <strong>10</strong>
+
+              {/* ------------ Button ------------ */}
+              <button className="flex min-w-20 max-w-24 items-center justify-center gap-1 rounded-md bg-green-500 px-1 py-1 shadow-sm shadow-green-700">
                 <FaArrowAltCircleUp className="text-white" />
                 <span className="text-white">73%</span>
               </button>
-              
             </div>
             <div className="flex items-center justify-end">
-            {/* ------------ Circle-Bar ------------ */}
-            <TeamCircle />
-          </div>
+              {/* ------------ Circle-Bar ------------ */}
+              <TeamCircle />
+            </div>
           </div>
         </div>
       </div>
-      
-      
-      
-      
+
       {/* ------------ 4 GRAPH SECTION ------------ */}
-      <div className="grid gap-3 m-3 sm:grid-cols-2 ">
+      <div className="m-3 grid gap-3 sm:grid-cols-2">
         <FirstChart
           text={business === "Brokerage" ? `Top 5 SRM` : `Top 5 BA`}
         />
@@ -414,8 +414,7 @@ export default function Analytics() {
         />
       </div>
 
-      
-      <div className="grid grid-cols-1 gap-3 mx-3 sm:grid-cols-2">
+      <div className="mx-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <BottomChart text={`Leads By Stage`} color={`#2B6CB0`} />
         <BottomChart text={`Sales By Stage`} color={`#34d399`} />
       </div>
