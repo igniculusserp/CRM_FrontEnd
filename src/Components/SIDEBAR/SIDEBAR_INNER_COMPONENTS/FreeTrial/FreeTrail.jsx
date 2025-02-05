@@ -914,7 +914,7 @@ export default function FreeTrail() {
                         >
                         
 
-                          <div className="">
+                          <div>
                             <div className="flex items-center py-2 text-center bg-white border-2 rounded border-cyan-500">
                               <div className="flex items-center justify-center gap-2 mx-auto">
                                 <FaUserTie />

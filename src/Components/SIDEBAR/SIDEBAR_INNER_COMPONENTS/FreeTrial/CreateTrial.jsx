@@ -1,26 +1,49 @@
 //react
 import { useState, useEffect } from "react";
+
 //reactIcon
 import { FaAngleDown } from "react-icons/fa";
+
 //reactPackages
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 //external Packages
 import axios from "axios";
 import ReactQuill from "react-quill";
+
+//textBox
 import "react-quill/dist/quill.snow.css";
-//file
+
+//API-Keywords
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
-//Images
-// import profilepic from "./../../../../assets/images/profilePicsetEditTrail.png";
+
+import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+
+
+//LanguageDropDown
+import languageDropDown from "../../../../data/dropdown/Languages/languageDropdown";
+
+
+//dropDown --->>> customHooks
+import useManagedBy from "../../../../Hooks/ManagedBy/useManagedBy";
+import useSegment from "../../../../Hooks/Segment/useSegment";
+import { ToastContainer } from "react-toastify";
+
 
 export default function CreateTrial() {
   //to make id unique
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const { managedBy } = useManagedBy();
+  const { segments } = useSegment();
+  
+
+  const name = getHostnamePart();
+
   //form description is kept-out
   const [description, setdescription] = useState("Add Text Here");
+  
   const [isEditMode, setIsEditMode] = useState(false);
   const [editTrail, setEditTrail] = useState({
     id: "",
@@ -37,12 +60,6 @@ export default function CreateTrial() {
     lastModifiedBy: "",
     segments: [],
   });
-
-  //----------------------------------------------------------------------------------------
-  //to make code for particluar company
-  const fullURL = window.location.href;
-  const url = new URL(fullURL);
-  const name = url.hostname.split(".")[0];
 
   useEffect(() => {
     handleFreeTrail(); // Fetch lead data for editing
@@ -63,7 +80,6 @@ export default function CreateTrial() {
       );
       const data = response.data.data;
       setdescription(data.description);
-      console.log("@@@@=====", response.data.data);
       setEditTrail({
         id: data.id || "",
         leadId: data.leadId || "",
@@ -86,33 +102,9 @@ export default function CreateTrial() {
 
   //----------------------------------------------------------------------------------------
 
-  // >>>>>>>>>>>>>>>Segment<<<<<<<<<<<<<<<<<<
-
-  const [segments, setSegments] = useState([]);
-
-  // Segment GET API Is being used here
-  async function handleSegment() {
-    const bearer_token = localStorage.getItem("token");
-
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${bearer_token}`,
-        },
-      };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
-        config,
-      );
-      setSegments(response.data.data);
-      // console.log("segment:", response.data.data);
-    } catch (error) {
-      console.error("Error fetching segments:", error);
-    }
-  }
+  //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   useEffect(() => {
-    handleSegment();
     setdefaultTextSegmentDropDown(
       editTrail.segments.length > 0
         ? editTrail.segments.join(", ")
@@ -130,17 +122,17 @@ export default function CreateTrial() {
   };
 
   const handleCheckboxChange = (segment) => {
-    const isChecked = editTrail.segments.includes(segment.segment);
+    const isChecked = editTrail.segments.includes(segment);
 
     let updatedSegments;
     if (isChecked) {
       // Remove segment if already selected
       updatedSegments = editTrail.segments.filter(
-        (selectedSegment) => selectedSegment !== segment.segment,
+        (selectedSegment) => selectedSegment !== segment,
       );
     } else {
       // Add segment if not already selected
-      updatedSegments = [...editTrail.segments, segment.segment];
+      updatedSegments = [...editTrail.segments, segment];
     }
     setEditTrail((prev) => ({
       ...prev,
@@ -155,35 +147,10 @@ export default function CreateTrial() {
 
     console.log("Selected segments:", updatedSegments);
   };
-  // Segment GET API Is being used here
 
-  //----------------------------------------------------------------------------------------
-  //assigned_ToDropDown
-  const [assigned_ToDropDown, setassigned_ToDropDown] = useState([]);
+   //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  //---------------------------> Assigned To <---------------------------
 
-  async function handleAssigned_To() {
-    const bearer_token = localStorage.getItem("token");
-
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${bearer_token}`,
-        },
-      };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config,
-      );
-      setassigned_ToDropDown(response.data?.data);
-    } catch (error) {
-      console.error("Error fetching Trail:", error);
-      // Optionally, set an error state to display a user-friendly message
-    }
-  }
-
-  useEffect(() => {
-    handleAssigned_To();
-  }, []);
 
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
     useState("Select Assigned");
@@ -290,15 +257,6 @@ export default function CreateTrial() {
 
   //----------------------------------------------------------------------------------------
   //LanguageDropDown
-
-  const LanguageDropDown = [
-    { key: 1, name: "English" },
-    { key: 2, name: "Portuguese" },
-    { key: 3, name: "Hindi" },
-    { key: 4, name: "Arabic" },
-    { key: 5, name: "Japanese" },
-  ];
-
   const [defaultTextLanguageDropDown, setDefaultTextLanguageDropDown] =
     useState("Select Language");
   const [isDropdownVisibleLanguage, setisDropdownVisibleLanguage] =
@@ -319,49 +277,44 @@ export default function CreateTrial() {
 
   return (
     <>
-      <div className="mt-3 flex min-h-screen flex-col">
-        <div className="mx-3 flex justify-between rounded border bg-white px-3 py-3">
+    <ToastContainer/>
+      {/* ------------------------------------------------> Parent <------------------------------------------------ */}
+      <div className="mt-3">
+        {/* ------------------------------------------------> Heading  <------------------------------------------------ */}
+        <div className="flex justify-between p-3 mx-3 bg-white border rounded">
+          {/* ------------------------------------------------> Text and Logo  <------------------------------------------------ */}
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-xl">
-              <h1>Edit Free Trail</h1>
+              Edit Free Trail
             </h1>
           </div>
           <div>
-            <Link
-              to="/panel/freeTrail"
-              className="rounded border border-blue-500 px-6 py-1 text-blue-500"
-            >
-              Cancel
-            </Link>
+             {/* ------------------------------------------------> Cancel Button  <------------------------------------------------ */}
+             <Link
+             to="/panel/freeTrail"
+             className="px-4 py-1 text-blue-500 border border-blue-500 rounded sm:px-6"
+           >
+             Cancel
+           </Link>
           </div>
         </div>
 
         {/* -------------FORM Starts FROM HERE------------- */}
-        {/* Lead Image */}
-        <form onSubmit={handleSubmit} className="flex">
-          {/*-FORM- */}
-          {/*Parent Div */}
-          <div className="w-full">
-            {/*CHILD Div------ Image Input */}
-            {/* <div className="mx-3 my-3 bg-white rounded-xl shadow-md flex-grow">
-              <h2 className="font-medium py-2 px-4 rounded-t-xl text-white bg-cyan-500">
-                Lead Image
-              </h2>
-              <img src={profilepic} className=" max-h-24 max-w-24 p-3" />
-            </div> */}
-
-            <div className="mx-3 my-3 flex-grow rounded-xl bg-white shadow-md">
-              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
-                Free Trail Information
-              </h2>
-
+        <form onSubmit={handleSubmit} className="flex mb-6">
+          {/* ------------------------------------------------> FORM PARENT includes 4 tabs <------------------------------------------------ */}
+          <div className="w-screen">
+      
+          <div className="m-3 bg-white shadow-md rounded-xl">
+          <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+            Free Trail Information
+          </h2>
+        
               {/* -------------Free Trail INFORMATION STARTS FROM HERE------------- */}
-
+              <div className="p-2 space-y-3">
               {/* -------------1------------- */}
-              {/* -------------Name------------- */}
-              <div className="grid gap-2 p-2">
-                <div className="flex space-x-4">
-                  <div className="flex w-1/2 flex-col">
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+              {/* -------------Lead ID------------- */}
+              <div className="relative flex flex-col">
                     <label
                       htmlFor="leadId"
                       className="text-sm font-medium text-gray-700"
@@ -373,12 +326,12 @@ export default function CreateTrial() {
                       name="leadId"
                       value={editTrail.leadId}
                       onChange={handleChange}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
                     />
                   </div>
 
                   {/* -------------Language------------- */}
-                  <div className="flex w-1/2 flex-col">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="name"
                       className="text-sm font-medium text-gray-700"
@@ -390,14 +343,16 @@ export default function CreateTrial() {
                       name="name"
                       value={editTrail.name}
                       onChange={handleChange}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
                     />
                   </div>
                 </div>
                 {/* -------------2------------- */}
-                <div className="flex space-x-4">
+               
+               
+               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------Language------------- */}
-                  <div className="relative flex w-1/2 flex-col">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="language"
                       className="text-sm font-medium text-gray-700"
@@ -410,7 +365,7 @@ export default function CreateTrial() {
                       onMouseLeave={() => setisDropdownVisibleLanguage(false)}
                     >
                       <button
-                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
+                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
                         id="LanguageDropDown"
                         type="button"
                       >
@@ -424,11 +379,11 @@ export default function CreateTrial() {
                       {isDropdownVisibleLanguage && (
                         <div className="top-10.5 absolute z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
-                            {LanguageDropDown.map(({ key, name }) => (
+                            {languageDropDown.map(({ key, name }) => (
                               <li
                                 key={key}
                                 onClick={() => handleDropdownLanguage(name)}
-                                className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                                className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                               >
                                 {name}
                               </li>
@@ -439,7 +394,7 @@ export default function CreateTrial() {
                     </div>
                   </div>
                   {/* ------------- Mobile Number------------- */}
-                  <div className="flex w-1/2 flex-col">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="mobileNo"
                       className="text-sm font-medium text-gray-700"
@@ -450,7 +405,7 @@ export default function CreateTrial() {
                       type="text"
                       name="mobileNo"
                       value={editTrail.mobileNo}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter your Mobile Number"
                     />
@@ -461,8 +416,8 @@ export default function CreateTrial() {
                 </div>
                 {/* -------------3------------- */}
                 {/* -------------Alternate Number------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex w-1/2 flex-col">
+               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="phoneNo"
                       className="text-sm font-medium text-gray-700"
@@ -473,14 +428,14 @@ export default function CreateTrial() {
                       type="text"
                       name="phoneNo"
                       value={editTrail.phoneNo}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter your Alternate Number"
                     />
                   </div>
 
                   {/* -------------Email------------- */}
-                  <div className="flex w-1/2 flex-col">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="email"
                       className="text-sm font-medium text-gray-700"
@@ -491,7 +446,7 @@ export default function CreateTrial() {
                       type="text"
                       name="email"
                       value={editTrail.email}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter your Email"
                     />
@@ -500,8 +455,8 @@ export default function CreateTrial() {
 
                 {/* -------------4------------- */}
                 {/* -----------Assigned To------------- */}
-                <div className="flex space-x-4">
-                  <div className="relative flex w-1/2 flex-col">
+               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor=" AssignedTo"
                       className="text-sm font-medium text-gray-700"
@@ -516,7 +471,7 @@ export default function CreateTrial() {
                       }
                     >
                       <button
-                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
+                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
                         id="LeadStatusDropDown"
                         type="button"
                       >
@@ -526,9 +481,9 @@ export default function CreateTrial() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownassigned_ToDropDown && (
-                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
+                        <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
                           <ul className="py-2 text-sm text-gray-700">
-                            {assigned_ToDropDown.map(
+                            {managedBy.map(
                               ({ key, userName, role }) => (
                                 <li
                                   key={key}
@@ -538,7 +493,7 @@ export default function CreateTrial() {
                                       role,
                                     )
                                   }
-                                  className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                                  className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                                 >
                                   {userName}-({role})
                                 </li>
@@ -550,59 +505,71 @@ export default function CreateTrial() {
                     </div>
                   </div>
                   {/* -------------Segments------------- */}
-                  <div className="relative flex w-1/2 flex-col">
-                    <label
-                      htmlFor="segment"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Segment
-                    </label>
-                    <div
-                      className="relative"
-                      onClick={toggleDropdownSegment}
-                      onMouseLeave={() => setisDropdownVisibleSegment(false)}
-                    >
-                      <button
-                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
-                        id="LeadStatusDropDown"
-                        type="button"
-                      >
-                        {defaultTextSegmentDropDown}
-                        <FaAngleDown className="ml-2 text-gray-400" />
-                      </button>
-                      {isDropdownVisibleSegment && (
-                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
-                          <ul className="py-2 text-sm text-gray-700">
-                            {segments.map((segment) => (
-                              <li
-                                key={segment.id}
-                                className="flex cursor-pointer items-center border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
-                              >
-                                <input
-                                  type="checkbox"
-                                  checked={editTrail.segments.includes(
-                                    segment.segment,
-                                  )}
-                                  onChange={() => handleCheckboxChange(segment)}
-                                  className="mr-2"
-                                />
-                                {segment.segment}{" "}
-                                {/* Assuming 'segment' is the property you want to display */}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                    {errors.segments && (
-                      <span style={{ color: "red" }}>{errors.segments}</span>
-                    )}
-                  </div>
+                  <div className="relative flex flex-col">
+                                      <label
+                                        htmlFor="segment"
+                                        className="text-sm font-medium text-gray-700"
+                                      >
+                                        Segment
+                                      </label>
+                                      <div
+                                        className="relative"
+                                        onClick={toggleDropdownSegment}
+                                        onMouseLeave={() => setisDropdownVisibleSegment(false)}
+                                      >
+                                        <button
+                                          id="segemntDropDown"
+                                          type="button"
+                                          className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                                        >
+                                          {defaultTextSegmentDropDown}
+                                          <FaAngleDown className="ml-2 text-gray-400" />
+                                        </button>
+                                        {isDropdownVisibleSegment && (
+                                          <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                                            <ul className="py-2 text-sm text-gray-700">
+                                              {segments?.length > 0 ? (
+                                                segments.map(({ key, segment }) => (
+                                                  <li
+                                                    key={key}
+                                                    className="flex items-center px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                                  >
+                                                    <input
+                                                      type="checkbox"
+                                                      checked={editTrail.segments?.includes(
+                                                        segment,
+                                                      )}
+                                                      onChange={() =>
+                                                        handleCheckboxChange(segment)
+                                                      }
+                                                      className="mr-2"
+                                                    />
+                                                    {segment}
+                                                  </li>
+                                                ))
+                                              ) : (
+                                                <li className="flex items-center gap-1 px-4 py-2 text-center">
+                                                  <IoInformationCircle
+                                                    size={25}
+                                                    className="text-cyan-600"
+                                                  />{" "}
+                                                  Segments not available. Go to{" "}
+                                                  <span className="font-bold">
+                                                    Settings - Add Segment{" "}
+                                                  </span>
+                                                  .
+                                                </li>
+                                              )}
+                                            </ul>
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
                 </div>
                 {/* -------------5------------- */}
                 {/* -------------Trail Start Date------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex w-1/2 flex-col">
+               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="trialStartDate"
                       className="text-sm font-medium text-gray-700"
@@ -613,7 +580,7 @@ export default function CreateTrial() {
                       type="date"
                       name="trialStartDate"
                       value={editTrail.trialStartDate.split("T")[0]}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
                       onChange={handleChange}
                     />
                     {errors.trialStartDate && (
@@ -623,7 +590,7 @@ export default function CreateTrial() {
                     )}
                   </div>
                   {/* -------------Trail End Date------------- */}
-                  <div className="flex w-1/2 flex-col">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="trialEndDate"
                       className="text-sm font-medium text-gray-700"
@@ -635,7 +602,7 @@ export default function CreateTrial() {
                       name="trialEndDate"
                       value={editTrail.trialEndDate.split("T")[0]}
                       onChange={handleChange}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
                     />
                     {errors.trialEndDate && (
                       <span style={{ color: "red" }}>
@@ -646,8 +613,8 @@ export default function CreateTrial() {
                 </div>
                 {/* -------------6------------- */}
                 {/* -------------CallBack DateTime------------- */}
-                <div className="flex space-x-4">
-                  <div className="flex w-1/2 flex-col">
+               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="callBackDateTime"
                       className="text-sm font-medium text-gray-700"
@@ -659,11 +626,11 @@ export default function CreateTrial() {
                       name="callBackDateTime"
                       value={editTrail.call_bck_DateTime.split("T")[0]}
                       onChange={handleChange}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
                     />
                   </div>
                   {/* ------------Last Modified By------------- */}
-                  <div className="flex w-1/2 flex-col">
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="lastModifiedBy"
                       className="text-sm font-medium text-gray-700"
@@ -674,7 +641,7 @@ export default function CreateTrial() {
                       type="text"
                       name="lastModifiedBy"
                       value={editTrail.lastModifiedBy}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter details"
                     />
@@ -683,8 +650,8 @@ export default function CreateTrial() {
               </div>
             </div>
             {/* -------------Description Information------------- */}
-            <div className="mx-3 mb-6 rounded-xl bg-white shadow-md">
-              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
+            <div className="mx-3 mb-6 bg-white shadow-md rounded-xl">
+              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
                 Description Information
               </h2>
               <div className="p-2">
@@ -698,7 +665,7 @@ export default function CreateTrial() {
                   <ReactQuill
                     name="description"
                     value={description}
-                    className="mt-1 h-60 max-h-full hyphens-auto text-balance"
+                    className="max-h-full mt-1 h-60 hyphens-auto text-balance"
                     theme="snow"
                     onChange={setdescription}
                     placeholder="Add Description"
@@ -708,7 +675,7 @@ export default function CreateTrial() {
               <div className="flex justify-end px-2">
                 <button
                   type="submit"
-                  className="mb-3 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
+                  className="px-32 py-4 mt-20 mb-3 text-white border-2 rounded border-cyan-500 bg-cyan-500 hover:bg-white hover:text-cyan-500"
                 >
                   {isEditMode ? "Update" : "Save"}
                 </button>
