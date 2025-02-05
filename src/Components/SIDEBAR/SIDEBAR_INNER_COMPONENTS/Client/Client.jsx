@@ -928,10 +928,7 @@ export default function Client() {
                               <FaUserTie />
                               <span className="">{item?.clientName}</span>
                             </div>
-                            <AiOutlineEdit
-                              className="p-1 mr-3 text-white rounded-full bg-cyan-400 hover:bg-cyan-500"
-                              size={25}
-                            />
+                           
                           </div>
                         </div>
 

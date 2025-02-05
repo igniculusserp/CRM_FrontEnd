@@ -202,7 +202,7 @@ export default function Setting() {
                 className="rounded-b-lg shadow-md rounded-t-xl "
 
               >
-                <h2 className="flex justify-center px-4 py-2 text-lg text-white border-b rounded-t-xl bg-cyan-500 ">
+                <h2 className="flex justify-center px-4 py-2 text-lg text-white border-b bg-sky-500 rounded-t-xl ">
                   {group}
                 </h2>
                 {/* Buttons */}
