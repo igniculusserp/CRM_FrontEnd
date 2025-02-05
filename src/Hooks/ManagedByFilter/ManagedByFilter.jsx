@@ -5,7 +5,7 @@ import { FaAngleDown } from "react-icons/fa";
 import { getHostnamePart } from "../../Components/SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import { protocal_url, tenant_base_url } from "../../Config/config";
 
-export default function ManagedByFilter({ assignedTo, onAssignedToSelect }) {
+export default function ManagedByFilter({ assignedTo, setAssignedTo, setFilteredData, originalData }) {
   const name = getHostnamePart();
   const [allAssigned_To_DROPDOWN, setallAssigned_To_DROPDOWN] = useState(false);
   const [allAssigned_To_Data, setallAssigned_To_Data] = useState([]);
@@ -14,6 +14,7 @@ export default function ManagedByFilter({ assignedTo, onAssignedToSelect }) {
     setallAssigned_To_DROPDOWN(!allAssigned_To_DROPDOWN);
   };
 
+  //----------------------------------------------- Fetch Assigned Users Data -----------------------------------------------------
   async function fetchAssignedUsers() {
     const bearer_token = localStorage.getItem("token");
 
@@ -21,7 +22,7 @@ export default function ManagedByFilter({ assignedTo, onAssignedToSelect }) {
       const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config,
+        config
       );
       setallAssigned_To_Data(response.data.data);
     } catch (error) {
@@ -32,6 +33,17 @@ export default function ManagedByFilter({ assignedTo, onAssignedToSelect }) {
   useEffect(() => {
     fetchAssignedUsers();
   }, []);
+
+  // ---------------------------------------------------------- Handle Assigned To Selection ------------------------------------
+  function handleAssignedToSelection(assignedToValue) {
+    setAssignedTo(assignedToValue); // Update state in FollowUp
+
+    let filtered = originalData;
+    if (assignedToValue !== "Managed By") {
+      filtered = filtered.filter((lead) => lead.assigned_To === assignedToValue);
+    }
+    setFilteredData(filtered);
+  }
 
   return (
     <div
@@ -53,7 +65,7 @@ export default function ManagedByFilter({ assignedTo, onAssignedToSelect }) {
               <li
                 key={item.id}
                 className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
-                onClick={() => onAssignedToSelect(item.userName)}
+                onClick={() => handleAssignedToSelection(item.userName)}
               >
                 {item.userName}
               </li>
@@ -67,5 +79,7 @@ export default function ManagedByFilter({ assignedTo, onAssignedToSelect }) {
 
 ManagedByFilter.propTypes = {
   assignedTo: PropTypes.string.isRequired,
-  onAssignedToSelect: PropTypes.func.isRequired,
+  setAssignedTo: PropTypes.func.isRequired,
+  setFilteredData: PropTypes.func.isRequired,
+  originalData: PropTypes.array.isRequired,
 };

@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 //external Packages
 import axios from "axios";
 //React Icons
-import { FaAngleDown, FaBars, FaPhoneAlt } from "react-icons/fa";
+import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
-import { MdCall } from "react-icons/md";
-import { GrFormNext, GrFormPrevious } from "react-icons/gr";
-
 //Folder Imported
+import { DataGrid } from "@mui/x-data-grid";
+import Paper from "@mui/material/Paper";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 import { tenant_base_url, protocal_url } from "./../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import { SearchElement } from "../SearchElement/SearchElement";
@@ -20,23 +21,16 @@ import UseGridFilter from "../../../../Hooks/GridFilter/UseGridFilter";
 
 export default function FollowUp() {
   const navigate = useNavigate();
-
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
-  // All States
-  const [selectAll, setSelectAll] = useState(false);
-  const [selectedRows, setSelectedRows] = useState([]);
-  // Mass Email
-
-  const [selectedEmails, setSelectedEmails] = useState([]);
-  const [followupList, setFollowupList] = useState([]);
+  //------------------------------------------------- All States----------------------------------------------------------
+  const [selectedRowsId, setSelectedRowsId] = useState([]);
+  const [selectedRowEmails, setSelectedRowEmails] = useState([]);
   const [followupDropdown, setFollowupDropdown] = useState(false);
-  //created such that to filter leads according to leadStatus
-  const [filteredLeads, setFilteredLeads] = useState([]); // Filtered
-  //----------------GET----------------
-
-  // Get Follow up lists
-  const getFollowupLists = async () => {
+  //-------------------------------------------------- GET Data ----------------------------------------------------
+  const [originalData, setOriginalData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const getApiData = async () => {
     try {
       const config = {
         headers: {
@@ -49,162 +43,115 @@ export default function FollowUp() {
       );
       if (response.status === 200) {
         const followup = response.data;
-        setFollowupList(followup?.data);
-        setFilteredLeads(followup?.data);
+        setOriginalData(followup?.data);
+        setFilteredData(followup?.data);
       }
     } catch (error) {
       console.log("error", error);
     }
   };
-
   useEffect(() => {
-    getFollowupLists();
+    getApiData();
   }, []);
-  //---------------------->---------------------->PAGINATION<----------------------<----------------------
-  //controlled from the bottom of the page
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Define items per page
-  const totalPage = Math.ceil(filteredLeads.length / itemsPerPage);
 
+  //---------------------------------------------> Grid Pagination <-----------------------------------------------
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
 
-  //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
-  const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  //----------------STRIPE BAR DROPDOWN----------------
- 
+  //------------------------------------------------------ Table Heading And Table Data ------------------------------------------
+  const columns = [
+    { field: "id", headerName: "ID", minWidth: 70, flex: 1 },
+    {
+      field: "name",
+      headerName: "Client Name",
+      minWidth: 200,
+      flex: 1,
+      renderCell: (params) => (
+        <span
+          onClick={() => handleClick(params.row.id)}
+          style={{ cursor: "pointer", color: "blue", fontWeight: 500 }}
+        >
+          {params.value}
+        </span>
+      ),
+    },
+    { field: "mobileNo", headerName: "Mobile", minWidth: 150, flex: 1 },
+    { field: "email", headerName: "Email", minWidth: 200, flex: 1 },
+    {
+      field: "segments",
+      headerName: "Segment",
+      minWidth: 200,
+      flex: 1,
+      renderCell: (params) => params.row.segments.join(", "),
+    },
+    {
+      field: "call_bck_DateTime",
+      headerName: "Follow Up",
+      minWidth: 200,
+      flex: 1,
+      renderCell: (params) => params.value?.replace("T", " ") || "",
+    },
+  ];
+  //------------------------------------------------------ Check Box Data ------------------------------------------
+  const handleSelectionChange = (selectionModel) => {
+    const selectedRows = currentData.filter((row) =>
+      selectionModel.includes(row.id),
+    );
+    const selectedIDs = selectedRows.map((row) => row.id);
+    const selectedEmails = selectedRows.map((row) => row.email);
+    setSelectedRowsId(selectedIDs);
+    setSelectedRowEmails(selectedEmails);
+  };
+  // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
+  const handleClick = (id) => {
+    if (edit || businessRole === "Admin") {
+      navigate(`/panel/createfollowup/${id}`);
+    }
+  };
+  //-----------------------------------------------STRIPE BAR DROPDOWN--------------------------------------------------
   const [selectedViewValue, setSelectedViewValue] = useState("Table View");
-
   // -----------------------------------------------  TOGGLE FOLLOWUP DROPDOWN ------------------------------------------------
   const toggleFollowupDropdown = () => {
     setFollowupDropdown(!followupDropdown);
   };
-
-  //   TOGGLE STRIPEBAR DROPDOWN
-
-  //   FOLLOW UP DROPDOWN DATA
+  // --------------------------------------------------------   FOLLOW UP DROPDOWN DATA -----------------------------------------
   const followup = [
     { key: 1, value: "Man Insited" },
     { key: 2, value: "Man Insited" },
   ];
-
-  //------------------------------------------------------------------------------------------------
-  //----------------ACTION BAR DROPDOWN----------------
+  //----------------------------------------------------ACTION BAR DROPDOWN---------------------------------------------------------
   const actions = [
     { key: 1, value: "Mass Delete" },
     { key: 3, value: "Mass E-Mail" },
-    { key: 5, value: "Export Follow Up" },
     { key: 6, value: "Sheet View" },
     { key: 7, value: "Print View" },
   ];
-
-  // Function to toggle all checkboxes
-  const selectAllCheckbox = () => {
-    if (selectAll) {
-      // Deselect all rows
-      setSelectedRows([]);
-      setSelectedEmails([]); // Clear selected emails
-      setSelectAll(false);
-    } else {
-      // Select all rows in the current page
-      const allIds = currentLeads.map((order) => order.id);
-      const allEmails = currentLeads.map((order) => order.email); // Extract emails
-      setSelectedRows(allIds);
-      setSelectedEmails(allEmails); // Store all emails
-      setSelectAll(true);
-    }
-  };
-
-  // Function to toggle individual checkboxes
-  const handleCheckboxChange = (id, email, e) => {
-    e.stopPropagation();
-
-    // Update selected rows
-    setSelectedRows((prevSelectedRows) => {
-      const newSelectedRows = prevSelectedRows.includes(id)
-        ? prevSelectedRows.filter((rowId) => rowId !== id)
-        : [...prevSelectedRows, id];
-
-      // Log the updated selectedRows
-      console.log("Updated Selected Rows:", newSelectedRows);
-      return newSelectedRows;
-    });
-
-    // Update selected emails
-    setSelectedEmails((prevSelectedEmails) => {
-      const newSelectedEmails = prevSelectedEmails.includes(email)
-        ? prevSelectedEmails.filter((e) => e !== email)
-        : [...prevSelectedEmails, email];
-
-      // Log the updated selectedEmails
-      console.log("@@@===", newSelectedEmails);
-      return newSelectedEmails;
-    });
-
-    setSelectAll(false); // Uncheck "Select All" if individual checkbox is toggled
-  };
-
-  // Navigate to Edit Screen
-  const handleClick = (id) => {
-    navigate(`/panel/createfollowup/${id}`);
-  };
-
-  // ------------------------------------------Managed By Fillters---------------------------------
-
-  function handleAssignedToSelection(assignedToValue) {
-    setAssignedTo(assignedToValue); // Update state in FollowUp component
-
-    let filteredLeads = followupList;
-    if (assignedToValue !== "Managed By") {
-      filteredLeads = filteredLeads.filter(
-        (lead) => lead.assigned_To === assignedToValue,
-      );
-    }
-    setFilteredLeads(filteredLeads);
-  }
-
-  // ----------------------------- Date Filter -----------------------------
-
-  const today = new Date().toISOString().split("T")[0];
-  const [startDate, setStartDate] = useState(today);
-  const [endDate, setEndDate] = useState(today);
-
-
-  // -------------------------------------- Function to update date states ---------------------------------------
-  const handleDateChange = (field, value) => {
-    if (field === "startDate") setStartDate(value);
-    else setEndDate(value);
-  };
   // ------------------------------ Search Function ----------------------------------
-
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
-
   useEffect(() => {
-    const filtered = followupList.filter(
+    const filtered = originalData.filter(
       (lead) =>
         lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
         lead.mobileNo?.includes(searchTerm),
     );
-    setFilteredLeads(filtered);
-  }, [searchTerm, followupList]);
-  
+    setFilteredData(filtered);
+  }, [searchTerm, originalData]);
   //------------------------------------------------------Filter Reset Settings ---------------------------------------------
   const [assignedTo, setAssignedTo] = useState("Managed By");
-
   const handleResetFilter = () => {
-    setStartDate(today);
-    setEndDate(today);
-    setFilteredLeads(followupList);
     setAssignedTo("Managed By");
+    setSearchTerm("");
   };
-
+ 
   //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
-
   const businessRole = localStorage.getItem("businessRole");
   const [edit, setEdit] = useState(false);
-
   async function handleGetPermission() {
     const bearer_token = localStorage.getItem("token");
     try {
@@ -229,9 +176,6 @@ export default function FollowUp() {
           const permissionsArray = serviceBoxPermissions.permissions.split(",");
 
           console.log("List : ", permissionsArray);
-
-          //------------------------------------------------------ Set permissions ------------------------------------------------
-
           setEdit(permissionsArray.includes("Edit Follow Up"));
         }
       }
@@ -239,19 +183,15 @@ export default function FollowUp() {
       console.error("Error fetching leads:", error);
     }
   }
-
   useEffect(() => {
     handleGetPermission();
   }, []);
-
 
   return (
     <>
       {/* -------- PARENT -------- */}
       <div className="m-3 flex min-h-screen flex-col">
-        {/* containerbar*/}
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-white px-3 py-2">
-          {/* PART-I */}
           {/* container- FollowUp, search */}
           <div className="contact_Dropdown_Main_Container flex flex-wrap items-center justify-start gap-3">
             {/* ALL FOLLOW UPS DROPDOWN */}
@@ -275,7 +215,6 @@ export default function FollowUp() {
                       <li
                         className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                         key={key}
-                        // onClick={handleActionButton(value)}
                       >
                         {value}
                       </li>
@@ -284,34 +223,33 @@ export default function FollowUp() {
                 </div>
               )}
             </div>
-            {/* PART-I-ii */}
-            {/* All ASSIGNED_TO  DropDown*/}
+            {/* ---------------------------------- Managed BY Filter ----------------------------------------------*/}
             <ManagedByFilter
-              assignedTo={assignedTo}
-              onAssignedToSelect={handleAssignedToSelection}
+               assignedTo={assignedTo}
+               setAssignedTo={setAssignedTo} // Pass function to update state in FollowUp
+               setFilteredData={setFilteredData} // Pass function to update filtered data
+               originalData={originalData} // Pass original data for filtering
             />
-            {/* SEARCH DROPDOWN */}
+            {/* ---------------------------------------- SEARCH DROPDOWN ------------------------------------------- */}
             <SearchElement
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          {/* PART-II */}
           <div className="action_Button_Main_Container flex items-center justify-start gap-3">
-            {/* PART-II */}
-            {/* Stripe-BarDropDown */}
-          <UseGridFilter 
-            selectedViewValue={selectedViewValue}
-            setSelectedViewValue={setSelectedViewValue}
-          />
-            {/* ACTIONS DROPDWON */}
+            {/*  ------------------------------------------------- Stripe-BarDropDown --------------------------------- */}
+            <UseGridFilter
+              selectedViewValue={selectedViewValue} // Sending selected value
+              setSelectedViewValue={setSelectedViewValue} // Setting selected value
+            />
+            {/*-------------------------------------- ACTIONS DROPDWON --------------------------------------------- */}
             <UseAction
-              followupList={followupList}
-              getFollowupLists={getFollowupLists}
-              screenName="FollowUpScreen"
-              selectedRows={selectedRows}
-              selectedEmails={selectedEmails}
-              actions={actions}
+              originalData={originalData}// Sending Original Data
+              getApiData={getApiData} // Execute API Data Function
+              screenName="FollowUpScreen"// Sending Screen Name
+              selectedRowsId={selectedRowsId} // Sending Selected Rows IDs
+              selectedRowEmails={selectedRowEmails} // Sending Selected Rows E-Mail's
+              actions={actions} // Sending Actions Dropdown List
             />
             {/* END ACTIONS DROPDWON */}
           </div>
@@ -321,171 +259,51 @@ export default function FollowUp() {
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-3xl font-medium">Follow Up</h1>
             <h1 className="min-w-10 rounded-md bg-blue-600 p-2 text-center text-sm text-white shadow-md">
-              {followupList.length}{" "}
+              {filteredData.length}
             </h1>
           </div>
           {/* ------------------- Filter by date ----------------- */}
           <UseDateFilter
-            startDate={startDate}
-            endDate={endDate}
-            onDateChange={handleDateChange}
-            onReset={handleResetFilter}
-            followupList={followupList}
-            setFilteredLeads={setFilteredLeads}
+              onReset={handleResetFilter} //Reset Button Function
+              originalData={originalData} // Sending Original Data
+              setFilteredData={setFilteredData} // Set Filter Data
           />
         </div>
         {/* TABLE VIEW */}
         <div className="leads_Table_Main_Container overflow-x-auto">
           <div className="leads_Table_Container min-w-full rounded-md">
-            {/*--------------TABLE HEAD START------------- */}
+            {/*---------------------------------------TABLE HEAD START---------------------------------------- */}
             {selectedViewValue === "Table View" && (
-              <table className="leads_Table min-w-full bg-white">
-                <thead>
-                  <tr className="border-b-2 border-gray-300">
-                    {/* CHECKBOX for Select All */}
-                    <th className="px-2 py-3 text-left font-medium">
-                      <input
-                        type="checkbox"
-                        onClick={selectAllCheckbox}
-                        checked={selectAll}
-                      />
-                    </th>
-                    {/* CLIENT NAME */}
-                    <th className="max-w-56 border-r px-1 py-3 text-left font-medium">
-                      <div className="">
-                        <span className="">Client Name</span>
-                      </div>
-                    </th>
-                    {/* MOBILE */}
-                    <th className="border-r px-3 py-3 text-left font-medium">
-                      <div className="flex items-center justify-between gap-3">
-                        <span>Mobile</span>
-                        <span>
-                          <FaBars />
-                        </span>
-                      </div>
-                    </th>
-                    {/* Email */}
-                    <th className="border-r px-1 py-3 text-left font-medium">
-                      <div className="flex items-center justify-between gap-3">
-                        <span>Email</span>
-                        <span>
-                          <FaBars />
-                        </span>
-                      </div>
-                    </th>
-                    {/* SEGMENT */}
-                    <th className="border-r px-3 py-3 text-left font-medium">
-                      <div className="flex items-center justify-between gap-3">
-                        <span>Segment</span>
-                        <span>
-                          <FaBars />
-                        </span>
-                      </div>
-                    </th>
-
-                    {/* FOLLOW UP */}
-                    <th className="border-r px-3 py-3 text-left font-medium">
-                      <div className="flex items-center justify-between gap-3">
-                        <span className="text-nowrap">Follow Up</span>
-                        <span>
-                          <FaBars />
-                        </span>
-                      </div>
-                    </th>
-                  </tr>
-                </thead>
-                {/*--------------TABLE HEAD END------------- */}
-                {/*--------------TABLE DATA START------------- */}
-                <tbody>
-                  {currentLeads.map((order) => {
-                    return (
-                      <tr
-                        key={order.id}
-                        className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
-                      >
-                        {/* CHECKBOX */}
-                        <td className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-gray-600">
-                          <div className="flex items-center">
-                            <input
-                              type="checkbox"
-                              checked={selectedRows.includes(order.id)}
-                              onChange={(e) =>
-                                handleCheckboxChange(order.id, order.email, e)
-                              }
-                            />
-                          </div>
-                        </td>
-                        {/* CLIENT NAME */}
-                        <td
-                          className="border-b border-gray-300 py-4 text-sm leading-5"
-                          onClick={
-                            edit || businessRole === "Admin"
-                              ? () => handleClick(order.id)
-                              : undefined
-                          }
-                        >
-                          <div className="flex items-center">
-                            <span className="break-words">{order.name}</span>
-                          </div>
-                        </td>
-                        {/* MOBILE */}
-                        <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5">
-                          <div className="flex items-center gap-1">
-                            <span>
-                              <a
-                                href={`tel:${order.mobileNo}`}
-                                onClick={(event) => event.stopPropagation()}
-                              >
-                                {order.mobileNo}
-                              </a>
-                            </span>
-                            <span className="text-red-400">
-                              <MdCall />
-                            </span>
-                          </div>
-                        </td>
-                        {/* Email */}
-                        <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5">
-                          <div className="flex items-center">{order.email}</div>
-                        </td>
-                        {/* SEGMENT */}
-                        <td className="min-w-24 max-w-36 border-b border-gray-300 px-1 py-4 text-sm">
-                          <div className="grid grid-cols-2 items-center gap-1">
-                            {order.segments && (
-                              <span className="">
-                                {order.segments
-                                  .filter((segment) => segment.length > 1)
-                                  .join(", ")}
-                              </span>
-                            )}
-                          </div>
-                        </td>
-                        {/* FOLLOW UP */}
-                        <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5">
-                          <div
-                            className="flex items-center text-nowrap"
-                            // onClick={() => }
-                          >
-                            {order.call_bck_DateTime.replace("T", " ")}
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-                {/*--------------TABLE DATA END------------- */}
-              </table>
+              <Paper sx={{ width: "100%" }}>
+                <DataGrid
+                  rows={currentData} // Row Data
+                  columns={columns} // Headings
+                  pagination={false}
+                  checkboxSelection
+                  onRowSelectionModelChange={(newSelection) =>
+                    handleSelectionChange(newSelection)
+                  }
+                  sx={{
+                    border: 0,
+                    width: "100%",
+                    "& .MuiDataGrid-columnHeaderTitle": {
+                      fontWeight: "bold",
+                    },
+                    "& .MuiDataGrid-footerContainer": {
+                      display: "none",
+                    },
+                  }}
+                />
+              </Paper>
             )}
           </div>
-
-          {/* Grid View */}
+          {/*---------------------------------------- Grid View ---------------------------------------------*/}
           {selectedViewValue === "Grid View" && (
             <>
               <div className="min-w-full">
                 <div className="grid grid-cols-3 gap-3">
-                  {/*---------Card starts Here */}
-                  {currentLeads.map((item) => (
+                  {/*---------Card starts Here---------------------------------------------------------- */}
+                  {currentData.map((item) => (
                     <div
                       className="flex flex-col gap-2 rounded-lg border-2 bg-white px-2 py-3"
                       key={item.id}
@@ -560,72 +378,25 @@ export default function FollowUp() {
               </div>
             </>
           )}
-          <div className="m-4 flex justify-end">
-            {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
-            <nav className="mx-auto mt-4 flex items-center justify-center gap-2 text-center">
-              {/* /---------------------->Previous Button <----------------------< */}
-              <button
-                onClick={() => paginate(currentPage - 1)}
-                className={`rounded-full p-1 text-white shadow-md ${
-                  currentPage === 1
-                    ? "border-2 border-gray-200"
-                    : "border-2 border-gray-100 bg-cyan-500"
-                }`}
-                disabled={currentPage === 1}
-              >
-                <GrFormPrevious size={25} />
-              </button>
-
-              {/* /---------------------->Dynamic Page Numbers <----------------------< */}
-              {Array.from({ length: totalPage }, (_, i) => i + 1).map(
-                (page) => {
-                  // Logic for ellipsis and showing only a subset of pages
-                  if (
-                    page === 1 ||
-                    page === totalPage ||
-                    (page >= currentPage - 1 && page <= currentPage + 1)
-                  ) {
-                    return (
-                      <button
-                        key={page}
-                        onClick={() => paginate(page)}
-                        className={`mx-1 rounded px-4 py-2 ${
-                          currentPage === page
-                            ? "bg-blue-600 text-white"
-                            : "border bg-white text-gray-700"
-                        }`}
-                      >
-                        {page}
-                      </button>
-                    );
-                  } else if (
-                    (page === currentPage - 2 && page > 1) || // Add ellipsis before current
-                    (page === currentPage + 2 && page < totalPage) // Add ellipsis after current
-                  ) {
-                    return (
-                      <span key={page} className="px-2 text-gray-500">
-                        ...
-                      </span>
-                    );
-                  }
-                  return null;
+          {/* --------------------------------------- Pagination ------------------------------------------ */}
+          <Stack spacing={2} className="mt-4 mb-1">
+            <Pagination
+              count={Math.ceil(filteredData.length / itemsPerPage)}
+              page={currentPage}
+              onChange={handlePageChange}
+              sx={{
+                display:"flex", 
+                justifyContent:"center", 
+                "& .MuiPaginationItem-root": {
+                  fontSize: "1.3 rem",
                 },
-              )}
-
-              {/* Next Button */}
-              <button
-                onClick={() => paginate(currentPage + 1)}
-                className={`rounded-full p-1 shadow-md text-white${
-                  currentPage === totalPage
-                    ? "border-2 border-gray-200"
-                    : "border-2 border-gray-100 bg-cyan-500"
-                }`}
-                disabled={currentPage === totalPage}
-              >
-                <GrFormNext size={25} />
-              </button>
-            </nav>
-          </div>
+                "& .MuiPaginationItem-root.Mui-selected": {
+                  backgroundColor: "rgba(6, 182, 212, 1)",
+                  color: "#fff",
+                },
+              }}
+            />
+          </Stack>
         </div>
       </div>
     </>
