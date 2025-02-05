@@ -3,9 +3,7 @@ import { useNavigate } from "react-router-dom";
 //external Packages
 import axios from "axios";
 
-
 import { IoMdSettings } from "react-icons/io";
-
 
 //Folder Imported
 import { tenant_base_url, protocal_url } from "../../../Config/config";
@@ -183,36 +181,31 @@ export default function Setting() {
 
   return (
     <>
-      <div className="flex flex-col m-3">
+      <div className="m-3 flex flex-col">
         {/* Header Section Parent*/}
-        <div className="flex justify-between p-3 text-white rounded-t-xl bg-gradient-to-r from-cyan-500 from-20% via-sky-600 via-100% ">
-        {/* Heading */}
-        <h1 className="flex items-center gap-2 text-2xl tracking-wide roboto-slab-setting ">
-        <IoMdSettings/> Setting Dashboard 
+        <div className="flex justify-between rounded-t-xl bg-gradient-to-r from-cyan-500 from-20% via-sky-600 via-100% p-3 text-white">
+          {/* Heading */}
+          <h1 className="roboto-slab-setting flex items-center gap-2 text-2xl tracking-wide">
+            <IoMdSettings /> Setting Dashboard
           </h1>
         </div>
 
         {/* Main Section */}
-        <div className="flex items-start min-h-screen px-4 py-8 bg-white rounded-b-xl">
+        <div className="flex min-h-screen items-start rounded-b-xl bg-white px-4 py-8">
           <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {/* Setting Cards */}
             {Object.keys(groupedData).map((group) => (
-              <div
-                key={group}
-                className="rounded-b-lg shadow-md rounded-t-xl "
-
-              >
-                <h2 className="flex justify-center px-4 py-2 text-lg text-white border-b bg-sky-500 rounded-t-xl ">
+              <div key={group} className="rounded-b-lg rounded-t-xl shadow-md">
+                <h2 className="flex justify-center rounded-t-xl border-b bg-sky-500 px-4 py-2 text-lg text-white">
                   {group}
                 </h2>
                 {/* Buttons */}
-                <div className="grid w-full grid-cols-1 gap-2 my-2">
+                <div className="my-2 grid w-full grid-cols-1 gap-2">
                   {groupedData[group].map((button) => (
                     <div
                       key={button.key}
                       onClick={() => navigate(button.link)}
-                      className="p-2 mx-4 text-center bg-white border-2 rounded-full shadow-md border-cyan-500 text-cyan-500 hover:bg-cyan-500 hover:text-white "
-
+                      className="mx-4 rounded-full border-2 border-cyan-500 bg-white p-2 text-center text-cyan-500 shadow-md hover:bg-cyan-500 hover:text-white"
                     >
                       {button.value}
                     </div>

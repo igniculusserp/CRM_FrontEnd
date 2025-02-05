@@ -2,7 +2,10 @@ import { useState } from "react";
 import { FaAngleDown, FaBars } from "react-icons/fa";
 import PropTypes from "prop-types";
 
-export default function UseGridFilter({ selectedViewValue, setSelectedViewValue }) {
+export default function UseGridFilter({
+  selectedViewValue,
+  setSelectedViewValue,
+}) {
   const stripeBar = [
     { key: 1, value: "Table View" },
     { key: 2, value: "Grid View" },
@@ -16,10 +19,7 @@ export default function UseGridFilter({ selectedViewValue, setSelectedViewValue 
   };
 
   return (
-    <div
-      className="relative"
-      onMouseLeave={() => setStripeBardropDown(false)}
-    >
+    <div className="relative" onMouseLeave={() => setStripeBardropDown(false)}>
       <button
         className="flex items-center justify-between gap-2 rounded-md border px-4 py-3"
         type="button"
@@ -35,7 +35,9 @@ export default function UseGridFilter({ selectedViewValue, setSelectedViewValue 
               <li
                 key={key}
                 className={`block cursor-pointer border-b px-4 py-2 ${
-                  selectedViewValue === value ? "bg-cyan-500 text-white" : "hover:bg-cyan-500 hover:text-white"
+                  selectedViewValue === value
+                    ? "bg-cyan-500 text-white"
+                    : "hover:bg-cyan-500 hover:text-white"
                 }`}
                 onClick={() => handleStripeButton(value)}
               >

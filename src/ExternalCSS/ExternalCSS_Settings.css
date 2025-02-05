@@ -4,21 +4,19 @@
   are those when toggle is true means small sidebar and large main screen ie short view
     */
 
-    .space-grotesk-setting {
-      font-family: "Space Grotesk", serif;
-      font-optical-sizing: auto;
-      font-weight: 400;
-      font-style: normal;
-    }    
+.space-grotesk-setting {
+  font-family: "Space Grotesk", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
 
-
-
-    .roboto-slab-setting {
-      font-family: "Roboto Slab", serif;
-      font-optical-sizing: auto;
-      font-weight: 500;
-      font-style: normal;
-    }
+.roboto-slab-setting {
+  font-family: "Roboto Slab", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
 
 /* Global CSS file or component-specific styles */
 .scrollbar-hidden {

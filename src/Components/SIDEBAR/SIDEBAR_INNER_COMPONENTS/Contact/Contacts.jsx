@@ -18,7 +18,6 @@ import { MdCall } from "react-icons/md";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { TbRefresh } from "react-icons/tb";
 
-
 //grid->
 import { BiCalendar } from "react-icons/bi";
 import { RiShieldUserLine } from "react-icons/ri";
@@ -615,7 +614,7 @@ export default function Contact() {
 
   return (
     //parent
-    <div className="flex flex-col min-h-screen m-3">
+    <div className="m-3 flex min-h-screen flex-col">
       {/* Render the modal only when `isModalOpen` is true */}
       {isModalOpen && (
         <MassEmail
@@ -624,19 +623,19 @@ export default function Contact() {
         />
       )}
       {/* containerbar*/}
-      <div className="flex flex-wrap items-center justify-between gap-3 px-3 py-2 bg-white rounded-lg">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-white px-3 py-2">
         {/* PART-I */}
         {/* container- Alleads, search */}
-        <div className="flex flex-wrap items-center justify-start gap-3 contact_Dropdown_Main_Container">
+        <div className="contact_Dropdown_Main_Container flex flex-wrap items-center justify-start gap-3">
           {/* PART-I */}
           {/* All Lead DropDown*/}
           <div
-            className="relative contact_Dropdown_Container whitespace-nowrap"
+            className="contact_Dropdown_Container relative whitespace-nowrap"
             onClick={toggleMenuAllLead}
             onMouseLeave={() => setAllLeaddropDown(false)}
           >
             <button
-              className="flex items-center justify-between px-4 py-2 truncate border rounded-md contact_Dropdown_Button min-w-40"
+              className="contact_Dropdown_Button flex min-w-40 items-center justify-between truncate rounded-md border px-4 py-2"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -644,12 +643,12 @@ export default function Contact() {
               <FaAngleDown className="ml-2 text-gray-900" />
             </button>
             {allLeaddropDown && (
-              <div className="absolute z-10 bg-white border border-gray-300 rounded-md top-10">
+              <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
                 <ul className="text-sm text-gray-700">
                   {allLeadData.map((item) => (
                     <li
                       key={item.id}
-                      className="block w-56 px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                      className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                       onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
                     >
                       {item.status}
@@ -662,12 +661,12 @@ export default function Contact() {
           {/* PART-I-ii */}
           {/* All MANAGED_BY  DropDown*/}
           <div
-            className="relative contact_Dropdown_Container whitespace-nowrap"
+            className="contact_Dropdown_Container relative whitespace-nowrap"
             onClick={toggleMenuAssigned_To}
             onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
           >
             <button
-              className="flex items-center justify-between px-4 py-2 border rounded-md contact_Dropdown_Button min-w-36"
+              className="contact_Dropdown_Button flex min-w-36 items-center justify-between rounded-md border px-4 py-2"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -675,12 +674,12 @@ export default function Contact() {
               <FaAngleDown className="ml-2 text-gray-900" />
             </button>
             {allAssigned_To_DROPDOWN && (
-              <div className="absolute z-10 bg-white border border-gray-300 rounded-md top-10">
+              <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
                 <ul className="text-sm text-gray-700">
                   {allAssigned_To_Data.map((item) => (
                     <li
                       key={item.id}
-                      className="block w-56 px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                      className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                       onClick={() => handleAssignedToSelection(item.userName)} // Correct selection logic
                     >
                       {item.userName}
@@ -699,16 +698,16 @@ export default function Contact() {
         </div>
 
         {/* PART-II */}
-        <div className="flex items-center justify-start gap-3 action_Button_Main_Container">
+        <div className="action_Button_Main_Container flex items-center justify-start gap-3">
           {/* PART-II */}
           {/* Stripe-BarDropDown */}
           <div
-            className="relative hide_Component"
+            className="hide_Component relative"
             onClick={togglestripeBar}
             onMouseLeave={() => setstripeBardropDown(false)}
           >
             <button
-              className="flex items-center justify-between gap-2 px-4 py-3 border rounded-md"
+              className="flex items-center justify-between gap-2 rounded-md border px-4 py-3"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -716,15 +715,15 @@ export default function Contact() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {stripeBardropDown && (
-              <div className="absolute right-0 z-10 w-32 bg-white border border-gray-300 rounded-md top-10">
+              <div className="absolute right-0 top-10 z-10 w-32 rounded-md border border-gray-300 bg-white">
                 <ul className="text-sm text-gray-700">
                   {stripeBar.map(({ key, value, icon }) => (
                     <li
                       key={key}
-                      className="flex items-center gap-2 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                      className="flex cursor-pointer items-center gap-2 border-b py-2 hover:bg-cyan-500 hover:text-white"
                       onClick={() => handleStripeButton(value)}
                     >
-                      <div className="flex items-center justify-center w-6 h-6 mx-1 text-lg">
+                      <div className="mx-1 flex h-6 w-6 items-center justify-center text-lg">
                         {icon}
                       </div>
                       <div className="flex-1 text-left">{value}</div>
@@ -738,12 +737,12 @@ export default function Contact() {
           {/* PART-II */}
           {/*-------Action DropDown */}
           <div
-            className="relative action_Button_Container"
+            className="action_Button_Container relative"
             onClick={toggleActionsMenuLogo}
             onMouseLeave={() => setdropActionsMenudropDown(false)}
           >
             <button
-              className="flex items-center justify-between gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg action_Button"
+              className="action_Button flex items-center justify-between gap-2 rounded-lg border border-blue-600 px-4 py-2 text-blue-600"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -751,13 +750,13 @@ export default function Contact() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {dropActionsMenudropDown && (
-              <div className="absolute right-0 z-10 w-56 bg-white border border-gray-300 rounded-md top-10">
+              <div className="absolute right-0 top-10 z-10 w-56 rounded-md border border-gray-300 bg-white">
                 <ul className="text-sm text-gray-700">
                   {dropActionsMenu.map(({ key, value }) =>
                     permissions.includes(value) || businessRole === "Admin" ? (
                       <li
                         key={key}
-                        className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                        className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                         onClick={() => handleActionButton(value)}
                       >
                         {value}
@@ -773,10 +772,10 @@ export default function Contact() {
       {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{" "}
       {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}{" "}
       {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}
-      <div className="flex flex-wrap items-center justify-between gap-3 mt-3">
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
         <div className="flex gap-3">
           <h1 className="text-3xl font-medium">Contacts</h1>
-          <h1 className="p-2 text-sm text-center text-white bg-blue-600 rounded shadow-md min-w-10">
+          <h1 className="min-w-10 rounded bg-blue-600 p-2 text-center text-sm text-white shadow-md">
             {/*  ------------------------------------------------------------------------------------------------*/}
             {/* ------------------- Length ----------------- */}
             {getleads?.length}
@@ -785,25 +784,25 @@ export default function Contact() {
 
         <div className="date_Filter_Main_Container">
           {/* ------------------- Filter by date ----------------- */}
-          <div className="flex items-center justify-between p-2 bg-white border-2 border-gray-300 rounded-lg date_Filter_Main_Container">
+          <div className="date_Filter_Main_Container flex items-center justify-between rounded-lg border-2 border-gray-300 bg-white p-2">
             {/* Filter Icon Button */}
             <div className="flex items-center">
-              <button className="pr-2 border-r border-gray-500">
+              <button className="border-r border-gray-500 pr-2">
                 <ImFilter className="filter_Image_Size" />
               </button>
 
               {/* Date Range Filter Button */}
-              <button className="px-2 border-r border-gray-500 filter_Image_Display whitespace-nowrap">
+              <button className="filter_Image_Display whitespace-nowrap border-r border-gray-500 px-2">
                 Filter By
               </button>
 
               {/* Date Range Inputs */}
-              <div className="flex items-center gap-2 px-2 filter_Date_Container">
+              <div className="filter_Date_Container flex items-center gap-2 px-2">
                 <label className="hide_Filter_Text">From:</label>
                 <input
                   type="date"
                   value={startDate}
-                  className="px-2 py-2 border rounded filter_Date"
+                  className="filter_Date rounded border px-2 py-2"
                   onChange={(e) => setStartDate(e.target.value)}
                 />
 
@@ -811,14 +810,14 @@ export default function Contact() {
                 <input
                   type="date"
                   value={endDate}
-                  className="px-2 py-2 border rounded filter_Date"
+                  className="filter_Date rounded border px-2 py-2"
                   onChange={(e) => setEndDate(e.target.value)}
                 />
               </div>
             </div>
 
             <div
-              className="flex items-center gap-2 p-2 border rounded cursor-pointer reset_paddings"
+              className="reset_paddings flex cursor-pointer items-center gap-2 rounded border p-2"
               onClick={handleResetFilter}
             >
               <label className="hide_Filter_Text">Reset</label>
@@ -829,10 +828,10 @@ export default function Contact() {
       </div>
       {/*-------Table-------*/}
       {viewContact || businessRole === "Admin" ? (
-        <div className="mt-3 overflow-x-auto leads_Table_Main_Container">
-          <div className="min-w-full rounded-md shadow-lg leads_Table_Container">
+        <div className="leads_Table_Main_Container mt-3 overflow-x-auto">
+          <div className="leads_Table_Container min-w-full rounded-md shadow-lg">
             {selectedViewValue === "Table View" && (
-              <table className="min-w-full bg-white leads_Table">
+              <table className="leads_Table min-w-full bg-white">
                 <thead>
                   <tr className="border-b-2 border-gray-300">
                     {/* CHECKBOX */}
@@ -844,33 +843,33 @@ export default function Contact() {
                       />
                     </th>
 
-                    <th className="px-1 py-3 font-medium text-left border-r">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="">
                         <span className="whitespace-nowrap">Client Name</span>
                       </div>
                     </th>
-                    <th className="px-1 py-3 font-medium text-left border-r min-w-16">
+                    <th className="min-w-16 border-r px-1 py-3 text-left font-medium">
                       <div className="text-center">
                         <span className="whitespace-nowrap">Mobile</span>
                       </div>
                     </th>
 
-                    <th className="px-1 py-3 font-medium text-left border-r min-w-16">
+                    <th className="min-w-16 border-r px-1 py-3 text-left font-medium">
                       <div className="text-center">
                         <span>Segment</span>
                       </div>
                     </th>
-                    <th className="relative px-1 py-3 font-medium text-left border-r min-w-20">
+                    <th className="relative min-w-20 border-r px-1 py-3 text-left font-medium">
                       <div className="text-center">
                         <span className="whitespace-nowrap">Free Trail</span>
                       </div>
                     </th>
-                    <th className="px-1 py-3 font-medium text-left border-r">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="text-center">
                         <span className="whitespace-nowrap">Follow Up</span>
                       </div>
                     </th>
-                    <th className="px-1 py-3 font-medium text-left border-r">
+                    <th className="border-r px-1 py-3 text-left font-medium">
                       <div className="text-center">
                         <span className="whitespace-nowrap">Managed By</span>
                       </div>
@@ -896,7 +895,7 @@ export default function Contact() {
                     return (
                       <tr
                         key={item.id}
-                        className="border-b border-gray-300 cursor-pointer hover:bg-gray-200"
+                        className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                       >
                         {/* CHECKBOX */}
                         <td className="px-1 px-2 py-3 text-center">
@@ -909,7 +908,7 @@ export default function Contact() {
 
                         {/* CONTACT NAME */}
                         <td
-                          className="px-2 py-4 text-sm border-b border-gray-300"
+                          className="border-b border-gray-300 px-2 py-4 text-sm"
                           onClick={
                             edit || businessRole === "Admin"
                               ? () => handleClick(item)
@@ -924,7 +923,7 @@ export default function Contact() {
                         </td>
 
                         {/* Mobile No */}
-                        <td className="px-2 py-4 text-sm border-b border-gray-300 min-w-20">
+                        <td className="min-w-20 border-b border-gray-300 px-2 py-4 text-sm">
                           <div className="flex items-center gap-2">
                             <a
                               href={`tel:${item.mobileNo}`}
@@ -938,7 +937,7 @@ export default function Contact() {
                         </td>
 
                         {/* Segments */}
-                        <td className="px-2 py-4 text-sm border-b border-gray-300">
+                        <td className="border-b border-gray-300 px-2 py-4 text-sm">
                           <div>
                             {item.segments && (
                               <span className="whitespace-nowrap">
@@ -950,11 +949,11 @@ export default function Contact() {
                           </div>
                         </td>
 
-                        <td className="px-2 py-4 text-sm text-center border-b border-gray-300 whitespace-nowrap">
+                        <td className="whitespace-nowrap border-b border-gray-300 px-2 py-4 text-center text-sm">
                           {item.trialStartDate?.split("T")[0]}
                         </td>
 
-                        <td className="px-2 py-4 text-sm text-center border-b border-gray-300 whitespace-nowrap">
+                        <td className="whitespace-nowrap border-b border-gray-300 px-2 py-4 text-center text-sm">
                           {item.call_bck_DateTime
                             ?.replace("T", " ")
                             ?.split(":")
@@ -994,12 +993,12 @@ export default function Contact() {
                             >
                               {/* SO */}
                               {business === "Brokerage" ? (
-                                <span className="p-2 text-xs text-white bg-blue-600 rounded shadow-md whitespace-nowrap hover:bg-blue-500">
+                                <span className="whitespace-nowrap rounded bg-blue-600 p-2 text-xs text-white shadow-md hover:bg-blue-500">
                                   Create Client
                                 </span>
                               ) : (
                                 <>
-                                  <span className="p-1 text-white bg-blue-600 rounded shadow-md text-xm whitespace-nowrap hover:bg-blue-500">
+                                  <span className="text-xm whitespace-nowrap rounded bg-blue-600 p-1 text-white shadow-md hover:bg-blue-500">
                                     SO
                                   </span>
                                 </>
@@ -1016,149 +1015,145 @@ export default function Contact() {
               </table>
             )}
 
-             {/* ------------GRID------------ */}
-              {/* ------------GRID------------ */}
-              {/* ------------GRID------------ */}
-              {/* ------------GRID------------ */}
-              {/* ------------GRID------------ */}
-              {selectedViewValue === "Grid View" && (
-                <>
-                  <div className="min-w-full">
-                    {/* ------------Parent------------ */}
-                    <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
-                      {/*---------Card starts Here */}
-                      {getleads.map((item) => (
-                        // {/* ------------sub-Parent->Container ------------ */}
-                        <div
-                          className="grid grid-cols-1 gap-1 p-2 rounded-lg shadow-md bg-sky-100"
-                          key={item.id}
-                        >
-                        
+            {/* ------------GRID------------ */}
+            {/* ------------GRID------------ */}
+            {/* ------------GRID------------ */}
+            {/* ------------GRID------------ */}
+            {/* ------------GRID------------ */}
+            {selectedViewValue === "Grid View" && (
+              <>
+                <div className="min-w-full">
+                  {/* ------------Parent------------ */}
+                  <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
+                    {/*---------Card starts Here */}
+                    {getleads.map((item) => (
+                      // {/* ------------sub-Parent->Container ------------ */}
+                      <div
+                        className="grid grid-cols-1 gap-1 rounded-lg bg-sky-100 p-2 shadow-md"
+                        key={item.id}
+                      >
+                        <div className="">
+                          <div className="flex items-center rounded border-2 border-cyan-500 bg-white py-2 text-center">
+                            <div className="mx-auto flex items-center justify-center gap-2">
+                              <FaUserTie />
+                              <span className="">
+                                {item?.name[0].toUpperCase() +
+                                  item?.name.substr(1)}
+                              </span>
+                            </div>
+                            <AiOutlineEdit
+                              className="mr-3 rounded-full bg-cyan-400 p-1 text-white hover:bg-cyan-500"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/panel/editcontact/${item.id}`);
+                              }}
+                              size={25}
+                            />
+                          </div>
+                        </div>
 
-                          <div className="">
-                            <div className="flex items-center py-2 text-center bg-white border-2 rounded border-cyan-500">
-                              <div className="flex items-center justify-center gap-2 mx-auto">
-                                <FaUserTie />
-                                <span className="">
-                                  {item?.name[0].toUpperCase() +
-                                    item?.name.substr(1)}
-                                </span>
-                              </div>
-                              <AiOutlineEdit
-                                className="p-1 mr-3 text-white rounded-full bg-cyan-400 hover:bg-cyan-500"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  navigate(`/panel/editcontact/${item.id}`);
-                                }}
-                                size={25}
-                              />
+                        <div className="rounded border-2 border-cyan-500 bg-white py-2">
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <IoIosMail size={22} className="w-6" />
+                              <span className="hidden sm:block">Email</span>
+                            </div>
+                            <div className="truncate text-sm font-medium">
+                              <a
+                                href={`mailto:${item.email}`}
+                                onClick={(event) => event.stopPropagation()}
+                              >
+                                {item.email}
+                              </a>
                             </div>
                           </div>
 
-                          <div className="py-2 bg-white border-2 rounded border-cyan-500">
-                            <div className="flex items-center justify-between px-3 py-1">
-                              <div className="flex items-center justify-between py-1">
-                                <IoIosMail size={22} className="w-6" />
-                                <span className="hidden sm:block">Email</span>
-                              </div>
-                              <div className="text-sm font-medium truncate">
-                                <a
-                                  href={`mailto:${item.email}`}
-                                  onClick={(event) => event.stopPropagation()}
-                                >
-                                  {item.email}
-                                </a>
-                              </div>
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <FaPhoneAlt size={14} className="w-6" />
+                              <span className="hidden sm:block">Phone</span>
                             </div>
-
-                            <div className="flex items-center justify-between px-3 py-1">
-                              <div className="flex items-center justify-between py-1">
-                                <FaPhoneAlt size={14} className="w-6" />
-                                <span className="hidden sm:block">Phone</span>
-                              </div>
-                              <div className="text-sm font-medium truncate">
-                                <a
-                                  href={`tel:${item.mobileNo}`}
-                                  onClick={(event) => event.stopPropagation()}
-                                >
-                                  {item?.mobileNo}
-                                </a>
-                              </div>
+                            <div className="truncate text-sm font-medium">
+                              <a
+                                href={`tel:${item.mobileNo}`}
+                                onClick={(event) => event.stopPropagation()}
+                              >
+                                {item?.mobileNo}
+                              </a>
                             </div>
+                          </div>
 
-                            <div className="flex items-center justify-between px-3 py-1">
-                              <div className="flex items-center justify-between py-1">
-                                <PiLineSegmentsBold size={16} className="w-6" />
-                                <span className="hidden sm:block">
-                                  Segments
-                                </span>
-                              </div>
-                              <div className="text-sm font-medium truncate">
-                                {item?.segments?.length
-                                  ? item.segments?.join(", ")
-                                  : ""}
-                              </div>
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <PiLineSegmentsBold size={16} className="w-6" />
+                              <span className="hidden sm:block">Segments</span>
                             </div>
-
-                            <div className="flex items-center justify-between px-3 py-1">
-                              <div className="flex items-center justify-between py-1">
-                                <RiShieldUserLine size={18} className="w-6" />
-                                <span className="hidden sm:block">
-                                  Managed By
-                                </span>
-                              </div>
-                              <div className="text-sm font-medium">
-                                {item?.assigned_To}
-                              </div>
+                            <div className="truncate text-sm font-medium">
+                              {item?.segments?.length
+                                ? item.segments?.join(", ")
+                                : ""}
                             </div>
+                          </div>
 
-                            <div className="flex items-center justify-between px-3 py-1">
-                              <div className="flex items-center justify-between py-1">
-                                <BsHourglassSplit size={18} className="w-6" />
-                                <span className="hidden sm:block">Status</span>
-                              </div>
-                              <div className="text-sm font-medium">
-                                {item?.leadesStatus}
-                              </div>
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <RiShieldUserLine size={18} className="w-6" />
+                              <span className="hidden sm:block">
+                                Managed By
+                              </span>
                             </div>
-
-                            <div className="flex items-center justify-between px-3 py-1">
-                              <div className="flex items-center justify-between py-1">
-                                <BiCalendar size={18} className="w-6" />
-                                <span className="hidden sm:block">
-                                  Trail Start Date
-                                </span>
-                              </div>
-                              <div className="text-sm font-medium">
-                                {item?.trialStartDate?.split("T")[0]}
-                              </div>
+                            <div className="text-sm font-medium">
+                              {item?.assigned_To}
                             </div>
+                          </div>
 
-                            <div className="flex items-center justify-between px-3 py-1">
-                              <div className="flex items-center justify-between py-1">
-                                <BiCalendar size={18} className="w-6" />
-                                <span className="hidden sm:block">
-                                  Trail End Date
-                                </span>
-                              </div>
-                              <div className="text-sm font-medium">
-                                {item?.trialEndDate?.split("T")[0]}
-                              </div>
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <BsHourglassSplit size={18} className="w-6" />
+                              <span className="hidden sm:block">Status</span>
+                            </div>
+                            <div className="text-sm font-medium">
+                              {item?.leadesStatus}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <BiCalendar size={18} className="w-6" />
+                              <span className="hidden sm:block">
+                                Trail Start Date
+                              </span>
+                            </div>
+                            <div className="text-sm font-medium">
+                              {item?.trialStartDate?.split("T")[0]}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between px-3 py-1">
+                            <div className="flex items-center justify-between py-1">
+                              <BiCalendar size={18} className="w-6" />
+                              <span className="hidden sm:block">
+                                Trail End Date
+                              </span>
+                            </div>
+                            <div className="text-sm font-medium">
+                              {item?.trialEndDate?.split("T")[0]}
                             </div>
                           </div>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </div>
-                </>
-              )}
-            </div>
+                </div>
+              </>
+            )}
+          </div>
 
           {selectedViewValue === "Table View" && (
             <>
-              <div className="flex justify-end m-4">
+              <div className="m-4 flex justify-end">
                 {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
-                <nav className="flex items-center justify-center gap-2 mx-auto mt-4 text-center">
+                <nav className="mx-auto mt-4 flex items-center justify-center gap-2 text-center">
                   {/* /---------------------->Previous Button <----------------------< */}
                   <button
                     onClick={() => paginate(currentPage - 1)}

@@ -148,7 +148,7 @@ export default function FollowUp() {
     setAssignedTo("Managed By");
     setSearchTerm("");
   };
- 
+
   //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
   const businessRole = localStorage.getItem("businessRole");
   const [edit, setEdit] = useState(false);
@@ -225,10 +225,10 @@ export default function FollowUp() {
             </div>
             {/* ---------------------------------- Managed BY Filter ----------------------------------------------*/}
             <ManagedByFilter
-               assignedTo={assignedTo} // Sending Value 
-               setAssignedTo={setAssignedTo} // Pass function to update state in FollowUp
-               setFilteredData={setFilteredData} // Pass function to update filtered data
-               originalData={originalData} // Pass original data for filtering
+              assignedTo={assignedTo} // Sending Value
+              setAssignedTo={setAssignedTo} // Pass function to update state in FollowUp
+              setFilteredData={setFilteredData} // Pass function to update filtered data
+              originalData={originalData} // Pass original data for filtering
             />
             {/* ---------------------------------------- SEARCH DROPDOWN ------------------------------------------- */}
             <SearchElement
@@ -244,9 +244,9 @@ export default function FollowUp() {
             />
             {/*-------------------------------------- ACTIONS DROPDWON --------------------------------------------- */}
             <UseAction
-              originalData={originalData}// Sending Original Data
+              originalData={originalData} // Sending Original Data
               getApiData={getApiData} // Execute API Data Function
-              screenName="FollowUpScreen"// Sending Screen Name
+              screenName="FollowUpScreen" // Sending Screen Name
               selectedRowsId={selectedRowsId} // Sending Selected Rows IDs
               selectedRowEmails={selectedRowEmails} // Sending Selected Rows E-Mail's
               actions={actions} // Sending Actions Dropdown List
@@ -264,9 +264,9 @@ export default function FollowUp() {
           </div>
           {/* ------------------- Filter by date ----------------- */}
           <UseDateFilter
-              onReset={handleResetFilter} //Reset Button Function
-              originalData={originalData} // Sending Original Data
-              setFilteredData={setFilteredData} // Set Filter Data
+            onReset={handleResetFilter} //Reset Button Function
+            originalData={originalData} // Sending Original Data
+            setFilteredData={setFilteredData} // Set Filter Data
           />
         </div>
         {/* TABLE VIEW */}
@@ -379,14 +379,14 @@ export default function FollowUp() {
             </>
           )}
           {/* --------------------------------------- Pagination ------------------------------------------ */}
-          <Stack spacing={2} className="mt-4 mb-1">
+          <Stack spacing={2} className="mb-1 mt-4">
             <Pagination
               count={Math.ceil(filteredData.length / itemsPerPage)}
               page={currentPage}
               onChange={handlePageChange}
               sx={{
-                display:"flex", 
-                justifyContent:"center", 
+                display: "flex",
+                justifyContent: "center",
                 "& .MuiPaginationItem-root": {
                   fontSize: "1.3 rem",
                 },

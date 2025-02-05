@@ -8,12 +8,11 @@ export default function UseDateFilter({
   originalData,
   setFilteredData,
 }) {
-  
   // ----------------------------- Date Filter -----------------------------
   const today = new Date().toISOString().split("T")[0];
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(today);
-  
+
   // -------------------------------------- Function to update date states ---------------------------------------
   const onDateChange = (field, value) => {
     let newStartDate = startDate;
@@ -28,7 +27,7 @@ export default function UseDateFilter({
     // Update state first
     setStartDate(newStartDate);
     setEndDate(newEndDate);
-    
+
     // Now filter with the updated values
     filterByDateRange(newStartDate, newEndDate);
   };

@@ -19,16 +19,13 @@ import { tenant_base_url, protocal_url } from "../../../../Config/config";
 
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
-
 //LanguageDropDown
 import languageDropDown from "../../../../data/dropdown/Languages/languageDropdown";
-
 
 //dropDown --->>> customHooks
 import useManagedBy from "../../../../Hooks/ManagedBy/useManagedBy";
 import useSegment from "../../../../Hooks/Segment/useSegment";
 import { ToastContainer } from "react-toastify";
-
 
 export default function CreateTrial() {
   //to make id unique
@@ -37,13 +34,12 @@ export default function CreateTrial() {
 
   const { managedBy } = useManagedBy();
   const { segments } = useSegment();
-  
 
   const name = getHostnamePart();
 
   //form description is kept-out
   const [description, setdescription] = useState("Add Text Here");
-  
+
   const [isEditMode, setIsEditMode] = useState(false);
   const [editTrail, setEditTrail] = useState({
     id: "",
@@ -148,9 +144,8 @@ export default function CreateTrial() {
     console.log("Selected segments:", updatedSegments);
   };
 
-   //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //---------------------------> Assigned To <---------------------------
-
 
   const [defaultTextassigned_ToDropDown, setdefaultTextassigned_ToDropDown] =
     useState("Select Assigned");
@@ -277,44 +272,41 @@ export default function CreateTrial() {
 
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       {/* ------------------------------------------------> Parent <------------------------------------------------ */}
       <div className="mt-3">
         {/* ------------------------------------------------> Heading  <------------------------------------------------ */}
-        <div className="flex justify-between p-3 mx-3 bg-white border rounded">
+        <div className="mx-3 flex justify-between rounded border bg-white p-3">
           {/* ------------------------------------------------> Text and Logo  <------------------------------------------------ */}
           <div className="flex items-center justify-center gap-3">
-            <h1 className="text-xl">
-              Edit Free Trail
-            </h1>
+            <h1 className="text-xl">Edit Free Trail</h1>
           </div>
           <div>
-             {/* ------------------------------------------------> Cancel Button  <------------------------------------------------ */}
-             <Link
-             to="/panel/freeTrail"
-             className="px-4 py-1 text-blue-500 border border-blue-500 rounded sm:px-6"
-           >
-             Cancel
-           </Link>
+            {/* ------------------------------------------------> Cancel Button  <------------------------------------------------ */}
+            <Link
+              to="/panel/freeTrail"
+              className="rounded border border-blue-500 px-4 py-1 text-blue-500 sm:px-6"
+            >
+              Cancel
+            </Link>
           </div>
         </div>
 
         {/* -------------FORM Starts FROM HERE------------- */}
-        <form onSubmit={handleSubmit} className="flex mb-6">
+        <form onSubmit={handleSubmit} className="mb-6 flex">
           {/* ------------------------------------------------> FORM PARENT includes 4 tabs <------------------------------------------------ */}
           <div className="w-screen">
-      
-          <div className="m-3 bg-white shadow-md rounded-xl">
-          <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
-            Free Trail Information
-          </h2>
-        
+            <div className="m-3 rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
+                Free Trail Information
+              </h2>
+
               {/* -------------Free Trail INFORMATION STARTS FROM HERE------------- */}
-              <div className="p-2 space-y-3">
-              {/* -------------1------------- */}
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-              {/* -------------Lead ID------------- */}
-              <div className="relative flex flex-col">
+              <div className="space-y-3 p-2">
+                {/* -------------1------------- */}
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                  {/* -------------Lead ID------------- */}
+                  <div className="relative flex flex-col">
                     <label
                       htmlFor="leadId"
                       className="text-sm font-medium text-gray-700"
@@ -326,7 +318,7 @@ export default function CreateTrial() {
                       name="leadId"
                       value={editTrail.leadId}
                       onChange={handleChange}
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
 
@@ -343,14 +335,13 @@ export default function CreateTrial() {
                       name="name"
                       value={editTrail.name}
                       onChange={handleChange}
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                 </div>
                 {/* -------------2------------- */}
-               
-               
-               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   {/* -------------Language------------- */}
                   <div className="relative flex flex-col">
                     <label
@@ -365,7 +356,7 @@ export default function CreateTrial() {
                       onMouseLeave={() => setisDropdownVisibleLanguage(false)}
                     >
                       <button
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LanguageDropDown"
                         type="button"
                       >
@@ -383,7 +374,7 @@ export default function CreateTrial() {
                               <li
                                 key={key}
                                 onClick={() => handleDropdownLanguage(name)}
-                                className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                                className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                               >
                                 {name}
                               </li>
@@ -405,7 +396,7 @@ export default function CreateTrial() {
                       type="text"
                       name="mobileNo"
                       value={editTrail.mobileNo}
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter your Mobile Number"
                     />
@@ -416,7 +407,7 @@ export default function CreateTrial() {
                 </div>
                 {/* -------------3------------- */}
                 {/* -------------Alternate Number------------- */}
-               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   <div className="relative flex flex-col">
                     <label
                       htmlFor="phoneNo"
@@ -428,7 +419,7 @@ export default function CreateTrial() {
                       type="text"
                       name="phoneNo"
                       value={editTrail.phoneNo}
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter your Alternate Number"
                     />
@@ -446,7 +437,7 @@ export default function CreateTrial() {
                       type="text"
                       name="email"
                       value={editTrail.email}
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter your Email"
                     />
@@ -455,7 +446,7 @@ export default function CreateTrial() {
 
                 {/* -------------4------------- */}
                 {/* -----------Assigned To------------- */}
-               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   <div className="relative flex flex-col">
                     <label
                       htmlFor=" AssignedTo"
@@ -471,7 +462,7 @@ export default function CreateTrial() {
                       }
                     >
                       <button
-                        className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
                         id="LeadStatusDropDown"
                         type="button"
                       >
@@ -481,24 +472,22 @@ export default function CreateTrial() {
                         <FaAngleDown className="ml-2 text-gray-400" />
                       </button>
                       {isDropdownassigned_ToDropDown && (
-                        <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
                           <ul className="py-2 text-sm text-gray-700">
-                            {managedBy.map(
-                              ({ key, userName, role }) => (
-                                <li
-                                  key={key}
-                                  onClick={() =>
-                                    handleDropdownassigned_ToDropDown(
-                                      userName,
-                                      role,
-                                    )
-                                  }
-                                  className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
-                                >
-                                  {userName}-({role})
-                                </li>
-                              ),
-                            )}
+                            {managedBy.map(({ key, userName, role }) => (
+                              <li
+                                key={key}
+                                onClick={() =>
+                                  handleDropdownassigned_ToDropDown(
+                                    userName,
+                                    role,
+                                  )
+                                }
+                                className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                              >
+                                {userName}-({role})
+                              </li>
+                            ))}
                           </ul>
                         </div>
                       )}
@@ -506,69 +495,69 @@ export default function CreateTrial() {
                   </div>
                   {/* -------------Segments------------- */}
                   <div className="relative flex flex-col">
-                                      <label
-                                        htmlFor="segment"
-                                        className="text-sm font-medium text-gray-700"
-                                      >
-                                        Segment
-                                      </label>
-                                      <div
-                                        className="relative"
-                                        onClick={toggleDropdownSegment}
-                                        onMouseLeave={() => setisDropdownVisibleSegment(false)}
-                                      >
-                                        <button
-                                          id="segemntDropDown"
-                                          type="button"
-                                          className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
-                                        >
-                                          {defaultTextSegmentDropDown}
-                                          <FaAngleDown className="ml-2 text-gray-400" />
-                                        </button>
-                                        {isDropdownVisibleSegment && (
-                                          <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
-                                            <ul className="py-2 text-sm text-gray-700">
-                                              {segments?.length > 0 ? (
-                                                segments.map(({ key, segment }) => (
-                                                  <li
-                                                    key={key}
-                                                    className="flex items-center px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
-                                                  >
-                                                    <input
-                                                      type="checkbox"
-                                                      checked={editTrail.segments?.includes(
-                                                        segment,
-                                                      )}
-                                                      onChange={() =>
-                                                        handleCheckboxChange(segment)
-                                                      }
-                                                      className="mr-2"
-                                                    />
-                                                    {segment}
-                                                  </li>
-                                                ))
-                                              ) : (
-                                                <li className="flex items-center gap-1 px-4 py-2 text-center">
-                                                  <IoInformationCircle
-                                                    size={25}
-                                                    className="text-cyan-600"
-                                                  />{" "}
-                                                  Segments not available. Go to{" "}
-                                                  <span className="font-bold">
-                                                    Settings - Add Segment{" "}
-                                                  </span>
-                                                  .
-                                                </li>
-                                              )}
-                                            </ul>
-                                          </div>
-                                        )}
-                                      </div>
-                                    </div>
+                    <label
+                      htmlFor="segment"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Segment
+                    </label>
+                    <div
+                      className="relative"
+                      onClick={toggleDropdownSegment}
+                      onMouseLeave={() => setisDropdownVisibleSegment(false)}
+                    >
+                      <button
+                        id="segemntDropDown"
+                        type="button"
+                        className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
+                      >
+                        {defaultTextSegmentDropDown}
+                        <FaAngleDown className="ml-2 text-gray-400" />
+                      </button>
+                      {isDropdownVisibleSegment && (
+                        <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
+                          <ul className="py-2 text-sm text-gray-700">
+                            {segments?.length > 0 ? (
+                              segments.map(({ key, segment }) => (
+                                <li
+                                  key={key}
+                                  className="flex cursor-pointer items-center border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={editTrail.segments?.includes(
+                                      segment,
+                                    )}
+                                    onChange={() =>
+                                      handleCheckboxChange(segment)
+                                    }
+                                    className="mr-2"
+                                  />
+                                  {segment}
+                                </li>
+                              ))
+                            ) : (
+                              <li className="flex items-center gap-1 px-4 py-2 text-center">
+                                <IoInformationCircle
+                                  size={25}
+                                  className="text-cyan-600"
+                                />{" "}
+                                Segments not available. Go to{" "}
+                                <span className="font-bold">
+                                  Settings - Add Segment{" "}
+                                </span>
+                                .
+                              </li>
+                            )}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
                 {/* -------------5------------- */}
                 {/* -------------Trail Start Date------------- */}
-               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   <div className="relative flex flex-col">
                     <label
                       htmlFor="trialStartDate"
@@ -580,7 +569,7 @@ export default function CreateTrial() {
                       type="date"
                       name="trialStartDate"
                       value={editTrail.trialStartDate.split("T")[0]}
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                     />
                     {errors.trialStartDate && (
@@ -602,7 +591,7 @@ export default function CreateTrial() {
                       name="trialEndDate"
                       value={editTrail.trialEndDate.split("T")[0]}
                       onChange={handleChange}
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                     {errors.trialEndDate && (
                       <span style={{ color: "red" }}>
@@ -613,7 +602,7 @@ export default function CreateTrial() {
                 </div>
                 {/* -------------6------------- */}
                 {/* -------------CallBack DateTime------------- */}
-               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
                   <div className="relative flex flex-col">
                     <label
                       htmlFor="callBackDateTime"
@@ -626,7 +615,7 @@ export default function CreateTrial() {
                       name="callBackDateTime"
                       value={editTrail.call_bck_DateTime.split("T")[0]}
                       onChange={handleChange}
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                     />
                   </div>
                   {/* ------------Last Modified By------------- */}
@@ -641,7 +630,7 @@ export default function CreateTrial() {
                       type="text"
                       name="lastModifiedBy"
                       value={editTrail.lastModifiedBy}
-                      className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                      className="mt-1 w-full rounded-md border border-gray-300 p-2"
                       onChange={handleChange}
                       placeholder="Enter details"
                     />
@@ -650,8 +639,8 @@ export default function CreateTrial() {
               </div>
             </div>
             {/* -------------Description Information------------- */}
-            <div className="mx-3 mb-6 bg-white shadow-md rounded-xl">
-              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
+            <div className="mx-3 mb-6 rounded-xl bg-white shadow-md">
+              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
                 Description Information
               </h2>
               <div className="p-2">
@@ -665,7 +654,7 @@ export default function CreateTrial() {
                   <ReactQuill
                     name="description"
                     value={description}
-                    className="max-h-full mt-1 h-60 hyphens-auto text-balance"
+                    className="mt-1 h-60 max-h-full hyphens-auto text-balance"
                     theme="snow"
                     onChange={setdescription}
                     placeholder="Add Description"
@@ -675,7 +664,7 @@ export default function CreateTrial() {
               <div className="flex justify-end px-2">
                 <button
                   type="submit"
-                  className="px-32 py-4 mt-20 mb-3 text-white border-2 rounded border-cyan-500 bg-cyan-500 hover:bg-white hover:text-cyan-500"
+                  className="mb-3 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
                 >
                   {isEditMode ? "Update" : "Save"}
                 </button>
