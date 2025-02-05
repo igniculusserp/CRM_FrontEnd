@@ -225,7 +225,7 @@ export default function FollowUp() {
             </div>
             {/* ---------------------------------- Managed BY Filter ----------------------------------------------*/}
             <ManagedByFilter
-               assignedTo={assignedTo}
+               assignedTo={assignedTo} // Sending Value 
                setAssignedTo={setAssignedTo} // Pass function to update state in FollowUp
                setFilteredData={setFilteredData} // Pass function to update filtered data
                originalData={originalData} // Pass original data for filtering

@@ -58,6 +58,8 @@ export default function FreeTrail() {
         const followup = response?.data?.data; // Get the user data
         setFreeTrial(followup); // Set the user data for editing
         setFilteredTrails(followup);
+        setOriginalData(followup);
+        setFilteredData(followup);
       }
     } catch (error) {
       console.error("Error fetching leads:", error);
