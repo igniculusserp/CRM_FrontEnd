@@ -132,18 +132,6 @@ export default function FollowUp() {
     { key: 6, value: "Sheet View" },
     { key: 7, value: "Print View" },
   ];
-  // ------------------------------------------Managed By Fillters---------------------------------
-  function handleAssignedToSelection(assignedToValue) {
-    setAssignedTo(assignedToValue); // Update state in FollowUp component
-
-    let filtered = originalData;
-    if (assignedToValue !== "Managed By") {
-      filtered = filtered.filter(
-        (lead) => lead.assigned_To === assignedToValue,
-      );
-    }
-    setFilteredData(filtered);
-  }
   // ------------------------------ Search Function ----------------------------------
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
   useEffect(() => {
@@ -235,31 +223,33 @@ export default function FollowUp() {
                 </div>
               )}
             </div>
-            {/* All ASSIGNED_TO  DropDown*/}
+            {/* ---------------------------------- Managed BY Filter ----------------------------------------------*/}
             <ManagedByFilter
-              assignedTo={assignedTo}
-              onAssignedToSelect={handleAssignedToSelection}
+               assignedTo={assignedTo} // Sending Value 
+               setAssignedTo={setAssignedTo} // Pass function to update state in FollowUp
+               setFilteredData={setFilteredData} // Pass function to update filtered data
+               originalData={originalData} // Pass original data for filtering
             />
-            {/* SEARCH DROPDOWN */}
+            {/* ---------------------------------------- SEARCH DROPDOWN ------------------------------------------- */}
             <SearchElement
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           <div className="action_Button_Main_Container flex items-center justify-start gap-3">
-            {/* Stripe-BarDropDown */}
+            {/*  ------------------------------------------------- Stripe-BarDropDown --------------------------------- */}
             <UseGridFilter
-              selectedViewValue={selectedViewValue}
-              setSelectedViewValue={setSelectedViewValue}
+              selectedViewValue={selectedViewValue} // Sending selected value
+              setSelectedViewValue={setSelectedViewValue} // Setting selected value
             />
-            {/* ACTIONS DROPDWON */}
+            {/*-------------------------------------- ACTIONS DROPDWON --------------------------------------------- */}
             <UseAction
-              originalData={originalData}
-              getApiData={getApiData}
-              screenName="FollowUpScreen"
-              selectedRowsId={selectedRowsId}
-              selectedRowEmails={selectedRowEmails}
-              actions={actions}
+              originalData={originalData}// Sending Original Data
+              getApiData={getApiData} // Execute API Data Function
+              screenName="FollowUpScreen"// Sending Screen Name
+              selectedRowsId={selectedRowsId} // Sending Selected Rows IDs
+              selectedRowEmails={selectedRowEmails} // Sending Selected Rows E-Mail's
+              actions={actions} // Sending Actions Dropdown List
             />
             {/* END ACTIONS DROPDWON */}
           </div>
@@ -269,25 +259,25 @@ export default function FollowUp() {
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-3xl font-medium">Follow Up</h1>
             <h1 className="min-w-10 rounded-md bg-blue-600 p-2 text-center text-sm text-white shadow-md">
-              {filteredData.length}{" "}
+              {filteredData.length}
             </h1>
           </div>
           {/* ------------------- Filter by date ----------------- */}
           <UseDateFilter
-              onReset={handleResetFilter}
-              originalData={originalData}
-              setFilteredData={setFilteredData}
+              onReset={handleResetFilter} //Reset Button Function
+              originalData={originalData} // Sending Original Data
+              setFilteredData={setFilteredData} // Set Filter Data
           />
         </div>
         {/* TABLE VIEW */}
         <div className="leads_Table_Main_Container overflow-x-auto">
           <div className="leads_Table_Container min-w-full rounded-md">
-            {/*--------------TABLE HEAD START------------- */}
+            {/*---------------------------------------TABLE HEAD START---------------------------------------- */}
             {selectedViewValue === "Table View" && (
               <Paper sx={{ width: "100%" }}>
                 <DataGrid
-                  rows={currentData}
-                  columns={columns}
+                  rows={currentData} // Row Data
+                  columns={columns} // Headings
                   pagination={false}
                   checkboxSelection
                   onRowSelectionModelChange={(newSelection) =>
@@ -307,12 +297,12 @@ export default function FollowUp() {
               </Paper>
             )}
           </div>
-          {/* Grid View */}
+          {/*---------------------------------------- Grid View ---------------------------------------------*/}
           {selectedViewValue === "Grid View" && (
             <>
               <div className="min-w-full">
                 <div className="grid grid-cols-3 gap-3">
-                  {/*---------Card starts Here */}
+                  {/*---------Card starts Here---------------------------------------------------------- */}
                   {currentData.map((item) => (
                     <div
                       className="flex flex-col gap-2 rounded-lg border-2 bg-white px-2 py-3"
