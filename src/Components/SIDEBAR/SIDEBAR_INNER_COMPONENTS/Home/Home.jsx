@@ -7,15 +7,10 @@ import axios from "axios";
 
 //reactIcons
 import { ImCancelCircle } from "react-icons/im";
-import {
-  FaArrowAltCircleDown,
-  FaArrowAltCircleUp,
-  FaUsers,
-} from "react-icons/fa";
+import { FaArrowAltCircleDown, FaArrowAltCircleUp, FaUsers} from "react-icons/fa";
 import { LuIndianRupee } from "react-icons/lu";
 import { MdOutlineGroups2 } from "react-icons/md";
 import { GiHumanPyramid } from "react-icons/gi";
-import { FaUsersRectangle } from "react-icons/fa6";
 import { GrContactInfo } from "react-icons/gr";
 
 //Chart
@@ -333,9 +328,9 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex min-h-screen flex-col gap-1">
+      <div className="flex flex-col min-h-screen gap-1">
         {showSubscription && (
-          <div className="animate-fade-in flex transform animate-slide-down items-center justify-between border-t-2 bg-white px-3 py-2 text-white shadow-md transition duration-500 ease-in-out">
+          <div className="flex items-center justify-between px-3 py-2 text-white transition duration-500 ease-in-out transform bg-white border-t-2 shadow-md animate-fade-in animate-slide-down">
             <div className="flex flex-col justify-start">
               {/*Condition if reamining days are less than 5  */}
               <h1
@@ -354,7 +349,7 @@ export default function Home() {
             {/* SECOND */}
             <div className="flex items-center gap-4">
               <Link to="/panel/subscription/">
-                <button className="cursor-pointer rounded-md border-none bg-cyan-500 px-2 py-2 text-sm font-semibold text-white hover:shadow-md">
+                <button className="px-2 py-2 text-sm font-semibold text-white border-none rounded-md cursor-pointer bg-cyan-500 hover:shadow-md">
                   Choose Plan
                 </button>
               </Link>
@@ -365,23 +360,23 @@ export default function Home() {
           </div>
         )}
         {/* FIRST NAME */}
-        <h1 className="my-2 px-3 pb-1 text-2xl font-semibold text-gray-700 sm:text-3xl">
+        <h1 className="px-3 pb-1 my-2 text-2xl font-semibold text-gray-700 sm:text-3xl">
           Hello, {firstName || ""}
         </h1>
         {/* ------- TOP CARDS ------- */}
         {/* ------- 4 Card, Charo ki alag alag CSS {Parent}  ------- */}
-        <div className="grid grid-cols-2 items-center gap-2 px-2 sm:grid sm:grid-cols-2 sm:gap-3 lg:flex">
+        <div className="grid items-center grid-cols-2 gap-2 px-2 sm:grid sm:grid-cols-2 sm:gap-3 lg:flex">
           {/* ------- CARD --> CHILD:1------- */}
-          <div className="md:w-4/4 flex h-44 flex-col justify-between rounded-md bg-white p-2 shadow-lg sm:min-h-52 sm:gap-4 sm:p-4 lg:w-1/4">
+          <div className="flex flex-col justify-between p-2 bg-white rounded-md shadow-lg md:w-4/4 h-44 sm:min-h-52 sm:gap-4 sm:p-4 lg:w-1/4">
             <div className="flex flex-col">
               {}
               <h1 className="text-sm font-light font-medium uppercase">
                 {business === "Brokerage" ? "Leads" : "Lead this month"}
               </h1>
               {/* ------- CARD--> 1 ---> Logo and SideText --> Parent ----------- */}
-              <div className="mt-2 flex items-center justify-between">
+              <div className="flex items-center justify-between mt-2">
                 {/* ------- CARD--> 1 ---> Logo --> C1 ----------- */}
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-teal-500 px-2 text-white sm:h-20 sm:w-20">
+                <div className="flex items-center justify-center w-12 h-12 px-2 text-white bg-teal-500 rounded-full sm:h-20 sm:w-20">
                   {/* ------- CARD--> 1 ---> Logo --> C1 ----------- */}
                   <GrContactInfo className="text-2xl sm:text-5xl" />
                 </div>
@@ -399,7 +394,7 @@ export default function Home() {
                     ) : (
                       <FaArrowAltCircleDown className="text-sm" />
                     )}
-                    <span className="sm:text-md text-sm">
+                    <span className="text-sm sm:text-md">
                       {Math.round(leadsPercentage)}%
                     </span>
                   </div>
@@ -407,7 +402,7 @@ export default function Home() {
               </div>
             </div>
             {/* ------- CARD--> 1 ---> PROGRESS BAR  --> C3 ----------- */}
-            <div className="h-2 w-full rounded-lg border border-gray-500 bg-transparent">
+            <div className="w-full h-2 bg-transparent border border-gray-500 rounded-lg">
               <div
                 className={`h-full ${
                   leadStatus == "up" ? "bg-blue-600" : "bg-red-500"
@@ -425,15 +420,15 @@ export default function Home() {
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------- */}
           {/* ------- CARD --> CHILD:2 ------- */}
-          <div className="md:w-4/4 flex h-44 flex-col justify-between rounded-md bg-white p-2 shadow-lg sm:min-h-52 sm:gap-4 sm:p-4 lg:w-1/4">
+          <div className="flex flex-col justify-between p-2 bg-white rounded-md shadow-lg md:w-4/4 h-44 sm:min-h-52 sm:gap-4 sm:p-4 lg:w-1/4">
             <div className="flex flex-col">
               <h1 className="text-sm font-light font-medium uppercase">
                 {business === "Brokerage" ? "Funds" : "REVENUE THIS MONTH"}
               </h1>
               {/* ------- CARD--> 2 ---> Logo and SideText --> Parent ----------- */}
-              <div className="mt-2 flex items-center justify-between">
+              <div className="flex items-center justify-between mt-2">
                 {/* ------- CARD--> 2 ---> Logo --> C1 ----------- */}
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-rose-500 px-2 text-white sm:h-20 sm:w-20">
+                <div className="flex items-center justify-center w-12 h-12 px-2 text-white rounded-full bg-rose-500 sm:h-20 sm:w-20">
                   <LuIndianRupee className="text-2xl sm:text-5xl" />
                 </div>
                 {/* ------- CARD--> 2 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
@@ -450,7 +445,7 @@ export default function Home() {
                     ) : (
                       <FaArrowAltCircleDown className="text-sm" />
                     )}
-                    <span className="sm:text-md text-sm">
+                    <span className="text-sm sm:text-md">
                       {Math.round(leadsPercentage)}%
                     </span>
                   </div>
@@ -458,7 +453,7 @@ export default function Home() {
               </div>
             </div>
             {/* ------- CARD--> 2 ---> PROGRESS BAR  --> C3 ----------- */}
-            <div className="h-2 w-full rounded-lg border border-gray-500 bg-transparent">
+            <div className="w-full h-2 bg-transparent border border-gray-500 rounded-lg">
               <div
                 className={`h-full ${
                   leadStatus == "up" ? "bg-blue-600" : "bg-red-600"
@@ -476,16 +471,16 @@ export default function Home() {
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------- */}
           {/* ------- CARD --> CHILD:3------- */}
-          <div className="md:w-4/4 flex h-44 flex-col justify-between rounded-md bg-white p-2 shadow-lg sm:min-h-52 sm:gap-4 sm:p-4 lg:w-1/4">
+          <div className="flex flex-col justify-between p-2 bg-white rounded-md shadow-lg md:w-4/4 h-44 sm:min-h-52 sm:gap-4 sm:p-4 lg:w-1/4">
             <div className="flex flex-col">
               {}
               <h1 className="text-sm font-light font-medium uppercase">
                 {business === "Brokerage" ? "KYC" : "CLIENT THIS MONTH"}
               </h1>
               {/* ------- CARD--> 3 ---> Logo and SideText --> Parent ----------- */}
-              <div className="mt-2 flex items-center justify-between">
+              <div className="flex items-center justify-between mt-2">
                 {/* ------- CARD--> 3 ---> Logo --> C1 ----------- */}
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-lime-500 px-2 text-white sm:h-20 sm:w-20">
+                <div className="flex items-center justify-center w-12 h-12 px-2 text-white rounded-full bg-lime-500 sm:h-20 sm:w-20">
                   <MdOutlineGroups2 className="text-2xl sm:text-5xl" />
                 </div>
                 {/* ------- CARD--> 3 ---> SideText --> Parent --> {top-bottom TEXTS}  C2 ----------- */}
@@ -505,7 +500,7 @@ export default function Home() {
                       ) : (
                         <FaArrowAltCircleDown className="text-sm" />
                       )}
-                      <span className="sm:text-md text-sm">
+                      <span className="text-sm sm:text-md">
                         {Math.round(kycPercentageChange)}%
                       </span>
                     </div>
@@ -518,7 +513,7 @@ export default function Home() {
                       ) : (
                         <FaArrowAltCircleDown className="text-sm" />
                       )}
-                      <span className="sm:text-md text-sm">
+                      <span className="text-sm sm:text-md">
                         {Math.round(clientPercentageChange)}%
                       </span>
                     </div>
@@ -527,7 +522,7 @@ export default function Home() {
               </div>
             </div>
             {/* ------- CARD--> 3  --> PROGRESS BAR  --> C3 ----------- */}
-            <div className="h-2 w-full rounded-lg border border-gray-500 bg-transparent">
+            <div className="w-full h-2 bg-transparent border border-gray-500 rounded-lg">
               {business === "Brokerage" ? (
                 <div
                   className={`h-full ${
@@ -559,7 +554,7 @@ export default function Home() {
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------- */}
           {/* ------- CARD --> CHILD -> 4 ------- */}
-          <div className="md:w-4/4 flex h-44 flex-col justify-between rounded-md bg-white p-2 shadow-lg sm:min-h-52 sm:gap-4 sm:p-4 lg:w-1/4">
+          <div className="flex flex-col justify-between p-2 bg-white rounded-md shadow-lg md:w-4/4 h-44 sm:min-h-52 sm:gap-4 sm:p-4 lg:w-1/4">
             <div className="flex flex-col">
               {}
               <h1 className="text-sm font-light font-medium uppercase">
@@ -568,8 +563,8 @@ export default function Home() {
                   : "SALES IN PIPELINE"}
               </h1>
               {/* ------- CARD--> 4 ---> Logo and SideText --> Parent ----------- */}
-              <div className="mt-2 flex items-center justify-between">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-500 px-2 text-white sm:h-20 sm:w-20">
+              <div className="flex items-center justify-between mt-2">
+                <div className="flex items-center justify-center w-12 h-12 px-2 text-white rounded-full bg-sky-500 sm:h-20 sm:w-20">
                   {/* ------- CARD--> 4 ---> Logo --> C1 ----------- */}
                   <GiHumanPyramid className="text-2xl sm:text-5xl" />
                 </div>
@@ -588,7 +583,7 @@ export default function Home() {
                     ) : (
                       <FaArrowAltCircleDown className="text-sm" />
                     )}
-                    <span className="sm:text-md text-sm">
+                    <span className="text-sm sm:text-md">
                       {Math.round(intrestedPercentageChange)}%
                     </span>
                   </button>
@@ -597,7 +592,7 @@ export default function Home() {
             </div>
             {/* ------- CARD--> 4 ---> PROGRESS BAR  --> C3 ----------- */}
             {/* ------- CARD--> 4 ---> PROGRESS BAR  --> C3 ----------- */}
-            <div className="h-2 w-full rounded-lg border border-gray-500 bg-transparent">
+            <div className="w-full h-2 bg-transparent border border-gray-500 rounded-lg">
               <div
                 className={`h-full ${
                   leadStatus == "up" ? "bg-blue-600" : "bg-red-500"
@@ -616,8 +611,8 @@ export default function Home() {
         </div>
         {/* ---------------------------------------------------------------------------------------------------------------- */}
 
-        <div className="m-2 grid grid-cols-1 gap-3 sm:flex">
-          <div className="flex-4 flex w-full flex-col justify-between rounded-md bg-white px-4 py-4 shadow-md sm:w-96">
+        <div className="grid grid-cols-1 gap-3 m-2 sm:flex">
+          <div className="flex flex-col justify-between w-full px-4 py-4 bg-white rounded-md shadow-md flex-4 sm:w-96">
             <h1 className="text-xl font-normal">
               {business === "Brokerage" ? "Brokerage" : "Custom Segmentation"}
             </h1>
@@ -629,9 +624,9 @@ export default function Home() {
               />
               {businessType === "Brokerage" ? (
                 <>
-                  <div className="flex w-full items-center justify-between">
+                  <div className="flex items-center justify-between w-full">
                     <div className="flex items-center gap-1">
-                      <div className="h-3 w-1 bg-orange-600"></div>
+                      <div className="w-1 h-3 bg-orange-600"></div>
                       <span className="text-sm">Total Target</span>
                     </div>
                     <div className="flex gap-1">
@@ -640,9 +635,9 @@ export default function Home() {
                       </span>
                     </div>
                   </div>
-                  <div className="flex w-full items-center justify-between">
+                  <div className="flex items-center justify-between w-full">
                     <div className="flex items-center gap-1">
-                      <div className="h-3 w-1 bg-green-300"></div>
+                      <div className="w-1 h-3 bg-green-300"></div>
                       <span className="text-sm">
                         Traget Achieved (Brokerage)
                       </span>
@@ -656,9 +651,9 @@ export default function Home() {
                 </>
               ) : (
                 <>
-                  <div className="flex w-full items-center justify-between">
+                  <div className="flex items-center justify-between w-full">
                     <div className="flex items-center gap-1">
-                      <div className="h-3 w-1 bg-orange-600"></div>
+                      <div className="w-1 h-3 bg-orange-600"></div>
                       <span className="text-sm">Small Business</span>
                     </div>
                     <div className="flex gap-1">
@@ -666,9 +661,9 @@ export default function Home() {
                       <span className="text-sm text-green-400">↑ 424</span>
                     </div>
                   </div>
-                  <div className="flex w-full items-center justify-between">
+                  <div className="flex items-center justify-between w-full">
                     <div className="flex items-center gap-1">
-                      <div className="h-3 w-1 bg-orange-300"></div>
+                      <div className="w-1 h-3 bg-orange-300"></div>
                       <span className="text-sm">Enterprise</span>
                     </div>
                     <div className="flex gap-1">
@@ -676,9 +671,9 @@ export default function Home() {
                       <span className="text-sm text-green-400">↑ 424</span>
                     </div>
                   </div>
-                  <div className="flex w-full items-center justify-between">
+                  <div className="flex items-center justify-between w-full">
                     <div className="flex items-center gap-1">
-                      <div className="h-3 w-1 bg-blue-600"></div>
+                      <div className="w-1 h-3 bg-blue-600"></div>
                       <span className="text-sm">Company</span>
                     </div>
                     <div className="flex gap-1">
@@ -700,7 +695,7 @@ export default function Home() {
             </div>
           </div>
           {/* ------- PROGRESS CARD ------- */}
-          <div className="flex flex-1 flex-col justify-between rounded-md bg-white px-4 py-4 shadow-md">
+          <div className="flex flex-col justify-between flex-1 px-4 py-4 bg-white rounded-md shadow-md">
             <SalesReportChart
               businessType={businessType}
               totalBrokerage={totalBrokerage}
@@ -712,9 +707,9 @@ export default function Home() {
         {business === "Brokerage" ? (
           ""
         ) : (
-          <div className="mx-2 gap-3 sm:flex md:grid md:grid-cols-1">
+          <div className="gap-3 mx-2 sm:flex md:grid md:grid-cols-1">
             {/* ------- BOTTOM CARD ------- */}
-            <div className="flex flex-col rounded-md bg-white px-3 py-6 shadow-sm">
+            <div className="flex flex-col px-3 py-6 bg-white rounded-md shadow-sm">
               <SalesPipelineChart />
             </div>
             {/* ------- BOTTOM CARD ------- */}
