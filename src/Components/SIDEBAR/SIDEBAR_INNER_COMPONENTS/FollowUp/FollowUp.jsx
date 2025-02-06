@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 //external Packages
 import axios from "axios";
 //React Icons
-import { FaAngleDown, FaPhoneAlt } from "react-icons/fa";
+import { FaPhoneAlt } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
 //Folder Imported
@@ -18,6 +18,7 @@ import ManagedByFilter from "../../../../Hooks/ManagedByFilter/ManagedByFilter";
 import UseAction from "../../../../Hooks/Action/useAction";
 import UseDateFilter from "../../../../Hooks/DateFilter/UseDateFilter";
 import UseGridFilter from "../../../../Hooks/GridFilter/UseGridFilter";
+import UseFilterBySegment from "../../../../Hooks/FilterBySegment/UseFilterBySegment";
 
 export default function FollowUp() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function FollowUp() {
   //------------------------------------------------- All States----------------------------------------------------------
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [selectedRowEmails, setSelectedRowEmails] = useState([]);
-  const [followupDropdown, setFollowupDropdown] = useState(false);
+  const [finalData, setFinalData] = useState([]);
   //-------------------------------------------------- GET Data ----------------------------------------------------
   const [originalData, setOriginalData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -56,7 +57,7 @@ export default function FollowUp() {
 
   //---------------------------------------------> Grid Pagination <-----------------------------------------------
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 12;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
@@ -116,15 +117,6 @@ export default function FollowUp() {
   };
   //-----------------------------------------------STRIPE BAR DROPDOWN--------------------------------------------------
   const [selectedViewValue, setSelectedViewValue] = useState("Table View");
-  // -----------------------------------------------  TOGGLE FOLLOWUP DROPDOWN ------------------------------------------------
-  const toggleFollowupDropdown = () => {
-    setFollowupDropdown(!followupDropdown);
-  };
-  // --------------------------------------------------------   FOLLOW UP DROPDOWN DATA -----------------------------------------
-  const followup = [
-    { key: 1, value: "Man Insited" },
-    { key: 2, value: "Man Insited" },
-  ];
   //----------------------------------------------------ACTION BAR DROPDOWN---------------------------------------------------------
   const actions = [
     { key: 1, value: "Mass Delete" },
@@ -142,10 +134,14 @@ export default function FollowUp() {
     );
     setFilteredData(filtered);
   }, [searchTerm, originalData]);
-  //------------------------------------------------------Filter Reset Settings ---------------------------------------------
+  // ------------------------------------------------- FOLLOW UP By State  --------------------------------------
+  const [followUpBy, setFollowUpBy] = useState("Follow Up By");
+  // ------------------------------------------------- Managed By State -----------------------------------------
   const [assignedTo, setAssignedTo] = useState("Managed By");
+  //------------------------------------------------------Filter Reset Settings ---------------------------------------------
   const handleResetFilter = () => {
     setAssignedTo("Managed By");
+    setFollowUpBy("Follow Up By");
     setSearchTerm("");
   };
 
@@ -194,41 +190,27 @@ export default function FollowUp() {
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-white px-3 py-2">
           {/* container- FollowUp, search */}
           <div className="contact_Dropdown_Main_Container flex flex-wrap items-center justify-start gap-3">
-            {/* ALL FOLLOW UPS DROPDOWN */}
-            <div
-              className="contact_Dropdown_Container relative whitespace-nowrap"
-              onClick={toggleFollowupDropdown}
-              onMouseLeave={() => setFollowupDropdown(false)}
-            >
-              <button
-                className="contact_Dropdown_Button flex min-w-40 items-center justify-between truncate rounded-md border px-4 py-2"
-                id="dropdownDefaultButton"
-                type="button"
-              >
-                All Follow Up
-                <FaAngleDown className="ml-2 text-gray-900" />
-              </button>
-              {followupDropdown && (
-                <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
-                  <ul className="py-2 text-sm text-gray-700">
-                    {followup.map(({ key, value }) => (
-                      <li
-                        className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
-                        key={key}
-                      >
-                        {value}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
+            {/*-------------------------------------- ALL FOLLOW UPS DROPDOWN --------------------------------- */}
+            <UseFilterBySegment
+              followUpBy={followUpBy} // Sending Value
+              assignedTo={assignedTo} // Sending Value
+              setFollowUpBy={setFollowUpBy} // Pass function to update state in FollowUp
+              setFilteredData={setFilteredData} // Pass function to update filtered data
+              filteredData={filteredData} // Pass original data for filtering
+              setFinalData={setFinalData}
+              finalData={finalData}
+              originalData={originalData}
+            />
+
             {/* ---------------------------------- Managed BY Filter ----------------------------------------------*/}
             <ManagedByFilter
               assignedTo={assignedTo} // Sending Value
+              followUpBy={followUpBy} // Sending Value
               setAssignedTo={setAssignedTo} // Pass function to update state in FollowUp
               setFilteredData={setFilteredData} // Pass function to update filtered data
-              originalData={originalData} // Pass original data for filtering
+              setFinalData={setFinalData}
+              finalData={finalData}
+              originalData={originalData}
             />
             {/* ---------------------------------------- SEARCH DROPDOWN ------------------------------------------- */}
             <SearchElement
@@ -267,6 +249,7 @@ export default function FollowUp() {
             onReset={handleResetFilter} //Reset Button Function
             originalData={originalData} // Sending Original Data
             setFilteredData={setFilteredData} // Set Filter Data
+            filteredData={filteredData} //Sending Filter Data
           />
         </div>
         {/* TABLE VIEW */}

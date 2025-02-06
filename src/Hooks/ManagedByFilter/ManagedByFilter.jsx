@@ -10,6 +10,9 @@ export default function ManagedByFilter({
   setAssignedTo,
   setFilteredData,
   originalData,
+  followUpBy,
+  setFinalData,
+  finalData,
 }) {
   const name = getHostnamePart();
   const [allAssigned_To_DROPDOWN, setallAssigned_To_DROPDOWN] = useState(false);
@@ -39,18 +42,30 @@ export default function ManagedByFilter({
     fetchAssignedUsers();
   }, []);
 
-  // ---------------------------------------------------------- Handle Assigned To Selection ------------------------------------
+  // ---------------------------------------------------------- Handle Filter  --------------------------------------------
   function handleAssignedToSelection(assignedToValue) {
     setAssignedTo(assignedToValue); // Update state in FollowUp
-
+  
     let filtered = originalData;
-    if (assignedToValue !== "Managed By") {
-      filtered = filtered.filter(
-        (lead) => lead.assigned_To === assignedToValue,
-      );
+  
+    if (followUpBy === "Follow Up By") {
+      if (assignedToValue !== "Managed By") {
+        filtered = originalData.filter(
+          (lead) => lead.assigned_To === assignedToValue
+        );
+        setFinalData(filtered);
+      }
+    } else {
+      filtered = finalData;
+      if (assignedToValue !== "Managed By") {
+        filtered = filtered.filter(
+          (lead) => lead.assigned_To === assignedToValue
+        );
+      }
     }
     setFilteredData(filtered);
   }
+  
 
   return (
     <div
@@ -86,7 +101,10 @@ export default function ManagedByFilter({
 
 ManagedByFilter.propTypes = {
   assignedTo: PropTypes.string.isRequired,
+  followUpBy: PropTypes.string.isRequired,
   setAssignedTo: PropTypes.func.isRequired,
   setFilteredData: PropTypes.func.isRequired,
+  setFinalData: PropTypes.func.isRequired,
+  finalData: PropTypes.array.isRequired,
   originalData: PropTypes.array.isRequired,
 };

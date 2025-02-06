@@ -7,6 +7,7 @@ export default function UseDateFilter({
   onReset,
   originalData,
   setFilteredData,
+  filteredData
 }) {
   // ----------------------------- Date Filter -----------------------------
   const today = new Date().toISOString().split("T")[0];
@@ -42,14 +43,14 @@ export default function UseDateFilter({
 
   //--------------------------------------------- Function to filter leads based on date range-----------------------------------
   const filterByDateRange = (start, end) => {
-    if (!originalData || originalData.length === 0) return;
+    if (!filteredData || filteredData.length === 0) return;
 
     const startDateObj = new Date(start);
     startDateObj.setHours(0, 0, 0, 0);
     const endDateObj = new Date(end);
     endDateObj.setHours(23, 59, 59, 999);
 
-    const filtered = originalData.filter((follow) => {
+    const filtered = filteredData.filter((follow) => {
       const callbackDate = new Date(follow.call_bck_DateTime);
       return callbackDate >= startDateObj && callbackDate <= endDateObj;
     });
@@ -107,4 +108,5 @@ UseDateFilter.propTypes = {
   onReset: PropTypes.func.isRequired,
   originalData: PropTypes.array.isRequired,
   setFilteredData: PropTypes.func.isRequired,
+  filteredData: PropTypes.array.isRequired,
 };
