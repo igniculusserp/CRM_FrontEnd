@@ -61,7 +61,6 @@ export default function FollowUp() {
       headerName: "Client Name",
       minWidth: 200,
       flex: 1,
-    
     },
     { field: "mobileNo", headerName: "Mobile", minWidth: 150, flex: 1 },
     { field: "email", headerName: "Email", minWidth: 200, flex: 1 },
@@ -72,7 +71,6 @@ export default function FollowUp() {
       flex: 1,
       renderCell: (params) => params.row.segments.join(", "),
     },
-  
   ];
   // ------------------------------------------------- FOLLOW UP By State  --------------------------------------
   const [followUpBy, setFollowUpBy] = useState("Follow Up By");
@@ -103,32 +101,32 @@ export default function FollowUp() {
             {/* ---------------------------------------- SEARCH DROPDOWN ------------------------------------------- */}
           </div>
         </div>
-      
+
         {/* TABLE VIEW */}
         <div className="leads_Table_Main_Container overflow-x-auto">
           <div className="leads_Table_Container min-w-full rounded-md">
             {/*---------------------------------------TABLE HEAD START---------------------------------------- */}
-           
-              <Paper sx={{ width: "100%" }}>
-                <DataGrid
-                  rows={currentData} // Row Data
-                  columns={columns} // Headings
-                  pagination={false}
-                  checkboxSelection
-                  sx={{
-                    border: 0,
-                    width: "100%",
-                    "& .MuiDataGrid-columnHeaderTitle": {
-                      fontWeight: "bold",
-                    },
-                    "& .MuiDataGrid-footerContainer": {
-                      display: "none",
-                    },
-                  }}
-                />
-              </Paper>
+
+            <Paper sx={{ width: "100%" }}>
+              <DataGrid
+                rows={currentData} // Row Data
+                columns={columns} // Headings
+                pagination={false}
+                checkboxSelection
+                sx={{
+                  border: 0,
+                  width: "100%",
+                  "& .MuiDataGrid-columnHeaderTitle": {
+                    fontWeight: "bold",
+                  },
+                  "& .MuiDataGrid-footerContainer": {
+                    display: "none",
+                  },
+                }}
+              />
+            </Paper>
           </div>
-     
+
           {/* --------------------------------------- Pagination ------------------------------------------ */}
           <Stack spacing={2} className="mb-1 mt-4">
             <Pagination

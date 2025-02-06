@@ -29,11 +29,10 @@ export default function UseFilterBySegment({
         const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
         const response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Admin/segment/getall`,
-          config
+          config,
         );
         setAllFollowUpToData(response.data.data || []);
-        console.log("@@@@@=======",response);
-        
+        console.log("@@@@@=======", response);
       } catch (error) {
         console.error("Error fetching FollowUp users:", error);
       }
@@ -41,42 +40,42 @@ export default function UseFilterBySegment({
 
     fetchFollowUpUsers();
   }, [name]);
- // ---------------------------------------------------------- Handle Filter  --------------------------------------------
+  // ---------------------------------------------------------- Handle Filter  --------------------------------------------
 
-//   const handleFollowUpBySelection = (followUpByValue) => {
-//     setFollowUpBy(followUpByValue);
+  //   const handleFollowUpBySelection = (followUpByValue) => {
+  //     setFollowUpBy(followUpByValue);
 
-//     const filtered = followUpByValue !== "Follow Up By"
-//       ? filteredData.filter((lead) => lead.segments.includes(followUpByValue))
-//       : filteredData;
+  //     const filtered = followUpByValue !== "Follow Up By"
+  //       ? filteredData.filter((lead) => lead.segments.includes(followUpByValue))
+  //       : filteredData;
 
-//     setFilteredData(filtered);
-//     setAllFollowUpToDropdown(false); // Close dropdown after selection
-// };
+  //     setFilteredData(filtered);
+  //     setAllFollowUpToDropdown(false); // Close dropdown after selection
+  // };
 
-function handleFollowUpBySelection(followUpByValue) {
-  setFollowUpBy(followUpByValue); // Update state in FollowUp
+  function handleFollowUpBySelection(followUpByValue) {
+    setFollowUpBy(followUpByValue); // Update state in FollowUp
 
-  let filtered = originalData;
+    let filtered = originalData;
 
-  if (assignedTo === "Managed By") {
-    if (followUpByValue !== "Follow Up By") {
-      filtered = originalData.filter(
-        (lead) => lead.segments.includes(followUpByValue)
-      );
-      setFinalData(filtered);
-    }
-  } else {
-    filtered = finalData;
+    if (assignedTo === "Managed By") {
       if (followUpByValue !== "Follow Up By") {
-        filtered = filtered.filter(
-          (lead) => lead.segments.includes(followUpByValue)
+        filtered = originalData.filter((lead) =>
+          lead.segments.includes(followUpByValue),
         );
+        setFinalData(filtered);
+      }
+    } else {
+      filtered = finalData;
+      if (followUpByValue !== "Follow Up By") {
+        filtered = filtered.filter((lead) =>
+          lead.segments.includes(followUpByValue),
+        );
+      }
     }
+    setAllFollowUpToDropdown(false);
+    setFilteredData(filtered);
   }
-  setAllFollowUpToDropdown(false); 
-  setFilteredData(filtered);
-}
 
   return (
     <div
@@ -117,6 +116,6 @@ UseFilterBySegment.propTypes = {
   setFilteredData: PropTypes.func.isRequired,
   filteredData: PropTypes.array.isRequired,
   setFinalData: PropTypes.func.isRequired,
-    finalData: PropTypes.array.isRequired,
-    originalData: PropTypes.array.isRequired,
+  finalData: PropTypes.array.isRequired,
+  originalData: PropTypes.array.isRequired,
 };

@@ -45,13 +45,13 @@ export default function ManagedByFilter({
   // ---------------------------------------------------------- Handle Filter  --------------------------------------------
   function handleAssignedToSelection(assignedToValue) {
     setAssignedTo(assignedToValue); // Update state in FollowUp
-  
+
     let filtered = originalData;
-  
+
     if (followUpBy === "Follow Up By") {
       if (assignedToValue !== "Managed By") {
         filtered = originalData.filter(
-          (lead) => lead.assigned_To === assignedToValue
+          (lead) => lead.assigned_To === assignedToValue,
         );
         setFinalData(filtered);
       }
@@ -59,13 +59,12 @@ export default function ManagedByFilter({
       filtered = finalData;
       if (assignedToValue !== "Managed By") {
         filtered = filtered.filter(
-          (lead) => lead.assigned_To === assignedToValue
+          (lead) => lead.assigned_To === assignedToValue,
         );
       }
     }
     setFilteredData(filtered);
   }
-  
 
   return (
     <div

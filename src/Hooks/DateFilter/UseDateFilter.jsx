@@ -7,7 +7,7 @@ export default function UseDateFilter({
   onReset,
   originalData,
   setFilteredData,
-  filteredData
+  filteredData,
 }) {
   // ----------------------------- Date Filter -----------------------------
   const today = new Date().toISOString().split("T")[0];
