@@ -1,6 +1,9 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 export default function LeadsReport({ currentReports }) {
   const columns = [
@@ -20,15 +23,7 @@ export default function LeadsReport({ currentReports }) {
       headerName: "Segments",
       minWidth: 180,
       flex: 1,
-      renderCell: (params) => (
-        <div className="grid grid-cols-2 items-center gap-1">
-          {params.value &&
-            params.value.map(
-              (segment, index) =>
-                segment.length > 1 && <span key={index}>{segment}</span>,
-            )}
-        </div>
-      ),
+      renderCell: (params) => params.row.segments?.join(", ") || "N/A",
     },
     {
       field: "description",
@@ -41,20 +36,30 @@ export default function LeadsReport({ currentReports }) {
     },
   ];
 
-  const rows = currentReports.map((report, index) => ({
-    id: index + 1,
-    ...report,
-  }));
+
+  // -------------------> State for Pagination <-------------------
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const paginatedData = currentReports.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
+//------------------------------------------------- Row Data ----------------------------
+const rows = paginatedData.map((report, index) => ({
+  id: report.id || index + 1, // Ensure id is set correctly
+  ...report,
+}));
 
   return (
+    <>
     <Paper sx={{ width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns}
-        initialState={{
-          pagination: { paginationModel: { pageSize: 10 } },
-        }}
-        pageSizeOptions={[10]}
+        pagination={false}
         checkboxSelection
         sx={{
           border: 0,
@@ -62,9 +67,32 @@ export default function LeadsReport({ currentReports }) {
           "& .MuiDataGrid-columnHeaderTitle": {
             fontWeight: "bold",
           },
+          "& .MuiDataGrid-footerContainer": {
+            display: "none",
+          },
         }}
       />
     </Paper>
+      {/* ---------------------------- Pagination ---------------------------- */}
+      <Stack spacing={2} className="mb-1 mt-4">
+        <Pagination
+          count={Math.ceil(currentReports.length / itemsPerPage)}
+          page={currentPage}
+          onChange={handlePageChange}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            "& .MuiPaginationItem-root": {
+              fontSize: "1.3rem",
+            },
+            "& .MuiPaginationItem-root.Mui-selected": {
+              backgroundColor: "rgba(6, 182, 212, 1)",
+              color: "#fff",
+            },
+          }}
+        />
+      </Stack>
+    </>
   );
 }
 
