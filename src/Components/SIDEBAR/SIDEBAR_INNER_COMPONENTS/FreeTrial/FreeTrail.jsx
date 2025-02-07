@@ -1,6 +1,6 @@
 //react inbuilt
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 //external
 import axios from "axios";
@@ -504,7 +504,7 @@ export default function FreeTrail() {
   }, []);
 
   return (
-    <div className="m-3 flex min-h-screen flex-col">
+    <div className="flex flex-col min-h-screen m-3">
       {/* Render the modal only when `isModalOpen` is true */}
       {isModalOpen && (
         <MassEmail
@@ -513,16 +513,16 @@ export default function FreeTrail() {
         />
       )}
 
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-md bg-white px-3 py-2">
-        <div className="contact_Dropdown_Main_Container flex flex-wrap items-center justify-start gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-3 py-2 bg-white rounded-md">
+        <div className="flex flex-wrap items-center justify-start gap-3 contact_Dropdown_Main_Container">
           {/* AllContact  DropDown*/}
           <div
-            className="contact_Dropdown_Container relative whitespace-nowrap"
+            className="relative contact_Dropdown_Container whitespace-nowrap"
             onClick={toggleMenuAllFreeTrial}
             onMouseLeave={() => setAllFreeTrialdropDown(false)}
           >
             <button
-              className="contact_Dropdown_Button flex min-w-40 items-center justify-between truncate rounded-md border px-4 py-2"
+              className="flex items-center justify-between px-4 py-2 truncate border rounded-md contact_Dropdown_Button min-w-40"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -530,12 +530,12 @@ export default function FreeTrail() {
               <FaAngleDown className="ml-2 text-gray-900" />
             </button>
             {allFreeTrialdropDown && (
-              <div className="z-100 absolute top-10 rounded-md border border-gray-300 bg-white">
+              <div className="absolute bg-white border border-gray-300 rounded-md z-100 top-10">
                 <ul className="py-2 text-sm text-gray-700">
                   {freeTrialDropdown.map((item) => (
                     <li
                       key={item.id}
-                      className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                      className="block w-56 px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                       // onClick={() => handleTrialStatusButton(item.status)}
                     >
                       {item.value}
@@ -548,12 +548,12 @@ export default function FreeTrail() {
 
           {/* All ASSIGNED_TO  DropDown*/}
           <div
-            className="contact_Dropdown_Container relative whitespace-nowrap"
+            className="relative contact_Dropdown_Container whitespace-nowrap"
             onClick={toggleMenuAssigned_To}
             onMouseLeave={() => setallAssigned_To_DROPDOWN(false)}
           >
             <button
-              className="contact_Dropdown_Button flex min-w-36 items-center justify-between rounded-md border px-4 py-2"
+              className="flex items-center justify-between px-4 py-2 border rounded-md contact_Dropdown_Button min-w-36"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -561,12 +561,12 @@ export default function FreeTrail() {
               <FaAngleDown className="ml-2 text-gray-900" />
             </button>
             {allAssigned_To_DROPDOWN && (
-              <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
+              <div className="absolute z-10 bg-white border border-gray-300 rounded-md top-10">
                 <ul className="py-2 text-sm text-gray-700">
                   {allAssigned_To_Data.map((item) => (
                     <li
                       key={item.id}
-                      className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                      className="block w-56 px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                       onClick={() => handleAssignedToSelection(item.userName)} // Correct selection logic
                     >
                       {item.userName}
@@ -584,15 +584,15 @@ export default function FreeTrail() {
           />
         </div>
 
-        <div className="action_Button_Main_Container flex items-center justify-start gap-3">
+        <div className="flex items-center justify-start gap-3 action_Button_Main_Container">
           {/* Stripe-BarDropDown */}
           <div
-            className="hide_Component relative"
+            className="relative hide_Component"
             onClick={togglestripeBar}
             onMouseLeave={() => setstripeBardropDown(false)}
           >
             <button
-              className="flex items-center justify-between gap-2 rounded-md border px-4 py-3"
+              className="flex items-center justify-between gap-2 px-4 py-3 border rounded-md"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -600,15 +600,15 @@ export default function FreeTrail() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {stripeBardropDown && (
-              <div className="absolute right-0 top-10 z-10 w-32 rounded-md border border-gray-300 bg-white py-2">
+              <div className="absolute right-0 z-10 w-32 py-2 bg-white border border-gray-300 rounded-md top-10">
                 <ul className="text-sm text-gray-700">
                   {stripeBar.map(({ key, value, icon }) => (
                     <li
                       key={key}
-                      className="flex cursor-pointer items-center gap-2 border-b py-2 hover:bg-cyan-500 hover:text-white"
+                      className="flex items-center gap-2 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                       onClick={() => handleStripeButton(value)}
                     >
-                      <div className="mx-1 flex h-6 w-6 items-center justify-center text-lg">
+                      <div className="flex items-center justify-center w-6 h-6 mx-1 text-lg">
                         {icon}
                       </div>
                       <div className="flex-1 text-left">{value}</div>
@@ -621,12 +621,12 @@ export default function FreeTrail() {
 
           {/* ACTION DROPDOWM START */}
           <div
-            className="action_Button_Container relative"
+            className="relative action_Button_Container"
             onClick={toggleActionsMenuLogo}
             onMouseLeave={() => setdropActionsMenudropDown(false)}
           >
             <button
-              className="action_Button flex items-center justify-between gap-2 rounded-lg border border-blue-600 px-4 py-2 text-blue-600"
+              className="flex items-center justify-between gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg action_Button"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -634,13 +634,13 @@ export default function FreeTrail() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {dropActionsMenudropDown && (
-              <div className="absolute right-0 top-10 z-10 w-56 rounded-md border border-gray-300 bg-white py-2">
+              <div className="absolute right-0 z-10 w-56 py-2 bg-white border border-gray-300 rounded-md top-10">
                 <ul className="text-sm text-gray-700">
                   {dropActionsMenu.map(({ key, value }) =>
                     permissions.includes(value) || businessRole === "Admin" ? (
                       <li
                         key={key}
-                        className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                        className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                         onClick={() => handleActionButton(value)}
                       >
                         {value}
@@ -654,10 +654,10 @@ export default function FreeTrail() {
         </div>
       </div>
       {/* FILTER BY */}
-      <div className="my-1 flex flex-wrap items-center justify-between gap-3 py-2">
+      <div className="flex flex-wrap items-center justify-between gap-3 py-2 my-1">
         <div className="flex gap-3">
           <h1 className="text-3xl font-medium">Free Trail</h1>
-          <h1 className="min-w-10 rounded bg-blue-600 p-2 text-center text-sm text-white shadow-md">
+          <h1 className="p-2 text-sm text-center text-white bg-blue-600 rounded shadow-md min-w-10">
             {freeTrial?.length}
           </h1>
         </div>
@@ -665,25 +665,25 @@ export default function FreeTrail() {
         {/* ------------------- Filter by date ----------------- */}
         <div className="date_Filter_Main_Container">
           {/* ------------------- Filter by date ----------------- */}
-          <div className="date_Filter_Main_Container flex items-center justify-between rounded-lg border-2 border-gray-300 bg-white p-2">
+          <div className="flex items-center justify-between p-2 bg-white border-2 border-gray-300 rounded-lg date_Filter_Main_Container">
             {/* Filter Icon Button */}
             <div className="flex items-center">
-              <button className="border-r border-gray-500 pr-2">
+              <button className="pr-2 border-r border-gray-500">
                 <ImFilter className="filter_Image_Size" />
               </button>
 
               {/* Date Range Filter Button */}
-              <button className="filter_Image_Display whitespace-nowrap border-r border-gray-500 px-2">
+              <button className="px-2 border-r border-gray-500 filter_Image_Display whitespace-nowrap">
                 Filter By
               </button>
 
               {/* Date Range Inputs */}
-              <div className="filter_Date_Container flex items-center gap-2 px-2">
+              <div className="flex items-center gap-2 px-2 filter_Date_Container">
                 <label className="hide_Filter_Text">From:</label>
                 <input
                   type="date"
                   value={startDate}
-                  className="filter_Date rounded border px-2 py-2"
+                  className="px-2 py-2 border rounded filter_Date"
                   onChange={(e) => setStartDate(e.target.value)}
                 />
 
@@ -691,14 +691,14 @@ export default function FreeTrail() {
                 <input
                   type="date"
                   value={endDate}
-                  className="filter_Date rounded border px-2 py-2"
+                  className="px-2 py-2 border rounded filter_Date"
                   onChange={(e) => setEndDate(e.target.value)}
                 />
               </div>
             </div>
 
             <div
-              className="reset_paddings flex cursor-pointer items-center gap-2 rounded border p-2"
+              className="flex items-center gap-2 p-2 border rounded cursor-pointer reset_paddings"
               onClick={handleResetFilter}
             >
               <label className="hide_Filter_Text">Reset</label>
@@ -708,16 +708,16 @@ export default function FreeTrail() {
         </div>
       </div>
       {/* TABLE VIEW */}
-      <div className="leads_Table_Main_Container overflow-x-auto">
-        <div className="leads_Table_Container min-w-full rounded-md">
+      <div className="overflow-x-auto leads_Table_Main_Container">
+        <div className="min-w-full rounded-md leads_Table_Container">
           {/*-------Table-------*/}
           {selectedViewValue === "Table View" && (
-            <table className="leads_Table min-w-full bg-white">
+            <table className="min-w-full bg-white leads_Table">
               {/*--------------TABLE DATA START------------- */}
               <thead>
                 <tr className="border-b-2 border-gray-300">
                   {/* CHECKBOX */}
-                  <th className="px-3 py-3 text-left font-medium">
+                  <th className="px-3 py-3 font-medium text-left">
                     <input
                       type="checkbox"
                       onClick={selectAllCheckbox}
@@ -725,7 +725,7 @@ export default function FreeTrail() {
                     />
                   </th>
                   {/* CLIENT NAME */}
-                  <th className="border-r px-1 py-3 text-left font-medium">
+                  <th className="px-1 py-3 font-medium text-left border-r">
                     <div className="flex items-center justify-between gap-3">
                       <span className="text-nowrap">Client Name</span>
                       <span>
@@ -734,7 +734,7 @@ export default function FreeTrail() {
                     </div>
                   </th>
                   {/* MOBILE */}
-                  <th className="border-r px-1 py-3 text-left font-medium">
+                  <th className="px-1 py-3 font-medium text-left border-r">
                     <div className="flex items-center justify-between gap-3">
                       <span>Mobile</span>
                       <span>
@@ -744,7 +744,7 @@ export default function FreeTrail() {
                   </th>
                   {/* Phone */}
                   {/* Email */}
-                  <th className="border-r px-1 py-3 text-left font-medium">
+                  <th className="px-1 py-3 font-medium text-left border-r">
                     <div className="flex items-center justify-between gap-3">
                       <span>Email</span>
                       <span>
@@ -753,7 +753,7 @@ export default function FreeTrail() {
                     </div>
                   </th>
                   {/* MANAGED BY */}
-                  <th className="border-r px-1 py-3 text-left font-medium">
+                  <th className="px-1 py-3 font-medium text-left border-r">
                     <div className="flex items-center justify-between gap-3">
                       <span className="text-nowrap">Managed By</span>
                       <span>
@@ -762,7 +762,7 @@ export default function FreeTrail() {
                     </div>
                   </th>
                   {/* SEGMENT */}
-                  <th className="border-r px-1 py-3 text-left font-medium">
+                  <th className="px-1 py-3 font-medium text-left border-r">
                     <div className="flex items-center justify-between gap-3">
                       <span>Segment</span>
                       <span>
@@ -771,7 +771,7 @@ export default function FreeTrail() {
                     </div>
                   </th>
                   {/* Trail Start Date */}
-                  <th className="border-r px-1 py-3 text-left font-medium">
+                  <th className="px-1 py-3 font-medium text-left border-r">
                     <div className="flex items-center justify-between gap-3">
                       <span className="text-nowrap">Trail Start Date</span>
                       <span>
@@ -780,7 +780,7 @@ export default function FreeTrail() {
                     </div>
                   </th>
                   {/* Trail End Date */}
-                  <th className="border-r py-3 pl-1 pr-3 text-left font-medium">
+                  <th className="py-3 pl-1 pr-3 font-medium text-left border-r">
                     <div className="flex items-center justify-between gap-3">
                       <span className="text-nowrap">Trail End Date</span>
                       <span>
@@ -796,10 +796,10 @@ export default function FreeTrail() {
                 {currentLeads.map((order, index) => (
                   <tr
                     key={index}
-                    className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
+                    className="border-b border-gray-300 cursor-pointer hover:bg-gray-200"
                   >
                     {/* CHECKBOX */}
-                    <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
+                    <td className="px-3 py-4 text-sm leading-5 text-gray-600 border-b border-gray-300">
                       <div className="flex items-center">
                         <input
                           type="checkbox"
@@ -812,7 +812,7 @@ export default function FreeTrail() {
                     </td>
                     {/* CLIENT NAME */}
                     <td
-                      className="border-b border-gray-300 px-1 py-4 text-sm leading-5"
+                      className="px-1 py-4 text-sm leading-5 border-b border-gray-300"
                       onClick={
                         edit || businessRole === "Admin"
                           ? () => handleClick(order.id)
@@ -826,7 +826,7 @@ export default function FreeTrail() {
                       </div>
                     </td>
                     {/* MOBILE */}
-                    <td className="border-b border-gray-300 px-1 py-4 text-sm leading-5">
+                    <td className="px-1 py-4 text-sm leading-5 border-b border-gray-300">
                       <div className="flex items-center gap-1">
                         <span className="break-all">
                           <a
@@ -842,15 +842,15 @@ export default function FreeTrail() {
                       </div>
                     </td>
                     {/* Email */}
-                    <td className="border-b border-gray-300 px-1 py-4 text-sm leading-5">
+                    <td className="px-1 py-4 text-sm leading-5 border-b border-gray-300">
                       <div className="break-all">{order.email}</div>
                     </td>
                     {/* Assigned To */}
-                    <td className="border-b border-gray-300 px-1 py-4 text-sm">
+                    <td className="px-1 py-4 text-sm border-b border-gray-300">
                       <div>{order.assigned_To}</div>
                     </td>
                     {/* SEGMENT */}
-                    <td className="min-w-24 max-w-36 border-b border-gray-300 px-1 py-4 text-sm">
+                    <td className="px-1 py-4 text-sm border-b border-gray-300 min-w-24 max-w-36">
                       <div>
                         {order.segments && (
                           <span className="">
@@ -862,7 +862,7 @@ export default function FreeTrail() {
                       </div>
                     </td>
                     {/* Trial Start Date */}
-                    <td className="border-b border-gray-300 px-1 py-4 text-sm leading-5">
+                    <td className="px-1 py-4 text-sm leading-5 border-b border-gray-300">
                       <div className="flex items-center break-words">
                         {order.trialStartDate
                           ? order.trialStartDate
@@ -874,7 +874,7 @@ export default function FreeTrail() {
                       </div>
                     </td>
                     {/* Trial End Date */}
-                    <td className="border-b border-gray-300 py-4 pl-1 pr-3 text-sm leading-5">
+                    <td className="py-4 pl-1 pr-3 text-sm leading-5 border-b border-gray-300">
                       <div className="flex items-center break-words">
                         {order.trialEndDate
                           ? order.trialEndDate
@@ -908,19 +908,19 @@ export default function FreeTrail() {
               {currentLeads.map((item) => (
                 // {/* ------------sub-Parent->Container ------------ */}
                 <div
-                  className="grid grid-cols-1 gap-1 rounded-lg bg-sky-100 p-2 shadow-md"
+                  className="grid grid-cols-1 gap-1 p-2 rounded-lg shadow-md bg-sky-100"
                   key={item.id}
                 >
                   <div>
-                    <div className="flex items-center rounded border-2 border-cyan-500 bg-white py-2 text-center">
-                      <div className="mx-auto flex items-center justify-center gap-2">
+                    <div className="flex items-center py-2 text-center bg-white border-2 rounded border-cyan-500">
+                      <div className="flex items-center justify-center gap-2 mx-auto">
                         <FaUserTie />
                         <span className="">
                           {item?.name[0].toUpperCase() + item?.name.substr(1)}
                         </span>
                       </div>
                       <AiOutlineEdit
-                        className="mr-3 rounded-full bg-cyan-400 p-1 text-white hover:bg-cyan-500"
+                        className="p-1 mr-3 text-white rounded-full bg-cyan-400 hover:bg-cyan-500"
                         onClick={(e) => {
                           e.stopPropagation();
                           navigate(`/panel/createtrial/${item.id}`);
@@ -930,13 +930,13 @@ export default function FreeTrail() {
                     </div>
                   </div>
 
-                  <div className="rounded border-2 border-cyan-500 bg-white py-2">
+                  <div className="py-2 bg-white border-2 rounded border-cyan-500">
                     <div className="flex items-center justify-between px-3 py-1">
                       <div className="flex items-center justify-between py-1">
                         <IoIosMail size={22} className="w-6" />
                         <span className="hidden sm:block">Email</span>
                       </div>
-                      <div className="truncate text-sm font-medium">
+                      <div className="text-sm font-medium truncate">
                         <a
                           href={`mailto:${item.email}`}
                           onClick={(event) => event.stopPropagation()}
@@ -951,7 +951,7 @@ export default function FreeTrail() {
                         <FaPhoneAlt size={14} className="w-6" />
                         <span className="hidden sm:block">Phone</span>
                       </div>
-                      <div className="truncate text-sm font-medium">
+                      <div className="text-sm font-medium truncate">
                         <a
                           href={`tel:${item.mobileNo}`}
                           onClick={(event) => event.stopPropagation()}
@@ -966,7 +966,7 @@ export default function FreeTrail() {
                         <PiLineSegmentsBold size={16} className="w-6" />
                         <span className="hidden sm:block">Segments</span>
                       </div>
-                      <div className="truncate text-sm font-medium">
+                      <div className="text-sm font-medium truncate">
                         {item?.segments?.length
                           ? item.segments?.join(", ")
                           : ""}
@@ -1024,9 +1024,9 @@ export default function FreeTrail() {
 
       {selectedViewValue === "Table View" && (
         <>
-          <div className="m-4 flex justify-end">
+          <div className="flex justify-end m-4">
             {/* //---------------------->---------------------->PAGINATION-RENDERER<----------------------<---------------------- */}
-            <nav className="mx-auto mt-4 flex items-center justify-center gap-2 text-center">
+            <nav className="flex items-center justify-center gap-2 mx-auto mt-4 text-center">
               {/* Previous Button */}
               <button
                 onClick={() => paginate(currentPage - 1)}
