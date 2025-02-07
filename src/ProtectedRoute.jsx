@@ -3,16 +3,16 @@ import { useNavigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
   const storedOtp = localStorage.getItem("otp");
-  const token  = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const timerRef = useRef(null);
 
   // Function to reset the idle timer
   const resetTimer = () => {
-    if (timerRef.current){ 
+    if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
-      timerRef.current = setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       localStorage.removeItem("otp");
       localStorage.removeItem("token");
       navigate("/tenantlogin", { replace: true });

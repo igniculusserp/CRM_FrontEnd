@@ -269,7 +269,10 @@ createRoot(document.getElementById("root")).render(
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <FollowUpNotificationProvider>
         <NotificationProvider>
-          <RouterProvider router={router} />
+          <RouterProvider future={{
+            v7_relativeSplatPath: true,
+            v7_startTransition: true
+          }} router={router} />
         </NotificationProvider>
       </FollowUpNotificationProvider>
     </GoogleOAuthProvider>

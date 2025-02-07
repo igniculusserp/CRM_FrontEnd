@@ -9,9 +9,7 @@ import {
 } from "./../../Config/config";
 
 // React-Icons
-import { RiAddBoxFill } from "react-icons/ri";
 import { IoMdNotifications } from "react-icons/io";
-import { TbCalendarMonth } from "react-icons/tb";
 import { IoMdSettings } from "react-icons/io";
 import { FaAngleDown } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
@@ -164,7 +162,7 @@ export default function Header({ toggle, setToggle }) {
           </button>
         </div>
 
-        <div className="flex items-center justify-start gap-1 rounded-full px-2 shadow sm:justify-end">
+        <div className="flex items-center justify-start gap-1 px-3 sm:justify-end">
           {menu.map(({ key, logo, link, functionality }) => (
             <div
               key={key}

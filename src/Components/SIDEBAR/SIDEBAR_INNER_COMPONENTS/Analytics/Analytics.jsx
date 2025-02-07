@@ -227,14 +227,14 @@ export default function Analytics() {
   };
 
   return (
-    <main className="mx-1 my-3 grid min-h-screen gap-1">
+    <main className="grid min-h-screen gap-1 mx-1 my-3">
       {/* ------------ TOP SECTION ------------ */}
       {/* ------------ CARD ->>>Parent : 4 Childs<<<- ------------ */}
-      <div className="grid grid-cols-4 items-center gap-3 px-2">
+      <div className="grid items-center grid-cols-4 gap-3 px-2">
         {/* ------------ CARD ->>> Child : 1 <<<- ------------ */}
-        <div className="rounded-md bg-white px-2 py-2 shadow-md">
+        <div className="px-2 py-2 bg-white rounded-md shadow-md">
           {/* ------------ Inner ------------ */}
-          <div className="grid grid-cols-2 items-center justify-between">
+          <div className="grid items-center justify-between grid-cols-2">
             {/* ------------ Textual Data ------------ */}
             <div className="grid grid-flow-row-dense gap-2">
               {/* ------------ Heading ------------ */}
@@ -281,10 +281,10 @@ export default function Analytics() {
         {/* ------------------------------------------------------------------------------------------------ */}
 
         {/* ------------ CARD ->>> Child :2 <<<- ------------ */}
-        <div className="rounded-md bg-white px-2 py-2 shadow-md">
+        <div className="px-2 py-2 bg-white rounded-md shadow-md">
           {/* ------------ CARD ------------ */}
           {/* ------------ Inner ------------ */}
-          <div className="grid grid-cols-2 items-center justify-between">
+          <div className="grid items-center justify-between grid-cols-2">
             {/* ------------ Textual Data ------------ */}
             <div className="grid grid-flow-row-dense gap-2">
               {/* ------------ Heading ------------ */}
@@ -332,14 +332,14 @@ export default function Analytics() {
         {/* ------------------------------------------------------------------------------------------------ */}
 
         {/* ------------ CARD ->>> Child :3 <<<- ------------ */}
-        <div className="rounded-md bg-white px-2 py-2 shadow-md">
+        <div className="px-2 py-2 bg-white rounded-md shadow-md">
           {/* ------------ CARD ------------ */}
           {/* ------------ Inner ------------ */}
-          <div className="grid grid-cols-2 items-center justify-between">
+          <div className="grid items-center justify-between grid-cols-2">
             {/* ------------ Textual Data ------------ */}
             <div className="grid grid-flow-row-dense gap-2">
               {/* ------------ Heading ------------ */}
-              <h1 className="text-sm">FOLLOW UP</h1>
+              <h1 className="text-sm">FOLLOW UPS</h1>
               <span>{todayFollowup.todayFollowup}</span>
 
               {/* ------------ Button ------------ */}
@@ -375,19 +375,19 @@ export default function Analytics() {
         {/* ------------------------------------------------------------------------------------------------ */}
 
         {/* ------------ CARD ->>> Child :3 <<<- ------------ */}
-        <div className="rounded-md bg-white px-2 py-2 shadow-md">
+        <div className="px-2 py-2 bg-white rounded-md shadow-md">
           {/* ------------ Inner ------------ */}
-          <div className="grid grid-cols-2 items-center justify-between">
+          <div className="grid items-center justify-between grid-cols-2">
             {/* ------------ Textual Data ------------ */}
             <div className="grid grid-flow-row-dense gap-2">
               {/* ------------ Heading ------------ */}
-              <h1 className="text-sm">TEAM MEMBER</h1>
+              <h1 className="text-sm">TEAM MEMBERS</h1>
 
               {/* ------------ COUNT ------------ */}
               <strong>10</strong>
 
               {/* ------------ Button ------------ */}
-              <button className="flex min-w-20 max-w-24 items-center justify-center gap-1 rounded-md bg-green-500 px-1 py-1 shadow-sm shadow-green-700">
+              <button className="flex items-center justify-center gap-1 px-1 py-1 bg-green-500 rounded-md shadow-sm min-w-20 max-w-24 shadow-green-700">
                 <FaArrowAltCircleUp className="text-white" />
                 <span className="text-white">73%</span>
               </button>
@@ -401,7 +401,7 @@ export default function Analytics() {
       </div>
 
       {/* ------------ 4 GRAPH SECTION ------------ */}
-      <div className="m-3 grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-3 m-3 sm:grid-cols-2">
         <FirstChart
           text={business === "Brokerage" ? `Top 5 SRM` : `Top 5 BA`}
         />
@@ -414,7 +414,7 @@ export default function Analytics() {
         />
       </div>
 
-      <div className="mx-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 mx-3 sm:grid-cols-2">
         <BottomChart text={`Leads By Stage`} color={`#2B6CB0`} />
         <BottomChart text={`Sales By Stage`} color={`#34d399`} />
       </div>
