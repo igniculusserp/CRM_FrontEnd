@@ -233,7 +233,6 @@ export default function FollowUp() {
               selectedRowEmails={selectedRowEmails} // Sending Selected Rows E-Mail's
               actions={actions} // Sending Actions Dropdown List
             />
-            {/* END ACTIONS DROPDWON */}
           </div>
         </div>
         {/* MIDDLE SECTION */}

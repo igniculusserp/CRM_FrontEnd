@@ -1,7 +1,7 @@
 import { FaBars } from "react-icons/fa";
 import PropTypes from "prop-types";
 
-export default function SendEmail({ currentSms }) {
+export default function SendEmail({ currentData }) {
   return (
     <table className="leads_Table min-w-full bg-white">
       {/* ----------------- TABLE HEAD START ----------------- */}
@@ -42,7 +42,7 @@ export default function SendEmail({ currentSms }) {
       {/* ----------------- TABLE HEAD END ----------------- */}
       {/* ----------------- TABLE BODY START ----------------- */}
       <tbody>
-        {currentSms.map((sms, index) => (
+        {currentData.map((sms, index) => (
           <tr
             key={index}
             // onClick={() => handleClick(sms)}
@@ -84,5 +84,5 @@ export default function SendEmail({ currentSms }) {
 }
 
 SendEmail.propTypes = {
-  currentSms: PropTypes.array.isRequired,
+  currentData: PropTypes.array.isRequired,
 };
