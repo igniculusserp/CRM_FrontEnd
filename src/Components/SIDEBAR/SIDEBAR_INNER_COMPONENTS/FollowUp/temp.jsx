@@ -135,13 +135,13 @@ export default function FollowUp() {
     setFilteredData(filtered);
   }, [searchTerm, originalData]);
   // ------------------------------------------------- FOLLOW UP By State  --------------------------------------
-  const [followUpBy, setFollowUpBy] = useState("Follow Up By");
+  const [followUpBy, setFollowUpBy] = useState("Segment By");
   // ------------------------------------------------- Managed By State -----------------------------------------
   const [assignedTo, setAssignedTo] = useState("Managed By");
   //------------------------------------------------------Filter Reset Settings ---------------------------------------------
   const handleResetFilter = () => {
     setAssignedTo("Managed By");
-    setFollowUpBy("Follow Up By");
+    setFollowUpBy("Segment By");
     setSearchTerm("");
   };
 
@@ -233,6 +233,7 @@ export default function FollowUp() {
               selectedRowEmails={selectedRowEmails} // Sending Selected Rows E-Mail's
               actions={actions} // Sending Actions Dropdown List
             />
+            {/* END ACTIONS DROPDWON */}
           </div>
         </div>
         {/* MIDDLE SECTION */}
@@ -370,7 +371,7 @@ export default function FollowUp() {
                 display: "flex",
                 justifyContent: "center",
                 "& .MuiPaginationItem-root": {
-                  fontSize: "1.3 rem",
+                  fontSize: "1.2rem",
                 },
                 "& .MuiPaginationItem-root.Mui-selected": {
                   backgroundColor: "rgba(6, 182, 212, 1)",

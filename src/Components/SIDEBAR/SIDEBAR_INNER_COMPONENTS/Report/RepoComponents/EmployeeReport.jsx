@@ -84,7 +84,7 @@ const rows = paginatedData.map((report, index) => ({
             display: "flex",
             justifyContent: "center",
             "& .MuiPaginationItem-root": {
-              fontSize: "1.3rem",
+              fontSize: "1.2rem",
             },
             "& .MuiPaginationItem-root.Mui-selected": {
               backgroundColor: "rgba(6, 182, 212, 1)",

@@ -32,7 +32,7 @@ export default function SendSMS({
       headerName: "Sent Time",
       minWidth: 200,
       flex: 1,
-      renderCell: (params) => (params.value ? params.value.replace("T", " ") : ""),
+      renderCell: (params) => (params.value ? params.value?.replace("T", " ") : ""),
     },
   ];
   

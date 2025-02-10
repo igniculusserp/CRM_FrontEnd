@@ -110,7 +110,7 @@ export default function UseAction({
     const ws = XLSX.utils.json_to_sheet(leadsToExport);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Selected FollowUp");
-    XLSX.writeFile(wb, "SelectedFollowupData.xlsx");
+    XLSX.writeFile(wb, "SelectedData.xlsx");
   };
 
   // ------------------- Export to PDF -------------------
@@ -135,7 +135,7 @@ export default function UseAction({
 
     doc.text("Selected Leads Data", 14, 16);
     autoTable(doc, { head: [tableColumn], body: tableRows, startY: 22 });
-    doc.save("Followup.pdf");
+    doc.save("Data.pdf");
   };
 
   // ------------------- Permissions Handling -------------------
