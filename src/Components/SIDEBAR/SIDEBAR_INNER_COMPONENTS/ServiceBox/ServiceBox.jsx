@@ -25,7 +25,7 @@ export default function ServiceBox() {
   const [originalData, setOriginalData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
 
-  async function getApiData(selectedOption) {
+  async function getApiData(selectedButton) {
     const bearer_token = localStorage.getItem("token");
 
     try {
@@ -36,12 +36,14 @@ export default function ServiceBox() {
       };
       let response;
 
-      if (selectedOption === "Send SMS") {
+      if (selectedButton === "Send SMS") {
         response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/SMSBox/sendsmsdetail/byusertoken`,
           config,
+          
         );
-      } else if (selectedOption === "Send Email") {
+        console.log("SMS",response);
+      } else if (selectedButton === "Send Email") {
         response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/SMSBox/sendemaildetail/byusertoken`,
           config,
@@ -55,6 +57,7 @@ export default function ServiceBox() {
       console.error("Error fetching leads:", error);
     }
   }
+ 
 
   useEffect(() => {
     getApiData(selectedButton);
@@ -169,8 +172,7 @@ export default function ServiceBox() {
   useEffect(() => {
     const filtered = originalData.filter(
       (lead) =>
-        lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
-        lead.mobileNo?.includes(searchTerm),
+        lead.products?.toLowerCase()?.includes(searchTerm?.toLowerCase()) 
     );
     setFilteredData(filtered);
   }, [searchTerm, originalData]);
@@ -280,7 +282,11 @@ export default function ServiceBox() {
         {/*----------------------------------------- SEND EMAIL TABLE -------------------------------------------*/}
 
         {selectedButton === "Send Email" &&
-          (smsPermission || businessRole === "Admin") && <SendEmail />}
+          (smsPermission || businessRole === "Admin") && 
+          <SendEmail 
+          currentData={currentData}
+          selectedViewValue={selectedViewValue}
+          handleSelectionChange={handleSelectionChange} />}
 
         {/* --------------------------------------- Pagination ------------------------------------------ */}
         <Stack spacing={2} className="mb-1 mt-4">
