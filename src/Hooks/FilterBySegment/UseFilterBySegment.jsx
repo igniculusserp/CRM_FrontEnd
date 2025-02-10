@@ -32,50 +32,42 @@ export default function UseFilterBySegment({
           config,
         );
         setAllFollowUpToData(response.data.data || []);
-        console.log("@@@@@=======", response);
       } catch (error) {
         console.error("Error fetching FollowUp users:", error);
       }
     };
+console.log("@@@@@@========",followUpBy);
 
     fetchFollowUpUsers();
-  }, [name]);
+  }, [name, followUpBy]);
   // ---------------------------------------------------------- Handle Filter  --------------------------------------------
 
-  //   const handleFollowUpBySelection = (followUpByValue) => {
-  //     setFollowUpBy(followUpByValue);
-
-  //     const filtered = followUpByValue !== "Follow Up By"
-  //       ? filteredData.filter((lead) => lead.segments.includes(followUpByValue))
-  //       : filteredData;
-
-  //     setFilteredData(filtered);
-  //     setAllFollowUpToDropdown(false); // Close dropdown after selection
-  // };
 
   function handleFollowUpBySelection(followUpByValue) {
-    setFollowUpBy(followUpByValue); // Update state in FollowUp
-
+    setFollowUpBy(followUpByValue); 
+  
     let filtered = originalData;
-
+  
     if (assignedTo === "Managed By") {
       if (followUpByValue !== "Follow Up By") {
-        filtered = originalData.filter((lead) =>
-          lead.segments.includes(followUpByValue),
+        filtered = originalData.filter(
+          (lead) => lead.segments && lead.segments.includes(followUpByValue)
         );
         setFinalData(filtered);
       }
     } else {
       filtered = finalData;
       if (followUpByValue !== "Follow Up By") {
-        filtered = filtered.filter((lead) =>
-          lead.segments.includes(followUpByValue),
+        filtered = filtered.filter(
+          (lead) => lead.segments && lead.segments.includes(followUpByValue)
         );
       }
     }
+  
     setAllFollowUpToDropdown(false);
     setFilteredData(filtered);
   }
+  
 
   return (
     <div

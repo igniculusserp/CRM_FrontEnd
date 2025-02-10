@@ -239,7 +239,7 @@ export default function ServiceBox() {
           <UseAction
             originalData={originalData} // Sending Original Data
             getApiData={getApiData} // Execute API Data Function
-            screenName="FollowUpScreen" // Sending Screen Name
+            screenName="Service Box" // Sending Screen Name
             selectedRowsId={selectedRowsId} // Sending Selected Rows IDs
             selectedRowEmails={selectedRowEmails} // Sending Selected Rows E-Mail's
             actions={actions} // Sending Actions Dropdown List
