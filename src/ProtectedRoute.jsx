@@ -2,8 +2,8 @@ import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 //45 minutes 
-// const INACTIVITY_TIMEOUT = 2700000; 
-const INACTIVITY_TIMEOUT = 27000; 
+const INACTIVITY_TIMEOUT = 2700000; 
+// const INACTIVITY_TIMEOUT = 27000; 
 
 const ProtectedRoute = ({ children }) => {
 

@@ -1,88 +1,76 @@
-import { FaBars } from "react-icons/fa";
 import PropTypes from "prop-types";
+//Folder Imported
+import { DataGrid } from "@mui/x-data-grid";
+import Paper from "@mui/material/Paper";
 
-export default function SendEmail({ currentData }) {
+export default function SendEmail({
+  selectedViewValue,
+  currentData,
+  handleSelectionChange,
+}) {
+ 
+  //------------------------------------------------------ Table Heading And Table Data ------------------------------------------
+  const columns = [
+    {
+      field: "products", 
+      headerName: "Segment",
+      minWidth: 200,
+      flex: 1,
+      renderCell: (params) => params.value || "", 
+    },
+    { field: "subject", headerName: "Subject", minWidth: 150, flex: 1 },
+    { field: "textMessage", headerName: "Message", minWidth: 150, flex: 1 },
+    {
+      field: "lastModifiedBy",
+      headerName: "Sent By",
+      minWidth: 200,
+      flex: 1,
+      renderCell: (params) => params.value || "N/A", 
+    },
+    {
+      field: "sentDateTime",
+      headerName: "Sent Time",
+      minWidth: 200,
+      flex: 1,
+      renderCell: (params) => (params.value ? params.value.replace("T", " ") : ""),
+    },
+  ];
+  
   return (
-    <table className="leads_Table min-w-full bg-white">
-      {/* ----------------- TABLE HEAD START ----------------- */}
-      <thead>
-        <tr className="border-b-2 border-gray-300">
-          {/* CHECKBOX */}
-          <th className="w-max px-3 py-3">
-            <input type="checkbox" />
-          </th>
-          {/* SEGMENT */}
-          <th className="border-r px-3 py-3 text-left font-medium">
-            <span>Segment</span>
-          </th>
-          {/* SUBJECT */}
-          <th className="border-r px-3 py-3 text-left font-medium">
-            <span>Subject</span>
-          </th>
-          {/* MESSAGE */}
-          <th className="border-r px-3 py-3 text-left font-medium">
-            <div className="flex items-center justify-between">
-              <span>Message</span>
-              <FaBars />
-            </div>
-          </th>
-          {/* SENT BY */}
-          <th className="border-r px-3 py-3 text-left font-medium">
-            <div className="flex items-center justify-between">
-              <span>Sent By</span>
-              <FaBars />
-            </div>
-          </th>
-          {/* SENT TIME */}
-          <th className="border-r px-3 py-3 text-left font-medium">
-            <span>Sent Time</span>
-          </th>
-        </tr>
-      </thead>
-      {/* ----------------- TABLE HEAD END ----------------- */}
-      {/* ----------------- TABLE BODY START ----------------- */}
-      <tbody>
-        {currentData.map((sms, index) => (
-          <tr
-            key={index}
-            // onClick={() => handleClick(sms)}
-            className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
-          >
-            {/*   CHECKBOX */}
-            <td className="w-max px-3 py-3 text-center">
-              <input
-                type="checkbox"
-                // onClick={(e) => handleCheckboxClick(e, sms.id)}
-              />
-            </td>
-            {/* SEGMENT */}
-            <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
-              <span>{sms.products}</span>
-            </td>
-            {/* SUBJECT */}
-            <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
-              <span>{sms.subject}</span>
-            </td>
-            {/* MESSAGE */}
-            <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
-              {sms.message}
-            </td>
-            {/* SENT BY */}
-            <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
-              {sms.lastModifiedBy}
-            </td>
-            {/* SENT TIME */}
-            <td className="border-b border-gray-300 px-3 py-4 text-sm leading-5 text-gray-600">
-              {sms.sentDateTime.replace("T", " ")}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-      {/* ----------------- TABLE BODY END ----------------- */}
-    </table>
+    <>
+      <div className="leads_Table_Container min-w-full rounded-md">
+        {/*---------------------------------------TABLE HEAD START---------------------------------------- */}
+        {selectedViewValue === "Table View" && (
+          <Paper sx={{ width: "100%" }}>
+            <DataGrid
+              rows={currentData} // Row Data
+              columns={columns} // Headings
+              pagination={false}
+              checkboxSelection
+              onRowSelectionModelChange={(newSelection) =>
+                handleSelectionChange(newSelection)
+              }
+              sx={{
+                border: 0,
+                width: "100%",
+                "& .MuiDataGrid-columnHeaderTitle": {
+                  fontWeight: "bold",
+                },
+                "& .MuiDataGrid-footerContainer": {
+                  display: "none",
+                },
+              }}
+            />
+          </Paper>
+        )}
+      </div>
+      {/*---------------------------------------- Grid View ---------------------------------------------*/}
+      {selectedViewValue === "Grid View" && <></>}
+    </>
   );
 }
-
 SendEmail.propTypes = {
   currentData: PropTypes.array.isRequired,
+  selectedViewValue: PropTypes.string.isRequired,
+  handleSelectionChange: PropTypes.func.isRequired,
 };

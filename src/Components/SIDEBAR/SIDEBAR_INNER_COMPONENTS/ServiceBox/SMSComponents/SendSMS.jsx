@@ -8,30 +8,34 @@ export default function SendSMS({
   currentData,
   handleSelectionChange,
 }) {
+ 
   //------------------------------------------------------ Table Heading And Table Data ------------------------------------------
   const columns = [
     {
-      field: "products",
+      field: "products", 
       headerName: "Segment",
       minWidth: 200,
       flex: 1,
-      renderCell: (params) => params.row.segments?.join(", ") ,
+      renderCell: (params) => params.value || "", 
     },
     { field: "textMessage", headerName: "Message", minWidth: 150, flex: 1 },
+    
     {
       field: "lastModifiedBy",
       headerName: "Sent By",
       minWidth: 200,
       flex: 1,
+      renderCell: (params) => params.value || "N/A", 
     },
     {
       field: "sentDateTime",
       headerName: "Sent Time",
       minWidth: 200,
       flex: 1,
-      renderCell: (params) => params.value?.replace("T", " ") || "",
+      renderCell: (params) => (params.value ? params.value.replace("T", " ") : ""),
     },
   ];
+  
   return (
     <>
       <div className="leads_Table_Container min-w-full rounded-md">
