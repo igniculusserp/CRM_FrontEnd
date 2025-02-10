@@ -244,12 +244,12 @@ export default function ServiceBox() {
     <div className="m-3 flex min-h-screen flex-col">
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-md bg-white px-3 py-2">
         <div className="contact_Dropdown_Main_Container flex flex-wrap items-center justify-start gap-3">
-          {/* SEARCH DROPDOWN */}
+          {/*-------------------------------------- SEARCH ---------------------------------------- */}
           <SearchElement
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          {/* DYNAMIC BUTTONS */}
+          {/*----------------------------------- DYNAMIC BUTTONS -----------------------------------*/}
           <div className="service_Button_Main_Container flex gap-4 whitespace-nowrap">
             {Object.keys(dynamicButtons).map((key) =>
               permissions.includes(key) || businessRole === "Admin" ? (
@@ -269,7 +269,8 @@ export default function ServiceBox() {
           </div>
         </div>
         <div className="service_Action_Main_Container flex flex-wrap items-center gap-3">
-          {/* DYNAMIC BUTTONS LINKS */}
+          {/*---------------------------- DYNAMIC BUTTONS LINKS ------------------------------------*/}
+          <div>
           {(smsPermission || businessRole === "Admin") &&
           buttonText.text === "Send SMS" ? (
             <Link to={buttonText.href} className="service_Action_Container">
@@ -290,8 +291,9 @@ export default function ServiceBox() {
           ) : (
             ""
           )}
+          </div>
 
-          {/* STRIPEBAR DROPDOWN */}
+          {/*---------------------------- STRIPEBAR DROPDOWN ---------------------------------------*/}
           <div
             className="hide_Component relative"
             onClick={toggleStripeBarDropdown}
