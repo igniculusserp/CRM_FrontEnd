@@ -447,7 +447,7 @@ export default function Lead() {
 
   //Enable us to switch to createlead/editlead page with /:id
   let handleClick = (item) => {
-    navigate(`../panel/editlead/${item.id}`);
+    navigate(`/panel/editlead/${item.id}`);
   };
 
   // ---------------------->MASS Email FUNCTIONALITY---<----------------------
