@@ -1,5 +1,6 @@
 //Brokerage&Leads
 
+//4 different API's  are working here 
 //react
 import { useState, useEffect } from "react";
 
@@ -230,9 +231,9 @@ export default function Analytics() {
     <main className="grid min-h-screen gap-1 mx-1 my-3">
       {/* ------------ TOP SECTION ------------ */}
       {/* ------------ CARD ->>>Parent : 4 Childs<<<- ------------ */}
-      <div className="grid items-center grid-cols-4 gap-3 px-2">
+      <div className="grid items-center grid-cols-2 gap-3 px-2 sm:grid-cols-4">
         {/* ------------ CARD ->>> Child : 1 <<<- ------------ */}
-        <div className="px-2 py-2 bg-white rounded-md shadow-md">
+        <div className="px-2 py-2 bg-white rounded-md shadow-md min-h-32">
           {/* ------------ Inner ------------ */}
           <div className="grid items-center justify-between grid-cols-2">
             {/* ------------ Textual Data ------------ */}
@@ -281,7 +282,7 @@ export default function Analytics() {
         {/* ------------------------------------------------------------------------------------------------ */}
 
         {/* ------------ CARD ->>> Child :2 <<<- ------------ */}
-        <div className="px-2 py-2 bg-white rounded-md shadow-md">
+        <div className="px-2 py-2 bg-white rounded-md shadow-md min-h-32">
           {/* ------------ CARD ------------ */}
           {/* ------------ Inner ------------ */}
           <div className="grid items-center justify-between grid-cols-2">
@@ -332,7 +333,7 @@ export default function Analytics() {
         {/* ------------------------------------------------------------------------------------------------ */}
 
         {/* ------------ CARD ->>> Child :3 <<<- ------------ */}
-        <div className="px-2 py-2 bg-white rounded-md shadow-md">
+        <div className="px-2 py-2 bg-white rounded-md shadow-md min-h-32">
           {/* ------------ CARD ------------ */}
           {/* ------------ Inner ------------ */}
           <div className="grid items-center justify-between grid-cols-2">
@@ -340,7 +341,7 @@ export default function Analytics() {
             <div className="grid grid-flow-row-dense gap-2">
               {/* ------------ Heading ------------ */}
               <h1 className="text-sm">FOLLOW UPS</h1>
-              <span>{todayFollowup.todayFollowup}</span>
+              <span>{todayFollowup?.todayFollowup}</span>
 
               {/* ------------ Button ------------ */}
               <div
@@ -374,8 +375,8 @@ export default function Analytics() {
         </div>
         {/* ------------------------------------------------------------------------------------------------ */}
 
-        {/* ------------ CARD ->>> Child :3 <<<- ------------ */}
-        <div className="px-2 py-2 bg-white rounded-md shadow-md">
+        {/* ------------ CARD ->>> Child :4 <<<- ------------ */}
+        <div className="px-2 py-2 bg-white rounded-md shadow-md min-h-32">
           {/* ------------ Inner ------------ */}
           <div className="grid items-center justify-between grid-cols-2">
             {/* ------------ Textual Data ------------ */}
