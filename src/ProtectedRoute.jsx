@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // 45 minutes
-const INACTIVITY_TIMEOUT = 2700000; 
+const INACTIVITY_TIMEOUT = 270000;
 
 const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate();
@@ -18,6 +18,14 @@ const ProtectedRoute = ({ children }) => {
     localStorage.removeItem("token");
     navigate("/tenantlogin", { replace: true });
     location.reload();
+
+    //localhost
+    // const newUrl = `http://${data.name}.localhost:5173/tenantlogin`;
+
+
+    //forServer
+    const newUrl = `http://${data.name}.${urlchange_base}/tenantlogin `
+    window.location.href = newUrl;
     console.log("logout hitted");
   };
 
@@ -26,7 +34,7 @@ const ProtectedRoute = ({ children }) => {
       clearTimeout(timerRef.current);
     }
     timerRef.current = setTimeout(handleLogout, INACTIVITY_TIMEOUT);
-    
+
     // Reset countdown timer
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -51,7 +59,7 @@ const ProtectedRoute = ({ children }) => {
     }
 
     // const events = ["mousemove", "keydown", "scroll", "click", "touchstart"];
-    const events = [ "click", ];
+    const events = ["click",];
     events.forEach((event) => window.addEventListener(event, resetTimer));
 
     resetTimer();
