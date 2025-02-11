@@ -50,7 +50,8 @@ const ProtectedRoute = ({ children }) => {
       return;
     }
 
-    const events = ["mousemove", "keydown", "scroll", "click", "touchstart"];
+    // const events = ["mousemove", "keydown", "scroll", "click", "touchstart"];
+    const events = [ "click", ];
     events.forEach((event) => window.addEventListener(event, resetTimer));
 
     resetTimer();
