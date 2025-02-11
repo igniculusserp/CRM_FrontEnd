@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const INACTIVITY_TIMEOUT = 2700000; // 45 minutes
+const INACTIVITY_TIMEOUT = 2640000; // 44 minutes
 
 const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate();
@@ -22,10 +22,10 @@ const ProtectedRoute = ({ children }) => {
 
     
     //localhost
-    //const newUrl = `http://${data.name}.localhost:5173/tenantlogin`;
+    const newUrl = `http://${data.name}.localhost:5173/tenantlogin`;
     
     // For Server
-    const newUrl = `http://${data.name}.${urlchange_base}/tenantlogin `;
+    // const newUrl = `http://${data.name}.${urlchange_base}/tenantlogin `;
     window.location.href = newUrl;
 
     console.log("logout triggered");
@@ -84,9 +84,7 @@ const ProtectedRoute = ({ children }) => {
 
   return (
     <>
-      <div>
-        <p>Time left before auto logout: {minutes}m {seconds}s</p>
-      </div>
+      
       {children}
     </>
   );
