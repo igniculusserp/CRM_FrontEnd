@@ -151,11 +151,11 @@ export default function SalesOrder() {
           className="w-[80%] h-7"
         >
           {params.value ? (
-            <div className="rounded-full border bg-green-300 text-white px-2 py-[2px] h-full flex items-center justify-center text-xs">
+            <div className="rounded-full border bg-green-300 text-white px-2 py-[2px] h-full flex items-center justify-center text-xs hover:bg-green-500">
               Approved
             </div>
           ) : (
-            <div className="rounded-full border bg-red-300 text-white px-2 py-[2px] h-full flex items-center justify-center text-xs">
+            <div className="rounded-full border bg-red-300 text-white px-2 py-[2px] h-full flex items-center justify-center text-xs hover:bg-red-500">
               Pending
             </div>
           )}

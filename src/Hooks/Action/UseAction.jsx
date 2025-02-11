@@ -178,7 +178,7 @@ export default function UseAction({
         onMouseLeave={() => setActionDropdown(false)}
       >
         <button
-          className="action_Button flex items-center justify-between gap-2 rounded-lg border border-blue-600 px-4 py-2 text-blue-600"
+          className="flex items-center justify-between gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg button_MaxWidth"
           onClick={() => setActionDropdown(!actionDropdown)}
         >
           Actions
@@ -186,13 +186,13 @@ export default function UseAction({
         </button>
 
         {actionDropdown && (
-          <div className="absolute top-10 z-10 w-56 rounded-md border border-gray-300 bg-white py-2">
+          <div className="absolute right-0 z-10 w-56 bg-white border border-gray-300 rounded-md top-10">
             <ul className="text-sm text-gray-700">
               {actions.map(({ key, value }) =>
                 permissions.includes(value) || businessRole === "Admin" ? (
                   <li
                     key={key}
-                    className="cursor-pointer px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                    className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                     onClick={() => handleActionButton(value)}
                   >
                     {value}
