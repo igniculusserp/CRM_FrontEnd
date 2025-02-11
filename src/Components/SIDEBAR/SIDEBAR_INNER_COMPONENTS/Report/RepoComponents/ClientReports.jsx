@@ -4,12 +4,23 @@ import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+// icon
+import { MdCall } from "react-icons/md";
 
 export default function ClientReports({ currentReports }) {
   const columns = [
     { field: "id", headerName: "Client ID", minWidth: 120, flex: 1 },
     { field: "clientName", headerName: "Client Name", minWidth: 150, flex: 1 },
-    { field: "mobileNo", headerName: "Mobile", minWidth: 150, flex: 1 },
+    { field: "mobileNo", headerName: "Mobile", minWidth: 150, flex: 1,
+      renderCell: (params) => (
+        <span
+          onClick={(event) => handleNumberClick(event, params.row.mobileNo)}
+          style={{ cursor: "pointer", display:"flex", gap:"5px", alignItems: "center" }}
+        >
+         <MdCall className="text-red-600" /> {params.value}
+        </span>
+      ),
+     },
     { field: "saleS_ODR_NO", headerName: "View SO", minWidth: 130, flex: 1 },
     { field: "assigned_To", headerName: "Managed By", minWidth: 150, flex: 1 },
     { field: "manager", headerName: "Manager", minWidth: 150, flex: 1 },
@@ -21,6 +32,11 @@ export default function ClientReports({ currentReports }) {
     },
     { field: "remarks", headerName: "Last Remarks", minWidth: 200, flex: 1 },
   ];
+     // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
+     const handleNumberClick = (event, mobileNo) => {
+      event.stopPropagation(); 
+      window.location.href = `tel:${mobileNo}`;
+    };
 
   // -------------------> State for Pagination <-------------------
   const [currentPage, setCurrentPage] = useState(1);

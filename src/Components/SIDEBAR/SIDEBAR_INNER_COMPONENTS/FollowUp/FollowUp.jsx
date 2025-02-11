@@ -6,6 +6,7 @@ import axios from "axios";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
+import { MdCall } from "react-icons/md";
 //Folder Imported
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
@@ -82,7 +83,16 @@ export default function FollowUp() {
         </span>
       ),
     },
-    { field: "mobileNo", headerName: "Mobile", minWidth: 150, flex: 1 },
+    { field: "mobileNo", headerName: "Mobile", minWidth: 150, flex: 1,
+      renderCell: (params) => (
+        <span
+          onClick={(event) => handleNumberClick(event, params.row.mobileNo)}
+          style={{ cursor: "pointer", display:"flex", gap:"5px", alignItems: "center" }}
+        >
+         <MdCall className="text-red-600" /> {params.value}
+        </span>
+      ),
+     },
     { field: "email", headerName: "Email", minWidth: 200, flex: 1 },
     {
       field: "segments",
@@ -99,6 +109,11 @@ export default function FollowUp() {
       renderCell: (params) => params.value?.replace("T", " ") || "",
     },
   ];
+     // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
+     const handleNumberClick = (event, mobileNo) => {
+      event.stopPropagation(); 
+      window.location.href = `tel:${mobileNo}`;
+    };
   //------------------------------------------------------ Check Box Data ------------------------------------------
   const handleSelectionChange = (selectionModel) => {
     const selectedRows = currentData.filter((row) =>
