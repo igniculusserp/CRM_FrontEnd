@@ -8,6 +8,7 @@ import { FaUserTie } from "react-icons/fa";
 import { BiCalendar } from "react-icons/bi";
 import { RiShieldUserLine } from "react-icons/ri";
 import { PiLineSegmentsBold } from "react-icons/pi";
+import { MdCall } from "react-icons/md";
 //Folder Imported
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
@@ -74,7 +75,20 @@ export default function Client() {
       minWidth: 200,
       flex: 1,
     },
-    { field: "mobileNo", headerName: "Mobile", minWidth: 150, flex: 1 },
+    {
+      field: "mobileNo",
+      headerName: "Mobile",
+      minWidth: 150,
+      flex: 1,
+      renderCell: (params) => (
+        <span
+          onClick={(event) => handleNumberClick(event, params.row.mobileNo)}
+          style={{ cursor: "pointer", display:"flex", gap:"5px", alignItems: "center" }}
+        >
+         <MdCall className="text-red-600" /> {params.value}
+        </span>
+      ),
+    },
     {
       field: "segments",
       headerName: "Segment",
@@ -90,13 +104,13 @@ export default function Client() {
       renderCell: (params) => params.value?.replace("T", " ") || "",
     },
     {
-        field: "subscription_end_date",
-        headerName: "Service End Date",
-        minWidth: 200,
-        flex: 1,
-        renderCell: (params) => params.value?.replace("T", " ") || "",
-      },
-      { field: "assigned_To", headerName: "Managed By", minWidth: 150, flex: 1 },
+      field: "subscription_end_date",
+      headerName: "Service End Date",
+      minWidth: 200,
+      flex: 1,
+      renderCell: (params) => params.value?.replace("T", " ") || "",
+    },
+    { field: "assigned_To", headerName: "Managed By", minWidth: 150, flex: 1 },
   ];
   //------------------------------------------------------ Check Box Data ------------------------------------------
   const handleSelectionChange = (selectionModel) => {
@@ -107,6 +121,12 @@ export default function Client() {
     const selectedEmails = selectedRows.map((row) => row.email);
     setSelectedRowsId(selectedIDs);
     setSelectedRowEmails(selectedEmails);
+  };
+
+   // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
+   const handleNumberClick = (event, mobileNo) => {
+    event.stopPropagation(); 
+    window.location.href = `tel:${mobileNo}`;
   };
 
   //-----------------------------------------------STRIPE BAR DROPDOWN--------------------------------------------------
