@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const INACTIVITY_TIMEOUT = 2640000; // 44 minutes
+// const INACTIVITY_TIMEOUT = 264000; // 4.4 minutes
 
 const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate();
@@ -12,9 +13,18 @@ const ProtectedRoute = ({ children }) => {
   const storedOtp = localStorage.getItem("otp");
   const token = localStorage.getItem("token");
 
+  useEffect(()=>{
+    if(!token){
+      navigate("/tenantlogin", { replace: true });
+    location.reload();
+
+    }
+  },[token, navigate])
+
   const handleLogout = () => {
     localStorage.removeItem("otp");
     localStorage.removeItem("token");
+   
     localStorage.removeItem("logoutTime"); // Clear the stored timestamp
 
     navigate("/tenantlogin", { replace: true });
@@ -33,6 +43,7 @@ const ProtectedRoute = ({ children }) => {
 
   const resetTimer = () => {
     const logoutTime = Date.now() + INACTIVITY_TIMEOUT;
+
     localStorage.setItem("logoutTime", logoutTime.toString());
 
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -81,6 +92,8 @@ const ProtectedRoute = ({ children }) => {
   // Convert milliseconds to minutes and seconds
   const minutes = Math.floor(timeLeft / 60000);
   const seconds = ((timeLeft % 60000) / 1000).toFixed(0);
+
+  console.log(minutes)
 
   return (
     <>

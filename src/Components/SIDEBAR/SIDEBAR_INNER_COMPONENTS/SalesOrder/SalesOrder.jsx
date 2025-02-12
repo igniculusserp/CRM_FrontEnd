@@ -334,14 +334,14 @@ export default function SalesOrder() {
 
   return (
     //parent
-    <div className="m-3 flex min-h-screen flex-col">
+    <div className="flex flex-col min-h-screen m-3">
       <ToastContainer />
 
       {/* containerbar*/}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-white px-3 py-2">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-3 py-2 bg-white rounded-lg">
         {/* PART-I */}
         {/* container- Alleads, search */}
-        <div className="contact_Dropdown_Main_Container flex flex-wrap items-center justify-start gap-3">
+        <div className="flex flex-wrap items-center justify-start gap-3 contact_Dropdown_Main_Container">
           {/* PART-I */}
 
           {/*-------------------------------------- ALL FOLLOW UPS DROPDOWN --------------------------------- */}
@@ -358,12 +358,12 @@ export default function SalesOrder() {
           {/*--------------------------------- All Sales Order  DropDown ----------------------------------------*/}
 
           <div
-            className="sales_Oreder_Dropdown_Container relative whitespace-nowrap"
+            className="relative sales_Oreder_Dropdown_Container whitespace-nowrap"
             onClick={toggleDropdown_salesOrderStatus}
             onMouseLeave={() => setisDropdownVisible_salesOrderStatus(false)}
           >
             <button
-              className="contact_Dropdown_Button flex min-w-40 items-center justify-between truncate rounded-md border px-4 py-2"
+              className="flex items-center justify-between px-4 py-2 truncate border rounded-md contact_Dropdown_Button min-w-40"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -371,12 +371,12 @@ export default function SalesOrder() {
               <FaAngleDown className="ml-2 text-gray-900" />
             </button>
             {isDropdownVisible_salesOrderStatus && (
-              <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
+              <div className="absolute z-10 bg-white border border-gray-300 rounded-md top-10">
                 <ul className="py-2 text-sm text-gray-700">
                   {status.map((item, index) => (
                     <li
                       key={index}
-                      className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                      className="block w-56 px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                       onClick={() => handleStatus(item.value)} // Correct selection logic
                     >
                       {item.value}
@@ -394,7 +394,7 @@ export default function SalesOrder() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <div className="action_Button_Main_Container flex items-center justify-start gap-3">
+        <div className="flex items-center justify-start gap-3 action_Button_Main_Container">
           {/*  ------------------------------------------------- Stripe-BarDropDown --------------------------------- */}
           <UseGridFilter
             selectedViewValue={selectedViewValue} // Sending selected value
@@ -412,10 +412,10 @@ export default function SalesOrder() {
         </div>
       </div>
       {/* 2nd bar Leads and lenghtLeads*/}
-      <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 mt-3">
         <div className="flex gap-3">
           <h1 className="text-3xl font-medium">Sales Order</h1>
-          <h1 className="min-w-10 rounded bg-blue-600 p-2 text-center text-sm text-white shadow-md">
+          <h1 className="p-2 text-sm text-center text-white bg-blue-600 rounded shadow-md min-w-10">
             {filteredData?.length}
           </h1>
         </div>
@@ -429,8 +429,8 @@ export default function SalesOrder() {
         />
       </div>
       {/*-------Table-------*/}
-      <div className="leads_Table_Main_Container mt-3 overflow-x-auto">
-        <div className="leads_Table_Container min-w-full rounded-md">
+      <div className="mt-3 overflow-x-auto leads_Table_Main_Container">
+        <div className="min-w-full rounded-md leads_Table_Container">
           
             {/*---------------------------------------TABLE HEAD START---------------------------------------- */}
             {selectedViewValue === "Table View" && (
@@ -469,11 +469,11 @@ export default function SalesOrder() {
                   {currentData.map((item) => (
                     // {/* ------------sub-Parent->Container ------------ */}
                     <div
-                      className="grid grid-cols-1 gap-1 rounded-lg bg-sky-100 p-2 shadow-md"
+                      className="grid grid-cols-1 gap-1 p-2 rounded-lg shadow-md bg-sky-100"
                       key={item.id}
                     >
                       <div className="">
-                        <div className="flex items-center rounded border-2 border-cyan-500 bg-white py-2 text-center">
+                        <div className="flex items-center py-2 text-center bg-white border-2 rounded border-cyan-500">
                           <div className="ml-1">
                             <div>
                               <button
@@ -489,18 +489,18 @@ export default function SalesOrder() {
                                 className="w-[90%]"
                               >
                                 {item.status === true ? (
-                                  <div className="rounded border bg-green-500 py-1 pl-2 pr-4 text-center text-xs font-medium text-white shadow-sm shadow-green-400 hover:bg-green-500">
+                                  <div className="py-1 pl-2 pr-4 text-xs font-medium text-center text-white border rounded shadow-sm bg-emerald-400 shadow-emerald-400 hover:bg-emerald-500">
                                     Approved
                                   </div>
                                 ) : (
-                                  <div className="w-full rounded border bg-red-500 py-1 pl-2 pr-4 text-center text-xs font-medium text-white shadow-sm shadow-red-400 hover:bg-red-600">
+                                  <div className="w-full py-1 pl-2 pr-4 text-xs font-medium text-center text-white bg-red-400 border rounded shadow-sm shadow-red-400 hover:bg-red-500">
                                     Pending
                                   </div>
                                 )}
                               </button>
                             </div>
                           </div>
-                          <div className="mx-auto flex items-center justify-center gap-2">
+                          <div className="flex items-center justify-center gap-2 mx-auto">
                             <FaUserTie />
                             <span className="">
                               {item?.clientName[0].toUpperCase() +
@@ -508,7 +508,7 @@ export default function SalesOrder() {
                             </span>
                           </div>
                           <AiOutlineEdit
-                            className="mr-3 rounded-full bg-cyan-400 p-1 text-white hover:bg-cyan-500"
+                            className="p-1 mr-3 text-white rounded-full shadow shadow-blue-500 bg-cyan-400 hover:bg-cyan-500"
                             onClick={(e) => {
                               e.stopPropagation();
                               navigate(`/panel/clientso/${item.id}`);
@@ -518,13 +518,13 @@ export default function SalesOrder() {
                         </div>
                       </div>
 
-                      <div className="rounded border-2 border-cyan-500 bg-white py-2">
+                      <div className="py-2 bg-white border-2 rounded border-cyan-500">
                         <div className="flex items-center justify-between px-3 py-1">
                           <div className="flex items-center justify-between py-1">
                             <IoIosMail size={22} className="w-6" />
                             <span className="hidden sm:block">Email</span>
                           </div>
-                          <div className="truncate text-sm font-medium">
+                          <div className="text-sm font-medium truncate">
                             <a
                               href={`mailto:${item.email}`}
                               onClick={(event) => event.stopPropagation()}
@@ -539,7 +539,7 @@ export default function SalesOrder() {
                             <FaPhoneAlt size={14} className="w-6" />
                             <span className="hidden sm:block">Phone</span>
                           </div>
-                          <div className="truncate text-sm font-medium">
+                          <div className="text-sm font-medium truncate">
                             <a
                               href={`tel:${item.mobileNo}`}
                               onClick={(event) => event.stopPropagation()}
@@ -554,7 +554,7 @@ export default function SalesOrder() {
                             <PiLineSegmentsBold size={16} className="w-6" />
                             <span className="hidden sm:block">Segments</span>
                           </div>
-                          <div className="truncate text-sm font-medium">
+                          <div className="text-sm font-medium truncate">
                             {item?.segments?.length
                               ? item.segments?.join(", ")
                               : ""}
@@ -613,7 +613,7 @@ export default function SalesOrder() {
           )}
         </div>
         {/* --------------------------------------- Pagination ------------------------------------------ */}
-        <Stack spacing={2} className="mb-1 mt-4">
+        <Stack spacing={2} className="mt-4 mb-1">
           <Pagination
             count={Math.ceil(filteredData.length / itemsPerPage)}
             page={currentPage}

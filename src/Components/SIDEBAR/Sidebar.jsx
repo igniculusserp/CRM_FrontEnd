@@ -271,7 +271,7 @@ export default function SidebaBar({ toggle, setToggle }) {
           </div>
         </div>
         {/* Scrollable Menu Section */}
-        <div className="CustomerTestimonialReview mt-10 flex h-full flex-col">
+        <div className="flex flex-col h-full mt-10 CustomerTestimonialReview">
           {(business === "Brokerage" ? sideBar_Brokerage : sideBar).map(
             ({ key, data, icon, link }, index) => (
               <Link to={link} onClick={() => handleClick(key)} key={key}>
