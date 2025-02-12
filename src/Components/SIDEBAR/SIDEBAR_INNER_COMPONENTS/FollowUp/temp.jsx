@@ -5,8 +5,14 @@ import axios from "axios";
 //React Icons
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
-import { BiEdit } from "react-icons/bi";
 import { MdCall } from "react-icons/md";
+//grid->
+import { BiCalendar } from "react-icons/bi";
+import { RiShieldUserLine } from "react-icons/ri";
+import { FaUserTie } from "react-icons/fa";
+import { PiLineSegmentsBold } from "react-icons/pi";
+import { AiOutlineEdit } from "react-icons/ai";
+import { BsHourglassSplit } from "react-icons/bs";
 //Folder Imported
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
@@ -83,16 +89,25 @@ export default function FollowUp() {
         </span>
       ),
     },
-    { field: "mobileNo", headerName: "Mobile", minWidth: 150, flex: 1,
+    {
+      field: "mobileNo",
+      headerName: "Mobile",
+      minWidth: 150,
+      flex: 1,
       renderCell: (params) => (
         <span
           onClick={(event) => handleNumberClick(event, params.row.mobileNo)}
-          style={{ cursor: "pointer", display:"flex", gap:"5px", alignItems: "center" }}
+          style={{
+            cursor: "pointer",
+            display: "flex",
+            gap: "5px",
+            alignItems: "center",
+          }}
         >
-         <MdCall className="text-red-600" /> {params.value}
+          <MdCall className="text-red-600" /> {params.value}
         </span>
       ),
-     },
+    },
     { field: "email", headerName: "Email", minWidth: 200, flex: 1 },
     {
       field: "segments",
@@ -109,11 +124,11 @@ export default function FollowUp() {
       renderCell: (params) => params.value?.replace("T", " ") || "",
     },
   ];
-     // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
-     const handleNumberClick = (event, mobileNo) => {
-      event.stopPropagation(); 
-      window.location.href = `tel:${mobileNo}`;
-    };
+  // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
+  const handleNumberClick = (event, mobileNo) => {
+    event.stopPropagation();
+    window.location.href = `tel:${mobileNo}`;
+  };
   //------------------------------------------------------ Check Box Data ------------------------------------------
   const handleSelectionChange = (selectionModel) => {
     const selectedRows = currentData.filter((row) =>
@@ -299,75 +314,108 @@ export default function FollowUp() {
           {selectedViewValue === "Grid View" && (
             <>
               <div className="min-w-full">
-                <div className="grid grid-cols-3 gap-3">
-                  {/*---------Card starts Here---------------------------------------------------------- */}
+                {/* ------------Parent------------ */}
+                <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
+                  {/*---------Card starts Here */}
                   {currentData.map((item) => (
+                    // {/* ------------sub-Parent->Container ------------ */}
                     <div
-                      className="flex flex-col gap-2 rounded-lg border-2 bg-white px-2 py-3"
+                      className="grid grid-cols-1 gap-1 rounded-lg bg-sky-100 p-2 shadow-md"
                       key={item.id}
                     >
-                      <div className="flex items-center gap-3">
-                        <img src={item.img} height={60} width={60} />
-                        <div className="flex grow flex-col">
-                          <div className="flex justify-between font-medium">
-                            <span className="text-indigo-500">{item.name}</span>
-                            <BiEdit
-                              size={25}
-                              className="rounded-full bg-white p-1 text-blue-500 shadow-md"
-                              onClick={() => handleClick(item.id)}
-                            />
-                          </div>
-                          <div className="flex items-center gap-2 text-sm font-medium">
-                            {item.leadesStatus}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
-                        <div className="w-2/4 text-sm text-gray-500">
-                          Client Name
-                        </div>
-                        <div className="2-2/4 text-sm font-medium">
-                          {item.name}
-                        </div>
-                      </div>
-
-                      <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
-                        <div className="w-2/4">
-                          <IoIosMail className="text-2xl" />
-                        </div>
-                        <div className="2-2/4 text-sm font-medium">
-                          {item.email}
-                        </div>
-                      </div>
-
-                      <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
-                        <div className="w-2/4">
-                          <FaPhoneAlt className="text-xl" />
-                        </div>
-                        <div className="2-2/4 text-sm font-medium">
-                          {item.phoneNo}
-                        </div>
-                      </div>
-                      <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
-                        <div className="w-2/4 text-sm text-gray-500">
-                          Follow Up Date
-                        </div>
-                        <div className="2-2/4 text-sm font-medium">
-                          {item.call_bck_DateTime.replace("T", " ")}
-                        </div>
-                      </div>
-                      <div className="flex items-center rounded-lg border-2 bg-gray-100 px-2 py-1">
-                        <div className="w-2/4 text-sm text-gray-500">
-                          Segment
-                        </div>
-                        <div className="2-2/4 text-sm font-medium">
-                          {item.segments && (
+                      <div>
+                        <div className="flex items-center rounded border-2 border-cyan-500 bg-white py-2 text-center">
+                          <div className="mx-auto flex items-center justify-center gap-2">
+                            <FaUserTie />
                             <span className="">
-                              {item.segments
-                                .filter((segment) => segment.length > 1)
-                                .join(", ")}
+                              {item?.name[0].toUpperCase() +
+                                item?.name.substr(1)}
                             </span>
-                          )}
+                          </div>
+                          <AiOutlineEdit
+                            className="mr-3 rounded-full bg-cyan-400 p-1 text-white hover:bg-cyan-500"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/panel/createtrial/${item.id}`);
+                            }}
+                            size={25}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="rounded border-2 border-cyan-500 bg-white py-2">
+                        <div className="flex items-center justify-between px-3 py-1">
+                          <div className="flex items-center justify-between py-1">
+                            <IoIosMail size={22} className="w-6" />
+                            <span className="hidden sm:block">Email</span>
+                          </div>
+                          <div className="truncate text-sm font-medium">
+                            <a
+                              href={`mailto:${item.email}`}
+                              onClick={(event) => event.stopPropagation()}
+                            >
+                              {item.email}
+                            </a>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between px-3 py-1">
+                          <div className="flex items-center justify-between py-1">
+                            <FaPhoneAlt size={14} className="w-6" />
+                            <span className="hidden sm:block">Phone</span>
+                          </div>
+                          <div className="truncate text-sm font-medium">
+                            <a
+                              href={`tel:${item.mobileNo}`}
+                              onClick={(event) => event.stopPropagation()}
+                            >
+                              {item?.mobileNo}
+                            </a>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between px-3 py-1">
+                          <div className="flex items-center justify-between py-1">
+                            <PiLineSegmentsBold size={16} className="w-6" />
+                            <span className="hidden sm:block">Segments</span>
+                          </div>
+                          <div className="truncate text-sm font-medium">
+                            {item?.segments?.length
+                              ? item.segments?.join(", ")
+                              : ""}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between px-3 py-1">
+                          <div className="flex items-center justify-between py-1">
+                            <RiShieldUserLine size={18} className="w-6" />
+                            <span className="hidden sm:block">Managed By</span>
+                          </div>
+                          <div className="text-sm font-medium">
+                            {item?.assigned_To}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between px-3 py-1">
+                          <div className="flex items-center justify-between py-1">
+                            <BsHourglassSplit size={18} className="w-6" />
+                            <span className="hidden sm:block">Status</span>
+                          </div>
+                          <div className="text-sm font-medium">
+                            {item?.leadesStatus}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between px-3 py-1">
+                          <div className="flex items-center justify-between py-1">
+                            <BiCalendar size={18} className="w-6" />
+                            <span className="hidden sm:block">
+                              Follow Up Date
+                            </span>
+                          </div>
+                          <div className="text-sm font-medium">
+                            {item?.call_bck_DateTime?.split("T")[0]}
+                          </div>
                         </div>
                       </div>
                     </div>
