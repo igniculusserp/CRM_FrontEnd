@@ -88,6 +88,7 @@ export default function SalesOrder() {
     {
       field: "clientName",
       headerName: "Client Name",
+      minWidth: 100,
       flex: 1,
       renderCell: (params) => (
         <span
@@ -98,10 +99,11 @@ export default function SalesOrder() {
         </span>
       ),
     },
-    { field: "email", headerName: "Email", flex: 1 },
+    { field: "email", headerName: "Email", minWidth: 200, flex: 1 },
     {
       field: "mobileNo",
       headerName: "Phone No",
+      minWidth: 100,
       flex: 1,
       renderCell: (params) => (
         <span
@@ -120,26 +122,30 @@ export default function SalesOrder() {
     {
       field: "subscription_start_date",
       headerName: "Start Date",
+      minWidth: 100,
       flex: 1,
       renderCell: (params) => params.value?.replace("T", " ") || "",
     },
     {
       field: "subscription_end_date",
       headerName: "End Date",
+      minWidth: 100,
       flex: 1,
       renderCell: (params) => params.value?.replace("T", " ") || "",
     },
     {
       field: "segments",
       headerName: "Segments",
+      minWidth: 100,
       flex: 1,
       renderCell: (params) =>
         params.value?.filter((segment) => segment.length > 1).join(", ") || "-",
     },
-    { field: "assigned_To", headerName: "Managed By", flex: 1 },
+    { field: "assigned_To", headerName: "Managed By", minWidth: 100, flex: 1 },
     {
       field: "status",
       headerName: "Status",
+      minWidth: 100,
       flex: 1,
       renderCell: (params) => (
         <button
@@ -163,6 +169,7 @@ export default function SalesOrder() {
       ),
     },
   ];
+  
   // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
   const handleNumberClick = (event, mobileNo) => {
     event.stopPropagation();

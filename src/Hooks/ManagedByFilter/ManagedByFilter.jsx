@@ -48,7 +48,7 @@ export default function ManagedByFilter({
 
     let filtered = originalData;
 
-    if (followUpBy === "Follow Up By") {
+    if (followUpBy === "Segment By") {
       if (assignedToValue !== "Managed By") {
         filtered = originalData.filter(
           (lead) => lead.assigned_To === assignedToValue,
