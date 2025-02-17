@@ -252,7 +252,7 @@ export default function SidebaBar({ toggle, setToggle }) {
 
   let handleClick = (key) => {
     setactive(key);
-    setToggle(false);
+    // setToggle(false);  ==> onClick() of 
   };
 
   console.log(welcomedata);
