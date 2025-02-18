@@ -347,13 +347,13 @@ export default function UserSetting() {
     return (
       <>
         <ToastContainer />
-        <div className="min-w-screen flex items-center justify-between">
+        <div className="flex items-center justify-between min-w-screen">
           <h1 className="text-3xl font-medium">
             {isEditMode ? "Edit" : "Add"}
           </h1>
           <button
             onClick={handleCancel}
-            className="min-w-10 rounded border border-blue-600 bg-white px-4 py-2 text-sm text-blue-600"
+            className="px-4 py-2 text-sm text-blue-600 bg-white border border-blue-600 rounded min-w-10"
           >
             Cancel
           </button>
@@ -361,8 +361,8 @@ export default function UserSetting() {
 
         <form onSubmit={handleSubmit} className="flex">
           <div className="w-full">
-            <div className="mt-3 flex-grow rounded-xl bg-white shadow-md">
-              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
+            <div className="flex-grow mt-3 bg-white shadow-md rounded-xl">
+              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
                 Lead Information
               </h2>
 
@@ -370,7 +370,7 @@ export default function UserSetting() {
                 {/*<---------------1--------------->*/}
                 {/*<---------------First Name--------------->*/}
                 <div className="flex space-x-4">
-                  <div className="flex w-1/2 flex-col">
+                  <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="firstName"
                       className="text-sm font-medium text-gray-700"
@@ -382,11 +382,11 @@ export default function UserSetting() {
                       name="firstName"
                       value={formData.firstName || ""}
                       onChange={handleChange}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="p-2 mt-1 border border-gray-300 rounded-md"
                     />
                   </div>
                   {/*<---------------Last Name--------------->*/}
-                  <div className="flex w-1/2 flex-col">
+                  <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="lastName"
                       className="text-sm font-medium text-gray-700"
@@ -398,14 +398,14 @@ export default function UserSetting() {
                       name="lastName"
                       value={formData.lastName || ""}
                       onChange={handleChange}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="p-2 mt-1 border border-gray-300 rounded-md"
                     />
                   </div>
                 </div>
                 {/*<---------------2--------------->*/}
                 <div className="flex space-x-4">
                   {/*<---------------Email--------------->*/}
-                  <div className="flex w-1/2 flex-col">
+                  <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="email"
                       className="text-sm font-medium text-gray-700"
@@ -417,11 +417,11 @@ export default function UserSetting() {
                       name="email"
                       value={formData.email || ""}
                       onChange={handleChange}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="p-2 mt-1 border border-gray-300 rounded-md"
                     />
                   </div>
                   {/*<---------------contactNo--------------->*/}
-                  <div className="flex w-1/2 flex-col">
+                  <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="contactNo"
                       className="text-sm font-medium text-gray-700"
@@ -433,7 +433,7 @@ export default function UserSetting() {
                       name="contactNo"
                       value={formData.contactNo || ""}
                       onChange={handleChange}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="p-2 mt-1 border border-gray-300 rounded-md"
                     />
                   </div>
                 </div>
@@ -441,7 +441,7 @@ export default function UserSetting() {
                 {/*<---------------3--------------->*/}
                 {/*<---------------userName--------------->*/}
                 <div className="flex space-x-4">
-                  <div className="flex w-1/2 flex-col">
+                  <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="userName"
                       className="text-sm font-medium text-gray-700"
@@ -453,12 +453,12 @@ export default function UserSetting() {
                       name="userName"
                       value={formData.userName || ""}
                       onChange={handleChange}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="p-2 mt-1 border border-gray-300 rounded-md"
                     />
                   </div>
 
                   {/*<---------------country--------------->*/}
-                  <div className="flex w-1/2 flex-col">
+                  <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="country"
                       className="text-sm font-medium text-gray-700"
@@ -470,14 +470,14 @@ export default function UserSetting() {
                       name="country"
                       value={formData.country || ""}
                       onChange={handleChange}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="p-2 mt-1 border border-gray-300 rounded-md"
                     />
                   </div>
                 </div>
                 {/*<---------------4--------------->*/}
                 <div className="flex space-x-4">
                   {/* Password Input Field */}
-                  <div className="flex w-1/2 flex-col">
+                  <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="password"
                       className="block text-sm font-medium text-gray-700"
@@ -487,7 +487,7 @@ export default function UserSetting() {
                         <input
                           type={passwordEye ? "text" : "password"}
                           name="password"
-                          className="mt-1 w-full rounded-md border border-gray-300 py-2 pl-2 pr-10 text-sm outline-none"
+                          className="w-full py-2 pl-2 pr-10 mt-1 text-sm border border-gray-300 rounded-md outline-none"
                           value={formData.password}
                           onChange={handleChange}
                           placeholder="********"
@@ -497,7 +497,7 @@ export default function UserSetting() {
                   </div>
                   {/*<---------------Confirm Password--------------->*/}
                   {/* Password Input Field */}
-                  <div className="flex w-1/2 flex-col">
+                  <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="confirmPassword"
                       className="relative block text-sm font-medium text-gray-700"
@@ -506,7 +506,7 @@ export default function UserSetting() {
                       <input
                         type={passwordEye ? "text" : "password"}
                         name="confirmPassword"
-                        className="mt-1 flex w-full justify-between rounded-md border border-gray-300 px-2 py-2 text-sm outline-none"
+                        className="flex justify-between w-full px-2 py-2 mt-1 text-sm border border-gray-300 rounded-md outline-none"
                         value={formData.confirmPassword}
                         onChange={handleChange}
                         placeholder="********"
@@ -516,33 +516,32 @@ export default function UserSetting() {
                 </div>
                 {/*<---------------5--------------->*/}
                 <div className="flex space-x-4">
-                  <div className="flex w-1/2 flex-col">
-                    <label
-                      htmlFor="reportedTo"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Reported To
-                    </label>
-                    <select
-                      name="reportedTo"
-                      className="mt-1 rounded-md border border-gray-300 p-2"
-                      value={formData?.reportedTo || ""}
-                      onChange={handleChange}
-                    >
-                      <option value="" disabled>
-                        {formData?.reportedTo || "Select"}
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="reportedTo"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Reported To
+                  </label>
+                  <select
+                    name="reportedTo"
+                    className="p-2 mt-1 border border-gray-300 rounded-md"
+                    value={formData?.reportedTo || ""}
+                    onChange={handleChange}
+                  >
+                    <option value="" disabled>
+                      {formData?.userName || "Select"}
+                    </option>
+                    {reportedTo?.map((item) => (
+                      <option key={item.id} value={item.userName}>
+                        {item.userName}
                       </option>
-                      {reportedTo?.map((item) => (
-                        <option key={item.id} value={item.reportedTo}>
-                          {item.reportedTo}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
+                    ))}
+                  </select>
+                </div>
                   {/* -------------ROLE------------- */}
 
-                  <div className="flex w-1/2 flex-col">
+                  <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="role"
                       className="text-sm font-medium text-gray-700"
@@ -551,7 +550,7 @@ export default function UserSetting() {
                     </label>
                     <select
                       name="role"
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="p-2 mt-1 border border-gray-300 rounded-md"
                       value={formData?.role || ""}
                       onChange={handleChange}
                     >
@@ -569,10 +568,10 @@ export default function UserSetting() {
 
                 {/* -------------createdDate------------- */}
 
-                <div className="mb-3 flex max-w-full items-center justify-end">
+                <div className="flex items-center justify-end max-w-full mb-3">
                   <button
                     type="submit"
-                    className="mt-4 w-full rounded-md border border-cyan-500 px-6 py-4 text-cyan-500 hover:bg-cyan-500 hover:text-white"
+                    className="w-full px-6 py-4 mt-4 border rounded-md border-cyan-500 text-cyan-500 hover:bg-cyan-500 hover:text-white"
                   >
                     {isEditMode ? "Update User" : "Save User"}
                   </button>
@@ -588,82 +587,82 @@ export default function UserSetting() {
   return (
     <>
       <ToastContainer />
-      <div className="min-w-screen m-3">
+      <div className="m-3 min-w-screen">
         {active ? (
           <>
-            <div className="min-w-screen flex flex-wrap items-center justify-between gap-5">
-              <h1 className="whitespace-nowrap text-3xl font-medium">User</h1>
+            <div className="flex flex-wrap items-center justify-between gap-5 min-w-screen">
+              <h1 className="text-3xl font-medium whitespace-nowrap">User</h1>
               <button
                 onClick={handleAdd}
-                className="min-w-10 rounded bg-blue-600 p-2 text-sm text-white"
+                className="p-2 text-sm text-white bg-blue-600 rounded min-w-10"
               >
                 Add user
               </button>
             </div>
-            <div className="mt-3 flex-wrap gap-5 overflow-x-auto shadow-md">
-              <div className="leads_Table_Container min-w-full rounded-md">
-                <table className="leads_Table min-w-full bg-white">
+            <div className="flex-wrap gap-5 mt-3 overflow-x-auto shadow-md">
+              <div className="min-w-full rounded-md leads_Table_Container">
+                <table className="min-w-full bg-white leads_Table">
                   <thead>
                     <tr className="border-b-2 border-gray-300">
                       <th className="px-1 py-3">
                         <input type="checkbox" />
                       </th>
-                      <th className="border-r px-2 py-3 text-left font-medium">
+                      <th className="px-2 py-3 font-medium text-left border-r">
                         <div className="flex items-center justify-between text-sm">
                           <span>First Name</span>
                           <FaBars />
                         </div>
                       </th>
-                      <th className="border-r px-2 py-3 text-left font-medium">
+                      <th className="px-2 py-3 font-medium text-left border-r">
                         <div className="flex items-center justify-between text-sm">
                           <span>Last Name</span>
                           <FaBars />
                         </div>
                       </th>
-                      <th className="border-r px-2 py-3 text-left font-medium">
+                      <th className="px-2 py-3 font-medium text-left border-r">
                         <div className="flex items-center justify-between text-sm">
                           <span>Email</span>
                           <FaBars />
                         </div>
                       </th>
-                      <th className="border-r px-2 py-3 text-left font-medium">
+                      <th className="px-2 py-3 font-medium text-left border-r">
                         <div className="flex items-center justify-between text-sm">
                           <span>Contact</span>
                           <FaBars />
                         </div>
                       </th>
-                      <th className="border-r px-2 py-3 text-left font-medium">
+                      <th className="px-2 py-3 font-medium text-left border-r">
                         <div className="flex items-center justify-between text-sm">
                           <span>Country</span>
                           <FaBars />
                         </div>
                       </th>
-                      <th className="border-r px-2 py-3 text-left font-medium">
+                      <th className="px-2 py-3 font-medium text-left border-r">
                         <div className="flex items-center justify-between text-sm">
                           <span>Reported To</span>
                           <FaBars />
                         </div>
                       </th>
-                      <th className="border-r px-2 py-3 text-left font-medium">
+                      <th className="px-2 py-3 font-medium text-left border-r">
                         <div className="flex items-center justify-between text-sm">
                           <span>Role</span>
                           <FaBars />
                         </div>
                       </th>
-                      <th className="border-r px-2 py-3 text-left font-medium">
+                      <th className="px-2 py-3 font-medium text-left border-r">
                         <div className="flex items-center justify-between text-sm">
                           <span>Created Date</span>
                           <FaBars />
                         </div>
                       </th>
-                      <th className="border-r px-2 py-3 text-left font-medium">
+                      <th className="px-2 py-3 font-medium text-left border-r">
                         <div className="flex items-center justify-between text-sm">
                           <span>Direct Login</span>
                           <FaBars />
                         </div>
                       </th>
 
-                      <th className="border-r px-2 py-3 text-left font-medium">
+                      <th className="px-2 py-3 font-medium text-left border-r">
                         <div className="flex items-center justify-between text-sm">
                           <span>Action</span>
                         </div>
@@ -674,21 +673,21 @@ export default function UserSetting() {
                     {data.map((data, i) => (
                       <tr
                         key={data.i}
-                        className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
+                        className="border-b border-gray-300 cursor-pointer hover:bg-gray-200"
                       >
                         <td className="px-1 py-3 text-center">
                           <input type="checkbox" />
                         </td>
-                        <td className="max-w-24 break-words px-2 py-4 text-sm">
+                        <td className="px-2 py-4 text-sm break-words max-w-24">
                           {data.firstName}
                         </td>
-                        <td className="min-w-20 max-w-20 break-words px-1 text-sm">
+                        <td className="px-1 text-sm break-words min-w-20 max-w-20">
                           {data.lastName}
                         </td>
-                        <td className="max-w-24 break-words px-2 py-4 text-sm">
+                        <td className="px-2 py-4 text-sm break-words max-w-24">
                           {data.email}
                         </td>
-                        <td className="max-w-24 break-words px-2 py-4 text-sm">
+                        <td className="px-2 py-4 text-sm break-words max-w-24">
                           <a
                             href={`tel:${data.contactNo}`}
                             onClick={(event) => event.stopPropagation()}
@@ -696,24 +695,24 @@ export default function UserSetting() {
                             {data.contactNo}
                           </a>
                         </td>
-                        <td className="max-w-24 break-words px-2 py-4 text-sm">
+                        <td className="px-2 py-4 text-sm break-words max-w-24">
                           {data.country}
                         </td>
-                        <td className="max-w-24 break-words px-2 py-4 text-sm">
+                        <td className="px-2 py-4 text-sm break-words max-w-24">
                           {data.reportedTo}
                         </td>
-                        <td className="max-w-24 break-words px-2 py-4 text-sm">
+                        <td className="px-2 py-4 text-sm break-words max-w-24">
                           {data.role}
                         </td>
 
-                        <td className="max-w-24 break-words px-2 py-4 text-sm">
+                        <td className="px-2 py-4 text-sm break-words max-w-24">
                           {data?.createdDate?.split("T")[0] || ""}
                         </td>
 
                         <td className="text-center">
                           <Link
                             onClick={() => handleLoginUser(user)}
-                            className="min-w-10 rounded bg-blue-600 p-2 text-sm text-white"
+                            className="p-2 text-sm text-white bg-blue-600 rounded min-w-10"
                           >
                             Login As
                           </Link>
@@ -723,7 +722,7 @@ export default function UserSetting() {
                           <MdEdit
                             size={25}
                             color="white"
-                            className="rounded bg-blue-500"
+                            className="bg-blue-500 rounded"
                             onClick={() => handleEdit(data)}
                           />
                           <RiDeleteBin6Fill
