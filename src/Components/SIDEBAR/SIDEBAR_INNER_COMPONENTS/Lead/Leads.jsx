@@ -1452,8 +1452,8 @@ export default function Lead() {
                               <div className="flex items-center justify-center gap-2 mx-auto">
                                 <FaUserTie />
                                 <span className="">
-                                  {item?.name[0].toUpperCase() +
-                                    item?.name.substr(1)}
+                                  {item?.name[0]?.toUpperCase() +
+                                    item?.name?.substr(1)}
                                 </span>
                               </div>
                               <AiOutlineEdit
