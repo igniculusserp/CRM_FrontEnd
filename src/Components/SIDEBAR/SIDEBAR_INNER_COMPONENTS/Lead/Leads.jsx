@@ -258,8 +258,8 @@ export default function Lead() {
     { key: 1, value: "Mass Delete" },
     { key: 3, value: "Mass E-Mail" },
     // { key: 4, value: "Approve Leads" },
-    { key: 5, value: "Sheet View" },
-    { key: 6, value: "Print View" },
+    { key: 5, value: "Export To Excel" },
+    { key: 6, value: "Export To PDF" },
     { key: 7, value: "Convert Lead to Contact" },
   ];
 

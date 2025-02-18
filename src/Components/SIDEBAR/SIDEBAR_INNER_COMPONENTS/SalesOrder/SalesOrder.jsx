@@ -236,8 +236,8 @@ export default function SalesOrder() {
   const actions = [
     { key: 1, value: "Mass Delete" },
     { key: 3, value: "Mass E-Mail" },
-    { key: 4, value: "Sheet View" },
-    { key: 5, value: "Print View" },
+    { key: 4, value: "Export To Excel" },
+    { key: 5, value: "Export To PDF" },
     // { key: 6, value: "Send SMS" },
   ];
 

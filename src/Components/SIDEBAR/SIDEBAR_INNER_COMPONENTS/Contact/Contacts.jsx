@@ -382,8 +382,8 @@ export default function Contact() {
   const actions = [
     { key: 1, value: "Mass Delete" },
     { key: 3, value: "Mass E-Mail" },
-    { key: 6, value: "Sheet View" },
-    { key: 7, value: "Print View" },
+    { key: 6, value: "Export To Excel" },
+    { key: 7, value: "Export To PDF" },
   ];
 
   // ------------------------------ Search Function ----------------------------------

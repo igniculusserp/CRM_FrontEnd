@@ -314,8 +314,8 @@ export default function MailBox() {
     { key: 3, value: "Mass Email" },
     { key: 4, value: "Approve Leads" },
     { key: 5, value: "Export Leads" },
-    { key: 6, value: "Sheet View" },
-    { key: 7, value: "Print View" },
+    { key: 6, value: "Export To Excel" },
+    { key: 7, value: "Export To PDF" },
   ];
 
   return (
