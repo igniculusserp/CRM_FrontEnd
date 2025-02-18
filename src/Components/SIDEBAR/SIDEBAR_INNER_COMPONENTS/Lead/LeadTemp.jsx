@@ -4,21 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 
 //external Packages
 import axios from "axios";
-import * as XLSX from "xlsx";
-import { jsPDF } from "jspdf";
-import autoTable from "jspdf-autotable";
+import { DataGrid } from "@mui/x-data-grid";
+import Paper from "@mui/material/Paper";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 //React Icons
-import { FaAngleDown, FaBars } from "react-icons/fa";
-import { GrFormNext, GrFormPrevious } from "react-icons/gr";
-import { VscSettings } from "react-icons/vsc";
-import { ImFilter } from "react-icons/im";
+import { FaAngleDown } from "react-icons/fa";
 import { MdCall } from "react-icons/md";
-import { TbRefresh } from "react-icons/tb";
-
-//Wizard->
-import { FaTableList } from "react-icons/fa6";
-import { IoGrid } from "react-icons/io5";
 
 //grid->
 import { BiCalendar } from "react-icons/bi";
@@ -32,9 +25,6 @@ import { BsHourglassSplit } from "react-icons/bs";
 
 //Folder Imported
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
-
-//Mass Email
-import MassEmail from "../MassEmail/MassEmail";
 
 //name
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
@@ -54,12 +44,10 @@ import LeadFeatchModal from "./LeadFeatchModal";
 //Global Search Element
 import { SearchElement } from "../SearchElement/SearchElement";
 
-//-----------------------------ToastContainer-----------------------------
-import { ToastContainer } from "react-toastify";
-import {
-  showSuccessToast,
-  showErrorToast,
-} from "./../../../../utils/toastNotifications";
+import UseDateFilter from "../../../../Hooks/DateFilter/UseDateFilter";
+import UseAction from "../../../../Hooks/Action/useAction";
+import UseGridFilter from "../../../../Hooks/GridFilter/UseGridFilter";
+import ManagedByFilter from "../../../../Hooks/ManagedByFilter/ManagedByFilter";
 
 export default function Lead() {
   const navigate = useNavigate();
@@ -74,36 +62,29 @@ export default function Lead() {
   // Featch Lead Modal
   const [isFeatchModalOpen, setIsFetchModalOpen] = useState(false);
 
-  // Mass Email
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedEmails, setSelectedEmails] = useState([]);
-
-  //This is to store the upcoming data from API
-  const [getleads, setGetleads] = useState([]);
-
   //DND
   const [users, setUsers] = useState([]);
 
-  //created such that to filter leads according to leadStatus
-  const [filteredLeads, setFilteredLeads] = useState([]); // Filtered leads
+  //------------------------------------------------- All States----------------------------------------------------------
+  const [selectedRowsId, setSelectedRowsId] = useState([]);
+  const [selectedRowEmails, setSelectedRowEmails] = useState([]);
+  const [finalData, setFinalData] = useState([]);
 
-  //---------------------->---------------------->PAGINATION<----------------------<----------------------
-  //controlled from the bottom of the page
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Define items per page
-  const totalPage = Math.ceil(filteredLeads.length / itemsPerPage);
+  //------------------------------------------------- Modal Satates --------------------------------------------------------
+  const [selectedValue, setSelectedValue] = useState("");
+  const [assignModalOpen, setAssignModalOpen] = useState(false);
+  const [statusModalOpen, setStatusModalOpen] = useState(false);
+  const [multiAssignModal, setMultiAssignModal] = useState(false);
+  const [multiStatusModal, setMultiStatusModal] = useState(false);
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  //-------------------------------------------------- GET Data ----------------------------------------------------
+  const [originalData, setOriginalData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
-  //---------------------->---------------------->PAGINATION->FILTERLEADS/ <----------------------<----------------------
-  const currentLeads = filteredLeads?.slice(indexOfFirstItem, indexOfLastItem);
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  //------------------------------------------------------------------------------------------------
-  //----------------GET($id)--->API<-------------------
-  async function handleLead(id) {
+  const getApiData = async (id = 0) => {
+    // Default id to 0
     const bearer_token = localStorage.getItem("token");
+
     try {
       const config = {
         headers: {
@@ -111,32 +92,60 @@ export default function Lead() {
         },
       };
 
+      let response;
       if (id === 4) {
-        const response = await axios.get(
+        response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/LeadOpration/leads/byusertoken/count`,
           config,
         );
-
-        const data = response.data.data;
-        setCurrentPage(1);
-        setGetleads(data);
-        setFilteredLeads(data);
       } else {
-        const response = await axios.get(
+        response = await axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Lead/leads/byusertoken`,
           config,
         );
+      }
 
-        const data = response.data.data;
-        setCurrentPage(1);
-        setGetleads(data);
-        setFilteredLeads(data);
-        setSelectedIds([]);
+      if (response.status === 200) {
+        const followup = response.data;
+        setOriginalData(followup?.data || []);
+        setFilteredData(followup?.data || []);
       }
     } catch (error) {
-      console.error("Error fetching leads:", error);
+      console.error("Error fetching data:", error);
     }
-  }
+  };
+
+  useEffect(() => {
+    getApiData();
+  }, []);
+
+  //---------------------------------------------> Grid Pagination <-----------------------------------------------
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
+  //-----------------------------------------------STRIPE BAR DROPDOWN--------------------------------------------------
+  const [selectedViewValue, setSelectedViewValue] = useState("Table View");
+  // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
+  const handleNumberClick = (event, mobileNo) => {
+    event.stopPropagation();
+    window.location.href = `tel:${mobileNo}`;
+  };
+  //------------------------------------------------------ Check Box Data ------------------------------------------
+  const handleSelectionChange = (selectionModel) => {
+    const selectedRows = currentData.filter((row) =>
+      selectionModel.includes(row.id),
+    );
+    const selectedIDs = selectedRows.map((row) => row.id);
+    const selectedEmails = selectedRows.map((row) => row.email);
+    setSelectedRowsId(selectedIDs);
+    setSelectedRowEmails(selectedEmails);
+  };
 
   //------------------------------------------------------------------------------------------------
   //----------------Managing Color of Assigned To----------------
@@ -163,7 +172,6 @@ export default function Lead() {
 
   //useEffect ==> to fetch handleLead, getAllUsers, bussiness, & AdminRole
   useEffect(() => {
-    handleLead();
     getAllUsers();
     setBusiness(businessType);
     setAdminRole(businessRole);
@@ -180,62 +188,28 @@ export default function Lead() {
       let filteredLeads;
       if (statusValue === "All Lead" || statusValue === null) {
         // Show all leads when "All Lead" is selected or reset
-        filteredLeads = getleads;
+        filteredLeads = filteredData;
       } else {
         // Apply filtering for other statuses
-        filteredLeads = getleads.filter(
+        filteredLeads = filteredData.filter(
           (lead) => lead.leadesStatus === statusValue,
         );
       }
-      setFilteredLeads(filteredLeads);
+      setFilteredData(filteredLeads);
     }
     if (activeButtonId === 2) {
       let filteredLeads;
       if (statusValue === "All Lead" || statusValue === null) {
         // Show all leads when "All Lead" is selected or reset
-        filteredLeads = getleads;
+        filteredLeads = filteredData;
       } else {
         // Apply filtering for other statuses
-        filteredLeads = getleads.filter(
+        filteredLeads = filteredData.filter(
           (lead) => lead.leadesStatus === statusValue,
         );
       }
-      setFilteredLeads(filteredLeads);
+      setFilteredData(filteredLeads);
     }
-  }
-
-  function handle_AssignedTo(assignedToValue) {
-    if (activeButtonId === 1) {
-      let filtered = getleads;
-      if (assignedToValue !== null && assignedToValue !== "Assigned to") {
-        filtered = filtered.filter(
-          (lead) => lead.assigned_To === assignedToValue,
-        );
-      }
-      setFilteredLeads(filtered); // Set the filtered result
-    }
-    if (activeButtonId === 3) {
-      let filtered = getleads;
-      if (assignedToValue !== null && assignedToValue !== "Assigned to") {
-        filtered = filtered.filter(
-          (lead) => lead.assigned_To === assignedToValue,
-        );
-      }
-      setFilteredLeads(filtered); // Set the filtered result
-    }
-    if (activeButtonId === 4) {
-      let filtered = getleads;
-      if (assignedToValue !== null && assignedToValue !== "Assigned to") {
-        filtered = filtered.filter((lead) => lead.userName === assignedToValue);
-      }
-      setFilteredLeads(filtered); // Set the filtered result
-    }
-  }
-
-  // Handle selecting an assigned user
-  function handleAssignedToSelection(user) {
-    setAssignedTo(user); // Update assignedTo state
-    handle_AssignedTo(user); // Apply both filters
   }
 
   //-----------------------------------------------> ALL LEADS-->>DROPDOWN<-----------------------------------------------
@@ -276,79 +250,10 @@ export default function Lead() {
     handleLeadStatus();
   }, []);
 
-  //-----------------------------------------------> ALL-> ASSIGNED_TO <-functionality <-----------------------------------------------
-
-  //BY_DEFAULT-TEXT
-  const [assignedTo, setAssignedTo] = useState("Assigned to"); // Track the selected assigned user
-
-  //->DROPDOWN_STATE
-  const [allAssigned_To_DROPDOWN, setallAssigned_To_DROPDOWN] = useState(false);
-
-  const toggleMenuAssigned_To = () => {
-    setallAssigned_To_DROPDOWN(!allAssigned_To_DROPDOWN);
-  };
-
-  //----------------ASSIGNED_TO DROPDOWN----------------
-  const [allAssigned_To_Data, setallAssigned_To_Data] = useState([]);
-  async function handleallAssigned_To() {
-    const bearer_token = localStorage.getItem("token");
-
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${bearer_token}`,
-        },
-      };
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Setting/users/byusertoken`,
-        config,
-      );
-      setallAssigned_To_Data(response.data.data);
-    } catch (error) {
-      console.error("Error fetching leads:", error);
-    }
-  }
-
-  useEffect(() => {
-    handleallAssigned_To();
-  }, []);
-
-  //-------------------------------->WIZARD DROPDOWN<--------------------------------
-  const stripeBar = [
-    { key: 1, value: "Table View", icon: <FaTableList /> },
-    { key: 2, value: "Grid View", icon: <IoGrid /> },
-  ];
-
-  //state to manage dropDown onMouseLeave
-  const [stripeBardropDown, setstripeBardropDown] = useState(false);
-
-  //By Default value - to <TABLE VIEW>
-  const [selectedViewValue, setSelectedViewValue] = useState(
-    stripeBar[0].value,
-  );
-
-  //function to open/close dropdown onMouseLeave
-  const togglestripeBar = () => {
-    setstripeBardropDown(!stripeBardropDown);
-  };
-
-  //function to select value from dropDown
-  const handleStripeButton = (value) => {
-    setSelectedViewValue(value);
-  };
-
-  //dropDown --> state OnClick
-  const [dropLogodropDown, setdropLogodropDown] = useState(false);
-
-  //dropDown --> function OnClick
-  const togglesdropLogo = () => {
-    setdropLogodropDown(!dropLogodropDown);
-  };
-
   //-------------------------------------------------------------------------------------
 
   //-------------------------------->ACTION BAR DROPDOWN<--------------------------------
-  const dropActionsMenu = [
+  const actions = [
     // { key: 0, value: "Actions" },
     { key: 1, value: "Mass Delete" },
     { key: 3, value: "Mass E-Mail" },
@@ -358,179 +263,15 @@ export default function Lead() {
     { key: 7, value: "Convert Lead to Contact" },
   ];
 
-  const [dropActionsMenudropDown, setdropActionsMenudropDown] = useState(false);
-
-  const toggleActionsMenuLogo = () => {
-    setdropActionsMenudropDown(!dropActionsMenudropDown);
-  };
-
-  const handleActionButton = async (value) => {
-    // ---------------------->MASS DELETE FUNCTIONALITY<----------------------
-    if (value === "Mass Delete") {
-      const userConfirmed = confirm(
-        "Are you sure you want to Delete the selected Leads?",
-      );
-      if (userConfirmed) {
-        massDelete();
-      }
-    }
-
-    // ---------------------->MASS E-Mail FUNCTIONALITY<----------------------
-    if (value === "Mass E-Mail") {
-      const userConfirmed = confirm(
-        "Are you sure you want to Send E-Mail to the selected Data?",
-      );
-      if (userConfirmed) {
-        openMassEmailModal(selectedEmails);
-      }
-    }
-
-    // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
-    if (value === "Sheet View") {
-      const userConfirmed = confirm(
-        "Are you sure you want to export the selected Leads?",
-      );
-      if (userConfirmed) {
-        exportToExcel();
-      }
-    }
-
-    // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
-    if (value === "Print View") {
-      const userConfirmed = confirm(
-        "Are you sure you want to export the selected Leads?",
-      );
-      if (userConfirmed) {
-        exportToPDF();
-      }
-    }
-
-    // ---------------------->Convert Lead to Contact FUNCTIONALITY*<----------------------
-    if (value === "Convert Lead to Contact") {
-      const userConfirmed = confirm(
-        "Are you sure you want to convert this lead to a contact?",
-      );
-      if (userConfirmed) {
-        convertType();
-      }
-    }
-  };
-  // ---------------------->MASS DELETE FUNCTIONALITY---###API###<----------------------
-  const massDelete = async () => {
-    const bearer_token = localStorage.getItem("token");
-
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${bearer_token}`,
-          "Content-Type": "application/json",
-        },
-        data: { leadIds: selectedIds },
-      };
-
-      const response = await axios.delete(
-        `${protocal_url}${name}.${tenant_base_url}/Lead/lead/massdelete`,
-        config,
-      );
-      alert("Mass Deleted run");
-      handleLead();
-      console.log(response);
-
-      setGetleads((prevLeads) =>
-        prevLeads.filter((lead) => !selectedIds.includes(lead.id)),
-      );
-      setSelectedIds([]);
-    } catch (error) {
-      console.error("Error deleting leads:", error);
-    }
-  };
-
-  //Enable us to switch to createlead/editlead page with /:id
-  let handleClick = (item) => {
-    navigate(`/panel/editlead/${item.id}`);
-  };
-
-  // ---------------------->MASS Email FUNCTIONALITY---<----------------------
-  const openMassEmailModal = () => {
-    if (selectedEmails.length > 0) {
-      setIsModalOpen(true); // Open the modal
-    } else {
-      alert("Selected Entity dose not have eMail Address.");
-    }
-  };
-
+  // ---------------------------------------- Close Modal Function -----------------------------------
   const closeModal = () => {
-    setIsModalOpen(false);
     setAssignModalOpen(false);
     setStatusModalOpen(false);
     setMultiAssignModal(false);
     setMultiStatusModal(false);
     setIsFetchModalOpen(false);
-    handleLead();
+    getApiData();
   };
-
-  //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
-  //-------> XLSX used here
-  const exportToExcel = () => {
-    console.log("runned");
-    const leadsToExport = currentLeads.filter((lead) =>
-      selectedIds.includes(lead.id),
-    );
-    if (leadsToExport?.length === 0) {
-      alert("No leads selected to export");
-      return;
-    }
-
-    // Create a worksheet from the filtered leads data
-    const ws = XLSX.utils.json_to_sheet(leadsToExport);
-
-    // Create a new workbook and append the worksheet
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Selected Leads");
-
-    // Export the workbook to an Excel file
-    XLSX.writeFile(wb, "SelectedLeadsData.xlsx");
-  };
-
-  //---------------------->Export TO PDF FUNCTIONALITY---###FUNCTION###<----------------------
-  const exportToPDF = () => {
-    const leadsToExport = currentLeads.filter((lead) =>
-      selectedIds.includes(lead.id),
-    );
-    if (leadsToExport?.length === 0) {
-      alert("No leads selected to export");
-      return;
-    }
-    const doc = new jsPDF();
-    // const role = matchedUser?.role;
-    const tableColumn = [
-      "ID",
-      "Name",
-      "Email",
-      "Phone No.",
-      "Lead Source",
-      "Assigned To",
-    ];
-    // Map the leads data to rows
-    const tableRows = leadsToExport?.map((lead) => [
-      lead.id,
-      lead.name,
-      lead.email,
-      lead.phoneNo,
-      lead.leadsSource,
-      lead.assigned_To,
-    ]);
-    // Add a title to the PDF
-    doc.text("Selected Leads Data", 14, 16);
-    // Add the table to the PDF
-    autoTable(doc, {
-      head: [tableColumn],
-      body: tableRows,
-      startY: 22, // Position the table after the title
-    });
-    doc.save("Leads.pdf");
-  };
-
   //---------------------->---------------------->MANAGE_BY/ASSIGNED_TO<----------------------<ARVIND----------------------
   const roleColors = [
     "#2563eb", // blue
@@ -540,106 +281,11 @@ export default function Lead() {
     "#e11d48", //Rose
   ];
 
-  //---------------------->---------------------->CONVERT_LEADS_TO_CONTACTS<----------------------<----------------------
-
-  const convertType = async () => {
-    const bearer_token = localStorage.getItem("token");
-
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${bearer_token}`,
-          "Content-Type": "application/json",
-        },
-      };
-
-      const response = await axios.post(
-        `${protocal_url}${name}.${tenant_base_url}/Lead/leadtocontact/${selectedIds}`,
-        { id: selectedIds }, // Pass data as second parameter
-        config,
-      );
-
-      setGetleads((prevLeads) =>
-        prevLeads.filter((lead) => !selectedIds.includes(lead.id)),
-      );
-      setSelectedIds([]);
-
-      if (response.status === 200) {
-        showSuccessToast("Lead has been successfully converted to a contact.");
-      } else {
-        showErrorToast(
-          `Failed to convert lead: ${response.data.message || "Unknown error"}`,
-        );
-      }
-    } catch (error) {
-      showErrorToast(
-        "An error occurred while converting the lead. Please try again later.",
-      );
-    }
-  };
-
   // Function to get the color for a role based on its index
   const getRoleColorByIndex = (index) => {
     return roleColors[index % roleColors?.length]; // Use modulo for wrapping
   };
-
-  //---------------------->---------------------->̧CHECKBOX<----------------------<----------------------
-  //---------------------->---------------------->̧CHECKBOX -> SINGLE<----------------------<----------------------
-  const [selectedIds, setSelectedIds] = useState([]);
-  const handleOnCheckBox = (e, item) => {
-    e.stopPropagation();
-
-    const leadId = item.id;
-
-    // Toggle selected IDs
-    setSelectedIds((prevSelected) =>
-      prevSelected.includes(leadId)
-        ? prevSelected.filter((id) => id !== leadId)
-        : [...prevSelected, leadId],
-    );
-
-    // Update selected emails
-    setSelectedEmails((prevSelectedEmails) => {
-      const newSelectedEmails = prevSelectedEmails.includes(item.email)
-        ? prevSelectedEmails.filter((email) => email !== item.email)
-        : [...prevSelectedEmails, item.email];
-      return newSelectedEmails;
-    });
-  };
-
-  //---------------------->---------------------->̧CHECKBOX -> MULTIPLE<----------------------<----------------------
-  const [isSelectAllChecked, setIsSelectAllChecked] = useState(false);
-  const handleSelectAllCheckbox = (e) => {
-    const isChecked = e.target.checked;
-    setIsSelectAllChecked(isChecked);
-
-    if (isChecked) {
-      // Add all leads in the current page to selectedIds
-      const currentPageIds = currentLeads?.map((lead) => lead.id);
-      const allEmails = currentLeads.map((order) => order.email);
-      setSelectedEmails(allEmails); // Store all emails
-      setSelectedIds((prevSelected) => [
-        ...new Set([...prevSelected, ...currentPageIds]),
-      ]);
-    } else {
-      const currentPageIds = currentLeads?.map((lead) => lead.id);
-      setSelectedEmails([]);
-      setSelectedIds((prevSelected) =>
-        prevSelected.filter((id) => !currentPageIds.includes(id)),
-      );
-    }
-  };
-
-  // Update "Select All" checkbox state when individual checkboxes are clicked
-  useEffect(() => {
-    const currentPageIds = currentLeads?.map((lead) => lead.id);
-    const isAllSelected =
-      currentPageIds.every((id) => selectedIds.includes(id)) &&
-      currentPageIds?.length > 0;
-    setIsSelectAllChecked(isAllSelected);
-  }, [selectedIds, currentLeads]);
-
-  // DYNAMIC RENDERING BUTTONS - TABLE
+  //--------------------------------------------------  DYNAMIC RENDERING BUTTONS - TABLE --------------------------------------------
   // DYNAMIC LEAD BUTTONS
   const dynamicButtons = [
     { id: 1, name: "Leads" },
@@ -657,7 +303,7 @@ export default function Lead() {
   const handleDynamicButtonsClick = (id) => {
     setActiveButtonId(id); // Update state first
     localStorage.setItem("activeButtonId", id);
-    handleLead(id);
+    getApiData(id);
   };
 
   useEffect(() => {
@@ -667,41 +313,8 @@ export default function Lead() {
     };
   }, [location]);
 
-  // ----------------------------- Date Filter -----------------------------
-
-  const today = new Date().toISOString().split("T")[0];
-  const [startDate, setStartDate] = useState(today);
-  const [endDate, setEndDate] = useState(today);
-
-  // Function to filter based on date range
-  function handle_DateRange(startDate, endDate) {
-    let filteredFollows = getleads;
-
-    // Convert startDate to the beginning of the day and endDate to the end of the day
-    const start = new Date(startDate);
-    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
-
-    const end = new Date(endDate);
-    end.setHours(23, 59, 59, 999); // Set time to 23:59:59
-
-    if (startDate && endDate) {
-      filteredFollows = filteredFollows.filter((follow) => {
-        const callbackDate = new Date(follow.call_bck_DateTime);
-        return callbackDate >= start && callbackDate <= end;
-      });
-    }
-    setFilteredLeads(filteredFollows); // Update the filtered result
-  }
-
-  // UseEffect to trigger handle_DateRange on date change
-  useEffect(() => {
-    if (startDate <= endDate) {
-      handle_DateRange(startDate, endDate);
-    }
-  }, [startDate, endDate]);
-
   //------------------------------------------------------------------------------------------------
-  //----------------leadOperations BAR DROPDOWN----------------
+  //-----------------------------------leadOperations BAR DROPDOWN-----------------------------------------------------
   const leadOperations = [
     { key: 1, value: "Lead Allotment" },
     { key: 2, value: "Multiple Assign" },
@@ -709,13 +322,6 @@ export default function Lead() {
     { key: 4, value: "Multiple Status Change" },
   ];
 
-  const [selectedValue, setSelectedValue] = useState("");
-  const [assignModalOpen, setAssignModalOpen] = useState(false);
-  const [statusModalOpen, setStatusModalOpen] = useState(false);
-  const [multiAssignModal, setMultiAssignModal] = useState(false);
-  const [multiStatusModal, setMultiStatusModal] = useState(false);
-
-  selectedIds;
   const handleSelect = (selected) => {
     setSelectedValue(selected);
 
@@ -728,14 +334,14 @@ export default function Lead() {
       setStatusModalOpen(true);
     }
     if (selected === "Multiple Assign") {
-      if (selectedIds.length > 0) {
+      if (selectedRowsId.length > 0) {
         setMultiAssignModal(true);
       } else {
         alert("No Id Selected");
       }
     }
     if (selected === "Multiple Status Change") {
-      if (selectedIds.length > 0) {
+      if (selectedRowsId.length > 0) {
         setMultiStatusModal(true);
       } else {
         alert("No Id Selected");
@@ -751,44 +357,9 @@ export default function Lead() {
     setSelectOperationDropdown(!selectOperationDropdown);
   };
 
-  // ------------------------------ Search Function ----------------------------------
-
-  const [searchTerm, setSearchTerm] = useState(""); // State for search term
-
-  useEffect(() => {
-    let filtered;
-
-    if (activeButtonId === 4) {
-      // Filter for Lead Action (id === 4)
-      filtered = getleads.filter(
-        (lead) =>
-          lead.userName &&
-          lead.userName?.toLowerCase()?.includes(searchTerm?.toLowerCase()),
-      );
-    } else {
-      // General filtering for other lead types
-      filtered = getleads.filter(
-        (lead) =>
-          lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
-          lead.mobileNo?.includes(searchTerm),
-      );
-    }
-
-    setFilteredLeads(filtered);
-  }, [searchTerm, getleads, activeButtonId]);
-
-  //------------------------------------------------------Filter Reset Settings ---------------------------------------------
-
-  const handleResetFilter = () => {
-    setFilteredLeads(getleads);
-    setLeadStatus("All Lead");
-    setAssignedTo("Assigned to");
-  };
-
   //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
 
   const [permissions, setPermissions] = useState([]);
-  const [edit, setEdit] = useState(false);
   const [createSO, setCreateSO] = useState(false);
   const [viewLeads, setviewLeads] = useState(false);
   const [createLead, setCreateLead] = useState(false);
@@ -830,7 +401,6 @@ export default function Lead() {
           } else {
             setViewName("");
           }
-          setEdit(permissionsArray.includes("Edit Lead"));
           setCreateSO(permissionsArray.includes("Create Sales Order"));
           setviewLeads(permissionsArray.includes("View Leads"));
           setCreateLead(permissionsArray.includes("Create Lead"));
@@ -846,22 +416,178 @@ export default function Lead() {
     handleGetPermission();
   }, []);
 
+  // ------------------------------ Search Function ----------------------------------
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
+  useEffect(() => {
+    let filtered = [];
+
+    if (activeButtonId === 4) {
+      // Filter for Lead Action (id === 4)
+      filtered = originalData.filter(
+        (lead) =>
+          lead.userName &&
+          lead.userName.toLowerCase().includes(searchTerm?.toLowerCase()),
+      );
+    } else {
+      // General filtering for other lead types
+      filtered = originalData.filter(
+        (lead) =>
+          lead.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+          lead.mobileNo?.includes(searchTerm),
+      );
+    }
+
+    setFilteredData(filtered);
+  }, [searchTerm, originalData, activeButtonId]); // Added activeButtonId to dependencies
+
+  // ------------------------------------------------- FOLLOW UP By State  --------------------------------------
+  const [followUpBy, setFollowUpBy] = useState("Segment By");
+  // ------------------------------------------------- Managed By State -----------------------------------------
+  const [assignedTo, setAssignedTo] = useState("Managed By");
+  //------------------------------------------------------Filter Reset Settings ---------------------------------------------
+  const handleResetFilter = () => {
+    setLeadStatus("All Lead");
+    setAssignedTo("Managed By");
+    setFollowUpBy("Segment By");
+    setSearchTerm("");
+    setLeadStatus("All Lead");
+  };
+    //-------------------------------------Enable us to switch to createlead/editlead page with /:id ----------------------------
+    let handleClick = (item) => {
+      navigate(`/panel/editlead/${item.id}`);
+    };
+  //------------------------------------------------------ Table Heading And Table Data ------------------------------------------
+  const columns = [
+
+    {
+      field: "name",
+      headerName: "Lead Name",
+      minWidth: 200,
+      flex: 1,
+      renderCell: (params) => (
+        <span
+          onClick={
+            businessRole === "Admin" ? () => handleClick(params.row) : undefined
+          }
+          style={{ cursor: "pointer", color: "blue", fontWeight: 500 }}
+        >
+          {params.value}
+        </span>
+      ),
+    },
+    !business.includes("Brokerage") && {
+      field: "email",
+      headerName: "Email",
+      minWidth: 200,
+      flex: 1,
+      renderCell: (params) => (
+        <a href={`mailto:${params.value}`} onClick={(e) => e.stopPropagation()}>
+          {params.value}
+        </a>
+      ),
+    },
+    {
+      field: "mobileNo",
+      headerName: "Phone No",
+      minWidth: 150,
+      flex: 1,
+      renderCell: (params) => (
+        <span
+          onClick={(event) => handleNumberClick(event, params.row.mobileNo)}
+          style={{ display: "flex", gap: "5px", alignItems: "center" }}
+        >
+          <MdCall className="text-red-600" /> {params.value}
+        </span>
+      ),
+    },
+    !business.includes("Brokerage") && {
+      field: "call_bck_DateTime",
+      headerName: "Follow Up",
+      minWidth: 200,
+      flex: 1,
+      renderCell: (params) => params.value?.replace("T", " ").split(":00")[0],
+    },
+    {
+      field: "segments",
+      headerName: "Segments",
+      minWidth: 200,
+      flex: 1,
+      renderCell: (params) => params.row.segments?.join(", ") || "",
+    },
+    {
+      field: "managedBy",
+      headerName: "Managed By",
+      minWidth: 200,
+      flex: 1,
+      display: "flex",
+      alignItems: "center",
+      renderCell: (params) => {
+        const matchedUser = users.find(
+          (user) => user.userName === params.row.assigned_To
+        );
+        const roleColor = getRoleColorByIndex(matchedUser?.role?.length);
+        return matchedUser ? (
+          <div
+            style={{
+              backgroundColor: roleColor || "#000",
+              borderRadius: "8px",
+              padding: "8px",
+              color: "white",
+              textAlign: "center",
+              width: "100%",
+              height: "60%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {params.row.assigned_To} - ({matchedUser?.role})
+          </div>
+        ) : (
+          ""
+        );
+      },
+    },
+    (createSO || businessRole === "Admin") && {
+      field: "createSO",
+      headerName: "Action",
+      minWidth: 150,
+      flex: 1,
+      display: "flex",
+      alignItems: "center",
+      renderCell: (params) => (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/panel/lead/create/so/${params.row.id}`);
+          }}
+          className="flex h-7 items-center justify-center rounded bg-blue-600 px-3 py-1 text-white shadow-md hover:bg-blue-500"
+        >
+          {business === "Brokerage" ? "Create Client" : "SO"}
+        </button>
+      ),
+    },
+  ].filter(Boolean); 
+
+
   return (
     //parent
     <>
-      <ToastContainer />
       <div className="m-3 flex min-h-screen flex-col">
         {/* -----------------------------------Leads Allotment Modal------------------------------ */}
         {assignModalOpen && <LeadAssignModal onClose={closeModal} />}
         {/* -----------------------------------Multi Assign Modal------------------------------ */}
         {multiAssignModal && (
-          <MultipleAssignModal multiIds={selectedIds} onClose={closeModal} />
+          <MultipleAssignModal multiIds={selectedRowsId} onClose={closeModal} />
         )}
         {/* -----------------------------------Change Status Modal------------------------------ */}
         {statusModalOpen && <LeadStatusModal onClose={closeModal} />}
         {/* -----------------------------------Multi Status Change Modal------------------------------ */}
         {multiStatusModal && (
-          <MultipuleStatusModal multiIds={selectedIds} onClose={closeModal} />
+          <MultipuleStatusModal
+            multiIds={selectedRowsId}
+            onClose={closeModal}
+          />
         )}
         {/* -------------------------------- Fetch modal -------------------------------------------- */}
         {isFeatchModalOpen && <LeadFeatchModal onClose={closeModal} />}
@@ -958,26 +684,19 @@ export default function Lead() {
                     Create Lead
                   </button>
                 </Link>
-                {/* PART-II */}
-                {/*  Create Lead Part-II -> down button */}
-                <div
-                  className="relative"
-                  onClick={togglesdropLogo}
-                  onMouseLeave={() => setdropLogodropDown(false)}
-                ></div>
               </div>
             ) : (
               ""
             )}
             {/*-------------------------------------- ACTIONS DROPDWON --------------------------------------------- */}
-                      <UseAction
-                        originalData={originalData} // Sending Original Data
-                        getApiData={getApiData} // Execute API Data Function
-                        screenName="Follow Up" // Sending Screen Name
-                        selectedRowsId={selectedRowsId} // Sending Selected Rows IDs
-                        selectedRowEmails={selectedRowEmails} // Sending Selected Rows E-Mail's
-                        actions={actions} // Sending Actions Dropdown List
-                      />
+            <UseAction
+              originalData={originalData} // Sending Original Data
+              getApiData={getApiData} // Execute API Data Function
+              screenName="Follow Up" // Sending Screen Name
+              selectedRowsId={selectedRowsId} // Sending Selected Rows IDs
+              selectedRowEmails={selectedRowEmails} // Sending Selected Rows E-Mail's
+              actions={actions} // Sending Actions Dropdown List
+            />
           </div>
         </div>
         {/* 2nd bar Leads and lenghtLeads*/}
@@ -985,7 +704,7 @@ export default function Lead() {
           <div className="leads_Button_Main_Container flex items-center justify-start gap-3">
             <h1 className="text-3xl font-medium">Leads</h1>
             <h1 className="text-md min-w-10 rounded-md bg-blue-600 px-2 py-2 text-center text-white shadow-md">
-              {getleads?.length}
+              {filteredData?.length}
             </h1>
 
             {/*---------------------------------------------------- BUTTONS -------------------------------------------------*/}
@@ -1011,15 +730,15 @@ export default function Lead() {
           </div>
 
           {activeButtonId === 1 ? (
-           <>
-            {/* ------------------- Filter by date ----------------- */}
-                   <UseDateFilter
-                     onReset={handleResetFilter} //Reset Button Function
-                     originalData={originalData} // Sending Original Data
-                     setFilteredData={setFilteredData} // Set Filter Data
-                     filteredData={filteredData} //Sending Filter Data
-                   />
-           </>
+            <>
+              {/* ------------------- Filter by date ----------------- */}
+              <UseDateFilter
+                onReset={handleResetFilter} //Reset Button Function
+                originalData={originalData} // Sending Original Data
+                setFilteredData={setFilteredData} // Set Filter Data
+                filteredData={filteredData} //Sending Filter Data
+              />
+            </>
           ) : (
             ""
           )}
@@ -1060,27 +779,27 @@ export default function Lead() {
           <div className="leads_Table_Main_Container mt-3 overflow-x-auto">
             <div className="leads_Table_Container min-w-full rounded-md shadow-lg">
               {selectedViewValue === "Table View" && activeButtonId === 1 && (
-               <Paper sx={{ width: "100%" }}>
-               <DataGrid
-                 rows={currentData} // Row Data
-                 columns={columns} // Headings
-                 pagination={false}
-                 checkboxSelection
-                 onRowSelectionModelChange={(newSelection) =>
-                   handleSelectionChange(newSelection)
-                 }
-                 sx={{
-                   border: 0,
-                   width: "100%",
-                   "& .MuiDataGrid-columnHeaderTitle": {
-                     fontWeight: "bold",
-                   },
-                   "& .MuiDataGrid-footerContainer": {
-                     display: "none",
-                   },
-                 }}
-               />
-             </Paper>
+                <Paper sx={{ width: "100%" }}>
+                  <DataGrid
+                    rows={currentData} // Row Data
+                    columns={columns} // Headings
+                    pagination={false}
+                    checkboxSelection
+                    onRowSelectionModelChange={(newSelection) =>
+                      handleSelectionChange(newSelection)
+                    }
+                    sx={{
+                      border: 0,
+                      width: "100%",
+                      "& .MuiDataGrid-columnHeaderTitle": {
+                        fontWeight: "bold",
+                      },
+                      "& .MuiDataGrid-footerContainer": {
+                        display: "none",
+                      },
+                    }}
+                  />
+                </Paper>
               )}
 
               {/* ------------GRID------------ */}
@@ -1090,7 +809,7 @@ export default function Lead() {
                     {/* ------------Parent------------ */}
                     <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
                       {/*---------Card starts Here */}
-                      {getleads.map((item) => (
+                      {currentData.map((item) => (
                         // {/* ------------sub-Parent->Container ------------ */}
                         <div
                           className="grid grid-cols-1 gap-1 rounded-lg bg-sky-100 p-2 shadow-md"
@@ -1228,38 +947,33 @@ export default function Lead() {
               {/* LEAD ACTION TABLE */}
               {selectedViewValue === "Table View" && activeButtonId === 3 && (
                 <LeadOperations
-                  currentLeads={currentLeads}
-                  selectedIds={selectedIds}
-                  handleOnCheckBox={handleOnCheckBox}
-                  isSelectAllChecked={isSelectAllChecked}
-                  handleSelectAllCheckbox={handleSelectAllCheckbox}
+                  currentData={currentData}
+                  handleSelectionChange={handleSelectionChange}
                 />
               )}
               {/* RENDERING UPLOAD LEADS PAGE */}
-              {activeButtonId === 4 && (
-                <LeadAction currentLeads={currentLeads} />
-              )}
+              {activeButtonId === 4 && <LeadAction currentData={currentData} />}
             </div>
 
-             {/* --------------------------------------- Pagination ------------------------------------------ */}
-          <Stack spacing={2} className="mb-1 mt-4">
-            <Pagination
-              count={Math.ceil(filteredData.length / itemsPerPage)}
-              page={currentPage}
-              onChange={handlePageChange}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                "& .MuiPaginationItem-root": {
-                  fontSize: "1.2rem",
-                },
-                "& .MuiPaginationItem-root.Mui-selected": {
-                  backgroundColor: "rgba(6, 182, 212, 1)",
-                  color: "#fff",
-                },
-              }}
-            />
-          </Stack>
+            {/* --------------------------------------- Pagination ------------------------------------------ */}
+            <Stack spacing={2} className="mb-1 mt-4">
+              <Pagination
+                count={Math.ceil(filteredData.length / itemsPerPage)}
+                page={currentPage}
+                onChange={handlePageChange}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  "& .MuiPaginationItem-root": {
+                    fontSize: "1.2rem",
+                  },
+                  "& .MuiPaginationItem-root.Mui-selected": {
+                    backgroundColor: "rgba(6, 182, 212, 1)",
+                    color: "#fff",
+                  },
+                }}
+              />
+            </Stack>
           </div>
         ) : (
           ""

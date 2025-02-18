@@ -5,6 +5,14 @@ import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { FaAngleDown } from "react-icons/fa";
+//-----------------------------ToastContainer-----------------------------
+import { ToastContainer } from "react-toastify";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "./../../utils/toastNotifications";
+
+
 
 // Folder Imports
 import { getHostnamePart } from "../../Components/SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
@@ -60,10 +68,16 @@ export default function UseAction({
         exportToTrailPDF();
         break;
 
+case "Convert Lead to Contact":
+        if (confirm("Are you sure you want to convert this lead to a contact?")) {
+          convertType(selectedRowsId);
+        }
+        break;
       default:
         break;
     }
   };
+    
 
   // ------------------- Mass Delete Function -------------------
   const handleMassTrailDelete = async (ids) => {
@@ -138,6 +152,42 @@ export default function UseAction({
     doc.save("Data.pdf");
   };
 
+    //---------------------->---------------------->CONVERT_LEADS_TO_CONTACTS<----------------------<----------------------
+
+    const convertType = async () => {
+      const bearer_token = localStorage.getItem("token");
+  
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${bearer_token}`,
+            "Content-Type": "application/json",
+          },
+        };
+  
+        const response = await axios.post(
+          `${protocal_url}${name}.${tenant_base_url}/Lead/leadtocontact/${selectedRowsId}`,
+          { id: selectedRowsId }, // Pass data as second parameter
+          config,
+        );
+        getApiData();
+        if (response.status === 200) {
+          showSuccessToast("Lead has been successfully converted to a contact.");
+        } else {
+          showErrorToast(
+            `Failed to convert lead: ${response.data.message || "Unknown error"}`,
+          );
+        }
+
+      } catch (error) {
+        console.error("Error converting lead:", error); // Log the error to avoid ESLint warning
+        showErrorToast(
+          `An error occurred while converting the lead. ${error.message || "Please try again later."}`
+        );
+      }
+    };
+  
+
   // ------------------- Permissions Handling -------------------
   const businessRole = localStorage.getItem("businessRole");
 
@@ -166,6 +216,8 @@ export default function UseAction({
 
   return (
     <>
+     <ToastContainer />
+     {/* ---------------------------------- E-Mail Modal ------------------------------- */}
       {isModalOpen && (
         <MassEmail
           emails={selectedRowEmails}
