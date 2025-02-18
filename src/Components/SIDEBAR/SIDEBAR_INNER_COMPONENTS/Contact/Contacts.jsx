@@ -473,7 +473,7 @@ export default function Contact() {
           <UseAction
             originalData={originalData} // Sending Original Data
             getApiData={getApiData} // Execute API Data Function
-            screenName="Follow Up" // Sending Screen Name
+            screenName="Contacts" // Sending Screen Name
             selectedRowsId={selectedRowsId} // Sending Selected Rows IDs
             selectedRowEmails={selectedRowEmails} // Sending Selected Rows E-Mail's
             actions={actions} // Sending Actions Dropdown List
