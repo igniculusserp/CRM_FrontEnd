@@ -458,21 +458,20 @@ export default function Lead() {
     };
   //------------------------------------------------------ Table Heading And Table Data ------------------------------------------
   const columns = [
-
     {
       field: "name",
       headerName: "Lead Name",
       minWidth: 200,
       flex: 1,
       renderCell: (params) => (
-        <span
+        <div
           onClick={
             businessRole === "Admin" ? () => handleClick(params.row) : undefined
           }
-          style={{ cursor: "pointer", color: "blue", fontWeight: 500 }}
+          style={{ cursor: "pointer", color: "blue", fontWeight: 500, width:"100%" }}
         >
-          {params.value}
-        </span>
+          {params.value || "-"}
+        </div>
       ),
     },
     !business.includes("Brokerage") && {

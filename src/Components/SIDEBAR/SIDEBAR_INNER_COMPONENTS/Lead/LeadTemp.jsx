@@ -458,21 +458,20 @@ export default function Lead() {
     };
   //------------------------------------------------------ Table Heading And Table Data ------------------------------------------
   const columns = [
-
     {
       field: "name",
       headerName: "Lead Name",
       minWidth: 200,
       flex: 1,
       renderCell: (params) => (
-        <span
+        <div
           onClick={
             businessRole === "Admin" ? () => handleClick(params.row) : undefined
           }
-          style={{ cursor: "pointer", color: "blue", fontWeight: 500 }}
+          style={{ cursor: "pointer", color: "blue", fontWeight: 500, width:"100%" }}
         >
           {params.value}
-        </span>
+        </div>
       ),
     },
     !business.includes("Brokerage") && {
@@ -568,7 +567,6 @@ export default function Lead() {
       ),
     },
   ].filter(Boolean); 
-
 
   return (
     //parent
@@ -692,7 +690,7 @@ export default function Lead() {
             <UseAction
               originalData={originalData} // Sending Original Data
               getApiData={getApiData} // Execute API Data Function
-              screenName="Follow Up" // Sending Screen Name
+              screenName="Leads" // Sending Screen Name
               selectedRowsId={selectedRowsId} // Sending Selected Rows IDs
               selectedRowEmails={selectedRowEmails} // Sending Selected Rows E-Mail's
               actions={actions} // Sending Actions Dropdown List
@@ -820,8 +818,8 @@ export default function Lead() {
                               <div className="mx-auto flex items-center justify-center gap-2">
                                 <FaUserTie />
                                 <span className="">
-                                  {item?.name[0].toUpperCase() +
-                                    item?.name.substr(1)}
+                                  {item?.name[0]?.toUpperCase() +
+                                    item?.name?.substr(1)}
                                 </span>
                               </div>
                               <AiOutlineEdit
