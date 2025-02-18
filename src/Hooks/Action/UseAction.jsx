@@ -12,8 +12,6 @@ import {
   showErrorToast,
 } from "./../../utils/toastNotifications";
 
-
-
 // Folder Imports
 import { getHostnamePart } from "../../Components/SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import { protocal_url, tenant_base_url } from "../../Config/config";
@@ -39,7 +37,7 @@ export default function UseAction({
   // ------------------- Handle Action Click -------------------
   const handleActionButton = async (value) => {
     if (!selectedRowsId.length) {
-      alert("No records selected.");
+      showSuccessToast("No records selected.");
       return;
     }
 
@@ -68,8 +66,10 @@ export default function UseAction({
         exportToTrailPDF();
         break;
 
-case "Convert Lead to Contact":
-        if (confirm("Are you sure you want to convert this lead to a contact?")) {
+      case "Convert Lead to Contact":
+        if (
+          confirm("Are you sure you want to convert this lead to a contact?")
+        ) {
           convertType(selectedRowsId);
         }
         break;
@@ -77,24 +77,61 @@ case "Convert Lead to Contact":
         break;
     }
   };
-    
 
   // ------------------- Mass Delete Function -------------------
+
   const handleMassTrailDelete = async (ids) => {
     try {
-      const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
-      const deleteRequests = ids.map((id) =>
-        axios.delete(
-          `${protocal_url}${name}.${tenant_base_url}/FollowUp/delete/${id}`,
-          config,
-        ),
-      );
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+          "Content-Type": "application/json",
+        },
+      };
 
-      await Promise.all(deleteRequests);
+      let deleteUrl = "";
+      let payload = {}; // Correct payload format based on screenName
+
+      switch (screenName) {
+        case "Follow Up":
+          deleteUrl = `${protocal_url}${name}.${tenant_base_url}/FollowUp/massdelete`;
+          payload = { followUPIds: ids };
+          break;
+        case "Contacts":
+          deleteUrl = `${protocal_url}${name}.${tenant_base_url}/Contact/contact/massdelete`;
+          payload = { contactsIds: ids };
+          break;
+        case "Free Trail":
+          deleteUrl = `${protocal_url}${name}.${tenant_base_url}/Trail/massdelete`;
+          payload = { trailIds: ids };
+          break;
+        case "Leads":
+          deleteUrl = `${protocal_url}${name}.${tenant_base_url}/Lead/lead/massdelete`;
+          payload = { leadIds: ids };
+          break;
+        case "Sales Order":
+          deleteUrl = `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/massdelete`;
+          payload = { soIds: ids };
+          break;
+        case "Service Box":
+          deleteUrl = `${protocal_url}${name}.${tenant_base_url}/VoiceBox/massdelete`;
+          payload = { voiceBoxesIds: ids };
+          break;
+        default:
+          console.error("Invalid screen name");
+          return;
+      }
+
+      await axios.delete(deleteUrl, {
+        ...config,
+        data: payload, // Correct payload format
+      });
+
       getApiData();
-      alert(`${ids.length} items successfully deleted.`);
+      showSuccessToast(`${ids.length} items successfully deleted.`);
     } catch (error) {
-      console.error("Error deleting follow-ups:", error);
+      console.error("Error deleting items:", error.response?.data || error);
+      showErrorToast("Failed to delete items.");
     }
   };
 
@@ -152,41 +189,39 @@ case "Convert Lead to Contact":
     doc.save("Data.pdf");
   };
 
-    //---------------------->---------------------->CONVERT_LEADS_TO_CONTACTS<----------------------<----------------------
+  //---------------------->---------------------->CONVERT_LEADS_TO_CONTACTS<----------------------<----------------------
 
-    const convertType = async () => {
-      const bearer_token = localStorage.getItem("token");
-  
-      try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${bearer_token}`,
-            "Content-Type": "application/json",
-          },
-        };
-  
-        const response = await axios.post(
-          `${protocal_url}${name}.${tenant_base_url}/Lead/leadtocontact/${selectedRowsId}`,
-          { id: selectedRowsId }, // Pass data as second parameter
-          config,
-        );
-        getApiData();
-        if (response.status === 200) {
-          showSuccessToast("Lead has been successfully converted to a contact.");
-        } else {
-          showErrorToast(
-            `Failed to convert lead: ${response.data.message || "Unknown error"}`,
-          );
-        }
+  const convertType = async () => {
+    const bearer_token = localStorage.getItem("token");
 
-      } catch (error) {
-        console.error("Error converting lead:", error); // Log the error to avoid ESLint warning
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+          "Content-Type": "application/json",
+        },
+      };
+
+      const response = await axios.post(
+        `${protocal_url}${name}.${tenant_base_url}/Lead/leadtocontact/${selectedRowsId}`,
+        { id: selectedRowsId }, // Pass data as second parameter
+        config,
+      );
+      getApiData();
+      if (response.status === 200) {
+        showSuccessToast("Lead has been successfully converted to a contact.");
+      } else {
         showErrorToast(
-          `An error occurred while converting the lead. ${error.message || "Please try again later."}`
+          `Failed to convert lead: ${response.data.message || "Unknown error"}`,
         );
       }
-    };
-  
+    } catch (error) {
+      console.error("Error converting lead:", error); // Log the error to avoid ESLint warning
+      showErrorToast(
+        `An error occurred while converting the lead. ${error.message || "Please try again later."}`,
+      );
+    }
+  };
 
   // ------------------- Permissions Handling -------------------
   const businessRole = localStorage.getItem("businessRole");
@@ -216,8 +251,8 @@ case "Convert Lead to Contact":
 
   return (
     <>
-     <ToastContainer />
-     {/* ---------------------------------- E-Mail Modal ------------------------------- */}
+      <ToastContainer />
+      {/* ---------------------------------- E-Mail Modal ------------------------------- */}
       {isModalOpen && (
         <MassEmail
           emails={selectedRowEmails}
@@ -230,7 +265,7 @@ case "Convert Lead to Contact":
         onMouseLeave={() => setActionDropdown(false)}
       >
         <button
-          className="flex items-center justify-between gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg button_MaxWidth"
+          className="button_MaxWidth flex items-center justify-between gap-2 rounded-lg border border-blue-600 px-4 py-2 text-blue-600"
           onClick={() => setActionDropdown(!actionDropdown)}
         >
           Actions
@@ -238,13 +273,13 @@ case "Convert Lead to Contact":
         </button>
 
         {actionDropdown && (
-          <div className="absolute right-0 z-10 w-56 bg-white border border-gray-300 rounded-md top-10">
+          <div className="absolute right-0 top-10 z-10 w-56 rounded-md border border-gray-300 bg-white">
             <ul className="text-sm text-gray-700">
               {actions.map(({ key, value }) =>
                 permissions.includes(value) || businessRole === "Admin" ? (
                   <li
                     key={key}
-                    className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                     onClick={() => handleActionButton(value)}
                   >
                     {value}
