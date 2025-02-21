@@ -29,7 +29,7 @@ export default function Client() {
   //------------------------------------------------- All States----------------------------------------------------------
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [selectedRowEmails, setSelectedRowEmails] = useState([]);
-  const [finalData, setFinalData] = useState([]);
+   
   //-------------------------------------------------- GET Data ----------------------------------------------------
   const [originalData, setOriginalData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -72,13 +72,13 @@ export default function Client() {
     {
       field: "clientName",
       headerName: "Client Name",
-      minWidth: 200,
+      minWidth: 160,
       flex: 1,
     },
     {
       field: "mobileNo",
       headerName: "Mobile",
-      minWidth: 150,
+      minWidth: 100,
       flex: 1,
       renderCell: (params) => (
         <span
@@ -92,21 +92,21 @@ export default function Client() {
     {
       field: "segments",
       headerName: "Segment",
-      minWidth: 200,
+      minWidth: 160,
       flex: 1,
       renderCell: (params) => params.row.segments?.join(", "),
     },
     {
       field: "subscription_start_date",
       headerName: "Service Start Date",
-      minWidth: 200,
+      minWidth: 100,
       flex: 1,
       renderCell: (params) => params.value?.replace("T", " ") || "",
     },
     {
       field: "subscription_end_date",
       headerName: "Service End Date",
-      minWidth: 200,
+      minWidth: 100,
       flex: 1,
       renderCell: (params) => params.value?.replace("T", " ") || "",
     },
@@ -134,8 +134,8 @@ export default function Client() {
   //----------------------------------------------------ACTION BAR DROPDOWN---------------------------------------------------------
   const actions = [
     { key: 3, value: "Mass E-Mail" },
-    { key: 6, value: "Sheet View" },
-    { key: 7, value: "Print View" },
+    { key: 6, value: "Export To Excel" },
+    { key: 7, value: "Export To PDF" },
   ];
   // ------------------------------ Search Function ----------------------------------
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
@@ -166,27 +166,20 @@ export default function Client() {
           {/* container- FollowUp, search */}
           <div className="contact_Dropdown_Main_Container flex flex-wrap items-center justify-start gap-3">
             {/*-------------------------------------- ALL FOLLOW UPS DROPDOWN --------------------------------- */}
-            <UseFilterBySegment
-              followUpBy={followUpBy} // Sending Value
-              assignedTo={assignedTo} // Sending Value
-              setFollowUpBy={setFollowUpBy} // Pass function to update state in FollowUp
-              setFilteredData={setFilteredData} // Pass function to update filtered data
-              filteredData={filteredData} // Pass original data for filtering
-              setFinalData={setFinalData}
-              finalData={finalData}
-              originalData={originalData}
-            />
+             <UseFilterBySegment
+                         followUpBy={followUpBy} // Sending Value
+                         setFollowUpBy={setFollowUpBy} // Pass function to update state in FollowUp
+                         setFilteredData={setFilteredData} // Pass function to update filtered data
+                         filteredData={filteredData}
+                       />
 
             {/* ---------------------------------- Managed BY Filter ----------------------------------------------*/}
-            <ManagedByFilter
-              assignedTo={assignedTo} // Sending Value
-              followUpBy={followUpBy} // Sending Value
-              setAssignedTo={setAssignedTo} // Pass function to update state in FollowUp
-              setFilteredData={setFilteredData} // Pass function to update filtered data
-              setFinalData={setFinalData}
-              finalData={finalData}
-              originalData={originalData}
-            />
+           <ManagedByFilter
+                         assignedTo={assignedTo} // Sending Value
+                         setAssignedTo={setAssignedTo} // Pass function to update state in FollowUp
+                         setFilteredData={setFilteredData} // Pass function to update filtered data
+                         filteredData={filteredData}
+                       />
             {/* ---------------------------------------- SEARCH DROPDOWN ------------------------------------------- */}
             <SearchElement
               value={searchTerm}

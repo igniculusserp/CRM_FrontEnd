@@ -44,7 +44,7 @@ export default function SalesOrder() {
   //------------------------------------------------- All States----------------------------------------------------------
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [selectedRowEmails, setSelectedRowEmails] = useState([]);
-  const [finalData, setFinalData] = useState([]);
+   
 
   //-------------------------------------------------- GET Data ----------------------------------------------------
   const [originalData, setOriginalData] = useState([]);
@@ -88,7 +88,7 @@ export default function SalesOrder() {
     {
       field: "clientName",
       headerName: "Client Name",
-      minWidth: 100,
+      minWidth: 120,
       flex: 1,
       renderCell: (params) => (
         <span
@@ -99,7 +99,7 @@ export default function SalesOrder() {
         </span>
       ),
     },
-    { field: "email", headerName: "Email", minWidth: 200, flex: 1 },
+    { field: "email", headerName: "Email", minWidth: 160, flex: 1 },
     {
       field: "mobileNo",
       headerName: "Phone No",
@@ -136,7 +136,7 @@ export default function SalesOrder() {
     {
       field: "segments",
       headerName: "Segments",
-      minWidth: 100,
+      minWidth: 120,
       flex: 1,
       renderCell: (params) =>
         params.value?.filter((segment) => segment.length > 1).join(", ") || "-",
@@ -215,7 +215,7 @@ export default function SalesOrder() {
     setsalesOrderStatus(value);
     console.log(salesOrderStatus);
     setisDropdownVisible_salesOrderStatus(false);
-    let filteredLeads = originalData;
+    let filteredLeads = filteredData;
 
     if (value === "Pending Records") {
       filteredLeads = filteredLeads.filter((item) => item.status === false);
@@ -236,8 +236,8 @@ export default function SalesOrder() {
   const actions = [
     { key: 1, value: "Mass Delete" },
     { key: 3, value: "Mass E-Mail" },
-    { key: 4, value: "Sheet View" },
-    { key: 5, value: "Print View" },
+    { key: 4, value: "Export To Excel" },
+    { key: 5, value: "Export To PDF" },
     // { key: 6, value: "Send SMS" },
   ];
 
@@ -283,16 +283,13 @@ export default function SalesOrder() {
 
   // ------------------------------------------------- FOLLOW UP By State  --------------------------------------
   const [followUpBy, setFollowUpBy] = useState("Segment By");
-  // ------------------------------------------------- Managed By State -----------------------------------------
-  const [assignedTo, setAssignedTo] = useState("Managed By");
+
   //------------------------------------------------------Filter Reset Settings ---------------------------------------------
   const handleResetFilter = () => {
-    setAssignedTo("Managed By");
     setFollowUpBy("Segment By");
     setsalesOrderStatus("All Sales Order");
     setSearchTerm("");
   };
-
   //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
 
   const businessRole = localStorage.getItem("businessRole");
@@ -353,15 +350,11 @@ export default function SalesOrder() {
 
           {/*-------------------------------------- ALL FOLLOW UPS DROPDOWN --------------------------------- */}
           <UseFilterBySegment
-            followUpBy={followUpBy} // Sending Value
-            assignedTo={assignedTo} // Sending Value
-            setFollowUpBy={setFollowUpBy} // Pass function to update state in FollowUp
-            setFilteredData={setFilteredData} // Pass function to update filtered data
-            filteredData={filteredData} // Pass original data for filtering
-            setFinalData={setFinalData}
-            finalData={finalData}
-            originalData={originalData}
-          />
+                      followUpBy={followUpBy} // Sending Value
+                      setFollowUpBy={setFollowUpBy} // Pass function to update state in FollowUp
+                      setFilteredData={setFilteredData} // Pass function to update filtered data
+                      filteredData={filteredData}
+                    />
           {/*--------------------------------- All Sales Order  DropDown ----------------------------------------*/}
 
           <div

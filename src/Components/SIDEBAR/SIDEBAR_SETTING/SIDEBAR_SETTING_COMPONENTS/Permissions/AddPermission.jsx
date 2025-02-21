@@ -680,16 +680,16 @@ export default function AddPermission({ onCancel }) {
                         <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
-                            onChange={() => handleCheckboxChange("Print View")}
+                            onChange={() => handleCheckboxChange("Export To PDF")}
                           />
-                          <p className="font-md text-sm">Print View</p>
+                          <p className="font-md text-sm">Export To PDF</p>
                         </div>
                         <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
-                            onChange={() => handleCheckboxChange("Sheet View")}
+                            onChange={() => handleCheckboxChange("Export To Excel")}
                           />
-                          <p className="font-md text-sm">Sheet View</p>
+                          <p className="font-md text-sm">Export To Excel</p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">
@@ -746,16 +746,16 @@ export default function AddPermission({ onCancel }) {
                         <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
-                            onChange={() => handleCheckboxChange("Print View")}
+                            onChange={() => handleCheckboxChange("Export To PDF")}
                           />
-                          <p className="font-md text-sm">Print View</p>
+                          <p className="font-md text-sm">Export To PDF</p>
                         </div>
                         <div className="flex items-center gap-3 font-light">
                           <input
                             type="checkbox"
-                            onChange={() => handleCheckboxChange("Sheet View")}
+                            onChange={() => handleCheckboxChange("Export To Excel")}
                           />
-                          <p className="font-md text-sm">Sheet View</p>
+                          <p className="font-md text-sm">Export To Excel</p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">

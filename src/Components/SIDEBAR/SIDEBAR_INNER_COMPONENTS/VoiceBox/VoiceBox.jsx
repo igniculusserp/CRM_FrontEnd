@@ -126,8 +126,8 @@ export default function VoiceBox() {
     { key: 4, value: "Approve Leads" },
     // { key: 5, value: "Add to Campaign" },
     { key: 6, value: "Export Leads" },
-    { key: 7, value: "Sheet View" },
-    { key: 8, value: "Print View" },
+    { key: 7, value: "Export To Excel" },
+    { key: 8, value: "Export To PDF" },
   ];
 
   // On click of Action Button
@@ -150,8 +150,8 @@ export default function VoiceBox() {
         openMassEmailModal(selectedEmails);
       }
     }
-    // ---------------------->SHEET VIEW FUNCTIONALITY*<----------------------
-    if (value === "Sheet View") {
+    // ---------------------->Export To Excel FUNCTIONALITY*<----------------------
+    if (value === "Export To Excel") {
       const userConfirmed = confirm(
         "Are you sure you want to export the selected data?",
       );
@@ -160,8 +160,8 @@ export default function VoiceBox() {
       }
     }
 
-    // ---------------------->PRINT VIEW FUNCTIONALITY*<----------------------
-    if (value === "Print View") {
+    // ---------------------->Export To PDF FUNCTIONALITY*<----------------------
+    if (value === "Export To PDF") {
       const userConfirmed = confirm(
         "Are you sure you want to export the selected Leads?",
       );
@@ -213,7 +213,7 @@ export default function VoiceBox() {
     setIsModalOpen(false); // Close the modal
   };
 
-  //---------------------->SHEET VIEW FUNCTIONALITY---###FUNCTION###<----------------------
+  //---------------------->Export To Excel FUNCTIONALITY---###FUNCTION###<----------------------
   //-------> XLSX used here
   const exportToTrailExcel = () => {
     // Filter currentLeads based on selectedIds

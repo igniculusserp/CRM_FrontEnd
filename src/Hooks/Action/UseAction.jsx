@@ -58,11 +58,11 @@ export default function UseAction({
         }
         break;
 
-      case "Sheet View":
+      case "Export To Excel":
         exportToTrailExcel();
         break;
 
-      case "Print View":
+      case "Export To PDF":
         exportToTrailPDF();
         break;
 

@@ -51,7 +51,7 @@ export default function Contact() {
   //------------------------------------------------- All States----------------------------------------------------------
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [selectedRowEmails, setSelectedRowEmails] = useState([]);
-  const [finalData, setFinalData] = useState([]);
+   
   //-------------------------------------------------- GET Data ----------------------------------------------------
   const [originalData, setOriginalData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -382,8 +382,8 @@ export default function Contact() {
   const actions = [
     { key: 1, value: "Mass Delete" },
     { key: 3, value: "Mass E-Mail" },
-    { key: 6, value: "Sheet View" },
-    { key: 7, value: "Print View" },
+    { key: 6, value: "Export To Excel" },
+    { key: 7, value: "Export To PDF" },
   ];
 
   // ------------------------------ Search Function ----------------------------------
@@ -448,15 +448,12 @@ export default function Contact() {
             )}
           </div>
           {/* ---------------------------------- Managed BY Filter ----------------------------------------------*/}
-          <ManagedByFilter
-            assignedTo={assignedTo} // Sending Value
-            followUpBy={followUpBy} // Sending Value
-            setAssignedTo={setAssignedTo} // Pass function to update state in FollowUp
-            setFilteredData={setFilteredData} // Pass function to update filtered data
-            setFinalData={setFinalData}
-            finalData={finalData}
-            originalData={originalData}
-          />
+     <ManagedByFilter
+                   assignedTo={assignedTo} // Sending Value
+                   setAssignedTo={setAssignedTo} // Pass function to update state in FollowUp
+                   setFilteredData={setFilteredData} // Pass function to update filtered data
+                   filteredData={filteredData}
+                 />
           {/*--------------------------------------- Search Box -------------------------------------------------------*/}
           <SearchElement
             value={searchTerm}

@@ -68,7 +68,6 @@ export default function Lead() {
   //------------------------------------------------- All States----------------------------------------------------------
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [selectedRowEmails, setSelectedRowEmails] = useState([]);
-  const [finalData, setFinalData] = useState([]);
 
   //------------------------------------------------- Modal Satates --------------------------------------------------------
   const [selectedValue, setSelectedValue] = useState("");
@@ -258,8 +257,8 @@ export default function Lead() {
     { key: 1, value: "Mass Delete" },
     { key: 3, value: "Mass E-Mail" },
     // { key: 4, value: "Approve Leads" },
-    { key: 5, value: "Sheet View" },
-    { key: 6, value: "Print View" },
+    { key: 5, value: "Export To Excel" },
+    { key: 6, value: "Export To PDF" },
     { key: 7, value: "Convert Lead to Contact" },
   ];
 
@@ -440,44 +439,56 @@ export default function Lead() {
     setFilteredData(filtered);
   }, [searchTerm, originalData, activeButtonId]); // Added activeButtonId to dependencies
 
-  // ------------------------------------------------- FOLLOW UP By State  --------------------------------------
-  const [followUpBy, setFollowUpBy] = useState("Segment By");
   // ------------------------------------------------- Managed By State -----------------------------------------
   const [assignedTo, setAssignedTo] = useState("Managed By");
   //------------------------------------------------------Filter Reset Settings ---------------------------------------------
   const handleResetFilter = () => {
     setLeadStatus("All Lead");
     setAssignedTo("Managed By");
-    setFollowUpBy("Segment By");
     setSearchTerm("");
     setLeadStatus("All Lead");
   };
-    //-------------------------------------Enable us to switch to createlead/editlead page with /:id ----------------------------
-    let handleClick = (item) => {
-      navigate(`/panel/editlead/${item.id}`);
-    };
+  //-------------------------------------Enable us to switch to createlead/editlead page with /:id ----------------------------
+  let handleClick = (item) => {
+    navigate(`/panel/editlead/${item.id}`);
+  };
   //------------------------------------------------------ Table Heading And Table Data ------------------------------------------
   const columns = [
     {
       field: "name",
       headerName: "Lead Name",
-      minWidth: 200,
+      minWidth: 150,
       flex: 1,
       renderCell: (params) => (
         <div
-          onClick={
-            businessRole === "Admin" ? () => handleClick(params.row) : undefined
-          }
-          style={{ cursor: "pointer", color: "blue", fontWeight: 500, width:"100%" }}
+          onClick={() => handleClick(params.row)} // Always trigger on click
+          style={{
+            cursor: "pointer",
+            color: "blue",
+            fontWeight: 500,
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            lineHeight:1,
+            height:"100%"
+          }}
         >
-          {params.value || "-"}
+          {params.value || "-"} {/* Show dash if empty */}
+          <div className="mt-1 flex h-6 w-[80%] justify-center">
+            <div className="w-full rounded-full bg-cyan-500 px-1 py-1 text-center text-xs text-white">
+              {params.row.leadStatus || "No Status"}
+            </div>
+          </div>
         </div>
       ),
     },
+
     !business.includes("Brokerage") && {
       field: "email",
       headerName: "Email",
-      minWidth: 200,
+      minWidth: 160,
       flex: 1,
       renderCell: (params) => (
         <a href={`mailto:${params.value}`} onClick={(e) => e.stopPropagation()}>
@@ -488,7 +499,7 @@ export default function Lead() {
     {
       field: "mobileNo",
       headerName: "Phone No",
-      minWidth: 150,
+      minWidth: 110,
       flex: 1,
       renderCell: (params) => (
         <span
@@ -502,27 +513,27 @@ export default function Lead() {
     !business.includes("Brokerage") && {
       field: "call_bck_DateTime",
       headerName: "Follow Up",
-      minWidth: 200,
+      minWidth: 100,
       flex: 1,
       renderCell: (params) => params.value?.replace("T", " ").split(":00")[0],
     },
     {
       field: "segments",
       headerName: "Segments",
-      minWidth: 200,
+      minWidth: 120,
       flex: 1,
       renderCell: (params) => params.row.segments?.join(", ") || "",
     },
     {
       field: "managedBy",
       headerName: "Managed By",
-      minWidth: 200,
+      minWidth: 120,
       flex: 1,
       display: "flex",
       alignItems: "center",
       renderCell: (params) => {
         const matchedUser = users.find(
-          (user) => user.userName === params.row.assigned_To
+          (user) => user.userName === params.row.assigned_To,
         );
         const roleColor = getRoleColorByIndex(matchedUser?.role?.length);
         return matchedUser ? (
@@ -550,7 +561,7 @@ export default function Lead() {
     (createSO || businessRole === "Admin") && {
       field: "createSO",
       headerName: "Action",
-      minWidth: 150,
+      minWidth: 80,
       flex: 1,
       display: "flex",
       alignItems: "center",
@@ -566,7 +577,7 @@ export default function Lead() {
         </button>
       ),
     },
-  ].filter(Boolean); 
+  ].filter(Boolean);
 
   return (
     //parent
@@ -628,12 +639,9 @@ export default function Lead() {
             {/* ---------------------------------- Managed BY Filter ----------------------------------------------*/}
             <ManagedByFilter
               assignedTo={assignedTo} // Sending Value
-              followUpBy={followUpBy} // Sending Value
               setAssignedTo={setAssignedTo} // Pass function to update state in FollowUp
               setFilteredData={setFilteredData} // Pass function to update filtered data
-              setFinalData={setFinalData}
-              finalData={finalData}
-              originalData={originalData}
+              filteredData={filteredData}
             />
             {/*--------------------------------------- Search Box -------------------------------------------------------*/}
             <SearchElement

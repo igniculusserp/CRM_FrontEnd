@@ -68,7 +68,7 @@ export default function Lead() {
   //------------------------------------------------- All States----------------------------------------------------------
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [selectedRowEmails, setSelectedRowEmails] = useState([]);
-  const [finalData, setFinalData] = useState([]);
+   
 
   //------------------------------------------------- Modal Satates --------------------------------------------------------
   const [selectedValue, setSelectedValue] = useState("");
@@ -257,9 +257,9 @@ export default function Lead() {
     // { key: 0, value: "Actions" },
     { key: 1, value: "Mass Delete" },
     { key: 3, value: "Mass E-Mail" },
-    { key: 4, value: "Approve Leads" },
-    { key: 5, value: "Export to Excel" },
-    { key: 6, value: "Export to PDF" },
+    // { key: 4, value: "Approve Leads" },
+    { key: 5, value: "Export To Excel" },
+    { key: 6, value: "Export To PDF" },
     { key: 7, value: "Convert Lead to Contact" },
   ];
 
@@ -470,7 +470,7 @@ export default function Lead() {
           }
           style={{ cursor: "pointer", color: "blue", fontWeight: 500, width:"100%" }}
         >
-          {params.value}
+          {params.value || "-"}
         </div>
       ),
     },
@@ -782,6 +782,7 @@ export default function Lead() {
                     rows={currentData} // Row Data
                     columns={columns} // Headings
                     pagination={false}
+                    getRowId={(row) => row.id}
                     checkboxSelection
                     onRowSelectionModelChange={(newSelection) =>
                       handleSelectionChange(newSelection)
