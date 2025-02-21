@@ -34,7 +34,7 @@ export default function FollowUp() {
   //------------------------------------------------- All States----------------------------------------------------------
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [selectedRowEmails, setSelectedRowEmails] = useState([]);
-  const [finalData, setFinalData] = useState([]);
+   
   //-------------------------------------------------- GET Data ----------------------------------------------------
   const [originalData, setOriginalData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);

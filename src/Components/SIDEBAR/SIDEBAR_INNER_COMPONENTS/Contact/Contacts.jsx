@@ -51,7 +51,6 @@ export default function Contact() {
   //------------------------------------------------- All States----------------------------------------------------------
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [selectedRowEmails, setSelectedRowEmails] = useState([]);
-  const [finalData, setFinalData] = useState([]);
   //-------------------------------------------------- GET Data ----------------------------------------------------
   const [originalData, setOriginalData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -171,7 +170,8 @@ export default function Contact() {
     {
       field: "name",
       headerName: "Client Name",
-      minWidth: 180,
+      minWidth: 150,
+      flex: 1, 
       renderCell: (params) => (
         <span
           onClick={() =>
@@ -190,7 +190,8 @@ export default function Contact() {
     {
       field: "mobileNo",
       headerName: "Mobile",
-      minWidth: 150,
+      minWidth: 100,
+      flex: 1, 
       renderCell: (params) => (
         <span
           onClick={(event) => handleNumberClick(event, params.row.mobileNo)}
@@ -208,19 +209,22 @@ export default function Contact() {
     {
       field: "segments",
       headerName: "Segment",
-      minWidth: 200,
+      minWidth: 120,
+      flex: 1, 
       renderCell: (params) => params.row.segments?.join(", ") || "",
     },
     {
       field: "trialStartDate",
       headerName: "Free Trial",
-      minWidth: 150,
+      minWidth: 100,
+      flex: 1, 
       renderCell: (params) => params.value?.split("T")[0] || "",
     },
     {
       field: "call_bck_DateTime",
       headerName: "Follow Up",
-      minWidth: 150,
+      minWidth: 120,
+      flex: 1, 
       renderCell: (params) =>
         params.value?.replace("T", " ")?.split(":").slice(0, 2).join(":") || "",
     },
@@ -228,6 +232,7 @@ export default function Contact() {
       field: "assigned_To",
       headerName: "Managed By",
       minWidth: 200,
+      flex: 1, 
       display: "flex",
       alignItems: "center",
       renderCell: (params) => {
@@ -265,7 +270,7 @@ export default function Contact() {
             field: "createSO",
             headerName: "Action",
             renderHeader: () => <VscSettings size={20} />,
-            width: 150,
+            width: 100,
             display: "flex",
             alignItems: "center",
             renderCell: (params) => (
@@ -396,15 +401,13 @@ export default function Contact() {
     );
     setFilteredData(filtered);
   }, [searchTerm, originalData]);
-  // ------------------------------------------------- FOLLOW UP By State  --------------------------------------
-  const [followUpBy, setFollowUpBy] = useState("Segment By");
+
   // ------------------------------------------------- Managed By State -----------------------------------------
   const [assignedTo, setAssignedTo] = useState("Managed By");
   //------------------------------------------------------Filter Reset Settings ---------------------------------------------
   const handleResetFilter = () => {
     setLeadStatus("All Lead");
     setAssignedTo("Managed By");
-    setFollowUpBy("Segment By");
     setSearchTerm("");
   };
 
@@ -450,12 +453,9 @@ export default function Contact() {
           {/* ---------------------------------- Managed BY Filter ----------------------------------------------*/}
           <ManagedByFilter
             assignedTo={assignedTo} // Sending Value
-            followUpBy={followUpBy} // Sending Value
             setAssignedTo={setAssignedTo} // Pass function to update state in FollowUp
             setFilteredData={setFilteredData} // Pass function to update filtered data
-            setFinalData={setFinalData}
-            finalData={finalData}
-            originalData={originalData}
+            filteredData={filteredData}
           />
           {/*--------------------------------------- Search Box -------------------------------------------------------*/}
           <SearchElement

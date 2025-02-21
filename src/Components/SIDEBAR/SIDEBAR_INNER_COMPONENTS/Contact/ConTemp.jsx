@@ -51,7 +51,7 @@ export default function Contact() {
   //------------------------------------------------- All States----------------------------------------------------------
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [selectedRowEmails, setSelectedRowEmails] = useState([]);
-  const [finalData, setFinalData] = useState([]);
+   
   //-------------------------------------------------- GET Data ----------------------------------------------------
   const [originalData, setOriginalData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -448,15 +448,12 @@ export default function Contact() {
             )}
           </div>
           {/* ---------------------------------- Managed BY Filter ----------------------------------------------*/}
-          <ManagedByFilter
-            assignedTo={assignedTo} // Sending Value
-            followUpBy={followUpBy} // Sending Value
-            setAssignedTo={setAssignedTo} // Pass function to update state in FollowUp
-            setFilteredData={setFilteredData} // Pass function to update filtered data
-            setFinalData={setFinalData}
-            finalData={finalData}
-            originalData={originalData}
-          />
+     <ManagedByFilter
+                   assignedTo={assignedTo} // Sending Value
+                   setAssignedTo={setAssignedTo} // Pass function to update state in FollowUp
+                   setFilteredData={setFilteredData} // Pass function to update filtered data
+                   filteredData={filteredData}
+                 />
           {/*--------------------------------------- Search Box -------------------------------------------------------*/}
           <SearchElement
             value={searchTerm}

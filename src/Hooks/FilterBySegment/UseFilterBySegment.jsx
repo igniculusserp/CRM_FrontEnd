@@ -9,10 +9,7 @@ export default function UseFilterBySegment({
   followUpBy,
   setFollowUpBy,
   setFilteredData,
-  originalData,
-  assignedTo,
-  setFinalData,
-  finalData,
+  filteredData,
 }) {
   const name = getHostnamePart();
   const [allFollowUpToDropdown, setAllFollowUpToDropdown] = useState(false);
@@ -36,38 +33,22 @@ export default function UseFilterBySegment({
         console.error("Error fetching FollowUp users:", error);
       }
     };
-console.log("@@@@@@========",followUpBy);
 
     fetchFollowUpUsers();
   }, [name, followUpBy]);
   // ---------------------------------------------------------- Handle Filter  --------------------------------------------
 
-
   function handleFollowUpBySelection(followUpByValue) {
-    setFollowUpBy(followUpByValue); 
-  
-    let filtered = originalData;
-  
-    if (assignedTo === "Managed By") {
-      if (followUpByValue !== "Follow Up By") {
-        filtered = originalData.filter(
-          (lead) => lead.segments && lead.segments.includes(followUpByValue)
-        );
-        setFinalData(filtered);
-      }
-    } else {
-      filtered = finalData;
-      if (followUpByValue !== "Follow Up By") {
-        filtered = filtered.filter(
-          (lead) => lead.segments && lead.segments.includes(followUpByValue)
-        );
-      }
+    setFollowUpBy(followUpByValue);
+    let filtered = filteredData;
+    if (followUpByValue !== "Follow Up By") {
+      filtered = filtered.filter(
+        (lead) => lead.segments && lead.segments.includes(followUpByValue),
+      );
     }
-  
     setAllFollowUpToDropdown(false);
     setFilteredData(filtered);
   }
-  
 
   return (
     <div
@@ -103,11 +84,7 @@ console.log("@@@@@@========",followUpBy);
 
 UseFilterBySegment.propTypes = {
   followUpBy: PropTypes.string.isRequired,
-  assignedTo: PropTypes.string.isRequired,
   setFollowUpBy: PropTypes.func.isRequired,
   setFilteredData: PropTypes.func.isRequired,
   filteredData: PropTypes.array.isRequired,
-  setFinalData: PropTypes.func.isRequired,
-  finalData: PropTypes.array.isRequired,
-  originalData: PropTypes.array.isRequired,
 };
