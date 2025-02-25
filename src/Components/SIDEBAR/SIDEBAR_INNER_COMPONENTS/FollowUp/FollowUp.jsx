@@ -177,6 +177,7 @@ export default function FollowUp() {
   //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
   const businessRole = localStorage.getItem("businessRole");
   const [edit, setEdit] = useState(false);
+  const [viewFollowUp, setViewFollowUp] = useState(false);
   async function handleGetPermission() {
     const bearer_token = localStorage.getItem("token");
     try {
@@ -202,6 +203,7 @@ export default function FollowUp() {
 
           console.log("List : ", permissionsArray);
           setEdit(permissionsArray.includes("Edit Follow Up"));
+          setViewFollowUp(permissionsArray.includes("View Follow Up"));
         }
       }
     } catch (error) {
@@ -274,7 +276,8 @@ export default function FollowUp() {
             filteredData={filteredData} //Sending Filter Data
           />
         </div>
-        {/* TABLE VIEW */}
+        {/* TABLE VIEW */}    
+        {viewFollowUp || businessRole === "Admin" ? (<>
         <div className="leads_Table_Main_Container overflow-x-auto">
           <div className="leads_Table_Container min-w-full rounded-md">
             {/*---------------------------------------TABLE HEAD START---------------------------------------- */}
@@ -436,6 +439,7 @@ export default function FollowUp() {
             />
           </Stack>
         </div>
+        </>):""}
       </div>
     </>
   );

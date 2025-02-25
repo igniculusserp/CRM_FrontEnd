@@ -29,7 +29,7 @@ export default function Client() {
   //------------------------------------------------- All States----------------------------------------------------------
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [selectedRowEmails, setSelectedRowEmails] = useState([]);
-   
+
   //-------------------------------------------------- GET Data ----------------------------------------------------
   const [originalData, setOriginalData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -83,9 +83,14 @@ export default function Client() {
       renderCell: (params) => (
         <span
           onClick={(event) => handleNumberClick(event, params.row.mobileNo)}
-          style={{ cursor: "pointer", display:"flex", gap:"5px", alignItems: "center" }}
+          style={{
+            cursor: "pointer",
+            display: "flex",
+            gap: "5px",
+            alignItems: "center",
+          }}
         >
-         <MdCall className="text-red-600" /> {params.value}
+          <MdCall className="text-red-600" /> {params.value}
         </span>
       ),
     },
@@ -123,9 +128,9 @@ export default function Client() {
     setSelectedRowEmails(selectedEmails);
   };
 
-   // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
-   const handleNumberClick = (event, mobileNo) => {
-    event.stopPropagation(); 
+  // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
+  const handleNumberClick = (event, mobileNo) => {
+    event.stopPropagation();
     window.location.href = `tel:${mobileNo}`;
   };
 
@@ -157,6 +162,49 @@ export default function Client() {
     setFollowUpBy("Segment By");
     setSearchTerm("");
   };
+    //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
+
+    const businessRole = localStorage.getItem("businessRole");
+    const [viewClient, setViewClient] = useState(false);
+  
+    async function handleGetPermission() {
+      const bearer_token = localStorage.getItem("token");
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${bearer_token}`,
+          },
+        };
+        const response = await axios.get(
+          `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/getgroupwise/${businessRole}`,
+          config,
+        );
+        console.log("Permission Data : ", response.data.data);
+        const permissionsList = response?.data?.data;
+  
+        if (permissionsList) {
+          const serviceBoxPermissions = permissionsList.find(
+            (item) => item.moduleName === "Client",
+          );
+  
+          if (serviceBoxPermissions) {
+            const permissionsArray = serviceBoxPermissions.permissions.split(",");
+  
+            console.log("List : ", permissionsArray);
+  
+            //------------------------------------------------------ Set permissions ------------------------------------------------
+
+            setViewClient(permissionsArray.includes("View Client"));
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching leads:", error);
+      }
+    }
+  
+    useEffect(() => {
+      handleGetPermission();
+    }, []);
 
   return (
     <>
@@ -166,20 +214,20 @@ export default function Client() {
           {/* container- FollowUp, search */}
           <div className="contact_Dropdown_Main_Container flex flex-wrap items-center justify-start gap-3">
             {/*-------------------------------------- ALL FOLLOW UPS DROPDOWN --------------------------------- */}
-             <UseFilterBySegment
-                         followUpBy={followUpBy} // Sending Value
-                         setFollowUpBy={setFollowUpBy} // Pass function to update state in FollowUp
-                         setFilteredData={setFilteredData} // Pass function to update filtered data
-                         filteredData={filteredData}
-                       />
+            <UseFilterBySegment
+              followUpBy={followUpBy} // Sending Value
+              setFollowUpBy={setFollowUpBy} // Pass function to update state in FollowUp
+              setFilteredData={setFilteredData} // Pass function to update filtered data
+              filteredData={filteredData}
+            />
 
             {/* ---------------------------------- Managed BY Filter ----------------------------------------------*/}
-           <ManagedByFilter
-                         assignedTo={assignedTo} // Sending Value
-                         setAssignedTo={setAssignedTo} // Pass function to update state in FollowUp
-                         setFilteredData={setFilteredData} // Pass function to update filtered data
-                         filteredData={filteredData}
-                       />
+            <ManagedByFilter
+              assignedTo={assignedTo} // Sending Value
+              setAssignedTo={setAssignedTo} // Pass function to update state in FollowUp
+              setFilteredData={setFilteredData} // Pass function to update filtered data
+              filteredData={filteredData}
+            />
             {/* ---------------------------------------- SEARCH DROPDOWN ------------------------------------------- */}
             <SearchElement
               value={searchTerm}
@@ -221,6 +269,8 @@ export default function Client() {
           />
         </div>
         {/* TABLE VIEW */}
+        {viewClient || businessRole === "Admin" ? (
+          <>
         <div className="leads_Table_Main_Container overflow-x-auto">
           <div className="leads_Table_Container min-w-full rounded-md">
             {/*---------------------------------------TABLE HEAD START---------------------------------------- */}
@@ -361,6 +411,8 @@ export default function Client() {
             />
           </Stack>
         </div>
+        </>
+        ):""}
       </div>
     </>
   );

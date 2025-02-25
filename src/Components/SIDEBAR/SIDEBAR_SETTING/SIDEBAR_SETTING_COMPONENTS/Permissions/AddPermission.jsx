@@ -691,11 +691,11 @@ export default function AddPermission({ onCancel }) {
                             control={
                               <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Client", "View Contact")
+                                  handleCheckboxChange("Client", "View Client")
                                 }
                               />
                             }
-                            label="View Contact"
+                            label="View Client"
                           />
                         </Grid>
                       </Grid>
@@ -852,6 +852,16 @@ export default function AddPermission({ onCancel }) {
                             }
                             label="Mass E-Mail"
                           />
+                                <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange("Sales Order", "View Sales Order")
+                                }
+                              />
+                            }
+                            label="View Sales Order"
+                          />
                         </Grid>
                       </Grid>
                     </AccordionDetails>
@@ -970,6 +980,16 @@ export default function AddPermission({ onCancel }) {
                               />
                             }
                             label="Mass Delete"
+                          />
+                                     <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange("Free Trail", "View Free Trail")
+                                }
+                              />
+                            }
+                            label="View Free Trail"
                           />
                         </Grid>
 
@@ -1113,6 +1133,16 @@ export default function AddPermission({ onCancel }) {
                             }
                             label="Mass Delete"
                           />
+                               <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange("Follow Up", "View Follow Up")
+                                }
+                              />
+                            }
+                            label="View Follow Up"
+                          />
                         </Grid>
 
                         {/* FOURTH COLUMN */}
@@ -1203,6 +1233,7 @@ export default function AddPermission({ onCancel }) {
                             label="Send E-Mail"
                           />
                         </Grid>
+
                       </Grid>
                     </AccordionDetails>
                   </Accordion>
