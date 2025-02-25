@@ -478,7 +478,7 @@ export default function Lead() {
           {params.value || "-"} {/* Show dash if empty */}
           <div className="mt-1 flex h-6 w-[80%] justify-center">
             <div className="w-full rounded-full bg-cyan-500 px-1 py-1 text-center text-xs text-white">
-              {params.row.leadStatus || "No Status"}
+              {params.row.leadesStatus || "NA"}
             </div>
           </div>
         </div>
@@ -551,7 +551,7 @@ export default function Lead() {
               justifyContent: "center",
             }}
           >
-            {params.row.assigned_To} - ({matchedUser?.role})
+            {params.row.assigned_To || "NA"} - ({matchedUser?.role || "NA"})
           </div>
         ) : (
           ""
