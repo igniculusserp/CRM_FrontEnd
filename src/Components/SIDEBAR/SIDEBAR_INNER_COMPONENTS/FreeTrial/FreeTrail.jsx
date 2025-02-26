@@ -194,6 +194,7 @@ export default function FreeTrail() {
 
  const businessRole = localStorage.getItem("businessRole");
  const [edit, setEdit] = useState(false);
+ const [viewFreeTrail, setViewFreeTrail] = useState(false);
 
  async function handleGetPermission() {
    const bearer_token = localStorage.getItem("token");
@@ -222,7 +223,8 @@ export default function FreeTrail() {
 
          //------------------------------------------------------ Set permissions ------------------------------------------------
 
-         setEdit(permissionsArray.includes("Edit Follow Up"));
+         setEdit(permissionsArray.includes("Edit Free Trail"));
+         setViewFreeTrail(permissionsArray.includes("View Free Trail"));
        }
      }
    } catch (error) {
@@ -298,6 +300,7 @@ export default function FreeTrail() {
           />
         </div>
         {/* TABLE VIEW */}
+        {viewFreeTrail || businessRole === "Admin" ? (<>
         <div className="leads_Table_Main_Container overflow-x-auto">
           <div className="leads_Table_Container min-w-full rounded-md">
             {/*---------------------------------------TABLE HEAD START---------------------------------------- */}
@@ -468,6 +471,7 @@ export default function FreeTrail() {
             />
           </Stack>
         </div>
+        </>):""}
       </div>
     </>
   );

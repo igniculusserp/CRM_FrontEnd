@@ -295,6 +295,7 @@ export default function SalesOrder() {
   const businessRole = localStorage.getItem("businessRole");
   const [edit, setEdit] = useState(false);
   const [approve, setApprove] = useState(false);
+  const [viewSO, setViewSO] = useState(false);
 
   async function handleGetPermission() {
     const bearer_token = localStorage.getItem("token");
@@ -325,6 +326,7 @@ export default function SalesOrder() {
 
           setEdit(permissionsArray.includes("Edit Sales Order"));
           setApprove(permissionsArray.includes("Approve Pending"));
+          setViewSO(permissionsArray.includes("View Sales Order"));
         }
       }
     } catch (error) {
@@ -429,6 +431,7 @@ export default function SalesOrder() {
         />
       </div>
       {/*-------Table-------*/}
+      {viewSO || businessRole === "Admin" ? (<>
       <div className="mt-3 overflow-x-auto leads_Table_Main_Container">
         <div className="min-w-full rounded-md leads_Table_Container">
           
@@ -632,6 +635,7 @@ export default function SalesOrder() {
           />
         </Stack>
       </div>
+      </>):""}
     </div>
   );
 }

@@ -5,7 +5,15 @@ import axios from "axios";
 import PropTypes from "prop-types";
 
 //----------------- MUI Imports --------------------
-import { Grid, Checkbox, FormControlLabel, Typography, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import {
+  Grid,
+  Checkbox,
+  FormControlLabel,
+  Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
@@ -66,11 +74,10 @@ export default function AddPermission({ onCancel }) {
 
   const [selectedPermissions, setSelectedPermissions] = useState({});
 
-
   const handleCheckboxChange = (module, permission) => {
     setSelectedPermissions((prev) => {
       const updatedModule = prev[module] ? [...prev[module]] : [];
-  
+
       if (updatedModule.includes(permission)) {
         return {
           ...prev,
@@ -84,7 +91,6 @@ export default function AddPermission({ onCancel }) {
       }
     });
   };
-  
 
   // Log updated permissions whenever they change
   useEffect(() => {
@@ -96,7 +102,7 @@ export default function AddPermission({ onCancel }) {
     event.preventDefault();
     const bearer_token = localStorage.getItem("token");
     let success = false; // Flag to check if at least one request was successful
-  
+
     // Convert selectedPermissions object into an array of modules
     const payload = Object.keys(selectedPermissions).map((module) => ({
       groupName: defaultTextLeadStatusDropDown,
@@ -106,37 +112,37 @@ export default function AddPermission({ onCancel }) {
       updatedDate: null,
       lastModifiedBy: null,
     }));
-  
+
     console.log("Payload before sending:", payload);
-  
+
     const config = {
       headers: {
         Authorization: `Bearer ${bearer_token}`,
         "Content-Type": "application/json",
       },
     };
-  
+
     try {
       for (const item of payload) {
         console.log("Sending Payload:", JSON.stringify(item, null, 2));
-  
+
         const response = await axios.post(
           `${protocal_url}${name}.${tenant_base_url}/Security/rolesandpermissions/add`,
           item,
-          config
+          config,
         );
-  
+
         console.log("Response:", response.data);
-  
+
         if (response.data.isSuccess) {
           success = true; // Set success flag if at least one request succeeds
         }
       }
-  
+
       // Show success toast only once if at least one request was successful
       if (success) {
         showSuccessToast("Permission added successfully!");
-        
+
         // Close the modal after all requests are completed
         setTimeout(() => {
           onCancel();
@@ -147,10 +153,6 @@ export default function AddPermission({ onCancel }) {
       showErrorToast("Failed");
     }
   };
-  
-  
-  
-  
 
   return (
     <div className="m-3 flex min-h-screen flex-col overflow-x-auto overflow-y-hidden">
@@ -178,7 +180,6 @@ export default function AddPermission({ onCancel }) {
                 {/* ------ FIRST ONE -------- */}
                 <div className="flex space-x-4">
                   {/* ---------- Group NAME DROPDOWN ---------- */}
-
                   <div className="relative flex w-1/2 flex-col">
                     <label
                       htmlFor="leadesStatus"
@@ -234,1016 +235,1481 @@ export default function AddPermission({ onCancel }) {
                       )}
                     </div>
                   </div>
+
                   {/* ---------- DROPDOWN END ---------- */}
-                  
                 </div>
+
                 {/* ----------Lead CHECK BOXES ---------- */}
-                  <div className="mt-2 w-full rounded-sm bg-white  shadow-md">
-                    <Accordion>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel2-content"
-                        id="panel2-header"
+                <div className="mt-2 w-full rounded-sm bg-white shadow-md">
+                  <Accordion sx={{ boxShadow: "none" }}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel2-content"
+                      id="panel2-header"
+                    >
+                      <Typography variant="h6">Leads</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {/* MUI Grid Layout */}
+                      <Grid
+                        container
+                        spacing={3}
+                        justifyContent="space-between"
                       >
-                        <Typography component="span">
-                          <h1 className="text-xl font-normal">Leads</h1>
-                        </Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {/* ---------- LEAD BOXES ---------- */}
-                        <div className="flex justify-between gap-12">
-                          {/* FIRST */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                id="create-lead"
+                        {/* FIRST COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Leads","Create Lead")
+                                  handleCheckboxChange("Leads", "Create Lead")
                                 }
                               />
-                              <p className="font-md text-sm">Create Lead</p>
-                            </div>
-                            {/* SECOND ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Create Lead"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Leads","Upload Leads")
+                                  handleCheckboxChange("Leads", "Upload Leads")
                                 }
                               />
-                              <p className="font-md text-sm">Upload Leads</p>
-                            </div>
-                            {/* THIRD ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() =>
-                                  handleCheckboxChange("Leads","Lead Operation")
-                                }
-                              />
-                              <p className="font-md text-sm">Lead operation</p>
-                            </div>
-                            {/* FOURTH ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() =>
-                                  handleCheckboxChange("Leads","Lead Action")
-                                }
-                              />
-                              <p className="font-md text-sm">Lead Action</p>
-                            </div>
-                          </div>
-                          {/* SECOND */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() =>
-                                  handleCheckboxChange("Leads","View Leads")
-                                }
-                              />
-                              <p className="font-md text-sm">View Leads</p>
-                            </div>
-                            {/* SECOND ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() =>
-                                  handleCheckboxChange("Leads","Fetch Leads")
-                                }
-                              />
-                              <p className="font-md text-sm">Fetch Leads</p>
-                            </div>
-                            {/* THIRD ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() =>
-                                  handleCheckboxChange("Leads","Edit Lead")
-                                }
-                              />
-                              <p className="font-md text-sm">Edit Lead</p>
-                            </div>
-                            {/* Fourth ITEM */}
-                            {/* <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() =>
-                                  handleCheckboxChange("Leads","Mass Delete")
-                                }
-                              />
-                              <p className="font-md text-sm">Mass Delete</p>
-                            </div> */}
-                          </div>
-                          {/* THIRD */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            {/* <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() =>
-                                  handleCheckboxChange("Leads","Approve Leads")
-                                }
-                              />
-                              <p className="font-md text-sm">Approve Leads</p>
-                            </div> */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() =>
-                                  handleCheckboxChange("Leads","Mass Delete")
-                                }
-                              />
-                              <p className="font-md text-sm">Mass Delete</p>
-                            </div>
-                            {/* SECOND ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() =>
-                                  handleCheckboxChange("Leads","Export to Excel")
-                                }
-                              />
-                              <p className="font-md text-sm">Export to Excel</p>
-                            </div>
-                            {/* THIRD ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() =>
-                                  handleCheckboxChange("Leads","Export to PDF")
-                                }
-                              />
-                              <p className="font-md text-sm">Export to PDF</p>
-                            </div>
-                          </div>
-                          {/* FOURTH */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Upload Leads"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
                                   handleCheckboxChange(
-                                    "Leads","Convert Lead to Contact",
+                                    "Leads",
+                                    "Lead Operation",
                                   )
                                 }
                               />
-                              <p className="font-md text-sm">
-                                Convert Lead to Contact
-                              </p>
-                            </div>
-                            {/* SECOND ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Lead Operation"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Leads","Create Sales Order")
+                                  handleCheckboxChange("Leads", "Lead Action")
                                 }
                               />
-                              <p className="font-md text-sm">
-                                Create sales order
-                              </p>
-                            </div>
-                            {/* THIRD ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Lead Action"
+                          />
+                        </Grid>
+
+                        {/* SECOND COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Leads","Mass E-Mail")
+                                  handleCheckboxChange("Leads", "View Leads")
                                 }
                               />
-                              <p className="font-md text-sm">Mass E-Mail</p>
-                            </div>
-                          </div>
-                          {/* FIFTH */}
-                        </div>
-                      </AccordionDetails>
-                    </Accordion>
-                  </div>
+                            }
+                            label="View Leads"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange("Leads", "Fetch Leads")
+                                }
+                              />
+                            }
+                            label="Fetch Leads"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange("Leads", "Edit Lead")
+                                }
+                              />
+                            }
+                            label="Edit Lead"
+                          />
+                        </Grid>
+
+                        {/* THIRD COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange("Leads", "Mass Delete")
+                                }
+                              />
+                            }
+                            label="Mass Delete"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange(
+                                    "Leads",
+                                    "Export to Excel",
+                                  )
+                                }
+                              />
+                            }
+                            label="Export to Excel"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange("Leads", "Export to PDF")
+                                }
+                              />
+                            }
+                            label="Export to PDF"
+                          />
+                        </Grid>
+
+                        {/* FOURTH COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange(
+                                    "Leads",
+                                    "Convert Lead to Contact",
+                                  )
+                                }
+                              />
+                            }
+                            label="Convert Lead to Contact"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange(
+                                    "Leads",
+                                    "Create Sales Order",
+                                  )
+                                }
+                              />
+                            }
+                            label="Create Sales Order"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange("Leads", "Mass E-Mail")
+                                }
+                              />
+                            }
+                            label="Mass E-Mail"
+                          />
+                        </Grid>
+                      </Grid>
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
 
                 {/* --------- CONTACT --------- */}
-                  <div className="mt-2 w-full rounded-sm bg-white  shadow-md">
-                    <Accordion>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel3-content"
-                        id="panel3-header"
+                <div className="mt-2 w-full rounded-sm bg-white shadow-md">
+                  <Accordion sx={{ boxShadow: "none" }}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel3-content"
+                      id="panel3-header"
+                    >
+                      <Typography component="span">
+                        <h1 className="text-xl font-normal">Contacts</h1>
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Grid
+                        container
+                        spacing={3}
+                        justifyContent="space-between"
                       >
-                        <Typography component="span">
-                          <h1 className="text-xl font-normal">Contacts</h1>
-                        </Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {/* ---------- Contacts BOXES ---------- */}
-                        <div className="flex justify-between gap-12">
-                          {/* FIRST */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                        {/* FIRST COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Contacts","Create Sales order")
+                                  handleCheckboxChange(
+                                    "Contacts",
+                                    "Create Sales Order",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">
-                                Create Sales order
-                              </p>
-                            </div>
-                            {/* SECOND ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Create Sales Order"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Contacts","Edit Contact")
+                                  handleCheckboxChange(
+                                    "Contacts",
+                                    "Edit Contact",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Edit Contact</p>
-                            </div>
-                          </div>
-                          {/* SECOND */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() =>
-                                  handleCheckboxChange("Contacts","View Contacts")
-                                }
-                              />
-                              <p className="font-md text-sm">View Contacts</p>
-                            </div>
-                            {/* SECOND ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() =>
-                                  handleCheckboxChange("Contacts","Export to PDF")
-                                }
-                              />
-                              <p className="font-md text-sm">Export to PDF</p>
-                            </div>
-                          </div>
-                          {/* THIRD */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() =>
-                                  handleCheckboxChange("Contacts","Mass Delete")
-                                }
-                              />
-                              <p className="font-md text-sm">Mass Delete</p>
-                            </div>
-                            {/* SECOND ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() =>
-                                  handleCheckboxChange("Contacts","Export to Excel")
-                                }
-                              />
-                              <p className="font-md text-sm">Export to Excel</p>
-                            </div>
-                          </div>
-                          {/* FOURTH */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() =>
-                                  handleCheckboxChange("Contacts","Mass E-Mail")
-                                }
-                              />
-                              <p className="font-md text-sm">Mass E-Mail</p>
-                            </div>
-                          </div>
-                          {/* FIFTH */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
+                            }
+                            label="Edit Contact"
+                          />
+                        </Grid>
 
-                            {/* SECOND ITEM */}
-                          </div>
-                        </div>
-                      </AccordionDetails>
-                    </Accordion>
-                  </div>
+                        {/* SECOND COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange(
+                                    "Contacts",
+                                    "View Contacts",
+                                  )
+                                }
+                              />
+                            }
+                            label="View Contacts"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange(
+                                    "Contacts",
+                                    "Export to PDF",
+                                  )
+                                }
+                              />
+                            }
+                            label="Export to PDF"
+                          />
+                        </Grid>
+
+                        {/* THIRD COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange(
+                                    "Contacts",
+                                    "Mass Delete",
+                                  )
+                                }
+                              />
+                            }
+                            label="Mass Delete"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange(
+                                    "Contacts",
+                                    "Export to Excel",
+                                  )
+                                }
+                              />
+                            }
+                            label="Export to Excel"
+                          />
+                        </Grid>
+
+                        {/* FOURTH COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange(
+                                    "Contacts",
+                                    "Mass E-Mail",
+                                  )
+                                }
+                              />
+                            }
+                            label="Mass E-Mail"
+                          />
+                        </Grid>
+                      </Grid>
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
 
                 {/* --------- Client  --------- */}
-                  <div className="mt-2 w-full rounded-sm bg-white  shadow-md">
-                    <Accordion>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel4-content"
-                        id="panel4-header"
+                {/* --------- Client Section --------- */}
+                <div className="mt-2 w-full rounded-sm bg-white shadow-md">
+                  <Accordion sx={{ boxShadow: "none" }}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel4-content"
+                      id="panel4-header"
+                    >
+                      <Typography variant="h6">Client</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {/* MUI Grid Layout */}
+                      <Grid
+                        container
+                        spacing={3}
+                        justifyContent="space-between"
                       >
-                        <Typography component="span">
-                          <h1 className="text-xl font-normal">Client</h1>
-                        </Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {/* ---------- Client BOXES ---------- */}
-                        <div className="flex justify-between gap-12">
-                          {/* FIRST */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                        {/* FIRST COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Client","Mass E-Mail")
+                                  handleCheckboxChange("Client", "Mass E-Mail")
                                 }
                               />
-                              <p className="font-md text-sm">Mass E-Mail</p>
-                            </div>
-                          </div>
-                          {/* SECOND */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Mass E-Mail"
+                          />
+                        </Grid>
+
+                        {/* SECOND COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Client","Export to PDF")
+                                  handleCheckboxChange(
+                                    "Client",
+                                    "Export to PDF",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Export to PDF</p>
-                            </div>
-                          </div>
-                          {/* THIRD */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Export to PDF"
+                          />
+                        </Grid>
+
+                        {/* THIRD COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Client","Export to Excel")
+                                  handleCheckboxChange(
+                                    "Client",
+                                    "Export to Excel",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Export to Excel</p>
-                            </div>
-                          </div>
-                          {/* Fourth */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Export to Excel"
+                          />
+                        </Grid>
+
+                        {/* FOURTH COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Client","View Contact")
+                                  handleCheckboxChange("Client", "View Client")
                                 }
                               />
-                              <p className="font-md text-sm">View Contact</p>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionDetails>
-                    </Accordion>
-                  </div>
+                            }
+                            label="View Client"
+                          />
+                        </Grid>
+                      </Grid>
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
 
                 {/* --------- SO --------- */}
-                  <div className="mt-2 w-full rounded-sm bg-white  shadow-md">
-                    <Accordion>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel5-content"
-                        id="panel5-header"
+                {/* --------- SALES ORDER SECTION ---------- */}
+                <div className="mt-2 w-full rounded-sm bg-white shadow-md">
+                  <Accordion sx={{ boxShadow: "none" }}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel5-content"
+                      id="panel5-header"
+                    >
+                      <Typography component="span">
+                        <h1 className="text-xl font-normal">Sales Order</h1>
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {/* MUI Grid for Balanced Layout */}
+                      <Grid
+                        container
+                        spacing={3}
+                        justifyContent="space-between"
                       >
-                        <Typography component="span">
-                          <h1 className="text-xl font-normal">Sales Order</h1>
-                        </Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {/* ---------- Sales Order BOXES ---------- */}
-                        <div className="flex justify-between gap-12">
-                          <div className="flex flex-col gap-3">
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                        {/* COLUMN 1 */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Sales Order","Edit Sales Order")
+                                  handleCheckboxChange(
+                                    "Sales Order",
+                                    "Edit Sales Order",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">
-                                Edit Sales Order
-                              </p>
-                            </div>
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Edit Sales Order"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Sales Order","Approve Pending")
+                                  handleCheckboxChange(
+                                    "Sales Order",
+                                    "Approve Pending",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Approve Pending</p>
-                            </div>
-                          </div>
-                          <div className="flex flex-col gap-3">
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Approve Pending"
+                          />
+                        </Grid>
+
+                        {/* COLUMN 2 */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Sales Order","Send SMS")
+                                  handleCheckboxChange(
+                                    "Sales Order",
+                                    "Send SMS",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Send SMS</p>
-                            </div>
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Send SMS"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Sales Order","Export to PDF")
+                                  handleCheckboxChange(
+                                    "Sales Order",
+                                    "Export to PDF",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Export to PDF</p>
-                            </div>
-                          </div>
-                          <div className="flex flex-col gap-3">
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Export to PDF"
+                          />
+                        </Grid>
+
+                        {/* COLUMN 3 */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Sales Order","Mass Delete")
+                                  handleCheckboxChange(
+                                    "Sales Order",
+                                    "Mass Delete",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Mass Delete</p>
-                            </div>
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Mass Delete"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Sales Order","Export to Excel")
+                                  handleCheckboxChange(
+                                    "Sales Order",
+                                    "Export to Excel",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Export to Excel</p>
-                            </div>
-                          </div>
-                          <div className="flex flex-col gap-3">
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Export to Excel"
+                          />
+                        </Grid>
+
+                        {/* COLUMN 4 */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Sales Order","Mass E-Mail")
+                                  handleCheckboxChange(
+                                    "Sales Order",
+                                    "Mass E-Mail",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Mass E-Mail</p>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionDetails>
-                    </Accordion>
-                  </div>
+                            }
+                            label="Mass E-Mail"
+                          />
+                                <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange("Sales Order", "View Sales Order")
+                                }
+                              />
+                            }
+                            label="View Sales Order"
+                          />
+                        </Grid>
+                      </Grid>
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
 
                 {/* --------- Free Trail --------- */}
-                  <div className="mt-2 w-full rounded-sm bg-white  shadow-md">
-                    <Accordion>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel6-content"
-                        id="panel6-header"
+                {/* ---------- FREE TRIAL SECTION ---------- */}
+                <div className="mt-2 w-full rounded-sm bg-white shadow-md">
+                  <Accordion sx={{ boxShadow: "none" }}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel6-content"
+                      id="panel6-header"
+                    >
+                      <Typography component="span">
+                        <h1 className="text-xl font-normal">Free Trial</h1>
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {/* MUI Grid for Layout */}
+                      <Grid
+                        container
+                        spacing={3}
+                        justifyContent="space-between"
                       >
-                        <Typography component="span">
-                          <h1 className="text-xl font-normal">Free Trail</h1>
-                        </Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {/* ---------- Free Trail BOXES ---------- */}
-                        <div className="flex justify-between gap-12">
-                          <div className="flex flex-col gap-3">
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                        {/* FIRST COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Free Trail","Edit Free Trail")
+                                  handleCheckboxChange(
+                                    "Free Trail",
+                                    "Edit Free Trail",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Edit Free Trail</p>
-                            </div>
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Edit Free Trail"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Free Trail","Export Trail")
+                                  handleCheckboxChange(
+                                    "Free Trail",
+                                    "Export Trail",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Export Trail</p>
-                            </div>
-                          </div>
-                          <div className="flex flex-col gap-3">
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Export Trail"
+                          />
+                        </Grid>
+
+                        {/* SECOND COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Free Trail","Export To PDF")
+                                  handleCheckboxChange(
+                                    "Free Trail",
+                                    "Export To PDF",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Export To PDF</p>
-                            </div>
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Export To PDF"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Free Trail","Export To Excel")
+                                  handleCheckboxChange(
+                                    "Free Trail",
+                                    "Export To Excel",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Export To Excel</p>
-                            </div>
-                          </div>
-                          <div className="flex flex-col gap-3">
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Export To Excel"
+                          />
+                        </Grid>
+
+                        {/* THIRD COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Free Trail","Mass Delete")
+                                  handleCheckboxChange(
+                                    "Free Trail",
+                                    "Mass Delete",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Mass Delete</p>
-                            </div>
-                          </div>
-                          <div className="flex flex-col gap-3">
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Mass Delete"
+                          />
+                                     <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Free Trail","Mass E-Mail")
+                                  handleCheckboxChange("Free Trail", "View Free Trail")
                                 }
                               />
-                              <p className="font-md text-sm">Mass E-Mail</p>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionDetails>
-                    </Accordion>
-                  </div>
+                            }
+                            label="View Free Trail"
+                          />
+                        </Grid>
+
+                        {/* FOURTH COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange(
+                                    "Free Trail",
+                                    "Mass E-Mail",
+                                  )
+                                }
+                              />
+                            }
+                            label="Mass E-Mail"
+                          />
+                        </Grid>
+                      </Grid>
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
 
                 {/* --------- Follow Up --------- */}
-                  <div className="mt-2 w-full rounded-sm bg-white  shadow-md">
-                    <Accordion>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel7-content"
-                        id="panel7-header"
+                {/* ---------- FOLLOW UP SECTION ---------- */}
+                <div className="mt-2 w-full rounded-sm bg-white shadow-md">
+                  <Accordion sx={{ boxShadow: "none" }}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel7-content"
+                      id="panel7-header"
+                    >
+                      <Typography component="span">
+                        <h1 className="text-xl font-normal">Follow Up</h1>
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {/* MUI Grid Layout for Better Spacing */}
+                      <Grid
+                        container
+                        spacing={3}
+                        justifyContent="space-between"
                       >
-                        <Typography component="span">
-                          <h1 className="text-xl font-normal">Follow Up</h1>
-                        </Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {/* ---------- Follow Up BOXES ---------- */}
-                        <div className="flex justify-between gap-12">
-                          <div className="flex flex-col gap-3">
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                        {/* FIRST COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Follow Up","Edit Follow Up")
+                                  handleCheckboxChange(
+                                    "Follow Up",
+                                    "Edit Follow Up",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Edit Follow Up</p>
-                            </div>
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Edit Follow Up"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Follow Up","Export Follow Up")
+                                  handleCheckboxChange(
+                                    "Follow Up",
+                                    "Export Follow Up",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">
-                                Export Follow Up
-                              </p>
-                            </div>
-                          </div>
-                          <div className="flex flex-col gap-3">
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Export Follow Up"
+                          />
+                        </Grid>
+
+                        {/* SECOND COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Follow Up","Export To PDF")
+                                  handleCheckboxChange(
+                                    "Follow Up",
+                                    "Export To PDF",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Export To PDF</p>
-                            </div>
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Export To PDF"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Follow Up","Export To Excel")
+                                  handleCheckboxChange(
+                                    "Follow Up",
+                                    "Export To Excel",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Export To Excel</p>
-                            </div>
-                          </div>
-                          <div className="flex flex-col gap-3">
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Export To Excel"
+                          />
+                        </Grid>
+
+                        {/* THIRD COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Follow Up","Mass Delete")
+                                  handleCheckboxChange(
+                                    "Follow Up",
+                                    "Mass Delete",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Mass Delete</p>
-                            </div>
-                          </div>
-                          <div className="flex flex-col gap-3">
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Mass Delete"
+                          />
+                               <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Follow Up","Mass E-Mail")
+                                  handleCheckboxChange("Follow Up", "View Follow Up")
                                 }
                               />
-                              <p className="font-md text-sm">Mass E-Mail</p>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionDetails>
-                    </Accordion>
-                  </div>
+                            }
+                            label="View Follow Up"
+                          />
+                        </Grid>
+
+                        {/* FOURTH COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange(
+                                    "Follow Up",
+                                    "Mass E-Mail",
+                                  )
+                                }
+                              />
+                            }
+                            label="Mass E-Mail"
+                          />
+                        </Grid>
+                      </Grid>
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
 
                 {/* --------- SMS Box --------- */}
-                  <div className="mt-2 w-full rounded-sm bg-white  shadow-md">
-                    <Accordion>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel-8content"
-                        id="panel8-header"
-                      >
-                        <Typography component="span">
-                          <h1 className="text-xl font-normal">Service Box</h1>
-                        </Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {/* ---------- Service Box BOXES ---------- */}
-                        <div className="flex items-center gap-12">
-                          <div className="flex items-center gap-3 font-light">
-                            <input
-                              type="checkbox"
-                              onChange={() => handleCheckboxChange("Service Box","Send SMS")}
-                            />
-                            <p className="font-md text-sm">Send SMS</p>
-                          </div>
-                          <div className="flex items-center gap-3 font-light">
-                            <input
-                              type="checkbox"
-                              onChange={() =>
-                                handleCheckboxChange("Service Box","Send E-Mail")
-                              }
-                            />
-                            <p className="font-md text-sm">Send E-Mail</p>
-                          </div>
-                        </div>
-                      </AccordionDetails>
-                    </Accordion>
-                  </div>
+                {/* --------- SERVICE BOX --------- */}
+                <div className="mt-2 w-full rounded-sm bg-white shadow-md">
+                  <Accordion sx={{ boxShadow: "none" }}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel-8content"
+                      id="panel8-header"
+                    >
+                      <Typography component="span">
+                        <h1 className="text-xl font-normal">Service Box</h1>
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {/* MUI Grid Layout for checkboxes */}
+                      <Grid container spacing={3} justifyContent="flex-start">
+                        {/* FIRST COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange(
+                                    "Service Box",
+                                    "Send SMS",
+                                  )
+                                }
+                              />
+                            }
+                            label="Send SMS"
+                          />
+                        </Grid>
+
+                        {/* SECOND COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange(
+                                    "Service Box",
+                                    "Send E-Mail",
+                                  )
+                                }
+                              />
+                            }
+                            label="Send E-Mail"
+                          />
+                        </Grid>
+
+                      </Grid>
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
 
                 {/* --------- Reports --------- */}
-                  <div className="mt-2 w-full rounded-sm bg-white  shadow-md">
-                    <Accordion>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel9-content"
-                        id="panel9-header"
+                {/* ---------- Reports SECTION ---------- */}
+                <div className="mt-2 w-full rounded-sm bg-white shadow-md">
+                  <Accordion sx={{ boxShadow: "none" }}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel9-content"
+                      id="panel9-header"
+                    >
+                      <Typography variant="h6">Reports</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {/* MUI Grid for Reports */}
+                      <Grid
+                        container
+                        spacing={3}
+                        justifyContent="space-between"
                       >
-                        <Typography component="span">
-                          <h1 className="text-xl font-normal">Reports</h1>
-                        </Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {/* ---------- Reports BOXES ---------- */}
-                        <div className="flex justify-between gap-12">
-                          {/* FIRST */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                        {/* FIRST COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Reports","Employee Report")
+                                  handleCheckboxChange(
+                                    "Reports",
+                                    "Employee Report",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Employee Report</p>
-                            </div>
-                            {/* SECOND ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Employee Report"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Reports","Monitoring")
+                                  handleCheckboxChange("Reports", "Monitoring")
                                 }
                               />
-                              <p className="font-md text-sm">Monitoring</p>
-                            </div>
-                          </div>
-                          {/* SECOND */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Monitoring"
+                          />
+                        </Grid>
+
+                        {/* SECOND COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Reports","Lead Report")
+                                  handleCheckboxChange("Reports", "Lead Report")
                                 }
                               />
-                              <p className="font-md text-sm">Lead Report</p>
-                            </div>
-                            {/* SECOND ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Lead Report"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Reports","Dispose Leads")
+                                  handleCheckboxChange(
+                                    "Reports",
+                                    "Dispose Leads",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Dispose Leads</p>
-                            </div>
-                          </div>
-                          {/* THIRD */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Dispose Leads"
+                          />
+                        </Grid>
+
+                        {/* THIRD COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Reports","Client Report")
+                                  handleCheckboxChange(
+                                    "Reports",
+                                    "Client Report",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Client Report</p>
-                            </div>
-                          </div>
-                          {/* FOURTH */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Client Report"
+                          />
+                        </Grid>
+
+                        {/* FOURTH COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Reports","Sales Report")
+                                  handleCheckboxChange(
+                                    "Reports",
+                                    "Sales Report",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Sales Report</p>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionDetails>
-                    </Accordion>
-                  </div>
+                            }
+                            label="Sales Report"
+                          />
+                        </Grid>
+                      </Grid>
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
 
                 {/* ---------  Financial Activity --------- */}
-                  <div className="mt-2 w-full rounded-sm bg-white  shadow-md">
-                    <Accordion>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel10-content"
-                        id="panel10-header"
-                      >
-                        <Typography component="span">
-                          <h1 className="text-xl font-normal">
-                            {" "}
-                            Financial Activity
-                          </h1>
-                        </Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {/* ----------  Financial Activity BOXES ---------- */}
-                        {/* CONTACT CHECKBOXES */}
-                        <div className="flex items-center gap-12">
-                          {/* FIRST */}
-                          <div className="flex items-center gap-3 font-light">
-                            <input
-                              type="checkbox"
-                              onChange={() =>
-                                handleCheckboxChange("Financial Activity","View Expenses")
-                              }
-                            />
-                            <p className="font-md text-sm">View Expenses</p>
-                          </div>
-                          {/* SECOND */}
-                          <div className="flex items-center gap-3 font-light">
-                            <input
-                              type="checkbox"
-                              onChange={() =>
-                                handleCheckboxChange("Financial Activity","View Brokerage")
-                              }
-                            />
-                            <p className="font-md text-sm">View Brokerage</p>
-                          </div>
-                        </div>
-                      </AccordionDetails>
-                    </Accordion>
-                  </div>
+                {/* ---------  Financial Activity --------- */}
+                <div className="mt-2 w-full rounded-sm bg-white shadow-md">
+                  <Accordion sx={{ boxShadow: "none" }}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel10-content"
+                      id="panel10-header"
+                    >
+                      <Typography component="span">
+                        <h1 className="text-xl font-normal">
+                          Financial Activity
+                        </h1>
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {/* ----------  Financial Activity CHECKBOXES ---------- */}
+                      <Grid container spacing={3} justifyContent="flex-start">
+                        {/* FIRST CHECKBOX */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange(
+                                    "Financial Activity",
+                                    "View Expenses",
+                                  )
+                                }
+                              />
+                            }
+                            label="View Expenses"
+                          />
+                        </Grid>
+
+                        {/* SECOND CHECKBOX */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange(
+                                    "Financial Activity",
+                                    "View Brokerage",
+                                  )
+                                }
+                              />
+                            }
+                            label="View Brokerage"
+                          />
+                        </Grid>
+                      </Grid>
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
 
                 {/* ----------Settings CHECK BOXES ---------- */}
-                  <div className="mt-2 w-full rounded-sm bg-white  shadow-md">
-                    <Accordion>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1-content"
-                        id="panel1-header"
+                <div className="mt-2 w-full rounded-sm bg-white shadow-md">
+                  <Accordion sx={{ boxShadow: "none" }}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel2-content"
+                      id="panel2-header"
+                    >
+                      <Typography variant="h6">Settings</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {/* MUI Grid Layout */}
+                      <Grid
+                        container
+                        spacing={3}
+                        justifyContent="space-between"
                       >
-                        <Typography component="span">
-                          <h1 className="text-xl font-normal">Settings</h1>
-                        </Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {/* ---------- Settings BOXES ---------- */}
-                        <div className="flex justify-between gap-12">
-                          {/* FIRST */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                        {/* FIRST COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Settings","User Setting")
+                                  handleCheckboxChange(
+                                    "Settings",
+                                    "User Setting",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">User Setting</p>
-                            </div>
-                            {/* SECOND ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="User Setting"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Settings","User Operation")
+                                  handleCheckboxChange(
+                                    "Settings",
+                                    "User Operation",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">User Operation</p>
-                            </div>
-                            {/* THIRD ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() => handleCheckboxChange("Settings","Group")}
-                              />
-                              <p className="font-md text-sm">Group</p>
-                            </div>
-                            {/* FOURTH ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="User Operation"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Settings","Department")
+                                  handleCheckboxChange("Settings", "Group")
                                 }
                               />
-                              <p className="font-md text-sm">Department</p>
-                            </div>
-                          </div>
-                           {/* FIFTH ITEM */}
-                           <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Group"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Settings","Roles & Permissions")
+                                  handleCheckboxChange("Settings", "Department")
                                 }
                               />
-                              <p className="font-md text-sm">
-                                Roles & Permissions
-                              </p>
-                            </div>
-                          {/* SECOND */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Department"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Settings","Designation")
+                                  handleCheckboxChange(
+                                    "Settings",
+                                    "Roles & Permissions",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Designation</p>
-                            </div>
-                            {/* SECOND ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Roles & Permissions"
+                          />
+                        </Grid>
+
+                        {/* SECOND COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Settings","Qualification")
+                                  handleCheckboxChange(
+                                    "Settings",
+                                    "Designation",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Qualification</p>
-                            </div>
-                            {/* THIRD ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Designation"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Settings","Lead Status")
+                                  handleCheckboxChange(
+                                    "Settings",
+                                    "Qualification",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Lead Status</p>
-                            </div>
-                            {/* FOURTH ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
-                                onChange={() => handleCheckboxChange("Settings","Pools")}
-                              />
-                              <p className="font-md text-sm">Pools</p>
-                            </div>
-                           
-                          </div>
-                          {/* THIRD */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Qualification"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Settings","Segments")
+                                  handleCheckboxChange(
+                                    "Settings",
+                                    "Lead Status",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Segments</p>
-                            </div>
-                            {/* SECOND ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Lead Status"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Settings","Expense Head")
+                                  handleCheckboxChange("Settings", "Pools")
                                 }
                               />
-                              <p className="font-md text-sm">Expense Head</p>
-                            </div>
-                            {/* THIRD ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Pools"
+                          />
+                        </Grid>
+
+                        {/* THIRD COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Settings","SMS Setting")
+                                  handleCheckboxChange("Settings", "Segments")
                                 }
                               />
-                              <p className="font-md text-sm">SMS Setting</p>
-                            </div>
-                            {/* FOURTH ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Segments"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Settings","E-Mail Template")
+                                  handleCheckboxChange(
+                                    "Settings",
+                                    "Expense Head",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">E-Mail Template</p>
-                            </div>
-                          </div>
-                          {/* FOURTH */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIRST ROW */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Expense Head"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Settings","SMS Template")
+                                  handleCheckboxChange(
+                                    "Settings",
+                                    "SMS Setting",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">SMS Template</p>
-                            </div>
-                            {/* SECOND ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="SMS Setting"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Settings","Access Device")
+                                  handleCheckboxChange(
+                                    "Settings",
+                                    " E-Mail Template",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Access Device</p>
-                            </div>
-                            {/* THIRD ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label=" E-Mail Template"
+                          />
+                        </Grid>
+
+                        {/* FOURTH COLUMN */}
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          sx={{ flexDirection: "column", display: "flex" }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Settings","Access Control")
+                                  handleCheckboxChange(
+                                    "Settings",
+                                    "SMS Template",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">Access Control</p>
-                            </div>
-                            {/* Fourth ITEM */}
-                            <div className="flex items-center gap-3 font-light">
-                              <input
-                                type="checkbox"
+                            }
+                            label="Create Lead"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
                                 onChange={() =>
-                                  handleCheckboxChange("Settings","E-Mail Setting")
+                                  handleCheckboxChange(
+                                    "Settings",
+                                    "Access Device",
+                                  )
                                 }
                               />
-                              <p className="font-md text-sm">E-Mail Setting</p>
-                            </div>
-                          </div>
-                          {/* FIFTH */}
-                          <div className="flex flex-col gap-3">
-                            {/* FIFTH ROW */}
-                            {/* Additional items can be added here */}
-                          </div>
-                        </div>
-                      </AccordionDetails>
-                    </Accordion>
-                  </div>
+                            }
+                            label="Access Device"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange(
+                                    "Settings",
+                                    "Access Control",
+                                  )
+                                }
+                              />
+                            }
+                            label="Access Control"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                onChange={() =>
+                                  handleCheckboxChange(
+                                    "Settings",
+                                    "E-Mail Setting",
+                                  )
+                                }
+                              />
+                            }
+                            label="E-Mail Setting"
+                          />
+                        </Grid>
+                      </Grid>
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
               </div>
             </div>
             {/* BUTTONS */}
@@ -1253,7 +1719,7 @@ export default function AddPermission({ onCancel }) {
                 className="mb-3 mt-20 w-max rounded border-2 border-cyan-500 bg-cyan-500 px-10 py-4 text-white hover:bg-white hover:text-cyan-500 disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-300 disabled:text-gray-500"
                 disabled={
                   !(
-                    selectedPermissions.length !== 0 &&  
+                    selectedPermissions.length !== 0 &&
                     defaultTextLeadStatusDropDown !== "Select Group Name"
                   )
                 }
