@@ -9,21 +9,22 @@ import { MsalProvider } from "@azure/msal-react";
 import msalInstance from "./Config/msalConfig.js";
 
 //-------------------------------------Google Authentication----------------------------------------------------
-
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
+//Protected route for disabling OTP By Pass
 import ProtectedRoute from "./ProtectedRoute.jsx";
 
-//Login
+//Login: -->
 import TenantLogin from "./Components/REGISTRATION/TenantLogin.jsx";
 import TenantLoginOTP from "./Components/REGISTRATION/TenantLoginOTP.jsx";
 
-//Registration
+//Registration: -->
 import Registration from "./Components/REGISTRATION/Registration.jsx";
 import Verifyotp from "./Components/REGISTRATION/Verifyotp.jsx";
 import VerifyTenant from "./Components/REGISTRATION/VerifyTenant.jsx";
+import WelcomePage from "./Components/REGISTRATION/WelcomePage.jsx";
 
-//Forget Password
+//Forget Password: -->
 import ForgetPass from "./Components/REGISTRATION/ForgetPass.jsx";
 import ForgetPassOTP from "./Components/REGISTRATION/ForgetPassOTP.jsx";
 import ForgetResetPassword from "./Components/REGISTRATION/ForgetResetPassword";
@@ -31,7 +32,7 @@ import ForgetPassSuccess from "./Components/REGISTRATION/ForgetPassSuccess.jsx";
 
 //SideBar
 import SidebarBase from "./Components/SIDEBAR/SidebarBase.jsx";
-import WelcomePage from "./Components/REGISTRATION/WelcomePage.jsx";
+
 
 //SiderBar Modules
 //Home
@@ -111,7 +112,9 @@ import Chat from "./Components/SIDEBAR/SIDEBAR_SETTING/ChatWindow.jsx";
 import NotificationProvider from "./NotificationProvider";
 
 //only for Testing
-import Test from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Test.jsx";
+import ErrorRoute from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/ErrorRoute.jsx";
+
+//roles and permissions
 import UserSetting from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/User_Setting/UserSetting.jsx";
 import UserOperation from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/User_Operation/UserOperation.jsx";
 import Department from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/Department/Department.jsx";
@@ -148,7 +151,7 @@ const router = createBrowserRouter([
   { path: "/forgetresetpass", element: <ForgetResetPassword /> },
   { path: "/forgetpasssucess", element: <ForgetPassSuccess /> },
 
-  { path: "/test", element: <Test /> },
+  { path: "*", element: <ErrorRoute /> },
   {
     path: "/panel",
     element: (
@@ -237,7 +240,7 @@ const router = createBrowserRouter([
 
       { path: "/panel/chat", element: <Chat /> },
 
-      { path: "*", element: <Test /> },
+      { path: "*", element: <ErrorRoute /> },
 
       // --------------------------------  Settings ------------------------------
       { path: "/panel/settings/user-settings", element: <UserSetting /> },
