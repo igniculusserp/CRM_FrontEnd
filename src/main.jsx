@@ -67,6 +67,9 @@ import CreateFollowUp from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Follow
 import FreeTrail from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FreeTrial/FreeTrail.jsx";
 import CreateTrial from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/FreeTrial/CreateTrial.jsx";
 
+// Inner Contact --> FollowUp
+import Messaging from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Messaging/Messaging.jsx";
+
 // Inner Contact --> Component
 import Contact from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Contact/Contacts.jsx";
 import CreateContact from "./Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/Contact/CreateContact.jsx";
@@ -218,6 +221,9 @@ const router = createBrowserRouter([
 
       // ANALYTICS
       { path: "/panel/analytics", element: <Analytics /> },
+
+      //Messaging
+      { path: "/panel/messaging", element: <Messaging /> },
 
       // MIS REPORT
       { path: "/panel/misreports", element: <MISReports /> },

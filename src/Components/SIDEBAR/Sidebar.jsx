@@ -18,6 +18,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import PropTypes from "prop-types";
 import noAvatar from "../../assets/images/noAvatar.png";
 import { GiProgression } from "react-icons/gi";
+import { PiChatsBold } from "react-icons/pi";
 
 import { getHostnamePart } from "./SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
@@ -111,6 +112,12 @@ export default function SidebaBar({ toggle, setToggle }) {
       data: "Analytics",
       link: "/panel/analytics",
       icon: <VscGraph />,
+    },
+    {
+      key: 13,
+      data: "Messaging",
+      link: "/panel/messaging",
+      icon: <PiChatsBold />,
     },
     // {
     //   key: 13,
@@ -230,6 +237,12 @@ export default function SidebaBar({ toggle, setToggle }) {
       data: "Subscription",
       link: "/panel/subscription",
       icon: <IoDocumentTextOutline />,
+    },
+    {
+      key: 13,
+      data: "Messaging",
+      link: "/panel/messaging",
+      icon: <PiChatsBold />,
     },
   ];
 
