@@ -4,7 +4,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+
 export default function EmployeeReport({ currentReports }) {
+
   const columns = [
     {
       field: "fullName",
