@@ -4,6 +4,31 @@
   are those when toggle is true means small sidebar and large main screen ie short view
     */
 
+    .arsenal-sc-regular {
+      font-family: "Arsenal SC", serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+    
+    .arsenal-sc-bold {
+      font-family: "Arsenal SC", serif;
+      font-weight: 700;
+      font-style: normal;
+    }
+    
+    .arsenal-sc-regular-italic {
+      font-family: "Arsenal SC", serif;
+      font-weight: 400;
+      font-style: italic;
+    }
+    
+    .arsenal-sc-bold-italic {
+      font-family: "Arsenal SC", serif;
+      font-weight: 700;
+      font-style: italic;
+    }
+
+    
 .space-grotesk-setting {
   font-family: "Space Grotesk", serif;
   font-optical-sizing: auto;
