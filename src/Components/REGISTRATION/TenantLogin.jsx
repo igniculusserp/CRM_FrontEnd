@@ -306,6 +306,8 @@ export default function TenantLogin() {
         response.data.data.userDetail.businessType,
       );
 
+      localStorage.setItem("CurrentUserId", response.data.data.userDetail.userId);
+
       localStorage.setItem("businessRole", response.data.data.userDetail.role);
 
       localStorage.setItem("token", response.data.data.token);
