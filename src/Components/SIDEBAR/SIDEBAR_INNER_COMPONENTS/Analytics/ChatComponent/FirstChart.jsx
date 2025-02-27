@@ -20,7 +20,7 @@ const data = [
 
 const SalesChart = ({ text }) => {
   return (
-    <div className="rounded-md bg-white px-2 py-4 shadow-lg">
+    <div className="px-2 py-4 bg-white rounded-md shadow-lg">
       <h1 className="mb-1 text-xl font-medium">{text}</h1>
       <ResponsiveContainer width="100%" height={300}>
         <ComposedChart data={data}>

@@ -147,18 +147,18 @@ export default function Header({ toggle, setToggle }) {
   return (
     <>
       <ToastContainer />
-      <div className="sm:min-w-screen mx-3 flex items-center justify-between py-3">
+      <div className="flex items-center justify-between py-3 mx-3 sm:min-w-screen">
         <div className="flex items-center justify-center">
           {/*-> Toggle Button <-*/}
           <button
-            className="flex-start flex rounded-full bg-cyan-500 p-1 text-lg text-white shadow"
+            className="flex p-1 text-lg text-white rounded-full shadow flex-start bg-cyan-500"
             onClick={() => setToggle(!toggle)}
           >
             {toggle ? <FaBarsStaggered /> : <FaBars />}
           </button>
           {/*-> Igniculuss DropDown Button hidden For mobile <-*/}
-          <button className="ml-4 hidden items-center gap-2 rounded-full border px-2 py-1 sm:flex">
-            Igniculuss <FaAngleDown />
+          <button className="items-center hidden gap-2 px-2 py-1 ml-4 border rounded-full sm:flex">
+            {name?.toUpperCase()} 
           </button>
         </div>
 
