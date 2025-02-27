@@ -3,13 +3,13 @@ import { Outlet } from "react-router-dom";
 import Header from "./../SIDEBAR/Header";
 import SidebarBar from "./../SIDEBAR/Sidebar";
 import "./../../ExternalCSS/ExternalCSS_Settings.css";
-import ChatPopup from "./SIDEBAR_SETTING/ChatPopup";
+
 
 export default function SidebarBase() {
   const [toggle, setToggle] = useState(false);
 
   return (
-    <div className="reative flex">
+    <div className="flex reative">
       {/* SidebarBar is fixed in place */}
       <div
         className={toggle ? "hide_View" : "Show_View"}
@@ -34,7 +34,7 @@ export default function SidebarBase() {
         {/* Main content scrolls independently */}
         <div className="flex-grow overflow-auto bg-gray-300">
           <Outlet />
-          {/* CHAT POPUP */}
+
         </div>
       </div>
     </div>
