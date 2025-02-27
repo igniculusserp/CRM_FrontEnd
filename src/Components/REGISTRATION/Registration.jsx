@@ -240,22 +240,22 @@ export default function Registration() {
   return (
     <>
       <ToastContainer />
-      <div className="flex min-h-screen flex-col bg-cyan-500 sm:bg-cyan-500 md:flex-row">
+      <div className="flex flex-col min-h-screen bg-cyan-500 sm:bg-cyan-500 md:flex-row">
         {/*----------> Part-I <---------- */}
-        <div className="bg-cyan hidden min-h-screen w-2/3 flex-col items-center justify-center md:flex">
-          <div className="flex flex-col items-center justify-center gap-2 rounded-md bg-white px-16 py-16">
+        <div className="flex-col items-center justify-center hidden w-2/3 min-h-screen bg-cyan md:flex">
+          <div className="flex flex-col items-center justify-center gap-2 px-16 py-16 bg-white rounded-md">
             <img src={IgniculussLogo} alt="Brandlogo" width={80} height={80} />
             <img
               src={CRMRegistrationPage}
               alt="sample"
-              className="h-4/5 w-4/5"
+              className="w-4/5 h-4/5"
             />
             <div className="flex text-3xl font-semibold">
               <GiDiamonds className="text-cyan-500" />
               <h1>Hello, Igniculuss</h1>
             </div>
             <div>
-              <p className="text-center text-xs text-gray-400">
+              <p className="text-xs text-center text-gray-400">
                 Skip repetitive and manual sales-marketing tasks. Get highly
                 <br />
                 productive through automation and save tons of time!
@@ -265,13 +265,13 @@ export default function Registration() {
         </div>
 
         {/*----------> Part-II <---------- */}
-        <div className="my-6 flex min-h-screen w-full flex-col justify-center overflow-hidden bg-cyan-500 md:my-0 md:w-1/3 md:bg-white">
+        <div className="flex flex-col justify-center w-full min-h-screen my-6 overflow-hidden bg-cyan-500 md:my-0 md:w-1/3 md:bg-white">
           {/* Image on Top for Small Screens */}
           <div className="flex justify-center md:hidden">
             <img src={IgniculussLogo} alt="sample" width={100} height={50} />
           </div>
 
-          <div className="mx-10 mt-8 flex flex-col justify-center rounded-2xl bg-white px-3 py-3 md:mx-4">
+          <div className="flex flex-col justify-center px-3 py-3 mx-10 mt-8 bg-white rounded-2xl md:mx-4">
             <div className="flex items-center gap-3 text-2xl font-semibold">
               <GiDiamonds className="hidden text-3xl hover:skew-x-12 md:block" />
               <h1 className="">Create your Account</h1>
@@ -295,7 +295,7 @@ export default function Registration() {
                   <input
                     type="text"
                     name="firstName"
-                    className="mt-1 flex w-full justify-between rounded-md border border-gray-300 px-2 py-2 text-sm outline-none"
+                    className="flex justify-between w-full px-2 py-2 mt-1 text-sm border border-gray-300 rounded-md outline-none"
                     value={formValues.firstName}
                     onChange={handleChange}
                     placeholder="John"
@@ -313,7 +313,7 @@ export default function Registration() {
                   <input
                     type="text"
                     name="lastName"
-                    className="mt-1 flex w-full justify-between rounded-md border border-gray-300 px-2 py-2 text-sm outline-none"
+                    className="flex justify-between w-full px-2 py-2 mt-1 text-sm border border-gray-300 rounded-md outline-none"
                     value={formValues.lastName}
                     onChange={handleChange}
                     placeholder="Mark"
@@ -332,7 +332,7 @@ export default function Registration() {
                   <input
                     type="email"
                     name="email"
-                    className="mt-1 flex w-full justify-between rounded-md border border-gray-300 px-2 py-2 text-sm outline-none"
+                    className="flex justify-between w-full px-2 py-2 mt-1 text-sm border border-gray-300 rounded-md outline-none"
                     value={formValues.email}
                     onChange={handleChange}
                     placeholder="specimen@company.com"
@@ -352,7 +352,7 @@ export default function Registration() {
                   <input
                     type={passwordEye ? "text" : "password"}
                     name="password"
-                    className="mt-1 flex w-full justify-between rounded-md border border-gray-300 px-2 py-2 text-sm outline-none"
+                    className="flex justify-between w-full px-2 py-2 mt-1 text-sm border border-gray-300 rounded-md outline-none"
                     value={formValues.password}
                     onChange={handleChange}
                     placeholder="********"
@@ -360,7 +360,7 @@ export default function Registration() {
                   <button
                     type="button"
                     onClick={togglePasswordEye}
-                    className="absolute inset-y-0 right-2 top-5 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
+                    className="absolute inset-y-0 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out right-2 top-5"
                   >
                     {passwordEye ? (
                       <IoIosEye
@@ -393,7 +393,7 @@ export default function Registration() {
                   <input
                     type={confirmPasswordEye ? "text" : "password"}
                     name="confirmPassword"
-                    className="mt-1 w-full rounded-md border border-gray-300 px-2 py-2 text-sm outline-none"
+                    className="w-full px-2 py-2 mt-1 text-sm border border-gray-300 rounded-md outline-none"
                     value={formValues.confirmPassword}
                     onChange={handleChange}
                     placeholder="********"
@@ -401,7 +401,7 @@ export default function Registration() {
                   <button
                     type="button"
                     onClick={toggleConfirmPasswordEye}
-                    className="absolute inset-y-0 right-2 top-5 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out"
+                    className="absolute inset-y-0 flex items-center text-gray-500 transition-opacity duration-300 ease-in-out right-2 top-5"
                   >
                     {confirmPasswordEye ? (
                       <IoIosEye
@@ -430,19 +430,19 @@ export default function Registration() {
                     Contact
                     <FaStarOfLife size={7} className="text-red-500" />
                   </span>
-                  <div className="flex items-center rounded-md border">
-                    <div className="w-28 text-xs">
+                  <div className="flex items-center border rounded-md">
+                    <div className="text-xs w-28">
                       <button
                         type="button"
                         onClick={toggleDropdown}
-                        className="rounded bg-white px-4 py-2"
+                        className="px-4 py-2 bg-white rounded"
                       >
                         {selectedCode ? (
                           <div className="flex items-center">
                             <img
                               src={selectedCode.img}
                               alt="flag"
-                              className="mr-2 h-4 w-6"
+                              className="w-6 h-4 mr-2"
                               onError={(e) => (e.target.style.display = "none")} // Hides image if not found
                             />
                             {selectedCode.label}
@@ -453,24 +453,24 @@ export default function Registration() {
                       </button>
 
                       {isOpen && (
-                        <div className="code absolute z-10 h-48 w-96 overflow-y-scroll rounded border bg-white shadow-lg">
+                        <div className="absolute z-10 h-48 overflow-y-scroll bg-white border rounded shadow-lg code w-96">
                           <input
                             type="text"
                             placeholder="Search Country"
                             value={searchQueryCode}
                             onChange={(e) => setSearchQueryCode(e.target.value)}
-                            className="w-full border-b px-4 py-2 outline-none"
+                            className="w-full px-4 py-2 border-b outline-none"
                           />
                           {filteredCountryCodes.map((code, index) => (
                             <div
                               key={index}
                               onClick={() => handleSelect(code)}
-                              className="flex cursor-pointer items-center px-4 py-2 hover:bg-gray-100"
+                              className="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100"
                             >
                               <img
                                 src={code.img}
                                 alt="flag"
-                                className="mr-2 h-4 w-6"
+                                className="w-6 h-4 mr-2"
                                 onError={(e) =>
                                   (e.target.style.display = "none")
                                 } // Hides image if not found
@@ -486,7 +486,7 @@ export default function Registration() {
                       name="contactNo"
                       value={formValues.contactNo}
                       onChange={handleChange}
-                      className="mt-1 flex w-full justify-between rounded-md px-2 py-2 text-sm outline-none"
+                      className="flex justify-between w-full px-2 py-2 mt-1 text-sm rounded-md outline-none"
                       placeholder="Alternate Number"
                     />
                   </div>
@@ -501,32 +501,32 @@ export default function Registration() {
                     Country
                     <FaStarOfLife size={7} className="text-red-500" />
                   </span>
-                  <div className="flex items-center rounded-md border">
-                    <div className="relative w-full items-center justify-center">
+                  <div className="flex items-center border rounded-md">
+                    <div className="relative items-center justify-center w-full">
                       <button
                         type="button"
                         onClick={toggleDropdownCountry}
-                        className="w-full rounded bg-white px-4 py-2"
+                        className="w-full px-4 py-2 bg-white rounded"
                       >
                         {selectedCountry ? (
                           <div className="flex">
                             <img
                               src={selectedCountry.img}
                               alt="flag"
-                              className="mr-2 h-4 w-6"
+                              className="w-6 h-4 mr-2"
                               onError={(e) => (e.target.style.display = "none")} // Hides image if not found
                             />
                             {selectedCountry.countryName}
                           </div>
                         ) : (
-                          <div className="text-ms flex justify-between font-medium text-gray-400">
+                          <div className="flex justify-between font-medium text-gray-400 text-ms">
                             Select Country <FaChevronDown />{" "}
                           </div>
                         )}
                       </button>
 
                       {isOpenCountry && (
-                        <div className="absolute z-10 h-36 w-full overflow-y-scroll rounded border bg-white shadow-lg">
+                        <div className="absolute z-10 w-full overflow-y-scroll bg-white border rounded shadow-lg h-36">
                           <input
                             type="text"
                             placeholder="Search Country"
@@ -534,18 +534,18 @@ export default function Registration() {
                             onChange={(e) =>
                               setSearchQueryCountry(e.target.value)
                             }
-                            className="w-full border-b px-8 py-2 outline-none"
+                            className="w-full px-8 py-2 border-b outline-none"
                           />
                           {filteredCountries.map((code, index) => (
                             <div
                               key={index}
                               onClick={() => handleCountrySelect(code)}
-                              className="flex w-full cursor-pointer px-4 py-2 hover:bg-gray-100"
+                              className="flex w-full px-4 py-2 cursor-pointer hover:bg-gray-100"
                             >
                               <img
                                 src={code.img}
                                 alt="flag"
-                                className="mr-2 h-4 w-6"
+                                className="w-6 h-4 mr-2"
                                 onError={(e) =>
                                   (e.target.style.display = "none")
                                 } // Hides image if not found
@@ -574,20 +574,19 @@ export default function Registration() {
                     name="businessType"
                     value={formValues.businessType}
                     onChange={handleChange}
-                    className="mt-1 flex w-full justify-between rounded-md border border-gray-300 px-2 py-2 text-sm outline-none"
+                    className="flex justify-between w-full px-2 py-2 mt-1 text-sm border border-gray-300 rounded-md outline-none"
                   >
                     <option value="" disabled>
                       Select Business Type
                     </option>
                     <option value="Advisory">Advisory</option>
                     <option value="Brokerage">Brokerage</option>
-                    <option value="IT">IT</option>
-                    <option value="Retail">Retail</option>
-                    <option value="Ecommerce">Ecommerce</option>
+                    <option value="Real Estate">Real Estate</option>
+                    
                   </select>
                 </label>
 
-                <button className="mt-4 rounded-md bg-cyan-500 py-4 text-xs font-bold text-white outline-none">
+                <button className="py-4 mt-4 text-xs font-bold text-white rounded-md outline-none bg-cyan-500">
                   Submit
                 </button>
               </form>

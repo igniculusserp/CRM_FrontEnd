@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { FaBars } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
@@ -20,6 +20,9 @@ import {
 export default function UserSetting() {
   const name = getHostnamePart();
   const bearer_token = localStorage.getItem("token");
+
+  const pathnames = location.pathname.split("/").filter((x) => x);
+
 
   const [data, setData] = useState([]);
   const [active, setActive] = useState(true);
@@ -516,29 +519,29 @@ export default function UserSetting() {
                 </div>
                 {/*<---------------5--------------->*/}
                 <div className="flex space-x-4">
-                <div className="flex flex-col w-1/2">
-                  <label
-                    htmlFor="reportedTo"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Reported To
-                  </label>
-                  <select
-                    name="reportedTo"
-                    className="p-2 mt-1 border border-gray-300 rounded-md"
-                    value={formData?.reportedTo || ""}
-                    onChange={handleChange}
-                  >
-                    <option value="" disabled>
-                      {formData?.userName || "Select"}
-                    </option>
-                    {reportedTo?.map((item) => (
-                      <option key={item.id} value={item.userName}>
-                        {item.userName}
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="reportedTo"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Reported To
+                    </label>
+                    <select
+                      name="reportedTo"
+                      className="p-2 mt-1 border border-gray-300 rounded-md"
+                      value={formData?.reportedTo || ""}
+                      onChange={handleChange}
+                    >
+                      <option value="" disabled>
+                        {formData?.userName || "Select"}
                       </option>
-                    ))}
-                  </select>
-                </div>
+                      {reportedTo?.map((item) => (
+                        <option key={item.id} value={item.userName}>
+                          {item.userName}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                   {/* -------------ROLE------------- */}
 
                   <div className="flex flex-col w-1/2">
@@ -599,6 +602,18 @@ export default function UserSetting() {
                 Add user
               </button>
             </div>
+         
+            <nav className="">
+      {pathnames.map((value, index) => {
+        const to = `/${pathnames.slice(0, index + 1).join("/")}`;
+        return (
+          <span key={to}  className ="gap-3 p-1 text-blue-500 bg-white ">
+            {index !== 0 && " > "} 
+            <Link to={to}>{value.charAt(0).toUpperCase()}{value.substring(1)}</Link>
+          </span>
+        );
+      })}
+    </nav>
             <div className="flex-wrap gap-5 mt-3 overflow-x-auto shadow-md">
               <div className="min-w-full rounded-md leads_Table_Container">
                 <table className="min-w-full bg-white leads_Table">

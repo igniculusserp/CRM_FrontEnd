@@ -13,103 +13,103 @@ const settingButtons = [
   {
     key: 1,
     value: "User Setting",
-    link: "/panel/settings/user-settings",
+    link: "/panel/setting/user-settings",
     group: "User's Settings",
   },
   {
     key: 2,
     value: "User Operation",
-    link: "/panel/settings/user-Operation",
+    link: "/panel/setting/user-Operation",
     group: "User's Settings",
   },
   {
     key: 3,
     value: "Group",
-    link: "/panel/settings/group",
+    link: "/panel/setting/group",
     group: "User's Settings",
   },
   {
     key: 27,
     value: "Roles & Permissions",
-    link: "/panel/settings/roles-permissions",
+    link: "/panel/setting/roles-permissions",
     group: "User's Settings",
   },
   {
     key: 7,
     value: "Lead Status",
-    link: "/panel/settings/lead_status",
+    link: "/panel/setting/lead_status",
     group: "Lead Settings",
   },
   {
     key: 8,
     value: "Pools",
-    link: "/panel/settings/pools",
+    link: "/panel/setting/pools",
     group: "Lead Settings",
   },
   {
     key: 9,
     value: "Segments",
-    link: "/panel/settings/segments",
+    link: "/panel/setting/segments",
     group: "Lead Settings",
   },
   {
     key: 10,
     value: "SMS Template",
-    link: "/panel/settings/sms-template",
+    link: "/panel/setting/sms-template",
     group: "ENV Settings",
   },
   {
     key: 11,
     value: "E-Mail Template",
-    link: "/panel/settings/email-template",
+    link: "/panel/setting/email-template",
     group: "ENV Settings",
   },
   {
     key: 15,
     value: "SMS Setting",
-    link: "/panel/settings/sms-Settings",
+    link: "/panel/setting/sms-Settings",
     group: "ENV Settings",
   },
   {
     key: 16,
     value: "E-Mail Setting",
-    link: "/panel/settings/email-Settings",
+    link: "/panel/setting/email-Settings",
     group: "ENV Settings",
   },
   {
     key: 21,
     value: "Access Device",
-    link: "/panel/settings/access-device",
+    link: "/panel/setting/access-device",
     group: "Security Settings",
   },
   {
     key: 24,
     value: "Access Control",
-    link: "/panel/settings/access-control",
+    link: "/panel/setting/access-control",
     group: "Security Settings",
   },
   {
     key: 4,
     value: "Department",
-    link: "/panel/settings/department",
+    link: "/panel/setting/department",
     group: "Other Settings",
   },
   {
     key: 5,
     value: "Designation",
-    link: "/panel/settings/designation",
+    link: "/panel/setting/designation",
     group: "Other Settings",
   },
   {
     key: 26,
     value: "Expense Head",
-    link: "/panel/settings/expensehead",
+    link: "/panel/setting/expensehead",
     group: "Other Settings",
   },
   {
     key: 6,
     value: "Qualification",
-    link: "/panel/settings/qualification",
+    link: "/panel/setting/qualification",
     group: "Other Settings",
   },
   // { key: 20, value: "Call Template" },
@@ -181,31 +181,31 @@ export default function Setting() {
 
   return (
     <>
-      <div className="m-3 flex flex-col">
+      <div className="flex flex-col m-3">
         {/* Header Section Parent*/}
         <div className="flex justify-between rounded-t-xl bg-gradient-to-r from-cyan-500 from-20% via-sky-600 via-100% p-3 text-white">
           {/* Heading */}
-          <h1 className="roboto-slab-setting flex items-center gap-2 text-2xl tracking-wide">
+          <h1 className="flex items-center gap-2 text-2xl tracking-wide roboto-slab-setting">
             <IoMdSettings /> Setting Dashboard
           </h1>
         </div>
 
         {/* Main Section */}
-        <div className="flex min-h-screen items-start rounded-b-xl bg-white px-4 py-8">
+        <div className="flex items-start min-h-screen px-4 py-8 bg-white rounded-b-xl">
           <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {/* Setting Cards */}
             {Object.keys(groupedData).map((group) => (
-              <div key={group} className="rounded-b-lg rounded-t-xl shadow-md">
-                <h2 className="flex justify-center rounded-t-xl border-b bg-sky-500 px-4 py-2 text-lg text-white">
+              <div key={group} className="rounded-b-lg shadow-md rounded-t-xl">
+                <h2 className="flex justify-center px-4 py-2 text-lg text-white border-b rounded-t-xl bg-sky-500">
                   {group}
                 </h2>
                 {/* Buttons */}
-                <div className="my-2 grid w-full grid-cols-1 gap-2">
+                <div className="grid w-full grid-cols-1 gap-2 my-2">
                   {groupedData[group].map((button) => (
                     <div
                       key={button.key}
                       onClick={() => navigate(button.link)}
-                      className="mx-4 rounded-full border-2 border-cyan-500 bg-white p-2 text-center text-cyan-500 shadow-md hover:bg-cyan-500 hover:text-white"
+                      className="p-2 mx-4 text-center bg-white border-2 rounded-full shadow-md border-cyan-500 text-cyan-500 hover:bg-cyan-500 hover:text-white"
                     >
                       {button.value}
                     </div>
