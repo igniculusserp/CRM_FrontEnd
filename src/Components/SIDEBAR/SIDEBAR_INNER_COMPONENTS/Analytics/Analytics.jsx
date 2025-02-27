@@ -153,7 +153,7 @@ export default function Analytics() {
       setGrowthPercentage(growthPercentage);
       if (
         totalSales.currentMonthSalesAmount -
-          totalSales.previousMonthSalesAmount >
+        totalSales.previousMonthSalesAmount >
         0
       ) {
         setPercentageStatus("Plus");
@@ -233,16 +233,26 @@ export default function Analytics() {
       {/* ------------ CARD ->>>Parent : 4 Childs<<<- ------------ */}
       <div className="grid items-center grid-cols-2 gap-3 px-2 sm:grid-cols-4">
         {/* ------------ CARD ->>> Child : 1 <<<- ------------ */}
-        <div className="px-2 py-2 bg-white rounded-md shadow-md min-h-32">
+        <div className="px-2 py-2 bg-white rounded-md shadow-md min-h-24">
           {/* ------------ Inner ------------ */}
           <div className="grid items-center justify-between grid-cols-2">
             {/* ------------ Textual Data ------------ */}
-            <div className="grid grid-flow-row-dense gap-2">
+            <div className="grid gap-2 grid-row">
               {/* ------------ Heading ------------ */}
-              <h1 className="text-sm">
-                {/* Total Sales */}
-                {business === "Brokerage" ? "TOTAL FUNDS" : "TOTAL SALES"}
-              </h1>
+
+              
+       
+
+
+              <h1 className="hidden text-sm sm:block">
+              {business === "Brokerage" ? "TOTAL FUND" : "TOTAL SALE"}
+            </h1>
+
+            <h1 className="text-sm sm:hidden">
+            {business === "Brokerage" ? "Total" : "TOTAL SALE"}
+          </h1>
+              
+              
               {/* ------------ Button ------------ */}
               <div className="flex items-center">
                 <LuIndianRupee />
@@ -282,16 +292,25 @@ export default function Analytics() {
         {/* ------------------------------------------------------------------------------------------------ */}
 
         {/* ------------ CARD ->>> Child :2 <<<- ------------ */}
-        <div className="px-2 py-2 bg-white rounded-md shadow-md min-h-32">
+        <div className="px-2 py-2 bg-white rounded-md shadow-md min-h-24">
           {/* ------------ CARD ------------ */}
           {/* ------------ Inner ------------ */}
           <div className="grid items-center justify-between grid-cols-2">
             {/* ------------ Textual Data ------------ */}
             <div className="grid grid-flow-row-dense gap-2">
               {/* ------------ Heading ------------ */}
-              <h1 className="text-sm">
+
+
+
+
+              
+              <h1 className="hidden text-sm sm:block">
                 {business === "Brokerage" ? "TODAY'S FUND" : "TODAY'S SALE"}
               </h1>
+
+              <h1 className="text-sm sm:hidden">
+              {business === "Brokerage" ? "Today's Fund" : "Today's Sale"}
+            </h1>
 
               {/* ------------ Amount ------------ */}
               <div className="flex items-center">
@@ -333,14 +352,16 @@ export default function Analytics() {
         {/* ------------------------------------------------------------------------------------------------ */}
 
         {/* ------------ CARD ->>> Child :3 <<<- ------------ */}
-        <div className="px-2 py-2 bg-white rounded-md shadow-md min-h-32">
+        <div className="px-2 py-2 bg-white rounded-md shadow-md min-h-24">
           {/* ------------ CARD ------------ */}
           {/* ------------ Inner ------------ */}
           <div className="grid items-center justify-between grid-cols-2">
             {/* ------------ Textual Data ------------ */}
             <div className="grid grid-flow-row-dense gap-2">
+              {/* ------------Two  Heading Just to manage it in Mobile View------------ */}
               {/* ------------ Heading ------------ */}
-              <h1 className="text-sm">FOLLOW UPS</h1>
+              <h1 className="hidden text-sm sm:block">FOLLOW UPS</h1>
+              <h1 className="text-sm sm:hidden">Follow Up</h1>
               <span>{todayFollowup?.todayFollowup}</span>
 
               {/* ------------ Button ------------ */}
@@ -376,13 +397,14 @@ export default function Analytics() {
         {/* ------------------------------------------------------------------------------------------------ */}
 
         {/* ------------ CARD ->>> Child :4 <<<- ------------ */}
-        <div className="px-2 py-2 bg-white rounded-md shadow-md min-h-32">
+        <div className="px-2 py-2 bg-white rounded-md shadow-md min-h-24">
           {/* ------------ Inner ------------ */}
           <div className="grid items-center justify-between grid-cols-2">
             {/* ------------ Textual Data ------------ */}
             <div className="grid grid-flow-row-dense gap-2">
               {/* ------------ Heading ------------ */}
-              <h1 className="text-sm">TEAM MEMBERS</h1>
+              <h1 className="hidden text-sm sm:block">TOTAL MEMBERS</h1>
+              <h1 className="text-sm sm:hidden">Total Members</h1>
 
               {/* ------------ COUNT ------------ */}
               <strong>10</strong>
@@ -402,7 +424,7 @@ export default function Analytics() {
       </div>
 
       {/* ------------ 4 GRAPH SECTION ------------ */}
-      <div className="grid gap-3 m-3 sm:grid-cols-2">
+      <div className="grid gap-3 mx-2 my-3 sm:grid-cols-2">
         <FirstChart
           text={business === "Brokerage" ? `Top 5 SRM` : `Top 5 BA`}
         />
@@ -415,7 +437,7 @@ export default function Analytics() {
         />
       </div>
 
-      <div className="grid grid-cols-1 gap-3 mx-3 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 mx-2 sm:grid-cols-2">
         <BottomChart text={`Leads By Stage`} color={`#2B6CB0`} />
         <BottomChart text={`Sales By Stage`} color={`#34d399`} />
       </div>

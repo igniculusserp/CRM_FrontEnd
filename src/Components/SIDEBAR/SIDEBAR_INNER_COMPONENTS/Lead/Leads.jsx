@@ -477,7 +477,7 @@ export default function Lead() {
         >
           {params.value || "-"} {/* Show dash if empty */}
           <div className="mt-1 flex h-6 w-[80%] justify-center">
-            <div className="w-full rounded-full bg-cyan-500 px-1 py-1 text-center text-xs text-white">
+            <div className="w-full px-1 py-1 text-xs text-center text-white rounded-full bg-cyan-500">
               {params.row.leadesStatus || "NA"}
             </div>
           </div>
@@ -783,7 +783,7 @@ export default function Lead() {
         {/*-------Table-------*/}
         {viewLeads || businessRole === "Admin" ? (
           <div className="mt-3 overflow-x-auto leads_Table_Main_Container">
-            <div className="min-w-full rounded-md shadow-lg leads_Table_Container">
+            <div className="min-w-full rounded-md leads_Table_Container">
               {selectedViewValue === "Table View" && activeButtonId === 1 && (
                 <Paper sx={{ width: "100%" }}>
                   <DataGrid
