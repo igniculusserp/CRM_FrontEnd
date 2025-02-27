@@ -11,7 +11,8 @@ import {
 // React-Icons
 import { IoMdNotifications } from "react-icons/io";
 import { IoMdSettings } from "react-icons/io";
-import { FaAngleDown } from "react-icons/fa";
+import { RiBuilding2Line } from "react-icons/ri";
+
 import { MdLogout } from "react-icons/md";
 
 // Toast
@@ -157,9 +158,10 @@ export default function Header({ toggle, setToggle }) {
             {toggle ? <FaBarsStaggered /> : <FaBars />}
           </button>
           {/*-> Igniculuss DropDown Button hidden For mobile <-*/}
-          <button className="items-center hidden gap-2 px-2 py-1 ml-4 border rounded-full sm:flex">
-            {name?.toUpperCase()} 
-          </button>
+          <div className="flex items-center gap-2 p-1 ml-4 border border-gray-800 rounded shadow-sm">
+          < RiBuilding2Line size={25}/>
+          <span className="border-b-2 border-gray-600 arsenal-sc-bold"> {name?.toUpperCase()} </span>
+          </div>
         </div>
 
         <div className="flex items-center justify-start gap-1 px-3 sm:justify-end">
