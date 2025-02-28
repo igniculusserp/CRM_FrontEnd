@@ -33,6 +33,9 @@ const Messaging = () => {
   const [activeUsers, setActiveUsers] = useState([]);
   const [receiverId, setReceiverId] = useState(0);
   const [messageContent, setMessageContent] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [myInitials, setMyInitials] = useState("");
+  const [userInitials, setUserInitials] = useState("");
 
   // ------------------------------------------ Fetch user ----------------------------------------
   const fetchUsers = async () => {
@@ -50,70 +53,64 @@ const Messaging = () => {
     }
   };
 
-  //--------------------------------------- Fetch Sender Chat By ID ------------------------------------
+  //--------------------------------------- Fetch messages (sent & received) By ID ------------------------------------
 
-  const fetchSenderDataById = async (receiverId) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${bearer_token}`,
-      },
-    };
+  const fetchMessages = async (receiverId) => {
+    if (!receiverId) return;
+
+    const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
 
     try {
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Chat/getsendmessages/${receiverId}`,
-        config,
-      );
+      const [sentRes, receivedRes] = await Promise.all([
+        axios.get(
+          `${protocal_url}${name}.${tenant_base_url}/Chat/getsendmessages/${receiverId}`,
+          config,
+        ),
+        axios.get(
+          `${protocal_url}${name}.${tenant_base_url}/Chat/getrecievemessages/${receiverId}`,
+          config,
+        ),
+      ]);
 
-      if (response.status === 200 && response.data.isSuccess) {
-        const Chat = response.data.data;
-        console.log("Fetch Sender response", Chat);
+      if (sentRes.status === 200 && receivedRes.status === 200) {
+        const sentMessages = sentRes.data.data.map((msg) => ({
+          ...msg,
+          type: "sent",
+        }));
+
+        const receivedMessages = receivedRes.data.data.map((msg) => ({
+          ...msg,
+          type: "received",
+        }));
+
+        // Sort messages based on the `date` field
+        const allMessages = [...sentMessages, ...receivedMessages].sort(
+          (a, b) => new Date(a.date) - new Date(b.date), // Sort by date (oldest first)
+        );
+
+        setMessages(allMessages);
       }
     } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  };
-  
-  //--------------------------------------- Fetch Receiver Chat By ID ------------------------------------
-
-  const fetchReceiverDataById = async (receiverId) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${bearer_token}`,
-      },
-    };
-
-    try {
-      const response = await axios.get(
-        `${protocal_url}${name}.${tenant_base_url}/Chat/getrecievemessages/${receiverId}`,
-        config,
-      );
-
-      if (response.status === 200 && response.data.isSuccess) {
-        const Chat = response.data.data;
-        console.log("Fetch Receiver response", Chat);
-      }
-    } catch (error) {
-      console.error("Error fetching data: ", error);
+      console.error("Error fetching messages:", error);
     }
   };
 
   //---------------------------------------- UseEffect call ------------------------------------
   useEffect(() => {
     fetchUsers();
-    fetchSenderDataById(receiverId);
-    fetchReceiverDataById(receiverId);
-  }, [receiverId]);
+    console.log("messages", messages);
+  }, [messages]);
   //------------------------------------------- Select Users Functionality --------------------------------
   const handleSelectUser = (fullName, userId) => {
     console.log("@@@@====", userId);
-
     setSelectedUser(fullName);
     setChatStatus((prevChat) => ({
       ...prevChat,
       [fullName]: prevChat[fullName]?.map((msg) => ({ ...msg, seen: true })),
     }));
     setReceiverId(userId);
+    setUserInitials(getInitials(fullName));
+    fetchMessages(userId);
   };
   //------------------------------------------- Count Functionality --------------------------------
 
@@ -128,6 +125,16 @@ const Messaging = () => {
       ? words[0][0].toUpperCase() + words[1][0].toUpperCase()
       : words[0][0].toUpperCase();
   };
+
+  //------------------------------------------- Set My Initials Functionality --------------------------------
+  useEffect(() => {
+    const currentUser = activeUsers.find(
+      (user) => parseInt(CurrentUserId) === user.userId,
+    );
+    if (currentUser) {
+      setMyInitials(getInitials(currentUser.fullName));
+    }
+  }, [CurrentUserId, activeUsers]);
 
   // ------------------------------------------- Send Message Functionality --------------------------------
   //------------------------------------------------Handle Submit---------------------------------------------------
@@ -166,6 +173,7 @@ const Messaging = () => {
 
       if (response.status === 200) {
         setMessageContent("");
+        fetchMessages();
       }
     } catch (error) {
       console.error("API Error:", error.response?.data || error.message);
@@ -184,36 +192,32 @@ const Messaging = () => {
         className="flex bg-gray-100 p-4"
         style={{ height: "calc(100% - 72px)" }}
       >
-        {/* Sidebar */}
+        {/* ------------------------------------------------------- Sidebar --------------------------------------------- */}
         <div className="w-1/3 rounded-lg bg-white p-4 shadow-md">
-        {/* Loged in User */}
-   <div>
-  {activeUsers.map((user) => {
-    if (parseInt(CurrentUserId) !== user.userId) return null; 
+          {/* ------------------------------------------ Loged in User ------------------------------------------ */}
+          <div>
+            {activeUsers.map((user) => {
+              if (parseInt(CurrentUserId) !== user.userId) return null;
 
-    return (
-      <div
-        key={user.userId}
-        className="mb-2 flex items-center justify-between rounded-lg bg-cyan-500 p-2 shadow-sm "
-      >
-        <div className="flex items-center gap-2">
-          <Badge>
-            <Avatar>{getInitials(user.fullName)}</Avatar>
-          </Badge>
-          <span className="font-medium">{user.fullName}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span
-            className="relative flex h-3 w-3 items-center justify-center rounded-full shadow-xl bg-gradient-to-br from-green-400 to-green-700 mr-4"
-          >
-          </span>
-          
-        </div>
-      </div>
-    );
-  })}
-</div>
-        {/* Search Bar */}
+              return (
+                <div
+                  key={user.userId}
+                  className="mb-2 flex items-center justify-between rounded-lg bg-cyan-500 p-2 shadow-sm"
+                >
+                  <div className="flex items-center gap-2">
+                    <Badge>
+                      <Avatar>{getInitials(user.fullName)}</Avatar>
+                    </Badge>
+                    <span className="font-medium">{user.fullName}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="relative mr-4 flex h-3 w-3 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-700 shadow-xl"></span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {/* Search Bar */}
           <TextField
             variant="outlined"
             placeholder="Search"
@@ -228,75 +232,86 @@ const Messaging = () => {
               ),
             }}
           />
-   {/* User Area */}
-   <div>
-  {activeUsers.map((user) => {
-    if (parseInt(CurrentUserId) === user.userId) return null; 
+          {/* ---------------------------------------------- User Area ---------------------------------------------------- */}
+          <div>
+            {activeUsers.map((user) => {
+              if (parseInt(CurrentUserId) === user.userId) return null;
 
-    return (
-      <div
-        key={user.userId}
-        className="mb-2 flex cursor-pointer items-center justify-between rounded-lg bg-gray-100 p-2 shadow-sm hover:bg-gray-200"
-        onClick={() => handleSelectUser(user.fullName, user.userId)}
-      >
-        <div className="flex items-center gap-2">
-          <Badge
-            badgeContent={getUnseenCount(user.fullName)}
-            color="error"
-            overlap="circular"
-            classes={{ badge: "bg-green-500" }}
-          >
-            <Avatar>{getInitials(user.fullName)}</Avatar>
-          </Badge>
-          <span className="font-medium">{user.fullName}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span
-            className={`relative flex h-3 w-3 items-center justify-center rounded-full shadow-xl ${
-              user.status
-                ? "bg-gradient-to-br from-green-400 to-green-700"
-                : "bg-gradient-to-br from-orange-400 to-orange-700"
-            }`}
-          >
-            {user.status && (
-              <span className="absolute h-3 w-3 animate-ping rounded-full bg-green-400 opacity-50"></span>
-            )}
-            <span className="absolute inset-0 h-full w-full rounded-full bg-white opacity-20"></span>
-          </span>
-          <IconButton size="small">
-            <OpenInNewIcon fontSize="small" />
-          </IconButton>
-        </div>
-      </div>
-    );
-  })}
-</div>
+              return (
+                <div
+                  key={user.userId}
+                  className="mb-2 flex cursor-pointer items-center justify-between rounded-lg bg-gray-100 p-2 shadow-sm hover:bg-gray-200"
+                  onClick={() => handleSelectUser(user.fullName, user.userId)}
+                >
+                  <div className="flex items-center gap-2">
+                    <Badge
+                      badgeContent={getUnseenCount(user.fullName)}
+                      color="error"
+                      overlap="circular"
+                      classes={{ badge: "bg-green-500" }}
+                    >
+                      <Avatar>{getInitials(user.fullName)}</Avatar>
+                    </Badge>
+                    <span className="font-medium">{user.fullName}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`relative flex h-3 w-3 items-center justify-center rounded-full shadow-xl ${
+                        user.status
+                          ? "bg-gradient-to-br from-green-400 to-green-700"
+                          : "bg-gradient-to-br from-orange-400 to-orange-700"
+                      }`}
+                    >
+                      {user.status && (
+                        <span className="absolute h-3 w-3 animate-ping rounded-full bg-green-400 opacity-50"></span>
+                      )}
+                      <span className="absolute inset-0 h-full w-full rounded-full bg-white opacity-20"></span>
+                    </span>
+                    <IconButton size="small">
+                      <OpenInNewIcon fontSize="small" />
+                    </IconButton>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Chat Area */}
+        {/* ------------------------------------------------------- Chat Area ----------------------------------------------- */}
         <div className="ml-4 flex flex-1 flex-col rounded-lg bg-white shadow-md">
           {selectedUser ? (
             <>
+              {/* ---------------------------------------------- Heading ------------------------------------------- */}
               <div className="flex justify-between rounded-t-lg bg-cyan-500 px-4 py-2 font-semibold text-white">
                 <span className="flex items-center">{selectedUser}</span>
                 <IconButton size="small" onClick={() => setSelectedUser(null)}>
                   <img src={CloseImage} alt="Close" />
                 </IconButton>
               </div>
+              {/* -------------------------------------------------- Chat Box --------------------------------------------------- */}
               <div className="flex-1 overflow-auto p-4">
-                {chatStatus[selectedUser]?.map((msg, index) => (
-                  <div
-                    key={index}
-                    className={`flex ${msg.sender === "SJ" ? "justify-end" : "justify-start"} mb-2`}
-                  >
-                    <Avatar>{msg.sender}</Avatar>
-                    <div className="ml-2 rounded-lg bg-gray-200 p-2 shadow">
-                      <p>{msg.text}</p>
-                      <span className="text-xs italic">{msg.timestamp}</span>
+                {messages.map((msg, index) => {
+                  return parseInt(CurrentUserId) === msg.senderId ? (
+                    <div key={index} className="mb-2 flex justify-end">
+                      <div className="ml-2 rounded-lg bg-gray-200 p-2 shadow">
+                        <p>{msg.messageContent}</p>
+                        <span className="text-xs italic">{msg.date}</span>
+                      </div>
+                      <Avatar>{myInitials}</Avatar>
                     </div>
-                  </div>
-                ))}
+                  ) : (
+                    <div key={index} className="mb-2 flex justify-start">
+                      <Avatar>{userInitials}</Avatar>
+                      <div className="ml-2 rounded-lg bg-gray-200 p-2 shadow">
+                        <p>{msg.messageContent}</p>
+                        <span className="text-xs italic">{msg.date}</span>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
+
+              {/* ------------------------------------------- Text Box ------------------------------------------------------------ */}
               <div className="border-t p-2">
                 <TextField
                   fullWidth
