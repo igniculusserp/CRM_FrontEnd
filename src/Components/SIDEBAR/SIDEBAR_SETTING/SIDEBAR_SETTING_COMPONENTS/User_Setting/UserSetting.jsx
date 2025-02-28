@@ -8,6 +8,8 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import axios from "axios";
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
+import { IoIosArrowForward } from "react-icons/io";
+
 import { IoIosEyeOff } from "react-icons/io";
 import { IoIosEye } from "react-icons/io";
 
@@ -602,14 +604,18 @@ export default function UserSetting() {
                 Add user
               </button>
             </div>
+            
+            {/*---------------------------------------------------------------- BreadCumb Menu  ----------------------------------------------------------------*/}
+            {/*---------------------------------------------------------------- BreadCumb Menu  ----------------------------------------------------------------*/}
          
             <div className="flex ">
+
               {pathnames.map((value, index) => {
                 const to = `/${pathnames.slice(0, index + 1).join("/")}`;
                 return (
-                  <ul key={to}  className ="flex p-1 text-blue-500 underline">
-                    {index  !== 0 && " > "} 
-                    <Link to={to}>{value.charAt(0).toUpperCase()}{value.substring(1)}</Link>
+                  <ul key={to}  className ="flex items-center ">
+                    {index  !== 0 && <IoIosArrowForward size = {20} className ="mx-2 text-blue-600 bg-white border border-blue-600 rounded-full shadow-md" /> } 
+                    <Link className="p-1 text-blue-600 bg-white rounded hover:text-blue-500" to={to}>{value.charAt(0).toUpperCase()}{value.substring(1)}</Link>
                   </ul>
                 );
               })}
