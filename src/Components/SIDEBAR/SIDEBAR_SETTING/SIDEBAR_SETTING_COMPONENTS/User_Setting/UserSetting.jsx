@@ -603,17 +603,18 @@ export default function UserSetting() {
               </button>
             </div>
          
-            <nav className="">
-      {pathnames.map((value, index) => {
-        const to = `/${pathnames.slice(0, index + 1).join("/")}`;
-        return (
-          <span key={to}  className ="gap-3 p-1 text-blue-500 bg-white ">
-            {index !== 0 && " > "} 
-            <Link to={to}>{value.charAt(0).toUpperCase()}{value.substring(1)}</Link>
-          </span>
-        );
-      })}
-    </nav>
+            <div className="flex ">
+              {pathnames.map((value, index) => {
+                const to = `/${pathnames.slice(0, index + 1).join("/")}`;
+                return (
+                  <ul key={to}  className ="flex p-1 text-blue-500 underline">
+                    {index  !== 0 && " > "} 
+                    <Link to={to}>{value.charAt(0).toUpperCase()}{value.substring(1)}</Link>
+                  </ul>
+                );
+              })}
+            </div>
+            
             <div className="flex-wrap gap-5 mt-3 overflow-x-auto shadow-md">
               <div className="min-w-full rounded-md leads_Table_Container">
                 <table className="min-w-full bg-white leads_Table">

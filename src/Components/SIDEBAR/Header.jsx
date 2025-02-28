@@ -27,7 +27,7 @@ import {
 import { FaBarsStaggered } from "react-icons/fa6";
 import { FaBars } from "react-icons/fa6";
 import { FiMessageSquare } from "react-icons/fi";
-import ChatPopup from "./SIDEBAR_SETTING/ChatPopup";
+
 import { getHostnamePart } from "./SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 export default function Header({ toggle, setToggle }) {
@@ -110,14 +110,8 @@ export default function Header({ toggle, setToggle }) {
     }
   };
 
-  const [popup, setPopup] = useState(false);
-
-  const handlePopup = () => {
-    setPopup(!popup);
-  };
-
   const menu = [
-    { key: 2, logo: <FiMessageSquare />, functionality: handlePopup },
+    { key: 2, logo: <FiMessageSquare />, },
     { key: 3, logo: <IoMdNotifications /> },
     { key: 5, logo: <IoMdSettings />, link: "/panel/setting" },
     {
@@ -186,8 +180,6 @@ export default function Header({ toggle, setToggle }) {
             </div>
           ))}
         </div>
-        {/* POPUP */}
-        {popup && <ChatPopup />}
       </div>
     </>
   );
