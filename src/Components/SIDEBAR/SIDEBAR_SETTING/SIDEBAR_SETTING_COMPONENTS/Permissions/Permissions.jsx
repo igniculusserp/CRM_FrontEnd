@@ -6,6 +6,12 @@ import axios from "axios";
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 import AddPermission from "./AddPermission";
 
+
+import { Link, useLocation } from "react-router-dom";
+import { IoMdHome } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
+
+
 import { ToastContainer } from "react-toastify";
 import {
   showErrorToast,
@@ -17,6 +23,9 @@ export default function Permissions() {
   const [activeComponent, setActiveComponent] = useState("Table");
   const [selectedId, setSelectedId] = useState(null);
 
+
+  const pathnames = location.pathname.split("/").filter((x) => x);
+  
   // ------------------------------ Permissions Handle Add Button ------------------------
 
   const handleAdd = () => {
@@ -92,40 +101,67 @@ export default function Permissions() {
     };
 
     return (
-      <div className="min-w-screen m-3">
+      <div className="m-3 min-w-screen">
         <ToastContainer />
-        <div className="min-w-screen flex flex-wrap items-center justify-between gap-5">
+        <div className="flex flex-wrap items-center justify-between gap-5 min-w-screen">
           <div className="flex items-center gap-2">
             <h1 className="text-3xl font-medium">Permissions</h1>
           </div>
           <button
             onClick={handleAdd}
-            className="min-w-10 rounded bg-blue-600 p-2 text-sm text-white"
+            className="p-2 text-sm text-white bg-blue-600 rounded min-w-10"
           >
             Add Permissions
           </button>
         </div>
-        <div className="leads_Table_Main_Container mt-3 overflow-x-auto shadow-md">
-          <div className="leads_Table_Container min-w-full rounded-md">
-            <table className="leads_Table min-w-full bg-white">
+
+        {/*---------------------------------------------------------------- BreadCumb Menu  ----------------------------------------------------------------*/}
+            {/*---------------------------------------------------------------- BreadCumb Menu  ----------------------------------------------------------------*/}
+            {/*----------------------------------------------------------------pathname started with slice(1,3) :because we want skip panel ----------------------------------------------------------------*/}
+            {/*----------------------------------------------------------------const to :  is route where we stored the route    ----------------------------------------------------------------*/}
+
+            <div className="flex items-center my-2 ">
+              <Link to="/panel">
+                <IoMdHome size={30} className="mb-1 text-blue-600 " /> 
+              </Link>
+              
+              <IoIosArrowForward size={20} className="mx-2 text-blue-600 bg-white border border-blue-600 rounded-full shadow-md" />
+              
+              {pathnames.slice(1, 3).map((value, index) => {
+                const to = `/${pathnames.slice(0, index+2).join("/")}`;
+                return (
+                  <ul key={to} className="flex items-center ">
+                    {index !== 0 && <IoIosArrowForward size={20} className="mx-2 text-blue-600 bg-white border border-blue-600 rounded-full shadow-md" />}
+
+                    <Link className="p-1 text-blue-600 bg-white border border-blue-500 rounded hover:text-blue-500"
+                      to={to}>{value.charAt(0).toUpperCase()}{value.substring(1)}
+                    </Link>
+                  </ul>
+                );
+              })}
+            </div>
+            
+        <div className="mt-3 overflow-x-auto shadow-md leads_Table_Main_Container">
+          <div className="min-w-full rounded-md leads_Table_Container">
+            <table className="min-w-full bg-white leads_Table">
               <thead>
                 <tr className="border-b-2 border-gray-300">
                   <th className="px-1 py-3">
                     <input type="checkbox" />
                   </th>
-                  <th className="border-r px-2 py-3 text-left font-medium">
+                  <th className="px-2 py-3 font-medium text-left border-r">
                     <div className="flex items-center justify-between text-sm">
                       <span>Group Name</span>
                       <FaBars />
                     </div>
                   </th>
-                  <th className="border-r px-2 py-3 text-left font-medium">
+                  <th className="px-2 py-3 font-medium text-left border-r">
                     <div className="flex items-center justify-between text-sm">
                       <span>Module Name</span>
                       <FaBars />
                     </div>
                   </th>
-                  <th className="border-r px-2 py-3 text-left font-medium">
+                  <th className="px-2 py-3 font-medium text-left border-r">
                     <div className="flex items-center justify-between text-sm">
                       <span>Action</span>
                     </div>
@@ -136,15 +172,15 @@ export default function Permissions() {
                 {data.map((permission) => (
                   <tr
                     key={permission.id}
-                    className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
+                    className="border-b border-gray-300 cursor-pointer hover:bg-gray-200"
                   >
                     <td className="px-1 py-3 text-center">
                       <input type="checkbox" />
                     </td>
-                    <td className="max-w-24 break-words px-2 py-4 text-sm">
+                    <td className="px-2 py-4 text-sm break-words max-w-24">
                       {permission.groupName}
                     </td>
-                    <td className="max-w-24 break-words px-2 py-4 text-sm">
+                    <td className="px-2 py-4 text-sm break-words max-w-24">
                       {permission.moduleName}
                     </td>
 
@@ -152,7 +188,7 @@ export default function Permissions() {
                       <MdEdit
                         size={25}
                         color="white"
-                        className="rounded bg-blue-500"
+                        className="bg-blue-500 rounded"
                         onClick={() => handleEdit(permission.id)}
                       />
                       <RiDeleteBin6Fill

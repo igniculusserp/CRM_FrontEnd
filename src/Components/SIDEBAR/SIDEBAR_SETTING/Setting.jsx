@@ -31,13 +31,13 @@ const settingButtons = [
   {
     key: 27,
     value: "Roles & Permissions",
-    link: "/panel/setting/roles-permissions",
+    link: "/panel/setting/permissions",
     group: "User's Settings",
   },
   {
     key: 7,
     value: "Lead Status",
-    link: "/panel/setting/lead_status",
+    link: "/panel/setting/leadStatus",
     group: "Lead Settings",
   },
   {
