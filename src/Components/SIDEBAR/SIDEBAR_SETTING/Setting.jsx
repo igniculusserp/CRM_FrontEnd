@@ -13,13 +13,13 @@ const settingButtons = [
   {
     key: 1,
     value: "User Setting",
-    link: "/panel/setting/user-settings",
+    link: "/panel/setting/User-Setting",
     group: "User's Settings",
   },
   {
     key: 2,
     value: "User Operation",
-    link: "/panel/setting/user-Operation",
+    link: "/panel/setting/User-Operation",
     group: "User's Settings",
   },
   {

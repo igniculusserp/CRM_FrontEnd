@@ -249,8 +249,8 @@ const router = createBrowserRouter([
       { path: "*", element: <ErrorRoute /> },
 
       // --------------------------------  Settings ------------------------------
-      { path: "/panel/setting/user-settings", element: <UserSetting /> },
-      { path: "/panel/setting/user-Operation", element: <UserOperation /> },
+      { path: "/panel/setting/User-Setting", element: <UserSetting /> },
+      { path: "/panel/setting/User-Operation", element: <UserOperation /> },
       { path: "/panel/setting/group", element: <Group /> },
       { path: "/panel/setting/department", element: <Department /> },
       { path: "/panel/setting/designation", element: <Designation /> },

@@ -5,6 +5,8 @@ import { FaAngleDown, FaBars } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 
+import { Link, useLocation } from "react-router-dom";
+
 import { useParams } from "react-router-dom";
 
 //external Packages
@@ -13,6 +15,9 @@ import axios from "axios";
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
 import GlobalUserNameComponent from "../../ReusableComponents/GlobalUserNameComponent";
+
+import { IoMdHome } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
 
 //toastify~
 import { ToastContainer } from "react-toastify";
@@ -24,6 +29,8 @@ import {
 export default function UserOperation() {
   //to make id unique
   const { id } = useParams();
+
+  const pathnames = location.pathname.split("/").filter((x) => x);
 
   const name = getHostnamePart();
 
@@ -274,6 +281,35 @@ export default function UserOperation() {
                 Add User Operation
               </button>
             </div>
+
+
+               {/*---------------------------------------------------------------- BreadCumb Menu  ----------------------------------------------------------------*/}
+            {/*---------------------------------------------------------------- BreadCumb Menu  ----------------------------------------------------------------*/}
+            {/*----------------------------------------------------------------pathname started with slice(1,3) :because we want skip panel ----------------------------------------------------------------*/}
+            {/*----------------------------------------------------------------const to :  is route where we stored the route    ----------------------------------------------------------------*/}
+
+            <div className="flex items-center my-2">
+              <Link to="/panel">
+                <IoMdHome size={30} className="mb-1 text-blue-600 " /> 
+              </Link>
+              
+              <IoIosArrowForward size={20} className="mx-2 text-blue-600 bg-white border border-blue-600 rounded-full shadow-md" />
+              
+              {pathnames.slice(1, 3).map((value, index) => {
+                const to = `/${pathnames.slice(0, index+2).join("/")}`;
+                return (
+                  <ul key={to} className="flex items-center ">
+                    {index !== 0 && <IoIosArrowForward size={20} className="mx-2 text-blue-600 bg-white border border-blue-600 rounded-full shadow-md" />}
+
+                    <Link className="p-1 text-blue-600 bg-white border border-blue-500 rounded hover:text-blue-500"
+                      to={to}>{value.charAt(0).toUpperCase()}{value.substring(1)}
+                    </Link>
+                  </ul>
+                );
+              })}
+            </div>
+
+            
             <div className="mt-3 overflow-x-auto shadow-md leads_Table_Main_Container">
               <div className="min-w-full rounded-md leads_Table_Container">
                 <table className="min-w-full bg-white leads_Table">

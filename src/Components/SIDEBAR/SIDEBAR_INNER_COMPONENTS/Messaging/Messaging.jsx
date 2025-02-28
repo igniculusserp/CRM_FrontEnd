@@ -14,19 +14,29 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import SendIcon from "@mui/icons-material/Send";
+
+
+//reactIcons
+import { CgCloseO } from "react-icons/cg";
+import { BsCheck2 } from "react-icons/bs";
+import { BsCheck2All } from "react-icons/bs";
+import { BsCheck2Circle } from "react-icons/bs";
+
 //Folder Imported
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
 import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 //Images Imported
 import MessageImage from "../../../../assets/Message/Message.png";
-import CloseImage from "../../../../assets/Message/Close.png";
+
 
 const Messaging = () => {
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
+  
   //------------------------- Get Current User ID From Local Storage --------------------------------
   const CurrentUserId = localStorage.getItem("CurrentUserId");
+  
   //----------------------------------- All States ---------------------------------------------------
   const [selectedUser, setSelectedUser] = useState(null);
   const [chatStatus, setChatStatus] = useState({});
@@ -98,11 +108,9 @@ const Messaging = () => {
   //---------------------------------------- UseEffect call ------------------------------------
   useEffect(() => {
     fetchUsers();
-    console.log("messages", messages);
   }, [messages]);
   //------------------------------------------- Select Users Functionality --------------------------------
   const handleSelectUser = (fullName, userId) => {
-    console.log("@@@@====", userId);
     setSelectedUser(fullName);
     setChatStatus((prevChat) => ({
       ...prevChat,
@@ -183,17 +191,17 @@ const Messaging = () => {
 
   return (
     <>
-      <div className="flex bg-gray-100 p-4 pb-0 pt-3 align-middle">
-        <div className="w-full rounded-lg bg-white p-4 shadow-md">
+      <div className="flex p-4 pt-3 pb-0 align-middle bg-gray-100">
+        <div className="w-full p-4 bg-white rounded-lg shadow-md">
           <h2 className="text-lg font-semibold">Messaging</h2>
         </div>
       </div>
       <div
-        className="flex bg-gray-100 p-4"
+        className="flex p-4 bg-gray-100"
         style={{ height: "calc(100% - 72px)" }}
       >
         {/* ------------------------------------------------------- Sidebar --------------------------------------------- */}
-        <div className="w-1/3 rounded-lg bg-white p-4 shadow-md">
+        <div className="w-1/3 p-4 bg-white rounded-lg shadow-md">
           {/* ------------------------------------------ Loged in User ------------------------------------------ */}
           <div>
             {activeUsers.map((user) => {
@@ -202,7 +210,7 @@ const Messaging = () => {
               return (
                 <div
                   key={user.userId}
-                  className="mb-2 flex items-center justify-between rounded-lg bg-cyan-500 p-2 shadow-sm"
+                  className="flex items-center justify-between p-2 mb-2 rounded-lg shadow-sm bg-cyan-500"
                 >
                   <div className="flex items-center gap-2">
                     <Badge>
@@ -211,7 +219,7 @@ const Messaging = () => {
                     <span className="font-medium">{user.fullName}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="relative mr-4 flex h-3 w-3 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-700 shadow-xl"></span>
+                    <span className="relative flex items-center justify-center w-3 h-3 mr-4 rounded-full shadow-xl bg-gradient-to-br from-green-400 to-green-700 "></span>
                   </div>
                 </div>
               );
@@ -240,7 +248,7 @@ const Messaging = () => {
               return (
                 <div
                   key={user.userId}
-                  className="mb-2 flex cursor-pointer items-center justify-between rounded-lg bg-gray-100 p-2 shadow-sm hover:bg-gray-200"
+                  className="flex items-center justify-between p-2 mb-2 bg-gray-100 rounded-lg shadow-sm cursor-pointer hover:bg-gray-200"
                   onClick={() => handleSelectUser(user.fullName, user.userId)}
                 >
                   <div className="flex items-center gap-2">
@@ -263,9 +271,9 @@ const Messaging = () => {
                       }`}
                     >
                       {user.status && (
-                        <span className="absolute h-3 w-3 animate-ping rounded-full bg-green-400 opacity-50"></span>
+                        <span className="absolute w-3 h-3 bg-green-400 rounded-full opacity-50 animate-ping"></span>
                       )}
-                      <span className="absolute inset-0 h-full w-full rounded-full bg-white opacity-20"></span>
+                      <span className="absolute inset-0 w-full h-full bg-white rounded-full opacity-20"></span>
                     </span>
                     <IconButton size="small">
                       <OpenInNewIcon fontSize="small" />
@@ -278,33 +286,33 @@ const Messaging = () => {
         </div>
 
         {/* ------------------------------------------------------- Chat Area ----------------------------------------------- */}
-        <div className="ml-4 flex flex-1 flex-col rounded-lg bg-white shadow-md">
+        <div className="flex flex-col flex-1 ml-4 bg-white rounded-lg shadow-md">
           {selectedUser ? (
             <>
               {/* ---------------------------------------------- Heading ------------------------------------------- */}
-              <div className="flex justify-between rounded-t-lg bg-cyan-500 px-4 py-2 font-semibold text-white">
+              <div className="flex justify-between px-4 py-2 font-semibold text-white rounded-t-lg bg-cyan-500">
                 <span className="flex items-center">{selectedUser}</span>
                 <IconButton size="small" onClick={() => setSelectedUser(null)}>
-                  <img src={CloseImage} alt="Close" />
+                <CgCloseO size={22} className="text-white text-semibold"/> 
                 </IconButton>
               </div>
               {/* -------------------------------------------------- Chat Box --------------------------------------------------- */}
-              <div className="flex-1 overflow-auto p-4">
+              <div className="flex-1 p-4 overflow-auto">
                 {messages.map((msg, index) => {
                   return parseInt(CurrentUserId) === msg.senderId ? (
-                    <div key={index} className="mb-2 flex justify-end">
-                      <div className="ml-2 rounded-lg bg-gray-200 p-2 shadow">
+                    <div key={index} className="flex items-center justify-end gap-3 mb-2">
+                      <div className="p-2 ml-2 bg-gray-200 rounded-lg shadow">
                         <p>{msg.messageContent}</p>
-                        <span className="text-xs italic">{msg.date}</span>
+                        <span className="text-xs italic">{(msg.date.replace('T', ' ').split('.')[0]).split(' ').reverse().join(' ')}</span>
                       </div>
                       <Avatar>{myInitials}</Avatar>
                     </div>
                   ) : (
-                    <div key={index} className="mb-2 flex justify-start">
+                    <div key={index} className="flex items-center justify-start mb-2">
                       <Avatar>{userInitials}</Avatar>
-                      <div className="ml-2 rounded-lg bg-gray-200 p-2 shadow">
+                      <div className="p-2 ml-2 bg-gray-200 rounded-lg shadow">
                         <p>{msg.messageContent}</p>
-                        <span className="text-xs italic">{msg.date}</span>
+                        <span className="text-xs italic">{(msg.date.replace('T', ' ').split('.')[0]).split(' ').reverse().join(' ')}</span>
                       </div>
                     </div>
                   );
@@ -312,7 +320,7 @@ const Messaging = () => {
               </div>
 
               {/* ------------------------------------------- Text Box ------------------------------------------------------------ */}
-              <div className="border-t p-2">
+              <div className="p-2 border-t">
                 <TextField
                   fullWidth
                   placeholder="Type your message here"
@@ -332,7 +340,7 @@ const Messaging = () => {
               </div>
             </>
           ) : (
-            <div className="flex flex-1 items-center justify-center">
+            <div className="flex items-center justify-center flex-1">
               <Box className="text-center">
                 <img src={MessageImage} alt="No Chat Selected" />
                 <p className="mt-2 font-medium text-gray-600">
