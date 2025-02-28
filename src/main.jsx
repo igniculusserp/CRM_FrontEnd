@@ -255,7 +255,7 @@ const router = createBrowserRouter([
       { path: "/panel/setting/department", element: <Department /> },
       { path: "/panel/setting/designation", element: <Designation /> },
       { path: "/panel/setting/qualification", element: <Qualification /> },
-      { path: "/panel/setting/lead_status", element: <LeadStatus /> },
+      { path: "/panel/setting/leadStatus", element: <LeadStatus /> },
       { path: "/panel/setting/pools", element: <Pool /> },
       { path: "/panel/setting/segments", element: <Segments /> },
       { path: "/panel/setting/expensehead", element: <ExpenseHead /> },
@@ -264,11 +264,8 @@ const router = createBrowserRouter([
       { path: "/panel/setting/sms-Settings", element: <SMSSetting /> },
       { path: "/panel/setting/email-Settings", element: <EmailSetting /> },
       { path: "/panel/setting/access-device", element: <AccessDevice /> },
-      {
-        path: "/panel/settings/access-control",
-        element: <AccessControl />,
-      },
-      { path: "/panel/settings/roles-permissions", element: <Permissions /> },
+      { path: "/panel/settings/access-control",lement: <AccessControl />,},
+      { path: "/panel/setting/permissions", element: <Permissions /> },
     ],
   },
 ]);

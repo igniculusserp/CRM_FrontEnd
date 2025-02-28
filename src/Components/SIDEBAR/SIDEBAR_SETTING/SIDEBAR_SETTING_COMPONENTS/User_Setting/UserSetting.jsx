@@ -10,13 +10,9 @@ import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
 import { FaBars } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import { IoIosArrowForward } from "react-icons/io";
-import { IoMdHome } from "react-icons/io";
 
 
-
-import { IoIosEyeOff } from "react-icons/io";
-import { IoIosEye } from "react-icons/io";
+import Breadcrumb from "../Breadcrumb/Breadcrumb";
 
 import { ToastContainer } from "react-toastify";
 import {
@@ -605,33 +601,8 @@ export default function UserSetting() {
                 Add user
               </button>
             </div>
-
-            {/*---------------------------------------------------------------- BreadCumb Menu  ----------------------------------------------------------------*/}
-            {/*---------------------------------------------------------------- BreadCumb Menu  ----------------------------------------------------------------*/}
-            {/*----------------------------------------------------------------pathname started with slice(1,3) :because we want skip panel ----------------------------------------------------------------*/}
-            {/*----------------------------------------------------------------const to :  is route where we stored the route    ----------------------------------------------------------------*/}
-
-            <div className="flex items-center my-2 ">
-              <Link to="/panel">
-                <IoMdHome size={30} className="mb-1 text-blue-600 " /> 
-              </Link>
-              
-              <IoIosArrowForward size={20} className="mx-2 text-blue-600 bg-white border border-blue-600 rounded-full shadow-md" />
-              
-              {pathnames.slice(1, 3).map((value, index) => {
-                const to = `/${pathnames.slice(0, index+2).join("/")}`;
-                return (
-                  <ul key={to} className="flex items-center ">
-                    {index !== 0 && <IoIosArrowForward size={20} className="mx-2 text-blue-600 bg-white border border-blue-600 rounded-full shadow-md" />}
-
-                    <Link className="p-1 text-blue-600 bg-white border border-blue-500 rounded hover:text-blue-500"
-                      to={to}>{value.charAt(0).toUpperCase()}{value.substring(1)}
-                    </Link>
-                  </ul>
-                );
-              })}
-            </div>
-
+            {/*---------------------------------------------------------------- BreadCrumb PROP  ----------------------------------------------------------------*/}
+            <Breadcrumb pathnames={pathnames} />
 
             <div className="flex-wrap gap-5 mt-3 overflow-x-auto shadow-md">
               <div className="min-w-full rounded-md leads_Table_Container">
