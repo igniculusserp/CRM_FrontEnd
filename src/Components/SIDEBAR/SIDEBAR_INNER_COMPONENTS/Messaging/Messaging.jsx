@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef  } from "react";
+import { useState, useEffect, useRef } from "react";
 //external Packages
 import axios from "axios";
 //MUi Packages
@@ -38,7 +38,8 @@ const Messaging = () => {
 
   //----------------------------------- All States ---------------------------------------------------
   const [selectedUser, setSelectedUser] = useState(null);
-  const [chatStatus, setChatStatus] = useState({});
+  const [allMessage, setAllMessage] = useState([]);
+  const [userMessageCounts, setUserMessageCounts] = useState([]);
   const [activeUsers, setActiveUsers] = useState([]);
   const [receiverId, setReceiverId] = useState(0);
   const [messageContent, setMessageContent] = useState("");
@@ -62,8 +63,23 @@ const Messaging = () => {
     }
   };
 
-  //--------------------------------------- Fetch messages (sent & received) By ID ------------------------------------
+  // ------------------------------------------ Fetch All Messages ----------------------------------------
+  const fetchAllMessages = async () => {
+    try {
+      const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Chat/getAllrecievemessages`,
+        config,
+      );
+      if (response.status === 200) {
+        setAllMessage(response.data?.data || []);
+      }
+    } catch (error) {
+      console.error("Error fetching user status:", error);
+    }
+  };
 
+  //--------------------------------------- Fetch messages (sent & received) By ID ------------------------------------
   const fetchMessages = async (receiverId) => {
     if (!receiverId) return;
   
@@ -104,42 +120,39 @@ const Messaging = () => {
           }
           return allMessages;
         });
+  
+        // Run CheckMessages after setMessages is updated
+        setTimeout(() => {
+          CheckMessages(allMessages);
+        }, 100);
       }
     } catch (error) {
       console.error("Error fetching messages:", error);
     }
   };
   
-  
-  
-
   //---------------------------------------- UseEffect call ------------------------------------
   useEffect(() => {
     fetchUsers();
-  }, [messages]);
-
+    fetchAllMessages();
+  }, []);
+  //---------------------------------------- UseEffect fetchMessages ------------------------------
   useEffect(() => {
     const interval = setInterval(() => {
       fetchMessages(receiverId);
-    }, 2000); // Fetch messages every 5 seconds
-  
+      fetchAllMessages();
+    }, 2000); // Fetch messages every 2 seconds
+
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, [receiverId]);
   //------------------------------------------- Select Users Functionality --------------------------------
   const handleSelectUser = (fullName, userId) => {
     setSelectedUser(fullName);
-    setChatStatus((prevChat) => ({
-      ...prevChat,
-      [fullName]: prevChat[fullName]?.map((msg) => ({ ...msg, seen: true })),
-    }));
     setReceiverId(userId);
     setUserInitials(getInitials(fullName));
     fetchMessages(userId);
-  };
-  //------------------------------------------- Count Functionality --------------------------------
 
-  const getUnseenCount = (fullName) =>
-    chatStatus[fullName]?.filter((msg) => !msg.seen).length || 0;
+  };
 
   //------------------------------------------- Users Initials Functionality --------------------------------
 
@@ -213,11 +226,11 @@ const Messaging = () => {
       alert("Message ID is missing!");
       return; // Stop execution if id is undefined/null
     }
-  
+
     const bearer_token = localStorage.getItem("token");
     const name = getHostnamePart();
     console.log("Deleting Message ID:", id);
-  
+
     try {
       const config = {
         headers: {
@@ -225,14 +238,14 @@ const Messaging = () => {
           "Content-Type": "application/json",
         },
       };
-  
+
       const payload = { messageId: id };
-  
+
       const response = await axios.delete(
         `${protocal_url}${name}.${tenant_base_url}/Chat/deletemessage`,
-        { data: payload, ...config }
+        { data: payload, ...config },
       );
-  
+
       console.log("Delete Response:", response.data);
       fetchMessages(receiverId);
       alert("Message deleted successfully");
@@ -241,14 +254,13 @@ const Messaging = () => {
       alert(error.response?.data?.message || "Failed to delete message.");
     }
   };
-  
-  // ------------------------------------------ Scroll to bottom ---------------------------------
 
+  // ------------------------------------------ Scroll to bottom ---------------------------------
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView();
   };
-  
+
   //------------------------------------------ Handle Update -------------------------------------
   const handleChangeStatus = async (id) => {
     if (!id) {
@@ -257,7 +269,7 @@ const Messaging = () => {
     }
     const bearer_token = localStorage.getItem("token");
     const name = getHostnamePart();
-    console.log("Updating Message Status for ID:", id); 
+    console.log("Updating Message Status for ID:", id);
     try {
       const config = {
         headers: {
@@ -268,18 +280,57 @@ const Messaging = () => {
       const payload = { messageId: id };
       const response = await axios.put(
         `${protocal_url}${name}.${tenant_base_url}/Chat/updatemessagestatusread`,
-        payload, 
-        config
+        payload,
+        config,
       );
-  
+
       console.log("Status Update Response:", response.data);
       // fetchMessages(receiverId);
     } catch (error) {
       console.error("Update Status Error:", error.response?.data);
-      alert(error.response?.data?.message || "Failed to update message status.");
+      alert(
+        error.response?.data?.message || "Failed to update message status.",
+      );
     }
   };
+
+  //---------------------------------------------- Set Count of Un read Messages --------------------------------
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (activeUsers.length > 0 && allMessage.length > 0) {
+        const userMessageCounts = activeUsers.map((user) => {
+          const count = allMessage.reduce((acc, msg) => {  
+            return msg.senderId === user.userId && msg.status === false ? acc + 1 : acc;
+          }, 0);
+          return { userId: user.userId, count }; // Store count with userId
+        });
   
+        setUserMessageCounts(userMessageCounts); // Save in state
+        console.log("Updated userMessageCounts:", userMessageCounts);
+      }
+    }, 100); // Runs every 5 seconds
+  
+    return () => clearInterval(interval); // Cleanup interval when component unmounts
+  }, [activeUsers, allMessage]); // Dependency array
+  
+  //------------------------------------------ Check all un read messages -------------------------------------
+  let previousMessageLength = 0; // Store previous length outside function scope
+
+  const CheckMessages = (updatedMessages) => {
+    if (updatedMessages.length === previousMessageLength) {
+      console.log("No new messages, skipping status check.");
+      return; // Exit early if length is unchanged
+    }
+  
+    console.log("New messages detected, checking statuses...");
+    previousMessageLength = updatedMessages.length; // Update stored length
+  
+    updatedMessages.forEach((msg) => {
+      if (msg.status === false) {
+        handleChangeStatus(msg.messageId);
+      }
+    });
+  };
 
   return (
     <>
@@ -336,6 +387,10 @@ const Messaging = () => {
           <div>
             {activeUsers.map((user) => {
               if (parseInt(CurrentUserId) === user.userId) return null;
+              // Find the unread message count for this user
+              const userCount = userMessageCounts?.find(
+                (countObj) => countObj?.userId === user.userId,
+              );
 
               return (
                 <div
@@ -345,7 +400,7 @@ const Messaging = () => {
                 >
                   <div className="flex items-center gap-2">
                     <Badge
-                      badgeContent={getUnseenCount(user.fullName)}
+                      badgeContent={userCount?.count}
                       color="error"
                       overlap="circular"
                       classes={{ badge: "bg-green-500" }}
@@ -389,7 +444,7 @@ const Messaging = () => {
                 </IconButton>
               </div>
               {/* -------------------------------------------------- Chat Box --------------------------------------------------- */}
-              <div className="flex-1 overflow-auto p-4" >
+              <div className="flex-1 overflow-auto p-4">
                 {messages.map((msg, index) => {
                   const isCurrentUser =
                     parseInt(CurrentUserId) === msg.senderId;
@@ -403,43 +458,53 @@ const Messaging = () => {
                     >
                       {isCurrentUser ? (
                         <>
-                          <div className="relative ml-2 flex flex-col justify-start rounded-lg bg-gray-100 p-2 shadow max-w-[75%]">
-                            <div className="relative flex items-center justify-between gap-3 ">
+                          <div className="relative ml-2 flex max-w-[75%] flex-col justify-start rounded-lg bg-gray-100 p-2 shadow">
+                            <div className="relative flex items-center justify-between gap-3">
                               <p>{msg.messageContent}</p>
-                              <LongMenu onDelete={() => handleDelete(msg.messageId)} /> 
+                              <LongMenu
+                                onDelete={() => handleDelete(msg.messageId)}
+                              />
                             </div>
-                            <div className="text-xs italic text-gray-500 pr-3 pt-2 flex gap-8  items-center">
+                            <div className="flex items-center gap-8 pr-3 pt-2 text-xs italic text-gray-500">
                               <div>
-                              {msg.date
-                                .replace("T", " ")
-                                .split(".")[0]
-                                .split(" ")
-                                .reverse()
-                                .join(" ")}
-                                </div>
-                                <div>
-                                {msg.status ? <BsCheck2All color="green" size={16}/>:<BsCheck2  size={16}/> }
-                                </div>
+                                {msg.date
+                                  .replace("T", " ")
+                                  .split(".")[0]
+                                  .split(" ")
+                                  .reverse()
+                                  .join(" ")}
+                              </div>
+                              <div>
+                                {msg.status ? (
+                                  <BsCheck2All color="green" size={16} />
+                                ) : (
+                                  <BsCheck2 size={16} />
+                                )}
+                              </div>
                             </div>
                           </div>
                           <Avatar>{myInitials}</Avatar>
                         </>
                       ) : (
-                        <div onMouseEnter={() => handleChangeStatus(msg.messageId)} className="flex items-center">
+                        <div
+                          onMouseEnter={() => handleChangeStatus(msg.messageId)}
+                          className="flex items-center"
+                        >
                           <Avatar>{userInitials}</Avatar>
-                          <div className="relative ml-2 flex flex-col justify-start rounded-lg bg-gray-100 p-2 shadow max-w-[75%]">
+                          <div className="relative ml-2 flex max-w-[75%] flex-col justify-start rounded-lg bg-gray-100 p-2 shadow">
                             <div className="relative flex items-center justify-between gap-3">
                               <p>{msg.messageContent}</p>
-                              <LongMenu onDelete={() => handleDelete(msg.messageId)} />
+                              <LongMenu
+                                onDelete={() => handleDelete(msg.messageId)}
+                              />
                             </div>
-                            <span className="text-xs italic text-gray-500 pl-3 pt-2">
+                            <span className="pl-3 pt-2 text-xs italic text-gray-500">
                               {msg.date
                                 .replace("T", " ")
                                 .split(".")[0]
                                 .split(" ")
                                 .reverse()
                                 .join(" ")}
-                              
                             </span>
                           </div>
                         </div>
@@ -448,9 +513,8 @@ const Messaging = () => {
                   );
                 })}
 
-                 {/* Invisible div for auto-scroll */}
-      <div ref={messagesEndRef} />
-    
+                {/* Invisible div for auto-scroll */}
+                <div ref={messagesEndRef} />
               </div>
 
               {/* ------------------------------------------- Text Box ------------------------------------------------------------ */}
