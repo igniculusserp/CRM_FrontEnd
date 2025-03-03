@@ -18,8 +18,8 @@ import LongMenu from "./LongMenu";
 
 //reactIcons
 import { CgCloseO } from "react-icons/cg";
-// import { BsCheck2 } from "react-icons/bs";
-// import { BsCheck2All } from "react-icons/bs";
+import { BsCheck2 } from "react-icons/bs";
+import { BsCheck2All } from "react-icons/bs";
 // import { BsCheck2Circle } from "react-icons/bs";
 
 //Folder Imported
@@ -66,48 +66,65 @@ const Messaging = () => {
 
   const fetchMessages = async (receiverId) => {
     if (!receiverId) return;
-
+  
     const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
-
+  
     try {
       const [sentRes, receivedRes] = await Promise.all([
         axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Chat/getsendmessages/${receiverId}`,
-          config,
+          config
         ),
         axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Chat/getrecievemessages/${receiverId}`,
-          config,
+          config
         ),
       ]);
-
+  
       if (sentRes.status === 200 && receivedRes.status === 200) {
         const sentMessages = sentRes.data.data.map((msg) => ({
           ...msg,
           type: "sent",
         }));
-
+  
         const receivedMessages = receivedRes.data.data.map((msg) => ({
           ...msg,
           type: "received",
         }));
-
-        // Sort messages based on the `date` field
+  
+        // Sort messages by date (oldest first)
         const allMessages = [...sentMessages, ...receivedMessages].sort(
-          (a, b) => new Date(a.date) - new Date(b.date), // Sort by date (oldest first)
+          (a, b) => new Date(a.date) - new Date(b.date)
         );
-
-        setMessages(allMessages);
+  
+        // Use a callback function inside setMessages
+        setMessages((prevMessages) => {
+          if (allMessages.length > prevMessages.length) {
+            setTimeout(scrollToBottom, 100); // Scroll after rendering
+          }
+          return allMessages;
+        });
       }
     } catch (error) {
       console.error("Error fetching messages:", error);
     }
   };
+  
+  
+  
 
   //---------------------------------------- UseEffect call ------------------------------------
   useEffect(() => {
     fetchUsers();
   }, [messages]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchMessages(receiverId);
+    }, 2000); // Fetch messages every 5 seconds
+  
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, [receiverId]);
   //------------------------------------------- Select Users Functionality --------------------------------
   const handleSelectUser = (fullName, userId) => {
     setSelectedUser(fullName);
@@ -226,9 +243,11 @@ const Messaging = () => {
   };
   
   // ------------------------------------------ Scroll to bottom ---------------------------------
-  useEffect(() => {
+
+
+  const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView();
-  }, [messages]);
+  };
   
   //------------------------------------------ Handle Update -------------------------------------
   const handleChangeStatus = async (id) => {
@@ -236,11 +255,9 @@ const Messaging = () => {
       alert("Message ID is missing!");
       return; // Stop execution if id is undefined/null
     }
-  
     const bearer_token = localStorage.getItem("token");
     const name = getHostnamePart();
-    console.log("Updating Message Status for ID:", id);
-  
+    console.log("Updating Message Status for ID:", id); 
     try {
       const config = {
         headers: {
@@ -248,9 +265,7 @@ const Messaging = () => {
           "Content-Type": "application/json",
         },
       };
-  
-      const payload = { messageId: id }; // Send messageId in request body
-  
+      const payload = { messageId: id };
       const response = await axios.put(
         `${protocal_url}${name}.${tenant_base_url}/Chat/updatemessagestatusread`,
         payload, 
@@ -258,8 +273,7 @@ const Messaging = () => {
       );
   
       console.log("Status Update Response:", response.data);
-      fetchMessages(receiverId); // Refresh messages after updating status
-      alert("Message marked as read successfully");
+      // fetchMessages(receiverId);
     } catch (error) {
       console.error("Update Status Error:", error.response?.data);
       alert(error.response?.data?.message || "Failed to update message status.");
@@ -394,7 +408,7 @@ const Messaging = () => {
                               <p>{msg.messageContent}</p>
                               <LongMenu onDelete={() => handleDelete(msg.messageId)} /> 
                             </div>
-                            <div className="text-xs italic text-gray-500 pr-3 pt-2 flex gap-8 ">
+                            <div className="text-xs italic text-gray-500 pr-3 pt-2 flex gap-8  items-center">
                               <div>
                               {msg.date
                                 .replace("T", " ")
@@ -404,7 +418,7 @@ const Messaging = () => {
                                 .join(" ")}
                                 </div>
                                 <div>
-                                {msg.status ?"Seen" :"UnSeen"}
+                                {msg.status ? <BsCheck2All color="green" size={16}/>:<BsCheck2  size={16}/> }
                                 </div>
                             </div>
                           </div>
