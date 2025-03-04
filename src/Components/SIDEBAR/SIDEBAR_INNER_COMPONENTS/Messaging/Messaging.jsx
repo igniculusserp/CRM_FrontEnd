@@ -362,7 +362,6 @@ const Messaging = () => {
         setShowPicker(false);
       }
     };
-  
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showPicker]);
