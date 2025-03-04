@@ -31,6 +31,10 @@ import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/Global
 //Images Imported
 import MessageImage from "../../../../assets/Message/Message.png";
 
+// External Emoji Files
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
+
 const Messaging = () => {
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
@@ -49,10 +53,14 @@ const Messaging = () => {
   const [messages, setMessages] = useState([]);
   const [myInitials, setMyInitials] = useState("");
   const [userInitials, setUserInitials] = useState("");
+  const [showPicker, setShowPicker] = useState(false);
   //------------------------------------------- Set User ID From Drop down --------------------------------
   useEffect(() => {
     if (location.state?.userId) {
-      handleSelectUser(location.state?.userName || "Unknown", location.state.userId);
+      handleSelectUser(
+        location.state?.userName || "Unknown",
+        location.state.userId,
+      );
     }
   }, [location.state?.userId]);
 
@@ -78,20 +86,19 @@ const Messaging = () => {
       const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Chat/getAllrecievemessages`,
-        config
+        config,
       );
-  
+
       if (response.status === 200) {
         const messages = response.data?.data || [];
-        setAllMessage(messages); 
-  
-        CheckMessages(messages); 
+        setAllMessage(messages);
+
+        CheckMessages(messages);
       }
     } catch (error) {
       console.error("Error fetching user messages:", error);
     }
   };
-  
 
   //--------------------------------------- Fetch messages (sent & received) By ID ------------------------------------
   const fetchMessages = async (receiverId) => {
@@ -323,13 +330,17 @@ const Messaging = () => {
   }, [activeUsers, allMessage]); // Dependency array
 
   //------------------------------------------ Check all un read messages -------------------------------------
-  
+
   const CheckMessages = (updatedMessages) => {
     updatedMessages.forEach((msg) => {
       if (msg.status === false && msg.senderId === receiverId) {
         handleChangeStatus(msg.messageId);
       }
     });
+  };
+
+  const handleEmojiSelect = (emoji) => {
+    setMessageContent((prev) => prev + emoji.native);
   };
 
   return (
@@ -518,33 +529,67 @@ const Messaging = () => {
               </div>
 
               {/* ------------------------------------------- Text Box ------------------------------------------------------------ */}
-              <TextField
-                fullWidth
-                multiline
-                minRows={1}
-                maxRows={1}
-                placeholder="Type your message here"
-                variant="outlined"
-                value={messageContent}
-                onChange={(e) => setMessageContent(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSubmit();
-                  }
-                }}
-                sx={{ height: "80px" }}
-                InputProps={{
-                  style: { height: "80px", overflow: "auto" },
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={handleSubmit}>
-                        <SendIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
+              <div className="flex items-center gap-3 rounded-lg border-t bg-white p-3 shadow-md">
+                {/* Emoji Picker Button */}
+                <div className="relative">
+                  <button
+                    onClick={() => setShowPicker(!showPicker)}
+                    // onBlur={()=>setShowPicker(false)}
+                    className="rounded-full p-2 transition hover:bg-gray-200"
+                  >
+                    😊
+                  </button>
+
+                  {/* Emoji Picker */}
+                  {showPicker && (
+                    <div className="absolute bottom-12 left-0 z-10 rounded-lg bg-white shadow-lg">
+                      <Picker data={data} onEmojiSelect={handleEmojiSelect} />
+                    </div>
+                  )}
+                </div>
+
+                {/* Message Input Field */}
+                <TextField
+                  fullWidth
+                  multiline
+                  minRows={1}
+                  maxRows={3}
+                  placeholder="Type your message..."
+                  variant="outlined"
+                  value={messageContent}
+                  onChange={(e) => setMessageContent(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSubmit();
+                    }
+                  }}
+                  sx={{
+                    flex: 1,
+                    backgroundColor: "#f8f9fa",
+                    borderRadius: "8px",
+                    "& textarea": {
+                      scrollbarWidth: "none", // Firefox
+                      "&::-webkit-scrollbar": { display: "none" }, // Chrome, Safari, Edge
+                    },
+                  }}
+                  InputProps={{
+                    style: {
+                      height: "50px",
+                      overflow: "hidden", // Hides the scrollbar completely
+                    },
+                  }}
+                />
+
+                {/* Send Button */}
+                <IconButton
+                  onClick={handleSubmit}
+                  color="primary"
+                  className="rounded-full bg-blue-500 p-3 text-white transition hover:bg-blue-600"
+                >
+                  <SendIcon />
+                </IconButton>
+              </div>
             </>
           ) : (
             <div className="flex flex-1 items-center justify-center">
