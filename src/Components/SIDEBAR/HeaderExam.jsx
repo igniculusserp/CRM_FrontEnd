@@ -166,26 +166,22 @@ export default function Header({ toggle, setToggle }) {
 
     //---------------------------------------------- Set Count of Un read Messages --------------------------------
     useEffect(() => {
-      const interval = setInterval(() => {
-        if (activeUsers.length > 0 && allMessage.length > 0) {
-          const userMessageCounts = activeUsers
-            .map((user) => {
-              const count = allMessage.reduce((acc, msg) => 
-                msg.senderId === user.userId && msg.status === false ? acc + 1 : acc, 
-              0);
-    
-              return count > 0 ? { userName: user.fullName, count } : null;
-            })
-            .filter(Boolean); // Remove null values
-    
-          setUserMessageCounts(userMessageCounts);
-          console.log("Updated userMessageCounts:", userMessageCounts);
-        }
-      }, 100);
-    
-      return () => clearInterval(interval);
-    }, [activeUsers, allMessage]);
-     // Dependency array
+        const interval = setInterval(() => {
+          if (activeUsers.length > 0 && allMessage.length > 0) {
+            const userMessageCounts = activeUsers.map((user) => {
+              const count = allMessage.reduce((acc, msg) => {  
+                return msg.senderId === user.userId && msg.status === false ? acc + 1 : acc;
+              }, 0);
+              return { userName: user.fullName, count }; // Store count with userId
+            });
+      
+            setUserMessageCounts(userMessageCounts); // Save in state
+            console.log("Updated userMessageCounts:", userMessageCounts);
+          }
+        }, 100); // Runs every 5 seconds
+      
+        return () => clearInterval(interval); // Cleanup interval when component unmounts
+      }, [activeUsers, allMessage]); // Dependency array
 
       //--------------------------------------------------- Handle Drop DOwn --------------------------------------------------
 
@@ -197,7 +193,7 @@ export default function Header({ toggle, setToggle }) {
   const menu = [
     { key: 2, logo:  (
         <Badge
-          badgeContent={userMessageCounts?.length}
+          badgeContent={userMessageCounts.length}
           color="error"
           overlap="circular"
           classes={{ badge: "bg-green-500" }}

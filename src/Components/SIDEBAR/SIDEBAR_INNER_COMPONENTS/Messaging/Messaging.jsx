@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 //external Packages
 import axios from "axios";
 //MUi Packages
@@ -14,13 +14,13 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import SendIcon from "@mui/icons-material/Send";
-
+import LongMenu from "./LongMenu";
 
 //reactIcons
 import { CgCloseO } from "react-icons/cg";
 import { BsCheck2 } from "react-icons/bs";
 import { BsCheck2All } from "react-icons/bs";
-import { BsCheck2Circle } from "react-icons/bs";
+// import { BsCheck2Circle } from "react-icons/bs";
 
 //Folder Imported
 import { tenant_base_url, protocal_url } from "../../../../Config/config";
@@ -29,17 +29,17 @@ import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/Global
 //Images Imported
 import MessageImage from "../../../../assets/Message/Message.png";
 
-
 const Messaging = () => {
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
-  
+  const messagesEndRef = useRef(null);
   //------------------------- Get Current User ID From Local Storage --------------------------------
   const CurrentUserId = localStorage.getItem("CurrentUserId");
-  
+
   //----------------------------------- All States ---------------------------------------------------
   const [selectedUser, setSelectedUser] = useState(null);
-  const [chatStatus, setChatStatus] = useState({});
+  const [allMessage, setAllMessage] = useState([]);
+  const [userMessageCounts, setUserMessageCounts] = useState([]);
   const [activeUsers, setActiveUsers] = useState([]);
   const [receiverId, setReceiverId] = useState(0);
   const [messageContent, setMessageContent] = useState("");
@@ -63,67 +63,96 @@ const Messaging = () => {
     }
   };
 
-  //--------------------------------------- Fetch messages (sent & received) By ID ------------------------------------
+  // ------------------------------------------ Fetch All Messages ----------------------------------------
+  const fetchAllMessages = async () => {
+    try {
+      const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
+      const response = await axios.get(
+        `${protocal_url}${name}.${tenant_base_url}/Chat/getAllrecievemessages`,
+        config,
+      );
+      if (response.status === 200) {
+        setAllMessage(response.data?.data || []);
+      }
+    } catch (error) {
+      console.error("Error fetching user status:", error);
+    }
+  };
 
+  //--------------------------------------- Fetch messages (sent & received) By ID ------------------------------------
   const fetchMessages = async (receiverId) => {
     if (!receiverId) return;
-
+  
     const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
-
+  
     try {
       const [sentRes, receivedRes] = await Promise.all([
         axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Chat/getsendmessages/${receiverId}`,
-          config,
+          config
         ),
         axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Chat/getrecievemessages/${receiverId}`,
-          config,
+          config
         ),
       ]);
-
+  
       if (sentRes.status === 200 && receivedRes.status === 200) {
         const sentMessages = sentRes.data.data.map((msg) => ({
           ...msg,
           type: "sent",
         }));
-
+  
         const receivedMessages = receivedRes.data.data.map((msg) => ({
           ...msg,
           type: "received",
         }));
-
-        // Sort messages based on the `date` field
+  
+        // Sort messages by date (oldest first)
         const allMessages = [...sentMessages, ...receivedMessages].sort(
-          (a, b) => new Date(a.date) - new Date(b.date), // Sort by date (oldest first)
+          (a, b) => new Date(a.date) - new Date(b.date)
         );
-
-        setMessages(allMessages);
+  
+        // Use a callback function inside setMessages
+        setMessages((prevMessages) => {
+          if (allMessages.length > prevMessages.length) {
+            setTimeout(scrollToBottom, 100); // Scroll after rendering
+          }
+          return allMessages;
+        });
+  
+        // Run CheckMessages after setMessages is updated
+        setTimeout(() => {
+          CheckMessages(allMessages);
+        }, 100);
       }
     } catch (error) {
       console.error("Error fetching messages:", error);
     }
   };
-
+  
   //---------------------------------------- UseEffect call ------------------------------------
   useEffect(() => {
     fetchUsers();
-  }, [messages]);
+    fetchAllMessages();
+  }, []);
+  //---------------------------------------- UseEffect fetchMessages ------------------------------
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchMessages(receiverId);
+      fetchAllMessages();
+    }, 2000); // Fetch messages every 2 seconds
+
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, [receiverId]);
   //------------------------------------------- Select Users Functionality --------------------------------
   const handleSelectUser = (fullName, userId) => {
     setSelectedUser(fullName);
-    setChatStatus((prevChat) => ({
-      ...prevChat,
-      [fullName]: prevChat[fullName]?.map((msg) => ({ ...msg, seen: true })),
-    }));
     setReceiverId(userId);
     setUserInitials(getInitials(fullName));
     fetchMessages(userId);
-  };
-  //------------------------------------------- Count Functionality --------------------------------
 
-  const getUnseenCount = (fullName) =>
-    chatStatus[fullName]?.filter((msg) => !msg.seen).length || 0;
+  };
 
   //------------------------------------------- Users Initials Functionality --------------------------------
 
@@ -146,14 +175,15 @@ const Messaging = () => {
 
   // ------------------------------------------- Send Message Functionality --------------------------------
   //------------------------------------------------Handle Submit---------------------------------------------------
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
     const bearer_token = localStorage.getItem("token");
     const currentTime = new Date().toISOString(); // Ensure valid sendtime
+
     if (!messageContent.trim()) {
       alert("Message cannot be empty!");
       return;
     }
+
     const payload = {
       receiverId: receiverId,
       messageContent: messageContent,
@@ -181,7 +211,7 @@ const Messaging = () => {
 
       if (response.status === 200) {
         setMessageContent("");
-        fetchMessages();
+        fetchMessages(receiverId);
       }
     } catch (error) {
       console.error("API Error:", error.response?.data || error.message);
@@ -189,19 +219,132 @@ const Messaging = () => {
     }
   };
 
+  //---------------------------------------------------------- Handle Delete -----------------------------------------------
+
+  const handleDelete = async (id) => {
+    if (!id) {
+      alert("Message ID is missing!");
+      return; // Stop execution if id is undefined/null
+    }
+
+    const bearer_token = localStorage.getItem("token");
+    const name = getHostnamePart();
+    console.log("Deleting Message ID:", id);
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+          "Content-Type": "application/json",
+        },
+      };
+
+      const payload = { messageId: id };
+
+      const response = await axios.delete(
+        `${protocal_url}${name}.${tenant_base_url}/Chat/deletemessage`,
+        { data: payload, ...config },
+      );
+
+      console.log("Delete Response:", response.data);
+      fetchMessages(receiverId);
+      alert("Message deleted successfully");
+    } catch (error) {
+      console.error("Delete Error:", error.response?.data);
+      alert(error.response?.data?.message || "Failed to delete message.");
+    }
+  };
+
+  // ------------------------------------------ Scroll to bottom ---------------------------------
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView();
+  };
+
+  //------------------------------------------ Handle Update -------------------------------------
+  const handleChangeStatus = async (id) => {
+    if (!id) {
+      alert("Message ID is missing!");
+      return; // Stop execution if id is undefined/null
+    }
+    const bearer_token = localStorage.getItem("token");
+    const name = getHostnamePart();
+    console.log("Updating Message Status for ID:", id);
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${bearer_token}`,
+          "Content-Type": "application/json",
+        },
+      };
+      const payload = { messageId: id };
+      const response = await axios.put(
+        `${protocal_url}${name}.${tenant_base_url}/Chat/updatemessagestatusread`,
+        payload,
+        config,
+      );
+
+      console.log("Status Update Response:", response.data);
+      // fetchMessages(receiverId);
+    } catch (error) {
+      console.error("Update Status Error:", error.response?.data);
+      alert(
+        error.response?.data?.message || "Failed to update message status.",
+      );
+    }
+  };
+
+  //---------------------------------------------- Set Count of Un read Messages --------------------------------
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (activeUsers.length > 0 && allMessage.length > 0) {
+        const userMessageCounts = activeUsers.map((user) => {
+          const count = allMessage.reduce((acc, msg) => {  
+            return msg.senderId === user.userId && msg.status === false ? acc + 1 : acc;
+          }, 0);
+          return { userId: user.userId, count }; // Store count with userId
+        });
+  
+        setUserMessageCounts(userMessageCounts); // Save in state
+        console.log("Updated userMessageCounts:", userMessageCounts);
+      }
+    }, 100); // Runs every 5 seconds
+  
+    return () => clearInterval(interval); // Cleanup interval when component unmounts
+  }, [activeUsers, allMessage]); // Dependency array
+  
+  //------------------------------------------ Check all un read messages -------------------------------------
+  let previousMessageLength = 0; // Store previous length outside function scope
+
+  const CheckMessages = (updatedMessages) => {
+    if (updatedMessages.length === previousMessageLength) {
+      console.log("No new messages, skipping status check.");
+      return; // Exit early if length is unchanged
+    }
+  
+    console.log("New messages detected, checking statuses...");
+    previousMessageLength = updatedMessages.length; // Update stored length
+  
+    updatedMessages.forEach((msg) => {
+      if (msg.status === false) {
+        handleChangeStatus(msg.messageId);
+      }
+    });
+  };
+
   return (
     <>
-      <div className="flex p-4 pt-3 pb-0 align-middle bg-gray-100">
-        <div className="w-full p-4 bg-white rounded-lg shadow-md">
+      <div className="flex bg-gray-100 p-4 pb-0 pt-3 align-middle">
+        <div className="w-full rounded-lg bg-white p-4 shadow-md">
           <h2 className="text-lg font-semibold">Messaging</h2>
         </div>
       </div>
       <div
-        className="flex p-4 bg-gray-100"
+        className="flex bg-gray-100 p-4"
         style={{ height: "calc(100% - 72px)" }}
       >
         {/* ------------------------------------------------------- Sidebar --------------------------------------------- */}
-        <div className="w-1/3 p-4 bg-white rounded-lg shadow-md">
+        <div className="w-1/3 rounded-lg bg-white p-4 shadow-md">
           {/* ------------------------------------------ Loged in User ------------------------------------------ */}
           <div>
             {activeUsers.map((user) => {
@@ -210,7 +353,7 @@ const Messaging = () => {
               return (
                 <div
                   key={user.userId}
-                  className="flex items-center justify-between p-2 mb-2 rounded-lg shadow-sm bg-cyan-500"
+                  className="mb-2 flex items-center justify-between rounded-lg bg-cyan-500 p-2 shadow-sm"
                 >
                   <div className="flex items-center gap-2">
                     <Badge>
@@ -219,7 +362,7 @@ const Messaging = () => {
                     <span className="font-medium">{user.fullName}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="relative flex items-center justify-center w-3 h-3 mr-4 rounded-full shadow-xl bg-gradient-to-br from-green-400 to-green-700 "></span>
+                    <span className="relative mr-4 flex h-3 w-3 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-700 shadow-xl"></span>
                   </div>
                 </div>
               );
@@ -244,16 +387,20 @@ const Messaging = () => {
           <div>
             {activeUsers.map((user) => {
               if (parseInt(CurrentUserId) === user.userId) return null;
+              // Find the unread message count for this user
+              const userCount = userMessageCounts?.find(
+                (countObj) => countObj?.userId === user.userId,
+              );
 
               return (
                 <div
                   key={user.userId}
-                  className="flex items-center justify-between p-2 mb-2 bg-gray-100 rounded-lg shadow-sm cursor-pointer hover:bg-gray-200"
+                  className="mb-2 flex cursor-pointer items-center justify-between rounded-lg bg-gray-100 p-2 shadow-sm hover:bg-gray-200"
                   onClick={() => handleSelectUser(user.fullName, user.userId)}
                 >
                   <div className="flex items-center gap-2">
                     <Badge
-                      badgeContent={getUnseenCount(user.fullName)}
+                      badgeContent={userCount?.count}
                       color="error"
                       overlap="circular"
                       classes={{ badge: "bg-green-500" }}
@@ -271,9 +418,9 @@ const Messaging = () => {
                       }`}
                     >
                       {user.status && (
-                        <span className="absolute w-3 h-3 bg-green-400 rounded-full opacity-50 animate-ping"></span>
+                        <span className="absolute h-3 w-3 animate-ping rounded-full bg-green-400 opacity-50"></span>
                       )}
-                      <span className="absolute inset-0 w-full h-full bg-white rounded-full opacity-20"></span>
+                      <span className="absolute inset-0 h-full w-full rounded-full bg-white opacity-20"></span>
                     </span>
                     <IconButton size="small">
                       <OpenInNewIcon fontSize="small" />
@@ -286,61 +433,121 @@ const Messaging = () => {
         </div>
 
         {/* ------------------------------------------------------- Chat Area ----------------------------------------------- */}
-        <div className="flex flex-col flex-1 ml-4 bg-white rounded-lg shadow-md">
+        <div className="ml-4 flex flex-1 flex-col rounded-lg bg-white shadow-md">
           {selectedUser ? (
             <>
               {/* ---------------------------------------------- Heading ------------------------------------------- */}
-              <div className="flex justify-between px-4 py-2 font-semibold text-white rounded-t-lg bg-cyan-500">
+              <div className="flex justify-between rounded-t-lg bg-cyan-500 px-4 py-2 font-semibold text-white">
                 <span className="flex items-center">{selectedUser}</span>
                 <IconButton size="small" onClick={() => setSelectedUser(null)}>
-                <CgCloseO size={22} className="text-white text-semibold"/> 
+                  <CgCloseO size={22} className="text-semibold text-white" />
                 </IconButton>
               </div>
               {/* -------------------------------------------------- Chat Box --------------------------------------------------- */}
-              <div className="flex-1 p-4 overflow-auto">
+              <div className="flex-1 overflow-auto p-4">
                 {messages.map((msg, index) => {
-                  return parseInt(CurrentUserId) === msg.senderId ? (
-                    <div key={index} className="flex items-center justify-end gap-3 mb-2">
-                      <div className="p-2 ml-2 bg-gray-200 rounded-lg shadow">
-                        <p>{msg.messageContent}</p>
-                        <span className="text-xs italic">{(msg.date.replace('T', ' ').split('.')[0]).split(' ').reverse().join(' ')}</span>
-                      </div>
-                      <Avatar>{myInitials}</Avatar>
-                    </div>
-                  ) : (
-                    <div key={index} className="flex items-center justify-start mb-2">
-                      <Avatar>{userInitials}</Avatar>
-                      <div className="p-2 ml-2 bg-gray-200 rounded-lg shadow">
-                        <p>{msg.messageContent}</p>
-                        <span className="text-xs italic">{(msg.date.replace('T', ' ').split('.')[0]).split(' ').reverse().join(' ')}</span>
-                      </div>
+                  const isCurrentUser =
+                    parseInt(CurrentUserId) === msg.senderId;
+
+                  return (
+                    <div
+                      key={index}
+                      className={`mb-2 flex items-center ${
+                        isCurrentUser ? "justify-end" : "justify-start"
+                      } gap-3`}
+                    >
+                      {isCurrentUser ? (
+                        <>
+                          <div className="relative ml-2 flex max-w-[75%] flex-col justify-start rounded-lg bg-gray-100 p-2 shadow">
+                            <div className="relative flex items-center justify-between gap-3">
+                              <p>{msg.messageContent}</p>
+                              <LongMenu
+                                onDelete={() => handleDelete(msg.messageId)}
+                              />
+                            </div>
+                            <div className="flex items-center gap-8 pr-3 pt-2 text-xs italic text-gray-500">
+                              <div>
+                                {msg.date
+                                  .replace("T", " ")
+                                  .split(".")[0]
+                                  .split(" ")
+                                  .reverse()
+                                  .join(" ")}
+                              </div>
+                              <div>
+                                {msg.status ? (
+                                  <BsCheck2All color="green" size={16} />
+                                ) : (
+                                  <BsCheck2 size={16} />
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                          <Avatar>{myInitials}</Avatar>
+                        </>
+                      ) : (
+                        <div
+                          onMouseEnter={() => handleChangeStatus(msg.messageId)}
+                          className="flex items-center"
+                        >
+                          <Avatar>{userInitials}</Avatar>
+                          <div className="relative ml-2 flex max-w-[75%] flex-col justify-start rounded-lg bg-gray-100 p-2 shadow">
+                            <div className="relative flex items-center justify-between gap-3">
+                              <p>{msg.messageContent}</p>
+                              <LongMenu
+                                onDelete={() => handleDelete(msg.messageId)}
+                              />
+                            </div>
+                            <span className="pl-3 pt-2 text-xs italic text-gray-500">
+                              {msg.date
+                                .replace("T", " ")
+                                .split(".")[0]
+                                .split(" ")
+                                .reverse()
+                                .join(" ")}
+                            </span>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
+
+                {/* Invisible div for auto-scroll */}
+                <div ref={messagesEndRef} />
               </div>
 
               {/* ------------------------------------------- Text Box ------------------------------------------------------------ */}
-              <div className="p-2 border-t">
-                <TextField
-                  fullWidth
-                  placeholder="Type your message here"
-                  variant="outlined"
-                  value={messageContent}
-                  onChange={(e) => setMessageContent(e.target.value)}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton onClick={handleSubmit}>
-                          <SendIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </div>
+              <TextField
+                fullWidth
+                multiline
+                minRows={1}
+                maxRows={1}
+                placeholder="Type your message here"
+                variant="outlined"
+                value={messageContent}
+                onChange={(e) => setMessageContent(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSubmit();
+                  }
+                }}
+                sx={{ height: "80px" }}
+                InputProps={{
+                  style: { height: "80px", overflow: "auto" },
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleSubmit}>
+                        <SendIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
             </>
           ) : (
-            <div className="flex items-center justify-center flex-1">
+            <div className="flex flex-1 items-center justify-center">
               <Box className="text-center">
                 <img src={MessageImage} alt="No Chat Selected" />
                 <p className="mt-2 font-medium text-gray-600">
