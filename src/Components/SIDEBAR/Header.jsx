@@ -211,6 +211,7 @@ export default function Header({ toggle, setToggle }) {
   //-------------------------------------------------- Navigation to Message Menu ---------------------------------------------
 
   const handleNavigate = (userId) => {
+    handleDropdownClose();
     navigate("/panel/messaging", { state: { userId } });
   };
   
