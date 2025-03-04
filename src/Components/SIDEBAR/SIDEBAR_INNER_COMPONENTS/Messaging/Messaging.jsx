@@ -53,6 +53,7 @@ const Messaging = () => {
   useEffect(() => {
     if (location.state?.userId) {
       setReceiverId(location.state.userId);
+      fetchMessages(location.state.userId);
     }
   }, [location.state?.userId]);
 
