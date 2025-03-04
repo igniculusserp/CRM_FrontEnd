@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { getHostnamePart } from "./Components/SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
+
 const INACTIVITY_TIMEOUT = 2640000; // 44 minutes
 // const INACTIVITY_TIMEOUT = 264000; // 4.4 minutes
 
@@ -9,6 +11,9 @@ const ProtectedRoute = ({ children }) => {
   const timerRef = useRef(null);
   const intervalRef = useRef(null);
   const [timeLeft, setTimeLeft] = useState(INACTIVITY_TIMEOUT);
+
+  //to read url
+  const name = getHostnamePart();
 
   const storedOtp = localStorage.getItem("otp");
   const token = localStorage.getItem("token");
@@ -32,10 +37,10 @@ const ProtectedRoute = ({ children }) => {
 
     
     //localhost
-    const newUrl = `http://${data.name}.localhost:5173/tenantlogin`;
+    const newUrl = `http://${name}.localhost:5173/tenantlogin`;
     
     // For Server
-    // const newUrl = `http://${data.name}.${urlchange_base}/tenantlogin `;
+    // const newUrl = `http://${name}.${urlchange_base}/tenantlogin `;
     window.location.href = newUrl;
 
     console.log("logout triggered");
