@@ -329,7 +329,7 @@ const Messaging = () => {
     return () => clearInterval(interval); // Cleanup interval when component unmounts
   }, [activeUsers, allMessage]); // Dependency array
 
-  //------------------------------------------ Check all un read messages -------------------------------------
+  //---------------------------------------------- Check all un read messages ------------------------------------------
 
   const CheckMessages = (updatedMessages) => {
     updatedMessages.forEach((msg) => {
@@ -338,10 +338,34 @@ const Messaging = () => {
       }
     });
   };
-
+  //---------------------------------------------- Emoji Picker Code ------------------------------------------
+  //---------------------------------------------- Emoji Picker Select ------------------------------------------
   const handleEmojiSelect = (emoji) => {
     setMessageContent((prev) => prev + emoji.native);
   };
+
+
+  //---------------------------------------------- Emoji Picker Close on Out Side Click ------------------------------------------
+
+  const pickerRef = useRef(null);
+
+  const buttonRef = useRef(null); 
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        pickerRef.current &&
+        !pickerRef.current.contains(event.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target) // Prevent closing when clicking the button
+      ) {
+        setShowPicker(false);
+      }
+    };
+  
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showPicker]);
 
   return (
     <>
@@ -533,8 +557,11 @@ const Messaging = () => {
                 {/* Emoji Picker Button */}
                 <div className="relative">
                   <button
-                    onClick={() => setShowPicker(!showPicker)}
-                    // onBlur={()=>setShowPicker(false)}
+                    ref={buttonRef} // Attach ref to button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowPicker((prev) => !prev); // Properly toggle picker
+                    }}
                     className="rounded-full p-2 transition hover:bg-gray-200"
                   >
                     😊
@@ -542,7 +569,10 @@ const Messaging = () => {
 
                   {/* Emoji Picker */}
                   {showPicker && (
-                    <div className="absolute bottom-12 left-0 z-10 rounded-lg bg-white shadow-lg">
+                    <div
+                      ref={pickerRef}
+                      className="absolute bottom-12 left-0 z-10 rounded-lg bg-white shadow-lg"
+                    >
                       <Picker data={data} onEmojiSelect={handleEmojiSelect} />
                     </div>
                   )}
