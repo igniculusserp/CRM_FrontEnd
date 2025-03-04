@@ -339,36 +339,34 @@ const Messaging = () => {
     });
   };
   //---------------------------------------------- Emoji Picker Code ------------------------------------------
-//---------------------------------------------- Emoji Picker Select ------------------------------------------
+  //---------------------------------------------- Emoji Picker Select ------------------------------------------
   const handleEmojiSelect = (emoji) => {
     setMessageContent((prev) => prev + emoji.native);
   };
-//---------------------------------------------- Emoji Picker OPen / Close ------------------------------------------
- const handleEmijiPicker =()=>{
-  setShowPicker(!showPicker);
- }
 
-//---------------------------------------------- Emoji Picker Close on Out Side Click ------------------------------------------
 
- const pickerRef = useRef(null);
+  //---------------------------------------------- Emoji Picker Close on Out Side Click ------------------------------------------
 
- useEffect(() => {
-   const handleClickOutside = (event) => {
-     if (pickerRef.current && !pickerRef.current.contains(event.target)) {
-       setShowPicker(false);
-     }
-   };
- 
-   if (showPicker) {
-     document.addEventListener("mousedown", handleClickOutside);
-   } else {
-     document.removeEventListener("mousedown", handleClickOutside);
-   }
- 
-   return () => document.removeEventListener("mousedown", handleClickOutside);
- }, [showPicker]);
+  const pickerRef = useRef(null);
 
- 
+  const buttonRef = useRef(null); 
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        pickerRef.current &&
+        !pickerRef.current.contains(event.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target) // Prevent closing when clicking the button
+      ) {
+        setShowPicker(false);
+      }
+    };
+  
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showPicker]);
+
   return (
     <>
       <div className="flex bg-gray-100 p-4 pb-0 pt-3 align-middle">
@@ -559,15 +557,22 @@ const Messaging = () => {
                 {/* Emoji Picker Button */}
                 <div className="relative">
                   <button
-                    onClick={handleEmijiPicker}
+                    ref={buttonRef} // Attach ref to button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowPicker((prev) => !prev); // Properly toggle picker
+                    }}
                     className="rounded-full p-2 transition hover:bg-gray-200"
-                    >
+                  >
                     😊
                   </button>
 
                   {/* Emoji Picker */}
                   {showPicker && (
-                    <div ref={pickerRef} className="absolute bottom-12 left-0 z-10 rounded-lg bg-white shadow-lg">
+                    <div
+                      ref={pickerRef}
+                      className="absolute bottom-12 left-0 z-10 rounded-lg bg-white shadow-lg"
+                    >
                       <Picker data={data} onEmojiSelect={handleEmojiSelect} />
                     </div>
                   )}
