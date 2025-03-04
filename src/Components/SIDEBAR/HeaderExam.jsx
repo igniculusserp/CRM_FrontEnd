@@ -175,8 +175,7 @@ export default function Header({ toggle, setToggle }) {
               return { userName: user.fullName, count }; // Store count with userId
             });
       
-            setUserMessageCounts(userMessageCounts); // Save in state
-            console.log("Updated userMessageCounts:", userMessageCounts);
+            setUserMessageCounts(userMessageCounts); 
           }
         }, 100); // Runs every 5 seconds
       
@@ -271,21 +270,21 @@ export default function Header({ toggle, setToggle }) {
           ))}
         </div>
          {/* Dropdown for Messages */}
-         <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleDropdownClose}
-        >
-          {userMessageCounts.length > 0 ? (
-            userMessageCounts.map((msg, index) => (
-              <MenuItem key={index}>
-                <span className="text-sm">{msg.fullName}</span>
-              </MenuItem>
-            ))
-          ) : (
-            <MenuItem>No new messages</MenuItem>
-          )}
-        </Menu>
+       <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleDropdownClose}
+      >
+        {userMessageCounts?.length > 0 ? (
+          userMessageCounts.map((msg, index) => (
+            <MenuItem key={index}>
+              <span className="text-sm">{msg.userName} ({msg.count})</span>
+            </MenuItem>
+          ))
+        ) : (
+          <MenuItem>No new messages</MenuItem>
+        )}
+      </Menu>
       </div>
     </>
   );
