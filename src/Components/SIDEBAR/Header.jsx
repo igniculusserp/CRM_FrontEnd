@@ -210,9 +210,9 @@ export default function Header({ toggle, setToggle }) {
 
   //-------------------------------------------------- Navigation to Message Menu ---------------------------------------------
 
-  const handleNavigate = (userId) => {
+  const handleNavigate = (userName, userId) => {
     handleDropdownClose();
-    navigate("/panel/messaging", { state: { userId } });
+    navigate("/panel/messaging", { state: {userName, userId } });
   };
   
   //----------------------------------------------------------- MENU --------------------------------------------------------------------
@@ -312,7 +312,7 @@ export default function Header({ toggle, setToggle }) {
               <MenuItem
                 key={index} 
                 className="flex items-center gap-2 px-4 py-2"
-                onClick={()=>handleNavigate(msg.userId)}
+                onClick={()=>handleNavigate(msg.userName, msg.userId)}
               >
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 text-sm font-semibold text-white">
                   {msg.userName.charAt(0)}

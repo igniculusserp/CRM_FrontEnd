@@ -52,8 +52,7 @@ const Messaging = () => {
   //------------------------------------------- Set User ID From Drop down --------------------------------
   useEffect(() => {
     if (location.state?.userId) {
-      setReceiverId(location.state.userId);
-      fetchMessages(location.state.userId);
+      handleSelectUser(location.state?.userName || "Unknown", location.state.userId);
     }
   }, [location.state?.userId]);
 
@@ -326,8 +325,6 @@ const Messaging = () => {
   //------------------------------------------ Check all un read messages -------------------------------------
   
   const CheckMessages = (updatedMessages) => {
-
-
     updatedMessages.forEach((msg) => {
       if (msg.status === false && msg.senderId === receiverId) {
         handleChangeStatus(msg.messageId);
