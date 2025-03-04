@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
+
 //external Packages
 import axios from "axios";
 //MUi Packages
@@ -33,6 +35,7 @@ const Messaging = () => {
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
   const messagesEndRef = useRef(null);
+  const location = useLocation();
   //------------------------- Get Current User ID From Local Storage --------------------------------
   const CurrentUserId = localStorage.getItem("CurrentUserId");
 
@@ -46,6 +49,12 @@ const Messaging = () => {
   const [messages, setMessages] = useState([]);
   const [myInitials, setMyInitials] = useState("");
   const [userInitials, setUserInitials] = useState("");
+  //------------------------------------------- Set User ID From Drop down --------------------------------
+  useEffect(() => {
+    if (location.state?.userId) {
+      setReceiverId(location.state.userId);
+    }
+  }, [location.state?.userId]);
 
   // ------------------------------------------ Fetch user ----------------------------------------
   const fetchUsers = async () => {
@@ -69,50 +78,55 @@ const Messaging = () => {
       const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
       const response = await axios.get(
         `${protocal_url}${name}.${tenant_base_url}/Chat/getAllrecievemessages`,
-        config,
+        config
       );
+  
       if (response.status === 200) {
-        setAllMessage(response.data?.data || []);
+        const messages = response.data?.data || [];
+        setAllMessage(messages); 
+  
+        CheckMessages(messages); 
       }
     } catch (error) {
-      console.error("Error fetching user status:", error);
+      console.error("Error fetching user messages:", error);
     }
   };
+  
 
   //--------------------------------------- Fetch messages (sent & received) By ID ------------------------------------
   const fetchMessages = async (receiverId) => {
     if (!receiverId) return;
-  
+
     const config = { headers: { Authorization: `Bearer ${bearer_token}` } };
-  
+
     try {
       const [sentRes, receivedRes] = await Promise.all([
         axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Chat/getsendmessages/${receiverId}`,
-          config
+          config,
         ),
         axios.get(
           `${protocal_url}${name}.${tenant_base_url}/Chat/getrecievemessages/${receiverId}`,
-          config
+          config,
         ),
       ]);
-  
+
       if (sentRes.status === 200 && receivedRes.status === 200) {
         const sentMessages = sentRes.data.data.map((msg) => ({
           ...msg,
           type: "sent",
         }));
-  
+
         const receivedMessages = receivedRes.data.data.map((msg) => ({
           ...msg,
           type: "received",
         }));
-  
+
         // Sort messages by date (oldest first)
         const allMessages = [...sentMessages, ...receivedMessages].sort(
-          (a, b) => new Date(a.date) - new Date(b.date)
+          (a, b) => new Date(a.date) - new Date(b.date),
         );
-  
+
         // Use a callback function inside setMessages
         setMessages((prevMessages) => {
           if (allMessages.length > prevMessages.length) {
@@ -120,17 +134,12 @@ const Messaging = () => {
           }
           return allMessages;
         });
-  
-        // Run CheckMessages after setMessages is updated
-        setTimeout(() => {
-          CheckMessages(allMessages);
-        }, 100);
       }
     } catch (error) {
       console.error("Error fetching messages:", error);
     }
   };
-  
+
   //---------------------------------------- UseEffect call ------------------------------------
   useEffect(() => {
     fetchUsers();
@@ -151,7 +160,6 @@ const Messaging = () => {
     setReceiverId(userId);
     setUserInitials(getInitials(fullName));
     fetchMessages(userId);
-
   };
 
   //------------------------------------------- Users Initials Functionality --------------------------------
@@ -299,34 +307,28 @@ const Messaging = () => {
     const interval = setInterval(() => {
       if (activeUsers.length > 0 && allMessage.length > 0) {
         const userMessageCounts = activeUsers.map((user) => {
-          const count = allMessage.reduce((acc, msg) => {  
-            return msg.senderId === user.userId && msg.status === false ? acc + 1 : acc;
+          const count = allMessage.reduce((acc, msg) => {
+            return msg.senderId === user.userId && msg.status === false
+              ? acc + 1
+              : acc;
           }, 0);
           return { userId: user.userId, count }; // Store count with userId
         });
-  
-        setUserMessageCounts(userMessageCounts); // Save in state
-        console.log("Updated userMessageCounts:", userMessageCounts);
+
+        setUserMessageCounts(userMessageCounts);
       }
     }, 100); // Runs every 5 seconds
-  
+
     return () => clearInterval(interval); // Cleanup interval when component unmounts
   }, [activeUsers, allMessage]); // Dependency array
-  
-  //------------------------------------------ Check all un read messages -------------------------------------
-  let previousMessageLength = 0; // Store previous length outside function scope
 
+  //------------------------------------------ Check all un read messages -------------------------------------
+  
   const CheckMessages = (updatedMessages) => {
-    if (updatedMessages.length === previousMessageLength) {
-      console.log("No new messages, skipping status check.");
-      return; // Exit early if length is unchanged
-    }
-  
-    console.log("New messages detected, checking statuses...");
-    previousMessageLength = updatedMessages.length; // Update stored length
-  
+
+
     updatedMessages.forEach((msg) => {
-      if (msg.status === false) {
+      if (msg.status === false && msg.senderId === receiverId) {
         handleChangeStatus(msg.messageId);
       }
     });
