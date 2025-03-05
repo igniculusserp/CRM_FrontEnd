@@ -36,19 +36,19 @@ export default function SidebaBar({ toggle, setToggle }) {
   useEffect(() => {
     setBusiness(businessType);
     console.log(business);
-  }, []);
+  }, [business]);
 
   const sideBar = [
     {
       key: 1,
       data: "Home",
-      link: "/panel/dashboard",
+      link: "/panel/advisory/dashboard",
       icon: <RiHome4Line />,
     },
     {
       key: 2,
       data: "Leads",
-      link: "/panel/lead",
+      link: "/panel/advisory/lead",
       icon: <GrContactInfo />,
     },
     {
@@ -143,7 +143,7 @@ export default function SidebaBar({ toggle, setToggle }) {
     {
       key: 1,
       data: "Home",
-      link: "/panel/dashboard",
+      link: "/panel/brokerage/dashboard",
       icon: <RiHome4Line />,
     },
     {
@@ -245,6 +245,8 @@ export default function SidebaBar({ toggle, setToggle }) {
       icon: <PiChatsBold />,
     },
   ];
+
+ 
 
   const [active, setactive] = useState(sideBar[0].key);
 

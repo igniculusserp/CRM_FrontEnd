@@ -30,7 +30,7 @@ import ForgetPassOTP from "./Components/REGISTRATION/ForgetPassOTP.jsx";
 import ForgetResetPassword from "./Components/REGISTRATION/ForgetResetPassword";
 import ForgetPassSuccess from "./Components/REGISTRATION/ForgetPassSuccess.jsx";
 
-//SideBar
+//SidebarBase
 import SidebarBase from "./Components/SIDEBAR/SidebarBase.jsx";
 
 
@@ -156,116 +156,36 @@ const router = createBrowserRouter([
 
   { path: "*", element: <ErrorRoute /> },
   {
-    path: "/panel",
-    element: (
+    path: "/panel/advisory", element: (
       <ProtectedRoute>
         <SidebarBase />
       </ProtectedRoute>
     ),
     children: [
-      { path: "/panel", element: <Home /> },
-
-      //Lead->
-      { path: "/panel/dashboard", element: <Home /> },
-      { path: "/panel/lead", element: <Lead /> },
-      { path: "/panel/editlead/:id", element: <Createlead /> },
-      { path: "/panel/createlead", element: <Createlead /> },
-      { path: "/panel/lead/create/so/:id", element: <CreateSOLead /> },
-
-      //Contacts->
-      { path: "/panel/contact", element: <Contact /> },
-      { path: "/panel/createcontact", element: <CreateContact /> },
-      { path: "/panel/editContact/:id", element: <CreateContact /> },
-      { path: "/panel/contact/create/so/:id", element: <CreateSOContact /> },
-
-      //FreeTrail ->
-      { path: "/panel/freeTrail", element: <FreeTrail /> },
-      { path: "/panel/createtrial/:id", element: <CreateTrial /> },
-
-      //FollowUp ->
-      { path: "/panel/followup", element: <FollowUp /> },
-      { path: "/panel/createfollowup/:id", element: <CreateFollowUp /> },
-
-      //VoiceBox ->
-      { path: "/panel/voicebox", element: <VoiceBox /> },
-      { path: "/panel/createvoice", element: <CreateVoice /> },
-      { path: "/panel/createvoicedetails", element: <CreateVoiceDetails /> },
-      { path: "/panel/createvoicereports", element: <CreateVoiceReports /> },
-
-      //LOGS
-      { path: "/panel/logs", element: <Logs /> },
-      { path: "/panel/createlogs", element: <CreateLogs /> },
-      { path: "/panel/createchats", element: <CreateChats /> },
-      { path: "/panel/createextension", element: <CreateExtension /> },
-      { path: "/panel/createlogin", element: <CreateLogin /> },
-
-      //CLIENT
-      { path: "/panel/client", element: <Client /> },
-
-      //SALESORDER
-      { path: "/panel/salesorder", element: <SalesOrder /> },
-      { path: "/panel/createorder", element: <CreateOrder /> },
-
-      //MAILBOX
-      { path: "/panel/mailBox", element: <MailBox /> },
-      { path: "/panel/createmail", element: <CreateMailBox /> },
-
-      // SERVICE BOX
-      { path: "/panel/servicebox", element: <ServiceBox /> },
-      { path: "/panel/sendsms", element: <CreateSendSms /> },
-      { path: "/panel/sendemail", element: <CreateSendEmail /> },
-
-      // Financial Activity
-      { path: "/panel/FinancialActivity", element: <FinancialActivity /> },
-
-      // Report
-      { path: "/panel/reports", element: <Reports /> },
-      { path: "/panel/clientso/:id", element: <EditClientSO /> },
-
-      // ANALYTICS
-      { path: "/panel/analytics", element: <Analytics /> },
-
-      //Messaging
-      { path: "/panel/messaging", element: <Messaging /> },
-
-      // MIS REPORT
-      { path: "/panel/misreports", element: <MISReports /> },
-      { path: "/panel/creategeneral", element: <GeneralReport /> },
-      { path: "/panel/createft", element: <FtReport /> },
-      { path: "/panel/createpaid", element: <PaidClientReport /> },
-      { path: "/panel/createuser", element: <UserReport /> },
-      { path: "/panel/createcalling", element: <CallingReport /> },
-      { path: "/panel/creatednd", element: <DNDReport /> },
-      { path: "/panel/createtrack", element: <TrackSheet /> },
-      { path: "/panel/createresearch", element: <ResearchReport /> },
-
-      { path: "/panel/groupChat", element: <GroupChat /> },
-      { path: "/panel/setting", element: <Setting /> },
-
-      { path: "/panel/subscription", element: <Subscription /> },
-
-
-
-      { path: "*", element: <ErrorRoute /> },
-
-      // --------------------------------  Settings ------------------------------
-      { path: "/panel/setting/User-Setting", element: <UserSetting /> },
-      { path: "/panel/setting/User-Operation", element: <UserOperation /> },
-      { path: "/panel/setting/group", element: <Group /> },
-      { path: "/panel/setting/department", element: <Department /> },
-      { path: "/panel/setting/designation", element: <Designation /> },
-      { path: "/panel/setting/qualification", element: <Qualification /> },
-      { path: "/panel/setting/leadStatus", element: <LeadStatus /> },
-      { path: "/panel/setting/pools", element: <Pool /> },
-      { path: "/panel/setting/segments", element: <Segments /> },
-      { path: "/panel/setting/expensehead", element: <ExpenseHead /> },
-      { path: "/panel/setting/sms-template", element: <SMSTemplate /> },
-      { path: "/panel/setting/email-template", element: <EmailTemplate /> },
-      { path: "/panel/setting/sms-Settings", element: <SMSSetting /> },
-      { path: "/panel/setting/email-Settings", element: <EmailSetting /> },
-      { path: "/panel/setting/access-device", element: <AccessDevice /> },
-      { path: "/panel/settings/access-control",lement: <AccessControl />,},
-      { path: "/panel/setting/permissions", element: <Permissions /> },
+      { path: "", element: <Home /> },  // Default route when /panel/advisory is accessed
+      { path: "dashboard", element: <Home /> },  // For /panel/advisory/dashboard
+    ],
+  },
+  {
+    path: "/panel/brokerage", element: (
+      <ProtectedRoute>
+        <SidebarBase />
+      </ProtectedRoute>
+    ),
+    children: [
+      { path: "", element: <Home /> },  // Default route when /panel/brokerage is accessed
+      { path: "dashboard", element: <Home /> },  // For /panel/brokerage/dashboard
+    ],
+  },
+  {
+    path: "/panel/realestate", element: (
+      <ProtectedRoute>
+        <SidebarBase />
+      </ProtectedRoute>
+    ),
+    children: [
+      { path: "", element: <Home /> },  // Default route when /panel/advisory is accessed
+      { path: "dashboard", element: <Home /> },  // For /panel/advisory/dashboard
     ],
   },
 ]);
