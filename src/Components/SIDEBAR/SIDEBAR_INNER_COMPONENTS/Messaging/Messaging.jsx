@@ -12,6 +12,7 @@ import {
   Box,
   Badge,
 } from "@mui/material";
+import { deepOrange } from "@mui/material/colors";
 //Icons
 import SearchIcon from "@mui/icons-material/Search";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
@@ -54,6 +55,7 @@ const Messaging = () => {
   const [myInitials, setMyInitials] = useState("");
   const [userInitials, setUserInitials] = useState("");
   const [showPicker, setShowPicker] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   //------------------------------------------- Set User ID From Drop down --------------------------------
   useEffect(() => {
     if (location.state?.userId) {
@@ -344,12 +346,11 @@ const Messaging = () => {
     setMessageContent((prev) => prev + emoji.native);
   };
 
-
   //---------------------------------------------- Emoji Picker Close on Out Side Click ------------------------------------------
 
   const pickerRef = useRef(null);
 
-  const buttonRef = useRef(null); 
+  const buttonRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -391,7 +392,9 @@ const Messaging = () => {
                 >
                   <div className="flex items-center gap-2">
                     <Badge>
-                      <Avatar>{getInitials(user.fullName)}</Avatar>
+                      <Avatar sx={{ bgcolor: deepOrange[500] }}>
+                        {getInitials(user.fullName)}
+                      </Avatar>
                     </Badge>
                     <span className="font-medium">{user.fullName}</span>
                   </div>
@@ -402,12 +405,14 @@ const Messaging = () => {
               );
             })}
           </div>
-          {/* Search Bar */}
+          {/*-------------------------------------------------------- Search Bar ------------------------------------------------*/}
           <TextField
             variant="outlined"
             placeholder="Search"
             size="small"
             fullWidth
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm state
             style={{ marginBottom: "10px" }}
             InputProps={{
               startAdornment: (
@@ -419,50 +424,58 @@ const Messaging = () => {
           />
           {/* ---------------------------------------------- User Area ---------------------------------------------------- */}
           <div>
-            {activeUsers.map((user) => {
-              if (parseInt(CurrentUserId) === user.userId) return null;
-              // Find the unread message count for this user
-              const userCount = userMessageCounts?.find(
-                (countObj) => countObj?.userId === user.userId,
-              );
+            {activeUsers
+              .filter(
+                (user) =>
+                  user.fullName
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()), // Filter by name
+              )
+              .map((user) => {
+                if (parseInt(CurrentUserId) === user.userId) return null;
 
-              return (
-                <div
-                  key={user.userId}
-                  className="mb-2 flex cursor-pointer items-center justify-between rounded-lg bg-gray-100 p-2 shadow-sm hover:bg-gray-200"
-                  onClick={() => handleSelectUser(user.fullName, user.userId)}
-                >
-                  <div className="flex items-center gap-2">
-                    <Badge
-                      badgeContent={userCount?.count}
-                      color="error"
-                      overlap="circular"
-                      classes={{ badge: "bg-green-500" }}
-                    >
-                      <Avatar>{getInitials(user.fullName)}</Avatar>
-                    </Badge>
-                    <span className="font-medium">{user.fullName}</span>
+                // Find the unread message count for this user
+                const userCount = userMessageCounts?.find(
+                  (countObj) => countObj?.userId === user.userId,
+                );
+
+                return (
+                  <div
+                    key={user.userId}
+                    className={`mb-2 flex cursor-pointer items-center justify-between rounded-lg p-2 shadow-sm hover:bg-gray-200 ${user.userId === receiverId ? "border-2 border-cyan-500 bg-cyan-50" : "bg-gray-100"} `}
+                    onClick={() => handleSelectUser(user.fullName, user.userId)}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Badge
+                        badgeContent={userCount?.count}
+                        color="error"
+                        overlap="circular"
+                        classes={{ badge: "bg-green-500" }}
+                      >
+                        <Avatar sx={{ width: 32, height: 32, fontSize:"16px" }}>{getInitials(user.fullName)}</Avatar>
+                      </Badge>
+                      <span className="font-medium text-sm">{user.fullName}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`relative flex h-3 w-3 items-center justify-center rounded-full shadow-xl ${
+                          user.status
+                            ? "bg-gradient-to-br from-green-400 to-green-700"
+                            : "bg-gradient-to-br from-rose-600 to-rose-700"
+                        }`}
+                      >
+                        {user.status && (
+                          <span className="absolute h-3 w-3 animate-ping rounded-full bg-green-400 opacity-50"></span>
+                        )}
+                        <span className="absolute inset-0 h-full w-full rounded-full bg-white opacity-20"></span>
+                      </span>
+                      <IconButton size="small">
+                        <OpenInNewIcon fontSize="small" />
+                      </IconButton>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`relative flex h-3 w-3 items-center justify-center rounded-full shadow-xl ${
-                        user.status
-                          ? "bg-gradient-to-br from-green-400 to-green-700"
-                          : "bg-gradient-to-br from-orange-400 to-orange-700"
-                      }`}
-                    >
-                      {user.status && (
-                        <span className="absolute h-3 w-3 animate-ping rounded-full bg-green-400 opacity-50"></span>
-                      )}
-                      <span className="absolute inset-0 h-full w-full rounded-full bg-white opacity-20"></span>
-                    </span>
-                    <IconButton size="small">
-                      <OpenInNewIcon fontSize="small" />
-                    </IconButton>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         </div>
 
