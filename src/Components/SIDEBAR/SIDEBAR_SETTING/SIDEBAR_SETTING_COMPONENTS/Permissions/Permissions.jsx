@@ -26,26 +26,22 @@ export default function Permissions() {
 
   const pathnames = location.pathname.split("/").filter((x) => x);
   
-  // ------------------------------ Permissions Handle Add Button ------------------------
 
   const handleAdd = () => {
     setActiveComponent("Add");
   };
 
-  // ------------------------------ Permissions Handle Cancel Button ------------------------
 
   const handleCancel = () => {
     setActiveComponent("Table");
   };
 
-  // ------------------------------ Permissions Handle Edit Button ------------------------
 
   const handleEdit = (id) => {
     setSelectedId(id); // Set the selected id
     setActiveComponent("Update");
   };
 
-  //------------------------------------Permissions Table -----------------------------
   const PermissionsTable = () => {
     const [data, setData] = useState([]);
 
@@ -53,7 +49,6 @@ export default function Permissions() {
     const url = new URL(fullURL);
     const name = url.hostname.split(".")[0];
 
-    // ------------------------------ Permissions Get All  ------------------------
 
     async function handleGetAll() {
       const bearer_token = localStorage.getItem("token");
@@ -77,7 +72,6 @@ export default function Permissions() {
       handleGetAll();
     }, []);
 
-    // ------------------------------ Permissions Handle Delete ------------------------
 
     const handleDelete = async (id) => {
       const bearer_token = localStorage.getItem("token");
@@ -114,12 +108,6 @@ export default function Permissions() {
             Add Permissions
           </button>
         </div>
-
-        {/*---------------------------------------------------------------- BreadCumb Menu  ----------------------------------------------------------------*/}
-            {/*---------------------------------------------------------------- BreadCumb Menu  ----------------------------------------------------------------*/}
-            {/*----------------------------------------------------------------pathname started with slice(1,3) :because we want skip panel ----------------------------------------------------------------*/}
-            {/*----------------------------------------------------------------const to :  is route where we stored the route    ----------------------------------------------------------------*/}
-
             <div className="flex items-center my-2 ">
               <Link to="/panel">
                 <IoMdHome size={30} className="mb-1 text-blue-600 " /> 

@@ -37,7 +37,7 @@ export default function TenantLoginOTP() {
 
   const [count, setCount] = useState(0);
 
-  // Countdown logic for OTP resend
+
   useEffect(() => {
     let timer;
     if (resendDisabled) {
@@ -45,7 +45,7 @@ export default function TenantLoginOTP() {
         setCountdown((prev) => {
           if (prev === 1) {
             clearInterval(timer);
-            setResendDisabled(false); // Re-enable resend after countdown finishes
+            setResendDisabled(false);
             return 120;
           }
           return prev - 1;

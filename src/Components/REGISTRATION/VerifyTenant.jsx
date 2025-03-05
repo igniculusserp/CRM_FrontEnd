@@ -142,7 +142,7 @@ export default function VerifyTenant() {
 
         {/*----------> Part-II <---------- */}
         <div className="flex flex-col justify-center w-full min-h-screen bg-cyan-500 md:w-1/3 md:bg-white">
-          {/* Image on Top for Small Screens */}
+
           <div className="flex justify-center md:hidden">
             <img src={IgniculussLogo} alt="sample" width={100} height={50} />
           </div>
@@ -154,12 +154,10 @@ export default function VerifyTenant() {
             </div>
 
             <div className="mt-6">
-              {/*----------> FORM <---------- */}
               <form
                 className="flex flex-col gap-2 rounded-md"
                 onSubmit={handleSubmit}
               >
-                {/*----------> Username <---------- */}
                 <label
                   htmlFor="userName"
                   className="text-xs font-medium text-gray-700"
