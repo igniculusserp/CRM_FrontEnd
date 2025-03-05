@@ -299,8 +299,6 @@ export default function TenantLogin() {
       );
       const logindetail = response.data.data;
       console.log("Login Response: ", response.data);
-
-      //IMP for handling businessType such as Brokerage, IT, Retail.... etc
       localStorage.setItem(
         "businessType",
         response.data.data.userDetail.businessType,
@@ -364,12 +362,10 @@ export default function TenantLogin() {
             </div>
 
             <div className="mt-6">
-              {/*----------> FORM <---------- */}
               <form
                 className="flex flex-col gap-2 rounded-md"
                 onSubmit={handleSubmit}
               >
-                {/*----------> Username <---------- */}
                 <label
                   htmlFor="userName"
                   className="text-xs font-medium text-gray-700"
@@ -387,7 +383,6 @@ export default function TenantLogin() {
                     placeholder="specimen@company.com"
                   />
                 </label>
-                {/*----------> Password <---------- */}
                 <label
                   htmlFor="password"
                   className="relative block text-xs font-medium text-gray-700"
@@ -454,14 +449,6 @@ export default function TenantLogin() {
             >
               Login with Microsoft <img src={Microsoft} className="w-4 h-4" />
             </button>
-
-            {/*//Google Login Commented */}
-            {/*
-                <GoogleLogin
-                  onSuccess={handleLoginSuccess}
-                  onError={handleLoginError}
-                />
-            */}
           </div>
         </div>
       </div>

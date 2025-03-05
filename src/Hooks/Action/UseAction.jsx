@@ -5,14 +5,14 @@ import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { FaAngleDown } from "react-icons/fa";
-//-----------------------------ToastContainer-----------------------------
+
 import { ToastContainer } from "react-toastify";
 import {
   showSuccessToast,
   showErrorToast,
 } from "./../../utils/toastNotifications";
 
-// Folder Imports
+
 import { getHostnamePart } from "../../Components/SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 import { protocal_url, tenant_base_url } from "../../Config/config";
 import MassEmail from "../../Components/SIDEBAR/SIDEBAR_INNER_COMPONENTS/MassEmail/MassEmail";
@@ -189,7 +189,7 @@ export default function UseAction({
     doc.save("Data.pdf");
   };
 
-  //---------------------->---------------------->CONVERT_LEADS_TO_CONTACTS<----------------------<----------------------
+
 
   const convertType = async () => {
     const bearer_token = localStorage.getItem("token");
@@ -204,7 +204,7 @@ export default function UseAction({
 
       const response = await axios.post(
         `${protocal_url}${name}.${tenant_base_url}/Lead/leadtocontact/${selectedRowsId}`,
-        { id: selectedRowsId }, // Pass data as second parameter
+        { id: selectedRowsId },
         config,
       );
       getApiData();
@@ -223,7 +223,7 @@ export default function UseAction({
     }
   };
 
-  // ------------------- Permissions Handling -------------------
+
   const businessRole = localStorage.getItem("businessRole");
 
   useEffect(() => {
@@ -256,16 +256,16 @@ export default function UseAction({
       {isModalOpen && (
         <MassEmail
           emails={selectedRowEmails}
-          onClose={closeModal} // Pass function to close modal
+          onClose={closeModal}  //
         />
       )}
 
       <div
-        className="action_Button_Container relative"
+        className="relative action_Button_Container"
         onMouseLeave={() => setActionDropdown(false)}
       >
         <button
-          className="button_MaxWidth flex items-center justify-between gap-2 rounded-lg border border-blue-600 px-4 py-2 text-blue-600"
+          className="flex items-center justify-between gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg button_MaxWidth"
           onClick={() => setActionDropdown(!actionDropdown)}
         >
           Actions
@@ -273,13 +273,13 @@ export default function UseAction({
         </button>
 
         {actionDropdown && (
-          <div className="absolute right-0 top-10 z-10 w-56 rounded-md border border-gray-300 bg-white">
+          <div className="absolute right-0 z-10 w-56 bg-white border border-gray-300 rounded-md top-10">
             <ul className="text-sm text-gray-700">
               {actions.map(({ key, value }) =>
                 permissions.includes(value) || businessRole === "Admin" ? (
                   <li
                     key={key}
-                    className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                    className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                     onClick={() => handleActionButton(value)}
                   >
                     {value}

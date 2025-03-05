@@ -15,9 +15,9 @@ const WelcomePage = () => {
   const handleClick = () => {
     if (!condition) {
       setCondition(true);
-      navigate("/tenantlogin"); // Set condition to true on first click
+      navigate("/tenantlogin"); 
     } else {
-      navigate("/desired-path"); // Replace '/desired-path' with the path you want to navigate to
+      navigate("/desired-path"); 
     }
   };
 
@@ -51,16 +51,16 @@ const WelcomePage = () => {
     } else {
       console.error("No tenantId found in URL parameters.");
     }
-  }, [tenantId]); // Fetch data when tenantId changes
+  }, [tenantId]); 
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-cyan-500">
-      <div className="mx-6 w-full rounded-3xl bg-white py-10 shadow-lg sm:w-2/3 lg:w-1/3">
+    <div className="flex items-center justify-center min-h-screen bg-cyan-500">
+      <div className="w-full py-10 mx-6 bg-white shadow-lg rounded-3xl sm:w-2/3 lg:w-1/3">
         <div className="relative w-full">
-          <div className="absolute left-0 top-8 w-16 md:w-24">
+          <div className="absolute left-0 w-16 top-8 md:w-24">
             <img src={welcomePageLeft} alt="Decoration" />
           </div>
-          <div className="absolute right-0 top-32 w-16 md:w-24">
+          <div className="absolute right-0 w-16 top-32 md:w-24">
             <img src={welcomePageRight} alt="Decoration" />
           </div>
 
@@ -69,7 +69,7 @@ const WelcomePage = () => {
               id="logoImg"
               src={welcomedata.tenantUrl}
               alt="Company Logo"
-              className="mx-auto h-28 w-28 rounded-full"
+              className="mx-auto rounded-full h-28 w-28"
             />
           </div>
           <div className="flex justify-center pt-12">
@@ -78,19 +78,19 @@ const WelcomePage = () => {
             </div>
           </div>
           <div className="flex justify-center">
-            <div className="py-2 text-center text-lg text-slate-900">
+            <div className="py-2 text-lg text-center text-slate-900">
               {welcomedata.firstName} {welcomedata.lastName}
             </div>
           </div>
           <div className="flex justify-center">
-            <div className="pb-2 pt-2 text-center text-slate-900">
+            <div className="pt-2 pb-2 text-center text-slate-900">
               {welcomedata.tenantName}
             </div>
           </div>
           <div className="flex items-center justify-center">
             <button
               onClick={handleClick}
-              className="hover:bg-cyan- mx-10 w-2/3 rounded-md bg-cyan-500 py-2 font-medium text-white"
+              className="w-2/3 py-2 mx-10 font-medium text-white rounded-md hover:bg-cyan- bg-cyan-500"
             >
               Get Started
             </button>

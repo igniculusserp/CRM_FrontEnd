@@ -6,7 +6,7 @@ import axios from "axios";
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
 import { getHostnamePart } from "../../ReusableComponents/GlobalHostUrl";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IoMdHome } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 
@@ -72,7 +72,6 @@ export default function SMSTemplate() {
     }
   };
 
-  // Handle switching to the form for adding or editing
   const handleEdit = (data) => {
     setSelectedData(data);
     setActive(false);
@@ -85,7 +84,6 @@ export default function SMSTemplate() {
     setIsEditMode(false);
   };
 
-  // Handle form submission callback
   const handleFormSubmit = async (formData) => {
     const config = {
       headers: {
@@ -227,12 +225,7 @@ export default function SMSTemplate() {
                 Add SMS Template
               </button>
             </div>
-
-                  {/*---------------------------------------------------------------- BreadCumb Menu  ----------------------------------------------------------------*/}
-            {/*---------------------------------------------------------------- BreadCumb Menu  ----------------------------------------------------------------*/}
-            {/*----------------------------------------------------------------pathname started with slice(1,3) :because we want skip panel ----------------------------------------------------------------*/}
-            {/*----------------------------------------------------------------const to :  is route where we stored the route    ----------------------------------------------------------------*/}
-
+    
             <div className="flex items-center my-2 ">
               <Link to="/panel">
                 <IoMdHome size={30} className="mb-1 text-blue-600 " /> 

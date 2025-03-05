@@ -2,7 +2,6 @@ import { useState } from "react";
 import { FaAngleDown, FaBars } from "react-icons/fa";
 import PropTypes from "prop-types";
 
-//Wizard->
 import { FaTableList } from "react-icons/fa6";
 import { IoGrid } from "react-icons/io5";
 
@@ -26,7 +25,7 @@ export default function UseGridFilter({
     <>
     <div className="relative" onMouseLeave={() => setStripeBardropDown(false)}>
       <button
-        className="flex items-center justify-between gap-2 rounded-md border px-4 py-3"
+        className="flex items-center justify-between gap-2 px-4 py-3 border rounded-md"
         type="button"
         onClick={() => setStripeBardropDown(!stripeBardropDown)}
       >

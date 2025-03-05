@@ -48,7 +48,6 @@ export default function Qualification() {
     handleLead(); // Fetch the list on initial load
   }, []);
 
-  // Delete qualification by ID
   const handleDelete = async (id) => {
     const bearer_token = localStorage.getItem("token");
     try {
@@ -89,7 +88,6 @@ export default function Qualification() {
     setIsEditMode(false);
   };
 
-  // Handle form submission callback
   const handleFormSubmit = async (formData) => {
     const bearer_token = localStorage.getItem("token");
     const config = {
@@ -230,7 +228,6 @@ export default function Qualification() {
         console.log("status:", response.data);
       } catch (error) {
         console.error("Error fetching leads:", error);
-        // Optionally, set an error state to display a user-friendly message
       }
     }
 
@@ -275,19 +272,19 @@ export default function Qualification() {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-3 flex">
+        <form onSubmit={handleSubmit} className="flex mt-3">
           <div className="w-full">
-            <div className="rounded-xl bg-white pb-6 shadow-md">
+            <div className="pb-6 bg-white shadow-md rounded-xl">
               <div className="">
-                <h1 className="text-md rounded-t-lg bg-cyan-500 px-3 py-2 font-medium text-white">
+                <h1 className="px-3 py-2 font-medium text-white rounded-t-lg text-md bg-cyan-500">
                   Qualification Details
                 </h1>
-                <div className="rounded-b-xl bg-white px-1">
+                <div className="px-1 bg-white rounded-b-xl">
                   <div className="grid gap-2 p-2">
                     {/* FIRST ROW */}
                     <div className="flex space-x-4">
                       {/* LEAD ID FIELD */}
-                      <div className="flex w-1/2 flex-col">
+                      <div className="flex flex-col w-1/2">
                         <label
                           htmlFor="userId"
                           className="text-sm font-medium text-gray-700"
@@ -300,13 +297,13 @@ export default function Qualification() {
                           name="userId"
                           id="userId"
                           value={formData.userId}
-                          className="mt-1 rounded-md border border-gray-300 p-2"
+                          className="p-2 mt-1 border border-gray-300 rounded-md"
                           placeholder="Enter User Id"
                         />
                       </div>
                       {/* CLIENT NAME FIELD */}
                       {isEditMode ? (
-                        <div className="flex w-1/2 flex-col">
+                        <div className="flex flex-col w-1/2">
                           <label
                             htmlFor="userName"
                             className="text-sm font-medium text-gray-700"
@@ -319,7 +316,7 @@ export default function Qualification() {
                             name="userName"
                             id="userName"
                             value={formData.userName}
-                            className="mt-1 rounded-md border border-gray-300 p-2"
+                            className="p-2 mt-1 border border-gray-300 rounded-md"
                             onChange={handleChange}
                             placeholder="Enter your User Name"
                           />
@@ -327,8 +324,8 @@ export default function Qualification() {
                       ) : (
                         <>
                           {/* ASSIGNED TO DROPDOWN */}
-                          <div className="flex w-1/2 flex-col">
-                            <div className="relative flex w-full flex-col">
+                          <div className="flex flex-col w-1/2">
+                            <div className="relative flex flex-col w-full">
                               <label
                                 htmlFor="userName"
                                 className="text-sm font-medium text-gray-700"
@@ -343,7 +340,7 @@ export default function Qualification() {
                                 }
                               >
                                 <button
-                                  className="mt-1 flex w-full items-center justify-between rounded-md border border-gray-300 p-2"
+                                  className="flex items-center justify-between w-full p-2 mt-1 border border-gray-300 rounded-md"
                                   id="LeadStatusDropDown"
                                   type="button"
                                 >
@@ -353,7 +350,7 @@ export default function Qualification() {
                                   <FaAngleDown className="ml-2 text-gray-400" />
                                 </button>
                                 {isDropdownassigned_ToDropDown && (
-                                  <div className="absolute top-11 z-10 w-full rounded-md border border-gray-300 bg-white">
+                                  <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md top-11">
                                     <ul className="py-2 text-sm text-gray-700">
                                       {assigned_ToDropDown.map(
                                         ({ userName, userId }, index) => (
@@ -365,7 +362,7 @@ export default function Qualification() {
                                                 userId,
                                               )
                                             }
-                                            className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                                            className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                                           >
                                             {userName}
                                           </li>
@@ -383,7 +380,7 @@ export default function Qualification() {
                     {/* SECOND ROW */}
                     <div className="flex space-x-4">
                       {/* Qualification FIELD */}
-                      <div className="flex w-1/2 flex-col">
+                      <div className="flex flex-col w-1/2">
                         <label
                           htmlFor="qualification"
                           className="text-sm font-medium text-gray-700"
@@ -395,13 +392,13 @@ export default function Qualification() {
                           name="qualification"
                           id="qualification"
                           value={formData.qualification}
-                          className="mt-1 rounded-md border border-gray-300 p-2"
+                          className="p-2 mt-1 border border-gray-300 rounded-md"
                           onChange={handleChange}
                           placeholder="Enter Qualification"
                         />
                       </div>
                       {/* phoneNo FIELD */}
-                      <div className="flex w-1/2 flex-col">
+                      <div className="flex flex-col w-1/2">
                         <label
                           htmlFor="workExpierence"
                           className="text-sm font-medium text-gray-700"
@@ -413,7 +410,7 @@ export default function Qualification() {
                           name="workExpierence"
                           id="workExpierence"
                           value={formData.workExpierence}
-                          className="mt-1 rounded-md border border-gray-300 p-2"
+                          className="p-2 mt-1 border border-gray-300 rounded-md"
                           onChange={handleChange}
                           placeholder="Enter Work Experience"
                         />
@@ -422,7 +419,7 @@ export default function Qualification() {
                     {/* THIRD ROW */}
                     <div className="flex space-x-4">
                       {/* MOBILE NUMBER FIELD */}
-                      <div className="flex w-1/2 flex-col">
+                      <div className="flex flex-col w-1/2">
                         <label
                           htmlFor="skill"
                           className="text-sm font-medium text-gray-700"
@@ -434,13 +431,13 @@ export default function Qualification() {
                           name="skill"
                           id="skill"
                           value={formData.skill}
-                          className="mt-1 rounded-md border border-gray-300 p-2"
+                          className="p-2 mt-1 border border-gray-300 rounded-md"
                           onChange={handleChange}
                           placeholder="Enter Skill"
                         />
                       </div>
                       {/* EMAIL FIELD */}
-                      <div className="flex w-1/2 flex-col">
+                      <div className="flex flex-col w-1/2">
                         <label
                           htmlFor="achievements"
                           className="text-sm font-medium text-gray-700"
@@ -452,7 +449,7 @@ export default function Qualification() {
                           name="achievements"
                           id="achievements"
                           value={formData.achievements}
-                          className="mt-1 rounded-md border border-gray-300 p-2"
+                          className="p-2 mt-1 border border-gray-300 rounded-md"
                           onChange={handleChange}
                           placeholder="Enter Achievements"
                         />
@@ -462,10 +459,10 @@ export default function Qualification() {
                 </div>
               </div>
 
-              <div className="mb-8 px-4">
+              <div className="px-4 mb-8">
                 <button
                   type="submit"
-                  className="mt-4 rounded-md border border-cyan-500 px-4 py-4 text-cyan-500 hover:bg-cyan-500 hover:text-white"
+                  className="px-4 py-4 mt-4 border rounded-md border-cyan-500 text-cyan-500 hover:bg-cyan-500 hover:text-white"
                   // onClick={handleLog}
                 >
                   {isEditMode ? "Update" : "Save"}
@@ -486,50 +483,50 @@ export default function Qualification() {
             <h1 className="text-3xl font-medium">Qualifications</h1>
             <button
               onClick={handleAdd}
-              className="min-w-10 rounded bg-blue-600 p-2 text-sm text-white"
+              className="p-2 text-sm text-white bg-blue-600 rounded min-w-10"
             >
               Add Qualification
             </button>
           </div>
-          <div className="leads_Table_Main_Container mt-3 overflow-x-auto shadow-md">
-            <div className="leads_Table_Container min-w-full rounded-md">
-              <table className="leads_Table min-w-full rounded-md bg-white">
+          <div className="mt-3 overflow-x-auto shadow-md leads_Table_Main_Container">
+            <div className="min-w-full rounded-md leads_Table_Container">
+              <table className="min-w-full bg-white rounded-md leads_Table">
                 <thead>
                   <tr className="border-b-2 border-gray-300">
                     <th className="px-1 py-3">
                       <input type="checkbox" />
                     </th>
-                    <th className="py-3 text-left font-medium">
+                    <th className="py-3 font-medium text-left">
                       <div className="flex items-center justify-between text-sm">
                         <span>User Name</span>
                         <FaBars />
                       </div>
                     </th>
-                    <th className="px-2 py-3 text-left font-medium">
+                    <th className="px-2 py-3 font-medium text-left">
                       <div className="flex items-center justify-between text-sm">
                         <span>Qualification</span>
                         <FaBars />
                       </div>
                     </th>
-                    <th className="px-2 py-3 text-left font-medium">
+                    <th className="px-2 py-3 font-medium text-left">
                       <div className="flex items-center justify-between text-sm">
                         <span>work Experience</span>
                         <FaBars />
                       </div>
                     </th>
-                    <th className="px-2 py-3 text-left font-medium">
+                    <th className="px-2 py-3 font-medium text-left">
                       <div className="flex items-center justify-between text-sm">
                         <span>Skills</span>
                         <FaBars />
                       </div>
                     </th>
-                    <th className="px-2 py-3 text-left font-medium">
+                    <th className="px-2 py-3 font-medium text-left">
                       <div className="flex items-center justify-between text-sm">
                         <span>Achievements</span>
                         <FaBars />
                       </div>
                     </th>
-                    <th className="px-2 py-3 text-left font-medium">
+                    <th className="px-2 py-3 font-medium text-left">
                       <div className="flex items-center justify-between text-sm">
                         <span>Action</span>
                       </div>
@@ -540,7 +537,7 @@ export default function Qualification() {
                   {data.map((item) => (
                     <tr
                       key={item.id}
-                      className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
+                      className="border-b border-gray-300 cursor-pointer hover:bg-gray-200"
                     >
                       <td className="px-1 py-3 text-center">
                         <input type="checkbox" />
@@ -557,7 +554,7 @@ export default function Qualification() {
                       <td className="flex justify-center gap-3 px-2 py-4">
                         <MdEdit
                           size={25}
-                          className="rounded bg-blue-500 text-white"
+                          className="text-white bg-blue-500 rounded"
                           onClick={() => handleEdit(item)}
                         />
                         <RiDeleteBin6Fill

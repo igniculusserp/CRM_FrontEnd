@@ -47,11 +47,8 @@ export default function Contact() {
   //------- Business Type --------
   const [business, setBusiness] = useState("");
   const businessType = localStorage.getItem("businessType");
-
-  //------------------------------------------------- All States----------------------------------------------------------
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [selectedRowEmails, setSelectedRowEmails] = useState([]);
-  //-------------------------------------------------- GET Data ----------------------------------------------------
   const [originalData, setOriginalData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const getApiData = async () => {
@@ -103,11 +100,8 @@ export default function Contact() {
 
   useEffect(() => {
     getAllUsers();
-    //------- Business Type --------
     setBusiness(businessType);
   }, []);
-
-  //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
 
   const businessRole = localStorage.getItem("businessRole");
   const [edit, setEdit] = useState(false);
@@ -164,8 +158,6 @@ export default function Contact() {
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
   };
-
-  //------------------------------------------------------ Table Heading And Table Data ------------------------------------------
   const columns = [
     {
       field: "name",
@@ -279,7 +271,7 @@ export default function Contact() {
                   e.stopPropagation();
                   navigate(`/panel/contact/create/so/${params.row.id}`);
                 }}
-                className="flex h-7 items-center justify-center rounded bg-blue-600 px-3 py-1 text-white shadow-md hover:bg-blue-500"
+                className="flex items-center justify-center px-3 py-1 text-white bg-blue-600 rounded shadow-md h-7 hover:bg-blue-500"
               >
                 {business === "Brokerage" ? "Create Client" : "SO"}
               </button>
@@ -348,16 +340,10 @@ export default function Contact() {
     setLeadStatus(status); // Update leadStatus state
     handle_LeadStatus(status); // Apply both filters
   }
-
-  //-----------------------------------------------> ALL-> LEADS <-functionality <-----------------------------------------------
-
   const [allLeaddropDown, setAllLeaddropDown] = useState(false);
   const toggleMenuAllLead = () => {
     setAllLeaddropDown(!allLeaddropDown);
   };
-
-  //-----------------------------------------------> ALL LEADS DATA <-----------------------------------------------
-  //----------------STATUS DROPDOWN----------------
   const [allLeadData, setallLeadData] = useState([]);
   async function handleLeadStatus() {
     const bearer_token = localStorage.getItem("token");
@@ -413,21 +399,21 @@ export default function Contact() {
 
   return (
     //parent
-    <div className="m-3 flex min-h-screen flex-col">
+    <div className="flex flex-col min-h-screen m-3">
       {/* containerbar*/}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-white px-3 py-2">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-3 py-2 bg-white rounded-lg">
         {/* PART-I */}
         {/* container- Alleads, search */}
-        <div className="contact_Dropdown_Main_Container flex flex-wrap items-center justify-start gap-3">
+        <div className="flex flex-wrap items-center justify-start gap-3 contact_Dropdown_Main_Container">
           {/* PART-I */}
           {/* All Lead DropDown*/}
           <div
-            className="contact_Dropdown_Container relative whitespace-nowrap"
+            className="relative contact_Dropdown_Container whitespace-nowrap"
             onClick={toggleMenuAllLead}
             onMouseLeave={() => setAllLeaddropDown(false)}
           >
             <button
-              className="contact_Dropdown_Button flex min-w-40 items-center justify-between truncate rounded-md border px-4 py-2"
+              className="flex items-center justify-between px-4 py-2 truncate border rounded-md contact_Dropdown_Button min-w-40"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -435,12 +421,12 @@ export default function Contact() {
               <FaAngleDown className="ml-2 text-gray-900" />
             </button>
             {allLeaddropDown && (
-              <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
+              <div className="absolute z-10 bg-white border border-gray-300 rounded-md top-10">
                 <ul className="text-sm text-gray-700">
                   {allLeadData.map((item) => (
                     <li
                       key={item.id}
-                      className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
+                      className="block w-56 px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
                       onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
                     >
                       {item.status}
@@ -463,7 +449,7 @@ export default function Contact() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <div className="action_Button_Main_Container flex items-center justify-start gap-3">
+        <div className="flex items-center justify-start gap-3 action_Button_Main_Container">
           {/*  ------------------------------------------------- Stripe-BarDropDown --------------------------------- */}
           <UseGridFilter
             selectedViewValue={selectedViewValue} // Sending selected value
@@ -481,10 +467,10 @@ export default function Contact() {
         </div>
       </div>
       {/* 2nd bar Leads and lenghtLeads*/} {/* 2nd bar Leads and lenghtLeads*/}
-      <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 mt-3">
         <div className="flex gap-3">
           <h1 className="text-3xl font-medium">Contacts</h1>
-          <h1 className="min-w-10 rounded bg-blue-600 p-2 text-center text-sm text-white shadow-md">
+          <h1 className="p-2 text-sm text-center text-white bg-blue-600 rounded shadow-md min-w-10">
             {/*  ------------------------------------------------------------------------------------------------*/}
             {/* ------------------- Length ----------------- */}
             {filteredData?.length}
@@ -501,8 +487,8 @@ export default function Contact() {
       </div>
       {/*-------Table-------*/}
       {viewContact || businessRole === "Admin" ? (
-        <div className="leads_Table_Main_Container mt-3 overflow-x-auto">
-          <div className="leads_Table_Container min-w-full rounded-md shadow-lg">
+        <div className="mt-3 overflow-x-auto leads_Table_Main_Container">
+          <div className="min-w-full rounded-md shadow-lg leads_Table_Container">
             {selectedViewValue === "Table View" && (
               <Paper sx={{ width: "100%" }}>
                 <DataGrid
@@ -537,12 +523,12 @@ export default function Contact() {
                     {currentData.map((item) => (
                       // {/* ------------sub-Parent->Container ------------ */}
                       <div
-                        className="grid grid-cols-1 gap-1 rounded-lg bg-sky-100 p-2 shadow-md"
+                        className="grid grid-cols-1 gap-1 p-2 rounded-lg shadow-md bg-sky-100"
                         key={item.id}
                       >
                         <div className="">
-                          <div className="flex items-center rounded border-2 border-cyan-500 bg-white py-2 text-center">
-                            <div className="mx-auto flex items-center justify-center gap-2">
+                          <div className="flex items-center py-2 text-center bg-white border-2 rounded border-cyan-500">
+                            <div className="flex items-center justify-center gap-2 mx-auto">
                               <FaUserTie />
                               <span className="">
                                 {item?.name[0].toUpperCase() +
@@ -550,7 +536,7 @@ export default function Contact() {
                               </span>
                             </div>
                             <AiOutlineEdit
-                              className="mr-3 rounded-full bg-cyan-400 p-1 text-white hover:bg-cyan-500"
+                              className="p-1 mr-3 text-white rounded-full bg-cyan-400 hover:bg-cyan-500"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 navigate(`/panel/editcontact/${item.id}`);
@@ -560,13 +546,13 @@ export default function Contact() {
                           </div>
                         </div>
 
-                        <div className="rounded border-2 border-cyan-500 bg-white py-2">
+                        <div className="py-2 bg-white border-2 rounded border-cyan-500">
                           <div className="flex items-center justify-between px-3 py-1">
                             <div className="flex items-center justify-between py-1">
                               <IoIosMail size={22} className="w-6" />
                               <span className="hidden sm:block">Email</span>
                             </div>
-                            <div className="truncate text-sm font-medium">
+                            <div className="text-sm font-medium truncate">
                               <a
                                 href={`mailto:${item.email}`}
                                 onClick={(event) => event.stopPropagation()}
@@ -581,7 +567,7 @@ export default function Contact() {
                               <FaPhoneAlt size={14} className="w-6" />
                               <span className="hidden sm:block">Phone</span>
                             </div>
-                            <div className="truncate text-sm font-medium">
+                            <div className="text-sm font-medium truncate">
                               <a
                                 href={`tel:${item.mobileNo}`}
                                 onClick={(event) => event.stopPropagation()}
@@ -596,7 +582,7 @@ export default function Contact() {
                               <PiLineSegmentsBold size={16} className="w-6" />
                               <span className="hidden sm:block">Segments</span>
                             </div>
-                            <div className="truncate text-sm font-medium">
+                            <div className="text-sm font-medium truncate">
                               {item?.segments?.length
                                 ? item.segments?.join(", ")
                                 : ""}
@@ -657,7 +643,7 @@ export default function Contact() {
             )}
           </div>
           {/* --------------------------------------- Pagination ------------------------------------------ */}
-          <Stack spacing={2} className="mb-1 mt-4">
+          <Stack spacing={2} className="mt-4 mb-1">
             <Pagination
               count={Math.ceil(filteredData.length / itemsPerPage)}
               page={currentPage}

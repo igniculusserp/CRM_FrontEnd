@@ -46,8 +46,6 @@ export default function EditBrokerage({
     }));
   };
 
-  //--------------------------------------------------------- Get Data By ID -----------------------------------------------
-
   useEffect(() => {
     if (editBrokerageId) {
       fetchDataById();
@@ -85,9 +83,6 @@ export default function EditBrokerage({
       //   setLoading(false);
     }
   };
-
-  //---------->handleSubmit<----------
-  //two different models one for PUT and one for POST
   const handleSubmit = async (event) => {
     event.preventDefault();
     const bearer_token = localStorage.getItem("token");
@@ -135,8 +130,8 @@ export default function EditBrokerage({
   return (
     <>
       <ToastContainer />
-      <div className="mt-3 flex min-h-screen flex-col">
-        <div className="flex justify-between rounded border bg-white px-3 py-3">
+      <div className="flex flex-col min-h-screen mt-3">
+        <div className="flex justify-between px-3 py-3 bg-white border rounded">
           <div className="flex items-center justify-center gap-3">
             <h1 className="text-xl">
               {/*  {isEditMode? <h1>Edit Lead</h1>: <>Create Lead</> } */}
@@ -146,25 +141,24 @@ export default function EditBrokerage({
           <div>
             <div
               onClick={handleCancel}
-              className="cursor-pointer rounded border border-blue-500 px-6 py-1 text-blue-500"
+              className="px-6 py-1 text-blue-500 border border-blue-500 rounded cursor-pointer"
             >
               Cancel
             </div>
           </div>
         </div>
 
-        {/* -------------FORM Starts FROM HERE------------- */}
         <form onSubmit={handleSubmit} className="flex">
           <div className="w-full">
-            <div className="mt-3 flex-grow rounded-xl bg-white shadow-md">
-              <h2 className="rounded-t-xl bg-cyan-500 px-4 py-2 font-medium text-white">
+            <div className="flex-grow mt-3 bg-white shadow-md rounded-xl">
+              <h2 className="px-4 py-2 font-medium text-white rounded-t-xl bg-cyan-500">
                 Lead Information
               </h2>
-              {/* -------------1------------- */}
+
 
               <div className="grid gap-2 p-2">
                 <div className="flex space-x-4">
-                  <div className="flex w-1/2 flex-col">
+                  <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="date"
                       className="text-sm font-medium text-gray-700"
@@ -175,16 +169,14 @@ export default function EditBrokerage({
                       type="date"
                       name="date"
                       value={finance.date.split("T")[0] || today}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="p-2 mt-1 border border-gray-300 rounded-md"
                       onChange={handleChange}
                     />
                   </div>
                 </div>
 
-                {/* -------------2------------- */}
-                {/* -------------brokerageAmount------------- */}
                 <div className="flex space-x-4">
-                  <div className="flex w-1/2 flex-col">
+                  <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="brokerageAmount"
                       className="text-sm font-medium text-gray-700"
@@ -196,13 +188,12 @@ export default function EditBrokerage({
                       name="brokerageAmount"
                       value={finance.brokerageAmount}
                       maxLength="15"
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="p-2 mt-1 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter your Amount"
                     />
                   </div>
-                  {/* -------------Reference Number------------- */}
-                  <div className="flex w-1/2 flex-col">
+                  <div className="flex flex-col w-1/2">
                     <label
                       htmlFor="referenceno"
                       className="text-sm font-medium text-gray-700"
@@ -213,7 +204,7 @@ export default function EditBrokerage({
                       type="text"
                       name="referenceno"
                       value={finance.referenceno}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="p-2 mt-1 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter your Reference Number"
                     />
@@ -223,7 +214,7 @@ export default function EditBrokerage({
                 {/* -------------3------------- */}
 
                 <div className="flex space-x-4">
-                  <div className="flex w-full flex-col">
+                  <div className="flex flex-col w-full">
                     <label
                       htmlFor="remarks"
                       className="text-sm font-medium text-gray-700"
@@ -234,7 +225,7 @@ export default function EditBrokerage({
                       type="text"
                       name="remarks"
                       value={finance.remarks}
-                      className="mt-1 rounded-md border border-gray-300 p-2"
+                      className="p-2 mt-1 border border-gray-300 rounded-md"
                       onChange={handleChange}
                       placeholder="Enter Remark"
                     />
@@ -242,12 +233,12 @@ export default function EditBrokerage({
                 </div>
               </div>
 
-              {/* -------------Button------------- */}
-              <div className="mb-6 flex justify-end gap-5">
-                <div className="mr-5 flex justify-end">
+
+              <div className="flex justify-end gap-5 mb-6">
+                <div className="flex justify-end mr-5">
                   <button
                     type="submit"
-                    className="mb-4 mt-20 rounded border-2 border-cyan-500 bg-cyan-500 px-32 py-4 text-white hover:bg-white hover:text-cyan-500"
+                    className="px-32 py-4 mt-20 mb-4 text-white border-2 rounded border-cyan-500 bg-cyan-500 hover:bg-white hover:text-cyan-500"
                   >
                     Save
                   </button>

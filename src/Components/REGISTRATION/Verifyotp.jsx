@@ -167,7 +167,6 @@ const VerifyOtp = () => {
         // const newUrl = `http://${host.split('.')[0]}.${urlchange_base}/welcome/${tenantId}`;
 
         window.location.href = newUrl;
-        // console.log(newUrl)
       }
     } catch (error) {
       console.error("Error:", error.response.data.errors.tenant);

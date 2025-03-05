@@ -9,12 +9,10 @@ export default function UseDateFilter({
   setFilteredData,
   filteredData,
 }) {
-  // ----------------------------- Date Filter -----------------------------
   const today = new Date().toISOString().split("T")[0];
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(today);
 
-  // -------------------------------------- Function to update date states ---------------------------------------
   const onDateChange = (field, value) => {
     let newStartDate = startDate;
     let newEndDate = endDate;
@@ -33,7 +31,7 @@ export default function UseDateFilter({
     filterByDateRange(newStartDate, newEndDate);
   };
 
-  //------------------------------------------------Reset Function --------------------------------------------------
+
   const handleResetClick = () => {
     setStartDate(today);
     setEndDate(today);
@@ -41,7 +39,6 @@ export default function UseDateFilter({
     onReset();
   };
 
-  //--------------------------------------------- Function to filter leads based on date range-----------------------------------
   const filterByDateRange = (start, end) => {
     if (!filteredData || filteredData.length === 0) return;
 
@@ -60,14 +57,14 @@ export default function UseDateFilter({
 
   return (
     <div className="date_Filter_Main_Container">
-      <div className="flex items-center justify-between rounded-lg border-2 border-gray-300 bg-white p-2">
+      <div className="flex items-center justify-between p-2 bg-white border-2 border-gray-300 rounded-lg">
         {/* Filter Icon & Label */}
         <div className="flex items-center">
-          <button className="border-r border-gray-500 pr-2">
+          <button className="pr-2 border-r border-gray-500">
             <ImFilter className="filter_Image_Size" />
           </button>
 
-          <button className="filter_Image_Display whitespace-nowrap border-r border-gray-500 px-2">
+          <button className="px-2 border-r border-gray-500 filter_Image_Display whitespace-nowrap">
             Filter By
           </button>
 
@@ -77,7 +74,7 @@ export default function UseDateFilter({
             <input
               type="date"
               value={startDate}
-              className="filter_Date rounded border px-2 py-2"
+              className="px-2 py-2 border rounded filter_Date"
               onChange={(e) => onDateChange("startDate", e.target.value)}
             />
 
@@ -85,7 +82,7 @@ export default function UseDateFilter({
             <input
               type="date"
               value={endDate}
-              className="filter_Date rounded border px-2 py-2"
+              className="px-2 py-2 border rounded filter_Date"
               onChange={(e) => onDateChange("endDate", e.target.value)}
             />
           </div>
@@ -93,7 +90,7 @@ export default function UseDateFilter({
 
         {/* Reset Button */}
         <div
-          className="reset_paddings flex cursor-pointer items-center gap-2 rounded border p-2"
+          className="flex items-center gap-2 p-2 border rounded cursor-pointer reset_paddings"
           onClick={() => handleResetClick()}
         >
           <label className="hide_Filter_Text">Reset</label>

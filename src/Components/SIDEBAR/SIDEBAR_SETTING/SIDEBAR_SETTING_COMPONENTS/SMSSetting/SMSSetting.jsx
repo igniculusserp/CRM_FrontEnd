@@ -21,8 +21,6 @@ export default function SMSSetting() {
   const [selectedData, setSelectedData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-  // Fetch all data
-  //-------------------get-------------------get-------------------get-------------------get-------------------
   async function handleLead() {
     const bearer_token = localStorage.getItem("token");
     try {
@@ -42,11 +40,9 @@ export default function SMSSetting() {
   }
 
   useEffect(() => {
-    handleLead(); // Fetch the list on initial load
+    handleLead();
   }, []);
 
-  // Delete smssetting by ID
-  //-------------------Delete-------------------Delete-------------------Delete-------------------Delete-------------------
   const handleDelete = async (id) => {
     const bearer_token = localStorage.getItem("token");
     try {
@@ -66,7 +62,6 @@ export default function SMSSetting() {
     }
   };
 
-  // Switch to edit form
   const handleEdit = (data) => {
     setSelectedData(data);
     setActive(false);
@@ -83,7 +78,6 @@ export default function SMSSetting() {
     setIsEditMode(false);
   };
 
-  // Handle form submission callback
   const handleFormSubmit = async (formData) => {
     const bearer_token = localStorage.getItem("token");
     const config = {
@@ -129,23 +123,21 @@ export default function SMSSetting() {
         showSuccessToast("Added successfully");
       }
 
-      handleLead(); // Refresh the list
-      setActive(true); // Switch back to the list view
-      setSelectedData(null); // Reset the selected
-      setIsEditMode(false); // Reset edit mode
+      handleLead(); 
+      setActive(true);
+      setSelectedData(null); 
+      setIsEditMode(false); 
     } catch (error) {
       showErrorToast(error.response.data.message);
     }
   };
 
-  // Handle cancel action
   const handleCancel = () => {
     setActive(true);
     setSelectedData(null);
     setIsEditMode(false);
   };
 
-  // Form Component for Adding/Updating
   const EditForm = ({ data, isEditMode }) => {
     const [formData, setFormData] = useState({
       id: "",
@@ -191,19 +183,19 @@ export default function SMSSetting() {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-3 flex">
+        <form onSubmit={handleSubmit} className="flex mt-3">
           <div className="w-full">
-            <div className="rounded-xl bg-white pb-6 shadow-md">
+            <div className="pb-6 bg-white shadow-md rounded-xl">
               <div className="">
-                <h1 className="text-md rounded-t-lg bg-cyan-500 px-3 py-2 font-medium text-white">
+                <h1 className="px-3 py-2 font-medium text-white rounded-t-lg text-md bg-cyan-500">
                   SMS Setting
                 </h1>
-                <div className="rounded-b-xl bg-white px-1">
+                <div className="px-1 bg-white rounded-b-xl">
                   <div className="grid gap-2 p-2">
                     {/* FIRST ROW */}
                     <div className="flex space-x-4">
                       {/* LEAD ID FIELD */}
-                      <div className="flex w-1/2 flex-col">
+                      <div className="flex flex-col w-1/2">
                         <label
                           htmlFor="senderId"
                           className="text-sm font-medium text-gray-700"
@@ -215,14 +207,14 @@ export default function SMSSetting() {
                           name="senderId"
                           id="senderId"
                           value={formData.senderId}
-                          className="mt-1 rounded-md border border-gray-300 p-2"
+                          className="p-2 mt-1 border border-gray-300 rounded-md"
                           onChange={handleChange}
                           placeholder="Enter API Sender Id"
                         />
                       </div>
                       {/* CLIENT NAME FIELD */}
 
-                      <div className="flex w-1/2 flex-col">
+                      <div className="flex flex-col w-1/2">
                         <label
                           htmlFor="apiKey"
                           className="text-sm font-medium text-gray-700"
@@ -234,7 +226,7 @@ export default function SMSSetting() {
                           name="apiKey"
                           id="apiKey"
                           value={formData.apiKey}
-                          className="mt-1 rounded-md border border-gray-300 p-2"
+                          className="p-2 mt-1 border border-gray-300 rounded-md"
                           onChange={handleChange}
                           placeholder="Enter API Key"
                         />
@@ -244,11 +236,10 @@ export default function SMSSetting() {
                 </div>
               </div>
 
-              <div className="mb-8 px-4">
+              <div className="px-4 mb-8">
                 <button
                   type="submit"
-                  className="mt-4 rounded-md border border-cyan-500 px-4 py-4 text-cyan-500 hover:bg-cyan-500 hover:text-white"
-                  // onClick={handleLog}
+                  className="px-4 py-4 mt-4 border rounded-md border-cyan-500 text-cyan-500 hover:bg-cyan-500 hover:text-white"
                 >
                   {isEditMode ? "Update" : "Save"}
                 </button>
@@ -268,34 +259,34 @@ export default function SMSSetting() {
             <h1 className="text-3xl font-medium">SMS Setting</h1>
             <button
               onClick={handleAdd}
-              className="min-w-10 rounded bg-blue-600 p-2 text-sm text-white"
+              className="p-2 text-sm text-white bg-blue-600 rounded min-w-10"
             >
               Add SMS Setting
             </button>
           </div>
-          <div className="leads_Table_Main_Container mt-3 overflow-x-auto shadow-md">
-            <div className="leads_Table_Container min-w-full rounded-md">
-              <table className="leads_Table min-w-full rounded-md bg-white">
+          <div className="mt-3 overflow-x-auto shadow-md leads_Table_Main_Container">
+            <div className="min-w-full rounded-md leads_Table_Container">
+              <table className="min-w-full bg-white rounded-md leads_Table">
                 <thead>
                   <tr className="border-b-2 border-gray-300">
                     <th className="px-1 py-3">
                       <input type="checkbox" />
                     </th>
-                    <th className="px-2 py-3 text-left font-medium">
+                    <th className="px-2 py-3 font-medium text-left">
                       <div className="flex items-center justify-between text-sm">
                         <span>API Sender ID</span>
                         <FaBars />
                       </div>
                     </th>
 
-                    <th className="px-2 py-3 text-left font-medium">
+                    <th className="px-2 py-3 font-medium text-left">
                       <div className="flex items-center justify-between text-sm">
                         <span>API Key</span>
                         <FaBars />
                       </div>
                     </th>
 
-                    <th className="px-2 py-3 text-left font-medium">
+                    <th className="px-2 py-3 font-medium text-left">
                       <div className="flex items-center justify-between text-sm">
                         <span>Action</span>
                       </div>
@@ -306,7 +297,7 @@ export default function SMSSetting() {
                   {data.map((item) => (
                     <tr
                       key={item.id}
-                      className="cursor-pointer border-b border-gray-300 hover:bg-gray-200"
+                      className="border-b border-gray-300 cursor-pointer hover:bg-gray-200"
                     >
                       <td className="px-1 py-3 text-center">
                         <input type="checkbox" />
@@ -316,7 +307,7 @@ export default function SMSSetting() {
                       <td className="flex justify-center gap-3 px-2 py-4">
                         <MdEdit
                           size={25}
-                          className="rounded bg-blue-500 text-white"
+                          className="text-white bg-blue-500 rounded"
                           onClick={() => handleEdit(item)}
                         />
                         <RiDeleteBin6Fill
