@@ -35,9 +35,8 @@ import MessageImage from "../../../../assets/Message/Message.png";
 // External Emoji Files
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
-import { Menu } from "lucide-react";
 
-export default function Messaging() {
+const Messaging = () => {
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
   const messagesEndRef = useRef(null);
@@ -172,7 +171,6 @@ export default function Messaging() {
     setReceiverId(userId);
     setUserInitials(getInitials(fullName));
     fetchMessages(userId);
-    setIsDrawerOpen(false);
   };
 
   //------------------------------------------- Users Initials Functionality --------------------------------
@@ -371,158 +369,121 @@ export default function Messaging() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showPicker]);
 
-  //--------------------------------------------------------------- Main Body ------------------------------------------------
   return (
     <>
-      {/* --------------------------------------------------------- Heading Section ----------------------------------------- */}
-
       <div className="flex bg-gray-100 p-4 pb-0 pt-3 align-middle">
-        <div className="flex w-full gap-4 rounded-lg bg-white p-4 shadow-md">
-          {/* -------------------------------- Drawer Menu Button ----------------------- */}
-          <Menu
-            className="cursor-pointer md:hidden"
-            onClick={() => setIsDrawerOpen(true)}
-          />
-          {/* -----------------------------  Headding  ------------------------------*/}
-          <h2 className="text-lg font-semibold">Chat</h2>
+        <div className="w-full rounded-lg bg-white p-4 shadow-md">
+          <h2 className="text-lg font-semibold">Messaging</h2>
         </div>
-        {/* ----------------------------------- Drawer Part of Opacity ------------------------------------------ */}
-        <div
-          className={`fixed inset-0 z-[90] bg-black bg-opacity-30 transition-opacity md:hidden ${
-            isDrawerOpen ? "block" : "hidden"
-          }`}
-          onClick={() => setIsDrawerOpen(false)}
-        ></div>
       </div>
-
-      {/* --------------------------------------------------------- Chat Section ----------------------------------------- */}
       <div
-        className="flex gap-0 bg-gray-100 p-4 md:gap-2"
-        style={{
-          height: "calc(100% - 72px)",
-        }}
+        className="flex bg-gray-100 p-4"
+        style={{ height: "calc(100% - 72px)" }}
       >
-        {/*--------------------------------------------------------- Sidebar (Drawer) ---------------------------------------------*/}
-        <div className="relative">
-          <aside
-            className={`absolute inset-y-0 left-0 transform rounded-lg bg-white shadow-lg transition-transform duration-300 md:relative md:translate-x-0 ${isDrawerOpen ? "flex" : "hidden"} z-[100] w-[350px] max-[1050px]:w-[250px] max-[767px]:w-[300px] md:flex`}
-            style={{
-              height: "100%",
+        {/* ------------------------------------------------------- Sidebar --------------------------------------------- */}
+        <div className="w-full sm:w-1/3 rounded-lg bg-white p-4 shadow-md">
+          {/* ------------------------------------------ Loged in User ------------------------------------------ */}
+          <div>
+            {activeUsers.map((user) => {
+              if (parseInt(CurrentUserId) !== user.userId) return null;
+
+              return (
+                <div
+                  key={user.userId}
+                  className="mb-2 flex items-center justify-between rounded-lg bg-cyan-500 p-2 shadow-sm"
+                >
+                  <div className="flex items-center gap-2">
+                    <Badge>
+                      <Avatar sx={{ bgcolor: deepOrange[500] }}>
+                        {getInitials(user.fullName)}
+                      </Avatar>
+                    </Badge>
+                    <span className="font-medium">{user.fullName}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="relative mr-4 flex h-3 w-3 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-700 shadow-xl"></span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {/*-------------------------------------------------------- Search Bar ------------------------------------------------*/}
+          <TextField
+            variant="outlined"
+            placeholder="Search"
+            size="small"
+            fullWidth
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm state
+            style={{ marginBottom: "10px" }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
             }}
-          >
-            {/* ------------------------------------------------------- Sidebar --------------------------------------------- */}
-            <div className="w-full rounded-lg bg-white p-2 shadow-md">
-              {/* ------------------------------------------ Loged in User ------------------------------------------ */}
-              <div>
-                {activeUsers.map((user) => {
-                  if (parseInt(CurrentUserId) !== user.userId) return null;
+          />
+          {/* ---------------------------------------------- User Area ---------------------------------------------------- */}
+          <div>
+            {activeUsers
+              .filter(
+                (user) =>
+                  user.fullName
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()), // Filter by name
+              )
+              .map((user) => {
+                if (parseInt(CurrentUserId) === user.userId) return null;
 
-                  return (
-                    <div
-                      key={user.userId}
-                      className="mb-2 flex items-center justify-between rounded-lg bg-cyan-500 p-2 shadow-sm"
-                    >
-                      <div className="flex items-center gap-2">
-                        <Badge>
-                          <Avatar sx={{ bgcolor: deepOrange[500] }}>
-                            {getInitials(user.fullName)}
-                          </Avatar>
-                        </Badge>
-                        <span className="font-medium">{user.fullName}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="relative mr-4 flex h-3 w-3 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-700 shadow-xl"></span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-              {/*-------------------------------------------------------- Search Bar ------------------------------------------------*/}
-              <TextField
-                variant="outlined"
-                placeholder="Search"
-                size="small"
-                fullWidth
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm state
-                style={{ marginBottom: "10px" }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              {/* ---------------------------------------------- User Area ---------------------------------------------------- */}
-              <div>
-                {activeUsers
-                  .filter(
-                    (user) =>
-                      user.fullName
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase()), // Filter by name
-                  )
-                  .map((user) => {
-                    if (parseInt(CurrentUserId) === user.userId) return null;
+                // Find the unread message count for this user
+                const userCount = userMessageCounts?.find(
+                  (countObj) => countObj?.userId === user.userId,
+                );
 
-                    // Find the unread message count for this user
-                    const userCount = userMessageCounts?.find(
-                      (countObj) => countObj?.userId === user.userId,
-                    );
-
-                    return (
-                      <div
-                        key={user.userId}
-                        className={`mb-2 flex cursor-pointer items-center justify-between rounded-lg p-2 shadow-sm hover:bg-gray-200 ${user.userId === receiverId ? "border-2 border-cyan-500 bg-cyan-50" : "bg-gray-100"} `}
-                        onClick={() =>
-                          handleSelectUser(user.fullName, user.userId)
-                        }
+                return (
+                  <div
+                    key={user.userId}
+                    className={`mb-2 flex cursor-pointer items-center justify-between rounded-lg p-2 shadow-sm hover:bg-gray-200 ${user.userId === receiverId ? "border-2 border-cyan-500 bg-cyan-50" : "bg-gray-100"} `}
+                    onClick={() => handleSelectUser(user.fullName, user.userId)}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Badge
+                        badgeContent={userCount?.count}
+                        color="error"
+                        overlap="circular"
+                        classes={{ badge: "bg-green-500" }}
                       >
-                        <div className="flex items-center gap-2">
-                          <Badge
-                            badgeContent={userCount?.count}
-                            color="error"
-                            overlap="circular"
-                            classes={{ badge: "bg-green-500" }}
-                          >
-                            <Avatar
-                              sx={{ width: 28, height: 28, fontSize: "14px" }}
-                              className="sm:h-8 sm:w-8"
-                            >
-                              {getInitials(user.fullName)}
-                            </Avatar>
-                          </Badge>
-                          <span className="text-sm font-medium">
-                            {user.fullName}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span
-                            className={`relative flex h-3 w-3 items-center justify-center rounded-full shadow-xl ${
-                              user.status
-                                ? "bg-gradient-to-br from-green-400 to-green-700"
-                                : "bg-gradient-to-br from-red-600 to-rose-600"
-                            }`}
-                          >
-                            {user.status && (
-                              <span className="absolute h-3 w-3 animate-ping rounded-full bg-green-400 opacity-50"></span>
-                            )}
-                            <span className="absolute inset-0 h-full w-full rounded-full bg-white opacity-20"></span>
-                          </span>
-                          <IconButton size="small">
-                            <OpenInNewIcon fontSize="small" />
-                          </IconButton>
-                        </div>
-                      </div>
-                    );
-                  })}
-              </div>
-            </div>
-          </aside>
+                        <Avatar sx={{ width: 28, height: 28, fontSize: "14px" }} className="sm:w-8 sm:h-8">
+                        {getInitials(user.fullName)}</Avatar>
+                      </Badge>
+                      <span className="font-medium text-sm">{user.fullName}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`relative flex h-3 w-3 items-center justify-center rounded-full shadow-xl ${
+                          user.status
+                            ? "bg-gradient-to-br from-green-400 to-green-700"
+                            : "bg-gradient-to-br from-red-600 to-rose-600"
+                        }`}
+                      >
+                        {user.status && (
+                          <span className="absolute h-3 w-3 animate-ping rounded-full bg-green-400 opacity-50"></span>
+                        )}
+                        <span className="absolute inset-0 h-full w-full rounded-full bg-white opacity-20"></span>
+                      </span>
+                      <IconButton size="small">
+                        <OpenInNewIcon fontSize="small" />
+                      </IconButton>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
         </div>
+
         {/* ------------------------------------------------------- Chat Area ----------------------------------------------- */}
-        <div className="flex w-full flex-1 flex-col rounded-lg bg-white shadow-md">
+        <div className="ml-0 sm:ml-4 flex flex-1 flex-col rounded-lg bg-white shadow-md w-full">
           {selectedUser ? (
             <>
               {/* ---------------------------------------------- Heading ------------------------------------------- */}
@@ -547,7 +508,7 @@ export default function Messaging() {
                     >
                       {isCurrentUser ? (
                         <>
-                          <div className="relative ml-2 flex max-w-[90%] flex-col justify-start rounded-lg bg-gray-100 p-2 shadow sm:max-w-[75%]">
+                          <div className="relative ml-2 flex max-w-[90%] sm:max-w-[75%] flex-col justify-start rounded-lg bg-gray-100 p-2 shadow">
                             <div className="relative flex items-center justify-between gap-3">
                               <p>{msg.messageContent}</p>
                               <LongMenu
@@ -580,7 +541,7 @@ export default function Messaging() {
                           className="flex items-center"
                         >
                           <Avatar>{userInitials}</Avatar>
-                          <div className="relative ml-2 flex max-w-[90%] flex-col justify-start rounded-lg bg-gray-100 p-2 shadow sm:max-w-[75%]">
+                          <div className="relative ml-2 flex max-w-[90%] sm:max-w-[75%] flex-col justify-start rounded-lg bg-gray-100 p-2 shadow">
                             <div className="relative flex items-center justify-between gap-3">
                               <p>{msg.messageContent}</p>
                               <LongMenu
@@ -689,4 +650,6 @@ export default function Messaging() {
       </div>
     </>
   );
-}
+};
+
+export default Messaging;
