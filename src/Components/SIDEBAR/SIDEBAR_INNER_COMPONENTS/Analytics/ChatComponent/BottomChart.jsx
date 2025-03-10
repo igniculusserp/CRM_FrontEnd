@@ -75,7 +75,7 @@ const BottomChart = ({ text, color }) => {
             </div>
           )}
         </div>
-        {/* ------------ FILTER DROPDOWN END -------------- */}
+
       </div>
 
       <ResponsiveContainer width="100%" height="100%">

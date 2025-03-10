@@ -36,7 +36,7 @@ export default function SidebaBar({ toggle, setToggle }) {
   useEffect(() => {
     setBusiness(businessType);
     console.log(business);
-  }, []);
+  }, [business]);
 
       //--------------------------------------- Set Business Type --------------------------------------------
       const [BusinessType, setBusinessType] = useState("");
@@ -50,13 +50,17 @@ export default function SidebaBar({ toggle, setToggle }) {
     {
       key: 1,
       data: "Home",
+
       link: `/panel/${BusinessType}/dashboard`,
+
       icon: <RiHome4Line />,
     },
     {
       key: 2,
       data: "Leads",
+
       link: `/panel/${BusinessType}/lead`,
+
       icon: <GrContactInfo />,
     },
     {
@@ -151,7 +155,9 @@ export default function SidebaBar({ toggle, setToggle }) {
     {
       key: 1,
       data: "Home",
+
       link: `/panel/${BusinessType}/dashboard`,
+
       icon: <RiHome4Line />,
     },
     {
@@ -253,6 +259,8 @@ export default function SidebaBar({ toggle, setToggle }) {
       icon: <PiChatsBold />,
     },
   ];
+
+ 
 
   const [active, setactive] = useState(sideBar[0].key);
 

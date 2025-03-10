@@ -30,7 +30,7 @@ import ForgetPassOTP from "./Components/REGISTRATION/ForgetPassOTP.jsx";
 import ForgetResetPassword from "./Components/REGISTRATION/ForgetResetPassword";
 import ForgetPassSuccess from "./Components/REGISTRATION/ForgetPassSuccess.jsx";
 
-//SideBar
+//SidebarBase
 import SidebarBase from "./Components/SIDEBAR/SidebarBase.jsx";
 
 
@@ -265,6 +265,7 @@ const router = createBrowserRouter([
       { path: "setting/access-device", element: <AccessDevice /> },
       { path: "settings/access-control",lement: <AccessControl />,},
       { path: "setting/permissions", element: <Permissions /> },
+
     ],
   },
   {
@@ -377,6 +378,7 @@ const router = createBrowserRouter([
       { path: "setting/access-device", element: <AccessDevice /> },
       { path: "settings/access-control",lement: <AccessControl />,},
       { path: "setting/permissions", element: <Permissions /> },
+
     ],
   },
 ]);
