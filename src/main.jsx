@@ -162,7 +162,7 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
-      { path: "/panel", element: <Home /> },
+      { path: "", element: <Home /> },
 
       //Lead->
       { path: "dashboard", element: <Home /> },
@@ -274,7 +274,7 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
-      { path: "/panel", element: <Home /> },
+      { path: "", element: <Home /> },
 
       //Lead->
       { path: "dashboard", element: <Home /> },

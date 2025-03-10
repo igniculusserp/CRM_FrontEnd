@@ -44,7 +44,14 @@ export default function TenantLogin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userData, setUserData] = useState(null);
   const [managerData, setManagerData] = useState(null);
-
+     //--------------------------------------- Set Business Type --------------------------------------------
+     const [BusinessType, setBusinessType] = useState("");
+            
+     useEffect(() => {
+       const storedType = localStorage.getItem("businessType") || "";
+       setBusinessType(storedType);
+     }, []);
+     
   const newOtp = 121212;
 
   // Function to handle Microsoft login
@@ -156,7 +163,7 @@ export default function TenantLogin() {
       localStorage.setItem("userDetail", JSON.stringify(loginDetail));
       localStorage.setItem("myData_forget", userData.displayName);
 
-      navigate("/panel");
+      navigate(`/panel/${BusinessType}/dashboard`);
     } catch (error) {
       if (error.response?.data) {
         console.error("Server Error:", error.response.data);
