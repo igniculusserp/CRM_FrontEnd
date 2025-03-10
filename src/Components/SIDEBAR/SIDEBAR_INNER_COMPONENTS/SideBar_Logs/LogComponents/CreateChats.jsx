@@ -4,6 +4,14 @@ import ReactQuill from "react-quill";
 import { Link } from "react-router-dom";
 
 export default function CreateChats() {
+   //--------------------------------------- Set Business Type --------------------------------------------
+                             const [BusinessType, setBusinessType] = useState("");
+                              
+                             useEffect(() => {
+                               const storedType = localStorage.getItem("businessType") || "";
+                               setBusinessType(storedType);
+                             }, []);
+                             
   const [description, setDescription] = useState("HELLO, ");
   const [isEditMode, setIsEditMode] = useState(false);
   const [editChats, setEditChats] = useState({
@@ -156,7 +164,7 @@ export default function CreateChats() {
       <div className="flex items-center justify-between rounded-md bg-white px-3 py-2 shadow-md">
         <h1 className="text-xl">Add Chat Logs</h1>
         <Link
-          to="/panel/logs"
+          to={`/panel/${BusinessType}/logs`}
           className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
         >
           Cancel

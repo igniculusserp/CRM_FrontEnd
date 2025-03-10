@@ -1,6 +1,15 @@
+import { useState,useEffect } from "react";
 import { FaBars } from "react-icons/fa";
-
 export default function GeneralReportTable({ currentReports }) {
+
+            //--------------------------------------- Set Business Type --------------------------------------------
+                     const [BusinessType, setBusinessType] = useState("");
+                      
+                     useEffect(() => {
+                       const storedType = localStorage.getItem("businessType") || "";
+                       setBusinessType(storedType);
+                     }, []);
+
   return (
     <table className="min-w-full bg-white">
       {/* ----------------- TABLE HEAD START ----------------- */}
@@ -73,7 +82,7 @@ export default function GeneralReportTable({ currentReports }) {
             {/* CREATED START DATE */}
             <td
               className="border-b border-gray-300 px-2 py-4 text-sm leading-5 text-blue-600"
-              onClick={() => navigate(`/panel/clientso/${report.id}`)}
+              onClick={() => navigate(`/panel/${BusinessType}/clientso/${report.id}`)}
             >
               {report.createdStartDate}
             </td>

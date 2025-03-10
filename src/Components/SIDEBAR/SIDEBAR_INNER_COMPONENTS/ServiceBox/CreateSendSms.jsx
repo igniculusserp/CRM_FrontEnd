@@ -11,6 +11,13 @@ import { getHostnamePart } from "../../SIDEBAR_SETTING/ReusableComponents/Global
 export default function CreateSendSms() {
   const name = getHostnamePart();
   const navigate = useNavigate();
+     //--------------------------------------- Set Business Type --------------------------------------------
+                           const [BusinessType, setBusinessType] = useState("");
+                            
+                           useEffect(() => {
+                             const storedType = localStorage.getItem("businessType") || "";
+                             setBusinessType(storedType);
+                           }, []);
 
   const [editSms, setEditSms] = useState({
     mobilenos: [],
@@ -273,7 +280,7 @@ export default function CreateSendSms() {
         config,
       );
       alert("Successfully Added");
-      navigate(`/panel/servicebox`);
+      navigate(`/panel/${BusinessType}/servicebox`);
     } catch (error) {
       console.error("Error saving pool name", error);
       alert("Failed to save pool. Please try again.");
@@ -286,7 +293,7 @@ export default function CreateSendSms() {
       <div className="flex items-center justify-between rounded-md bg-white px-3 py-2 shadow-md">
         <h1 className="text-xl">Send SMS</h1>
         <Link
-          to="/panel/servicebox"
+          to={`/panel/${BusinessType}/servicebox`}
           className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
         >
           Cancel

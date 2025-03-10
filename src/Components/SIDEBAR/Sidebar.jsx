@@ -38,103 +38,111 @@ export default function SidebaBar({ toggle, setToggle }) {
     console.log(business);
   }, []);
 
+      //--------------------------------------- Set Business Type --------------------------------------------
+      const [BusinessType, setBusinessType] = useState("");
+    
+      useEffect(() => {
+        const storedType = localStorage.getItem("businessType") || "";
+        setBusinessType(storedType);
+      }, []);
+
   const sideBar = [
     {
       key: 1,
       data: "Home",
-      link: "/panel/dashboard",
+      link: `/panel/${BusinessType}/dashboard`,
       icon: <RiHome4Line />,
     },
     {
       key: 2,
       data: "Leads",
-      link: "/panel/lead",
+      link: `/panel/${BusinessType}/lead`,
       icon: <GrContactInfo />,
     },
     {
       key: 3,
       data: "Contacts",
-      link: "/panel/contact",
+      link: `/panel/${BusinessType}/contact`,
       icon: <MdOutlineContactPhone />,
     },
     {
       key: 6,
       data: "Free Trail",
-      link: "/panel/freeTrail",
+      link: `/panel/${BusinessType}/freeTrail`,
       icon: <FaRegHandshake />,
     },
     {
       key: 7,
       data: "Follow up",
-      link: "/panel/followUp",
+      link: `/panel/${BusinessType}/followup`,
       icon: <SiAmazonsimpleemailservice />,
     },
 
     {
       key: 5,
       data: "Sales order",
-      link: "/panel/salesorder",
+      link: `/panel/${BusinessType}/salesorder`,
       icon: <BsGraphUpArrow />,
     },
     {
       key: 4,
       data: "Client",
-      link: "/panel/client",
+      link: `/panel/${BusinessType}/client`,
       icon: <FiUsers />,
     },
 
     // {
     //   key: 8,
     //   data: 'Mail Box',
-    //   link: '/panel/mailBox',
+    //   link: '/panel/${BusinessType}/mailBox',
     //   icon: <MdOutlineEmail />,
     // },
     {
       key: 9,
       data: "Service Box",
-      link: "/panel/servicebox",
+      link: `/panel/${BusinessType}/servicebox`,
       icon: <MdOutlineEmail />,
     },
     // {
     //   key: 10,
     //   data: 'Voice Box',
-    //   link: '/panel/voicebox',
+    //   link: '/panel/${BusinessType}/voicebox',
     //   icon: <MdOutlineKeyboardVoice />,
     // },
     {
       key: 11,
       data: "Reports",
-      link: "/panel/reports",
+      link: '/panel/${BusinessType}/reports',
       icon: <IoDocumentTextOutline />,
     },
     {
       key: 12,
       data: "Analytics",
-      link: "/panel/analytics",
+      link: `/panel/${BusinessType}/analytics`,
       icon: <VscGraph />,
     },
     {
       key: 13,
       data: "Messaging",
-      link: "/panel/messaging",
+      link: `/panel/${BusinessType}/messaging`,
       icon: <PiChatsBold />,
     },
     // {
     //   key: 13,
     //   data: 'Logs',
-    //   link: '/panel/logs',
+    //   link: '/panel/${BusinessType}/logs',
     //   icon: <VscGraph />,
     // },
     // {
     //   key: 14,
     //   data: 'MIS Reports',
-    //   link: '/panel/misreports',
+    //   link: '/panel/${BusinessType}/misreports',
     //   icon: <IoDocumentTextOutline />,
     // },
     // {
     //   key: 15,
     //   data: 'Subscription',
-    //   link: '/panel/subscription',
+    //   link: '/panel/${BusinessType}/subscription',
     //   icon: <IoDocumentTextOutline />,
     // },
   ];
@@ -143,105 +151,105 @@ export default function SidebaBar({ toggle, setToggle }) {
     {
       key: 1,
       data: "Home",
-      link: "/panel/dashboard",
+      link: `/panel/${BusinessType}/dashboard`,
       icon: <RiHome4Line />,
     },
     {
       key: 2,
       data: "Leads",
-      link: "/panel/lead",
+      link: `/panel/${BusinessType}/lead`,
       icon: <GrContactInfo />,
     },
     {
       key: 3,
       data: "Contacts",
-      link: "/panel/contact",
+      link: `/panel/${BusinessType}/contact`,
       icon: <MdOutlineContactPhone />,
     },
     {
       key: 11,
       data: "Reports",
-      link: "/panel/reports",
+      link: `/panel/${BusinessType}/reports`,
       icon: <IoDocumentTextOutline />,
     },
     {
       key: 14, //newLy Added 1st Sept
       data: "Finance ",
-      link: "/panel/FinancialActivity",
+      link: `/panel/${BusinessType}/FinancialActivity`,
       icon: <VscGraph />,
     },
     {
       key: 12,
       data: "Analytics",
-      link: "/panel/analytics",
+      link: `/panel/${BusinessType}/analytics`,
       icon: <GiProgression />,
     },
     {
       key: 4,
       data: "Client",
-      link: "/panel/client",
+      link: `/panel/${BusinessType}/client`,
       icon: <FiUsers />,
     },
     {
       key: 5,
       data: "Sales order",
-      link: "/panel/salesorder",
+      link: `/panel/${BusinessType}/salesorder`,
       icon: <BsGraphUpArrow />,
     },
     {
       key: 6,
       data: "Free Trail",
-      link: "/panel/freeTrail",
+      link: `/panel/${BusinessType}/freeTrail`,
       icon: <FaRegHandshake />,
     },
     {
       key: 7,
       data: "Follow up",
-      link: "/panel/followUp",
+      link: `/panel/${BusinessType}/followup`,
       icon: <SiAmazonsimpleemailservice />,
     },
     // {
     //   key: 8,
     //   data: 'Mail Box',
-    //   link: '/panel/mailBox',
+    //   link: '/panel/${BusinessType}/mailBox',
     //   icon: <MdOutlineEmail />,
     // },
     {
       key: 9,
       data: "Service Box",
-      link: "/panel/servicebox",
+      link: `/panel/${BusinessType}/servicebox`,
       icon: <MdOutlineEmail />,
     },
     // {
     //   key: 10,
     //   data: 'Voice Box',
-    //   link: '/panel/voicebox',
+    //   link: '/panel/${BusinessType}/voicebox',
     //   icon: <MdOutlineKeyboardVoice />,
     // },
 
     // {
     //   key: 13,
     //   data: 'Logs',
-    //   link: '/panel/logs',
+    //   link: '/panel/${BusinessType}/logs',
     //   icon: <VscGraph />,
     // },
 
     // {
     //   key: 15,
     //   data: 'MIS Reports',
-    //   link: '/panel/misreports',
+    //   link: '/panel/${BusinessType}/misreports',
     //   icon: <IoDocumentTextOutline />,
     // },
     {
       key: 16,
       data: "Subscription",
-      link: "/panel/subscription",
+      link: `/panel/${BusinessType}/subscription`,
       icon: <IoDocumentTextOutline />,
     },
     {
       key: 13,
       data: "Messaging",
-      link: "/panel/messaging",
+      link: `/panel/${BusinessType}/messaging`,
       icon: <PiChatsBold />,
     },
   ];

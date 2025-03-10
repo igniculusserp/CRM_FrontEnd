@@ -15,6 +15,14 @@ const CreateFollowUp = () => {
   const name = getHostnamePart();
   const navigate = useNavigate();
 
+   //--------------------------------------- Set Business Type --------------------------------------------
+         const [BusinessType, setBusinessType] = useState("");
+          
+         useEffect(() => {
+           const storedType = localStorage.getItem("businessType") || "";
+           setBusinessType(storedType);
+         }, []);
+
   const [isEditMode, setIsEditMode] = useState(false);
   const [followupsData, setFollowupsData] = useState({
     id: "",
@@ -132,7 +140,7 @@ const CreateFollowUp = () => {
       );
 
       alert("Follow updated successfully!");
-      navigate(`/panel/followup`);
+      navigate(`/panel/${BusinessType}/followup`);
     } catch (error) {
       // Log the detailed error response
       console.error("Error response:", error.response);
@@ -360,7 +368,7 @@ const CreateFollowUp = () => {
       {/* TOP PART */}
       <div className="m-3 flex items-center justify-between rounded-md bg-white px-3 py-2">
         <h1 className="text-xl">Edit Follow Up</h1>
-        <Link to="/panel/followup">
+        <Link to={`/panel/${BusinessType}/followup`}>
           <button className="rounded-md border border-blue-600 px-6 py-2 text-center text-sm text-blue-600">
             Cancel
           </button>

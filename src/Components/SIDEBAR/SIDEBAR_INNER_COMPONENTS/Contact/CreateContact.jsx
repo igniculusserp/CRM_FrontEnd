@@ -43,6 +43,14 @@ export default function CreateContact() {
   const { managedBy } = useManagedBy();
   const { segments } = useSegment();
 
+   //--------------------------------------- Set Business Type --------------------------------------------
+         const [BusinessType, setBusinessType] = useState("");
+          
+         useEffect(() => {
+           const storedType = localStorage.getItem("businessType") || "";
+           setBusinessType(storedType);
+         }, []);
+
   //form description is kept-out
   const [description, setdescription] = useState("Add Text Here");
   const [editLead, seteditLead] = useState({
@@ -347,7 +355,7 @@ export default function CreateContact() {
           config,
         );
         showSuccessToast("Contact updated successfully!");
-        navigate(`/panel/contact`);
+        navigate(`/panel/${BusinessType}/contact`);
       }
     } catch (error) {
       showErrorToast("An error occurred. Please try again.", error);
@@ -392,7 +400,7 @@ export default function CreateContact() {
           {/* ------------------------------------------------> Cancel Button  <------------------------------------------------ */}
           <div>
             <Link
-              to="/panel/contact"
+              to={`/panel/${BusinessType}/contact`}
               className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
             >
               Cancel

@@ -11,6 +11,13 @@ import { getHostnamePart } from "../../../SIDEBAR_SETTING/ReusableComponents/Glo
 export default function CreateSendEmail() {
   const name = getHostnamePart();
   const navigate = useNavigate();
+     //--------------------------------------- Set Business Type --------------------------------------------
+                           const [BusinessType, setBusinessType] = useState("");
+                            
+                           useEffect(() => {
+                             const storedType = localStorage.getItem("businessType") || "";
+                             setBusinessType(storedType);
+                           }, []);
 
   const [editEmail, setEditEmail] = useState({
     Length: "",
@@ -216,7 +223,7 @@ export default function CreateSendEmail() {
         config,
       );
       alert("Successfully Added");
-      navigate(`/panel/servicebox`);
+      navigate(`/panel/${BusinessType}/servicebox`);
       console.log("Response from the server:", response.data);
     } catch (error) {
       console.error("Error sending email data:", error);
@@ -229,7 +236,7 @@ export default function CreateSendEmail() {
       <div className="flex items-center justify-between rounded-md bg-white px-3 py-2 shadow-md">
         <h1 className="text-xl">Send Email</h1>
         <Link
-          to="/panel/servicebox"
+          to={`/panel/${BusinessType}/servicebox`}
           className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
         >
           Cancel

@@ -52,6 +52,14 @@ export default function CreateSOLead() {
   //IMP used as ${name} in an API
   const name = getHostnamePart();
 
+    //--------------------------------------- Set Business Type --------------------------------------------
+             const [BusinessType, setBusinessType] = useState("");
+              
+             useEffect(() => {
+               const storedType = localStorage.getItem("businessType") || "";
+               setBusinessType(storedType);
+             }, []);
+
   //const bearer_token for API Config
   const bearer_token = localStorage.getItem("token");
 
@@ -531,7 +539,7 @@ export default function CreateSOLead() {
       );
       if (response.data.isSuccess) {
         showSuccessToast("Sales Order created successfully!");
-        navigate(`/panel/lead`);
+        navigate(`/panel/${BusinessType}/lead`);
       }
       // Redirect after a short delay
     } catch (error) {
@@ -555,7 +563,7 @@ export default function CreateSOLead() {
           <div>
             {/* ------------------------------------------------> Cancel Button  <------------------------------------------------ */}
             <Link
-              to="/panel/lead"
+              to={`/panel/${BusinessType}/lead`}
               className="rounded border border-blue-500 px-4 py-1 text-blue-500 sm:px-6"
             >
               Cancel

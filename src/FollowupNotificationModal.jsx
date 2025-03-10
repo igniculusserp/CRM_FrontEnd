@@ -12,6 +12,14 @@ const FollowupNotificationModal = ({ id, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [followupsData, setFollowupsData] = useState({});
 
+  //--------------------------------------- Set Business Type --------------------------------------------
+  const [BusinessType, setBusinessType] = useState("");
+
+  useEffect(() => {
+    const storedType = localStorage.getItem("businessType") || "";
+    setBusinessType(storedType);
+  }, []);
+
   // Fetch Data by ID
   useEffect(() => {
     if (id) {
@@ -49,7 +57,7 @@ const FollowupNotificationModal = ({ id, onClose }) => {
   };
 
   const handleViewClick = (id) => {
-    window.location.href = `/panel/createfollowup/${id}`; // Navigate to the specified route
+    window.location.href = `/panel/${BusinessType}/createfollowup/${id}`; // Navigate to the specified route
     onClose();
   };
   return (

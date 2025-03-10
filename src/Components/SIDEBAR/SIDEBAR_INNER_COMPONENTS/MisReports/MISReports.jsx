@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import GeneralReportTable from "./MisComponents/GeneralReportTable";
 import FtReportTable from "./MisComponents/FtReportTable";
@@ -10,6 +10,14 @@ import TrackSheetTable from "./MisComponents/TrackSheetTable";
 import ResearchReportTable from "./MisComponents/ResearchReportTable";
 
 export default function MISReports() {
+
+      //--------------------------------------- Set Business Type --------------------------------------------
+               const [BusinessType, setBusinessType] = useState("");
+                
+               useEffect(() => {
+                 const storedType = localStorage.getItem("businessType") || "";
+                 setBusinessType(storedType);
+               }, []);
   // DUMMY DATA
   const misReportData = [
     {
@@ -144,28 +152,28 @@ export default function MISReports() {
   const dynamicButtons = {
     "General Report": {
       text: "Add General Report",
-      href: "/panel/creategeneral",
+      href: `/panel/${BusinessType}/creategeneral`,
     },
-    "Ft Report": { text: "Add Ft Report", href: "/panel/createft" },
+    "Ft Report": { text: "Add Ft Report", href: `/panel/${BusinessType}/createft` },
     "Paid Client Report": {
       text: "Add Paid Client Report",
-      href: "/panel/createpaid",
+      href: `/panel/${BusinessType}/createpaid`,
     },
-    "User Report": { text: "Add User Report", href: "/panel/createuser" },
+    "User Report": { text: "Add User Report", href: `/panel/${BusinessType}/createuser` },
     "Calling Report": {
       text: "Add Calling Report",
-      href: "/panel/createcalling",
+      href: `/panel/${BusinessType}/createcalling`,
     },
-    "DND Report": { text: "Add DND Report", href: "/panel/creatednd" },
-    // 'Track Sheet': { text: 'Add Track Sheet', href: '/panel/createtrack' },
-    // 'Research Report': { text: 'Add Research Report', href: '/panel/createresearch' },
+    "DND Report": { text: "Add DND Report", href: `/panel/${BusinessType}/creatednd` },
+    // 'Track Sheet': { text: 'Add Track Sheet', href: '/panel/${BusinessType}/createtrack' },
+    // 'Research Report': { text: 'Add Research Report', href: '/panel/${BusinessType}/createresearch' },
   };
 
   const [selectedButton, setSelectedButton] = useState("General Report");
   // State to manage the button text
   const [buttonText, setButtonText] = useState({
     text: "Add General Report",
-    href: "/panel/creategeneral",
+    href: `/panel/${BusinessType}/creategeneral`,
   });
 
   // Function to handle option click using bracket notation

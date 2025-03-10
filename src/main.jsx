@@ -156,8 +156,7 @@ const router = createBrowserRouter([
 
   { path: "*", element: <ErrorRoute /> },
   {
-    path: "/panel",
-    element: (
+    path: "/panel/advisory", element: (
       <ProtectedRoute>
         <SidebarBase />
       </ProtectedRoute>
@@ -166,106 +165,218 @@ const router = createBrowserRouter([
       { path: "/panel", element: <Home /> },
 
       //Lead->
-      { path: "/panel/dashboard", element: <Home /> },
-      { path: "/panel/lead", element: <Lead /> },
-      { path: "/panel/editlead/:id", element: <Createlead /> },
-      { path: "/panel/createlead", element: <Createlead /> },
-      { path: "/panel/lead/create/so/:id", element: <CreateSOLead /> },
+      { path: "dashboard", element: <Home /> },
+      { path: "lead", element: <Lead /> },
+      { path: "editlead/:id", element: <Createlead /> },
+      { path: "createlead", element: <Createlead /> },
+      { path: "lead/create/so/:id", element: <CreateSOLead /> },
 
       //Contacts->
-      { path: "/panel/contact", element: <Contact /> },
-      { path: "/panel/createcontact", element: <CreateContact /> },
-      { path: "/panel/editContact/:id", element: <CreateContact /> },
-      { path: "/panel/contact/create/so/:id", element: <CreateSOContact /> },
+      { path: "contact", element: <Contact /> },
+      { path: "createcontact", element: <CreateContact /> },
+      { path: "editContact/:id", element: <CreateContact /> },
+      { path: "contact/create/so/:id", element: <CreateSOContact /> },
 
       //FreeTrail ->
-      { path: "/panel/freeTrail", element: <FreeTrail /> },
-      { path: "/panel/createtrial/:id", element: <CreateTrial /> },
+      { path: "freeTrail", element: <FreeTrail /> },
+      { path: "createtrial/:id", element: <CreateTrial /> },
 
       //FollowUp ->
-      { path: "/panel/followup", element: <FollowUp /> },
-      { path: "/panel/createfollowup/:id", element: <CreateFollowUp /> },
+      { path: "followup", element: <FollowUp /> },
+      { path: "createfollowup/:id", element: <CreateFollowUp /> },
 
       //VoiceBox ->
-      { path: "/panel/voicebox", element: <VoiceBox /> },
-      { path: "/panel/createvoice", element: <CreateVoice /> },
-      { path: "/panel/createvoicedetails", element: <CreateVoiceDetails /> },
-      { path: "/panel/createvoicereports", element: <CreateVoiceReports /> },
+      { path: "voicebox", element: <VoiceBox /> },
+      { path: "createvoice", element: <CreateVoice /> },
+      { path: "createvoicedetails", element: <CreateVoiceDetails /> },
+      { path: "createvoicereports", element: <CreateVoiceReports /> },
 
-      //LOGS
-      { path: "/panel/logs", element: <Logs /> },
-      { path: "/panel/createlogs", element: <CreateLogs /> },
-      { path: "/panel/createchats", element: <CreateChats /> },
-      { path: "/panel/createextension", element: <CreateExtension /> },
-      { path: "/panel/createlogin", element: <CreateLogin /> },
+      //LOGS 
+      { path: "logs", element: <Logs /> },
+      { path: "createlogs", element: <CreateLogs /> },
+      { path: "createchats", element: <CreateChats /> },
+      { path: "createextension", element: <CreateExtension /> },
+      { path: "createlogin", element: <CreateLogin /> },
 
       //CLIENT
-      { path: "/panel/client", element: <Client /> },
+      { path: "client", element: <Client /> },
 
       //SALESORDER
-      { path: "/panel/salesorder", element: <SalesOrder /> },
-      { path: "/panel/createorder", element: <CreateOrder /> },
+      { path: "salesorder", element: <SalesOrder /> },
+      { path: "createorder", element: <CreateOrder /> },
 
       //MAILBOX
-      { path: "/panel/mailBox", element: <MailBox /> },
-      { path: "/panel/createmail", element: <CreateMailBox /> },
+      { path: "mailBox", element: <MailBox /> },
+      { path: "createmail", element: <CreateMailBox /> },
 
       // SERVICE BOX
-      { path: "/panel/servicebox", element: <ServiceBox /> },
-      { path: "/panel/sendsms", element: <CreateSendSms /> },
-      { path: "/panel/sendemail", element: <CreateSendEmail /> },
+      { path: "servicebox", element: <ServiceBox /> },
+      { path: "sendsms", element: <CreateSendSms /> },
+      { path: "sendemail", element: <CreateSendEmail /> },
 
       // Financial Activity
-      { path: "/panel/FinancialActivity", element: <FinancialActivity /> },
+      { path: "FinancialActivity", element: <FinancialActivity /> },
 
       // Report
-      { path: "/panel/reports", element: <Reports /> },
-      { path: "/panel/clientso/:id", element: <EditClientSO /> },
+      { path: "reports", element: <Reports /> },
+      { path: "clientso/:id", element: <EditClientSO /> },
 
       // ANALYTICS
-      { path: "/panel/analytics", element: <Analytics /> },
+      { path: "analytics", element: <Analytics /> },
 
       //Messaging
-      { path: "/panel/messaging", element: <Messaging /> },
+      { path: "messaging", element: <Messaging /> },
 
       // MIS REPORT
-      { path: "/panel/misreports", element: <MISReports /> },
-      { path: "/panel/creategeneral", element: <GeneralReport /> },
-      { path: "/panel/createft", element: <FtReport /> },
-      { path: "/panel/createpaid", element: <PaidClientReport /> },
-      { path: "/panel/createuser", element: <UserReport /> },
-      { path: "/panel/createcalling", element: <CallingReport /> },
-      { path: "/panel/creatednd", element: <DNDReport /> },
-      { path: "/panel/createtrack", element: <TrackSheet /> },
-      { path: "/panel/createresearch", element: <ResearchReport /> },
+      { path: "misreports", element: <MISReports /> },
+      { path: "creategeneral", element: <GeneralReport /> },
+      { path: "createft", element: <FtReport /> },
+      { path: "createpaid", element: <PaidClientReport /> },
+      { path: "createuser", element: <UserReport /> },
+      { path: "createcalling", element: <CallingReport /> },
+      { path: "creatednd", element: <DNDReport /> },
+      { path: "createtrack", element: <TrackSheet /> },
+      { path: "createresearch", element: <ResearchReport /> },
 
-      { path: "/panel/groupChat", element: <GroupChat /> },
-      { path: "/panel/setting", element: <Setting /> },
+      { path: "groupChat", element: <GroupChat /> },
+      { path: "setting", element: <Setting /> },
 
-      { path: "/panel/subscription", element: <Subscription /> },
+      { path: "subscription", element: <Subscription /> },
 
 
 
       { path: "*", element: <ErrorRoute /> },
 
       // --------------------------------  Settings ------------------------------
-      { path: "/panel/setting/User-Setting", element: <UserSetting /> },
-      { path: "/panel/setting/User-Operation", element: <UserOperation /> },
-      { path: "/panel/setting/group", element: <Group /> },
-      { path: "/panel/setting/department", element: <Department /> },
-      { path: "/panel/setting/designation", element: <Designation /> },
-      { path: "/panel/setting/qualification", element: <Qualification /> },
-      { path: "/panel/setting/leadStatus", element: <LeadStatus /> },
-      { path: "/panel/setting/pools", element: <Pool /> },
-      { path: "/panel/setting/segments", element: <Segments /> },
-      { path: "/panel/setting/expensehead", element: <ExpenseHead /> },
-      { path: "/panel/setting/sms-template", element: <SMSTemplate /> },
-      { path: "/panel/setting/email-template", element: <EmailTemplate /> },
-      { path: "/panel/setting/sms-Settings", element: <SMSSetting /> },
-      { path: "/panel/setting/email-Settings", element: <EmailSetting /> },
-      { path: "/panel/setting/access-device", element: <AccessDevice /> },
-      { path: "/panel/settings/access-control",lement: <AccessControl />,},
-      { path: "/panel/setting/permissions", element: <Permissions /> },
+      { path: "setting/User-Setting", element: <UserSetting /> },
+      { path: "setting/User-Operation", element: <UserOperation /> },
+      { path: "setting/group", element: <Group /> },
+      { path: "setting/department", element: <Department /> },
+      { path: "setting/designation", element: <Designation /> },
+      { path: "setting/qualification", element: <Qualification /> },
+      { path: "setting/leadStatus", element: <LeadStatus /> },
+      { path: "setting/pools", element: <Pool /> },
+      { path: "setting/segments", element: <Segments /> },
+      { path: "setting/expensehead", element: <ExpenseHead /> },
+      { path: "setting/sms-template", element: <SMSTemplate /> },
+      { path: "setting/email-template", element: <EmailTemplate /> },
+      { path: "setting/sms-Settings", element: <SMSSetting /> },
+      { path: "setting/email-Settings", element: <EmailSetting /> },
+      { path: "setting/access-device", element: <AccessDevice /> },
+      { path: "settings/access-control",lement: <AccessControl />,},
+      { path: "setting/permissions", element: <Permissions /> },
+    ],
+  },
+  {
+    path: "/panel/brokerage", element: (
+      <ProtectedRoute>
+        <SidebarBase />
+      </ProtectedRoute>
+    ),
+    children: [
+      { path: "/panel", element: <Home /> },
+
+      //Lead->
+      { path: "dashboard", element: <Home /> },
+      { path: "lead", element: <Lead /> },
+      { path: "editlead/:id", element: <Createlead /> },
+      { path: "createlead", element: <Createlead /> },
+      { path: "lead/create/so/:id", element: <CreateSOLead /> },
+
+      //Contacts->
+      { path: "contact", element: <Contact /> },
+      { path: "createcontact", element: <CreateContact /> },
+      { path: "editContact/:id", element: <CreateContact /> },
+      { path: "contact/create/so/:id", element: <CreateSOContact /> },
+
+      //FreeTrail ->
+      { path: "freeTrail", element: <FreeTrail /> },
+      { path: "createtrial/:id", element: <CreateTrial /> },
+
+      //FollowUp ->
+      { path: "followup", element: <FollowUp /> },
+      { path: "createfollowup/:id", element: <CreateFollowUp /> },
+
+      //VoiceBox ->
+      { path: "voicebox", element: <VoiceBox /> },
+      { path: "createvoice", element: <CreateVoice /> },
+      { path: "createvoicedetails", element: <CreateVoiceDetails /> },
+      { path: "createvoicereports", element: <CreateVoiceReports /> },
+
+      //LOGS 
+      { path: "logs", element: <Logs /> },
+      { path: "createlogs", element: <CreateLogs /> },
+      { path: "createchats", element: <CreateChats /> },
+      { path: "createextension", element: <CreateExtension /> },
+      { path: "createlogin", element: <CreateLogin /> },
+
+      //CLIENT
+      { path: "client", element: <Client /> },
+
+      //SALESORDER
+      { path: "salesorder", element: <SalesOrder /> },
+      { path: "createorder", element: <CreateOrder /> },
+
+      //MAILBOX
+      { path: "mailBox", element: <MailBox /> },
+      { path: "createmail", element: <CreateMailBox /> },
+
+      // SERVICE BOX
+      { path: "servicebox", element: <ServiceBox /> },
+      { path: "sendsms", element: <CreateSendSms /> },
+      { path: "sendemail", element: <CreateSendEmail /> },
+
+      // Financial Activity
+      { path: "FinancialActivity", element: <FinancialActivity /> },
+
+      // Report
+      { path: "reports", element: <Reports /> },
+      { path: "clientso/:id", element: <EditClientSO /> },
+
+      // ANALYTICS
+      { path: "analytics", element: <Analytics /> },
+
+      //Messaging
+      { path: "messaging", element: <Messaging /> },
+
+      // MIS REPORT
+      { path: "misreports", element: <MISReports /> },
+      { path: "creategeneral", element: <GeneralReport /> },
+      { path: "createft", element: <FtReport /> },
+      { path: "createpaid", element: <PaidClientReport /> },
+      { path: "createuser", element: <UserReport /> },
+      { path: "createcalling", element: <CallingReport /> },
+      { path: "creatednd", element: <DNDReport /> },
+      { path: "createtrack", element: <TrackSheet /> },
+      { path: "createresearch", element: <ResearchReport /> },
+
+      { path: "groupChat", element: <GroupChat /> },
+      { path: "setting", element: <Setting /> },
+
+      { path: "subscription", element: <Subscription /> },
+
+
+
+      { path: "*", element: <ErrorRoute /> },
+
+      // --------------------------------  Settings ------------------------------
+      { path: "setting/User-Setting", element: <UserSetting /> },
+      { path: "setting/User-Operation", element: <UserOperation /> },
+      { path: "setting/group", element: <Group /> },
+      { path: "setting/department", element: <Department /> },
+      { path: "setting/designation", element: <Designation /> },
+      { path: "setting/qualification", element: <Qualification /> },
+      { path: "setting/leadStatus", element: <LeadStatus /> },
+      { path: "setting/pools", element: <Pool /> },
+      { path: "setting/segments", element: <Segments /> },
+      { path: "setting/expensehead", element: <ExpenseHead /> },
+      { path: "setting/sms-template", element: <SMSTemplate /> },
+      { path: "setting/email-template", element: <EmailTemplate /> },
+      { path: "setting/sms-Settings", element: <SMSSetting /> },
+      { path: "setting/email-Settings", element: <EmailSetting /> },
+      { path: "setting/access-device", element: <AccessDevice /> },
+      { path: "settings/access-control",lement: <AccessControl />,},
+      { path: "setting/permissions", element: <Permissions /> },
     ],
   },
 ]);

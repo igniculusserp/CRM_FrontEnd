@@ -29,6 +29,14 @@ export default function CreateSO() {
   const { id, leadId } = useParams();
   const navigate = useNavigate();
 
+     //--------------------------------------- Set Business Type --------------------------------------------
+                           const [BusinessType, setBusinessType] = useState("");
+                            
+                           useEffect(() => {
+                             const storedType = localStorage.getItem("businessType") || "";
+                             setBusinessType(storedType);
+                           }, []);
+
   //form description is kept-out
   const [description, setdescription] = useState("Add Text Here");
   const [editLead, seteditLead] = useState({});
@@ -475,7 +483,7 @@ export default function CreateSO() {
           config,
         );
         alert("SO updated successfully!");
-        navigate(`/panel/lead`);
+        navigate(`/panel/${BusinessType}/lead`);
       } else {
         await axios.post(
           `${protocal_url}${name}.${tenant_base_url}/SalesOrder/salesOrder/add`,
@@ -484,7 +492,7 @@ export default function CreateSO() {
         );
         console.log(formData_POST);
         alert("Sales Order created successfully!");
-        navigate(`/panel/lead`);
+        navigate(`/panel/${BusinessType}/lead`);
       }
 
       // Redirect after a short delay
@@ -538,7 +546,7 @@ export default function CreateSO() {
           </div>
           <div>
             <Link
-              to="/panel/lead"
+              to={`/panel/${BusinessType}/lead`}
               className="rounded border border-blue-500 px-6 py-1 text-blue-500"
             >
               Cancel

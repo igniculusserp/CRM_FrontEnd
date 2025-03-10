@@ -454,7 +454,7 @@ export default function Lead() {
   };
     //-------------------------------------Enable us to switch to createlead/editlead page with /:id ----------------------------
     let handleClick = (item) => {
-      navigate(`/panel/editlead/${item.id}`);
+      navigate(`/panel/${BusinessType}/editlead/${item.id}`);
     };
   //------------------------------------------------------ Table Heading And Table Data ------------------------------------------
   const columns = [
@@ -558,7 +558,7 @@ export default function Lead() {
         <button
           onClick={(e) => {
             e.stopPropagation();
-            navigate(`/panel/lead/create/so/${params.row.id}`);
+            navigate(`/panel/${BusinessType}/lead/create/so/${params.row.id}`);
           }}
           className="flex h-7 items-center justify-center rounded bg-blue-600 px-3 py-1 text-white shadow-md hover:bg-blue-500"
         >
@@ -673,7 +673,7 @@ export default function Lead() {
             {/*------------------------------------------------------  Create Lead ------------------------------------------*/}
             {createLead || businessRole === "Admin" ? (
               <div className="button_MaxWidth_Container flex">
-                <Link to="/panel/createlead" className="button_MaxWidth">
+                <Link to="/panel/${BusinessType}/createlead" className="button_MaxWidth">
                   <button
                     className="button_MaxWidth flex items-center justify-center gap-2 rounded-lg border bg-blue-600 px-4 py-2 text-white"
                     id="dropdownDefaultButton"
@@ -827,7 +827,7 @@ export default function Lead() {
                                 className="mr-3 rounded-full bg-cyan-400 p-1 text-white hover:bg-cyan-500"
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  navigate(`/panel/editlead/${item.id}`);
+                                  navigate(`/panel/${BusinessType}/editlead/${item.id}`);
                                 }}
                                 size={25}
                               />

@@ -40,6 +40,13 @@ export default function SalesOrder() {
   const navigate = useNavigate();
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
+     //--------------------------------------- Set Business Type --------------------------------------------
+                           const [BusinessType, setBusinessType] = useState("");
+                            
+                           useEffect(() => {
+                             const storedType = localStorage.getItem("businessType") || "";
+                             setBusinessType(storedType);
+                           }, []);
   //This is to store the upcoming data from API
   //------------------------------------------------- All States----------------------------------------------------------
   const [selectedRowsId, setSelectedRowsId] = useState([]);
@@ -178,7 +185,7 @@ export default function SalesOrder() {
   // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
   const handleClick = (id) => {
     if (edit || businessRole === "Admin") {
-      navigate(`/panel/clientso/${id}`);
+      navigate(`/panel/${BusinessType}/clientso/${id}`);
     }
   };
   //------------------------------------------------------ Check Box Data ------------------------------------------
@@ -514,7 +521,7 @@ export default function SalesOrder() {
                             className="p-1 mr-3 text-white rounded-full shadow shadow-blue-500 bg-cyan-400 hover:bg-cyan-500"
                             onClick={(e) => {
                               e.stopPropagation();
-                              navigate(`/panel/clientso/${item.id}`);
+                              navigate(`/panel/${BusinessType}/clientso/${item.id}`);
                             }}
                             size={25}
                           />

@@ -1,6 +1,6 @@
 //------------------------------------------no use------------------------------------------
 //react
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 //reactIcon
 import { FaAngleDown } from "react-icons/fa";
@@ -18,6 +18,14 @@ export default function UploadLead() {
   const { leadStatus } = useLeadStatus();
   const { leadSource } = useLeadSource();
   const { managedBy } = useManagedBy();
+
+    //--------------------------------------- Set Business Type --------------------------------------------
+             const [BusinessType, setBusinessType] = useState("");
+              
+             useEffect(() => {
+               const storedType = localStorage.getItem("businessType") || "";
+               setBusinessType(storedType);
+             }, []);
 
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -124,7 +132,7 @@ export default function UploadLead() {
         </h1>
         <div>
           <Link
-            to="/panel/lead"
+            to={`/panel/${BusinessType}/lead`}
             className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
           >
             Cancel

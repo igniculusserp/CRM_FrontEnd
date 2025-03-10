@@ -48,6 +48,14 @@ export default function Contact() {
   const [business, setBusiness] = useState("");
   const businessType = localStorage.getItem("businessType");
 
+   //--------------------------------------- Set Business Type --------------------------------------------
+   const [BusinessType, setBusinessType] = useState("");
+        
+   useEffect(() => {
+     const storedType = localStorage.getItem("businessType") || "";
+     setBusinessType(storedType);
+   }, []);
+
   //------------------------------------------------- All States----------------------------------------------------------
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [selectedRowEmails, setSelectedRowEmails] = useState([]);
@@ -277,7 +285,7 @@ export default function Contact() {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate(`/panel/contact/create/so/${params.row.id}`);
+                  navigate(`/panel/${BusinessType}/contact/create/so/${params.row.id}`);
                 }}
                 className="flex h-7 items-center justify-center rounded bg-blue-600 px-3 py-1 text-white shadow-md hover:bg-blue-500"
               >
@@ -320,7 +328,7 @@ export default function Contact() {
   // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
   const handleClick = (id) => {
     if (edit || businessRole === "Admin") {
-      navigate(`/panel/createfollowup/${id}`);
+      navigate(`/panel/${BusinessType}/createfollowup/${id}`);
     }
   };
   //-----------------------------------------------STRIPE BAR DROPDOWN--------------------------------------------------
@@ -553,7 +561,7 @@ export default function Contact() {
                               className="mr-3 rounded-full bg-cyan-400 p-1 text-white hover:bg-cyan-500"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                navigate(`/panel/editcontact/${item.id}`);
+                                navigate(`/panel/${BusinessType}/editContact/${item.id}`);
                               }}
                               size={25}
                             />

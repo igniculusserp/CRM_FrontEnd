@@ -20,6 +20,13 @@ import MassEmail from "../MassEmail/MassEmail";
 
 export default function VoiceBox() {
   const navigate = useNavigate();
+     //--------------------------------------- Set Business Type --------------------------------------------
+                               const [BusinessType, setBusinessType] = useState("");
+                                
+                               useEffect(() => {
+                                 const storedType = localStorage.getItem("businessType") || "";
+                                 setBusinessType(storedType);
+                               }, []);
 
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
@@ -39,7 +46,7 @@ export default function VoiceBox() {
 
   //   HANDLE TABLE CLICK
   const handleMonitorClick = (id) => {
-    navigate(`/panel/createvoice/${id}`);
+    navigate(`/panel/${BusinessType}/createvoice/${id}`);
   };
 
   //----------------GET----------------
@@ -315,11 +322,11 @@ export default function VoiceBox() {
 
   // Object containing the options
   const dynamicButtons = {
-    Monitoring: { text: "Create View Box", href: "/panel/createvoice" },
-    Reports: { text: "Create Reports", href: "/panel/createvoicereports" },
+    Monitoring: { text: "Create View Box", href: `/panel/${BusinessType}/createvoice` },
+    Reports: { text: "Create Reports", href: `/panel/${BusinessType}/createvoicereports` },
     "SMS via GMS Gateway": {
       text: "Send Details",
-      href: "/panel/createvoicedetails",
+      href: `/panel/${BusinessType}/createvoicedetails`,
     },
   };
 
@@ -333,7 +340,7 @@ export default function VoiceBox() {
   // State to manage the button text
   const [buttonText, setButtonText] = useState({
     text: "Create View Box",
-    href: "/panel/createvoice",
+    href: `/panel/${BusinessType}/createvoice`,
   });
 
   // Function to handle option click using bracket notation

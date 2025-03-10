@@ -31,6 +31,13 @@ export default function FreeTrail() {
   const navigate = useNavigate();
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
+   //--------------------------------------- Set Business Type --------------------------------------------
+         const [BusinessType, setBusinessType] = useState("");
+          
+         useEffect(() => {
+           const storedType = localStorage.getItem("businessType") || "";
+           setBusinessType(storedType);
+         }, []);
   //------------------------------------------------- All States----------------------------------------------------------
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [selectedRowEmails, setSelectedRowEmails] = useState([]);
@@ -157,7 +164,7 @@ export default function FreeTrail() {
   // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
   const handleClick = (id) => {
     if (edit || businessRole === "Admin") {
-      navigate(`/panel/createtrial/${id}`);
+      navigate(`/panel/${BusinessType}/createtrial/${id}`);
     }
   };
   //-----------------------------------------------STRIPE BAR DROPDOWN--------------------------------------------------
@@ -353,7 +360,7 @@ export default function FreeTrail() {
                         className="p-1 mr-3 text-white rounded-full bg-cyan-400 hover:bg-cyan-500"
                         onClick={(e) => {
                           e.stopPropagation();
-                          navigate(`/panel/createtrial/${item.id}`);
+                          navigate(`/panel/${BusinessType}/createtrial/${item.id}`);
                         }}
                         size={25}
                       />

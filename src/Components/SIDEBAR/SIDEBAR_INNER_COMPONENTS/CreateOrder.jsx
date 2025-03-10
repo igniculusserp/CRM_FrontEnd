@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const CreateOrder = () => {
+     //--------------------------------------- Set Business Type --------------------------------------------
+     const [BusinessType, setBusinessType] = useState("");
+      
+     useEffect(() => {
+       const storedType = localStorage.getItem("businessType") || "";
+       setBusinessType(storedType);
+     }, []);
+
   const [ordersData, setOrdersData] = useState({
     clientName: "",
     alternateNumber: "",
@@ -142,7 +150,7 @@ const CreateOrder = () => {
       {/* TOP PART */}
       <div className="m-3 flex items-center justify-between rounded-md bg-white px-3 py-4">
         <h1 className="text-xl font-bold">Create Sales Oreder</h1>
-        <Link to="/panel/salesorder">
+        <Link to={`/panel/${BusinessType}/salesorder`}>
           <button className="rounded-md border border-blue-600 px-6 py-2 text-center text-sm text-blue-600">
             Cancel
           </button>
