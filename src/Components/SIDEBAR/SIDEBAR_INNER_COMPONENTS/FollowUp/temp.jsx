@@ -142,7 +142,7 @@ export default function FollowUp() {
   // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
   const handleClick = (id) => {
     if (edit || businessRole === "Admin") {
-      navigate(`/panel/createfollowup/${id}`);
+      navigate(`/panel/${BusinessType}/createfollowup/${id}`);
     }
   };
   //-----------------------------------------------STRIPE BAR DROPDOWN--------------------------------------------------
@@ -336,7 +336,7 @@ export default function FollowUp() {
                             className="mr-3 rounded-full bg-cyan-400 p-1 text-white hover:bg-cyan-500"
                             onClick={(e) => {
                               e.stopPropagation();
-                              navigate(`/panel/createtrial/${item.id}`);
+                              navigate(`/panel/${BusinessType}/createtrial/${item.id}`);
                             }}
                             size={25}
                           />

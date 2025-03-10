@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 //external Packages
 import axios from "axios";
@@ -13,120 +13,110 @@ const settingButtons = [
   {
     key: 1,
     value: "User Setting",
-    link: "/panel/setting/User-Setting",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/User-Setting`,
     group: "User's Settings",
   },
   {
     key: 2,
     value: "User Operation",
-    link: "/panel/setting/User-Operation",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/User-Operation`,
     group: "User's Settings",
   },
   {
     key: 3,
     value: "Group",
-    link: "/panel/setting/group",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/group`,
     group: "User's Settings",
   },
   {
     key: 27,
     value: "Roles & Permissions",
-    link: "/panel/setting/permissions",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/permissions`,
     group: "User's Settings",
   },
   {
     key: 7,
     value: "Lead Status",
-    link: "/panel/setting/leadStatus",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/leadStatus`,
     group: "Lead Settings",
   },
   {
     key: 8,
     value: "Pools",
-    link: "/panel/setting/pools",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/pools`,
     group: "Lead Settings",
   },
   {
     key: 9,
     value: "Segments",
-    link: "/panel/setting/segments",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/segments`,
     group: "Lead Settings",
   },
   {
     key: 10,
     value: "SMS Template",
-    link: "/panel/setting/sms-template",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/sms-template`,
     group: "ENV Settings",
   },
   {
     key: 11,
     value: "E-Mail Template",
-    link: "/panel/setting/email-template",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/email-template`,
     group: "ENV Settings",
   },
   {
     key: 15,
     value: "SMS Setting",
-    link: "/panel/setting/sms-Settings",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/sms-Settings`,
     group: "ENV Settings",
   },
   {
     key: 16,
     value: "E-Mail Setting",
-    link: "/panel/setting/email-Settings",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/email-Settings`,
     group: "ENV Settings",
   },
   {
     key: 21,
     value: "Access Device",
-    link: "/panel/setting/access-device",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/access-device`,
     group: "Security Settings",
   },
   {
     key: 24,
     value: "Access Control",
-    link: "/panel/setting/access-control",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/access-control`,
     group: "Security Settings",
   },
   {
     key: 4,
     value: "Department",
-    link: "/panel/setting/department",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/department`,
     group: "Other Settings",
   },
   {
     key: 5,
     value: "Designation",
-    link: "/panel/setting/designation",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/designation`,
     group: "Other Settings",
   },
   {
     key: 26,
     value: "Expense Head",
-    link: "/panel/setting/expensehead",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/expensehead`,
     group: "Other Settings",
   },
   {
     key: 6,
     value: "Qualification",
-    link: "/panel/setting/qualification",
+    getLink: (BusinessType) => `/panel/${BusinessType}/setting/qualification`,
     group: "Other Settings",
   },
-  // { key: 20, value: "Call Template" },
-  // { key: 12, value: "Plan" },
-  // { key: 13, value: "Calendar" },
-  // { key: 14, value: "Promotion" },
-  // { key: 17, value: "Branch Target" },
-  // { key: 18, value: "Notification Popup" },
-  // { key: 19, value: "Calling Extension" },
-  // { key: 22, value: "DLP" },
-  // { key: 23, value: "Alerts" },
-  // { key: 25, value: "Password Policy" },
 ];
 
 export default function Setting() {
   const navigate = useNavigate();
-
+  const BusinessType = localStorage.getItem("BusinessType");
   const name = getHostnamePart();
 
   // -------------------------------------- Group the data by the `group` property -------------------------------------
@@ -204,7 +194,7 @@ export default function Setting() {
                   {groupedData[group].map((button) => (
                     <div
                       key={button.key}
-                      onClick={() => navigate(button.link)}
+                      onClick={() => navigate(button.getLink(BusinessType))}
                       className="p-2 mx-4 text-center bg-white border-2 rounded-full shadow-md border-cyan-500 text-cyan-500 hover:bg-cyan-500 hover:text-white"
                     >
                       {button.value}

@@ -39,6 +39,14 @@ export default function Header({ toggle, setToggle }) {
   const bearer_token = localStorage.getItem("token");
   const location = useLocation();
 
+    //--------------------------------------- Set Business Type --------------------------------------------
+    const [BusinessType, setBusinessType] = useState("");
+  
+    useEffect(() => {
+      const storedType = localStorage.getItem("businessType") || "";
+      setBusinessType(storedType);
+    }, []);
+
   // const [welcomedata, setWelcomeData] = useState([]);
   const [tenantId, setData] = useState("");
   const [activeKey, setActiveKey] = useState(null);
@@ -53,7 +61,7 @@ export default function Header({ toggle, setToggle }) {
       setData(registrationDataParsed.tenantId || "");
       // setWelcomeData(JSON.parse(userDetail));
       if (window.location.pathname === "/panel") {
-        navigate("/panel/dashboard");
+        navigate(`/panel/${BusinessType}/dashboard`);
       } else if (window.location.pathname !== "/panel") {
         navigate(window.location.pathname);
       }
@@ -212,7 +220,7 @@ export default function Header({ toggle, setToggle }) {
 
   const handleNavigate = (userName, userId) => {
     handleDropdownClose();
-    navigate("/panel/messaging", { state: {userName, userId } });
+    navigate(`/panel/${BusinessType}/messaging`, { state: {userName, userId } });
   };
   
   //----------------------------------------------------------- MENU --------------------------------------------------------------------
@@ -233,7 +241,7 @@ export default function Header({ toggle, setToggle }) {
       functionality: handleDropdownOpen,
     },
     { key: 3, logo: <IoMdNotifications /> },
-    { key: 5, logo: <IoMdSettings />, link: "/panel/setting" },
+    { key: 5, logo: <IoMdSettings />, link: `/panel/${BusinessType}/setting` },
     {
       key: 6,
       logo: <MdLogout />,

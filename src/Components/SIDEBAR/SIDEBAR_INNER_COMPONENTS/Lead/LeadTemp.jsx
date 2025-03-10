@@ -450,7 +450,7 @@ export default function Lead() {
   };
     //-------------------------------------Enable us to switch to createlead/editlead page with /:id ----------------------------
     let handleClick = (item) => {
-      navigate(`/panel/editlead/${item.id}`);
+      navigate(`/panel/${BusinessType}/editlead/${item.id}`);
     };
   //------------------------------------------------------ Table Heading And Table Data ------------------------------------------
   const columns = [
@@ -554,7 +554,7 @@ export default function Lead() {
         <button
           onClick={(e) => {
             e.stopPropagation();
-            navigate(`/panel/lead/create/so/${params.row.id}`);
+            navigate(`/panel/${BusinessType}/lead/create/so/${params.row.id}`);
           }}
           className="flex items-center justify-center px-3 py-1 text-white bg-blue-600 rounded shadow-md h-7 hover:bg-blue-500"
         >
@@ -668,8 +668,10 @@ export default function Lead() {
             {/* PART-II */}
             {/*------------------------------------------------------  Create Lead ------------------------------------------*/}
             {createLead || businessRole === "Admin" ? (
-              <div className="flex button_MaxWidth_Container">
-                <Link to="/panel/createlead" className="button_MaxWidth">
+
+              <div className="button_MaxWidth_Container flex">
+                <Link to="/panel/${BusinessType}/createlead" className="button_MaxWidth">
+
                   <button
                     className="flex items-center justify-center gap-2 px-4 py-2 text-white bg-blue-600 border rounded-lg button_MaxWidth"
                     id="dropdownDefaultButton"
@@ -823,7 +825,7 @@ export default function Lead() {
                                 className="p-1 mr-3 text-white rounded-full bg-cyan-400 hover:bg-cyan-500"
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  navigate(`/panel/editlead/${item.id}`);
+                                  navigate(`/panel/${BusinessType}/editlead/${item.id}`);
                                 }}
                                 size={25}
                               />

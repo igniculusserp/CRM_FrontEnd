@@ -31,6 +31,13 @@ export default function FollowUp() {
   const navigate = useNavigate();
   const bearer_token = localStorage.getItem("token");
   const name = getHostnamePart();
+   //--------------------------------------- Set Business Type --------------------------------------------
+         const [BusinessType, setBusinessType] = useState("");
+          
+         useEffect(() => {
+           const storedType = localStorage.getItem("businessType") || "";
+           setBusinessType(storedType);
+         }, []);
   //------------------------------------------------- All States----------------------------------------------------------
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [selectedRowEmails, setSelectedRowEmails] = useState([]);
@@ -141,7 +148,7 @@ export default function FollowUp() {
   // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
   const handleClick = (id) => {
     if (edit || businessRole === "Admin") {
-      navigate(`/panel/createfollowup/${id}`);
+      navigate(`/panel/${BusinessType}/createfollowup/${id}`);
     }
   };
   //-----------------------------------------------STRIPE BAR DROPDOWN--------------------------------------------------
@@ -331,7 +338,7 @@ export default function FollowUp() {
                             className="mr-3 rounded-full bg-cyan-400 p-1 text-white hover:bg-cyan-500"
                             onClick={(e) => {
                               e.stopPropagation();
-                              navigate(`/panel/createfollowup/${item.id}`);
+                              navigate(`/panel/${BusinessType}/createfollowup/${item.id}`);
                             }}
                             size={25}
                           />

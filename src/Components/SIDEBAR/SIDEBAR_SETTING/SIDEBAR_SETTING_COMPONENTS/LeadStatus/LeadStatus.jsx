@@ -21,6 +21,13 @@ import {
 } from "../../../../../utils/toastNotifications";
 
 export default function LeadStatus() {
+     //--------------------------------------- Set Business Type --------------------------------------------
+       const [BusinessType, setBusinessType] = useState("");
+              
+       useEffect(() => {
+         const storedType = localStorage.getItem("businessType") || "";
+         setBusinessType(storedType);
+       }, []);
   const name = getHostnamePart();
   const bearer_token = localStorage.getItem("token");
 
@@ -233,7 +240,7 @@ export default function LeadStatus() {
             {/*----------------------------------------------------------------const to :  is route where we stored the route    ----------------------------------------------------------------*/}
 
             <div className="flex items-center my-2 ">
-              <Link to="/panel">
+              <Link to={`/panel/${BusinessType}/dashboard`}>
                 <IoMdHome size={30} className="mb-1 text-blue-600 " /> 
               </Link>
               

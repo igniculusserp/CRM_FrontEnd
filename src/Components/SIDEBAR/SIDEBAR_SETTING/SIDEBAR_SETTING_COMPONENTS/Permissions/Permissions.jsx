@@ -25,6 +25,13 @@ export default function Permissions() {
 
 
   const pathnames = location.pathname.split("/").filter((x) => x);
+     //--------------------------------------- Set Business Type --------------------------------------------
+       const [BusinessType, setBusinessType] = useState("");
+              
+       useEffect(() => {
+         const storedType = localStorage.getItem("businessType") || "";
+         setBusinessType(storedType);
+       }, []);
   
 
   const handleAdd = () => {
@@ -109,7 +116,7 @@ export default function Permissions() {
           </button>
         </div>
             <div className="flex items-center my-2 ">
-              <Link to="/panel">
+              <Link to={`/panel/${BusinessType}/dashboard`}>
                 <IoMdHome size={30} className="mb-1 text-blue-600 " /> 
               </Link>
               

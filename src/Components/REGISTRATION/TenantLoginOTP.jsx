@@ -21,13 +21,13 @@ import { FaStarOfLife } from "react-icons/fa";
 export default function TenantLoginOTP() {
   const navigate = useNavigate();
 
-  const businessType = localStorage.getItem("businessType");
-  const [business, setBusiness] = useState("");
-
-  useEffect(() => {
-    setBusiness(businessType);
-    console.log(business);
-  }, [business]);
+       //--------------------------------------- Set Business Type --------------------------------------------
+             const [BusinessType, setBusinessType] = useState("");
+              
+             useEffect(() => {
+               const storedType = localStorage.getItem("businessType") || "";
+               setBusinessType(storedType);
+             }, []);
 
 
   const [email, setEmail] = useState("");
@@ -99,15 +99,9 @@ export default function TenantLoginOTP() {
         showErrorToast(message);
       } else if (!isSucess) {
         showSuccessToast(message);
-        if (businessType === "Brokerage") {
-          navigate("/panel/brokerage");
-        }
-        else if (businessType === "Advisory") {
-          navigate("/panel/advisory");
-        }
-        else if (businessType === "Real Estate") {
-          navigate("/panel/realestate");
-        }
+
+        navigate(`/panel/${BusinessType}/dashboard`);
+
       }
     } catch (error) {
       showErrorToast(error.response.data.message);

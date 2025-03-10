@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -16,6 +16,14 @@ const CreateMailBox = () => {
   const [defaultMailText, setDefaultMailText] = useState("Mail Type");
   const [typeDropdown, setTypeDropdown] = useState(false);
   const [defaultTypeText, setDefaultTypeText] = useState("Type");
+
+   //--------------------------------------- Set Business Type --------------------------------------------
+   const [BusinessType, setBusinessType] = useState("");
+    
+   useEffect(() => {
+     const storedType = localStorage.getItem("businessType") || "";
+     setBusinessType(storedType);
+   }, []);
 
   // HANDLING INPUT CHANGE
   const handleChange = (e) => {
@@ -85,11 +93,11 @@ const CreateMailBox = () => {
         {/* TOP SECTION */}
         <div className="m-3 flex items-center justify-between rounded-md bg-white px-3 py-4">
           <h1 className="text-xl font-bold">Create Mail Box</h1>
-          <Link to="/panel/mailBox">
-            <button className="rounded-md border border-blue-600 px-6 py-2 text-center text-sm text-blue-600">
-              Cancel
-            </button>
-          </Link>
+          <Link to={`/panel/${BusinessType}/mailBox`}>
+  <button className="rounded-md border border-blue-600 px-6 py-2 text-center text-sm text-blue-600">
+    Cancel
+  </button>
+</Link>
         </div>
         {/* -------------FORM Starts FROM HERE------------- */}
         <form onSubmit={handleSubmit} className="mb-6 flex flex-col">

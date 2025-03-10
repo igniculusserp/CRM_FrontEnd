@@ -44,6 +44,14 @@ export default function Createlead() {
   //IMP used as ${name} in an API
   const name = getHostnamePart();
 
+    //--------------------------------------- Set Business Type --------------------------------------------
+             const [BusinessType, setBusinessType] = useState("");
+              
+             useEffect(() => {
+               const storedType = localStorage.getItem("businessType") || "";
+               setBusinessType(storedType);
+             }, []);
+
   //const bearer_token for API Config
   const bearer_token = localStorage.getItem("token");
 
@@ -487,7 +495,7 @@ export default function Createlead() {
         );
         alert("Lead updated successfully!");
         showSuccessToast("Lead updated successfully!");
-        navigate(`/panel/lead`);
+        navigate(`/panel/${BusinessType}/lead`);
       } else {
         await axios.post(
           `${protocal_url}${name}.${tenant_base_url}/Lead/lead/add`,
@@ -496,7 +504,7 @@ export default function Createlead() {
         );
         alert("Lead created successfully!");
         showSuccessToast("Lead created successfully");
-        navigate(`/panel/lead`);
+        navigate(`/panel/${BusinessType}/lead`);
       }
     } catch (error) {
       showErrorToast(error.response?.data?.message || "An error occurred");
@@ -533,7 +541,7 @@ export default function Createlead() {
           <div>
             {/* ------------------------------------------------> Cancel Button  <------------------------------------------------ */}
             <Link
-              to="/panel/lead"
+              to={`/panel/${BusinessType}/lead`}
               className="rounded border border-blue-500 px-4 py-1 text-blue-500 sm:px-6"
             >
               Cancel

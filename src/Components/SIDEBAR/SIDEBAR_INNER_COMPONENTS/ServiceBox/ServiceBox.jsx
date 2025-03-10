@@ -15,7 +15,13 @@ import UseDateFilter from "../../../../Hooks/DateFilter/UseDateFilter";
 
 export default function ServiceBox() {
   const name = getHostnamePart();
-
+   //--------------------------------------- Set Business Type --------------------------------------------
+                         const [BusinessType, setBusinessType] = useState("");
+                          
+                         useEffect(() => {
+                           const storedType = localStorage.getItem("businessType") || "";
+                           setBusinessType(storedType);
+                         }, []);
   //------------------------------------------------- All States----------------------------------------------------------
   const [selectedButton, setSelectedButton] = useState("Send SMS");
   const [selectedRowsId, setSelectedRowsId] = useState([]);
@@ -100,14 +106,14 @@ export default function ServiceBox() {
   //------------------------------------------------ Buttons -------------------------------------------
   //--------------------------------------------- DYNAMIC BUTTONS ---------------------------------------
   const dynamicButtons = {
-    "Send SMS": { text: "Send SMS", href: "/panel/sendsms" },
-    "Send Email": { text: "Send Email", href: "/panel/sendemail" },
+    "Send SMS": { text: "Send SMS", href: `/panel/${BusinessType}/sendsms` },
+    "Send Email": { text: "Send Email", href: `/panel/${BusinessType}/sendemail` },
   };
 
   // State to manage the button text
   const [buttonText, setButtonText] = useState({
     text: "Send SMS",
-    href: "/panel/sendsms",
+    href: `/panel/${BusinessType}/sendsms`,
   });
 
   // Function to handle option click using bracket notation

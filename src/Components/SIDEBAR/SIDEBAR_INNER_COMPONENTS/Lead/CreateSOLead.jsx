@@ -24,6 +24,16 @@ export default function CreateSOLead() {
   const { id } = useParams();
   const navigate = useNavigate();
   const name = getHostnamePart();
+
+
+    //--------------------------------------- Set Business Type --------------------------------------------
+             const [BusinessType, setBusinessType] = useState("");
+              
+             useEffect(() => {
+               const storedType = localStorage.getItem("businessType") || "";
+               setBusinessType(storedType);
+             }, []);
+
   const bearer_token = localStorage.getItem("token");
   const { segments } = useSegment();
   const { managedBy } = useManagedBy();
@@ -479,7 +489,7 @@ export default function CreateSOLead() {
       );
       if (response.data.isSuccess) {
         showSuccessToast("Sales Order created successfully!");
-        navigate(`/panel/lead`);
+        navigate(`/panel/${BusinessType}/lead`);
       }
       // Redirect after a short delay
     } catch (error) {
@@ -499,8 +509,9 @@ export default function CreateSOLead() {
           </div>
           <div>
             <Link
-              to="/panel/lead"
-              className="px-4 py-1 text-blue-500 border border-blue-500 rounded sm:px-6"
+              to={`/panel/${BusinessType}/lead`}
+              className="rounded border border-blue-500 px-4 py-1 text-blue-500 sm:px-6"
+
             >
               Cancel
             </Link>

@@ -1,5 +1,5 @@
 // REACT INBUILD
-import { useState } from "react";
+import { useState,useEffect } from "react";
 // REACT-ROUTER-DOM
 import { Link } from "react-router-dom";
 
@@ -7,6 +7,13 @@ import { Link } from "react-router-dom";
 import ReactQuill from "react-quill";
 
 export default function CreateVoiceReports() {
+     //--------------------------------------- Set Business Type --------------------------------------------
+                               const [BusinessType, setBusinessType] = useState("");
+                                
+                               useEffect(() => {
+                                 const storedType = localStorage.getItem("businessType") || "";
+                                 setBusinessType(storedType);
+                               }, []);
   // INPUT HANDLING WITH STATE
   const [description, setDescription] = useState("");
   const [editReport, setEditReport] = useState({
@@ -46,7 +53,7 @@ export default function CreateVoiceReports() {
         </h1>
         <div>
           <Link
-            to="/panel/voicebox"
+            to={`/panel/${BusinessType}/voicebox`}
             className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
           >
             Cancel

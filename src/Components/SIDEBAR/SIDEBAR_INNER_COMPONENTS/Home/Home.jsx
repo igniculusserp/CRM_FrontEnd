@@ -38,6 +38,14 @@ export default function Home() {
   //
   const navigate = useNavigate();
 
+     //--------------------------------------- Set Business Type --------------------------------------------
+           const [BusinessType, setBusinessType] = useState("");
+            
+           useEffect(() => {
+             const storedType = localStorage.getItem("businessType") || "";
+             setBusinessType(storedType);
+           }, []);
+
   //
   const [salesData, setSalesData] = useState([]);
   const [leadsData, setLeadsData] = useState([]);
@@ -353,8 +361,10 @@ export default function Home() {
             </div>
             {/* SECOND */}
             <div className="flex items-center gap-4">
-              <Link to="/panel/subscription/">
-                <button className="px-2 py-2 text-sm font-semibold text-white border-none rounded-md cursor-pointer bg-cyan-500 hover:shadow-md">
+
+              <Link to={`/panel/${BusinessType}/subscription/`}>
+                <button className="cursor-pointer rounded-md border-none bg-cyan-500 px-2 py-2 text-sm font-semibold text-white hover:shadow-md">
+
                   Choose Plan
                 </button>
               </Link>

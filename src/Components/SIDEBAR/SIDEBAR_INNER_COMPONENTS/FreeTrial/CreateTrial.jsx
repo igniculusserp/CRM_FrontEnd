@@ -36,6 +36,13 @@ export default function CreateTrial() {
   const { segments } = useSegment();
 
   const name = getHostnamePart();
+   //--------------------------------------- Set Business Type --------------------------------------------
+         const [BusinessType, setBusinessType] = useState("");
+          
+         useEffect(() => {
+           const storedType = localStorage.getItem("businessType") || "";
+           setBusinessType(storedType);
+         }, []);
 
   //form description is kept-out
   const [description, setdescription] = useState("Add Text Here");
@@ -241,7 +248,7 @@ export default function CreateTrial() {
         config,
       );
       alert("Free Trail updated successfully!");
-      navigate(`/panel/freeTrail`);
+      navigate(`/panel/${BusinessType}/freeTrail`);
 
       // Redirect after a short delay
     } catch (error) {
@@ -284,7 +291,7 @@ export default function CreateTrial() {
           <div>
             {/* ------------------------------------------------> Cancel Button  <------------------------------------------------ */}
             <Link
-              to="/panel/freeTrail"
+              to={`/panel/${BusinessType}/freeTrail`}
               className="rounded border border-blue-500 px-4 py-1 text-blue-500 sm:px-6"
             >
               Cancel

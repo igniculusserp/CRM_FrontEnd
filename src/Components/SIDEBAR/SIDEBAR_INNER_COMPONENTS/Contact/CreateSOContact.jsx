@@ -45,6 +45,14 @@ export default function CreateSOContact() {
   const { managedBy } = useManagedBy();
   const { segments } = useSegment();
 
+   //--------------------------------------- Set Business Type --------------------------------------------
+         const [BusinessType, setBusinessType] = useState("");
+          
+         useEffect(() => {
+           const storedType = localStorage.getItem("businessType") || "";
+           setBusinessType(storedType);
+         }, []);
+
   //------- Business Type --------
   const businessType = localStorage.getItem("businessType");
   const [business, setBusiness] = useState("");
@@ -536,7 +544,7 @@ export default function CreateSOContact() {
       );
       if (response.data.isSuccess) {
         showSuccessToast("Sales Order created successfully!");
-        navigate(`/panel/lead`);
+        navigate(`/panel/${BusinessType}/lead`);
       }
       // Redirect after a short delay
     } catch (error) {
@@ -559,8 +567,10 @@ export default function CreateSOContact() {
           {/* ------------------------------------------------> Cancel Button  <------------------------------------------------ */}
           <div>
             <Link
-              to="/panel/contact"
-              className="px-4 py-1 text-blue-500 border border-blue-500 rounded sm:px-6"
+
+              to={`/panel/${BusinessType}/contact`}
+              className="rounded border border-blue-500 px-4 py-1 text-blue-500 sm:px-6"
+
             >
               Cancel
             </Link>

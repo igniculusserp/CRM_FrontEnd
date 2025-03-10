@@ -16,7 +16,13 @@ const CreateVoice = () => {
   //to make id unique
   const { id } = useParams();
   const navigate = useNavigate();
-
+   //--------------------------------------- Set Business Type --------------------------------------------
+                             const [BusinessType, setBusinessType] = useState("");
+                              
+                             useEffect(() => {
+                               const storedType = localStorage.getItem("businessType") || "";
+                               setBusinessType(storedType);
+                             }, []);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editVoice, setEditVoice] = useState({
     id: "",
@@ -190,7 +196,7 @@ const CreateVoice = () => {
         config,
       );
       alert("Monitoring Voice Box updated successfully!");
-      navigate(`/panel/voicebox`);
+      navigate(`/panel/${BusinessType}/voicebox`);
 
       // Redirect after a short delay
     } catch (error) {
@@ -210,7 +216,7 @@ const CreateVoice = () => {
           <h1>Create Voice Box</h1>
         </h1>
         <Link
-          to="/panel/voicebox"
+          to={`/panel/${BusinessType}/voicebox`}
           className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
         >
           Cancel

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -13,6 +13,14 @@ export default function DNDReport() {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+      //--------------------------------------- Set Business Type --------------------------------------------
+      const [BusinessType, setBusinessType] = useState("");
+                
+      useEffect(() => {
+        const storedType = localStorage.getItem("businessType") || "";
+        setBusinessType(storedType);
+      }, []);
+  
 
   // DROPDOWNS
   const [startDateDropdown, setStartDateDropdown] = useState(false);
@@ -70,7 +78,7 @@ export default function DNDReport() {
       <div className="m-3 flex items-center justify-between rounded-md bg-white px-3 py-2 shadow-md">
         <h1 className="text-xl">Add DND Report</h1>
         <Link
-          to="/panel/misreports"
+          to={`/panel/${BusinessType}/misreports`}
           className="mx-3 rounded border border-blue-500 px-4 py-1 text-blue-500"
         >
           Cancel

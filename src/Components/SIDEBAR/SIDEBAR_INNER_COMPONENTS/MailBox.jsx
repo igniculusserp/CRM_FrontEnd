@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect  } from "react";
 import { FaAngleDown, FaBars } from "react-icons/fa";
 import { ImFilter } from "react-icons/im";
 import { IoSearchOutline } from "react-icons/io5";
@@ -16,8 +16,16 @@ export default function MailBox() {
   const [actionDropdown, setActionDropdown] = useState(false);
   const [filterByData, setFilterByData] = useState(false);
 
+     //--------------------------------------- Set Business Type --------------------------------------------
+       const [BusinessType, setBusinessType] = useState("");
+        
+       useEffect(() => {
+         const storedType = localStorage.getItem("businessType") || "";
+         setBusinessType(storedType);
+       }, []);
+
   const handleClick = () => {
-    navigate(`/panel/createmail`);
+    navigate(`/panel/${BusinessType}/createmail`);
   };
 
   // TOGGLE MAINBOX DROPDOWN
@@ -364,7 +372,7 @@ export default function MailBox() {
         </div>
         <div className="flex items-center gap-3">
           <Link
-            to="/panel/createmail"
+            to={`/panel/${BusinessType}/createmail`}
             className="rounded-md border bg-blue-600 px-4 py-2 text-white"
           >
             Create Mail Box

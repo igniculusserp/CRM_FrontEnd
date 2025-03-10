@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Chat from "./LogComponents/Chat";
@@ -8,6 +8,13 @@ import { MdEdit } from "react-icons/md";
 import LoginTable from "./LogComponents/LoginTable";
 
 export default function Logs() {
+     //--------------------------------------- Set Business Type --------------------------------------------
+                           const [BusinessType, setBusinessType] = useState("");
+                            
+                           useEffect(() => {
+                             const storedType = localStorage.getItem("businessType") || "";
+                             setBusinessType(storedType);
+                           }, []);
   // PAGINATION
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -306,14 +313,14 @@ export default function Logs() {
   //   THREE BUTTONS
   // Object containing the options
   const dynamicButtons = {
-    Clients: { text: "Add Client Logs", href: "/panel/createlogs" },
+    Clients: { text: "Add Client Logs", href: `/panel/${BusinessType}/createlogs` },
     "SMS Logs": {},
     Chat: {
       text: "Add Chat Logs",
-      href: "/panel/createchats",
+      href: `/panel/${BusinessType}/createchats`,
     },
-    Login: { text: "Add Login Logs", href: "/panel/createlogin" },
-    Extension: { text: "Add Extension Logs", href: "/panel/createextension" },
+    Login: { text: "Add Login Logs", href: `/panel/${BusinessType}/createlogin` },
+    Extension: { text: "Add Extension Logs", href: `/panel/${BusinessType}/createextension` },
   };
 
   const [selectedButton, setSelectedButton] = useState("Clients");
@@ -321,7 +328,7 @@ export default function Logs() {
   // State to manage the button text
   const [buttonText, setButtonText] = useState({
     text: "Add Clients Log",
-    href: "/panel/createlogs",
+    href: `/panel/${BusinessType}/createlogs`,
   });
 
   const handleClick = (key) => {
