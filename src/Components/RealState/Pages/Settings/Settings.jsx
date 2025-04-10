@@ -25,6 +25,7 @@ const data = [
   },
 ];
 
+
 export default function Settings() {
   const navigate = useNavigate();
   //------------------------------------------------ All States --------------------------------------------
