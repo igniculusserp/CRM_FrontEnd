@@ -42,6 +42,8 @@ export default function GlobalUserNameComponent({
   const handleChange = (e) => {
     const value = e.target.value;
     setSelectedValue(value);
+
+    // Find the selected user based on the selected field value
     const selectedUserObject = users.find((user) => user[fieldName] === value);
     if (selectedUserObject) {
       setSelectedUser(selectedUserObject); // Pass the full user object to the parent

@@ -60,9 +60,9 @@ export default function Header({ toggle, setToggle }) {
       const registrationDataParsed = JSON.parse(registrationdata || "{}");
       setData(registrationDataParsed.tenantId || "");
       // setWelcomeData(JSON.parse(userDetail));
-      if (window.location.pathname === "/panel") {
+      if (window.location.pathname === `/panel/${BusinessType}`) {
         navigate(`/panel/${BusinessType}/dashboard`);
-      } else if (window.location.pathname !== "/panel") {
+      } else if (window.location.pathname !== `/panel/${BusinessType}`) {
         navigate(window.location.pathname);
       }
     } else {
@@ -263,7 +263,7 @@ export default function Header({ toggle, setToggle }) {
   return (
     <>
       <ToastContainer />
-      <div className="sm:min-w-screen mx-3 flex items-center justify-between py-3">
+      <div className="sm:min-w-screen mx-3 flex items-center justify-between py-3 max-[400px]:flex-col max-[400px]:items-start max-[400px]:gap-3">
         <div className="flex items-center justify-center">
           {/*-> Toggle Button <-*/}
           <button
@@ -282,7 +282,7 @@ export default function Header({ toggle, setToggle }) {
           </div>
         </div>
 
-        <div className="flex items-center justify-start gap-1 px-3 sm:justify-end">
+        <div className="flex items-center justify-start gap-1 px-3 sm:justify-end max-[400px]:px-0">
           {menu.map(({ key, logo, link, functionality }) => (
             <div
               key={key}

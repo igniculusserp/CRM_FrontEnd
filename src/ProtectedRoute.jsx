@@ -4,13 +4,22 @@ import { useNavigate } from "react-router-dom";
 import { getHostnamePart } from "./Components/SIDEBAR/SIDEBAR_SETTING/ReusableComponents/GlobalHostUrl";
 
 const INACTIVITY_TIMEOUT = 2640000; // 44 minutes
-// const INACTIVITY_TIMEOUT = 264000; // 4.4 minutes
+// const INACTIVITY_TIMEOUT = 26400; // 26.4 seconds
 
 const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate();
   const timerRef = useRef(null);
   const intervalRef = useRef(null);
   const [timeLeft, setTimeLeft] = useState(INACTIVITY_TIMEOUT);
+
+  
+  const baseUrl = import.meta.env.VITE_BASE_URL || "localhost"; // Default to localhost
+  const port = import.meta.env.VITE_PORT || "5173"; // Default to 5173 if undefined
+  const urlChangeBase = import.meta.env.VITE_URLCHANGE_BASE || ""; // Server base URL
+
+console.log("Base URL:", baseUrl); // Debugging
+console.log("Port:", port); // Debugging
+console.log("urlChangeBase:", urlChangeBase); // Debugging
 
   //to read url
   const name = getHostnamePart();
@@ -35,15 +44,22 @@ const ProtectedRoute = ({ children }) => {
     navigate("/tenantlogin", { replace: true });
     location.reload();
 
-    
-    //localhost
-    const newUrl = `http://${name}.localhost:5173/tenantlogin`;
-    
-    // For Server
-    // const newUrl = `http://${name}.${urlchange_base}/tenantlogin `;
-    window.location.href = newUrl;
 
-    console.log("logout triggered");
+    const baseUrl =
+    import.meta.env.MODE === "development"
+      ? "localhost" // Development mode
+      : import.meta.env.VITE_BASE_URL || "igniculusscrm.com"; // Production mode
+  
+  const port = import.meta.env.VITE_PORT || "5173"; // Default development port
+  const urlChangeBase = import.meta.env.VITE_URLCHANGE_BASE || "igniculusscrm.com"; // Ensure a default value for production
+  
+  let newUrl =
+    baseUrl === "localhost"
+      ? `http://${name}.localhost:${port}/tenantlogin` // Development URL
+      : `https://${name}.${urlChangeBase}/tenantlogin`; // Production URL
+  
+  console.log("New URL:", newUrl);
+    
   };
 
   const resetTimer = () => {

@@ -36,6 +36,7 @@ export default function UseFilterBySegment({
 
     fetchFollowUpUsers();
   }, [name, followUpBy]);
+  // ---------------------------------------------------------- Handle Filter  --------------------------------------------
 
   function handleFollowUpBySelection(followUpByValue) {
     setFollowUpBy(followUpByValue);
@@ -55,7 +56,7 @@ export default function UseFilterBySegment({
       onMouseLeave={() => setAllFollowUpToDropdown(false)}
     >
       <button
-        className="flex items-center justify-between px-4 py-2 border rounded-md min-w-36"
+        className="flex min-w-36 items-center justify-between rounded-md border px-4 py-2"
         type="button"
         onClick={toggleMenuFollowUpTo}
       >
@@ -63,12 +64,12 @@ export default function UseFilterBySegment({
         <FaAngleDown className="ml-2 text-gray-900" />
       </button>
       {allFollowUpToDropdown && (
-        <div className="absolute z-10 bg-white border border-gray-300 rounded-md top-10">
+        <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
           <ul className="py-2 text-sm text-gray-700">
             {allFollowUpToData.map((item) => (
               <li
                 key={item.id}
-                className="block w-56 px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                 onClick={() => handleFollowUpBySelection(item.segment)}
               >
                 {item.segment}

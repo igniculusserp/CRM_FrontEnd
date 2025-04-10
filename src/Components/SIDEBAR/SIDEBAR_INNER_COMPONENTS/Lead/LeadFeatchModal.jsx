@@ -30,7 +30,7 @@ const LeadFeatchModal = ({ onClose }) => {
     setLeadCount(value);
   };
 
-
+  //--------------------------------------------------handleSubmit-----------------------------------
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -98,20 +98,20 @@ const LeadFeatchModal = ({ onClose }) => {
       <ToastContainer />
 
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
-        <div className="w-10/12 bg-white rounded-lg sm:w-4/12">
-          <div className="flex items-center justify-center px-2 py-2 text-xl font-medium text-white rounded-t-lg bg-cyan-500">
+        <div className="w-10/12 rounded-lg bg-white sm:w-4/12">
+          <div className="flex items-center justify-center rounded-t-lg bg-cyan-500 px-2 py-2 text-xl font-medium text-white">
             <h2 className="mx-auto">Fetch Leads</h2>
             <ImCancelCircle onClick={onClose} size={22} />
           </div>
           <form onSubmit={handleSubmit} className="px-4">
             <div className="mt-3">
-              <h1 className="px-4 py-2 font-medium text-white rounded-t-lg text-md bg-cyan-500">
+              <h1 className="text-md rounded-t-lg bg-cyan-500 px-4 py-2 font-medium text-white">
                 Details
               </h1>
-              <div className="px-1 bg-white border-2 border-t-0 rounded-b-xl border-cyan-500">
+              <div className="rounded-b-xl border-2 border-t-0 border-cyan-500 bg-white px-1">
                 <div className="grid gap-2 p-2">
                   <div className="flex space-x-4">
-                    <div className="flex flex-col w-full">
+                    <div className="flex w-full flex-col">
                       <label
                         htmlFor="leadCount"
                         className="text-sm font-medium text-gray-700"
@@ -124,24 +124,24 @@ const LeadFeatchModal = ({ onClose }) => {
                         id="leadCount"
                         value={leadCount}
                         onChange={handleInputChange}
-                        className="p-2 mt-1 border border-gray-300 rounded-md"
+                        className="mt-1 rounded-md border border-gray-300 p-2"
                       />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="grid justify-end grid-cols-2 gap-5 mt-4">
+            <div className="mt-4 grid grid-cols-2 justify-end gap-5">
               <button
                 type="submit"
-                className="p-2 mb-3 text-white border-2 rounded-md border-cyan-500 bg-cyan-500 hover:bg-white hover:text-cyan-500"
+                className="mb-3 rounded-md border-2 border-cyan-500 bg-cyan-500 p-2 text-white hover:bg-white hover:text-cyan-500"
                 disabled={loading}
               >
                 {loading ? "Sending..." : "Submit"}
               </button>
               <button
                 type="button"
-                className="p-2 mb-3 font-semibold text-gray-500 border-2 border-gray-300 rounded-md hover:bg-gray-300 hover:text-white"
+                className="mb-3 rounded-md border-2 border-gray-300 p-2 font-semibold text-gray-500 hover:bg-gray-300 hover:text-white"
                 onClick={onClose}
               >
                 Close

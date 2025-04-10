@@ -651,12 +651,13 @@ export default function Lead() {
               setFilteredData={setFilteredData} // Pass function to update filtered data
               filteredData={filteredData}
             />
+            {/*--------------------------------------- Search Box -------------------------------------------------------*/}
             <SearchElement
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
 
-
+            {/*------------------------------------- Fetch Box ----------------------------------------------------------*/}
             {fetchLead || businessRole === "Admin" ? (
               <div className="flex gap-1 button_MaxWidth_first_layer_Container">
                 <button
@@ -685,6 +686,7 @@ export default function Lead() {
               </>
             )}
             {/* PART-II */}
+            {/*------------------------------------------------------  Create Lead ------------------------------------------*/}
             {createLead || businessRole === "Admin" ? (
               <div className="flex button_MaxWidth_Container">
                 <Link to={`/panel/${BusinessType}/createlead`} className="button_MaxWidth">
@@ -700,7 +702,7 @@ export default function Lead() {
             ) : (
               ""
             )}
-
+            {/*-------------------------------------- ACTIONS DROPDWON --------------------------------------------- */}
             <UseAction
               originalData={originalData} // Sending Original Data
               getApiData={getApiData} // Execute API Data Function
@@ -946,13 +948,15 @@ export default function Lead() {
               )}
             </div>
 
+            {/*--------------------------------- LEAD OPERATIONS TABLE ---------------------------------------*/}
             <div className="min-w-full overflow-hidden rounded-md">
+              {/* MONITORING TABLE */}
               {selectedViewValue === "Table View" && activeButtonId === 2 && (
                 <UploadLead />
               )}
             </div>
 
-
+            {/*------------------------------------- LEAD ACTION TABLE --------------------------------------*/}
             <div className="min-w-full overflow-hidden rounded-md">
               {/* LEAD ACTION TABLE */}
               {selectedViewValue === "Table View" && activeButtonId === 3 && (

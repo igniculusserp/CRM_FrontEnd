@@ -1,3 +1,4 @@
+//Code for the entire application 
 import { RouterProvider } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
 import { createRoot } from "react-dom/client";
@@ -30,7 +31,7 @@ import ForgetPassOTP from "./Components/REGISTRATION/ForgetPassOTP.jsx";
 import ForgetResetPassword from "./Components/REGISTRATION/ForgetResetPassword";
 import ForgetPassSuccess from "./Components/REGISTRATION/ForgetPassSuccess.jsx";
 
-//SidebarBase
+//SideBar
 import SidebarBase from "./Components/SIDEBAR/SidebarBase.jsx";
 
 
@@ -135,6 +136,45 @@ import AccessDevice from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_C
 import AccessControl from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/AccessControl/AccessControl.jsx";
 import Permissions from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/Permissions/Permissions.jsx";
 import Group from "./Components/SIDEBAR/SIDEBAR_SETTING/SIDEBAR_SETTING_COMPONENTS/Group/Group.jsx";
+
+//------------------------------------------ Real Estates ----------------------------------------------------------------
+
+//Product Management 
+import ProductManagement from "./Components/RealState/Pages/Product_Management/ProductManagement.jsx";
+import Services from "./Components/RealState/Pages/Product_Management/Services/Services.jsx";
+import AllDevelopers from "./Components/RealState/Pages/Product_Management/AllDeveloper/AllDevelopers.jsx";
+import ListingURLS from "./Components/RealState/Pages/Product_Management/Listing URLS/ListingURLS.jsx";
+import ProjectTowerStage from "./Components/RealState/Pages/Product_Management/Project Tower Stage/ProjectTowerStage.jsx";
+import ProjectUnitStages from "./Components/RealState/Pages/Product_Management/Project Unit Stages/ProjectUnitStages.jsx";
+
+// Real Estate Home Page
+import RealEstateHome from "./Components/RealState/Pages/Home/RealEstateHome.jsx";
+
+// Real Estate Leads Page
+import RealEstateLeads from "./Components/RealState/Pages/RealEstate Leads/RealEstateLeads.jsx";
+import LeadDetails from "./Components/RealState/Pages/RealEstate Leads/Common/LeadDetails/LeadDetails.jsx";
+import LeadSearch from "./Components/RealState/Pages/RealEstate Leads/LeadsSearchScreen/LeadSearchTabs.jsx";
+
+// Real Estate Booking Page
+import Bookings from "./Components/RealState/Pages/Booking/Bookings.jsx";
+
+// Real Estate Conversations Page
+import Conversations from "./Components/RealState/Pages/Conversations/Conversations.jsx";
+
+// Real Estate Conversations Page
+import Tasks from "./Components/RealState/Pages/Tasks/Tasks.jsx";
+
+// Real Estate Reports Page
+import RealEstateReports from "./Components/RealState/Pages/RealEstateReports/RealEstateReports.jsx";
+
+// Real Estate Documents Page
+import AllDocuments from "./Components/RealState/Pages/Document/AllDocuments.jsx";
+
+// Real Estate Setting Management Page
+import SettingManagement from "./Components/RealState/Pages/Settings/Settings.jsx";
+
+
+
 
 const router = createBrowserRouter([
   //Login
@@ -265,7 +305,6 @@ const router = createBrowserRouter([
       { path: "setting/access-device", element: <AccessDevice /> },
       { path: "settings/access-control",lement: <AccessControl />,},
       { path: "setting/permissions", element: <Permissions /> },
-
     ],
   },
   {
@@ -277,7 +316,7 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <Home /> },
 
-      //Lead->
+      //Leads start from here
       { path: "dashboard", element: <Home /> },
       { path: "lead", element: <Lead /> },
       { path: "editlead/:id", element: <Createlead /> },
@@ -378,7 +417,141 @@ const router = createBrowserRouter([
       { path: "setting/access-device", element: <AccessDevice /> },
       { path: "settings/access-control",lement: <AccessControl />,},
       { path: "setting/permissions", element: <Permissions /> },
+    ],
+  },
+  {
+    path: "/panel/RealEstate", element: (
+      <ProtectedRoute>
+        <SidebarBase />
+      </ProtectedRoute>
+    ),
+    children: [
+      { path: "", element: <RealEstateHome /> },
+      // Product Management ->
+      { path: "product_management", element: <ProductManagement /> },
+      { path: "product_management/product_&_Services", element: <Services /> },
+      { path: "product_management/all_developers", element: <AllDevelopers /> },
+      { path: "product_management/Listing_URLS", element: <ListingURLS /> },
+      { path: "product_management/ProjectTowerStage", element: <ProjectTowerStage /> },
+      { path: "product_management/ProjectUnitStages", element: <ProjectUnitStages /> },
 
+      // Real Estate Home Page ->
+      { path: "dashboard", element: <RealEstateHome /> },
+
+      //Lead->
+      { path: "leads", element: <RealEstateLeads /> },
+      { path: "leads/search_lead", element: <LeadSearch /> },
+      { path: "leads/Lead_Details", element: <LeadDetails /> },
+      
+
+      //Bookings->
+      { path: "Bookings_and_Brokrage", element: <Bookings /> },
+
+      //Conversations->
+      { path: "conversations", element: <Conversations /> },
+      
+      //Tasks->
+      { path: "Tasks", element: <Tasks /> },
+      
+      //Reports->
+      { path: "Reports", element: <RealEstateReports /> },
+
+      //Documents->
+      { path: "Documents", element: <AllDocuments /> },
+      
+      //Setting Management->
+      { path: "setting_management", element: <SettingManagement /> },
+
+      //Contacts->
+      { path: "contact", element: <Contact /> },
+      { path: "createcontact", element: <CreateContact /> },
+      { path: "editContact/:id", element: <CreateContact /> },
+      { path: "contact/create/so/:id", element: <CreateSOContact /> },
+
+      //FreeTrail ->
+      { path: "freeTrail", element: <FreeTrail /> },
+      { path: "createtrial/:id", element: <CreateTrial /> },
+
+      //FollowUp ->
+      { path: "followup", element: <FollowUp /> },
+      { path: "createfollowup/:id", element: <CreateFollowUp /> },
+
+      //VoiceBox ->
+      { path: "voicebox", element: <VoiceBox /> },
+      { path: "createvoice", element: <CreateVoice /> },
+      { path: "createvoicedetails", element: <CreateVoiceDetails /> },
+      { path: "createvoicereports", element: <CreateVoiceReports /> },
+
+      //LOGS 
+      { path: "logs", element: <Logs /> },
+      { path: "createlogs", element: <CreateLogs /> },
+      { path: "createchats", element: <CreateChats /> },
+      { path: "createextension", element: <CreateExtension /> },
+      { path: "createlogin", element: <CreateLogin /> },
+
+      //CLIENT
+      { path: "client", element: <Client /> },
+
+      //SALESORDER
+      { path: "salesorder", element: <SalesOrder /> },
+      { path: "createorder", element: <CreateOrder /> },
+
+      //MAILBOX
+      { path: "mailBox", element: <MailBox /> },
+      { path: "createmail", element: <CreateMailBox /> },
+
+      // SERVICE BOX
+      { path: "servicebox", element: <ServiceBox /> },
+      { path: "sendsms", element: <CreateSendSms /> },
+      { path: "sendemail", element: <CreateSendEmail /> },
+
+      // Financial Activity
+      { path: "FinancialActivity", element: <FinancialActivity /> },
+
+      // ANALYTICS
+      { path: "analytics", element: <Analytics /> },
+
+      //Messaging
+      { path: "messaging", element: <Messaging /> },
+
+      // MIS REPORT
+      { path: "misreports", element: <MISReports /> },
+      { path: "creategeneral", element: <GeneralReport /> },
+      { path: "createft", element: <FtReport /> },
+      { path: "createpaid", element: <PaidClientReport /> },
+      { path: "createuser", element: <UserReport /> },
+      { path: "createcalling", element: <CallingReport /> },
+      { path: "creatednd", element: <DNDReport /> },
+      { path: "createtrack", element: <TrackSheet /> },
+      { path: "createresearch", element: <ResearchReport /> },
+
+      { path: "groupChat", element: <GroupChat /> },
+      { path: "setting", element: <Setting /> },
+
+      { path: "subscription", element: <Subscription /> },
+
+
+
+      { path: "*", element: <ErrorRoute /> },
+
+      // --------------------------------  Settings ------------------------------
+      { path: "setting/User-Setting", element: <UserSetting /> },
+      { path: "setting/User-Operation", element: <UserOperation /> },
+      { path: "setting/group", element: <Group /> },
+      { path: "setting/department", element: <Department /> },
+      { path: "setting/designation", element: <Designation /> },
+      { path: "setting/qualification", element: <Qualification /> },
+      { path: "setting/leadStatus", element: <LeadStatus /> },
+      { path: "setting/pools", element: <Pool /> },
+      { path: "setting/segments", element: <Segments /> },
+      { path: "setting/expensehead", element: <ExpenseHead /> },
+      { path: "setting/sms-template", element: <SMSTemplate /> },
+      { path: "setting/email-template", element: <EmailTemplate /> },
+      { path: "setting/sms-Settings", element: <SMSSetting /> },
+      { path: "setting/email-Settings", element: <EmailSetting /> },
+      { path: "setting/access-device", element: <AccessDevice /> },
+      { path: "settings/access-control",lement: <AccessControl />,},
+      { path: "setting/permissions", element: <Permissions /> },
     ],
   },
 ]);

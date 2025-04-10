@@ -241,6 +241,7 @@ export default function Registration() {
     <>
       <ToastContainer />
       <div className="flex flex-col min-h-screen bg-cyan-500 sm:bg-cyan-500 md:flex-row">
+        {/*----------> Part-I <---------- */}
         <div className="flex-col items-center justify-center hidden w-2/3 min-h-screen bg-cyan md:flex">
           <div className="flex flex-col items-center justify-center gap-2 px-16 py-16 bg-white rounded-md">
             <img src={IgniculussLogo} alt="Brandlogo" width={80} height={80} />
@@ -277,11 +278,12 @@ export default function Registration() {
             </div>
 
             <div className="mt-6">
+              {/*----------> FORM <---------- */}
               <form
                 className="flex flex-col gap-3 rounded-md"
                 onSubmit={handleSubmit}
               >
-
+                {/*----------> First-Name <---------- */}
                 <label
                   htmlFor="firstName"
                   className="text-xs font-medium text-gray-700"
@@ -299,6 +301,7 @@ export default function Registration() {
                     placeholder="John"
                   />
                 </label>
+                {/*----------> Last-Name <---------- */}
                 <label
                   htmlFor="lastName"
                   className="text-xs font-medium text-gray-700"
@@ -317,6 +320,7 @@ export default function Registration() {
                   />
                 </label>
 
+                {/*----------> Email <---------- */}
                 <label
                   htmlFor="email"
                   className="text-xs font-medium text-gray-700"
@@ -335,6 +339,7 @@ export default function Registration() {
                   />
                 </label>
 
+                {/*---------->Password<---------- */}
                 <label
                   htmlFor="password"
                   className="relative block text-xs font-medium text-gray-700"
@@ -375,7 +380,7 @@ export default function Registration() {
                   </button>
                 </label>
 
-
+                {/*---------->Confirm Password<---------- */}
                 <label
                   htmlFor="confirmPassword"
                   className="relative block text-xs font-medium text-gray-700"
@@ -416,7 +421,7 @@ export default function Registration() {
                   </button>
                 </label>
 
-
+                {/*----------> Contact No <---------- */}
                 <label
                   htmlFor="Contact"
                   className="text-xs font-medium text-gray-700"
@@ -553,6 +558,8 @@ export default function Registration() {
                     </div>
                   </div>
                 </label>
+
+                {/*----------> Business Selection <---------- */}
 
                 <label
                   htmlFor="confirmPassword"

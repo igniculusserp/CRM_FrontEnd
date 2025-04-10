@@ -32,6 +32,15 @@ const VerifyOtp = () => {
 
   const [resendDisabled, setResendDisabled] = useState(true); // Initialize to true
 
+
+  const baseUrl = import.meta.env.VITE_BASE_URL || "localhost"; // Default to localhost
+  const port = import.meta.env.VITE_PORT || "5173"; // Default to 5173 if undefined
+  const urlChangeBase = import.meta.env.VITE_URLCHANGE_BASE || ""; // Server base URL
+
+console.log("Base URL:", baseUrl); // Debugging
+console.log("Port:", port); // Debugging
+console.log("urlChangeBase:", urlChangeBase); // Debugging
+
   useEffect(() => {
     const registration = JSON.parse(localStorage.getItem("registrationdata"));
     if (registration && registration.data && registration.data.email) {
@@ -160,13 +169,27 @@ const VerifyOtp = () => {
 
         const tenantId = response.data.tenant.tenantId;
 
-        //localhost
-        const newUrl = `http://${host.split(".")[0]}.${localBase}/welcome/${tenantId}`;
+        // Check if running on localhost or server
 
-        //forServer
-        // const newUrl = `http://${host.split('.')[0]}.${urlchange_base}/welcome/${tenantId}`;
-
-        window.location.href = newUrl;
+        
+        const baseUrl =
+        import.meta.env.MODE === "development"
+          ? "localhost" // Development mode
+          : import.meta.env.VITE_BASE_URL || "igniculusscrm.com"; // Production mode
+      
+      const port = import.meta.env.VITE_PORT || "5173"; // Default development port
+      const urlChangeBase = import.meta.env.VITE_URLCHANGE_BASE || "igniculusscrm.com"; // Default production domain
+      
+      const subdomain = host.split(".")[0]; // Extract subdomain (e.g., "companyname")
+      
+      const newUrl =
+        baseUrl === "localhost"
+          ? `http://${subdomain}.localhost:${port}/welcome/${tenantId}` // Development URL
+          : `https://${subdomain}.${urlChangeBase}/welcome/${tenantId}`; // Production URL
+      
+      console.log("Redirecting to:", newUrl);
+      window.location.href = newUrl; // Perform redirection
+      
       }
     } catch (error) {
       console.error("Error:", error.response.data.errors.tenant);

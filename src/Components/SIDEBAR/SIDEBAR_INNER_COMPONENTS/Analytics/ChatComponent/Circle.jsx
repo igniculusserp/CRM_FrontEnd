@@ -2,7 +2,7 @@ import { PieChart, Pie, Cell, Tooltip } from "recharts";
 import PropTypes from "prop-types";
 
 const Circle = ({ growthPercentage, color }) => {
-
+  // Data for the pie chart using the direct growthPercentage prop
   const data = [
     {
       name: "Growth",

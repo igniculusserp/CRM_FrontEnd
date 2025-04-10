@@ -10,10 +10,7 @@ import { GiDiamonds } from "react-icons/gi";
 //react-toast
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  showSuccessToast,
-  showErrorToast,
-} from "./../../utils/toastNotifications";
+import { showSuccessToast, showErrorToast } from "./../../utils/toastNotifications";
 
 //imgUsed
 import IgniculussLogo from "./../../assets/images/IgniculussLogo.png";
@@ -41,6 +38,19 @@ import { FaStarOfLife } from "react-icons/fa";
 export default function TenantLogin() {
   //-------------------------------------- Microsoft Authentication Setup --------------------------------
 
+  const baseUrl = import.meta.env.VITE_BASE_URL || "localhost"; // Default to localhost
+  const port = import.meta.env.VITE_PORT || "5173"; // Default to 5173 if undefined
+  const urlChangeBase = import.meta.env.VITE_URLCHANGE_BASE || ""; // Server base URL
+
+
+console.log("Port:", port); // Debugging
+
+
+console.log("Base URL:", import.meta.env.VITE_BASE_URL);
+console.log("URL Change Base:", import.meta.env.VITE_URLCHANGE_BASE);
+
+
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userData, setUserData] = useState(null);
   const [managerData, setManagerData] = useState(null);
@@ -52,8 +62,6 @@ export default function TenantLogin() {
        setBusinessType(storedType);
      }, []);
      
-  const newOtp = 121212;
-
   // Function to handle Microsoft login
   const handleMicrosoftLogin = async () => {
     try {
@@ -61,10 +69,7 @@ export default function TenantLogin() {
 
       msalInstance.setActiveAccount(loginResponse.account);
       setIsAuthenticated(true);
-      console.log("runned");
-      localStorage.setItem("otp", newOtp); // Store OTP in localStorage
 
-      // Fetch user and manager details
       fetchUserDetails();
     } catch (error) {
       console.error("Login failed:", error);
@@ -242,12 +247,22 @@ export default function TenantLogin() {
       } catch (error) {
         console.error("Error checking tenant:", error); // Log the error
         setTimeout(() => {
-          //localhost
-          const newUrl = `http://${name}.localhost:5173`;
-
-          //forServer
-          //  const newUrl = `http://${name}.${urlchange_base}/VerifyTenant `
-          window.location.href = newUrl;
+     
+          const baseUrl =
+          import.meta.env.MODE === "development"
+            ? "localhost" // Development mode
+            : import.meta.env.VITE_BASE_URL || "igniculusscrm.com"; // Production mode
+        
+        const port = import.meta.env.VITE_PORT || "5173"; // Default development port
+        const urlChangeBase = import.meta.env.VITE_URLCHANGE_BASE || "igniculusscrm.com"; // Ensure a default value for production
+        
+        let newUrl =
+          baseUrl === "localhost"
+            ? `http://${name}.localhost:${port}/VerifyTenant` // Development URL
+            : `https://${name}.${urlChangeBase}/VerifyTenant`; // Production URL
+        
+        console.log("New URL:", newUrl);
+        
         }, 100);
       }
     };
@@ -306,10 +321,14 @@ export default function TenantLogin() {
       );
       const logindetail = response.data.data;
       console.log("Login Response: ", response.data);
+
+      //IMP for handling businessType such as Brokerage, IT, Retail.... etc
       localStorage.setItem(
         "businessType",
-        response.data.data.userDetail.businessType,
+        response.data.data.userDetail.businessType.replace(/\s+/g, "")
       );
+
+      localStorage.setItem("activeSidebarKey", 1);
 
       localStorage.setItem("CurrentUserId", response.data.data.userDetail.userId);
 
@@ -369,10 +388,12 @@ export default function TenantLogin() {
             </div>
 
             <div className="mt-6">
+              {/*----------> FORM <---------- */}
               <form
                 className="flex flex-col gap-2 rounded-md"
                 onSubmit={handleSubmit}
               >
+                {/*----------> Username <---------- */}
                 <label
                   htmlFor="userName"
                   className="text-xs font-medium text-gray-700"
@@ -390,6 +411,7 @@ export default function TenantLogin() {
                     placeholder="specimen@company.com"
                   />
                 </label>
+                {/*----------> Password <---------- */}
                 <label
                   htmlFor="password"
                   className="relative block text-xs font-medium text-gray-700"
@@ -456,6 +478,14 @@ export default function TenantLogin() {
             >
               Login with Microsoft <img src={Microsoft} className="w-4 h-4" />
             </button>
+
+            {/*//Google Login Commented */}
+            {/*
+                <GoogleLogin
+                  onSuccess={handleLoginSuccess}
+                  onError={handleLoginError}
+                />
+            */}
           </div>
         </div>
       </div>

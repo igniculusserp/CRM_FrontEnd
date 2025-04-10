@@ -4,8 +4,8 @@ import VerifyTenant from "./Components/REGISTRATION/VerifyTenant";
 function App() {
   return (
     <>
-      <VerifyTenant />
       <ToastContainer />
+      <VerifyTenant />
     </>
   );
 }

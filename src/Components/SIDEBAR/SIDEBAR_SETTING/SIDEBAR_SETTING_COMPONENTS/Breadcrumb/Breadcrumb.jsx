@@ -1,11 +1,23 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IoMdHome } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 
+
+
+
 const Breadcrumb = ({ pathnames }) => {
+    //--------------------------------------- Set Business Type --------------------------------------------
+    const [BusinessType, setBusinessType] = useState("");
+  
+    useEffect(() => {
+      const storedType = localStorage.getItem("businessType") || "";
+      setBusinessType(storedType);
+    }, []);
+
   return (
     <div className="flex items-center my-2">
-      <Link to="/panel">
+      <Link to={`/panel/${BusinessType}`}>
         <IoMdHome size={30} className="mb-1 text-blue-600" />
       </Link>
 

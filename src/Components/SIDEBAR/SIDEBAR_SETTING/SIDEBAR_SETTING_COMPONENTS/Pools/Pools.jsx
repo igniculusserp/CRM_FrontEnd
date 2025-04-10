@@ -35,6 +35,8 @@ export default function Pool() {
   const [selectedData, setSelectedData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
+  // Fetch all  data
+  //-------------------get-------------------get-------------------get-------------------get-------------------
   async function handleLead() {
     const bearer_token = localStorage.getItem("token");
     try {
@@ -90,7 +92,7 @@ export default function Pool() {
     setIsEditMode(false);
   };
 
-
+  // Handle form submission callback
   const handleFormSubmit = async (formData) => {
     const config = {
       headers: {
@@ -123,22 +125,23 @@ export default function Pool() {
         showSuccessToast("Pool added successfully");
       }
 
-      handleLead(); 
-      setActive(true);
-      setSelectedData(null);
-      setIsEditMode(false); 
+      handleLead(); // Refresh the list
+      setActive(true); // Switch back to the list view
+      setSelectedData(null); // Reset the selected
+      setIsEditMode(false); // Reset edit mode
     } catch (error) {
       console.error("Error saving name", error);
     }
   };
 
+  // Handle cancel form action
   const handleCancel = () => {
     setActive(true);
     setSelectedData(null);
     setIsEditMode(false);
   };
 
-
+  // Form Component for Adding/Updating
   const EditForm = ({ data, isEditMode }) => {
     const [formData, setFormData] = useState({ id: "", poolName: "" });
 
@@ -146,7 +149,7 @@ export default function Pool() {
       setFormData(data || { id: "", poolName: "" });
     }, [data]);
 
-
+    // Handle form input changes
     const handleChange = (e) => {
       setFormData({
         ...formData,
@@ -228,6 +231,12 @@ export default function Pool() {
                 Add Pool
               </button>
             </div>
+
+             {/*---------------------------------------------------------------- BreadCumb Menu  ----------------------------------------------------------------*/}
+            {/*---------------------------------------------------------------- BreadCumb Menu  ----------------------------------------------------------------*/}
+            {/*----------------------------------------------------------------pathname started with slice(1,3) :because we want skip panel ----------------------------------------------------------------*/}
+            {/*----------------------------------------------------------------const to :  is route where we stored the route    ----------------------------------------------------------------*/}
+
             <div className="flex items-center my-2 ">
               <Link to={`/panel/${BusinessType}/dashboard`}>
                 <IoMdHome size={30} className="mb-1 text-blue-600 " /> 

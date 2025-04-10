@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
 //external Packages
 import axios from "axios";
@@ -9,122 +9,131 @@ import { IoMdSettings } from "react-icons/io";
 import { tenant_base_url, protocal_url } from "../../../Config/config";
 import { getHostnamePart } from "./ReusableComponents/GlobalHostUrl";
 
-const settingButtons = [
-  {
-    key: 1,
-    value: "User Setting",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/User-Setting`,
-    group: "User's Settings",
-  },
-  {
-    key: 2,
-    value: "User Operation",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/User-Operation`,
-    group: "User's Settings",
-  },
-  {
-    key: 3,
-    value: "Group",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/group`,
-    group: "User's Settings",
-  },
-  {
-    key: 27,
-    value: "Roles & Permissions",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/permissions`,
-    group: "User's Settings",
-  },
-  {
-    key: 7,
-    value: "Lead Status",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/leadStatus`,
-    group: "Lead Settings",
-  },
-  {
-    key: 8,
-    value: "Pools",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/pools`,
-    group: "Lead Settings",
-  },
-  {
-    key: 9,
-    value: "Segments",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/segments`,
-    group: "Lead Settings",
-  },
-  {
-    key: 10,
-    value: "SMS Template",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/sms-template`,
-    group: "ENV Settings",
-  },
-  {
-    key: 11,
-    value: "E-Mail Template",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/email-template`,
-    group: "ENV Settings",
-  },
-  {
-    key: 15,
-    value: "SMS Setting",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/sms-Settings`,
-    group: "ENV Settings",
-  },
-  {
-    key: 16,
-    value: "E-Mail Setting",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/email-Settings`,
-    group: "ENV Settings",
-  },
-  {
-    key: 21,
-    value: "Access Device",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/access-device`,
-    group: "Security Settings",
-  },
-  {
-    key: 24,
-    value: "Access Control",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/access-control`,
-    group: "Security Settings",
-  },
-  {
-    key: 4,
-    value: "Department",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/department`,
-    group: "Other Settings",
-  },
-  {
-    key: 5,
-    value: "Designation",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/designation`,
-    group: "Other Settings",
-  },
-  {
-    key: 26,
-    value: "Expense Head",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/expensehead`,
-    group: "Other Settings",
-  },
-  {
-    key: 6,
-    value: "Qualification",
-    getLink: (BusinessType) => `/panel/${BusinessType}/setting/qualification`,
-    group: "Other Settings",
-  },
-];
+
 
 export default function Setting() {
   const navigate = useNavigate();
-  const BusinessType = localStorage.getItem("BusinessType");
   const name = getHostnamePart();
-
-  // -------------------------------------- Group the data by the `group` property -------------------------------------
-  const groupedData = settingButtons.reduce((acc, item) => {
+  //--------------------------------------- Set Business Type --------------------------------------------
+  const [BusinessType, setBusinessType] = useState("");
+  useEffect(() => {
+    const storedType = localStorage.getItem("businessType") || "";
+    setBusinessType(storedType);
+  }, []);
+  //-------------------------------------------------------------- Setting Buttons -----------------------------------------------
+    const settingButtons = [
+      {
+        key: 1,
+        value: "User Setting",
+        link: `/panel/${BusinessType}/setting/User-Setting`,
+        group: "User's Settings",
+      },
+      {
+        key: 2,
+        value: "User Operation",
+        link: `/panel/${BusinessType}/setting/User-Operation`,
+        group: "User's Settings",
+      },
+      {
+        key: 3,
+        value: "Group",
+        link: `/panel/${BusinessType}/setting/group`,
+        group: "User's Settings",
+      },
+      {
+        key: 27,
+        value: "Roles & Permissions",
+        link: `/panel/${BusinessType}/setting/permissions`,
+        group: "User's Settings",
+      },
+      {
+        key: 7,
+        value: "Lead Status",
+        link: `/panel/${BusinessType}/setting/leadStatus`,
+        group: "Lead Settings",
+      },
+      {
+        key: 8,
+        value: "Pools",
+        link: `/panel/${BusinessType}/setting/pools`,
+        group: "Lead Settings",
+      },
+      {
+        key: 9,
+        value: "Segments",
+        link: `/panel/${BusinessType}/setting/segments`,
+        group: "Lead Settings",
+      },
+      {
+        key: 10,
+        value: "SMS Template",
+        link: `/panel/${BusinessType}/setting/sms-template`,
+        group: "ENV Settings",
+      },
+      {
+        key: 11,
+        value: "E-Mail Template",
+        link: `/panel/${BusinessType}/setting/email-template`,
+        group: "ENV Settings",
+      },
+      {
+        key: 15,
+        value: "SMS Setting",
+        link: `/panel/${BusinessType}/setting/sms-Settings`,
+        group: "ENV Settings",
+      },
+      {
+        key: 16,
+        value: "E-Mail Setting",
+        link: `/panel/${BusinessType}/setting/email-Settings`,
+        group: "ENV Settings",
+      },
+      {
+        key: 21,
+        value: "Access Device",
+        link: `/panel/${BusinessType}/setting/access-device`,
+        group: "Security Settings",
+      },
+      {
+        key: 24,
+        value: "Access Control",
+        link: `/panel/${BusinessType}/setting/access-control`,
+        group: "Security Settings",
+      },
+      {
+        key: 4,
+        value: "Department",
+        link: `/panel/${BusinessType}/setting/department`,
+        group: "Other Settings",
+      },
+      {
+        key: 5,
+        value: "Designation",
+        link: `/panel/${BusinessType}/setting/designation`,
+        group: "Other Settings",
+      },
+      {
+        key: 26,
+        value: "Expense Head",
+        link: `/panel/${BusinessType}/setting/expensehead`,
+        group: "Other Settings",
+      },
+      {
+        key: 6,
+        value: "Qualification",
+        link: `/panel/${BusinessType}/setting/qualification`,
+        group: "Other Settings",
+      },
+    ];
+   // -------------------------------------- Group the data by the `group` property -------------------------------------
+   const groupedData = settingButtons.reduce((acc, item) => {
     acc[item.group] = acc[item.group] || [];
     acc[item.group].push(item);
     return acc;
   }, {});
+  
+
+ 
 
   //---------------------------------------------------- Roles & Permissions ----------------------------------------------------
 
@@ -169,6 +178,8 @@ export default function Setting() {
     handleGetPermission();
   }, []);
 
+
+
   return (
     <>
       <div className="flex flex-col m-3">
@@ -194,7 +205,7 @@ export default function Setting() {
                   {groupedData[group].map((button) => (
                     <div
                       key={button.key}
-                      onClick={() => navigate(button.getLink(BusinessType))}
+                      onClick={() => navigate(button.link)}
                       className="p-2 mx-4 text-center bg-white border-2 rounded-full shadow-md border-cyan-500 text-cyan-500 hover:bg-cyan-500 hover:text-white"
                     >
                       {button.value}

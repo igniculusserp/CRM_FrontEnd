@@ -60,9 +60,9 @@ export default function Header({ toggle, setToggle }) {
       const registrationDataParsed = JSON.parse(registrationdata || "{}");
       setData(registrationDataParsed.tenantId || "");
       // setWelcomeData(JSON.parse(userDetail));
-      if (window.location.pathname === "/panel") {
+      if (window.location.pathname === `/panel/${BusinessType}`) {
         navigate(`/panel/${BusinessType}/dashboard`);
-      } else if (window.location.pathname !== "/panel") {
+      } else if (window.location.pathname !== `/panel/${BusinessType}`) {
         navigate(window.location.pathname);
       }
     } else {

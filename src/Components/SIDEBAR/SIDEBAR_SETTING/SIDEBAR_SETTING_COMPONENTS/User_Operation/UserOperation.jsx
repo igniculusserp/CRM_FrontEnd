@@ -1,15 +1,15 @@
-
+//react
 import { useState, useEffect } from "react";
-
-import { FaBars } from "react-icons/fa";
+//reactIcon
+import { FaAngleDown, FaBars } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { useParams } from "react-router-dom";
 
-
+//external Packages
 import axios from "axios";
 
 import { tenant_base_url, protocal_url } from "./../../../../../Config/config";
@@ -19,6 +19,7 @@ import GlobalUserNameComponent from "../../ReusableComponents/GlobalUserNameComp
 import { IoMdHome } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 
+//toastify~
 import { ToastContainer } from "react-toastify";
 import {
   showSuccessToast,
@@ -26,7 +27,7 @@ import {
 } from "../../../../../utils/toastNotifications";
 
 export default function UserOperation() {
-
+  //to make id unique
   const { id } = useParams();
 
      //--------------------------------------- Set Business Type --------------------------------------------
@@ -43,10 +44,10 @@ export default function UserOperation() {
 
   const bearer_token = localStorage.getItem("token");
 
-
+  //state to show table or form
   const [active, setActive] = useState(true);
 
-
+  //form
   const [formData, setFormData] = useState({
     fullName: "",
     userName: "",
@@ -70,15 +71,20 @@ export default function UserOperation() {
   const [selectedUserName, setSelectedUserName] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
 
+  //getting user operation lists and groups lists here
   useEffect(() => {
     getOprationLists();
     getGroupsNames();
   }, []);
 
   const handleActiveState = () => {
+    //table to form and viceversa
     setActive(!active);
+
     setIsShowFields(false);
-    setIsEditMode(false); 
+
+    setIsEditMode(false); // Reset edit mode when switching views
+
     setFormData({
       fullName: "",
       userName: "",
@@ -89,7 +95,7 @@ export default function UserOperation() {
       currencyCode: "",
       extensions: "",
       did: "",
-    }); 
+    }); // Reset form dataa
     setSelectedUserName("");
   };
 
@@ -109,12 +115,13 @@ export default function UserOperation() {
 
     if (user) {
       setEditLead(user);
-      setFormData(user); 
+      setFormData(user); // Populate form with user data
       setIsEditMode(true);
-      setActive(false); 
+      setActive(false); // Switch to form view
     }
   };
 
+  // get operation lists
   const getOprationLists = async () => {
     try {
       const config = {
@@ -127,14 +134,16 @@ export default function UserOperation() {
         config,
       );
       if (response.status === 200) {
-        const opration = response.data; 
-        setUsers(opration?.data); }
+        const opration = response.data; // Get the user data
+        setUsers(opration?.data); // Set the user data for editing
+      }
     } catch (error) {
       console.log(error);
       showErrorToast(error.response.data.message);
     }
   };
 
+  // get operation lists
   const getGroupsNames = async () => {
     try {
       const config = {
@@ -147,13 +156,15 @@ export default function UserOperation() {
         config,
       );
       if (response.status === 200) {
-        const opration = response.data;
-        setGroupNames(opration?.data); 
+        const opration = response.data; // Get the user data
+        setGroupNames(opration?.data); // Set the user data for editing
       } else showErrorToast("You are not an authorised user");
     } catch (error) {
       showErrorToast("You are not an authorised user");
     }
   };
+
+  // Handle user selection and update form fields
   const handleSelectUser = (item) => {
     const fullName = `${item.firstName} ${item.lastName}`;
     setFormData({

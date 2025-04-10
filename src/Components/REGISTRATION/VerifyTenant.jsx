@@ -33,6 +33,14 @@ export default function VerifyTenant() {
   const name = getHostnamePart();
   console.log("Hostname part:", name);
 
+  const baseUrl = import.meta.env.VITE_BASE_URL || "localhost"; // Default to localhost
+  const port = import.meta.env.VITE_PORT || "5173"; // Default to 5173 if undefined
+  const urlChangeBase = import.meta.env.VITE_URLCHANGE_BASE || ""; // Server base URL
+
+console.log("Base URL:", baseUrl); // Debugging
+console.log("Port:", port); // Debugging
+console.log("urlChangeBase:", urlChangeBase); // Debugging
+
   useEffect(() => {
     const apiUrl = `${protocal_url}${name}.${tenant_base_url}/Tenants/check`;
     console.log("Constructed API URL:", apiUrl);
@@ -56,25 +64,30 @@ export default function VerifyTenant() {
         const { isSuccess } = response.data;
 
         if (isSuccess) {
-          {
-            showSuccessToast("Tenant Verified!");
-            setTimeout(() => {
-              //localhost
-              const newUrl = `http://${name}.localhost:5173/tenantlogin`;
-
-              //forServer
-              //  const newUrl = `http://${name}.${urlchange_base}/tenantlogin `
-              window.location.href = newUrl;
-            }, 100);
-          }
+          showSuccessToast("Tenant Verified!");
+          setTimeout(() => {
+            const baseUrl =
+            import.meta.env.MODE === "development"
+              ? "localhost" // Development mode
+              : import.meta.env.VITE_BASE_URL || "igniculusscrm.com"; // Production mode
+          
+          const port = import.meta.env.VITE_PORT || "5173"; // Default development port
+          const urlChangeBase = import.meta.env.VITE_URLCHANGE_BASE || "igniculusscrm.com"; // Ensure a default value for production
+          
+          let newUrl =
+            baseUrl === "localhost"
+              ? `http://${name}.localhost:${port}/VerifyTenant` // Development URL
+              : `https://${name}.${urlChangeBase}/VerifyTenant`; // Production URL
+          
+          console.log("New URL:", newUrl);
+          }, 100);
         } else {
           showErrorToast("Tenant verification failed");
         }
       } catch (error) {
-        console.error("Error checking tenant:", error); // Log the error
+        console.error("Error checking tenant:", error);
       }
     };
-
     verifyTenant();
   }, []);
 
@@ -103,18 +116,33 @@ export default function VerifyTenant() {
       } else {
         showSuccessToast("Login Successful!");
         setTimeout(() => {
-          //localhost
-          const newUrl = `http://${data.name}.localhost:5173/tenantlogin`;
-
-          //forServer
-          //  const newUrl = `http://${data.name}.${urlchange_base}/tenantlogin `
-          window.location.href = newUrl;
+          if (!data.name) {
+            showErrorToast("Invalid tenant name");
+            return;
+          }
+  
+          const baseUrl =
+          import.meta.env.MODE === "development"
+            ? "localhost" // Development mode
+            : import.meta.env.VITE_BASE_URL || "igniculusscrm.com"; // Production mode
+        
+        const port = import.meta.env.VITE_PORT || "5173"; // Default development port
+        const urlChangeBase = import.meta.env.VITE_URLCHANGE_BASE || "igniculusscrm.com"; // Ensure a default value for production
+        
+        let newUrl =
+          baseUrl === "localhost"
+            ? `http://${data.name}.localhost:${port}/tenantlogin` // Development URL
+            : `https://${data.name}.${urlChangeBase}/tenantlogin`; // Production URL
+        
+        console.log("New URL:", newUrl);
+        
+          // console.log("Redirecting to:", newUrl);
+          window.location.href = newUrl; // ✅ Missing redirection line added
         }, 100);
       }
     } catch (error) {
-      if (error.response.data) {
-        showErrorToast(error);
-      }
+      showErrorToast("Login failed. Please try again.");
+      console.error("Login error:", error);
     }
   }
   return (
@@ -142,7 +170,7 @@ export default function VerifyTenant() {
 
         {/*----------> Part-II <---------- */}
         <div className="flex flex-col justify-center w-full min-h-screen bg-cyan-500 md:w-1/3 md:bg-white">
-
+          {/* Image on Top for Small Screens */}
           <div className="flex justify-center md:hidden">
             <img src={IgniculussLogo} alt="sample" width={100} height={50} />
           </div>
@@ -154,10 +182,12 @@ export default function VerifyTenant() {
             </div>
 
             <div className="mt-6">
+              {/*----------> FORM <---------- */}
               <form
                 className="flex flex-col gap-2 rounded-md"
                 onSubmit={handleSubmit}
               >
+                {/*----------> Username <---------- */}
                 <label
                   htmlFor="userName"
                   className="text-xs font-medium text-gray-700"

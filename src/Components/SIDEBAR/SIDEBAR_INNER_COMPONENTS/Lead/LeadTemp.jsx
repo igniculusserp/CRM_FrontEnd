@@ -69,6 +69,8 @@ export default function Lead() {
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [selectedRowEmails, setSelectedRowEmails] = useState([]);
    
+
+  //------------------------------------------------- Modal Satates --------------------------------------------------------
   const [selectedValue, setSelectedValue] = useState("");
   const [assignModalOpen, setAssignModalOpen] = useState(false);
   const [statusModalOpen, setStatusModalOpen] = useState(false);
@@ -127,13 +129,14 @@ export default function Lead() {
     setCurrentPage(value);
   };
 
-
+  //-----------------------------------------------STRIPE BAR DROPDOWN--------------------------------------------------
   const [selectedViewValue, setSelectedViewValue] = useState("Table View");
+  // -------------------------------------------- Navigate to Edit Screen ----------------------------------------
   const handleNumberClick = (event, mobileNo) => {
     event.stopPropagation();
     window.location.href = `tel:${mobileNo}`;
   };
-
+  //------------------------------------------------------ Check Box Data ------------------------------------------
   const handleSelectionChange = (selectionModel) => {
     const selectedRows = currentData.filter((row) =>
       selectionModel.includes(row.id),
@@ -144,7 +147,8 @@ export default function Lead() {
     setSelectedRowEmails(selectedEmails);
   };
 
-
+  //------------------------------------------------------------------------------------------------
+  //----------------Managing Color of Assigned To----------------
   const getAllUsers = async () => {
     const bearer_token = localStorage.getItem("token");
     try {
@@ -556,7 +560,7 @@ export default function Lead() {
             e.stopPropagation();
             navigate(`/panel/${BusinessType}/lead/create/so/${params.row.id}`);
           }}
-          className="flex items-center justify-center px-3 py-1 text-white bg-blue-600 rounded shadow-md h-7 hover:bg-blue-500"
+          className="flex h-7 items-center justify-center rounded bg-blue-600 px-3 py-1 text-white shadow-md hover:bg-blue-500"
         >
           {business === "Brokerage" ? "Create Client" : "SO"}
         </button>
@@ -567,7 +571,7 @@ export default function Lead() {
   return (
     //parent
     <>
-      <div className="flex flex-col min-h-screen m-3">
+      <div className="m-3 flex min-h-screen flex-col">
         {/* -----------------------------------Leads Allotment Modal------------------------------ */}
         {assignModalOpen && <LeadAssignModal onClose={closeModal} />}
         {/* -----------------------------------Multi Assign Modal------------------------------ */}
@@ -586,19 +590,19 @@ export default function Lead() {
         {/* -------------------------------- Fetch modal -------------------------------------------- */}
         {isFeatchModalOpen && <LeadFeatchModal onClose={closeModal} />}
         {/* containerbar*/}
-        <div className="flex flex-wrap items-center justify-between gap-3 px-3 py-2 bg-white rounded-lg">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-white px-3 py-2">
           {/* PART-I */}
           {/* container- Alleads, search */}
           <div className="flex flex-wrap items-start justify-between gap-3">
             {/* PART-I */}
             {/* All Lead  DropDown*/}
             <div
-              className="relative button_MaxWidth_first_layer_Container"
+              className="button_MaxWidth_first_layer_Container relative"
               onClick={toggleMenuAllLead}
               onMouseLeave={() => setAllLeaddropDown(false)}
             >
               <button
-                className="flex items-center justify-between px-4 py-2 truncate border rounded-md button_MaxWidth_first_layer min-w-40 max-w-44"
+                className="button_MaxWidth_first_layer flex min-w-40 max-w-44 items-center justify-between truncate rounded-md border px-4 py-2"
                 id="dropdownDefaultButton"
                 type="button"
               >
@@ -606,12 +610,12 @@ export default function Lead() {
                 <FaAngleDown className="ml-2 text-gray-900" />
               </button>
               {allLeaddropDown && (
-                <div className="absolute z-10 bg-white border border-gray-300 rounded-md top-10">
+                <div className="absolute top-10 z-10 rounded-md border border-gray-300 bg-white">
                   <ul className="text-sm text-gray-700">
                     {allLeadData.map((item) => (
                       <li
                         key={item.id}
-                        className="block w-56 px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                        className="block w-56 cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                         onClick={() => handleLeadStatusSelection(item.status)} // Correct selection logic
                       >
                         {item.status}
@@ -639,9 +643,9 @@ export default function Lead() {
 
             {/*------------------------------------- Fetch Box ----------------------------------------------------------*/}
             {fetchLead || businessRole === "Admin" ? (
-              <div className="flex gap-1 button_MaxWidth_first_layer_Container">
+              <div className="button_MaxWidth_first_layer_Container flex gap-1">
                 <button
-                  className="flex items-center justify-center gap-2 px-4 py-2 text-white bg-blue-600 border rounded-lg button_MaxWidth_first_layer"
+                  className="button_MaxWidth_first_layer flex items-center justify-center gap-2 rounded-lg border bg-blue-600 px-4 py-2 text-white"
                   onClick={() => setIsFetchModalOpen(true)}
                 >
                   Fetch Leads
@@ -651,7 +655,7 @@ export default function Lead() {
               ""
             )}
           </div>
-          <div className="flex flex-wrap items-center gap-3 button_MaxWidth_Main_Container">
+          <div className="button_MaxWidth_Main_Container flex flex-wrap items-center gap-3">
             {/* PART-II */}
             {/*--------------------------------------------------- Stripe-BarDropDown -------------------------------------*/}
             {activeButtonId === 2 || activeButtonId === 4 ? (
@@ -668,12 +672,10 @@ export default function Lead() {
             {/* PART-II */}
             {/*------------------------------------------------------  Create Lead ------------------------------------------*/}
             {createLead || businessRole === "Admin" ? (
-
               <div className="button_MaxWidth_Container flex">
                 <Link to="/panel/${BusinessType}/createlead" className="button_MaxWidth">
-
                   <button
-                    className="flex items-center justify-center gap-2 px-4 py-2 text-white bg-blue-600 border rounded-lg button_MaxWidth"
+                    className="button_MaxWidth flex items-center justify-center gap-2 rounded-lg border bg-blue-600 px-4 py-2 text-white"
                     id="dropdownDefaultButton"
                     type="button"
                   >
@@ -696,15 +698,15 @@ export default function Lead() {
           </div>
         </div>
         {/* 2nd bar Leads and lenghtLeads*/}
-        <div className="flex flex-wrap items-center justify-between gap-3 mt-3 leads_Button_Main_Container">
-          <div className="flex items-center justify-start gap-3 leads_Button_Main_Container">
+        <div className="leads_Button_Main_Container mt-3 flex flex-wrap items-center justify-between gap-3">
+          <div className="leads_Button_Main_Container flex items-center justify-start gap-3">
             <h1 className="text-3xl font-medium">Leads</h1>
-            <h1 className="px-2 py-2 text-center text-white bg-blue-600 rounded-md shadow-md text-md min-w-10">
+            <h1 className="text-md min-w-10 rounded-md bg-blue-600 px-2 py-2 text-center text-white shadow-md">
               {filteredData?.length}
             </h1>
 
             {/*---------------------------------------------------- BUTTONS -------------------------------------------------*/}
-            <div className="flex gap-2 leads_Button_Container">
+            <div className="leads_Button_Container flex gap-2">
               {dynamicButtons.map(({ id, name }) =>
                 permissions.includes(name) ||
                 name === viewName ||
@@ -746,7 +748,7 @@ export default function Lead() {
             onMouseLeave={() => setSelectOperationDropdown(false)}
           >
             <button
-              className="flex items-center justify-between gap-2 px-4 py-2 mt-2 text-gray-600 bg-white border rounded-lg"
+              className="mt-2 flex items-center justify-between gap-2 rounded-lg border bg-white px-4 py-2 text-gray-600"
               id="dropdownDefaultButton"
               type="button"
             >
@@ -754,13 +756,13 @@ export default function Lead() {
               <FaAngleDown className="text-gray-900" />
             </button>
             {selectOperationDropdown && (
-              <div className="absolute z-10 w-64 bg-white border border-gray-300 rounded-md top-13">
-                <ul className="text-sm text-gray-700 rounded-md">
+              <div className="top-13 absolute z-10 w-64 rounded-md border border-gray-300 bg-white">
+                <ul className="rounded-md text-sm text-gray-700">
                   {leadOperations.map(({ key, value }) => (
                     <li
                       key={key}
                       onClick={() => handleSelect(value)}
-                      className="block px-4 py-2 border-b cursor-pointer hover:bg-cyan-500 hover:text-white"
+                      className="block cursor-pointer border-b px-4 py-2 hover:bg-cyan-500 hover:text-white"
                     >
                       {value}
                     </li>
@@ -772,8 +774,8 @@ export default function Lead() {
         )}
         {/*-------Table-------*/}
         {viewLeads || businessRole === "Admin" ? (
-          <div className="mt-3 overflow-x-auto leads_Table_Main_Container">
-            <div className="min-w-full rounded-md shadow-lg leads_Table_Container">
+          <div className="leads_Table_Main_Container mt-3 overflow-x-auto">
+            <div className="leads_Table_Container min-w-full rounded-md shadow-lg">
               {selectedViewValue === "Table View" && activeButtonId === 1 && (
                 <Paper sx={{ width: "100%" }}>
                   <DataGrid
@@ -809,12 +811,12 @@ export default function Lead() {
                       {currentData.map((item) => (
                         // {/* ------------sub-Parent->Container ------------ */}
                         <div
-                          className="grid grid-cols-1 gap-1 p-2 rounded-lg shadow-md bg-sky-100"
+                          className="grid grid-cols-1 gap-1 rounded-lg bg-sky-100 p-2 shadow-md"
                           key={item.id}
                         >
                           <div className="">
-                            <div className="flex items-center py-2 text-center bg-white border-2 rounded border-cyan-500">
-                              <div className="flex items-center justify-center gap-2 mx-auto">
+                            <div className="flex items-center rounded border-2 border-cyan-500 bg-white py-2 text-center">
+                              <div className="mx-auto flex items-center justify-center gap-2">
                                 <FaUserTie />
                                 <span className="">
                                   {item?.name[0]?.toUpperCase() +
@@ -822,7 +824,7 @@ export default function Lead() {
                                 </span>
                               </div>
                               <AiOutlineEdit
-                                className="p-1 mr-3 text-white rounded-full bg-cyan-400 hover:bg-cyan-500"
+                                className="mr-3 rounded-full bg-cyan-400 p-1 text-white hover:bg-cyan-500"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   navigate(`/panel/${BusinessType}/editlead/${item.id}`);
@@ -832,13 +834,13 @@ export default function Lead() {
                             </div>
                           </div>
 
-                          <div className="py-2 bg-white border-2 rounded border-cyan-500">
+                          <div className="rounded border-2 border-cyan-500 bg-white py-2">
                             <div className="flex items-center justify-between px-3 py-1">
                               <div className="flex items-center justify-between py-1">
                                 <IoIosMail size={22} className="w-6" />
                                 <span className="hidden sm:block">Email</span>
                               </div>
-                              <div className="text-sm font-medium truncate">
+                              <div className="truncate text-sm font-medium">
                                 <a
                                   href={`mailto:${item.email}`}
                                   onClick={(event) => event.stopPropagation()}
@@ -853,7 +855,7 @@ export default function Lead() {
                                 <FaPhoneAlt size={14} className="w-6" />
                                 <span className="hidden sm:block">Phone</span>
                               </div>
-                              <div className="text-sm font-medium truncate">
+                              <div className="truncate text-sm font-medium">
                                 <a
                                   href={`tel:${item.mobileNo}`}
                                   onClick={(event) => event.stopPropagation()}
@@ -870,7 +872,7 @@ export default function Lead() {
                                   Segments
                                 </span>
                               </div>
-                              <div className="text-sm font-medium truncate">
+                              <div className="truncate text-sm font-medium">
                                 {item?.segments?.length
                                   ? item.segments?.join(", ")
                                   : ""}
@@ -953,7 +955,7 @@ export default function Lead() {
             </div>
 
             {/* --------------------------------------- Pagination ------------------------------------------ */}
-            <Stack spacing={2} className="mt-4 mb-1">
+            <Stack spacing={2} className="mb-1 mt-4">
               <Pagination
                 count={Math.ceil(filteredData.length / itemsPerPage)}
                 page={currentPage}

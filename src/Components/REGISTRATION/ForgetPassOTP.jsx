@@ -27,7 +27,7 @@ export default function ForgetPassOTP() {
 
   const [email, setemail] = useState("");
 
-
+  //-----------------Email Read-----------------
   useEffect(() => {
     const storedEmail = localStorage.getItem("myData_forget");
     if (storedEmail) {
@@ -37,7 +37,7 @@ export default function ForgetPassOTP() {
     }
   }, []);
 
-
+  //-----------------Resend OTP TIMER-----------------
   useEffect(() => {
     let timer;
     if (resendDisabled) {
@@ -45,7 +45,7 @@ export default function ForgetPassOTP() {
         setCountdown((prev) => {
           if (prev === 1) {
             clearInterval(timer);
-            setResendDisabled(false); 
+            setResendDisabled(false); // Enable resend button
             return 120;
           }
           return prev - 1;
@@ -55,7 +55,7 @@ export default function ForgetPassOTP() {
     return () => clearInterval(timer);
   }, [resendDisabled]);
 
-
+  //-----------------Resend OTP Function-----------------
   const handleResend = async (event) => {
     event.preventDefault();
 
@@ -64,7 +64,7 @@ export default function ForgetPassOTP() {
         Email: email,
       });
       if (response.data.status === 200) {
-        setResendDisabled(true); 
+        setResendDisabled(true); // Disable the resend button
         showSuccessToast("OTP Sent");
       } else {
         showErrorToast("Failed To Sent OTP");
@@ -75,13 +75,14 @@ export default function ForgetPassOTP() {
     }
   };
 
-
+  //-----------------HandleChange OTP INPUT-----------------
   const handleChange = (e) => {
     let OTP = e.target.value;
     setotp(OTP);
     console.log(otp);
   };
 
+  //-----------------Handle SUBMIT-----------------
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -119,10 +120,10 @@ export default function ForgetPassOTP() {
   return (
     <>
       <ToastContainer />
-      <div className="flex flex-col min-h-screen bg-cyan-500 md:flex-row">
+      <div className="flex min-h-screen flex-col bg-cyan-500 md:flex-row">
         {/*----------> Part-I <---------- */}
-        <div className="flex-col items-center justify-center hidden w-2/3 min-h-screen bg-cyan md:flex">
-          <div className="flex flex-col items-center justify-center gap-2 px-16 py-10 bg-white rounded-md">
+        <div className="bg-cyan hidden min-h-screen w-2/3 flex-col items-center justify-center md:flex">
+          <div className="flex flex-col items-center justify-center gap-2 rounded-md bg-white px-16 py-10">
             <img src={IgniculussLogo} alt="Brandlogo" width={80} height={80} />
             <img src={forgetPassword} alt="sample" width={300} height={150} />
             <div className="flex text-3xl font-semibold">
@@ -133,7 +134,7 @@ export default function ForgetPassOTP() {
               </h1>
             </div>
             <div>
-              <p className="text-xs text-center text-gray-400">
+              <p className="text-center text-xs text-gray-400">
                 Skip repetitive and manual sales-marketing tasks. Get highly
                 <br />
                 productive through automation and save tons of time!
@@ -143,15 +144,15 @@ export default function ForgetPassOTP() {
         </div>
 
         {/*----------> Part-II <---------- */}
-        <div className="flex flex-col justify-center w-full min-h-screen bg-cyan-500 md:w-1/3 md:bg-white">
+        <div className="flex min-h-screen w-full flex-col justify-center bg-cyan-500 md:w-1/3 md:bg-white">
           {/* Image on Top for Small Screens */}
           <div className="flex justify-center md:hidden">
             <img src={IgniculussLogo} alt="sample" width={100} height={50} />
           </div>
 
-          <div className="flex flex-col justify-center px-3 py-3 mx-10 mt-8 bg-white rounded-2xl md:mx-4">
+          <div className="mx-10 mt-8 flex flex-col justify-center rounded-2xl bg-white px-3 py-3 md:mx-4">
             <div className="flex items-center gap-3 text-2xl font-semibold">
-              <GiDiamonds className="hidden mb-6 text-3xl md:block" />
+              <GiDiamonds className="mb-6 hidden text-3xl md:block" />
               <h1 className="">
                 Forgot your <br />
                 Password
@@ -163,7 +164,7 @@ export default function ForgetPassOTP() {
             </div>
 
             <div className="mt-8 md:mt-16">
-              <form onSubmit={handleSubmit} className="flex flex-col mx-10">
+              <form onSubmit={handleSubmit} className="mx-10 flex flex-col">
                 <label
                   htmlFor="forgetemail"
                   className="text-xs font-medium text-gray-700"
@@ -174,11 +175,11 @@ export default function ForgetPassOTP() {
                   type="number"
                   name="otp"
                   value={otp}
-                  className="w-full px-2 py-2 mt-1 text-sm border border-gray-300 rounded-md outline-none"
+                  className="mt-1 w-full rounded-md border border-gray-300 px-2 py-2 text-sm outline-none"
                   onChange={handleChange}
                   placeholder="000000"
                 />
-                <div className="flex flex-col items-center justify-center gap-2 mt-6">
+                <div className="mt-6 flex flex-col items-center justify-center gap-2">
                   <div className="text-sm">
                     <p>Code has been sent to your Mail Address </p>
                     <p className="text-center text-cyan-500">{email}</p>
@@ -189,10 +190,10 @@ export default function ForgetPassOTP() {
                     <span className="text-sm">sec's </span>
                   </div>
                 </div>
-                <button className="py-4 mt-3 text-xs font-bold text-white rounded-md outline-none bg-cyan-500">
+                <button className="mt-3 rounded-md bg-cyan-500 py-4 text-xs font-bold text-white outline-none">
                   Verify
                 </button>
-                <div className="flex items-center justify-between mt-3">
+                <div className="mt-3 flex items-center justify-between">
                   <div
                     className={`cursor-pointer text-left text-sm text-slate-900 ${
                       resendDisabled ? "cursor-not-allowed opacity-50" : ""
@@ -201,8 +202,8 @@ export default function ForgetPassOTP() {
                   >
                     {resendDisabled ? `Resend` : "Resend"}
                   </div>
-                  <div className="text-sm text-right">
-                    <Link to="/" className="underline text-cyan-500">
+                  <div className="text-right text-sm">
+                    <Link to="/" className="text-cyan-500 underline">
                       Back to login
                     </Link>
                   </div>
