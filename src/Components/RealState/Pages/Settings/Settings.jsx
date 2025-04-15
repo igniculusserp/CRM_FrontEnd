@@ -6,22 +6,81 @@ import { PiListDashesFill } from "react-icons/pi";
 import { GoGoal } from "react-icons/go";
 import { IoBriefcaseSharp } from "react-icons/io5";
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import { FaRegUser } from "react-icons/fa";
+import { IoReceiptOutline } from "react-icons/io5";
+import { TbListSearch } from "react-icons/tb";
+import { RiListSettingsLine } from "react-icons/ri";
+import { TiExportOutline } from "react-icons/ti";
+import { BsTelephone } from "react-icons/bs";
+import { MdOutlineNotificationsActive } from "react-icons/md";
+import { BiCustomize } from "react-icons/bi";
+import { FaGlobe } from "react-icons/fa";
 
 const data = [
   {
     icon: <PiListDashesFill style={{ width: "30px", height: "30px" }} />,
     title: "Booking Lists",
-    desc: "Smart Lists for you customers",
+    desc: "Smart Lists for you customers.",
   },
   {
     icon: <GoGoal style={{ width: "30px", height: "30px" }} />,
     title: "Goals",
-    desc: "Add and Manage goals",
+    desc: "Add and Manage goals.",
   },
   {
     icon: <IoBriefcaseSharp style={{ width: "30px", height: "30px" }} />,
     title: "Company Details",
-    desc: "Manage your common company details",
+    desc: "Manage your common company details.",
+  },
+  {
+    icon: <FaRegUser style={{ width: "30px", height: "30px" }} />,
+    title: "User Management",
+    desc: "Add users, manage their teams and hierarchy.",
+  },
+  {
+    icon: <IoReceiptOutline style={{ width: "30px", height: "30px" }} />,
+    title: "Billing",
+    desc: "Download your Invoices & check your dues.",
+  },
+  {
+    icon: <TbListSearch style={{ width: "30px", height: "30px" }} />,
+    title: "Search Lists",
+    desc: "Use Smart Lists to segment your leads.",
+  },
+  {
+    icon: <RiListSettingsLine style={{ width: "30px", height: "30px" }} />,
+    title: "Lead Settings",
+    desc: "Customise Lead forms, pipeline stages, manage lead access & more.",
+  },
+  {
+    icon: <TiExportOutline style={{ width: "30px", height: "30px" , transform: 'scaleX(-1)'}} />,
+    title: "Import",
+    desc: "Import your data in bulk.",
+  },
+  {
+    icon: <TiExportOutline style={{ width: "30px", height: "30px" }} />,
+    title: "Export",
+    desc: "Download your leads, calls, activities & more.",
+  },
+  {
+    icon: <BsTelephone style={{ width: "30px", height: "30px" }} />,
+    title: "Telephony",
+    desc: "Setup & manage your telephony & IVR.",
+  },
+  {
+    icon: <MdOutlineNotificationsActive style={{ width: "30px", height: "30px" }} />,
+    title: "Notification Settings",
+    desc: "Manage your Notification Settings.",
+  },
+  {
+    icon: <BiCustomize style={{ width: "30px", height: "30px" }} />,
+    title: "Custom Fields",
+    desc: "Customise your account with custom fields.",
+  },
+  {
+    icon: <FaGlobe style={{ width: "30px", height: "30px" }} />,
+    title: "Website",
+    desc: "Template integration for Property Landing page.",
   },
 ];
 
@@ -39,14 +98,15 @@ export default function Settings() {
   }, []);
 
   const handleAction = (title) => {
-    if (title === "Inventory Configuration") {
-      setOpen(true);
+   
+    if (title === "Booking Lists") {
+      navigate(`/panel/${businessType}/setting_management/Booking_List`);
     }
-    if (title === "Project Tower Stages") {
-      navigate(`/panel/${businessType}/product_management/ProjectTowerStage`);
+    if (title === "Goals") {
+      navigate(`/panel/${businessType}/setting_management/Goals`);
     }
-    if (title === "Project Unit Stages") {
-      navigate(`/panel/${businessType}/product_management/ProjectUnitStages`);
+    if (title === "Search Lists") {
+      navigate(`/panel/${businessType}/setting_management/All_List`);
     }
     if (title === "Products & Services") {
       navigate(`/panel/${businessType}/product_management/product_&_Services`);

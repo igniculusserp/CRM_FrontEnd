@@ -91,12 +91,6 @@ export default function RealEstateReports() {
       {selectedButton === "Default Reports" && selectedReport==="Marketing Effect" ? <MarketingEffect /> : ""}
       {selectedButton === "Default Reports" && selectedReport==="Call Reports" ? <CallReports /> : ""}
       {selectedButton === "Default Reports" && selectedReport==="Inventory Summary" ? <InventorySummary /> : ""}
-
-
-
-
-      {/* {selectedButton === "Completed" ? <CompleteTasks /> : ""} */}
-      {/* {selectedButton === "Archived" ? <ArchivedTasks /> : ""} */}
     </div>
   );
 }

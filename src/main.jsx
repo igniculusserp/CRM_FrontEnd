@@ -172,6 +172,11 @@ import AllDocuments from "./Components/RealState/Pages/Document/AllDocuments.jsx
 
 // Real Estate Setting Management Page
 import SettingManagement from "./Components/RealState/Pages/Settings/Settings.jsx";
+import BookingList from "./Components/RealState/Pages/Settings/Components/BookingList/BookingList.jsx";
+import Goals from "./Components/RealState/Pages/Settings/Components/Goals/Goals.jsx";
+import SearchList from "./Components/RealState/Pages/Settings/Components/SearchList/SearchList.jsx";
+
+
 
 
 
@@ -461,6 +466,11 @@ const router = createBrowserRouter([
       
       //Setting Management->
       { path: "setting_management", element: <SettingManagement /> },
+      { path: "setting_management/Booking_List", element: <BookingList /> },
+      { path: "setting_management/Goals", element: <Goals /> },
+      { path: "setting_management/All_List", element: <SearchList /> },
+
+
 
       //Contacts->
       { path: "contact", element: <Contact /> },
