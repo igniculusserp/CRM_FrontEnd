@@ -65,15 +65,15 @@ export default function InvoiceForm() {
             id="outlined-select-currency"
             select
             defaultValue="EUR"
-            InputProps={{ readOnly: true }} // Makes input read-only
+             
           >
-            <MenuItem value="USD" disabled>
+            <MenuItem value="USD" >
               USD - US Dollar
             </MenuItem>
-            <MenuItem value="EUR" disabled>
+            <MenuItem value="EUR" >
               EUR - Euro
             </MenuItem>
-            <MenuItem value="INR" disabled>
+            <MenuItem value="INR" >
               INR - Indian Rupee
             </MenuItem>
           </TextField>
@@ -123,15 +123,15 @@ export default function InvoiceForm() {
               id="outlined-select-currency"
               select
               defaultValue="EUR"
-              InputProps={{ readOnly: true }} // Makes input read-only
+               
             >
-              <MenuItem value="USD" disabled>
+              <MenuItem value="USD" >
                 USD - US Dollar
               </MenuItem>
-              <MenuItem value="EUR" disabled>
+              <MenuItem value="EUR" >
                 EUR - Euro
               </MenuItem>
-              <MenuItem value="INR" disabled>
+              <MenuItem value="INR" >
                 INR - Indian Rupee
               </MenuItem>
             </TextField>
@@ -153,15 +153,15 @@ export default function InvoiceForm() {
               id="outlined-select-currency"
               select
               defaultValue="EUR"
-              InputProps={{ readOnly: true }} // Makes input read-only
+               
             >
-              <MenuItem value="USD" disabled>
+              <MenuItem value="USD" >
                 USD - US Dollar
               </MenuItem>
-              <MenuItem value="EUR" disabled>
+              <MenuItem value="EUR" >
                 EUR - Euro
               </MenuItem>
-              <MenuItem value="INR" disabled>
+              <MenuItem value="INR" >
                 INR - Indian Rupee
               </MenuItem>
             </TextField>
@@ -183,15 +183,15 @@ export default function InvoiceForm() {
               id="outlined-select-currency"
               select
               defaultValue="EUR"
-              InputProps={{ readOnly: true }} // Makes input read-only
+               
             >
-              <MenuItem value="USD" disabled>
+              <MenuItem value="USD" >
                 USD - US Dollar
               </MenuItem>
-              <MenuItem value="EUR" disabled>
+              <MenuItem value="EUR" >
                 EUR - Euro
               </MenuItem>
-              <MenuItem value="INR" disabled>
+              <MenuItem value="INR" >
                 INR - Indian Rupee
               </MenuItem>
             </TextField>
@@ -231,15 +231,15 @@ export default function InvoiceForm() {
               id="outlined-select-currency"
               select
               defaultValue="EUR"
-              InputProps={{ readOnly: true }} // Makes input read-only
+               
             >
-              <MenuItem value="USD" disabled>
+              <MenuItem value="USD" >
                 USD - US Dollar
               </MenuItem>
-              <MenuItem value="EUR" disabled>
+              <MenuItem value="EUR" >
                 EUR - Euro
               </MenuItem>
-              <MenuItem value="INR" disabled>
+              <MenuItem value="INR" >
                 INR - Indian Rupee
               </MenuItem>
             </TextField>
@@ -261,15 +261,15 @@ export default function InvoiceForm() {
               id="outlined-select-currency"
               select
               defaultValue="EUR"
-              InputProps={{ readOnly: true }} // Makes input read-only
+               
             >
-              <MenuItem value="USD" disabled>
+              <MenuItem value="USD" >
                 USD - US Dollar
               </MenuItem>
-              <MenuItem value="EUR" disabled>
+              <MenuItem value="EUR" >
                 EUR - Euro
               </MenuItem>
-              <MenuItem value="INR" disabled>
+              <MenuItem value="INR" >
                 INR - Indian Rupee
               </MenuItem>
             </TextField>

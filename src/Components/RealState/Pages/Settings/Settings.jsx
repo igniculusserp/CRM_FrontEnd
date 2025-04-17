@@ -108,15 +108,10 @@ export default function Settings() {
     if (title === "Search Lists") {
       navigate(`/panel/${businessType}/setting_management/All_List`);
     }
-    if (title === "Products & Services") {
-      navigate(`/panel/${businessType}/product_management/product_&_Services`);
+    if (title === "User Management") {
+      navigate(`/panel/${businessType}/setting_management/User_Management`);
     }
-    if (title === "Developers") {
-      navigate(`/panel/${businessType}/product_management/all_developers`);
-    }
-    if (title === "Listing URLs") {
-      navigate(`/panel/${businessType}/product_management/Listing_URLS`);
-    }
+   
   };
 
   //---------------------------- Modal Close Button------------------------------------------------

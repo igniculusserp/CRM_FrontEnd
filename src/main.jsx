@@ -175,9 +175,12 @@ import SettingManagement from "./Components/RealState/Pages/Settings/Settings.js
 import BookingList from "./Components/RealState/Pages/Settings/Components/BookingList/BookingList.jsx";
 import Goals from "./Components/RealState/Pages/Settings/Components/Goals/Goals.jsx";
 import SearchList from "./Components/RealState/Pages/Settings/Components/SearchList/SearchList.jsx";
-
-
-
+import UserManagement from "./Components/RealState/Pages/Settings/Components/UserManagement/UserManagement.jsx";
+import ManageUser from "./Components/RealState/Pages/Settings/Components/UserManagement/Components/ManageUser/ManageUser.jsx";
+import ManageTeams from "./Components/RealState/Pages/Settings/Components/UserManagement/Components/ManageTeams/ManageTeams.jsx";
+import AvailabilityLogs from "./Components/RealState/Pages/Settings/Components/UserManagement/Components/AvailabilityLogs/AvailabilityLogs.jsx";
+import Attendance from "./Components/RealState/Pages/Settings/Components/UserManagement/Components/Attendance/Attendance.jsx";
+import CallAvailabilities from "./Components/RealState/Pages/Settings/Components/UserManagement/Components/CallAvailabilities/CallAvailabilities.jsx";
 
 
 
@@ -469,6 +472,16 @@ const router = createBrowserRouter([
       { path: "setting_management/Booking_List", element: <BookingList /> },
       { path: "setting_management/Goals", element: <Goals /> },
       { path: "setting_management/All_List", element: <SearchList /> },
+      { path: "setting_management/User_Management", element: <UserManagement /> },
+      { path: "setting_management/User_Management/Manage_User", element: <ManageUser /> },
+      { path: "setting_management/User_Management/Manage_Teams", element: <ManageTeams /> },
+      { path: "setting_management/User_Management/Availability_Logs", element: <AvailabilityLogs /> },
+      { path: "setting_management/User_Management/Attendance", element: <Attendance /> },
+      { path: "setting_management/User_Management/Call_Availabilities", element: <CallAvailabilities /> },
+
+
+
+
 
 
 
